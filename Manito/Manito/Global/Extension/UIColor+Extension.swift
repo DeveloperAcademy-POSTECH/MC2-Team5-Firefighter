@@ -17,6 +17,16 @@ extension UIColor {
     static var waitTextColor: UIColor {
         return UIColor(hex: "#616161")
     }
+    // MARK: 변수명 뭘로 하는게 좋을까요
+    static var grey4: UIColor {
+        return UIColor(hex: "#DFDFDF")
+    }
+    static var backgroundColor: UIColor {
+        return UIColor(hex: "#242424")
+    }
+    static var durationBackgroundColor: UIColor {
+        return UIColor(hex: "#8F3B38")
+    }
 }
 
 extension UIColor {
