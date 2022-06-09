@@ -11,6 +11,12 @@ extension UIColor {
     static var mainBabyYellow: UIColor {
         return UIColor(hex: "#FFED8B")
     }
+    static var waitBackgroundColor: UIColor {
+        return UIColor(hex: "#FFDBBA")
+    }
+    static var waitTextColor: UIColor {
+        return UIColor(hex: "#616161")
+    }
 }
 
 extension UIColor {
