@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,40 +13,85 @@
             <objects>
                 <viewController storyboardIdentifier="DetailWaitViewController" id="Y6W-OH-hqX" customClass="DetailWaitViewController" customModule="Manito" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="명예소방관" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pg8-6G-4Um">
-                                <rect key="frame" x="20" y="112" width="182" height="59"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name=".AppleSDGothicNeoI-Regular" family=".Apple SD Gothic NeoI" pointSize="34"/>
-                                <color key="textColor" systemColor="systemBackgroundColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="명예소방관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHE-ch-Aez">
+                                <rect key="frame" x="16" y="94" width="147.33333333333334" height="40.666666666666657"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="대기중" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPa-On-JnC">
-                                <rect key="frame" x="210" y="129" width="49" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="대기중" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SUa-wp-dQN">
+                                <rect key="frame" x="178.33333333333334" y="103" width="66" height="23"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="AZA-m8-6X2"/>
+                                    <constraint firstAttribute="height" constant="23" id="Jxw-u3-SUC"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Xz-uy-2WJ">
+                                <rect key="frame" x="16" y="159.66666666666666" width="343" height="36"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22.06.06 ~ 22.06.10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5A-Hr-fFr">
+                                        <rect key="frame" x="173" y="7" width="162" height="22"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="진행 기간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7TT-eS-ypn">
+                                        <rect key="frame" x="8" y="9.6666666666666856" width="53" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="7TT-eS-ypn" secondAttribute="bottom" constant="9.5" id="2Pi-2k-rf7"/>
+                                    <constraint firstAttribute="bottom" secondItem="f5A-Hr-fFr" secondAttribute="bottom" constant="7" id="IRq-cD-PRy"/>
+                                    <constraint firstAttribute="height" constant="36" id="RBQ-sh-wyN"/>
+                                    <constraint firstAttribute="trailing" secondItem="f5A-Hr-fFr" secondAttribute="trailing" constant="8" id="Tn8-JZ-3d8"/>
+                                    <constraint firstItem="7TT-eS-ypn" firstAttribute="leading" secondItem="8Xz-uy-2WJ" secondAttribute="leading" constant="8" id="VfG-dt-vf9"/>
+                                    <constraint firstItem="7TT-eS-ypn" firstAttribute="top" secondItem="8Xz-uy-2WJ" secondAttribute="top" constant="9.5" id="qXP-ri-jUC"/>
+                                    <constraint firstItem="f5A-Hr-fFr" firstAttribute="top" secondItem="8Xz-uy-2WJ" secondAttribute="top" constant="7" id="xS0-Ji-prc"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XHE-ch-Aez" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="Ha5-Yr-Jbx"/>
+                            <constraint firstItem="8Xz-uy-2WJ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="R1L-CM-gXY"/>
+                            <constraint firstItem="8Xz-uy-2WJ" firstAttribute="top" secondItem="XHE-ch-Aez" secondAttribute="bottom" constant="25" id="UvH-AD-1el"/>
+                            <constraint firstItem="SUa-wp-dQN" firstAttribute="leading" secondItem="XHE-ch-Aez" secondAttribute="trailing" constant="15" id="YqY-u7-xMl"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="8Xz-uy-2WJ" secondAttribute="trailing" constant="16" id="c1h-M4-9Pd"/>
+                            <constraint firstItem="XHE-ch-Aez" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="50" id="nyH-I9-FvI"/>
+                            <constraint firstItem="SUa-wp-dQN" firstAttribute="centerY" secondItem="XHE-ch-Aez" secondAttribute="centerY" id="sH5-03-6fz"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="roomTitle" destination="Pg8-6G-4Um" id="Sb2-rU-MHo"/>
-                        <outlet property="startStatus" destination="kPa-On-JnC" id="jK9-aW-RBq"/>
+                        <outlet property="durationDateText" destination="f5A-Hr-fFr" id="rZd-UV-K0e"/>
+                        <outlet property="durationText" destination="7TT-eS-ypn" id="wVe-SB-HP9"/>
+                        <outlet property="durationView" destination="8Xz-uy-2WJ" id="vcG-3d-ADa"/>
+                        <outlet property="roomTitle" destination="XHE-ch-Aez" id="lIr-z3-3eZ"/>
+                        <outlet property="startStatus" destination="SUa-wp-dQN" id="N9J-OB-YGx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="60.869565217391312" y="105.80357142857143"/>
+            <point key="canvasLocation" x="60" y="105.66502463054188"/>
         </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

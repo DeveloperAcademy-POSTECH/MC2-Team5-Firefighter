@@ -10,24 +10,52 @@ import UIKit
 class DetailWaitViewController: UIViewController {
     @IBOutlet weak var roomTitle: UILabel!
     @IBOutlet weak var startStatus: UILabel!
-
+    @IBOutlet weak var durationView: UIView!
+    @IBOutlet weak var durationText: UILabel!
+    @IBOutlet weak var durationDateText: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        roomTitle.textColor = .white
-        roomTitle.font = UIFont(name: "DungGeunMo", size: 34)
-
-        // MARK: 강제로 맞춘거라 어떻게 해야 유연하게 바뀌는지 모르겠음
-        startStatus.frame = CGRect(x: 200, y: 130, width: 66, height: 23)
-        startStatus.backgroundColor = .waitBackgroundColor
-        startStatus.layer.masksToBounds = true
-        startStatus.layer.cornerRadius = 11
-        startStatus.textColor = .waitTextColor
-        startStatus.font = UIFont(name: "DungGeunMo", size: 13)
-        startStatus.textAlignment = .center
+        self.view.backgroundColor = .backgroundColor
+        setRoomTitle(label: roomTitle)
+        setStartStatus(label: startStatus)
+        setDurationView(view: durationView)
+        setDurationTitle(label: durationText)
+        setDurationDateText(label: durationDateText)
 
         // Do any additional setup after loading the view.
     }
+
+    func setRoomTitle(label: UILabel) {
+        label.textColor = .white
+        label.font = UIFont(name: AppFontName.regular.rawValue, size: 34)
+    }
     
+    func setStartStatus(label: UILabel) {
+        label.backgroundColor = .waitBackgroundColor
+        label.layer.masksToBounds = true
+        label.layer.cornerRadius = 11
+        label.textColor = .waitTextColor
+        label.font = UIFont(name: AppFontName.regular.rawValue, size: 13)
+        label.textAlignment = .center
+    }
+    
+    func setDurationView(view: UIView) {
+        view.backgroundColor = .durationBackgroundColor
+        view.layer.cornerRadius = 8
+    }
+    
+    func setDurationTitle(label: UILabel) {
+        label.textColor = .grey4
+        label.font = UIFont(name: AppFontName.regular.rawValue, size: 14)
+    }
+    
+    func setDurationDateText(label: UILabel) {
+        label.textColor = .white
+        label.font = UIFont(name: AppFontName.regular.rawValue, size: 18)
+    }
+
+
 
     /*
     // MARK: - Navigation
