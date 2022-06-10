@@ -35,6 +35,7 @@
 		B5F525242851A25400614FF7 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525232851A25400614FF7 /* UICollectionView+Extension.swift */; };
 		B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525252851A26D00614FF7 /* NSObject+Extension.swift */; };
 		B5F525292851A2A400614FF7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525282851A2A400614FF7 /* Logger.swift */; };
+		B5F5252F2852F69700614FF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B5F5252E2852F69700614FF7 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F5252F2852F69700614FF7 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +295,9 @@
 			dependencies = (
 			);
 			name = Manito;
+			packageProductDependencies = (
+				B5F5252E2852F69700614FF7 /* SnapKit */,
+			);
 			productName = Manito;
 			productReference = B5F524CB28519AA000614FF7 /* Manito.app */;
 			productType = "com.apple.product-type.application";
@@ -321,6 +326,9 @@
 				Base,
 			);
 			mainGroup = B5F524C228519AA000614FF7;
+			packageReferences = (
+				B5F5252D2852F69700614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = B5F524CC28519AA000614FF7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -594,6 +602,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B5F5252D2852F69700614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B5F5252E2852F69700614FF7 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5F5252D2852F69700614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B5F524C328519AA000614FF7 /* Project object */;
 }
