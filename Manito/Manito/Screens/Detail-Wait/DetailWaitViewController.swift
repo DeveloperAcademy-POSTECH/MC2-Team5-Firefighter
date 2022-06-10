@@ -46,7 +46,7 @@ class DetailWaitViewController: BaseViewController {
         durationText.font = UIFont(name: AppFontName.regular.rawValue, size: 14)
         return durationText
     }()
-    
+
     private let durationDateText: UILabel = {
         let dateText = UILabel()
         dateText.text = "22.06.06 ~ 22.06.10"
@@ -54,6 +54,35 @@ class DetailWaitViewController: BaseViewController {
         dateText.font = UIFont(name: AppFontName.regular.rawValue, size: 18)
         return dateText
     }()
+
+    private let togetherFriendText: UILabel = {
+        let label = UILabel()
+        label.text = "함께 하는 친구들"
+        label.textColor = .white
+        label.font = UIFont(name: AppFontName.regular.rawValue, size: 16)
+        return label
+    }()
+
+    private let comeInText: UILabel = {
+        let label = UILabel()
+        label.text = "1/15"
+        label.textColor = .white
+        label.font = UIFont(name: AppFontName.regular.rawValue, size: 14)
+        return label
+    }()
+
+    private let copyButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("방 코드 복사", for: .normal)
+        button.titleLabel?.font = UIFont(name: AppFontName.regular.rawValue, size: 16)
+        button.addTarget(self, action: #selector(copyInviteCode), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func copyInviteCode() {
+        // TODO: 코드 복사 토스트형식 만들기
+        print("코드 복사 완료 !")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,14 +105,14 @@ class DetailWaitViewController: BaseViewController {
             $0.width.equalTo(66)
             $0.height.equalTo(23)
         }
-        
+
         view.addSubview(durationView)
         durationView.snp.makeConstraints {
             $0.top.equalTo(roomTitle.snp.bottom).offset(30)
             $0.trailing.leading.equalToSuperview().inset(16)
             $0.height.equalTo(36)
         }
-        
+
         durationText.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
@@ -92,6 +121,24 @@ class DetailWaitViewController: BaseViewController {
         durationDateText.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(40)
             $0.centerY.equalToSuperview()
+        }
+
+        view.addSubview(togetherFriendText)
+        togetherFriendText.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.top.equalTo(durationView.snp.bottom).offset(44)
+        }
+
+        view.addSubview(comeInText)
+        comeInText.snp.makeConstraints {
+            $0.leading.equalTo(togetherFriendText.snp.trailing).offset(10)
+            $0.centerY.equalTo(togetherFriendText.snp.centerY)
+        }
+
+        view.addSubview(copyButton)
+        copyButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(16)
+            $0.centerY.equalTo(togetherFriendText.snp.centerY)
         }
     }
 }
