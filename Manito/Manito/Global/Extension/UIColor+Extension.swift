@@ -27,6 +27,9 @@ extension UIColor {
     static var durationBackgroundColor: UIColor {
         return UIColor(hex: "#8F3B38")
     }
+    static var copyCodeTextColor: UIColor {
+        return UIColor(hex: "#3472EB")
+    }
 }
 
 extension UIColor {
