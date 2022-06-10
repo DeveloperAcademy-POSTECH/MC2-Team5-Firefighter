@@ -11,6 +11,9 @@ extension UIColor {
     static var mainBabyYellow: UIColor {
         return UIColor(hex: "#FFED8B")
     }
+    static var fieldGray: UIColor {
+        return UIColor(hex: "#5A5A5A")
+    }
 }
 
 extension UIColor {

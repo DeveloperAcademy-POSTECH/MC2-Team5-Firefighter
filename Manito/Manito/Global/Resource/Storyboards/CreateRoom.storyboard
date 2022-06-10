@@ -1,27 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="DungGeunMo.otf">
+            <string>DungGeunMo</string>
+        </array>
+    </customFonts>
     <scenes>
-        <!--Create Room View Controller-->
+        <!--방 생성하기-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController storyboardIdentifier="CreateRoomViewController" id="Y6W-OH-hqX" customClass="CreateRoomViewController" customModule="Manito" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="방 생성하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WqH-74-iTp">
+                                <rect key="frame" x="16" y="110" width="191" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="191" id="N5D-Gb-jYk"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="UoB-Xf-qnU"/>
+                                    <constraint firstAttribute="height" constant="33" id="WLJ-zN-tlI"/>
+                                    <constraint firstAttribute="width" constant="191" id="ZGi-Db-K8M"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="DungGeunMo" family="DungGeunMo" pointSize="34"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uEy-x3-iUM">
+                                <rect key="frame" x="361" y="53" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="Mcb-l2-fv4"/>
+                                    <constraint firstAttribute="height" constant="44" id="kyR-C3-yYk"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="ⓧ"/>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="center" minimumFontSize="18" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JUu-3m-LT0">
+                                <rect key="frame" x="16" y="209" width="382" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="F5k-bS-EMN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="DungGeunMo" family="DungGeunMo" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="WqH-74-iTp" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="66" id="Na2-Fd-Hu6"/>
+                            <constraint firstItem="WqH-74-iTp" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="RRL-8Y-ccb"/>
+                            <constraint firstItem="JUu-3m-LT0" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="SbN-Rz-vmc"/>
+                            <constraint firstItem="uEy-x3-iUM" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="9" id="aQL-Bc-dPx"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="uEy-x3-iUM" secondAttribute="trailing" constant="9" id="aQe-H0-H74"/>
+                            <constraint firstItem="JUu-3m-LT0" firstAttribute="top" secondItem="WqH-74-iTp" secondAttribute="bottom" constant="66" id="m8n-yz-qwd"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="JUu-3m-LT0" secondAttribute="trailing" constant="16" id="ncT-Ly-eXW"/>
+                        </constraints>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="방 생성하기" id="Jiz-qx-dX6"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="roomsNameTextField" destination="JUu-3m-LT0" id="Tgn-L0-LJJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="61" y="106"/>
+            <point key="canvasLocation" x="1963.7681159420292" y="165.40178571428569"/>
         </scene>
     </scenes>
     <resources>
