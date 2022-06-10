@@ -47,6 +47,16 @@ class CreateRoomViewController: UIViewController {
         return label
     }()
     
+    lazy var nextButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("다음", for: .normal)
+        btn.titleLabel?.font = UIFont(name: AppFontName.regular.rawValue, size: 20)
+        btn.tintColor = .white
+        btn.backgroundColor = UIColor.dinnerRed
+        btn.layer.cornerRadius = 30
+        return btn
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,10 +83,17 @@ class CreateRoomViewController: UIViewController {
         createView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 66).isActive = true
         createView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
         createView.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -16).isActive = true
-        createView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
+        createView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200).isActive = true
         
 
         configureRoomsTitle()
+        
+        view.addSubview(nextButton)
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        nextButton.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -16).isActive = true
+        nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -57).isActive = true
+        nextButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
     }
     
