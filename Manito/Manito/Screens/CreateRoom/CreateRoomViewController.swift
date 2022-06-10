@@ -11,17 +11,25 @@ class CreateRoomViewController: UIViewController {
 
     // MARK: - Property
     
-    lazy var createView : UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        return view
-    }()
-    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "방 생성하기"
         label.font = UIFont(name: AppFontName.regular.rawValue, size: 34)
         return label
+    }()
+    
+    lazy var closeButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        btn.tintColor = .lightGray
+        btn.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        return btn
+    }()
+    
+    lazy var createView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        return view
     }()
     
     lazy var roomsNameTextField: UITextField = {
@@ -54,6 +62,7 @@ class CreateRoomViewController: UIViewController {
         btn.tintColor = .white
         btn.backgroundColor = UIColor.dinnerRed
         btn.layer.cornerRadius = 30
+        btn.addTarget(self, action: #selector(didTapnextButoon), for: .touchUpInside)
         return btn
     }()
     
@@ -66,6 +75,16 @@ class CreateRoomViewController: UIViewController {
         
     }
     
+    // MARK: - Selectors
+    @objc func didTapCloseButton(){
+        print("ttaapp")
+    }
+    
+    @objc func didTapnextButoon(){
+        print("tap")
+    }
+    
+
     // MARK: - Configure
     func configure(){
         
@@ -77,6 +96,13 @@ class CreateRoomViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 66).isActive = true
         titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 16).isActive = true
+        
+        view.addSubview(closeButton)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9).isActive = true
+        closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        closeButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        closeButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
         
         view.addSubview(createView)
         createView.translatesAutoresizingMaskIntoConstraints = false
