@@ -30,6 +30,31 @@ class DetailWaitViewController: BaseViewController {
         return label
     }()
 
+    private lazy var durationView: UIView = {
+        let durationView = UIView()
+        durationView.backgroundColor = .durationBackgroundColor
+        durationView.layer.cornerRadius = 8
+        durationView.addSubview(durationText)
+        durationView.addSubview(durationDateText)
+        return durationView
+    }()
+
+    private let durationText: UILabel = {
+        let durationText = UILabel()
+        durationText.text = "진행 기간"
+        durationText.textColor = .grey4
+        durationText.font = UIFont(name: AppFontName.regular.rawValue, size: 14)
+        return durationText
+    }()
+    
+    private let durationDateText: UILabel = {
+        let dateText = UILabel()
+        dateText.text = "22.06.06 ~ 22.06.10"
+        dateText.textColor = .white
+        dateText.font = UIFont(name: AppFontName.regular.rawValue, size: 18)
+        return dateText
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .backgroundColor
@@ -47,20 +72,26 @@ class DetailWaitViewController: BaseViewController {
         view.addSubview(startStauts)
         startStauts.snp.makeConstraints {
             $0.centerY.equalTo(roomTitle.snp.centerY)
-            $0.left.equalTo(roomTitle.snp.right).inset(-10)
+            $0.left.equalTo(roomTitle.snp.right).offset(10)
             $0.width.equalTo(66)
             $0.height.equalTo(23)
         }
+        
+        view.addSubview(durationView)
+        durationView.snp.makeConstraints {
+            $0.top.equalTo(roomTitle.snp.bottom).offset(30)
+            $0.trailing.leading.equalToSuperview().inset(16)
+            $0.height.equalTo(36)
+        }
+        
+        durationText.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+        }
+
+        durationDateText.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(40)
+            $0.centerY.equalToSuperview()
+        }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
