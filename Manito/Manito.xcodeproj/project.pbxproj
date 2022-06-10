@@ -36,6 +36,7 @@
 		B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525252851A26D00614FF7 /* NSObject+Extension.swift */; };
 		B5F525292851A2A400614FF7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525282851A2A400614FF7 /* Logger.swift */; };
 		B5F5252F2852F69700614FF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B5F5252E2852F69700614FF7 /* SnapKit */; };
+		D70DB449285389A700417A76 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70DB448285389A700417A76 /* UITextField+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		B5F525232851A25400614FF7 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		B5F525252851A26D00614FF7 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
 		B5F525282851A2A400614FF7 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		D70DB448285389A700417A76 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +212,7 @@
 				B5F525212851A24100614FF7 /* UITableView+Extension.swift */,
 				B5F525232851A25400614FF7 /* UICollectionView+Extension.swift */,
 				B5F525252851A26D00614FF7 /* NSObject+Extension.swift */,
+				D70DB448285389A700417A76 /* UITextField+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
+				D70DB449285389A700417A76 /* UITextField+Extension.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
