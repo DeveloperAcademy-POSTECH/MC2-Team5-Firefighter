@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class CreateRoomViewController: BaseViewController {
-
+    
     // MARK: - Property
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -20,11 +20,10 @@ class CreateRoomViewController: BaseViewController {
     }()
     
     lazy var closeButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        btn.tintColor = .lightGray
-        btn.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
-        return btn
+        let button = UIButton(type: .system)
+        button.tintColor = .lightGray
+        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        return button
     }()
     
     lazy var nextButton: UIButton = {
@@ -34,24 +33,15 @@ class CreateRoomViewController: BaseViewController {
         btn.tintColor = .white
         btn.backgroundColor = UIColor.mainRed
         btn.layer.cornerRadius = 30
-        btn.addTarget(self, action: #selector(didTapnextButoon), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         return btn
     }()
     
-    private let nameView: InputNameView = {
-        let view = InputNameView()
-        return view
-    }()
+    private let nameView = InputNameView()
     
-    private let personView: InputPersonView = {
-        let view = InputPersonView()
-        return view
-    }()
+    private let personView = InputPersonView()
     
-    private let dateView: InputDateView = {
-        let view = InputDateView()
-        return view
-    }()
+    private let dateView = InputDateView()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -60,11 +50,11 @@ class CreateRoomViewController: BaseViewController {
     }
     
     override func render() {
-
+        
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
-            $0.leading.equalTo(view).inset(16)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
         
         view.addSubview(closeButton)
@@ -83,18 +73,18 @@ class CreateRoomViewController: BaseViewController {
         
         view.addSubview(nameView)
         nameView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).inset(-66)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(16)
-        $0.bottom.equalTo(nextButton.snp.top)
+            $0.bottom.equalTo(nextButton.snp.top)
         }
-
+        
         view.addSubview(personView)
         personView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalTo(nextButton.snp.top)
         }
-
+        
         view.addSubview(dateView)
         dateView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
@@ -110,15 +100,11 @@ class CreateRoomViewController: BaseViewController {
     }
     
     // MARK: - Selectors
-    @objc func didTapCloseButton(){
+    @objc func didTapCloseButton() {
         print("ttaapp")
     }
     
-    @objc func didTapnextButoon(){
+    @objc func didTapNextButton() {
         print("tap")
-    }
-    
-    // MARK: - Navigation
-
-
+    }    
 }

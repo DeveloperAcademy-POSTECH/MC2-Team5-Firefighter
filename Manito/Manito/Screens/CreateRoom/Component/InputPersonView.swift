@@ -76,14 +76,13 @@ class InputPersonView: UIView {
     }
     
     // MARK: - Selector
-    @objc func didSlider(_ slider: UISlider){
+    @objc func didSlider(_ slider: UISlider) {
         let value = slider.value
         personLabel.text = "X \(Int(value))인"
     }
     
     // MARK: - Config
-    private func render(){
-        
+    private func render() {
         self.addSubview(peronsViewLabel)
         peronsViewLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -91,7 +90,7 @@ class InputPersonView: UIView {
         
         self.addSubview(personBackView)
         personBackView.snp.makeConstraints {
-            $0.top.equalTo(peronsViewLabel.snp.bottom).inset(-36)
+            $0.top.equalTo(peronsViewLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(140)
         }

@@ -39,7 +39,7 @@ class InputNameView: UIView {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()    
+        render()
     }
     
     required init?(coder: NSCoder) {
@@ -47,7 +47,7 @@ class InputNameView: UIView {
     }
     
     // MARK: - Config
-    private func render(){
+    private func render() {
         self.addSubview(roomsNameTextField)
         roomsNameTextField.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
