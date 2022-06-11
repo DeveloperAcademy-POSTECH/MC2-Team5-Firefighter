@@ -27,10 +27,10 @@ class DetailWaitViewController: BaseViewController {
         let label = UILabel()
         // MARK: enum으로 만드는게 좋아보임
         label.text = "대기중"
-        label.backgroundColor = .waitBackgroundColor
+        label.backgroundColor = .badgeBeige
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 11
-        label.textColor = .waitTextColor
+        label.textColor = .darkGrey004
         label.font = UIFont(name: AppFontName.regular.rawValue, size: 13)
         label.textAlignment = .center
         return label
@@ -38,7 +38,7 @@ class DetailWaitViewController: BaseViewController {
 
     private lazy var durationView: UIView = {
         let durationView = UIView()
-        durationView.backgroundColor = .durationBackgroundColor
+        durationView.backgroundColor = .durationBannerRed.withAlphaComponent(0.65)
         durationView.layer.cornerRadius = 8
         durationView.addSubview(durationText)
         durationView.addSubview(durationDateText)
@@ -48,7 +48,7 @@ class DetailWaitViewController: BaseViewController {
     private let durationText: UILabel = {
         let durationText = UILabel()
         durationText.text = "진행 기간"
-        durationText.textColor = .grey4
+        durationText.textColor = .grey004
         durationText.font = UIFont(name: AppFontName.regular.rawValue, size: 14)
         return durationText
     }()
@@ -100,7 +100,7 @@ class DetailWaitViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .backgroundColor
+        self.view.backgroundColor = .darkGrey002
         listTable.delegate = self
         listTable.dataSource = self
         attribute()
@@ -182,7 +182,7 @@ extension DetailWaitViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = listTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
         cell.textLabel?.text = userArr[indexPath.row]
         cell.textLabel?.font = UIFont(name: AppFontName.regular.rawValue, size: 17)
-        cell.backgroundColor = .grey3
+        cell.backgroundColor = .darkGrey001
         cell.selectionStyle = .none
         return cell
     }

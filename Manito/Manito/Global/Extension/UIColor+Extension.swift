@@ -19,6 +19,10 @@ extension UIColor {
         return UIColor(hex: "#A4291F")
     }
     
+    static var durationBannerRed: UIColor {
+        return UIColor(hex: "#C84842")
+    }
+    
     // MARK: - grey
     
     static var backgroundGrey: UIColor {
@@ -118,29 +122,6 @@ extension UIColor {
     
     static var characterPink: UIColor {
         return UIColor(hex: "#E46593")
-    }
-    static var waitBackgroundColor: UIColor {
-        return UIColor(hex: "#FFDBBA")
-    }
-    static var waitTextColor: UIColor {
-        return UIColor(hex: "#616161")
-    }
-    // MARK: 변수명 뭘로 하는게 좋을까요
-    static var grey4: UIColor {
-        return UIColor(hex: "#DFDFDF")
-    }
-    static var backgroundColor: UIColor {
-        return UIColor(hex: "#242424")
-    }
-    static var durationBackgroundColor: UIColor {
-        return UIColor(hex: "#8F3B38")
-    }
-    static var copyCodeTextColor: UIColor {
-        return UIColor(hex: "#3472EB")
-    }
-    
-    static var grey3: UIColor {
-        return UIColor(hex: "3D3D3D")
     }
 }
 
