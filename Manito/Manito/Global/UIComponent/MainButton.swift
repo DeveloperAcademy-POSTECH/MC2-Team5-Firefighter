@@ -30,15 +30,15 @@ final class MainButton: UIButton {
      }
     
     var title: String? {
-        didSet {
-            setupAttribute()
-        }
+        didSet { setupAttribute() }
     }
     
     var isDisabled: Bool = false {
-        didSet {
-            setupAttribute()
-        }
+        didSet { setupAttribute() }
+    }
+    
+    var hasShadow: Bool = false {
+        didSet { setupShadow() }
     }
 
     // MARK: - init
@@ -76,5 +76,9 @@ final class MainButton: UIButton {
         backgroundColor = isDisabled ? .mainRed.withAlphaComponent(0.3) : .mainRed
         setTitleColor(isDisabled ? .white.withAlphaComponent(0.3) : .white, for: .normal)
         isEnabled = !isDisabled
+    }
+    
+    private func setupShadow() {
+        makeShadow(color: .shadowRed, opacity: 1.0, offset: CGSize(width: 0, height: 6), radius: 1)
     }
 }
