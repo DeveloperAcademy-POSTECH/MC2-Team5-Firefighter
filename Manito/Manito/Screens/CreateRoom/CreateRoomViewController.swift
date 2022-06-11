@@ -22,19 +22,20 @@ class CreateRoomViewController: BaseViewController {
     lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
+        button.setImage(ImageLiterals.xmark, for: .normal)
         button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         return button
     }()
     
     lazy var nextButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.setTitle("다음", for: .normal)
-        btn.titleLabel?.font = .font(.regular, ofSize: 20)
-        btn.tintColor = .white
-        btn.backgroundColor = UIColor.mainRed
-        btn.layer.cornerRadius = 30
-        btn.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
-        return btn
+        let button = UIButton(type: .system)
+        button.setTitle("다음", for: .normal)
+        button.titleLabel?.font = .font(.regular, ofSize: 20)
+        button.tintColor = .white
+        button.backgroundColor = UIColor.mainRed
+        button.layer.cornerRadius = 30
+        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        return button
     }()
     
     private let nameView = InputNameView()
