@@ -45,7 +45,7 @@ class DetailWaitViewController: BaseViewController {
 
     private lazy var durationView: UIView = {
         let durationView = UIView()
-        durationView.backgroundColor = .durationBannerRed.withAlphaComponent(0.65)
+        durationView.backgroundColor = .darkRed.withAlphaComponent(0.65)
         durationView.layer.cornerRadius = 8
         return durationView
     }()
