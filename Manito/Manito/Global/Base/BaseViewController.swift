@@ -9,10 +9,24 @@ import UIKit
 
 class BaseViewController: UIViewController {
     
+    // MARK: - property
+    
+    private lazy var backButton: UIButton = {
+        let button = BackButton()
+        let buttonAction = UIAction { _ in
+            self.navigationController?.popViewController(animated: true)
+        }
+        button.addAction(buttonAction, for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         render()
         configUI()
+        setupNavigationBar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -26,6 +40,13 @@ class BaseViewController: UIViewController {
     
     func configUI() {
         // View Configuration
+    }
+    
+    func setupNavigationBar() {
+        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
+        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
+        
+        navigationItem.leftBarButtonItem = backButton
     }
     
     // MARK: - helper func
