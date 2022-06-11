@@ -21,6 +21,12 @@ final class LetterViewController: BaseViewController {
         
     }
     
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        
+        title = "쪽지함"
+    }
+    
     // MARK: - func
     
 }

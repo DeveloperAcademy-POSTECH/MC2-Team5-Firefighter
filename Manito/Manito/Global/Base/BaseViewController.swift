@@ -43,8 +43,19 @@ class BaseViewController: UIViewController {
     }
     
     func setupNavigationBar() {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        let appearance = UINavigationBarAppearance()
+        let font = UIFont.font(.regular, ofSize: 14)
         let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
         let backButton = makeBarButtonItem(with: leftOffsetBackButton)
+        
+        appearance.titleTextAttributes = [.font: font]
+        appearance.shadowColor = .clear
+//        appearance.backgroundColor = backgroundColor
+        
+        navigationBar.standardAppearance = appearance
+        navigationBar.compactAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
         
         navigationItem.leftBarButtonItem = backButton
     }
