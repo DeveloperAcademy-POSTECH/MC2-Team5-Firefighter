@@ -13,7 +13,7 @@ final class BackButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
-        config()
+        configUI()
     }
     
     required init?(coder: NSCoder) {
@@ -22,7 +22,7 @@ final class BackButton: UIButton {
     
     // MARK: - func
     
-    private func config() {
+    private func configUI() {
         self.setImage(ImageLiterals.icBack, for: .normal)
         self.tintColor = .white
     }
