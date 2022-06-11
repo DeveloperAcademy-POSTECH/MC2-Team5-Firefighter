@@ -22,7 +22,7 @@ extension UIColor {
     // MARK: - grey
     
     static var backgroundGrey: UIColor {
-        return UIColor(hex: "#3D3D3D")
+        return UIColor(hex: "#242424")
     }
     
     static var subBackgroundGrey: UIColor {
