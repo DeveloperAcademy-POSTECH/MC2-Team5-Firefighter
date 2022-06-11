@@ -1,5 +1,5 @@
 //
-//  LetterCollectionReusableView.swift
+//  LetterHeaderView.swift
 //  Manito
 //
 //  Created by SHIN YOON AH on 2022/06/11.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class LetterCollectionReusableView: UICollectionReusableView {
+final class LetterHeaderView: UICollectionReusableView {
     
     private enum LetterState: String, CaseIterable {
         case received = "받은 쪽지"

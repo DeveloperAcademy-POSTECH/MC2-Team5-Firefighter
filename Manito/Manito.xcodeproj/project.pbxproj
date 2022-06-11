@@ -37,7 +37,7 @@
 		B5F525292851A2A400614FF7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525282851A2A400614FF7 /* Logger.swift */; };
 		B5F5252F2852F69700614FF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B5F5252E2852F69700614FF7 /* SnapKit */; };
 		B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253028545E4C00614FF7 /* BackButton.swift */; };
-		B5F5253528547F1900614FF7 /* LetterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253428547F1900614FF7 /* LetterCollectionReusableView.swift */; };
+		B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253428547F1900614FF7 /* LetterHeaderView.swift */; };
 		B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */; };
 		B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525382854871E00614FF7 /* SendLetterView.swift */; };
 /* End PBXBuildFile section */
@@ -74,7 +74,7 @@
 		B5F525252851A26D00614FF7 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
 		B5F525282851A2A400614FF7 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B5F5253028545E4C00614FF7 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
-		B5F5253428547F1900614FF7 /* LetterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCollectionReusableView.swift; sourceTree = "<group>"; };
+		B5F5253428547F1900614FF7 /* LetterHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterHeaderView.swift; sourceTree = "<group>"; };
 		B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5F525382854871E00614FF7 /* SendLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -301,7 +301,7 @@
 		B5F5253328547EE000614FF7 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
-				B5F5253428547F1900614FF7 /* LetterCollectionReusableView.swift */,
+				B5F5253428547F1900614FF7 /* LetterHeaderView.swift */,
 				B5F525382854871E00614FF7 /* SendLetterView.swift */,
 			);
 			path = UIComponent;
@@ -410,7 +410,7 @@
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
 				B5F525222851A24100614FF7 /* UITableView+Extension.swift in Sources */,
-				B5F5253528547F1900614FF7 /* LetterCollectionReusableView.swift in Sources */,
+				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
 				B5F525242851A25400614FF7 /* UICollectionView+Extension.swift in Sources */,
 			);

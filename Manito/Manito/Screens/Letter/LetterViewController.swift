@@ -37,9 +37,9 @@ final class LetterViewController: BaseViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(cell: LetterCollectionViewCell.self,
                                 forCellWithReuseIdentifier: LetterCollectionViewCell.className)
-        collectionView.register(LetterCollectionReusableView.self,
+        collectionView.register(LetterHeaderView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: LetterCollectionReusableView.className)
+                                withReuseIdentifier: LetterHeaderView.className)
         return collectionView
     }()
     private let sendLetterView = SendLetterView()
@@ -85,7 +85,7 @@ extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LetterCollectionReusableView.className, for: indexPath) as? LetterCollectionReusableView else { assert(false, "do not have reusable view") }
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LetterHeaderView.className, for: indexPath) as? LetterHeaderView else { assert(false, "do not have reusable view") }
             return headerView
         default:
             assert(false, "do not use footer")
