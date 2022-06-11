@@ -40,7 +40,7 @@ class BaseViewController: UIViewController {
     }
     
     func configUI() {
-        // View Configuration
+        view.backgroundColor = .backgroundGrey
     }
     
     func setupNavigationBar() {
@@ -52,7 +52,7 @@ class BaseViewController: UIViewController {
         appearance.titleTextAttributes = [.font: font]
         appearance.largeTitleTextAttributes = [.font: largeFont]
         appearance.shadowColor = .clear
-//        appearance.backgroundColor = backgroundColor
+        appearance.backgroundColor = .backgroundGrey
         
         navigationBar.standardAppearance = appearance
         navigationBar.compactAppearance = appearance

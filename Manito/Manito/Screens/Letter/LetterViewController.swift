@@ -23,11 +23,11 @@ final class LetterViewController: BaseViewController {
                                                  LetterState.sent.rawValue])
         let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-
+        
         control.setTitleTextAttributes(normalTextAttributes, for: .normal)
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
-        control.backgroundColor = .black
+        control.backgroundColor = .darkGrey003
         control.selectedSegmentIndex = 0
         
         return control
