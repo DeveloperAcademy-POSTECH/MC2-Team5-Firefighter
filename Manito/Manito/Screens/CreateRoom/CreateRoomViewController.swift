@@ -41,6 +41,7 @@ class CreateRoomViewController: BaseViewController {
             NSAttributedString.Key.font : UIFont(name: AppFontName.regular.rawValue, size: 18)!
         ]
         tf.attributedPlaceholder = NSAttributedString(string: "방 이름을 적어주세요", attributes:attributes)
+        
         tf.layer.cornerRadius = 10
         tf.layer.masksToBounds = true
         tf.layer.borderWidth = 1
@@ -81,7 +82,7 @@ class CreateRoomViewController: BaseViewController {
         return label
     }()
     
-    let backView: UIView = {
+    let personBackView: UIView = {
         let view = UIView()
         view.backgroundColor = .darkGray
         view.layer.borderWidth = 1
@@ -127,6 +128,36 @@ class CreateRoomViewController: BaseViewController {
         return label
     }()
     
+    // 방 기한 설정 뷰
+    lazy var dateView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .green
+        return view
+    }()
+    
+    let dateViewLabel: UILabel = {
+        let label = UILabel()
+        label.text = "활동 기간을 설정해 주세요"
+        label.font = .font(.regular, ofSize: 18)
+        return label
+    }()
+    
+    private let dateBackView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGray
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.strokeYello.cgColor
+        view.layer.cornerRadius = 10
+        return view
+    }()
+    
+    private var dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "2022.06.06 ~ 2022.06.11"
+        label.font = .font(.regular, ofSize: 20)
+        return label
+    }()
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,13 +188,6 @@ class CreateRoomViewController: BaseViewController {
         
         configureRoomsTitle()
         
-        view.addSubview(nextButton)
-        nextButton.snp.makeConstraints {
-            $0.left.right.equalTo(view).inset(16)
-            $0.bottom.equalTo(view).inset(57)
-            $0.height.equalTo(60)
-        }
-        
         view.addSubview(personView)
         personView.snp.makeConstraints {
             $0.top.equalTo(titleLabel).inset(66)
@@ -172,6 +196,23 @@ class CreateRoomViewController: BaseViewController {
         }
         
         configureRoomsPerson()
+        
+        view.addSubview(dateView)
+        dateView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel).inset(66)
+            $0.left.right.equalTo(view).inset(16)
+            $0.bottom.equalTo(view).inset(200)
+        }
+        
+        configureRoomsDate()
+        
+        view.addSubview(nextButton)
+        nextButton.snp.makeConstraints {
+            $0.left.right.equalTo(view).inset(16)
+            $0.bottom.equalTo(view).inset(57)
+            $0.height.equalTo(60)
+        }
+        
     }
     
     override func configUI() {
@@ -217,23 +258,22 @@ class CreateRoomViewController: BaseViewController {
         peronsViewLabel.snp.makeConstraints {
             $0.top.equalTo(personView)
             $0.left.right.equalTo(personView)
-            
         }
         
-        personView.addSubview(backView)
-        backView.snp.makeConstraints {
+        personView.addSubview(personBackView)
+        personBackView.snp.makeConstraints {
             $0.top.equalTo(peronsViewLabel.snp.bottom).inset(-36)
             $0.left.right.equalTo(personView)
             $0.height.equalTo(140)
         }
         
-        backView.addSubview(personLabel)
+        personBackView.addSubview(personLabel)
         personLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()
         }
         
-        backView.addSubview(imageView)
+        personBackView.addSubview(imageView)
         imageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.right.equalTo(personLabel.snp.left)
@@ -242,7 +282,7 @@ class CreateRoomViewController: BaseViewController {
         
         personView.addSubview(personSlider)
         personSlider.snp.makeConstraints {
-            $0.top.equalTo(backView.snp.bottom).inset(-54)
+            $0.top.equalTo(personBackView.snp.bottom).inset(-54)
             $0.left.equalTo(40)
             $0.right.equalTo(-50)
         }
@@ -258,8 +298,30 @@ class CreateRoomViewController: BaseViewController {
             $0.left.equalTo(personSlider.snp.right).offset(5)
             $0.centerY.equalTo(personSlider.snp.centerY)
         }
+    }
+    
+    func configureRoomsDate(){
         
+        dateView.addSubview(dateViewLabel)
+        dateViewLabel.snp.makeConstraints {
+            $0.top.equalTo(dateView)
+            $0.left.right.equalTo(dateView)
+        }
         
+        dateView.addSubview(dateBackView)
+        dateBackView.snp.makeConstraints {
+            $0.top.equalTo(peronsViewLabel.snp.bottom).inset(-36)
+            $0.left.right.equalTo(dateView)
+            $0.height.equalTo(60)
+        }
+        
+        dateBackView.addSubview(dateLabel)
+        dateLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview()
+            
+        }
+
     }
     
     // MARK: - Navigation
