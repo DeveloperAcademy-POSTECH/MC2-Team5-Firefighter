@@ -105,8 +105,36 @@ class DetailWaitViewController: BaseViewController {
     }()
 
     @objc func copyInviteCode() {
-        // TODO: 코드 복사 토스트형식 만들기
-        print("코드 복사 완료 !")
+        UIPasteboard.general.string = "초대코드"
+        self.showToast(message: "코드 복사 완료!")
+    }
+
+    func showToast(message: String) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = .grey003
+        toastLabel.textColor = .black
+        toastLabel.font = UIFont(name: AppFontName.regular.rawValue, size: 14)
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
+        toastLabel.alpha = 0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        self.view.addSubview(toastLabel)
+        toastLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(150)
+            $0.width.equalTo(140)
+            $0.height.equalTo(40)
+        }
+        UIView.animate(withDuration: 1.5, animations: {
+            toastLabel.alpha = 0.8
+        }, completion: { isCompleted in
+                UIView.animate(withDuration: 1.5, animations: {
+                    toastLabel.alpha = 0
+                }, completion: { isCompleted in
+                        toastLabel.removeFromSuperview()
+                    })
+            })
     }
 
     override func viewDidLoad() {
