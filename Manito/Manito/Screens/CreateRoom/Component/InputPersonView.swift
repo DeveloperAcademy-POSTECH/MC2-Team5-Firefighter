@@ -82,7 +82,7 @@ class InputPersonView: UIView {
     }
     
     // MARK: - Config
-    func render(){
+    private func render(){
         
         self.addSubview(peronsViewLabel)
         peronsViewLabel.snp.makeConstraints {

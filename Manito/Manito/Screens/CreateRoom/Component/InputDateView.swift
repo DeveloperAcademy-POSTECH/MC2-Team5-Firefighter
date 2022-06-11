@@ -52,7 +52,7 @@ class InputDateView: UIView {
     }
     
     // MARK: - Config
-    func render(){
+    private func render(){
         
         self.addSubview(dateViewLabel)
         dateViewLabel.snp.makeConstraints {
