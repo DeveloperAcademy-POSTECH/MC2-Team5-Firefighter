@@ -11,7 +11,7 @@ import SnapKit
 class CreateRoomViewController: BaseViewController {
 
     // MARK: - Property
-    lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "방 생성하기"
         label.font = .font(.regular, ofSize: 34)
@@ -27,13 +27,13 @@ class CreateRoomViewController: BaseViewController {
     }()
     
     // 방 제목입력 뷰
-    lazy var createView : UIView = {
+    private let createView : UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = .backgroundGrey
         return view
     }()
     
-    lazy var roomsNameTextField: UITextField = {
+    private let roomsNameTextField: UITextField = {
         let tf = UITextField()
         tf.backgroundColor = UIColor.subBackgroundGrey
         let attributes = [
@@ -50,7 +50,7 @@ class CreateRoomViewController: BaseViewController {
         return tf
     }()
     
-    lazy var roomsTextLimit : UILabel = {
+    private let roomsTextLimit : UILabel = {
         let label = UILabel()
         label.text = "0/8"
         label.font = .font(.regular, ofSize: 20)
@@ -69,20 +69,20 @@ class CreateRoomViewController: BaseViewController {
     }()
     
     // 방 인원수 입력 뷰
-    lazy var personView : UIView = {
+    private let personView : UIView = {
         let view = UIView()
-        view.backgroundColor = .blue
+        view.backgroundColor = .backgroundGrey
         return view
     }()
     
-    let peronsViewLabel: UILabel = {
+    private let peronsViewLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 참여 인원을 설정해 주세요"
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
     
-    let personBackView: UIView = {
+    private let personBackView: UIView = {
         let view = UIView()
         view.backgroundColor = .darkGray
         view.layer.borderWidth = 1
@@ -91,14 +91,14 @@ class CreateRoomViewController: BaseViewController {
         return view
     }()
     
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(systemName: "heart")
-        iv.backgroundColor = .mainRed
+        iv.backgroundColor = .darkGray
         return iv
     }()
     
-    lazy var personLabel: UILabel = {
+    private var personLabel: UILabel = {
         let label = UILabel()
         label.text = "X 5인"
         label.font = .font(.regular, ofSize: 24)
@@ -129,13 +129,13 @@ class CreateRoomViewController: BaseViewController {
     }()
     
     // 방 기한 설정 뷰
-    lazy var dateView : UIView = {
+    private let dateView : UIView = {
         let view = UIView()
-        view.backgroundColor = .green
+        view.backgroundColor = .backgroundGrey
         return view
     }()
     
-    let dateViewLabel: UILabel = {
+    private let dateViewLabel: UILabel = {
         let label = UILabel()
         label.text = "활동 기간을 설정해 주세요"
         label.font = .font(.regular, ofSize: 18)
@@ -175,7 +175,7 @@ class CreateRoomViewController: BaseViewController {
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
-            $0.right.equalTo(view).inset(16)
+            $0.right.equalTo(view)
             $0.width.height.equalTo(44)
         }
 
@@ -203,7 +203,7 @@ class CreateRoomViewController: BaseViewController {
             $0.left.right.equalTo(view).inset(16)
             $0.bottom.equalTo(view).inset(200)
         }
-        
+
         configureRoomsDate()
         
         view.addSubview(nextButton)
@@ -217,9 +217,14 @@ class CreateRoomViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
+        view.backgroundColor = .backgroundGrey
     }
     
     // MARK: - Selectors
+    @objc func didTapDateBackView(_ gesture: UITapGestureRecognizer){
+        print("gesture")
+    }
+    
     @objc func didSlider(_ slider: UISlider){
         let value = slider.value
         personLabel.text = "X \(Int(value))인"
@@ -319,8 +324,12 @@ class CreateRoomViewController: BaseViewController {
         dateLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview()
-            
         }
+        
+        let gestureTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapDateBackView(_:)))
+        gestureTapRecognizer.numberOfTapsRequired = 1
+        gestureTapRecognizer.numberOfTouchesRequired = 1
+        dateView.addGestureRecognizer(gestureTapRecognizer)
 
     }
     
