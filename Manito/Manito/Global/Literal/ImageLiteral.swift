@@ -13,6 +13,8 @@ enum ImageLiterals {
     
     static var icBack: UIImage { .load(systemName: "chevron.backward")  }
     
+    static var xmark: UIImage { .load(systemName: "xmark.circle.fill")}
+    
     // MARK: - image
     
 }
