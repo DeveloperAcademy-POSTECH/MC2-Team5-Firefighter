@@ -10,6 +10,9 @@ import SnapKit
 
 class DetailWaitViewController: BaseViewController {
     let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
+    var canStart = false
+    var maxUser = 15
+    lazy var userCount = userArr.count
 
     private func attribute() {
         listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -69,9 +72,9 @@ class DetailWaitViewController: BaseViewController {
         return label
     }()
 
-    private let comeInText: UILabel = {
+    private lazy var comeInText: UILabel = {
         let label = UILabel()
-        label.text = "1/15"
+        label.text = "\(userCount)/\(maxUser)"
         label.textColor = .white
         label.font = UIFont(name: AppFontName.regular.rawValue, size: 14)
         return label
@@ -80,6 +83,7 @@ class DetailWaitViewController: BaseViewController {
     private let copyButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("방 코드 복사", for: .normal)
+        button.setTitleColor(.subBlue, for: .normal)
         button.titleLabel?.font = UIFont(name: AppFontName.regular.rawValue, size: 16)
         button.addTarget(self, action: #selector(copyInviteCode), for: .touchUpInside)
         return button
@@ -91,6 +95,13 @@ class DetailWaitViewController: BaseViewController {
         table.layer.cornerRadius = 10
         table.isScrollEnabled = false
         return table
+    }()
+
+    private let startButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.titleLabel?.font = UIFont(name: AppFontName.regular.rawValue, size: 20)
+        button.layer.cornerRadius = 30
+        return button
     }()
 
     @objc func copyInviteCode() {
@@ -169,6 +180,25 @@ class DetailWaitViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(tableHeight)
+        }
+
+        view.addSubview(startButton)
+        startButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(65)
+            $0.height.equalTo(60)
+        }
+    }
+
+    override func configUI() {
+        if canStart {
+            startButton.setTitle("마니또 시작", for: .normal)
+            startButton.setTitleColor(.white, for: .normal)
+            startButton.backgroundColor = .mainRed
+        } else {
+            startButton.setTitle("시작을 기다리는 중...", for: .normal)
+            startButton.setTitleColor(.white.withAlphaComponent(0.3), for: .normal)
+            startButton.backgroundColor = .mainRed.withAlphaComponent(0.3)
         }
     }
 }
