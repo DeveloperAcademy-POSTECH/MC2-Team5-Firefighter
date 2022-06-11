@@ -56,8 +56,7 @@ class InputDateView: UIView {
         
         self.addSubview(dateViewLabel)
         dateViewLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
         }
         
         self.addSubview(dateBackView)
