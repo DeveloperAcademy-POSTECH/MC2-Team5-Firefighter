@@ -9,6 +9,12 @@ import UIKit
 import SnapKit
 
 class DetailWaitViewController: BaseViewController {
+    let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
+
+    private func attribute() {
+        listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+
     private let roomTitle: UILabel = {
         let label = UILabel()
         label.text = "명예소방관"
@@ -57,7 +63,7 @@ class DetailWaitViewController: BaseViewController {
 
     private let togetherFriendText: UILabel = {
         let label = UILabel()
-        label.text = "함께 하는 친구들"
+        label.text = "함께하는 친구들"
         label.textColor = .white
         label.font = UIFont(name: AppFontName.regular.rawValue, size: 16)
         return label
@@ -78,7 +84,15 @@ class DetailWaitViewController: BaseViewController {
         button.addTarget(self, action: #selector(copyInviteCode), for: .touchUpInside)
         return button
     }()
-    
+
+    private let listTable: UITableView = {
+        let table = UITableView()
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.layer.cornerRadius = 10
+        table.isScrollEnabled = false
+        return table
+    }()
+
     @objc func copyInviteCode() {
         // TODO: 코드 복사 토스트형식 만들기
         print("코드 복사 완료 !")
@@ -87,6 +101,9 @@ class DetailWaitViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .backgroundColor
+        listTable.delegate = self
+        listTable.dataSource = self
+        attribute()
         render()
         // Do any additional setup after loading the view.
     }
@@ -140,5 +157,37 @@ class DetailWaitViewController: BaseViewController {
             $0.trailing.equalToSuperview().inset(16)
             $0.centerY.equalTo(togetherFriendText.snp.centerY)
         }
+
+        view.addSubview(listTable)
+        var tableHeight = userArr.count * 44
+        if tableHeight > 400 {
+            tableHeight = 400
+            listTable.isScrollEnabled = true
+        }
+        listTable.snp.makeConstraints {
+            $0.top.equalTo(togetherFriendText.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(tableHeight)
+        }
+    }
+}
+
+extension DetailWaitViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return userArr.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = listTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
+        cell.textLabel?.text = userArr[indexPath.row]
+        cell.textLabel?.font = UIFont(name: AppFontName.regular.rawValue, size: 17)
+        cell.backgroundColor = .grey3
+        cell.selectionStyle = .none
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
     }
 }
