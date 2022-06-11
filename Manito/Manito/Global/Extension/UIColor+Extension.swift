@@ -30,6 +30,10 @@ extension UIColor {
     static var copyCodeTextColor: UIColor {
         return UIColor(hex: "#3472EB")
     }
+    
+    static var grey3: UIColor {
+        return UIColor(hex: "3D3D3D")
+    }
 }
 
 extension UIColor {
