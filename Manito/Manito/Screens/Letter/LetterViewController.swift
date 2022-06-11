@@ -7,23 +7,32 @@
 
 import UIKit
 
-class LetterViewController: UIViewController {
+import SnapKit
 
+final class LetterViewController: BaseViewController {
+    
+    // MARK: - property
+    
+    private let backButton: UIButton = {
+        let button = UIButton(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
+        button.setImage(ImageLiterals.icBack, for: .normal)
+        button.tintColor = .white
+        return button
+    }()
+
+    // MARK: - life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupNavigationBar()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - func
+    
+    private func setupNavigationBar() {
+        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
+        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
+        
+        navigationItem.leftBarButtonItem = backButton
     }
-    */
-
 }
