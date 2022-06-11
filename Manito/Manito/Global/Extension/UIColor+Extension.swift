@@ -119,6 +119,10 @@ extension UIColor {
     static var characterPink: UIColor {
         return UIColor(hex: "#E46593")
     }
+    
+    static var strokeYello: UIColor {
+        return UIColor(hex: "#EAB33D")
+    }
 }
 
 extension UIColor {

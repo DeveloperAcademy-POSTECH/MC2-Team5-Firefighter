@@ -26,6 +26,7 @@ class CreateRoomViewController: BaseViewController {
         return btn
     }()
     
+    // 방 제목입력 뷰
     lazy var createView : UIView = {
         let view = UIView()
         view.backgroundColor = .red
@@ -66,6 +67,29 @@ class CreateRoomViewController: BaseViewController {
         return btn
     }()
     
+    // 방 인원수 입력 뷰
+    lazy var personView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .blue
+        return view
+    }()
+    
+    let peronsViewLabel: UILabel = {
+        let label = UILabel()
+        label.text = "최대 참여 인원을 설정해 주세요"
+        label.font = .font(.regular, ofSize: 18)
+        return label
+    }()
+    
+    let backView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGray
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.strokeYello.cgColor
+        view.layer.cornerRadius = 10
+        return view
+    }()
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,6 +126,15 @@ class CreateRoomViewController: BaseViewController {
             $0.bottom.equalTo(view).inset(57)
             $0.height.equalTo(60)
         }
+        
+        view.addSubview(personView)
+        personView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel).inset(66)
+            $0.left.right.equalTo(view).inset(16)
+            $0.bottom.equalTo(view).inset(200)
+        }
+        
+        configureRoomsPerson()
     }
     
     override func configUI() {
@@ -134,6 +167,26 @@ class CreateRoomViewController: BaseViewController {
             $0.top.equalTo(roomsNameTextField.snp.bottom).inset(-10)
             $0.right.equalTo(createView)
         }
+    }
+    
+    func configureRoomsPerson(){
+        
+        personView.addSubview(peronsViewLabel)
+        peronsViewLabel.snp.makeConstraints {
+            $0.top.equalTo(personView)
+            $0.left.right.equalTo(personView)
+            
+        }
+        
+        personView.addSubview(backView)
+        backView.snp.makeConstraints {
+            $0.top.equalTo(peronsViewLabel.snp.bottom).inset(-36)
+            $0.left.right.equalTo(personView)
+            $0.height.equalTo(140)
+        }
+        
+        
+        
     }
     
     // MARK: - Navigation
