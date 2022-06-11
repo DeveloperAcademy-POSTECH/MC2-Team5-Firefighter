@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 class InputNameView: UIView {
     
     // MARK: - Property

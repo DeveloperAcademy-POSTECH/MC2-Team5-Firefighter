@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 class InputDateView: UIView {
     
     // MARK: - Property
