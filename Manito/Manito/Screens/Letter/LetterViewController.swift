@@ -23,7 +23,9 @@ final class LetterViewController: BaseViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        
+  
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .automatic
         title = "쪽지함"
     }
     

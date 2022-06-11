@@ -46,10 +46,13 @@ class BaseViewController: UIViewController {
         guard let navigationBar = navigationController?.navigationBar else { return }
         let appearance = UINavigationBarAppearance()
         let font = UIFont.font(.regular, ofSize: 14)
+        let largeFont = UIFont.font(.regular, ofSize: 34)
+      
         let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
         let backButton = makeBarButtonItem(with: leftOffsetBackButton)
         
         appearance.titleTextAttributes = [.font: font]
+        appearance.largeTitleTextAttributes = [.font: largeFont]
         appearance.shadowColor = .clear
 //        appearance.backgroundColor = backgroundColor
         
