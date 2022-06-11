@@ -35,7 +35,8 @@ final class LetterCollectionReusableView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()g
+        render()
+        configUI()
     }
     
     required init?(coder: NSCoder) {
@@ -51,5 +52,9 @@ final class LetterCollectionReusableView: UICollectionReusableView {
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(40)
         }
+    }
+    
+    private func configUI() {
+        backgroundColor = .backgroundGrey
     }
 }

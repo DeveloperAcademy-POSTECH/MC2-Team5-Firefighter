@@ -13,6 +13,9 @@ final class LetterViewController: BaseViewController {
     
     private enum Size {
         static let headerHeight: CGFloat = 70.0
+        static let collectionSpacing: CGFloat = 16.0
+        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - collectionSpacing * 2
+        static let collectionInset = UIEdgeInsets(top: 18, left: collectionSpacing, bottom: collectionSpacing, right: 18)
     }
     
     // MARK: - property
@@ -20,6 +23,10 @@ final class LetterViewController: BaseViewController {
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
+        flowLayout.sectionInset = Size.collectionInset
+        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: 100)
+        flowLayout.minimumLineSpacing = 33
+        flowLayout.sectionHeadersPinToVisibleBounds = true
         return flowLayout
     }()
     private lazy var listCollectionView: UICollectionView = {
@@ -27,6 +34,9 @@ final class LetterViewController: BaseViewController {
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(cell: LetterCollectionViewCell.self,
+                                forCellWithReuseIdentifier: LetterCollectionViewCell.className)
         collectionView.register(LetterCollectionReusableView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: LetterCollectionReusableView.className)
@@ -58,11 +68,12 @@ final class LetterViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
