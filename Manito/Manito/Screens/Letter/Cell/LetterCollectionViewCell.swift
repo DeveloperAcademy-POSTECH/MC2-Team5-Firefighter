@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LetterCollectionViewCell: UICollectionViewCell {
+final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - property
     
@@ -15,10 +15,14 @@ final class LetterCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .mainRed
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func configUI() {
+        backgroundColor = .mainRed
+        makeBorderLayer(color: .white.withAlphaComponent(0.5))
     }
 }
