@@ -90,6 +90,40 @@ class CreateRoomViewController: BaseViewController {
         return view
     }()
     
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(systemName: "heart")
+        iv.backgroundColor = .mainRed
+        return iv
+    }()
+    
+    lazy var personLabel: UILabel = {
+        let label = UILabel()
+        label.text = "X 8인"
+        label.font = .font(.regular, ofSize: 24)
+        return label
+    }()
+    
+    lazy var personSlider: UISlider = {
+        let slider = UISlider()
+        slider.value = 1
+        return slider
+    }()
+    
+    private var minLabel: UILabel = {
+        let label = UILabel()
+        label.text = "5인"
+        label.font = .font(.regular, ofSize: 16)
+        return label
+    }()
+    
+    private var maxLabel: UILabel = {
+        let label = UILabel()
+        label.text = "15인"
+        label.font = .font(.regular, ofSize: 16)
+        return label
+    }()
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -185,6 +219,37 @@ class CreateRoomViewController: BaseViewController {
             $0.height.equalTo(140)
         }
         
+        backView.addSubview(personLabel)
+        personLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview().offset(20)
+            $0.centerY.equalToSuperview()
+        }
+        
+        backView.addSubview(imageView)
+        imageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.right.equalTo(personLabel.snp.left)
+            $0.width.height.equalTo(60)
+        }
+        
+        personView.addSubview(personSlider)
+        personSlider.snp.makeConstraints {
+            $0.top.equalTo(backView.snp.bottom).inset(-54)
+            $0.left.equalTo(40)
+            $0.right.equalTo(-50)
+        }
+        
+        personView.addSubview(minLabel)
+        minLabel.snp.makeConstraints {
+            $0.right.equalTo(personSlider.snp.left).offset(-5)
+            $0.centerY.equalTo(personSlider.snp.centerY)
+        }
+        
+        personView.addSubview(maxLabel)
+        maxLabel.snp.makeConstraints {
+            $0.left.equalTo(personSlider.snp.right).offset(5)
+            $0.centerY.equalTo(personSlider.snp.centerY)
+        }
         
         
     }
