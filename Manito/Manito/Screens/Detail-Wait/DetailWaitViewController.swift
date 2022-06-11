@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import SnapKit
 
 class DetailWaitViewController: BaseViewController {
@@ -13,22 +14,20 @@ class DetailWaitViewController: BaseViewController {
     var canStart = false
     var maxUser = 15
     lazy var userCount = userArr.count
-    
+
     private enum StartStatus: String {
         case waiting = "대기중"
         case starting = "진행중"
         case complete = "완료"
     }
 
-    private func attribute() {
-        listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    }
+    // MARK: - property
 
     private let roomTitle: UILabel = {
         let label = UILabel()
         label.text = "명예소방관"
         label.textColor = .white
-        label.font = UIFont(name: AppFontName.regular.rawValue, size: 34)
+        label.font = .font(.regular, ofSize: 34)
         return label
     }()
 
@@ -39,7 +38,7 @@ class DetailWaitViewController: BaseViewController {
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 11
         label.textColor = .darkGrey004
-        label.font = UIFont(name: AppFontName.regular.rawValue, size: 13)
+        label.font = .font(.regular, ofSize: 13)
         label.textAlignment = .center
         return label
     }()
@@ -48,8 +47,6 @@ class DetailWaitViewController: BaseViewController {
         let durationView = UIView()
         durationView.backgroundColor = .durationBannerRed.withAlphaComponent(0.65)
         durationView.layer.cornerRadius = 8
-        durationView.addSubview(durationText)
-        durationView.addSubview(durationDateText)
         return durationView
     }()
 
@@ -57,7 +54,7 @@ class DetailWaitViewController: BaseViewController {
         let durationText = UILabel()
         durationText.text = "진행 기간"
         durationText.textColor = .grey004
-        durationText.font = UIFont(name: AppFontName.regular.rawValue, size: 14)
+        durationText.font = .font(.regular, ofSize: 14)
         return durationText
     }()
 
@@ -65,7 +62,7 @@ class DetailWaitViewController: BaseViewController {
         let dateText = UILabel()
         dateText.text = "22.06.06 ~ 22.06.10"
         dateText.textColor = .white
-        dateText.font = UIFont(name: AppFontName.regular.rawValue, size: 18)
+        dateText.font = .font(.regular, ofSize: 18)
         return dateText
     }()
 
@@ -73,7 +70,7 @@ class DetailWaitViewController: BaseViewController {
         let label = UILabel()
         label.text = "함께하는 친구들"
         label.textColor = .white
-        label.font = UIFont(name: AppFontName.regular.rawValue, size: 16)
+        label.font = .font(.regular, ofSize: 16)
         return label
     }()
 
@@ -81,7 +78,7 @@ class DetailWaitViewController: BaseViewController {
         let label = UILabel()
         label.text = "\(userCount)/\(maxUser)"
         label.textColor = .white
-        label.font = UIFont(name: AppFontName.regular.rawValue, size: 14)
+        label.font = .font(.regular, ofSize: 14)
         return label
     }()
 
@@ -89,8 +86,8 @@ class DetailWaitViewController: BaseViewController {
         let button = UIButton(type: .system)
         button.setTitle("방 코드 복사", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
-        button.titleLabel?.font = UIFont(name: AppFontName.regular.rawValue, size: 16)
-        button.addTarget(self, action: #selector(copyInviteCode), for: .touchUpInside)
+        button.titleLabel?.font = .font(.regular, ofSize: 16)
+        button.addTarget(self, action: #selector(touchUpToShowToast), for: .touchUpInside)
         return button
     }()
 
@@ -104,68 +101,35 @@ class DetailWaitViewController: BaseViewController {
 
     private let startButton: UIButton = {
         let button = UIButton(type: .system)
-        button.titleLabel?.font = UIFont(name: AppFontName.regular.rawValue, size: 20)
+        button.titleLabel?.font = .font(.regular, ofSize: 20)
         button.layer.cornerRadius = 30
         return button
     }()
 
-    @objc func copyInviteCode() {
-        UIPasteboard.general.string = "초대코드"
-        self.showToast(message: "코드 복사 완료!")
-    }
-
-    func showToast(message: String) {
-        let toastLabel = UILabel()
-        toastLabel.backgroundColor = .grey003
-        toastLabel.textColor = .black
-        toastLabel.font = UIFont(name: AppFontName.regular.rawValue, size: 14)
-        toastLabel.textAlignment = .center
-        toastLabel.text = message
-        toastLabel.alpha = 0
-        toastLabel.layer.cornerRadius = 10
-        toastLabel.clipsToBounds = true
-        self.view.addSubview(toastLabel)
-        toastLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(150)
-            $0.width.equalTo(140)
-            $0.height.equalTo(40)
-        }
-        UIView.animate(withDuration: 1.5, animations: {
-            toastLabel.alpha = 0.8
-        }, completion: { isCompleted in
-                UIView.animate(withDuration: 1.5, animations: {
-                    toastLabel.alpha = 0
-                }, completion: { isCompleted in
-                        toastLabel.removeFromSuperview()
-                    })
-            })
-    }
+    // MARK: - life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .darkGrey002
-        listTable.delegate = self
-        listTable.dataSource = self
-        attribute()
-        render()
-        // Do any additional setup after loading the view.
+        setupDelegation()
     }
 
     override func render() {
         view.addSubview(roomTitle)
         roomTitle.snp.makeConstraints {
-            $0.left.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(16)
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
         }
 
         view.addSubview(startStauts)
         startStauts.snp.makeConstraints {
             $0.centerY.equalTo(roomTitle.snp.centerY)
-            $0.left.equalTo(roomTitle.snp.right).offset(10)
+            $0.leading.equalTo(roomTitle.snp.trailing).offset(10)
             $0.width.equalTo(66)
             $0.height.equalTo(23)
         }
+
+        durationView.addSubview(durationText)
+        durationView.addSubview(durationDateText)
 
         view.addSubview(durationView)
         durationView.snp.makeConstraints {
@@ -224,6 +188,8 @@ class DetailWaitViewController: BaseViewController {
     }
 
     override func configUI() {
+        view.backgroundColor = .darkGrey002
+
         if canStart {
             startButton.setTitle("마니또 시작", for: .normal)
             startButton.setTitleColor(.white, for: .normal)
@@ -234,9 +200,58 @@ class DetailWaitViewController: BaseViewController {
             startButton.backgroundColor = .mainRed.withAlphaComponent(0.3)
         }
     }
+
+    // MARK: - func
+
+    private func setupDelegation() {
+        listTable.delegate = self
+        listTable.dataSource = self
+        listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+
+    private func showToast(message: String) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = .grey003
+        toastLabel.textColor = .black
+        toastLabel.font = .font(.regular, ofSize: 14)
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
+        toastLabel.alpha = 0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        self.view.addSubview(toastLabel)
+        toastLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(150)
+            $0.width.equalTo(140)
+            $0.height.equalTo(40)
+        }
+        UIView.animate(withDuration: 1.5, animations: {
+            toastLabel.alpha = 0.8
+        }, completion: { isCompleted in
+                UIView.animate(withDuration: 1.5, animations: {
+                    toastLabel.alpha = 0
+                }, completion: { isCompleted in
+                        toastLabel.removeFromSuperview()
+                    })
+            })
+    }
+
+    // MARK: - selector
+
+    @objc func touchUpToShowToast() {
+        UIPasteboard.general.string = "초대코드"
+        self.showToast(message: "코드 복사 완료!")
+    }
 }
 
-extension DetailWaitViewController: UITableViewDelegate, UITableViewDataSource {
+extension DetailWaitViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
+}
+
+extension DetailWaitViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return userArr.count
     }
@@ -244,13 +259,9 @@ extension DetailWaitViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = listTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
         cell.textLabel?.text = userArr[indexPath.row]
-        cell.textLabel?.font = UIFont(name: AppFontName.regular.rawValue, size: 17)
+        cell.textLabel?.font = .font(.regular, ofSize: 17)
         cell.backgroundColor = .darkGrey001
         cell.selectionStyle = .none
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
     }
 }
