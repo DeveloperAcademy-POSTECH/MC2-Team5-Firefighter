@@ -19,7 +19,7 @@ extension UIColor {
         return UIColor(hex: "#A4291F")
     }
     
-    static var durationBannerRed: UIColor {
+    static var darkRed: UIColor {
         return UIColor(hex: "#C84842")
     }
     
