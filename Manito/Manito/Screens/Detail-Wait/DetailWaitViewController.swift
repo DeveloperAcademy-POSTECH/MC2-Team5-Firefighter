@@ -13,6 +13,12 @@ class DetailWaitViewController: BaseViewController {
     var canStart = false
     var maxUser = 15
     lazy var userCount = userArr.count
+    
+    private enum StartStatus: String {
+        case waiting = "대기중"
+        case starting = "진행중"
+        case complete = "완료"
+    }
 
     private func attribute() {
         listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -28,8 +34,7 @@ class DetailWaitViewController: BaseViewController {
 
     private let startStauts: UILabel = {
         let label = UILabel()
-        // MARK: enum으로 만드는게 좋아보임
-        label.text = "대기중"
+        label.text = StartStatus.waiting.rawValue
         label.backgroundColor = .badgeBeige
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 11
