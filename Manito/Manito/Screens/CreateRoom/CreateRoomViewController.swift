@@ -99,7 +99,7 @@ class CreateRoomViewController: BaseViewController {
     
     lazy var personLabel: UILabel = {
         let label = UILabel()
-        label.text = "X 8인"
+        label.text = "X 5인"
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
@@ -107,6 +107,9 @@ class CreateRoomViewController: BaseViewController {
     lazy var personSlider: UISlider = {
         let slider = UISlider()
         slider.value = 1
+        slider.minimumValue = 5
+        slider.maximumValue = 15
+        slider.addTarget(self, action: #selector(didSlider(_:)), for: .valueChanged)
         return slider
     }()
     
@@ -176,6 +179,11 @@ class CreateRoomViewController: BaseViewController {
     }
     
     // MARK: - Selectors
+    @objc func didSlider(_ slider: UISlider){
+        let value = slider.value
+        personLabel.text = "X \(Int(value))인"
+    }
+    
     @objc func didTapCloseButton(){
         print("ttaapp")
     }
