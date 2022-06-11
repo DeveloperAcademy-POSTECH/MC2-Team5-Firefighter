@@ -36,6 +36,10 @@
 		B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525252851A26D00614FF7 /* NSObject+Extension.swift */; };
 		B5F525292851A2A400614FF7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525282851A2A400614FF7 /* Logger.swift */; };
 		B5F5252F2852F69700614FF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B5F5252E2852F69700614FF7 /* SnapKit */; };
+		B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253028545E4C00614FF7 /* BackButton.swift */; };
+		B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253428547F1900614FF7 /* LetterHeaderView.swift */; };
+		B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */; };
+		B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525382854871E00614FF7 /* SendLetterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +73,10 @@
 		B5F525232851A25400614FF7 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		B5F525252851A26D00614FF7 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
 		B5F525282851A2A400614FF7 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		B5F5253028545E4C00614FF7 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		B5F5253428547F1900614FF7 /* LetterHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterHeaderView.swift; sourceTree = "<group>"; };
+		B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCollectionViewCell.swift; sourceTree = "<group>"; };
+		B5F525382854871E00614FF7 /* SendLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +187,8 @@
 		B5F524EA28519B4B00614FF7 /* Letter */ = {
 			isa = PBXGroup;
 			children = (
+				B5F5253328547EE000614FF7 /* UIComponent */,
+				B5F5253228547CAF00614FF7 /* Cell */,
 				B5F5250D2851A07700614FF7 /* LetterViewController.swift */,
 			);
 			path = Letter;
@@ -197,6 +207,7 @@
 		B5F524F328519BB100614FF7 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
+				B5F5253028545E4C00614FF7 /* BackButton.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -277,6 +288,23 @@
 				B5F525282851A2A400614FF7 /* Logger.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		B5F5253228547CAF00614FF7 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		B5F5253328547EE000614FF7 /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				B5F5253428547F1900614FF7 /* LetterHeaderView.swift */,
+				B5F525382854871E00614FF7 /* SendLetterView.swift */,
+			);
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,6 +394,8 @@
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
+				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
+				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
@@ -380,6 +410,8 @@
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
 				B5F525222851A24100614FF7 /* UITableView+Extension.swift in Sources */,
+				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
+				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
 				B5F525242851A25400614FF7 /* UICollectionView+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
