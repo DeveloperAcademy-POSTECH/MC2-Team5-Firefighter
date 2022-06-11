@@ -27,6 +27,7 @@ class BaseViewController: UIViewController {
         render()
         configUI()
         setupNavigationBar()
+        setupBackButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -47,9 +48,6 @@ class BaseViewController: UIViewController {
         let appearance = UINavigationBarAppearance()
         let font = UIFont.font(.regular, ofSize: 14)
         let largeFont = UIFont.font(.regular, ofSize: 34)
-      
-        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
-        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
         
         appearance.titleTextAttributes = [.font: font]
         appearance.largeTitleTextAttributes = [.font: largeFont]
@@ -59,8 +57,6 @@ class BaseViewController: UIViewController {
         navigationBar.standardAppearance = appearance
         navigationBar.compactAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
-        
-        navigationItem.leftBarButtonItem = backButton
     }
     
     // MARK: - helper func
@@ -74,5 +70,14 @@ class BaseViewController: UIViewController {
         offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
         offsetView.addSubview(button)
         return offsetView
+    }
+    
+    // MARK: - private func
+    
+    private func setupBackButton() {
+        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
+        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
+        
+        navigationItem.leftBarButtonItem = backButton
     }
 }
