@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 final class LetterCollectionReusableView: UICollectionReusableView {
     
     private enum LetterState: String, CaseIterable {

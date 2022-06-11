@@ -42,6 +42,7 @@ final class LetterViewController: BaseViewController {
                                 withReuseIdentifier: LetterCollectionReusableView.className)
         return collectionView
     }()
+    private let sendLetterView = SendLetterView()
     
     // MARK: - life cycle
     
@@ -49,6 +50,11 @@ final class LetterViewController: BaseViewController {
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        view.addSubview(sendLetterView)
+        sendLetterView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
