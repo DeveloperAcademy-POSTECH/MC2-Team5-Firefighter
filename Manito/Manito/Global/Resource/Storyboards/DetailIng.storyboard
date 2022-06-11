@@ -28,6 +28,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="YPy-2Q-L3f">
+                                <rect key="frame" x="16" y="209.5" width="266" height="50.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오늘의 개별 미션" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHA-mR-fkA">
+                                        <rect key="frame" x="87" y="0.0" width="92.5" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000원 이하의 선물 주고 인증샷 받기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vma-X3-7Uq">
+                                        <rect key="frame" x="0.0" y="29" width="266" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.82114897185378821" green="0.84723506243842617" blue="0.88235294819999999" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -35,6 +53,7 @@
                             <constraint firstItem="dp8-IY-L6V" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="1l8-IR-vjQ"/>
                             <constraint firstItem="dp8-IY-L6V" firstAttribute="top" secondItem="PDH-QK-Zi6" secondAttribute="bottom" constant="12" id="4J8-qh-Oae"/>
                             <constraint firstItem="PDH-QK-Zi6" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="GGH-Fx-hOS"/>
+                            <constraint firstItem="YPy-2Q-L3f" firstAttribute="top" secondItem="dp8-IY-L6V" secondAttribute="bottom" constant="30" id="H4i-hh-egG"/>
                             <constraint firstItem="PDH-QK-Zi6" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="19" id="mFR-9E-deL"/>
                         </constraints>
                     </view>
@@ -42,7 +61,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="972" y="106"/>
+            <point key="canvasLocation" x="971.01449275362324" y="105.80357142857143"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tQJ-G3-8JC">
