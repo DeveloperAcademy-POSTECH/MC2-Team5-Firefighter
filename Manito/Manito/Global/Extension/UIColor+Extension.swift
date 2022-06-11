@@ -60,6 +60,10 @@ extension UIColor {
         return UIColor(hex: "#343434")
     }
     
+    static var darkGrey004: UIColor {
+        return UIColor(hex: "#616161")
+    }
+    
     // MARK: - orange
     
     static var subOrange: UIColor {
