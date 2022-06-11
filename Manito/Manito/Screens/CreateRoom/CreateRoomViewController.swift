@@ -6,15 +6,15 @@
 //
 
 import UIKit
+import SnapKit
 
-class CreateRoomViewController: UIViewController {
+class CreateRoomViewController: BaseViewController {
 
     // MARK: - Property
-    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "방 생성하기"
-        label.font = UIFont(name: AppFontName.regular.rawValue, size: 34)
+        label.font = .font(.regular, ofSize: 34)
         return label
     }()
     
@@ -34,7 +34,7 @@ class CreateRoomViewController: UIViewController {
     
     lazy var roomsNameTextField: UITextField = {
         let tf = UITextField()
-        tf.backgroundColor = UIColor.fieldGray
+        tf.backgroundColor = UIColor.subBackgroundGrey
         let attributes = [
             NSAttributedString.Key.foregroundColor : UIColor.white,
             NSAttributedString.Key.font : UIFont(name: AppFontName.regular.rawValue, size: 18)!
@@ -51,28 +51,61 @@ class CreateRoomViewController: UIViewController {
     lazy var roomsTextLimit : UILabel = {
         let label = UILabel()
         label.text = "0/8"
-        label.font = UIFont(name: AppFontName.regular.rawValue, size: 20)
+        label.font = .font(.regular, ofSize: 20)
         return label
     }()
     
     lazy var nextButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setTitle("다음", for: .normal)
-        btn.titleLabel?.font = UIFont(name: AppFontName.regular.rawValue, size: 20)
+        btn.titleLabel?.font = .font(.regular, ofSize: 20)
         btn.tintColor = .white
-        btn.backgroundColor = UIColor.dinnerRed
+        btn.backgroundColor = UIColor.mainRed
         btn.layer.cornerRadius = 30
         btn.addTarget(self, action: #selector(didTapnextButoon), for: .touchUpInside)
         return btn
     }()
     
-    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configure()
-        configureComponent()
         
+    }
+    
+    override func render() {
+
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
+            $0.left.equalTo(view).inset(16)
+        }
+        
+        view.addSubview(closeButton)
+        closeButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
+            $0.right.equalTo(view).inset(16)
+            $0.width.height.equalTo(44)
+        }
+
+        view.addSubview(createView)
+        createView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel).inset(66)
+            $0.left.right.equalTo(view).inset(16)
+            $0.bottom.equalTo(view).inset(200)
+        }
+        
+        configureRoomsTitle()
+        
+        view.addSubview(nextButton)
+        nextButton.snp.makeConstraints {
+            $0.left.right.equalTo(view).inset(16)
+            $0.bottom.equalTo(view).inset(57)
+            $0.height.equalTo(60)
+        }
+    }
+    
+    override func configUI() {
+        super.configUI()
     }
     
     // MARK: - Selectors
@@ -86,56 +119,21 @@ class CreateRoomViewController: UIViewController {
     
 
     // MARK: - Configure
-    func configure(){
-        
-    }
-    
-    func configureComponent(){
-        
-        view.addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 66).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 16).isActive = true
-        
-        view.addSubview(closeButton)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9).isActive = true
-        closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
-        closeButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        closeButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        
-        view.addSubview(createView)
-        createView.translatesAutoresizingMaskIntoConstraints = false
-        createView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 66).isActive = true
-        createView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
-        createView.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -16).isActive = true
-        createView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200).isActive = true
-        
 
-        configureRoomsTitle()
-        
-        view.addSubview(nextButton)
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
-        nextButton.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -16).isActive = true
-        nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -57).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
-    }
-    
     func configureRoomsTitle(){
 
         createView.addSubview(roomsNameTextField)
-        roomsNameTextField.translatesAutoresizingMaskIntoConstraints = false
-        roomsNameTextField.topAnchor.constraint(equalTo: createView.topAnchor).isActive = true
-        roomsNameTextField.leftAnchor.constraint(equalTo: createView.leftAnchor).isActive = true
-        roomsNameTextField.rightAnchor.constraint(equalTo: createView.rightAnchor).isActive = true
-        roomsNameTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        roomsNameTextField.snp.makeConstraints {
+            $0.top.equalTo(createView)
+            $0.left.right.equalTo(createView)
+            $0.height.equalTo(60)
+        }
         
         createView.addSubview(roomsTextLimit)
-        roomsTextLimit.translatesAutoresizingMaskIntoConstraints = false
-        roomsTextLimit.topAnchor.constraint(equalTo: roomsNameTextField.bottomAnchor, constant: 10).isActive = true
-        roomsTextLimit.rightAnchor.constraint(equalTo: createView.rightAnchor).isActive = true
+        roomsTextLimit.snp.makeConstraints {
+            $0.top.equalTo(roomsNameTextField.snp.bottom).inset(-10)
+            $0.right.equalTo(createView)
+        }
     }
     
     // MARK: - Navigation

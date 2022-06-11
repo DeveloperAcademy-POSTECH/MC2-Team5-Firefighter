@@ -119,12 +119,6 @@ extension UIColor {
     static var characterPink: UIColor {
         return UIColor(hex: "#E46593")
     }
-    static var fieldGray: UIColor {
-        return UIColor(hex: "#5A5A5A")
-    }
-    static var dinnerRed: UIColor {
-        return UIColor(hex: "#C84842")
-    }
 }
 
 extension UIColor {
