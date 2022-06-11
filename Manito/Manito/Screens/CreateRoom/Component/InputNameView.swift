@@ -14,17 +14,17 @@ class InputNameView: UIView {
     // MARK: - Property
     private let roomsNameTextField: UITextField = {
         let texField = UITextField()
-        texField.backgroundColor = UIColor.subBackgroundGrey
         let attributes = [
             NSAttributedString.Key.foregroundColor : UIColor.white,
-            NSAttributedString.Key.font : UIFont(name: AppFontName.regular.rawValue, size: 18)!
+            NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
+        texField.backgroundColor = UIColor.subBackgroundGrey
         texField.attributedPlaceholder = NSAttributedString(string: "방 이름을 적어주세요", attributes:attributes)
         
         texField.layer.cornerRadius = 10
         texField.layer.masksToBounds = true
         texField.layer.borderWidth = 1
-        texField.layer.borderColor = UIColor.lightGray.cgColor
+        texField.layer.borderColor = UIColor.white.cgColor
         texField.textAlignment = .center
         return texField
     }()
@@ -48,17 +48,15 @@ class InputNameView: UIView {
     
     // MARK: - Config
     private func render(){
-        
         self.addSubview(roomsNameTextField)
         roomsNameTextField.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(60)
         }
         
         self.addSubview(roomsTextLimit)
         roomsTextLimit.snp.makeConstraints {
-            $0.top.equalTo(roomsNameTextField.snp.bottom).inset(-10)
+            $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
             $0.right.equalToSuperview()
         }
     }

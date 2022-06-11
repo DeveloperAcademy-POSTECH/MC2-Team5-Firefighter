@@ -40,10 +40,18 @@ class InputDateView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         render()
+        tapGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    // MARK: - Funtion
+    func tapGesture(){
+        let gestureTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapDateBackView(_:)))
+        gestureTapRecognizer.numberOfTapsRequired = 1
+        gestureTapRecognizer.numberOfTouchesRequired = 1
+        self.addGestureRecognizer(gestureTapRecognizer)
     }
     
     // MARK: - Selector
@@ -61,21 +69,14 @@ class InputDateView: UIView {
         
         self.addSubview(dateBackView)
         dateBackView.snp.makeConstraints {
-            $0.top.equalTo(dateViewLabel.snp.bottom).inset(-36)
+            $0.top.equalTo(dateViewLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(60)
         }
         
         dateBackView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.centerX.centerY.equalToSuperview()
         }
-        
-        let gestureTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapDateBackView(_:)))
-        gestureTapRecognizer.numberOfTapsRequired = 1
-        gestureTapRecognizer.numberOfTouchesRequired = 1
-        self.addGestureRecognizer(gestureTapRecognizer)
-        
     }
 }

@@ -29,10 +29,10 @@ class InputPersonView: UIView {
     }()
     
     private let imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage(systemName: "heart")
-        iv.backgroundColor = .darkGray
-        return iv
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "heart")
+        imageView.backgroundColor = .darkGray
+        return imageView
     }()
     
     private var personLabel: UILabel = {
