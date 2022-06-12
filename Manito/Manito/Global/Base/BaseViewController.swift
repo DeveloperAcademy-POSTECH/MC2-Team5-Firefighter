@@ -26,8 +26,8 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         render()
         configUI()
-        setupNavigationBar()
         setupBackButton()
+        setupNavigationBar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -24,10 +24,12 @@ class MainViewController: BaseViewController {
     
     // MARK: - property
     
-    private lazy var topBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .green
-        return view
+    private lazy var appName: UILabel = {
+        let label = UILabel()
+        label.text = "MANITO"
+        label.textColor = .white
+        label.font = .font(.regular, ofSize: 28)
+        return label
     }()
     
     private lazy var commonMissionView: CommonMissonView = {
@@ -97,7 +99,8 @@ class MainViewController: BaseViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .automatic
-        title = "MANITO"
+        let appTitleView = makeBarButtonItem(with: appName)
+        navigationItem.leftBarButtonItem = appTitleView
     }
 }
 
