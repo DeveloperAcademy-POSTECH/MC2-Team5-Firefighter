@@ -66,8 +66,7 @@ final class LetterViewController: BaseViewController {
     
     private var letterState: LetterState = .received {
         didSet {
-            listCollectionView.collectionViewLayout.invalidateLayout()
-            listCollectionView.reloadData()
+            reloadCollectionView(with: self.letterState)
         }
     }
     
@@ -76,7 +75,8 @@ final class LetterViewController: BaseViewController {
     override func render() {
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
         }
         
         view.addSubview(sendLetterView)
@@ -87,6 +87,7 @@ final class LetterViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
+        sendLetterView.isHidden = (letterState == .received)
     }
     
     override func setupNavigationBar() {
@@ -95,6 +96,18 @@ final class LetterViewController: BaseViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
         title = "쪽지함"
+    }
+    
+    // MARK: - func
+    
+    private func reloadCollectionView(with state: LetterState) {
+        sendLetterView.isHidden = (state == .received)
+        
+
+        
+        listCollectionView.collectionViewLayout.invalidateLayout()
+        listCollectionView.scrollsToTop = true
+        listCollectionView.reloadData()
     }
 }
 
