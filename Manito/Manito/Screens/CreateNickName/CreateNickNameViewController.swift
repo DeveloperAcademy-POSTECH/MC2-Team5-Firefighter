@@ -73,13 +73,13 @@ class CreateNickNameViewController: BaseViewController {
             $0.centerX.equalToSuperview()
         }
     }
+    
     // MARK: - Seletors
     
     @objc func didTapDoneButton() {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickName = text
         }
-        print(nickName)
         roomsNameTextField.resignFirstResponder()
     }
     
@@ -105,11 +105,11 @@ extension CreateNickNameViewController : UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if range.length == 0 {
-            doneButton.isDisabled = false
+        if range.location == 0 && range.length != 0 {
+            doneButton.isDisabled = true
         }
         else {
-            doneButton.isDisabled = true
+            doneButton.isDisabled = false
         }
         return true
     }
