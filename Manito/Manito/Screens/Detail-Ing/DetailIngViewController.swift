@@ -29,7 +29,7 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
     
-    let manitoOpenButton: UIButton = {
+    private let manitoOpenButton: UIButton = {
         let button = MainButton()
         button.title = "마니또 공개"
         button.hasShadow = true
@@ -49,6 +49,11 @@ class DetailIngViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         
+        setupFont()
+        setupViewLayer()
+    }
+    
+    private func setupFont() {
         titleLabel.font = .font(.regular, ofSize: 34)
         periodLabel.font = .font(.regular, ofSize: 16)
         missionTitleLabel.font = .font(.regular, ofSize: 14)
@@ -58,6 +63,9 @@ class DetailIngViewController: BaseViewController {
         listLabel.font = .font(.regular, ofSize: 15)
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
         
+    }
+    
+    private func setupViewLayer() {
         missionBackgroundView.layer.cornerRadius = 10
         missionBackgroundView.layer.borderWidth = 1
         missionBackgroundView.layer.borderColor = UIColor.systemYellow.cgColor
@@ -72,6 +80,5 @@ class DetailIngViewController: BaseViewController {
         letterBoxButton.layer.cornerRadius = 10
         letterBoxButton.layer.borderWidth = 1
         letterBoxButton.layer.borderColor = UIColor.white.cgColor
-        
     }
 }
