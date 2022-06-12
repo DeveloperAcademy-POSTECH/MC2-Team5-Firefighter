@@ -15,6 +15,8 @@ enum ImageLiterals {
     
     static var xmark: UIImage { .load(systemName: "xmark.circle.fill")}
     
+    static var icSetting: UIImage { .load(systemName: "gearshape")}
+    
     // MARK: - image
     
 }

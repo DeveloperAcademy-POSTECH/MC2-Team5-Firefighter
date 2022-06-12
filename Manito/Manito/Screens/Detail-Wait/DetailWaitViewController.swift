@@ -22,6 +22,15 @@ class DetailWaitViewController: BaseViewController {
     }
 
     // MARK: - property
+    
+    private lazy var settingButton: UIButton = {
+        let button = SettingButton()
+        let buttonAction = UIAction { _ in
+            print("설정 버튼")
+        }
+        button.addAction(buttonAction, for: .touchUpInside)
+        return button
+    }()
 
     private let roomTitle: UILabel = {
         let label = UILabel()
@@ -111,6 +120,7 @@ class DetailWaitViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegation()
+        setupSettingButton()
     }
 
     override func render() {
@@ -235,6 +245,16 @@ class DetailWaitViewController: BaseViewController {
                         toastLabel.removeFromSuperview()
                     })
             })
+    }
+
+
+    // MARK: - private func
+
+    private func setupSettingButton() {
+        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: settingButton, offsetX: -10)
+        let settingButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
+
+        navigationItem.rightBarButtonItem = settingButton
     }
 
     // MARK: - selector
