@@ -54,7 +54,6 @@ class CreateNickNameViewController: BaseViewController {
     }
     
     override func render() {
-        
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
@@ -76,7 +75,7 @@ class CreateNickNameViewController: BaseViewController {
     }
     // MARK: - Seletors
     
-    @objc func didTapDoneButton(){
+    @objc func didTapDoneButton() {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickName = text
         }
@@ -102,6 +101,16 @@ extension CreateNickNameViewController : UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         roomsNameTextField.resignFirstResponder()
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if range.length == 0 {
+            doneButton.isDisabled = false
+        }
+        else {
+            doneButton.isDisabled = true
+        }
         return true
     }
 }
