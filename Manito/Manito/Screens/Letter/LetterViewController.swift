@@ -66,6 +66,7 @@ final class LetterViewController: BaseViewController {
     
     private var letterState: LetterState = .received {
         didSet {
+            listCollectionView.collectionViewLayout.invalidateLayout()
             listCollectionView.reloadData()
         }
     }
