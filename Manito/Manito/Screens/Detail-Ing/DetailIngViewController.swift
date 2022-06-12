@@ -59,10 +59,19 @@ class DetailIngViewController: BaseViewController {
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
         
         missionBackgroundView.layer.cornerRadius = 10
+        missionBackgroundView.layer.borderWidth = 1
+        missionBackgroundView.layer.borderColor = UIColor.systemYellow.cgColor
         manitiBackView.layer.cornerRadius = 10
+        manitiBackView.layer.borderWidth = 1
+        manitiBackView.layer.borderColor = UIColor.white.cgColor
         manitiImageView.layer.cornerRadius = 50
         listBackView.layer.cornerRadius = 10
+        listBackView.layer.borderWidth = 1
+        listBackView.layer.borderColor = UIColor.white.cgColor
         listImageView.layer.cornerRadius = 50
         letterBoxButton.layer.cornerRadius = 10
+        letterBoxButton.layer.borderWidth = 1
+        letterBoxButton.layer.borderColor = UIColor.white.cgColor
+        
     }
 }
