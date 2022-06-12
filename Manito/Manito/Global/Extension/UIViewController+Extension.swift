@@ -21,20 +21,22 @@ extension UIViewController {
     }
 
     func makeRequestAlert(title: String,
-                          message: String,
-                          okAction: ((UIAlertAction) -> Void)?,
-                          cancelAction: ((UIAlertAction) -> Void)? = nil,
-                          completion : (() -> Void)? = nil) {
+                        message: String,
+                        okTitle: String = "확인",
+                        cancelTitle: String = "취소",
+                        okAction: ((UIAlertAction) -> Void)?,
+                        cancelAction: ((UIAlertAction) -> Void)? = nil,
+                        completion : (() -> Void)? = nil) {
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
 
         let alertViewController = UIAlertController(title: title, message: message,
                                                     preferredStyle: .alert)
 
-        let cancelAction = UIAlertAction(title: "취소", style: .destructive, handler: cancelAction)
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .default, handler: cancelAction)
         alertViewController.addAction(cancelAction)
         
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: okAction)
+        let okAction = UIAlertAction(title: okTitle, style: .destructive, handler: okAction)
         alertViewController.addAction(okAction)
 
         self.present(alertViewController, animated: true, completion: completion)

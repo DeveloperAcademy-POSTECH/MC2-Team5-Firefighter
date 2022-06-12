@@ -14,33 +14,74 @@ class DetailWaitViewController: BaseViewController {
     var canStart = false
     var maxUser = 15
     lazy var userCount = userArr.count
+    let isOwner = true
 
+    // enum들이 많아졌는데 따로 파일을 분리하는게 좋을까요 ?
     private enum ButtonText: String {
         case waiting = "시작을 기다리는 중..."
         case start = "마니또 시작"
     }
-    
-    // 이거 enum으로 만드는거 괜찮나요 ??
+
     private enum MenuList: String {
         case edit = "방 정보 수정"
         case delete = "방 삭제"
     }
-    
-    // list로 쓰니까 뭔가 enum으로 만들었는데 제대로 활용 못하는 느낌 ?
-    private let menuList = [
-        UIAction(title: MenuList.edit.rawValue, handler: { _ in print("수정") }),
-        UIAction(title: MenuList.delete.rawValue, handler: { _ in print("삭제") })
-    ]
+
+    // 이거 enum으로 만드는거 괜찮나요 ??
+    private enum AlertText: String {
+        case setting
+        case exit
+
+        var title: String {
+            switch self {
+            case .setting:
+                return "방을 삭제하실건가요?"
+            case .exit:
+                return "정말 나가실거예요?"
+            }
+        }
+
+        var message: String {
+            switch self {
+            case .setting:
+                return "방을 삭제하시면 다시 되돌릴 수 없습니다."
+            case .exit:
+                return "초대코드를 입력하면 \n 다시 들어올 수 있어요"
+            }
+        }
+
+        var okTitle: String {
+            switch self {
+            case .setting:
+                return "삭제"
+            case .exit:
+                return "나가기"
+            }
+        }
+    }
 
     // MARK: - property
 
     private lazy var settingButton: UIButton = {
         let button = SettingButton()
-        let favorite = UIAction(title: "즐겨찾기", image: UIImage(systemName: "heart"), handler: { _ in print("즐겨찾기") })
         button.menu = UIMenu(options: [], children: menuList)
         button.showsMenuAsPrimaryAction = true
+        return button
+    }()
+
+    // list로 쓰니까 뭔가 enum으로 만들었는데 제대로 활용 못하는 느낌 ?
+    // 이거도 property인가요 ?
+    private lazy var menuList = [
+        UIAction(title: MenuList.edit.rawValue, handler: { _ in print("수정") }),
+        UIAction(title: MenuList.delete.rawValue, handler: { _ in
+            self.makeRequestAlert(title: AlertText.setting.title, message: AlertText.setting.message, okTitle: AlertText.setting.okTitle, okAction: nil)
+        })
+    ]
+
+    private lazy var exitButton: UIButton = {
+        let button = ExitButton()
         let buttonAction = UIAction { _ in
-            print("설정 버튼")
+            self.makeRequestAlert(title: AlertText.exit.title, message: AlertText.exit.message, okTitle: AlertText.exit.okTitle, okAction: nil)
         }
         button.addAction(buttonAction, for: .touchUpInside)
         return button
@@ -98,7 +139,6 @@ class DetailWaitViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegation()
-        setupSettingButton()
     }
 
     override func render() {
@@ -150,6 +190,7 @@ class DetailWaitViewController: BaseViewController {
 
     override func configUI() {
         view.backgroundColor = .darkGrey002
+        setupNavigationRightButton()
     }
 
     // MARK: - func
@@ -195,6 +236,21 @@ class DetailWaitViewController: BaseViewController {
         let settingButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
 
         navigationItem.rightBarButtonItem = settingButton
+    }
+
+    private func setupExitButton() {
+        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: exitButton, offsetX: -10)
+        let exitButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
+
+        navigationItem.rightBarButtonItem = exitButton
+    }
+    
+    private func setupNavigationRightButton() {
+        if isOwner {
+            setupSettingButton()
+        } else {
+            setupExitButton()
+        }
     }
 
     // MARK: - selector

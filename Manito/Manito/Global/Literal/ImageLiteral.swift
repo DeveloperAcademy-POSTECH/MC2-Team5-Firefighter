@@ -17,6 +17,8 @@ enum ImageLiterals {
     
     static var icSetting: UIImage { .load(systemName: "gearshape")}
     
+    static var icExit: UIImage { .load(systemName: "rectangle.portrait.and.arrow.right")}
+    
     // MARK: - image
     
 }
