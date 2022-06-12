@@ -27,14 +27,9 @@ class CreateRoomViewController: BaseViewController {
         return button
     }()
     
-    lazy var nextButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = .font(.regular, ofSize: 20)
-        button.tintColor = .white
-        button.backgroundColor = UIColor.mainRed
-        button.layer.cornerRadius = 30
-        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+    private let nextButton: MainButton = {
+        let button = MainButton()
+        button.title = "다음"
         return button
     }()
     
