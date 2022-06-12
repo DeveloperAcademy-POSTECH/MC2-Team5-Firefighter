@@ -62,7 +62,6 @@ class DetailIngViewController: BaseViewController {
         manitiLabel.font = .font(.regular, ofSize: 15)
         listLabel.font = .font(.regular, ofSize: 15)
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
-        
     }
     
     private func setupViewLayer() {

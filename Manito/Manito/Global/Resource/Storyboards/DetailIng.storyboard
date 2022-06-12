@@ -216,8 +216,8 @@
                     <navigationItem key="navigationItem" id="FX5-cA-NVi">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="lFJ-0U-0fI">
                             <imageReference key="image" image="ellipsis" catalog="system" symbolScale="default"/>
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rdm-h0-PkU">
-                                <rect key="frame" x="-33" y="-15" width="44" height="44"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rdm-h0-PkU">
+                                <rect key="frame" x="346" y="0.0" width="48" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
