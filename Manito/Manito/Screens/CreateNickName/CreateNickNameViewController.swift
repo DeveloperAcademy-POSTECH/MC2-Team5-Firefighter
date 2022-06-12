@@ -49,7 +49,7 @@ class CreateNickNameViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegation()
-        moveViewWithKeyboard()
+        setupNotificationCenter()
     }
     
     override func render() {
@@ -107,7 +107,7 @@ class CreateNickNameViewController: BaseViewController {
         roomsNameTextField.delegate = self
     }
     
-    private func moveViewWithKeyboard() {
+    private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
