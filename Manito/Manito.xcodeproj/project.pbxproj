@@ -45,6 +45,7 @@
 		B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253A2854ABF200614FF7 /* MainButton.swift */; };
 		B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */; };
 		B5F525402854E5F900614FF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B5F5253F2854E5F900614FF7 /* SnapKit */; };
+		B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525412855C97900614FF7 /* UILabel+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,7 @@
 		B5F525382854871E00614FF7 /* SendLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterView.swift; sourceTree = "<group>"; };
 		B5F5253A2854ABF200614FF7 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		B5F525412855C97900614FF7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +246,7 @@
 				B5F525232851A25400614FF7 /* UICollectionView+Extension.swift */,
 				B5F525252851A26D00614FF7 /* NSObject+Extension.swift */,
 				B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */,
+				B5F525412855C97900614FF7 /* UILabel+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
+				B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,

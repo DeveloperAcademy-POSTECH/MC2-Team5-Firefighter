@@ -24,7 +24,6 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         label.font = .font(.regular, ofSize: 15)
         label.textColor = .white
         label.numberOfLines = 0
-        label.lineBreakMode = .byCharWrapping
         return label
     }()
     private let photoImageView: UIImageView = {
@@ -44,6 +43,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         오늘 구름을 봤는데 고양이를 너무 닮아서
         귀여워서 보내드려요~ 오늘 하루도 화이팅!!
         """
+        contentLabel.addLabelSpacing()
         photoImageView.backgroundColor = .mainRed
     }
     
