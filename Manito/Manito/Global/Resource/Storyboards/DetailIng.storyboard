@@ -80,6 +80,13 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g7j-rM-Ytc">
                                                 <rect key="frame" x="31" y="18" width="99" height="99"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LWr-fu-P6T">
+                                                        <rect key="frame" x="8" y="6" width="83" height="87"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" red="0.94509803920000002" green="0.55294117649999996" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    </imageView>
+                                                </subviews>
                                                 <color key="backgroundColor" red="0.91764705879999997" green="0.70196078429999997" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="99" id="11Z-1q-cHk"/>
@@ -120,6 +127,13 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weP-4O-TyG">
                                                 <rect key="frame" x="31" y="19" width="99" height="99"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xg5-Qh-RDT">
+                                                        <rect key="frame" x="8" y="6" width="83" height="87"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" red="0.91764705879999997" green="0.70196078429999997" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    </imageView>
+                                                </subviews>
                                                 <color key="backgroundColor" red="0.94509803921568625" green="0.55294117647058827" blue="0.69411764705882351" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="99" id="Sea-Yc-DHO"/>
@@ -211,9 +225,11 @@
                         <outlet property="informationTitleLabel" destination="fZJ-MB-brw" id="DLK-x1-FBZ"/>
                         <outlet property="letterBoxButton" destination="OcH-K7-LfP" id="jeR-Wj-pUx"/>
                         <outlet property="listBackView" destination="qAr-Z0-8Pd" id="Fcm-jF-9Ql"/>
+                        <outlet property="listIconView" destination="Xg5-Qh-RDT" id="va6-q3-2ri"/>
                         <outlet property="listImageView" destination="weP-4O-TyG" id="GO6-ZZ-Xv7"/>
                         <outlet property="listLabel" destination="XZe-il-0Em" id="ipt-xQ-hWy"/>
                         <outlet property="manitiBackView" destination="MnW-cb-NGs" id="na6-NV-br0"/>
+                        <outlet property="manitiIconView" destination="LWr-fu-P6T" id="vQ7-fM-PmV"/>
                         <outlet property="manitiImageView" destination="g7j-rM-Ytc" id="9wE-hq-MWz"/>
                         <outlet property="manitiLabel" destination="Hpq-VL-lVb" id="trl-DK-Lmx"/>
                         <outlet property="manitoOpenButton" destination="yWs-qe-1vA" id="dXq-4N-g26"/>

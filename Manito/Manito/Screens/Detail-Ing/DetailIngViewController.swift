@@ -19,9 +19,11 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var informationTitleLabel: UILabel!
     @IBOutlet weak var manitiBackView: UIView!
     @IBOutlet weak var manitiImageView: UIView!
+    @IBOutlet weak var manitiIconView: UIImageView!
     @IBOutlet weak var manitiLabel: UILabel!
     @IBOutlet weak var listBackView: UIView!
     @IBOutlet weak var listImageView: UIView!
+    @IBOutlet weak var listIconView: UIImageView!
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
     @IBOutlet weak var manitoOpenButton: UIButton!
