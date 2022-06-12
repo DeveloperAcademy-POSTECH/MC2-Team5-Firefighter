@@ -83,7 +83,6 @@ class CreateNickNameViewController: BaseViewController {
     
     @objc private func keyboardWillShow(notification:NSNotification){
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            
             UIView.animate(withDuration: 0.2, animations: {
                 self.doneButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
             })
