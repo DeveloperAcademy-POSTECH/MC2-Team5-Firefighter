@@ -38,5 +38,12 @@ class DetailIngViewController: BaseViewController {
         super.configUI()
         
         titleLabel.font = .font(.regular, ofSize: 34)
+        periodLabel.font = .font(.regular, ofSize: 16)
+        missionTitleLabel.font = .font(.regular, ofSize: 14)
+        missionContentsLabel.font = .font(.regular, ofSize: 18)
+        informationTitleLabel.font = .font(.regular, ofSize: 16)
+        manitiLabel.font = .font(.regular, ofSize: 15)
+        listLabel.font = .font(.regular, ofSize: 15)
+        letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
     }
 }
