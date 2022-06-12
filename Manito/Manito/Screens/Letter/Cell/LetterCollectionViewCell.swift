@@ -112,6 +112,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         }
         
         if let image = data.image {
+            // FIXME: - 현재는 더미데이터라서 heart.fill
             photoImageView.image = UIImage(systemName: "heart.fill")
             photoImageView.snp.updateConstraints {
                 $0.height.equalTo(204)

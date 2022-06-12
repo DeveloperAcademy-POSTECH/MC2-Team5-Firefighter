@@ -11,6 +11,8 @@ import SnapKit
 
 final class LetterHeaderView: UICollectionReusableView {
     
+    var changeSegmentControlIndex: ((Int) -> ())?
+    
     // MARK: - property
     
     private lazy var segmentControl: UISegmentedControl = {
@@ -66,5 +68,6 @@ final class LetterHeaderView: UICollectionReusableView {
     @objc
     private func changedIndexValue(_ sender: UISegmentedControl) {
         segmentControlIndex = sender.selectedSegmentIndex
+        changeSegmentControlIndex?(segmentControlIndex)
     }
 }

@@ -64,7 +64,11 @@ final class LetterViewController: BaseViewController {
     }()
     private let sendLetterView = SendLetterView()
     
-    private let letterState: LetterState = .received
+    private var letterState: LetterState = .received {
+        didSet {
+            listCollectionView.reloadData()
+        }
+    }
     
     // MARK: - life cycle
     
@@ -109,7 +113,13 @@ extension LetterViewController: UICollectionViewDataSource {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LetterHeaderView.className, for: indexPath) as? LetterHeaderView else { assert(false, "do not have reusable view") }
+            
             headerView.segmentControlIndex = letterState.rawValue
+            headerView.changeSegmentControlIndex = { [weak self] index in
+                guard let letterStatus = LetterState.init(rawValue: index) else { return }
+                self?.letterState = letterStatus
+            }
+            
             return headerView
         default:
             assert(false, "do not use footer")
