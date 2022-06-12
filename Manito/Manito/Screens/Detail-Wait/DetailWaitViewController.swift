@@ -19,11 +19,26 @@ class DetailWaitViewController: BaseViewController {
         case waiting = "시작을 기다리는 중..."
         case start = "마니또 시작"
     }
+    
+    // 이거 enum으로 만드는거 괜찮나요 ??
+    private enum MenuList: String {
+        case edit = "방 정보 수정"
+        case delete = "방 삭제"
+    }
+    
+    // list로 쓰니까 뭔가 enum으로 만들었는데 제대로 활용 못하는 느낌 ?
+    private let menuList = [
+        UIAction(title: MenuList.edit.rawValue, handler: { _ in print("수정") }),
+        UIAction(title: MenuList.delete.rawValue, handler: { _ in print("삭제") })
+    ]
 
     // MARK: - property
 
     private lazy var settingButton: UIButton = {
         let button = SettingButton()
+        let favorite = UIAction(title: "즐겨찾기", image: UIImage(systemName: "heart"), handler: { _ in print("즐겨찾기") })
+        button.menu = UIMenu(options: [], children: menuList)
+        button.showsMenuAsPrimaryAction = true
         let buttonAction = UIAction { _ in
             print("설정 버튼")
         }
@@ -172,7 +187,6 @@ class DetailWaitViewController: BaseViewController {
                     })
             })
     }
-
 
     // MARK: - private func
 
