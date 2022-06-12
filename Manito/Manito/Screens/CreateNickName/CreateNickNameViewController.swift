@@ -24,7 +24,6 @@ class CreateNickNameViewController: BaseViewController {
     private let roomsNameTextField: UITextField = {
         let textField = UITextField()
         let attributes = [
-            NSAttributedString.Key.foregroundColor : UIColor.white,
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         textField.backgroundColor = .subBackgroundGrey
