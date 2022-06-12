@@ -7,9 +7,9 @@
 
 import UIKit
 
+import SnapKit
+
 final class LetterCollectionViewCell: BaseCollectionViewCell {
-    
-    
     
     // MARK: - property
     

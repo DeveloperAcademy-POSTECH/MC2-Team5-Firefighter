@@ -11,6 +11,20 @@ import SnapKit
 
 final class LetterViewController: BaseViewController {
     
+    private enum LetterState: Int, CaseIterable {
+        case received = 0
+        case sent = 1
+        
+        var letterCount: Int {
+            switch self {
+            case .received:
+                return receivedLetters.count
+            case .sent:
+                return sentLetters.count
+            }
+        }
+    }
+    
     private enum Size {
         static let headerHeight: CGFloat = 66.0
         static let collectionHorizontalSpacing: CGFloat = 16.0
@@ -48,6 +62,8 @@ final class LetterViewController: BaseViewController {
     }()
     private let sendLetterView = SendLetterView()
     
+    private let letterState: LetterState = .received
+    
     // MARK: - life cycle
     
     override func render() {
@@ -78,7 +94,7 @@ final class LetterViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return letterState.letterCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -90,6 +106,7 @@ extension LetterViewController: UICollectionViewDataSource {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LetterHeaderView.className, for: indexPath) as? LetterHeaderView else { assert(false, "do not have reusable view") }
+            headerView.segmentControlIndex = letterState.rawValue
             return headerView
         default:
             assert(false, "do not use footer")
