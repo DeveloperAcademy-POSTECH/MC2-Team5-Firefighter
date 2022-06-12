@@ -45,16 +45,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ne3-xF-fpF">
                                 <rect key="frame" x="16" y="209.5" width="382" height="100"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="오늘의 개별 미션" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHA-mR-fkA">
-                                        <rect key="frame" x="132" y="16" width="119" height="15"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오늘의 개별 미션" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHA-mR-fkA">
+                                        <rect key="frame" x="120" y="16" width="142" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1000원 이하의 선물 주고 인증샷 받기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vma-X3-7Uq">
-                                        <rect key="frame" x="24" y="52" width="335" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000원 이하의 선물 주고 인증샷 받기" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vma-X3-7Uq">
+                                        <rect key="frame" x="24" y="44" width="335" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="AzM-fe-C6S"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -62,7 +63,12 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.82114897190000002" green="0.84723506240000002" blue="0.88235294819999999" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="382" id="LcV-4d-0M5"/>
+                                    <constraint firstItem="vma-X3-7Uq" firstAttribute="leading" secondItem="ne3-xF-fpF" secondAttribute="leading" constant="24" id="TM6-mi-2KV"/>
+                                    <constraint firstItem="kHA-mR-fkA" firstAttribute="leading" secondItem="ne3-xF-fpF" secondAttribute="leading" constant="120" id="Ypt-sK-aB5"/>
+                                    <constraint firstItem="kHA-mR-fkA" firstAttribute="top" secondItem="ne3-xF-fpF" secondAttribute="top" constant="16" id="ZVo-eI-tCX"/>
+                                    <constraint firstAttribute="trailing" secondItem="kHA-mR-fkA" secondAttribute="trailing" constant="120" id="duX-hl-aGi"/>
+                                    <constraint firstAttribute="trailing" secondItem="vma-X3-7Uq" secondAttribute="trailing" constant="23" id="hNc-ui-g86"/>
+                                    <constraint firstAttribute="bottom" secondItem="vma-X3-7Uq" secondAttribute="bottom" constant="16" id="ncN-Es-3Bv"/>
                                     <constraint firstAttribute="height" constant="100" id="yle-T4-6Dg"/>
                                 </constraints>
                             </view>
@@ -188,6 +194,7 @@
                         <constraints>
                             <constraint firstItem="dp8-IY-L6V" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="1l8-IR-vjQ"/>
                             <constraint firstItem="dp8-IY-L6V" firstAttribute="top" secondItem="PDH-QK-Zi6" secondAttribute="bottom" constant="12" id="4J8-qh-Oae"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="ne3-xF-fpF" secondAttribute="trailing" constant="16" id="6W3-7f-QZ7"/>
                             <constraint firstItem="PDH-QK-Zi6" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="GGH-Fx-hOS"/>
                             <constraint firstItem="fZJ-MB-brw" firstAttribute="top" secondItem="ne3-xF-fpF" secondAttribute="bottom" constant="44" id="H33-tB-Yis"/>
                             <constraint firstItem="ne3-xF-fpF" firstAttribute="top" secondItem="dp8-IY-L6V" secondAttribute="bottom" constant="30" id="Hbh-oe-VO8"/>
