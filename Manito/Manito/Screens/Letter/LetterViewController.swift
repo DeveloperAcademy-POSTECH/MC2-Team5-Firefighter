@@ -54,6 +54,7 @@ final class LetterViewController: BaseViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 73, right: 0)
         collectionView.register(cell: LetterCollectionViewCell.self,
                                 forCellWithReuseIdentifier: LetterCollectionViewCell.className)
         collectionView.register(LetterHeaderView.self,
