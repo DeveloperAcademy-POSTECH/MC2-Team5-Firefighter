@@ -14,20 +14,47 @@ class DetailWaitViewController: BaseViewController {
     var canStart = false
     var maxUser = 15
     lazy var userCount = userArr.count
-    let isOwner = false
+    let isOwner = true
 
-    private enum ButtonText: String {
-        case waiting = "시작을 기다리는 중..."
-        case start = "마니또 시작"
+    private enum UserStatus: Int, CaseIterable {
+        case owner = 0
+        case member = 1
+
+        var buttonTitle: String {
+            switch self {
+            case .owner:
+                return "마니또 시작"
+            case .member:
+                return "시작을 기다리는 중..."
+            }
+        }
+
+        var buttonDisabled: Bool {
+            switch self {
+            case .owner:
+                return false
+            case .member:
+                return true
+            }
+        }
+
+        var alertText: AlertText {
+            switch self {
+            case .owner:
+                return .delete
+            case .member:
+                return .exit
+            }
+        }
     }
 
-    private enum AlertText: String {
-        case setting
+    private enum AlertText {
+        case delete
         case exit
 
         var title: String {
             switch self {
-            case .setting:
+            case .delete:
                 return "방을 삭제하실건가요?"
             case .exit:
                 return "정말 나가실거예요?"
@@ -36,7 +63,7 @@ class DetailWaitViewController: BaseViewController {
 
         var message: String {
             switch self {
-            case .setting:
+            case .delete:
                 return "방을 삭제하시면 다시 되돌릴 수 없습니다."
             case .exit:
                 return "초대코드를 입력하면 \n 다시 들어올 수 있어요."
@@ -45,12 +72,17 @@ class DetailWaitViewController: BaseViewController {
 
         var okTitle: String {
             switch self {
-            case .setting:
+            case .delete:
                 return "삭제"
             case .exit:
                 return "나가기"
             }
         }
+    }
+
+    private enum ButtonText: String {
+        case waiting = "시작을 기다리는 중..."
+        case start = "마니또 시작"
     }
 
     // MARK: - property
@@ -60,7 +92,7 @@ class DetailWaitViewController: BaseViewController {
         button.menu = UIMenu(options: [], children: [
                 UIAction(title: "방 정보 수정", handler: { _ in print("수정") }),
                 UIAction(title: "방 삭제", handler: { _ in
-                    self.makeRequestAlert(title: AlertText.setting.title, message: AlertText.setting.message, okTitle: AlertText.setting.okTitle, okAction: nil)
+                    self.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
                 })])
         button.showsMenuAsPrimaryAction = true
         return button
