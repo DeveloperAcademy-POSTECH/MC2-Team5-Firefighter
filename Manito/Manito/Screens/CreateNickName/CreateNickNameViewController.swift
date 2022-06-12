@@ -35,7 +35,6 @@ class CreateNickNameViewController: BaseViewController {
         textField.layer.borderColor = UIColor.white.cgColor
         textField.textAlignment = .center
         textField.returnKeyType = .done
-        textField.becomeFirstResponder()
         return textField
     }()
     private lazy var doneButton: MainButton = {
@@ -50,6 +49,7 @@ class CreateNickNameViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegation()
+        setupNotificationCenter()
     }
     
     override func render() {
@@ -79,13 +79,37 @@ class CreateNickNameViewController: BaseViewController {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
         }
-        roomsNameTextField.resignFirstResponder()
+    }
+    
+    @objc private func keyboardWillShow(notification:NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.doneButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
+            })
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification:NSNotification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.doneButton.transform = .identity
+        })
+    }
+    
+    override func dismissKeyboard() {
+        if !doneButton.isTouchInside {
+            view.endEditing(true)
+        }
     }
     
     // MARK: - Funtions
     
     private func setupDelegation() {
         roomsNameTextField.delegate = self
+    }
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // MARK: - Configure
