@@ -21,11 +21,6 @@ class DetailWaitViewController: BaseViewController {
         case start = "마니또 시작"
     }
 
-    private enum MenuList: String {
-        case edit = "방 정보 수정"
-        case delete = "방 삭제"
-    }
-
     private enum AlertText: String {
         case setting
         case exit
@@ -62,17 +57,14 @@ class DetailWaitViewController: BaseViewController {
 
     private lazy var settingButton: UIButton = {
         let button = SettingButton()
-        button.menu = UIMenu(options: [], children: menuActionList)
+        button.menu = UIMenu(options: [], children: [
+                UIAction(title: "방 정보 수정", handler: { _ in print("수정") }),
+                UIAction(title: "방 삭제", handler: { _ in
+                    self.makeRequestAlert(title: AlertText.setting.title, message: AlertText.setting.message, okTitle: AlertText.setting.okTitle, okAction: nil)
+                })])
         button.showsMenuAsPrimaryAction = true
         return button
     }()
-
-    private lazy var menuActionList = [
-        UIAction(title: MenuList.edit.rawValue, handler: { _ in print("수정") }),
-        UIAction(title: MenuList.delete.rawValue, handler: { _ in
-            self.makeRequestAlert(title: AlertText.setting.title, message: AlertText.setting.message, okTitle: AlertText.setting.okTitle, okAction: nil)
-        })
-    ]
 
     private lazy var exitButton: UIButton = {
         let button = ExitButton()
@@ -240,7 +232,7 @@ class DetailWaitViewController: BaseViewController {
 
         navigationItem.rightBarButtonItem = exitButton
     }
-    
+
     private func setupNavigationRightButton() {
         if isOwner {
             setupSettingButton()
