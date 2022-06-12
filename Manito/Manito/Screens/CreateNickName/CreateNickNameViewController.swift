@@ -11,6 +11,8 @@ import SnapKit
 
 class CreateNickNameViewController: BaseViewController {
     
+    private var nickname: String = ""
+    
     // MARK: - Property
     
     private let titleLabel: UILabel = {
@@ -20,30 +22,37 @@ class CreateNickNameViewController: BaseViewController {
         return label
     }()
     private let roomsNameTextField: UITextField = {
-        let texField = UITextField()
+        let textField = UITextField()
         let attributes = [
-            NSAttributedString.Key.foregroundColor : UIColor.white,
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
-        texField.backgroundColor = .subBackgroundGrey
-        texField.attributedPlaceholder = NSAttributedString(string: "닉네임을 적어주세요", attributes:attributes)
-        texField.layer.cornerRadius = 10
-        texField.layer.masksToBounds = true
-        texField.layer.borderWidth = 1
-        texField.layer.borderColor = UIColor.white.cgColor
-        texField.textAlignment = .center
-        return texField
+        textField.backgroundColor = .subBackgroundGrey
+        textField.attributedPlaceholder = NSAttributedString(string: "닉네임을 적어주세요", attributes:attributes)
+        textField.font = .font(.regular, ofSize: 18)
+        textField.layer.cornerRadius = 10
+        textField.layer.masksToBounds = true
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.white.cgColor
+        textField.textAlignment = .center
+        textField.returnKeyType = .done
+        return textField
     }()
-    private let doneButton : MainButton = {
+    private lazy var doneButton: MainButton = {
         let button = MainButton()
         button.title = "완료"
+        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        button.isDisabled = true
         return button
     }()
     
     // MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupDelegation()
+        setupNotificationCenter()
+    }
     
     override func render() {
-        
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
@@ -64,9 +73,60 @@ class CreateNickNameViewController: BaseViewController {
         }
     }
     
+    // MARK: - Seletors
+    
+    @objc private func didTapDoneButton() {
+        if let text = roomsNameTextField.text, !text.isEmpty {
+            nickname = text
+        }
+    }
+    
+    @objc private func keyboardWillShow(notification:NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.doneButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
+            })
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification:NSNotification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.doneButton.transform = .identity
+        })
+    }
+    
+    override func dismissKeyboard() {
+        if !doneButton.isTouchInside {
+            view.endEditing(true)
+        }
+    }
+    
+    // MARK: - Funtions
+    
+    private func setupDelegation() {
+        roomsNameTextField.delegate = self
+    }
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     // MARK: - Configure
     
     override func configUI() {
         super.configUI()
+    }
+}
+
+// MARK: - Extension
+extension CreateNickNameViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        roomsNameTextField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        doneButton.isDisabled = !textField.hasText
     }
 }
