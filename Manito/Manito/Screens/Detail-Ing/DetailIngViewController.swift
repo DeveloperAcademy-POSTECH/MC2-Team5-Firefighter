@@ -7,23 +7,77 @@
 
 import UIKit
 
-class DetailIngViewController: UIViewController {
+import SnapKit
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+class DetailIngViewController: BaseViewController {
 
-        // Do any additional setup after loading the view.
+    // MARK: - property
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var periodLabel: UILabel!
+    @IBOutlet weak var missionBackgroundView: UIView!
+    @IBOutlet weak var missionTitleLabel: UILabel!
+    @IBOutlet weak var missionContentsLabel: UILabel!
+    @IBOutlet weak var informationTitleLabel: UILabel!
+    @IBOutlet weak var manitiBackView: UIView!
+    @IBOutlet weak var manitiImageView: UIView!
+    @IBOutlet weak var manitiIconView: UIImageView!
+    @IBOutlet weak var manitiLabel: UILabel!
+    @IBOutlet weak var listBackView: UIView!
+    @IBOutlet weak var listImageView: UIView!
+    @IBOutlet weak var listIconView: UIImageView!
+    @IBOutlet weak var listLabel: UILabel!
+    @IBOutlet weak var letterBoxButton: UIButton!
+    
+    private let manitoOpenButton: UIButton = {
+        let button = MainButton()
+        button.title = "마니또 공개"
+        button.hasShadow = true
+        return button
+    }()
+    
+    // MARK: - life cycle
+    
+    override func render() {
+        view.addSubview(manitoOpenButton)
+        manitoOpenButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
+            $0.centerX.equalToSuperview()
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func configUI() {
+        super.configUI()
+        
+        setupFont()
+        setupViewLayer()
     }
-    */
-
+    
+    private func setupFont() {
+        titleLabel.font = .font(.regular, ofSize: 34)
+        periodLabel.font = .font(.regular, ofSize: 16)
+        missionTitleLabel.font = .font(.regular, ofSize: 14)
+        missionContentsLabel.font = .font(.regular, ofSize: 18)
+        informationTitleLabel.font = .font(.regular, ofSize: 16)
+        manitiLabel.font = .font(.regular, ofSize: 15)
+        listLabel.font = .font(.regular, ofSize: 15)
+        letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
+    }
+    
+    private func setupViewLayer() {
+        missionBackgroundView.layer.cornerRadius = 10
+        missionBackgroundView.layer.borderWidth = 1
+        missionBackgroundView.layer.borderColor = UIColor.systemYellow.cgColor
+        manitiBackView.layer.cornerRadius = 10
+        manitiBackView.layer.borderWidth = 1
+        manitiBackView.layer.borderColor = UIColor.white.cgColor
+        manitiImageView.layer.cornerRadius = 50
+        listBackView.layer.cornerRadius = 10
+        listBackView.layer.borderWidth = 1
+        listBackView.layer.borderColor = UIColor.white.cgColor
+        listImageView.layer.cornerRadius = 50
+        letterBoxButton.layer.cornerRadius = 10
+        letterBoxButton.layer.borderWidth = 1
+        letterBoxButton.layer.borderColor = UIColor.white.cgColor
+    }
 }
