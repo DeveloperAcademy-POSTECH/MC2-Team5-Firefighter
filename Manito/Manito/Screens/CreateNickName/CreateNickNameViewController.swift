@@ -81,7 +81,7 @@ class CreateNickNameViewController: BaseViewController {
         }
     }
     
-    @objc private func keyboardWillShow(notification:NSNotification){
+    @objc private func keyboardWillShow(notification:NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             UIView.animate(withDuration: 0.2, animations: {
                 self.doneButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
@@ -89,7 +89,7 @@ class CreateNickNameViewController: BaseViewController {
         }
     }
     
-    @objc private func keyboardWillHide(notification:NSNotification){
+    @objc private func keyboardWillHide(notification:NSNotification) {
         UIView.animate(withDuration: 0.2, animations: {
             self.doneButton.transform = .identity
         })
@@ -107,7 +107,7 @@ class CreateNickNameViewController: BaseViewController {
         roomsNameTextField.delegate = self
     }
     
-    private func moveViewWithKeyboard(){
+    private func moveViewWithKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
