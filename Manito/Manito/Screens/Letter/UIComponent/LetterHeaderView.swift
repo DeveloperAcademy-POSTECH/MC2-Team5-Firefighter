@@ -23,6 +23,7 @@ final class LetterHeaderView: UICollectionReusableView {
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
         control.backgroundColor = .darkGrey003
+        control.addTarget(self, action: #selector(changedIndexValue(_:)), for: .valueChanged)
         
         return control
     }()
@@ -58,5 +59,12 @@ final class LetterHeaderView: UICollectionReusableView {
     
     private func configUI() {
         backgroundColor = .backgroundGrey
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func changedIndexValue(_ sender: UISegmentedControl) {
+        segmentControlIndex = sender.selectedSegmentIndex
     }
 }

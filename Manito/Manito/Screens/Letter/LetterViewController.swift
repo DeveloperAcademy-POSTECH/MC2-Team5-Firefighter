@@ -27,6 +27,7 @@ final class LetterViewController: BaseViewController {
     
     private enum Size {
         static let headerHeight: CGFloat = 66.0
+        static let emptyContentHeight: CGFloat = 48.0
         static let collectionHorizontalSpacing: CGFloat = 16.0
         static let collectionVerticalSpacing: CGFloat = 18.0
         static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2
@@ -42,9 +43,9 @@ final class LetterViewController: BaseViewController {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.sectionInset = Size.collectionInset
-        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: 297)
         flowLayout.minimumLineSpacing = 33
         flowLayout.sectionHeadersPinToVisibleBounds = true
+        flowLayout.estimatedItemSize = CGSize(width: Size.cellWidth, height: Size.emptyContentHeight)
         return flowLayout
     }()
     private lazy var listCollectionView: UICollectionView = {
