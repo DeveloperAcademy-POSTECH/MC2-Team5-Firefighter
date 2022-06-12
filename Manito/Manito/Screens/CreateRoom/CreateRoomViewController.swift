@@ -7,23 +7,105 @@
 
 import UIKit
 
-class CreateRoomViewController: UIViewController {
+import SnapKit
 
+class CreateRoomViewController: BaseViewController {
+    
+    // MARK: - Property
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "방 생성하기"
+        label.font = .font(.regular, ofSize: 34)
+        return label
+    }()
+    
+    lazy var closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = .lightGray
+        button.setImage(ImageLiterals.xmark, for: .normal)
+        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var nextButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("다음", for: .normal)
+        button.titleLabel?.font = .font(.regular, ofSize: 20)
+        button.tintColor = .white
+        button.backgroundColor = UIColor.mainRed
+        button.layer.cornerRadius = 30
+        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        return button
+    }()
+    
+    private let nameView = InputNameView()
+    
+    private let personView = InputPersonView()
+    
+    private let dateView = InputDateView()
+    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func render() {
+        
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+        }
+        
+        view.addSubview(closeButton)
+        closeButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.width.height.equalTo(44)
+        }
+        
+        view.addSubview(nextButton)
+        nextButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(57)
+            $0.height.equalTo(60)
+        }
+        
+        view.addSubview(nameView)
+        nameView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(66)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalTo(nextButton.snp.top)
+        }
+        
+        view.addSubview(personView)
+        personView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(66)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalTo(nextButton.snp.top)
+        }
+        
+        view.addSubview(dateView)
+        dateView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(66)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalTo(nextButton.snp.top)
+        }
     }
-    */
-
+    
+    // MARK: - Configure
+    override func configUI() {
+        super.configUI()
+        view.backgroundColor = .backgroundGrey
+    }
+    
+    // MARK: - Selectors
+    @objc func didTapCloseButton() {
+        print("ttaapp")
+    }
+    
+    @objc func didTapNextButton() {
+        print("tap")
+    }    
 }
