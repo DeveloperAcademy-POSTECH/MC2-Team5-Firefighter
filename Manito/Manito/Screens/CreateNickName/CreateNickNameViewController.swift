@@ -97,19 +97,12 @@ class CreateNickNameViewController: BaseViewController {
 
 // MARK: - Extension
 extension CreateNickNameViewController : UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         roomsNameTextField.resignFirstResponder()
         return true
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if range.location == 0 && range.length != 0 {
-            doneButton.isDisabled = true
-        }
-        else {
-            doneButton.isDisabled = false
-        }
-        return true
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        doneButton.isDisabled = !textField.hasText
     }
 }
