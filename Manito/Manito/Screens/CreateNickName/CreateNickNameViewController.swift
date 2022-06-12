@@ -11,6 +11,8 @@ import SnapKit
 
 class CreateNickNameViewController: BaseViewController {
     
+    private var nickname: String = ""
+    
     // MARK: - Property
     
     private let titleLabel: UILabel = {
@@ -20,30 +22,37 @@ class CreateNickNameViewController: BaseViewController {
         return label
     }()
     private let roomsNameTextField: UITextField = {
-        let texField = UITextField()
+        let textField = UITextField()
         let attributes = [
-            NSAttributedString.Key.foregroundColor : UIColor.white,
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
-        texField.backgroundColor = .subBackgroundGrey
-        texField.attributedPlaceholder = NSAttributedString(string: "닉네임을 적어주세요", attributes:attributes)
-        texField.layer.cornerRadius = 10
-        texField.layer.masksToBounds = true
-        texField.layer.borderWidth = 1
-        texField.layer.borderColor = UIColor.white.cgColor
-        texField.textAlignment = .center
-        return texField
+        textField.backgroundColor = .subBackgroundGrey
+        textField.attributedPlaceholder = NSAttributedString(string: "닉네임을 적어주세요", attributes:attributes)
+        textField.font = .font(.regular, ofSize: 18)
+        textField.layer.cornerRadius = 10
+        textField.layer.masksToBounds = true
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.white.cgColor
+        textField.textAlignment = .center
+        textField.returnKeyType = .done
+        textField.becomeFirstResponder()
+        return textField
     }()
-    private let doneButton : MainButton = {
+    private lazy var doneButton: MainButton = {
         let button = MainButton()
         button.title = "완료"
+        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        button.isDisabled = true
         return button
     }()
     
     // MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupDelegation()
+    }
     
     override func render() {
-        
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
@@ -64,9 +73,36 @@ class CreateNickNameViewController: BaseViewController {
         }
     }
     
+    // MARK: - Seletors
+    
+    @objc private func didTapDoneButton() {
+        if let text = roomsNameTextField.text, !text.isEmpty {
+            nickname = text
+        }
+        roomsNameTextField.resignFirstResponder()
+    }
+    
+    // MARK: - Funtions
+    
+    private func setupDelegation() {
+        roomsNameTextField.delegate = self
+    }
+    
     // MARK: - Configure
     
     override func configUI() {
         super.configUI()
+    }
+}
+
+// MARK: - Extension
+extension CreateNickNameViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        roomsNameTextField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        doneButton.isDisabled = !textField.hasText
     }
 }
