@@ -45,5 +45,12 @@ class DetailIngViewController: BaseViewController {
         manitiLabel.font = .font(.regular, ofSize: 15)
         listLabel.font = .font(.regular, ofSize: 15)
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
+        
+        missionBackgroundView.layer.cornerRadius = 10
+        manitiBackView.layer.cornerRadius = 10
+        manitiImageView.layer.cornerRadius = 50
+        listBackView.layer.cornerRadius = 10
+        listImageView.layer.cornerRadius = 50
+        letterBoxButton.layer.cornerRadius = 10
     }
 }
