@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 class DetailIngViewController: BaseViewController {
 
     // MARK: - property
@@ -26,14 +28,22 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var listIconView: UIImageView!
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
-    @IBOutlet weak var manitoOpenButton: UIButton!
+    
+    let manitoOpenButton: UIButton = {
+        let button = MainButton()
+        button.title = "마니또 공개"
+        button.hasShadow = true
+        return button
+    }()
     
     // MARK: - life cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    override func render() {
+        view.addSubview(manitoOpenButton)
+        manitoOpenButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
+            $0.centerX.equalToSuperview()
+        }
     }
     
     override func configUI() {
