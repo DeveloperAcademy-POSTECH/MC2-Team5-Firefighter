@@ -11,7 +11,7 @@ import SnapKit
 
 class CreateNickNameViewController: BaseViewController {
     
-    private var nickName: String = ""
+    private var nickname: String = ""
     
     // MARK: - Property
     
@@ -38,7 +38,7 @@ class CreateNickNameViewController: BaseViewController {
         textField.becomeFirstResponder()
         return textField
     }()
-    private lazy var doneButton : MainButton = {
+    private lazy var doneButton: MainButton = {
         let button = MainButton()
         button.title = "완료"
         button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
@@ -75,16 +75,16 @@ class CreateNickNameViewController: BaseViewController {
     
     // MARK: - Seletors
     
-    @objc func didTapDoneButton() {
+    @objc private func didTapDoneButton() {
         if let text = roomsNameTextField.text, !text.isEmpty {
-            nickName = text
+            nickname = text
         }
         roomsNameTextField.resignFirstResponder()
     }
     
     // MARK: - Funtions
     
-    func setupDelegation() {
+    private func setupDelegation() {
         roomsNameTextField.delegate = self
     }
     
