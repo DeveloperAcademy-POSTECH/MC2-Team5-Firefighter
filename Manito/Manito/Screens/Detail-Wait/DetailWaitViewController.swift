@@ -14,9 +14,8 @@ class DetailWaitViewController: BaseViewController {
     var canStart = false
     var maxUser = 15
     lazy var userCount = userArr.count
-    let isOwner = true
+    let isOwner = false
 
-    // enum들이 많아졌는데 따로 파일을 분리하는게 좋을까요 ?
     private enum ButtonText: String {
         case waiting = "시작을 기다리는 중..."
         case start = "마니또 시작"
@@ -27,7 +26,6 @@ class DetailWaitViewController: BaseViewController {
         case delete = "방 삭제"
     }
 
-    // 이거 enum으로 만드는거 괜찮나요 ??
     private enum AlertText: String {
         case setting
         case exit
@@ -46,7 +44,7 @@ class DetailWaitViewController: BaseViewController {
             case .setting:
                 return "방을 삭제하시면 다시 되돌릴 수 없습니다."
             case .exit:
-                return "초대코드를 입력하면 \n 다시 들어올 수 있어요"
+                return "초대코드를 입력하면 \n 다시 들어올 수 있어요."
             }
         }
 
@@ -64,14 +62,12 @@ class DetailWaitViewController: BaseViewController {
 
     private lazy var settingButton: UIButton = {
         let button = SettingButton()
-        button.menu = UIMenu(options: [], children: menuList)
+        button.menu = UIMenu(options: [], children: menuActionList)
         button.showsMenuAsPrimaryAction = true
         return button
     }()
 
-    // list로 쓰니까 뭔가 enum으로 만들었는데 제대로 활용 못하는 느낌 ?
-    // 이거도 property인가요 ?
-    private lazy var menuList = [
+    private lazy var menuActionList = [
         UIAction(title: MenuList.edit.rawValue, handler: { _ in print("수정") }),
         UIAction(title: MenuList.delete.rawValue, handler: { _ in
             self.makeRequestAlert(title: AlertText.setting.title, message: AlertText.setting.message, okTitle: AlertText.setting.okTitle, okAction: nil)
