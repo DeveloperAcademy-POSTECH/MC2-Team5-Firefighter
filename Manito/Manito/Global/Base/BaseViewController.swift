@@ -28,6 +28,7 @@ class BaseViewController: UIViewController {
         configUI()
         setupNavigationBar()
         setupBackButton()
+        hidekeyboardWhenTappedAround()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
