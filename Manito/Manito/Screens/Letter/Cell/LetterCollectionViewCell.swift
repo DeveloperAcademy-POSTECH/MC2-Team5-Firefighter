@@ -64,8 +64,11 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func prepareForReuse() {
-        photoImageView.image = nil
         contentLabel.text = nil
+        photoImageView.image = nil
+        photoImageView.snp.updateConstraints {
+            $0.height.equalTo(0)
+        }
     }
     
     override func render() {
@@ -106,19 +109,12 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         if let content = data.content {
             contentLabel.text = content
             contentLabel.addLabelSpacing()
-        } else {
-            contentLabel.text = nil
         }
         
         if let image = data.image {
             photoImageView.image = UIImage(systemName: "heart.fill")
             photoImageView.snp.updateConstraints {
                 $0.height.equalTo(204)
-            }
-        } else {
-            photoImageView.image = nil
-            photoImageView.snp.updateConstraints {
-                $0.height.equalTo(0)
             }
         }
     }
