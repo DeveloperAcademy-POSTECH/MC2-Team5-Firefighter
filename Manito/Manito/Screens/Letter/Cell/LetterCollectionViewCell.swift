@@ -36,15 +36,6 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        // FIXME: - 더미 데이터 추가해둠
-        dateLabel.text = "오늘"
-        contentLabel.text = """
-        오늘 구름을 봤는데 고양이를 너무 닮아서
-        귀여워서 보내드려요~ 오늘 하루도 화이팅!!
-        """
-        contentLabel.addLabelSpacing()
-        photoImageView.backgroundColor = .mainRed
     }
     
     required init?(coder: NSCoder) {
@@ -74,5 +65,20 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     override func configUI() {
         clipsToBounds = true
         makeBorderLayer(color: .white.withAlphaComponent(0.5))
+    }
+    
+    // MARK: - func
+    
+    func setLetterData(with data: Letter) {
+        dateLabel.text = data.date
+        
+        if let content = data.content {
+            contentLabel.text = content
+            contentLabel.addLabelSpacing()
+        }
+
+        if let image = data.image {
+            photoImageView.backgroundColor = .mainRed
+        }
     }
 }

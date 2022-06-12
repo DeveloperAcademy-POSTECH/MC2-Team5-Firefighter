@@ -15,12 +15,12 @@ final class LetterViewController: BaseViewController {
         case received = 0
         case sent = 1
         
-        var letterCount: Int {
+        var lists: [Letter] {
             switch self {
             case .received:
-                return receivedLetters.count
+                return receivedLetters
             case .sent:
-                return sentLetters.count
+                return sentLetters
             }
         }
     }
@@ -94,11 +94,12 @@ final class LetterViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return letterState.letterCount
+        return letterState.lists.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        cell.setLetterData(with: letterState.lists[indexPath.item])
         return cell
     }
     
