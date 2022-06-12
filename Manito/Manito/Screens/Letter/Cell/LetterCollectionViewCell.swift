@@ -36,6 +36,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     private var photoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -62,12 +63,16 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         return layoutAttributes
     }
     
+    override func prepareForReuse() {
+        photoImageView.image = nil
+        contentLabel.text = nil
+    }
+    
     override func render() {
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(14)
+            $0.bottom.equalToSuperview().inset(14).priority(.low)
             $0.trailing.equalToSuperview().inset(15)
-            $0.height.equalTo(15)
         }
         
         contentView.addSubview(stackView)
@@ -75,16 +80,16 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         stackView.addArrangedSubview(contentLabel)
         stackView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(dateLabel.snp.top).offset(-8)
+            $0.bottom.equalTo(dateLabel.snp.top).offset(-8).priority(.required)
         }
         
         contentLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(16)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
         
         photoImageView.snp.makeConstraints {
-            $0.height.equalTo(self.frame.size.height * 0.69)
+            $0.height.equalTo(0)
+            $0.top.leading.trailing.equalToSuperview()
         }
     }
     
@@ -106,9 +111,15 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         }
         
         if let image = data.image {
-            photoImageView.backgroundColor = .mainRed
+            photoImageView.image = UIImage(systemName: "heart.fill")
+            photoImageView.snp.updateConstraints {
+                $0.height.equalTo(204)
+            }
         } else {
             photoImageView.image = nil
+            photoImageView.snp.updateConstraints {
+                $0.height.equalTo(0)
+            }
         }
     }
 }
