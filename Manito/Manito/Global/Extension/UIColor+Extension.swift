@@ -19,10 +19,14 @@ extension UIColor {
         return UIColor(hex: "#A4291F")
     }
     
+    static var darkRed: UIColor {
+        return UIColor(hex: "#C84842")
+    }
+    
     // MARK: - grey
     
     static var backgroundGrey: UIColor {
-        return UIColor(hex: "#3D3D3D")
+        return UIColor(hex: "#242424")
     }
     
     static var subBackgroundGrey: UIColor {

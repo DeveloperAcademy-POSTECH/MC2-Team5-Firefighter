@@ -11,7 +11,9 @@ enum ImageLiterals {
     
     // MARK: - icon
     
-    static var icActivecheck: UIImage { .load(name: "ic_activecheck") }
+    static var icBack: UIImage { .load(systemName: "chevron.backward")  }
+    
+    static var xmark: UIImage { .load(systemName: "xmark.circle.fill")}
     
     // MARK: - image
     
@@ -23,6 +25,14 @@ extension UIImage {
             return UIImage()
         }
         image.accessibilityIdentifier = name
+        return image
+    }
+    
+    static func load(systemName: String) -> UIImage {
+        guard let image = UIImage(systemName: systemName, compatibleWith: nil) else {
+            return UIImage()
+        }
+        image.accessibilityIdentifier = systemName
         return image
     }
     
