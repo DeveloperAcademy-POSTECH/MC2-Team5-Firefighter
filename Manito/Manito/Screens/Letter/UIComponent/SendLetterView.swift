@@ -14,11 +14,8 @@ final class SendLetterView: UIView {
     // MARK: - property
     
     private let sendLetterButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("쪽지 쓰기", for: .normal)
-        button.backgroundColor = .mainRed
-        button.layer.cornerRadius = 30
-        button.titleLabel?.font = .font(.regular, ofSize: 20)
+        let button = MainButton()
+        button.title = "쪽지 쓰기"
         return button
     }()
 
@@ -44,8 +41,7 @@ final class SendLetterView: UIView {
         self.addSubview(sendLetterButton)
         sendLetterButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(13)
-            $0.leading.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(60)
+            $0.centerX.equalToSuperview()
         }
     }
     
