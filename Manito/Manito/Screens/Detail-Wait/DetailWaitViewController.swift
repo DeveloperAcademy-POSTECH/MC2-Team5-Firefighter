@@ -21,8 +21,13 @@ class DetailWaitViewController: BaseViewController {
         case complete = "완료"
     }
 
+    private enum ButtonText: String {
+        case waiting = "시작을 기다리는 중..."
+        case start = "마니또 시작"
+    }
+
     // MARK: - property
-    
+
     private lazy var settingButton: UIButton = {
         let button = SettingButton()
         let buttonAction = UIAction { _ in
@@ -108,10 +113,15 @@ class DetailWaitViewController: BaseViewController {
         return table
     }()
 
-    private let startButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.titleLabel?.font = .font(.regular, ofSize: 20)
-        button.layer.cornerRadius = 30
+    private lazy var startButton: UIButton = {
+        let button = MainButton()
+        if canStart {
+            button.title = ButtonText.start.rawValue
+            button.isDisabled = false
+        } else {
+            button.title = ButtonText.waiting.rawValue
+            button.isDisabled = true
+        }
         return button
     }()
 
@@ -199,16 +209,6 @@ class DetailWaitViewController: BaseViewController {
 
     override func configUI() {
         view.backgroundColor = .darkGrey002
-
-        if canStart {
-            startButton.setTitle("마니또 시작", for: .normal)
-            startButton.setTitleColor(.white, for: .normal)
-            startButton.backgroundColor = .mainRed
-        } else {
-            startButton.setTitle("시작을 기다리는 중...", for: .normal)
-            startButton.setTitleColor(.white.withAlphaComponent(0.3), for: .normal)
-            startButton.backgroundColor = .mainRed.withAlphaComponent(0.3)
-        }
     }
 
     // MARK: - func
