@@ -79,11 +79,9 @@ class CreateNickNameViewController: BaseViewController {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
         }
-        print(nickname)
     }
     
     @objc private func keyboardWillShow(notification:NSNotification){
-        print("Show")
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
             UIView.animate(withDuration: 0.2, animations: {
@@ -93,7 +91,6 @@ class CreateNickNameViewController: BaseViewController {
     }
     
     @objc private func keyboardWillHide(notification:NSNotification){
-        print("Hide")
         UIView.animate(withDuration: 0.2, animations: {
             self.doneButton.transform = .identity
         })
