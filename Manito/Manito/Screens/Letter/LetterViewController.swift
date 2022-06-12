@@ -54,7 +54,6 @@ final class LetterViewController: BaseViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 73, right: 0)
         collectionView.register(cell: LetterCollectionViewCell.self,
                                 forCellWithReuseIdentifier: LetterCollectionViewCell.className)
         collectionView.register(LetterHeaderView.self,
@@ -101,12 +100,14 @@ final class LetterViewController: BaseViewController {
     // MARK: - func
     
     private func reloadCollectionView(with state: LetterState) {
-        sendLetterView.isHidden = (state == .received)
+        let isReceivedState = (state == .received)
+        let bottomInset: CGFloat = (isReceivedState ? 0 : 73)
+        let topPoint = listCollectionView.adjustedContentInset.top + 1
         
-
-        
+        sendLetterView.isHidden = isReceivedState
+        listCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+        listCollectionView.setContentOffset(CGPoint(x: 0, y: -topPoint), animated: false)
         listCollectionView.collectionViewLayout.invalidateLayout()
-        listCollectionView.scrollsToTop = true
         listCollectionView.reloadData()
     }
 }
