@@ -11,16 +11,25 @@ import SnapKit
 
 final class LetterHeaderView: UICollectionReusableView {
     
-    private enum LetterState: String, CaseIterable {
-        case received = "받은 쪽지"
-        case sent = "보낸 쪽지"
+    private enum LetterState: Int, CaseIterable {
+        case received = 0
+        case sent = 1
+        
+        var title: String {
+            switch self {
+            case .received:
+                return "받은 쪽지"
+            case .sent:
+                return "보낸 쪽지"
+            }
+        }
     }
     
     // MARK: - property
     
-    private let segmentControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: [LetterState.received.rawValue,
-                                                 LetterState.sent.rawValue])
+    private lazy var segmentControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: [LetterState.received.title,
+                                                 LetterState.sent.title])
         let font = UIFont.font(.regular, ofSize: 14)
         let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
         let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
@@ -29,10 +38,12 @@ final class LetterHeaderView: UICollectionReusableView {
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
         control.backgroundColor = .darkGrey003
-        control.selectedSegmentIndex = 0
+        control.selectedSegmentIndex = segmentIndex
         
         return control
     }()
+    
+    var segmentIndex = LetterState.received.rawValue
     
     // MARK: - init
     
