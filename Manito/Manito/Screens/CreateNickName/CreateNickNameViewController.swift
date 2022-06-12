@@ -42,10 +42,6 @@ class CreateNickNameViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
     override func render() {
         
         view.addSubview(titleLabel)
@@ -66,12 +62,11 @@ class CreateNickNameViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
             $0.centerX.equalToSuperview()
         }
-        
     }
     
     // MARK: - Configure
     
     override func configUI() {
-        view.backgroundColor = .backgroundGrey
+        super.configUI()
     }
 }
