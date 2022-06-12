@@ -39,7 +39,7 @@ class CreateNickNameViewController: BaseViewController {
         textField.becomeFirstResponder()
         return textField
     }()
-    lazy var doneButton : MainButton = {
+    private lazy var doneButton : MainButton = {
         let button = MainButton()
         button.title = "완료"
         button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
