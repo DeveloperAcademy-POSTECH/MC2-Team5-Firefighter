@@ -9,6 +9,8 @@ import UIKit
 
 final class LetterCollectionViewCell: BaseCollectionViewCell {
     
+    
+    
     // MARK: - property
     
     private let dateLabel: UILabel = {
@@ -25,6 +27,11 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         label.lineBreakMode = .byCharWrapping
         return label
     }()
+    private let photoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
     
     // MARK: - init
     
@@ -37,6 +44,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         오늘 구름을 봤는데 고양이를 너무 닮아서
         귀여워서 보내드려요~ 오늘 하루도 화이팅!!
         """
+        photoImageView.backgroundColor = .mainRed
     }
     
     required init?(coder: NSCoder) {
@@ -55,9 +63,16 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
             $0.bottom.equalToSuperview().inset(39)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
+        
+        contentView.addSubview(photoImageView)
+        photoImageView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(self.frame.size.height * 0.69)
+        }
     }
     
     override func configUI() {
+        clipsToBounds = true
         makeBorderLayer(color: .white.withAlphaComponent(0.5))
     }
 }

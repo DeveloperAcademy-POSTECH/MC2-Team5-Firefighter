@@ -28,7 +28,7 @@ final class LetterViewController: BaseViewController {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.sectionInset = Size.collectionInset
-        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: 100)
+        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: 297)
         flowLayout.minimumLineSpacing = 33
         flowLayout.sectionHeadersPinToVisibleBounds = true
         return flowLayout
