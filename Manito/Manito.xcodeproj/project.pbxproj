@@ -45,6 +45,7 @@
 		B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525382854871E00614FF7 /* SendLetterView.swift */; };
 		CB9592B22855C09A00847751 /* ManitoRoomViewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomViewCollectionCell.swift */; };
 		CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissonView.swift */; };
+		CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,7 @@
 		B5F525382854871E00614FF7 /* SendLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterView.swift; sourceTree = "<group>"; };
 		CB9592B12855C09A00847751 /* ManitoRoomViewCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomViewCollectionCell.swift; sourceTree = "<group>"; };
 		CB9592B42855D52700847751 /* CommonMissonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissonView.swift; sourceTree = "<group>"; };
+		CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -342,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				CB9592B42855D52700847751 /* CommonMissonView.swift */,
+				CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
+				CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
