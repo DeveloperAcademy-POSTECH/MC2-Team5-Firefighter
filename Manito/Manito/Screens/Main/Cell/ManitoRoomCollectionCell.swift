@@ -13,7 +13,6 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     let currentMember = 5
     let goalMember = 10
-    let roomName = "명예소방관"
     
     // MARK: - property
     
@@ -23,7 +22,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         return imageView
     }()
     
-    private lazy var member: UILabel = {
+    lazy var member: UILabel = {
         let label = UILabel()
         label.text = "\(currentMember)/\(goalMember)"
         label.textColor = .white
@@ -31,15 +30,15 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         return label
     }()
     
-    private lazy var room: UILabel = {
+    lazy var room: UILabel = {
         let label = UILabel()
-        label.text = roomName
+        label.text = "마니또"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 20)
         return label
     }()
     
-    private lazy var date: UILabel = {
+    lazy var date: UILabel = {
         let label = UILabel()
         label.text = "22.06.01 ~ 22.06.06"
         label.textColor = .grey003
