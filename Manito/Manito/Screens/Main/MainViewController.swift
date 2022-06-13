@@ -78,6 +78,8 @@ class MainViewController: BaseViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(cell: ManitoRoomCollectionViewCell.self,
                                 forCellWithReuseIdentifier: ManitoRoomCollectionViewCell.className)
+        collectionView.register(cell: CreateRoomCollectionViewCell.self,
+                                forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
         return collectionView
     }()
 
@@ -136,21 +138,49 @@ class MainViewController: BaseViewController {
     }
 }
 
+// 임시 데이터
+let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
+
 // MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return roomData.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: ManitoRoomCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        return cell
+        if indexPath.item < roomData.count {
+            let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ManitoRoomCollectionViewCell", for: indexPath)
+            
+            guard let ManitoRoomCollectionViewCell = dequeuedCell as? ManitoRoomCollectionViewCell else {
+                fatalError("Wrong cell type for section 0. Expected ManitoRoomCollectionViewCell")
+            }
+            
+            ManitoRoomCollectionViewCell.room.text = roomData[indexPath.item]
+            
+            // configure your ManitoRoomCollectionViewCell
+            
+            return ManitoRoomCollectionViewCell
+        } else {
+            let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateRoomCollectionViewCell", for: indexPath)
+            
+            guard let CreateRoomCollectionViewCell = dequeuedCell as? CreateRoomCollectionViewCell else {
+                fatalError("Wrong cell type for section 0. Expected CreateRoomCollectionViewCell")
+            }
+            
+            // configure your CreateRoomCollectionViewCell
+            
+            return CreateRoomCollectionViewCell
+        }
     }
 }
 
 // MARK: - UICollectionViewDelegate
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("체크")
+        if indexPath.item < roomData.count {
+            print("방 클릭")
+        } else {
+            print("방 생성")
+        }
     }
 }
