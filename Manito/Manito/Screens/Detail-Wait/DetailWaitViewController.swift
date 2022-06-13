@@ -250,11 +250,11 @@ class DetailWaitViewController: BaseViewController {
                     })
             })
     }
-    
+
     private func presentModal() {
         let modalViewController = DetailModalController()
         let nav = UINavigationController(rootViewController: modalViewController)
-        
+
         present(nav, animated: true, completion: nil)
     }
 
@@ -284,7 +284,8 @@ class DetailWaitViewController: BaseViewController {
 
     // MARK: - selector
 
-    @objc func touchUpToShowToast() {
+    @objc
+    private func touchUpToShowToast() {
         UIPasteboard.general.string = "초대코드"
         self.showToast(message: "코드 복사 완료!")
     }

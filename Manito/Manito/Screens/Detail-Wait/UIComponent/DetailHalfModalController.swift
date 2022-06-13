@@ -115,7 +115,17 @@ class DetailModalController: BaseViewController {
         slider.maximumTrackTintColor = .grey006
         slider.minimumTrackTintColor = .darkRed
         slider.value = Float(memberCount)
+        slider.isContinuous = true
+        slider.addTarget(self, action: #selector(changeMemberCount(sender:)), for: .valueChanged)
         return slider
+    }()
+
+    private lazy var memberCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "\(memberCount)명"
+        label.font = .font(.regular, ofSize: 24)
+        label.textColor = .white
+        return label
     }()
 
     // MARK: - life cycle
@@ -197,6 +207,12 @@ class DetailModalController: BaseViewController {
             $0.height.equalTo(45)
             $0.centerY.equalTo(minMemberLabel.snp.centerY)
         }
+
+        view.addSubview(memberCountLabel)
+        memberCountLabel.snp.makeConstraints {
+            $0.top.equalTo(memberSlider.snp.bottom).offset(20)
+            $0.centerX.equalToSuperview()
+        }
     }
 
     // MARK: - func
@@ -204,6 +220,15 @@ class DetailModalController: BaseViewController {
     private func setupDelegation() {
         calendar.delegate = self
         calendar.dataSource = self
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func changeMemberCount(sender: UISlider) {
+        memberCountLabel.text = String(Int(sender.value)) + "명"
+        memberCountLabel.font = .font(.regular, ofSize: 24)
+        memberCountLabel.textColor = .white
     }
 }
 
