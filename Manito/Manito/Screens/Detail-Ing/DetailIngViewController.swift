@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 class DetailIngViewController: BaseViewController {
+    
+    var isDone: Bool = false
 
     // MARK: - property
     
@@ -69,7 +71,16 @@ class DetailIngViewController: BaseViewController {
     private func setupViewLayer() {
         missionBackgroundView.layer.cornerRadius = 10
         missionBackgroundView.layer.borderWidth = 1
-        missionBackgroundView.layer.borderColor = UIColor.systemYellow.cgColor
+        if isDone {
+            missionBackgroundView.layer.borderColor = UIColor.white.cgColor
+            manitoMemoryButton.layer.isHidden = false
+            manitoOpenButton.layer.isHidden = true
+        }
+        else {
+            missionBackgroundView.layer.borderColor = UIColor.systemYellow.cgColor
+            manitoMemoryButton.layer.isHidden = true
+            manitoOpenButton.layer.isHidden = false
+        }
         manitiBackView.layer.cornerRadius = 10
         manitiBackView.layer.borderWidth = 1
         manitiBackView.layer.borderColor = UIColor.white.cgColor
