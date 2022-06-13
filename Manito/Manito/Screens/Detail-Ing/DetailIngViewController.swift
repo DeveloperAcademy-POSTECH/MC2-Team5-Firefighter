@@ -11,7 +11,7 @@ import SnapKit
 
 class DetailIngViewController: BaseViewController {
     
-    var isDone: Bool = false
+    var isDone = false
 
     // MARK: - property
     
