@@ -180,7 +180,16 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.item < roomData.count {
             print("방 클릭")
         } else {
-            print("방 생성")
+            let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+            
+            let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: nil)
+            let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: nil)
+            let cancel = UIAlertAction(title: "취소", style: .default, handler: nil)
+            
+            alert.addAction(createRoom)
+            alert.addAction(enterRoom)
+            alert.addAction(cancel)
+            present(alert, animated: true, completion: nil)
         }
     }
 }
