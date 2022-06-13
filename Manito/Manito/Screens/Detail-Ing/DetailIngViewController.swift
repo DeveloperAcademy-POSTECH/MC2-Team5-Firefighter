@@ -81,19 +81,11 @@ class DetailIngViewController: BaseViewController {
             manitoMemoryButton.layer.isHidden = true
             manitoOpenButton.layer.isHidden = false
         }
-        manitiBackView.layer.cornerRadius = 10
-        manitiBackView.layer.borderWidth = 1
-        manitiBackView.layer.borderColor = UIColor.white.cgColor
+        manitiBackView.makeBorderLayer(color: .white)
         manitiImageView.layer.cornerRadius = 50
-        listBackView.layer.cornerRadius = 10
-        listBackView.layer.borderWidth = 1
-        listBackView.layer.borderColor = UIColor.white.cgColor
+        listBackView.makeBorderLayer(color: .white)
         listImageView.layer.cornerRadius = 50
-        letterBoxButton.layer.cornerRadius = 10
-        letterBoxButton.layer.borderWidth = 1
-        letterBoxButton.layer.borderColor = UIColor.white.cgColor
-        manitoMemoryButton.layer.cornerRadius = 10
-        manitoMemoryButton.layer.borderWidth = 1
-        manitoMemoryButton.layer.borderColor = UIColor.white.cgColor
+        letterBoxButton.makeBorderLayer(color: .white)
+        manitoMemoryButton.makeBorderLayer(color: .white)
     }
 }
