@@ -11,13 +11,12 @@ import SnapKit
 
 final class CreateLetterViewController: BaseViewController {
 
-    
     // MARK: - property
 
     private let indicatorView: UIView = {
-        let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 40, height: 3)))
+        let view = UIView()
         view.backgroundColor = .white.withAlphaComponent(0.8)
-        view.layer.cornerRadius = 5
+        view.layer.cornerRadius = 2
         return view
     }()
     private let cancelButton: UIButton = {
@@ -59,6 +58,8 @@ final class CreateLetterViewController: BaseViewController {
         indicatorView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(9)
             $0.centerX.equalToSuperview()
+            $0.height.equalTo(3)
+            $0.width.equalTo(40)
         }
         
         view.addSubview(scrollView)
