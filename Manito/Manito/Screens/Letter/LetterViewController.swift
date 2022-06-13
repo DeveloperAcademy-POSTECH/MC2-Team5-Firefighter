@@ -11,8 +11,23 @@ import SnapKit
 
 final class LetterViewController: BaseViewController {
     
+    private enum LetterState: Int, CaseIterable {
+        case received = 0
+        case sent = 1
+        
+        var lists: [Letter] {
+            switch self {
+            case .received:
+                return receivedLetters
+            case .sent:
+                return sentLetters
+            }
+        }
+    }
+    
     private enum Size {
         static let headerHeight: CGFloat = 66.0
+        static let emptyContentHeight: CGFloat = 48.0
         static let collectionHorizontalSpacing: CGFloat = 16.0
         static let collectionVerticalSpacing: CGFloat = 18.0
         static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2
@@ -28,9 +43,9 @@ final class LetterViewController: BaseViewController {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.sectionInset = Size.collectionInset
-        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: 100)
         flowLayout.minimumLineSpacing = 33
         flowLayout.sectionHeadersPinToVisibleBounds = true
+        flowLayout.estimatedItemSize = CGSize(width: Size.cellWidth, height: Size.emptyContentHeight)
         return flowLayout
     }()
     private lazy var listCollectionView: UICollectionView = {
@@ -48,12 +63,19 @@ final class LetterViewController: BaseViewController {
     }()
     private let sendLetterView = SendLetterView()
     
+    private var letterState: LetterState = .received {
+        didSet {
+            reloadCollectionView(with: self.letterState)
+        }
+    }
+    
     // MARK: - life cycle
     
     override func render() {
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
         }
         
         view.addSubview(sendLetterView)
@@ -64,6 +86,7 @@ final class LetterViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
+        sendLetterView.isHidden = (letterState == .received)
     }
     
     override func setupNavigationBar() {
@@ -73,16 +96,31 @@ final class LetterViewController: BaseViewController {
         navigationItem.largeTitleDisplayMode = .automatic
         title = "쪽지함"
     }
+    
+    // MARK: - func
+    
+    private func reloadCollectionView(with state: LetterState) {
+        let isReceivedState = (state == .received)
+        let bottomInset: CGFloat = (isReceivedState ? 0 : 73)
+        let topPoint = listCollectionView.adjustedContentInset.top + 1
+        
+        sendLetterView.isHidden = isReceivedState
+        listCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+        listCollectionView.setContentOffset(CGPoint(x: 0, y: -topPoint), animated: false)
+        listCollectionView.collectionViewLayout.invalidateLayout()
+        listCollectionView.reloadData()
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return letterState.lists.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        cell.setLetterData(with: letterState.lists[indexPath.item])
         return cell
     }
     
@@ -90,6 +128,13 @@ extension LetterViewController: UICollectionViewDataSource {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LetterHeaderView.className, for: indexPath) as? LetterHeaderView else { assert(false, "do not have reusable view") }
+            
+            headerView.segmentControlIndex = letterState.rawValue
+            headerView.changeSegmentControlIndex = { [weak self] index in
+                guard let letterStatus = LetterState.init(rawValue: index) else { return }
+                self?.letterState = letterStatus
+            }
+            
             return headerView
         default:
             assert(false, "do not use footer")
