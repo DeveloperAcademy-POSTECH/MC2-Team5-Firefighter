@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		392EC77E2855C388006918A9 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC77D2855C388006918A9 /* SettingButton.swift */; };
+		392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */; };
+		392EC783285613C0006918A9 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC782285613C0006918A9 /* ExitButton.swift */; };
+		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
+		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
 		7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C52854B47F00489E6A /* InputNameView.swift */; };
 		7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C72854B64D00489E6A /* InputPersonView.swift */; };
 		7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C92854B7A900489E6A /* InputDateView.swift */; };
@@ -38,11 +43,15 @@
 		B5F525242851A25400614FF7 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525232851A25400614FF7 /* UICollectionView+Extension.swift */; };
 		B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525252851A26D00614FF7 /* NSObject+Extension.swift */; };
 		B5F525292851A2A400614FF7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525282851A2A400614FF7 /* Logger.swift */; };
-		B5F5252F2852F69700614FF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B5F5252E2852F69700614FF7 /* SnapKit */; };
 		B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253028545E4C00614FF7 /* BackButton.swift */; };
 		B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253428547F1900614FF7 /* LetterHeaderView.swift */; };
 		B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */; };
 		B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525382854871E00614FF7 /* SendLetterView.swift */; };
+		B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253A2854ABF200614FF7 /* MainButton.swift */; };
+		B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */; };
+		B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525412855C97900614FF7 /* UILabel+Extension.swift */; };
+		B5F525452855CE3F00614FF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B5F525442855CE3F00614FF7 /* SnapKit */; };
+		B5F525492855D01D00614FF7 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525482855D01D00614FF7 /* Letter.swift */; };
 		CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */; };
 		CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissonView.swift */; };
 		CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */; };
@@ -51,6 +60,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		392EC77D2855C388006918A9 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
+		392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitTitleView.swift; sourceTree = "<group>"; };
+		392EC782285613C0006918A9 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
+		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
+		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		7E3058C52854B47F00489E6A /* InputNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputNameView.swift; sourceTree = "<group>"; };
 		7E3058C72854B64D00489E6A /* InputPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPersonView.swift; sourceTree = "<group>"; };
 		7E3058C92854B7A900489E6A /* InputDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDateView.swift; sourceTree = "<group>"; };
@@ -88,6 +102,10 @@
 		B5F5253428547F1900614FF7 /* LetterHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterHeaderView.swift; sourceTree = "<group>"; };
 		B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5F525382854871E00614FF7 /* SendLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterView.swift; sourceTree = "<group>"; };
+		B5F5253A2854ABF200614FF7 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
+		B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		B5F525412855C97900614FF7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		B5F525482855D01D00614FF7 /* Letter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
 		CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomCollectionCell.swift; sourceTree = "<group>"; };
 		CB9592B42855D52700847751 /* CommonMissonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissonView.swift; sourceTree = "<group>"; };
 		CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleView.swift; sourceTree = "<group>"; };
@@ -100,13 +118,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5F5252F2852F69700614FF7 /* SnapKit in Frameworks */,
+				B5F525452855CE3F00614FF7 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		392EC77F2855D107006918A9 /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */,
+				392EC782285613C0006918A9 /* ExitButton.swift */,
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		7E0C5C342855B1EF00F698D1 /* CreateNickName */ = {
+			isa = PBXGroup;
+			children = (
+				7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */,
+			);
+			path = CreateNickName;
+			sourceTree = "<group>";
+		};
 		7E3058C42854B45300489E6A /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +171,7 @@
 		B5F524CD28519AA000614FF7 /* Manito */ = {
 			isa = PBXGroup;
 			children = (
+				B5F525462855D00B00614FF7 /* Network */,
 				B5F524E328519AC300614FF7 /* Screens */,
 				B5F524E428519AC600614FF7 /* Global */,
 			);
@@ -145,6 +181,7 @@
 		B5F524E328519AC300614FF7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				7E0C5C342855B1EF00F698D1 /* CreateNickName */,
 				B5F524EA28519B4B00614FF7 /* Letter */,
 				B5F524E928519B3F00614FF7 /* Detail-Ing */,
 				B5F524E828519B2F00614FF7 /* Detail-Wait */,
@@ -200,6 +237,7 @@
 		B5F524E828519B2F00614FF7 /* Detail-Wait */ = {
 			isa = PBXGroup;
 			children = (
+				392EC77F2855D107006918A9 /* UIComponent */,
 				B5F525092851A06700614FF7 /* DetailWaitViewController.swift */,
 			);
 			path = "Detail-Wait";
@@ -236,7 +274,9 @@
 		B5F524F328519BB100614FF7 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
+				392EC77D2855C388006918A9 /* SettingButton.swift */,
 				B5F5253028545E4C00614FF7 /* BackButton.swift */,
+				B5F5253A2854ABF200614FF7 /* MainButton.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -250,6 +290,8 @@
 				B5F525212851A24100614FF7 /* UITableView+Extension.swift */,
 				B5F525232851A25400614FF7 /* UICollectionView+Extension.swift */,
 				B5F525252851A26D00614FF7 /* NSObject+Extension.swift */,
+				B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */,
+				B5F525412855C97900614FF7 /* UILabel+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -299,6 +341,7 @@
 				B5F525132851A0DB00614FF7 /* DetailWait.storyboard */,
 				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
 				B5F525172851A10600614FF7 /* Letter.storyboard */,
+				7E0C5C372855B73100F698D1 /* Splash.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -334,6 +377,22 @@
 				B5F525382854871E00614FF7 /* SendLetterView.swift */,
 			);
 			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		B5F525462855D00B00614FF7 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B5F525472855D01200614FF7 /* Models */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		B5F525472855D01200614FF7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B5F525482855D01D00614FF7 /* Letter.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		CB9592B02855BFDD00847751 /* Cell */ = {
@@ -372,7 +431,7 @@
 			);
 			name = Manito;
 			packageProductDependencies = (
-				B5F5252E2852F69700614FF7 /* SnapKit */,
+				B5F525442855CE3F00614FF7 /* SnapKit */,
 			);
 			productName = Manito;
 			productReference = B5F524CB28519AA000614FF7 /* Manito.app */;
@@ -403,7 +462,7 @@
 			);
 			mainGroup = B5F524C228519AA000614FF7;
 			packageReferences = (
-				B5F5252D2852F69700614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				B5F525432855CE3F00614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = B5F524CC28519AA000614FF7 /* Products */;
 			projectDirPath = "";
@@ -422,6 +481,7 @@
 				B5F525102851A0B500614FF7 /* CreateRoom.storyboard in Resources */,
 				B5F525122851A0CB00614FF7 /* InvitedCode.storyboard in Resources */,
 				B5F525182851A10600614FF7 /* Letter.storyboard in Resources */,
+				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
 				B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */,
 				B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */,
 				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
@@ -440,11 +500,16 @@
 			files = (
 				CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */,
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
+				392EC783285613C0006918A9 /* ExitButton.swift in Sources */,
+				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */,
+				392EC77E2855C388006918A9 /* SettingButton.swift in Sources */,
+				B5F525492855D01D00614FF7 /* Letter.swift in Sources */,
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,
 				7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
+				B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
@@ -457,6 +522,7 @@
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
 				B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
+				7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
 				CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
@@ -465,8 +531,10 @@
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
 				B5F525222851A24100614FF7 /* UITableView+Extension.swift in Sources */,
+				B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */,
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
+				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
 				CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */,
 				B5F525242851A25400614FF7 /* UICollectionView+Extension.swift in Sources */,
 			);
@@ -692,7 +760,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B5F5252D2852F69700614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		B5F525432855CE3F00614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
@@ -703,9 +771,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B5F5252E2852F69700614FF7 /* SnapKit */ = {
+		B5F525442855CE3F00614FF7 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B5F5252D2852F69700614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = B5F525432855CE3F00614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */

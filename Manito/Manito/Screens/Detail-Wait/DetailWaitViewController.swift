@@ -14,57 +14,100 @@ class DetailWaitViewController: BaseViewController {
     var canStart = false
     var maxUser = 15
     lazy var userCount = userArr.count
+    let isOwner = true
 
-    private enum StartStatus: String {
-        case waiting = "대기중"
-        case starting = "진행중"
-        case complete = "완료"
+    private enum UserStatus: Int, CaseIterable {
+        case owner = 0
+        case member = 1
+
+        var buttonTitle: String {
+            switch self {
+            case .owner:
+                return "마니또 시작"
+            case .member:
+                return "시작을 기다리는 중..."
+            }
+        }
+
+        var buttonDisabled: Bool {
+            switch self {
+            case .owner:
+                return false
+            case .member:
+                return true
+            }
+        }
+
+        var alertText: AlertText {
+            switch self {
+            case .owner:
+                return .delete
+            case .member:
+                return .exit
+            }
+        }
+    }
+
+    private enum AlertText {
+        case delete
+        case exit
+
+        var title: String {
+            switch self {
+            case .delete:
+                return "방을 삭제하실건가요?"
+            case .exit:
+                return "정말 나가실거예요?"
+            }
+        }
+
+        var message: String {
+            switch self {
+            case .delete:
+                return "방을 삭제하시면 다시 되돌릴 수 없습니다."
+            case .exit:
+                return "초대코드를 입력하면 \n 다시 들어올 수 있어요."
+            }
+        }
+
+        var okTitle: String {
+            switch self {
+            case .delete:
+                return "삭제"
+            case .exit:
+                return "나가기"
+            }
+        }
+    }
+
+    private enum ButtonText: String {
+        case waiting = "시작을 기다리는 중..."
+        case start = "마니또 시작"
     }
 
     // MARK: - property
 
-    private let roomTitle: UILabel = {
-        let label = UILabel()
-        label.text = "명예소방관"
-        label.textColor = .white
-        label.font = .font(.regular, ofSize: 34)
-        return label
+    private lazy var settingButton: UIButton = {
+        let button = SettingButton()
+        button.menu = UIMenu(options: [], children: [
+                UIAction(title: "방 정보 수정", handler: { _ in print("수정") }),
+                UIAction(title: "방 삭제", handler: { _ in
+                    self.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
+                })])
+        button.showsMenuAsPrimaryAction = true
+        return button
     }()
 
-    private let startStauts: UILabel = {
-        let label = UILabel()
-        label.text = StartStatus.waiting.rawValue
-        label.backgroundColor = .badgeBeige
-        label.layer.masksToBounds = true
-        label.layer.cornerRadius = 11
-        label.textColor = .darkGrey004
-        label.font = .font(.regular, ofSize: 13)
-        label.textAlignment = .center
-        return label
+    private lazy var exitButton: UIButton = {
+        let button = ExitButton()
+        let buttonAction = UIAction { _ in
+            self.makeRequestAlert(title: AlertText.exit.title, message: AlertText.exit.message, okTitle: AlertText.exit.okTitle, okAction: nil)
+        }
+        button.addAction(buttonAction, for: .touchUpInside)
+        return button
     }()
 
-    private lazy var durationView: UIView = {
-        let durationView = UIView()
-        durationView.backgroundColor = .darkRed.withAlphaComponent(0.65)
-        durationView.layer.cornerRadius = 8
-        return durationView
-    }()
-
-    private let durationText: UILabel = {
-        let durationText = UILabel()
-        durationText.text = "진행 기간"
-        durationText.textColor = .grey004
-        durationText.font = .font(.regular, ofSize: 14)
-        return durationText
-    }()
-
-    private let durationDateText: UILabel = {
-        let dateText = UILabel()
-        dateText.text = "22.06.06 ~ 22.06.10"
-        dateText.textColor = .white
-        dateText.font = .font(.regular, ofSize: 18)
-        return dateText
-    }()
+    private let titleView = DetailWaitTitleView()
 
     private let togetherFriendText: UILabel = {
         let label = UILabel()
@@ -99,10 +142,15 @@ class DetailWaitViewController: BaseViewController {
         return table
     }()
 
-    private let startButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.titleLabel?.font = .font(.regular, ofSize: 20)
-        button.layer.cornerRadius = 30
+    private lazy var startButton: UIButton = {
+        let button = MainButton()
+        if canStart {
+            button.title = ButtonText.start.rawValue
+            button.isDisabled = false
+        } else {
+            button.title = ButtonText.waiting.rawValue
+            button.isDisabled = true
+        }
         return button
     }()
 
@@ -114,44 +162,17 @@ class DetailWaitViewController: BaseViewController {
     }
 
     override func render() {
-        view.addSubview(roomTitle)
-        roomTitle.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(16)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
-        }
-
-        view.addSubview(startStauts)
-        startStauts.snp.makeConstraints {
-            $0.centerY.equalTo(roomTitle.snp.centerY)
-            $0.leading.equalTo(roomTitle.snp.trailing).offset(10)
-            $0.width.equalTo(66)
-            $0.height.equalTo(23)
-        }
-
-        durationView.addSubview(durationText)
-        durationView.addSubview(durationDateText)
-
-        view.addSubview(durationView)
-        durationView.snp.makeConstraints {
-            $0.top.equalTo(roomTitle.snp.bottom).offset(30)
-            $0.trailing.leading.equalToSuperview().inset(16)
-            $0.height.equalTo(36)
-        }
-
-        durationText.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
-            $0.centerY.equalToSuperview()
-        }
-
-        durationDateText.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(40)
-            $0.centerY.equalToSuperview()
+        view.addSubview(titleView)
+        titleView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().offset(100)
+            $0.height.equalTo(86)
         }
 
         view.addSubview(togetherFriendText)
         togetherFriendText.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)
-            $0.top.equalTo(durationView.snp.bottom).offset(44)
+            $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
 
         view.addSubview(comeInText)
@@ -189,16 +210,7 @@ class DetailWaitViewController: BaseViewController {
 
     override func configUI() {
         view.backgroundColor = .darkGrey002
-
-        if canStart {
-            startButton.setTitle("마니또 시작", for: .normal)
-            startButton.setTitleColor(.white, for: .normal)
-            startButton.backgroundColor = .mainRed
-        } else {
-            startButton.setTitle("시작을 기다리는 중...", for: .normal)
-            startButton.setTitleColor(.white.withAlphaComponent(0.3), for: .normal)
-            startButton.backgroundColor = .mainRed.withAlphaComponent(0.3)
-        }
+        setupNavigationRightButton()
     }
 
     // MARK: - func
@@ -235,6 +247,30 @@ class DetailWaitViewController: BaseViewController {
                         toastLabel.removeFromSuperview()
                     })
             })
+    }
+
+    // MARK: - private func
+
+    private func setupSettingButton() {
+        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: settingButton, offsetX: -10)
+        let settingButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
+
+        navigationItem.rightBarButtonItem = settingButton
+    }
+
+    private func setupExitButton() {
+        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: exitButton, offsetX: -10)
+        let exitButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
+
+        navigationItem.rightBarButtonItem = exitButton
+    }
+
+    private func setupNavigationRightButton() {
+        if isOwner {
+            setupSettingButton()
+        } else {
+            setupExitButton()
+        }
     }
 
     // MARK: - selector

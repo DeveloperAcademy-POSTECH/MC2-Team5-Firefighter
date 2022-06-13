@@ -27,6 +27,7 @@ class BaseViewController: UIViewController {
         render()
         configUI()
         setupBackButton()
+        hidekeyboardWhenTappedAround()
         setupNavigationBar()
     }
     

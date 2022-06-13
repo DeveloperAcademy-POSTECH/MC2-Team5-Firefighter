@@ -29,11 +29,7 @@ class MainViewController: BaseViewController {
         return view
     }()
     
-    private let settingButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = .red
-        return button
-    }()
+    private let settingButton = SettingButton()
     
     private var lightImage: UIImageView = {
         let image = UIImageView()
