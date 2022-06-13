@@ -12,13 +12,9 @@ enum ImageLiterals {
     // MARK: - icon
     
     static var icBack: UIImage { .load(systemName: "chevron.backward") }
-    
-    static var xmark: UIImage { .load(systemName: "xmark.circle.fill") }
-    
+    static var icXmark: UIImage { .load(systemName: "xmark.circle.fill") }
     static var icSetting: UIImage { .load(systemName: "gearshape") }
-    
     static var icExit: UIImage { .load(systemName: "rectangle.portrait.and.arrow.right") }
-    
     static var icCamera: UIImage { .load(systemName: "camera.on.rectangle") }
     
     // MARK: - image

@@ -22,7 +22,7 @@ class CreateRoomViewController: BaseViewController {
     lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
-        button.setImage(ImageLiterals.xmark, for: .normal)
+        button.setImage(ImageLiterals.icXmark, for: .normal)
         button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         return button
     }()
