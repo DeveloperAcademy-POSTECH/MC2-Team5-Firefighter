@@ -43,9 +43,11 @@
 		B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253428547F1900614FF7 /* LetterHeaderView.swift */; };
 		B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */; };
 		B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525382854871E00614FF7 /* SendLetterView.swift */; };
-		CB9592B22855C09A00847751 /* ManitoRoomViewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomViewCollectionCell.swift */; };
+		CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */; };
 		CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissonView.swift */; };
 		CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */; };
+		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
+		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,9 +88,11 @@
 		B5F5253428547F1900614FF7 /* LetterHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterHeaderView.swift; sourceTree = "<group>"; };
 		B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5F525382854871E00614FF7 /* SendLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterView.swift; sourceTree = "<group>"; };
-		CB9592B12855C09A00847751 /* ManitoRoomViewCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomViewCollectionCell.swift; sourceTree = "<group>"; };
+		CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomCollectionCell.swift; sourceTree = "<group>"; };
 		CB9592B42855D52700847751 /* CommonMissonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissonView.swift; sourceTree = "<group>"; };
 		CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleView.swift; sourceTree = "<group>"; };
+		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
+		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,7 +339,8 @@
 		CB9592B02855BFDD00847751 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				CB9592B12855C09A00847751 /* ManitoRoomViewCollectionCell.swift */,
+				CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */,
+				CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -345,6 +350,7 @@
 			children = (
 				CB9592B42855D52700847751 /* CommonMissonView.swift */,
 				CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */,
+				CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -432,6 +438,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */,
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */,
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,
@@ -452,6 +459,7 @@
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
 				CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */,
+				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
@@ -459,7 +467,7 @@
 				B5F525222851A24100614FF7 /* UITableView+Extension.swift in Sources */,
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
-				CB9592B22855C09A00847751 /* ManitoRoomViewCollectionCell.swift in Sources */,
+				CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */,
 				B5F525242851A25400614FF7 /* UICollectionView+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
