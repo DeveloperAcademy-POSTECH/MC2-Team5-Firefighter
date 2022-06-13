@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EXr-Ct-gdV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0cF-MW-u9o">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -247,20 +248,49 @@
             </objects>
             <point key="canvasLocation" x="971.01449275362324" y="105.80357142857143"/>
         </scene>
-        <!--Friend List View Controller-->
+        <!--Detail Friend List View-->
         <scene sceneID="gAs-0V-Dtw">
             <objects>
-                <viewController storyboardIdentifier="FriendListViewController" id="EXr-Ct-gdV" customClass="FriendListViewController" customModule="Manito" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FriendListViewController" title="Detail Friend List View" id="EXr-Ct-gdV" customClass="FriendListViewController" customModule="Manito" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4dV-dp-iOt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DW5-pm-f3M">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UG3-f5-a0L">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="9bK-Ra-P6r">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="L7W-vs-yGN">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="0Eq-am-Htd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="0Eq-am-Htd" firstAttribute="trailing" secondItem="DW5-pm-f3M" secondAttribute="trailing" id="Nb4-nv-SIF"/>
+                            <constraint firstItem="DW5-pm-f3M" firstAttribute="top" secondItem="0Eq-am-Htd" secondAttribute="top" id="Tuv-tc-g00"/>
+                            <constraint firstAttribute="bottom" secondItem="DW5-pm-f3M" secondAttribute="bottom" id="YwB-b0-q3F"/>
+                            <constraint firstItem="DW5-pm-f3M" firstAttribute="leading" secondItem="0Eq-am-Htd" secondAttribute="leading" id="pSl-Af-FoD"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="함께 하는 친구들" id="BnL-5s-02p"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zAW-5I-gB9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1851" y="106"/>
+            <point key="canvasLocation" x="2693" y="106"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tQJ-G3-8JC">
@@ -279,6 +309,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KNc-hd-0ki" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="60.869565217391312" y="105.80357142857143"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="boF-Qo-B3Y">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0cF-MW-u9o" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="in1-xA-AT3">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="EXr-Ct-gdV" kind="relationship" relationship="rootViewController" id="xiA-4m-S3M"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BLG-0Q-KTz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1754" y="106"/>
         </scene>
     </scenes>
     <resources>
