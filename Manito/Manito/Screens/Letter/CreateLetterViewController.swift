@@ -27,10 +27,10 @@ final class CreateLetterViewController: BaseViewController {
         button.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
         return button
     }()
-    private let modifyButton: UIButton = {
-        let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
+    private let sendButton: UIButton = {
+        let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 44)))
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.setTitle("변경", for: .normal)
+        button.setTitle("보내기", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .highlighted)
         return button
@@ -117,12 +117,10 @@ final class CreateLetterViewController: BaseViewController {
     // MARK: - func
     
     private func setupNavigationItem() {
-        let leftOffsetCancelButton = removeBarButtonItemOffset(with: cancelButton, offsetX: 10)
-        let rightOffsetModifyButton = removeBarButtonItemOffset(with: modifyButton, offsetX: -10)
-        let cancelButton = makeBarButtonItem(with: leftOffsetCancelButton)
-        let modifyButton = makeBarButtonItem(with: rightOffsetModifyButton)
+        let cancelButton = makeBarButtonItem(with: cancelButton)
+        let sendButton = makeBarButtonItem(with: sendButton)
         
         navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItem = modifyButton
+        navigationItem.rightBarButtonItem = sendButton
     }
 }
