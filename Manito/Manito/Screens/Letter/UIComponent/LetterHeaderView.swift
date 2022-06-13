@@ -11,16 +11,12 @@ import SnapKit
 
 final class LetterHeaderView: UICollectionReusableView {
     
-    private enum LetterState: String, CaseIterable {
-        case received = "받은 쪽지"
-        case sent = "보낸 쪽지"
-    }
+    var changeSegmentControlIndex: ((Int) -> ())?
     
     // MARK: - property
     
-    private let segmentControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: [LetterState.received.rawValue,
-                                                 LetterState.sent.rawValue])
+    private lazy var segmentControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["받은 쪽지", "보낸 쪽지"])
         let font = UIFont.font(.regular, ofSize: 14)
         let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
         let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
@@ -29,10 +25,16 @@ final class LetterHeaderView: UICollectionReusableView {
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
         control.backgroundColor = .darkGrey003
-        control.selectedSegmentIndex = 0
+        control.addTarget(self, action: #selector(changedIndexValue(_:)), for: .valueChanged)
         
         return control
     }()
+    
+    var segmentControlIndex: Int = 0 {
+        didSet {
+            segmentControl.selectedSegmentIndex = segmentControlIndex
+        }
+    }
     
     // MARK: - init
     
@@ -59,5 +61,13 @@ final class LetterHeaderView: UICollectionReusableView {
     
     private func configUI() {
         backgroundColor = .backgroundGrey
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func changedIndexValue(_ sender: UISegmentedControl) {
+        segmentControlIndex = sender.selectedSegmentIndex
+        changeSegmentControlIndex?(segmentControlIndex)
     }
 }
