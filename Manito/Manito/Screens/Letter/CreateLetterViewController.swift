@@ -20,6 +20,22 @@ final class CreateLetterViewController: BaseViewController {
         view.layer.cornerRadius = 5
         return view
     }()
+    private let cancelButton: UIButton = {
+        let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
+        button.titleLabel?.font = .font(.regular, ofSize: 16)
+        button.setTitle("취소", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
+        return button
+    }()
+    private let modifyButton: UIButton = {
+        let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
+        button.titleLabel?.font = .font(.regular, ofSize: 16)
+        button.setTitle("변경", for: .normal)
+        button.setTitleColor(.subBlue, for: .normal)
+        button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .highlighted)
+        return button
+    }()
     private let missionView = IndividualMissionView(mission: "1000원 이하의 선물 주고 인증샷 받기")
     private let letterTextView = LetterTextView()
     private let letterPhotoView = LetterPhotoView()
@@ -28,7 +44,7 @@ final class CreateLetterViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupNavigationItem()
     }
     
     override func render() {
@@ -40,7 +56,7 @@ final class CreateLetterViewController: BaseViewController {
         
         view.addSubview(missionView)
         missionView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(54)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(25)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(100)
         }
@@ -56,5 +72,36 @@ final class CreateLetterViewController: BaseViewController {
             $0.top.equalTo(letterTextView.snp.bottom).offset(22)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
+    }
+    
+    override func setupNavigationBar() {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        let appearance = UINavigationBarAppearance()
+        let font = UIFont.font(.regular, ofSize: 16)
+        
+        appearance.titleTextAttributes = [.font: font]
+        appearance.shadowColor = .clear
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .clear
+        appearance.backgroundImage = nil
+        appearance.shadowImage = nil
+            
+        navigationBar.standardAppearance = appearance
+        navigationBar.compactAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
+        
+        title = "쪽지 작성하기"
+    }
+    
+    // MARK: - func
+    
+    private func setupNavigationItem() {
+        let leftOffsetCancelButton = removeBarButtonItemOffset(with: cancelButton, offsetX: 10)
+        let rightOffsetModifyButton = removeBarButtonItemOffset(with: modifyButton, offsetX: -10)
+        let cancelButton = makeBarButtonItem(with: leftOffsetCancelButton)
+        let modifyButton = makeBarButtonItem(with: rightOffsetModifyButton)
+        
+        navigationItem.leftBarButtonItem = cancelButton
+        navigationItem.rightBarButtonItem = modifyButton
     }
 }
