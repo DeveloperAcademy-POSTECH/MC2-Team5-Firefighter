@@ -90,7 +90,9 @@ class DetailWaitViewController: BaseViewController {
     private lazy var settingButton: UIButton = {
         let button = SettingButton()
         button.menu = UIMenu(options: [], children: [
-                UIAction(title: "방 정보 수정", handler: { _ in print("수정") }),
+                UIAction(title: "방 정보 수정", handler: { _ in
+                    self.presentModal()
+                }),
                 UIAction(title: "방 삭제", handler: { _ in
                     self.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
                 })])
@@ -247,6 +249,17 @@ class DetailWaitViewController: BaseViewController {
                         toastLabel.removeFromSuperview()
                     })
             })
+    }
+    
+    private func presentModal() {
+        let detailviewController = DetailHalfModalController()
+        let nav = UINavigationController(rootViewController: detailviewController)
+        
+        if let sheet = nav.sheetPresentationController {
+            sheet.detents = [.large()]
+        }
+        
+        present(nav, animated: true, completion: nil)
     }
 
     // MARK: - private func
