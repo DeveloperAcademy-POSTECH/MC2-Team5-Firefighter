@@ -25,6 +25,8 @@ final class CommonMissonView: UIView {
     private lazy var mission: UILabel = {
         let label = UILabel()
         label.text = missonName
+        label.numberOfLines = 2
+        label.textAlignment = .center
         label.textColor = .white
         label.font = .font(.regular, ofSize: 25)
         return label
@@ -35,7 +37,6 @@ final class CommonMissonView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         render()
-        configUI()
     }
     
     required init?(coder: NSCoder) {
@@ -47,18 +48,14 @@ final class CommonMissonView: UIView {
     private func render() {
         self.addSubview(title)
         title.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(50)
+            $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
         
         self.addSubview(mission)
         mission.snp.makeConstraints {
-            $0.top.equalTo(self.title).offset(50)
-            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.title.snp.bottom).offset(40)
+            $0.bottom.leading.trailing.equalToSuperview()
         }
-    }
-    
-    private func configUI() {
-        backgroundColor = .darkGrey001
     }
 }

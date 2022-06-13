@@ -26,7 +26,10 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     }()
 
     func setupView(){
-        backgroundColor = .blue
+        backgroundColor = .grey003.withAlphaComponent(0.3)
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
+        layer.cornerRadius = 10
 
         addSubview(imageView)
         

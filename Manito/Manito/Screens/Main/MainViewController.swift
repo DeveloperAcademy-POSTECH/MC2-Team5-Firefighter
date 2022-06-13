@@ -41,6 +41,12 @@ class MainViewController: BaseViewController {
         return image
     }()
     
+    private var commonMissionImageView: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = .red
+        return image
+    }()
+    
     private var commonMissionView: CommonMissonView = {
         let view = CommonMissonView()
         return view
@@ -87,18 +93,23 @@ class MainViewController: BaseViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(50)
         }
         
-        view.addSubview(commonMissionView)
-        commonMissionView.snp.makeConstraints {
-//            $0.height.equalTo(UIScreen.main.bounds.size.width - 48).multipliedBy(0.4)
-            $0.height.equalTo(200)
+        view.addSubview(commonMissionImageView)
+        commonMissionImageView.snp.makeConstraints {
+            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.5)
             $0.leading.trailing.equalToSuperview().inset(24)
             $0.top.equalTo(lightImage.snp.bottom)
             $0.centerX.equalToSuperview()
         }
         
+        commonMissionImageView.addSubview(commonMissionView)
+        commonMissionView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(30)
+        }
+        
         view.addSubview(menuTitle)
         menuTitle.snp.makeConstraints {
-            $0.top.equalTo(commonMissionView.snp.bottom).offset(50)
+            $0.top.equalTo(commonMissionImageView.snp.bottom).offset(50)
             $0.leading.equalToSuperview().offset(16)
         }
         
