@@ -11,6 +11,8 @@ import SnapKit
 
 class CreateRoomViewController: BaseViewController {
     
+    private var index = 0
+    
     // MARK: - Property
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -27,22 +29,35 @@ class CreateRoomViewController: BaseViewController {
         return button
     }()
     
-    private let nextButton: MainButton = {
+    private lazy var nextButton: MainButton = {
         let button = MainButton()
         button.title = "다음"
+        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         return button
     }()
     
-    private let nameView = InputNameView()
+    private let nameView: InputNameView = {
+        let view = InputNameView()
+        view.isHidden = false
+        return view
+        
+    }()
     
-    private let personView = InputPersonView()
+    private let personView: InputPersonView = {
+        let view = InputPersonView()
+        view.isHidden = true
+        return view
+    }()
     
-    private let dateView = InputDateView()
+    private let dateView: InputDateView = {
+        let view = InputDateView()
+        view.isHidden = true
+        return view
+    }()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func render() {
@@ -96,11 +111,32 @@ class CreateRoomViewController: BaseViewController {
     }
     
     // MARK: - Selectors
-    @objc func didTapCloseButton() {
+    @objc private func didTapCloseButton() {
         print("ttaapp")
     }
     
-    @objc func didTapNextButton() {
+    @objc private func didTapNextButton() {
         print("tap")
-    }    
+        index += 1
+        changedInputView()
+    }
+    
+    // MARK: - Functions
+    private func changedInputView() {
+        if index % 3 == 0 {
+            self.nameView.isHidden = false
+            self.personView.isHidden = true
+            self.dateView.isHidden = true
+        }
+        else if index % 3 == 1 {
+            self.nameView.isHidden = true
+            self.personView.isHidden = false
+            self.dateView.isHidden = true
+        }
+        else {
+            self.nameView.isHidden = true
+            self.personView.isHidden = true
+            self.dateView.isHidden = false
+        }
+    }
 }
