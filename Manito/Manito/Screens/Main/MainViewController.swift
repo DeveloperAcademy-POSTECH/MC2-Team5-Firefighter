@@ -6,10 +6,13 @@
 //
 
 import UIKit
+
 import SnapKit
 
 class MainViewController: BaseViewController {
     
+    // 임시 데이터
+    let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
     private let nickname = "코비"
     
     private enum Size {
@@ -24,10 +27,7 @@ class MainViewController: BaseViewController {
     
     // MARK: - property
     
-    private var appTitleView: AppTitleView = {
-        let view = AppTitleView()
-        return view
-    }()
+    private var appTitleView = AppTitleView ()
     
     private let settingButton = SettingButton()
     
@@ -43,10 +43,7 @@ class MainViewController: BaseViewController {
         return image
     }()
     
-    private var commonMissionView: CommonMissonView = {
-        let view = CommonMissonView()
-        return view
-    }()
+    private let commonMissionView = CommonMissonView()
     
     private lazy var menuTitle: UILabel = {
         let label = UILabel()
@@ -62,7 +59,6 @@ class MainViewController: BaseViewController {
         flowLayout.sectionInset = Size.collectionInset
         flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
         flowLayout.minimumLineSpacing = 24
-        flowLayout.sectionHeadersPinToVisibleBounds = true
         return flowLayout
     }()
     
@@ -82,21 +78,18 @@ class MainViewController: BaseViewController {
     // MARK: - life cycle
     
     override func render() {
-        
         view.addSubview(lightImage)
         lightImage.snp.makeConstraints {
-            $0.width.equalTo(30)
-            $0.height.equalTo(30)
+            $0.width.height.equalTo(30)
             $0.leading.equalToSuperview().inset(24)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(50)
         }
         
         view.addSubview(commonMissionImageView)
         commonMissionImageView.snp.makeConstraints {
-            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.5)
             $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.5)
             $0.top.equalTo(lightImage.snp.bottom)
-            $0.centerX.equalToSuperview()
         }
         
         commonMissionImageView.addSubview(commonMissionView)
@@ -125,17 +118,28 @@ class MainViewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.largeTitleDisplayMode = .automatic
         let appTitleView = makeBarButtonItem(with: appTitleView)
         let settingButtonView = makeBarButtonItem(with: settingButton)
+        
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.leftBarButtonItem = appTitleView
         navigationItem.rightBarButtonItem = settingButtonView
     }
+    
+    func newRoom() {
+        let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+        
+        let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: nil)
+        let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: nil)
+        let cancel = UIAlertAction(title: "취소", style: .default, handler: nil)
+        
+        alert.addAction(createRoom)
+        alert.addAction(enterRoom)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+    }
 }
-
-// 임시 데이터
-let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
 
 // MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
@@ -145,22 +149,22 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item < roomData.count {
-            let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ManitoRoomCollectionViewCell", for: indexPath)
+            let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath)
             
             guard let ManitoRoomCollectionViewCell = dequeuedCell as? ManitoRoomCollectionViewCell else {
-                fatalError("Wrong cell type for section 0. Expected ManitoRoomCollectionViewCell")
+                assert(false, "Wrong ManitoRoomCollectionViewCell")
             }
             
-            ManitoRoomCollectionViewCell.room.text = roomData[indexPath.item]
+            ManitoRoomCollectionViewCell.roomLabel.text = roomData[indexPath.item]
             
             // configure your ManitoRoomCollectionViewCell
             
             return ManitoRoomCollectionViewCell
         } else {
-            let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateRoomCollectionViewCell", for: indexPath)
+            let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: CreateRoomCollectionViewCell.className, for: indexPath)
             
             guard let CreateRoomCollectionViewCell = dequeuedCell as? CreateRoomCollectionViewCell else {
-                fatalError("Wrong cell type for section 0. Expected CreateRoomCollectionViewCell")
+                assert(false, "Wrong CreateRoomCollectionViewCell")
             }
             
             // configure your CreateRoomCollectionViewCell
@@ -176,16 +180,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.item < roomData.count {
             print("방 클릭")
         } else {
-            let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
-            
-            let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: nil)
-            let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: nil)
-            let cancel = UIAlertAction(title: "취소", style: .default, handler: nil)
-            
-            alert.addAction(createRoom)
-            alert.addAction(enterRoom)
-            alert.addAction(cancel)
-            present(alert, animated: true, completion: nil)
+            newRoom()
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import SnapKit
 
 final class CommonMissonView: UIView {
@@ -14,7 +15,7 @@ final class CommonMissonView: UIView {
     
     // MARK: - property
     
-    private lazy var title: UILabel = {
+    private let title: UILabel = {
         let label = UILabel()
         label.text = "오늘의 공통미션"
         label.textColor = .grey003
@@ -48,8 +49,7 @@ final class CommonMissonView: UIView {
     private func render() {
         self.addSubview(title)
         title.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.centerX.equalToSuperview()
+            $0.top.centerX.equalToSuperview()
         }
         
         self.addSubview(mission)

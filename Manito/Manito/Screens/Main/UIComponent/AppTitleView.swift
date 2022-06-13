@@ -6,19 +6,20 @@
 //
 
 import UIKit
+
 import SnapKit
 
 final class AppTitleView: UIView {
     
     // MARK: - property
     
-    private lazy var appLogo: UIImageView = {
+    private let appLogo: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .red
         return image
     }()
     
-    private lazy var appName: UILabel = {
+    private let appName: UILabel = {
         let label = UILabel()
         label.text = "MANITO"
         label.textColor = .white

@@ -5,11 +5,11 @@
 //  Created by COBY_PRO on 2022/06/13.
 //
 
-import SnapKit
 import UIKit
 
+import SnapKit
+
 class CreateRoomCollectionViewCell: UICollectionViewCell{
-    static let identifier = "CreateRoomCollectionViewCell"
     
     // MARK: - property
     
@@ -19,7 +19,7 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
         return imageView
     }()
     
-    private var menu: UILabel = {
+    private var menuLabel: UILabel = {
         let label = UILabel()
         label.text = "새로운 마니또 시작"
         label.textColor = .grey003
@@ -32,6 +32,7 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        render()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -42,20 +43,19 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
 
     func setupView(){
         backgroundColor = .grey003.withAlphaComponent(0.3)
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
-        layer.cornerRadius = 10
-
+        makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
+    }
+    
+    func render() {
         addSubview(imageView)
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(22)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(85)
-            $0.height.equalTo(85)
+            $0.width.height.equalTo(85)
         }
         
-        addSubview(menu)
-        menu.snp.makeConstraints {
+        addSubview(menuLabel)
+        menuLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(22)
             $0.centerX.equalToSuperview()
         }
