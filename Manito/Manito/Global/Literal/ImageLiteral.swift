@@ -19,6 +19,8 @@ enum ImageLiterals {
     
     static var icExit: UIImage { .load(systemName: "rectangle.portrait.and.arrow.right") }
     
+    static var icCamera: UIImage { .load(systemName: "camera.on.rectangle") }
+    
     // MARK: - image
     
 }

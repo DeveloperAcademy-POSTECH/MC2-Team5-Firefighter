@@ -33,7 +33,7 @@ final class CreateLetterViewController: BaseViewController {
     override func render() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(59)
+            $0.top.equalToSuperview().inset(77)
             $0.leading.equalToSuperview().inset(23)
         }
         

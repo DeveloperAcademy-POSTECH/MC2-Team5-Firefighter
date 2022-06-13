@@ -18,6 +18,7 @@
 		B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */; };
 		B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFA2856B5180080992C /* IndividualMissionView.swift */; };
 		B50B1AFD2856C3500080992C /* LetterTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFC2856C3500080992C /* LetterTextView.swift */; };
+		B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFE2856D3820080992C /* LetterPhotoView.swift */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
 		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
@@ -69,6 +70,7 @@
 		B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterViewController.swift; sourceTree = "<group>"; };
 		B50B1AFA2856B5180080992C /* IndividualMissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualMissionView.swift; sourceTree = "<group>"; };
 		B50B1AFC2856C3500080992C /* LetterTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterTextView.swift; sourceTree = "<group>"; };
+		B50B1AFE2856D3820080992C /* LetterPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterPhotoView.swift; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				B5F525382854871E00614FF7 /* SendLetterView.swift */,
 				B50B1AFA2856B5180080992C /* IndividualMissionView.swift */,
 				B50B1AFC2856C3500080992C /* LetterTextView.swift */,
+				B50B1AFE2856D3820080992C /* LetterPhotoView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
+				B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */,
 				392EC783285613C0006918A9 /* ExitButton.swift in Sources */,
 				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */,
