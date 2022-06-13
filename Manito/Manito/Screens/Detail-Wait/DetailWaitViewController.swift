@@ -255,10 +255,6 @@ class DetailWaitViewController: BaseViewController {
         let modalViewController = DetailModalController()
         let nav = UINavigationController(rootViewController: modalViewController)
         
-        if let sheet = nav.sheetPresentationController {
-            sheet.detents = [.large()]
-        }
-        
         present(nav, animated: true, completion: nil)
     }
 
