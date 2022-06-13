@@ -22,6 +22,7 @@ final class CreateLetterViewController: BaseViewController {
     }()
     private let missionView = IndividualMissionView(mission: "1000원 이하의 선물 주고 인증샷 받기")
     private let letterTextView = LetterTextView()
+    private let letterPhotoView = LetterPhotoView()
     
     // MARK: - life cycle
     
@@ -47,6 +48,12 @@ final class CreateLetterViewController: BaseViewController {
         view.addSubview(letterTextView)
         letterTextView.snp.makeConstraints {
             $0.top.equalTo(missionView.snp.bottom).offset(32)
+            $0.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        view.addSubview(letterPhotoView)
+        letterPhotoView.snp.makeConstraints {
+            $0.top.equalTo(letterTextView.snp.bottom).offset(22)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
     }
