@@ -326,7 +326,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="9bQ-q4-MsQ" secondAttribute="trailing" constant="30" id="eaX-Kl-hZf"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.86274509799999999" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
                                         <size key="customSize" width="160" height="160"/>
                                         <connections>
                                             <outlet property="friendListBackView" destination="9bQ-q4-MsQ" id="YxT-k6-Dos"/>

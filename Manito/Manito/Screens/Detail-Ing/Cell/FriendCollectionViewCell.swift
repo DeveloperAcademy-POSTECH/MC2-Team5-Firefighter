@@ -12,12 +12,13 @@ class FriendCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var friendListImageView: UIImageView!
     @IBOutlet weak var friendListNameLabel: UILabel!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    func setupFont() {
+        friendListNameLabel.font = .font(.regular, ofSize: 15)
     }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        print("아니에요")
+    func setupViewLayer() {
+        friendListBackView.makeBorderLayer(color: .white)
+        friendListImageView.layer.cornerRadius = 45
+        friendListBackView.layer.cornerRadius = 49
     }
 }
