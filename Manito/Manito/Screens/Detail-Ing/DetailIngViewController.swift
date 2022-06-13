@@ -28,6 +28,7 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var listIconView: UIImageView!
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
+    @IBOutlet weak var manitoMemoryButton: UIButton!
     
     private let manitoOpenButton: UIButton = {
         let button = MainButton()
@@ -62,6 +63,7 @@ class DetailIngViewController: BaseViewController {
         manitiLabel.font = .font(.regular, ofSize: 15)
         listLabel.font = .font(.regular, ofSize: 15)
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
+        manitoMemoryButton.titleLabel?.font = .font(.regular, ofSize: 15)
     }
     
     private func setupViewLayer() {
@@ -79,5 +81,8 @@ class DetailIngViewController: BaseViewController {
         letterBoxButton.layer.cornerRadius = 10
         letterBoxButton.layer.borderWidth = 1
         letterBoxButton.layer.borderColor = UIColor.white.cgColor
+        manitoMemoryButton.layer.cornerRadius = 10
+        manitoMemoryButton.layer.borderWidth = 1
+        manitoMemoryButton.layer.borderColor = UIColor.white.cgColor
     }
 }
