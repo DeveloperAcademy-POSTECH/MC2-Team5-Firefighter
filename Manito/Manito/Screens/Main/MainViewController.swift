@@ -10,7 +10,7 @@ import SnapKit
 
 class MainViewController: BaseViewController {
     
-    let nickname = "코비"
+    private let nickname = "코비"
     
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 24
@@ -24,15 +24,24 @@ class MainViewController: BaseViewController {
     
     // MARK: - property
     
-    private lazy var appName: UILabel = {
-        let label = UILabel()
-        label.text = "MANITO"
-        label.textColor = .white
-        label.font = .font(.regular, ofSize: 28)
-        return label
+    private var appTitleView: AppTitleView = {
+        let view = AppTitleView()
+        return view
     }()
     
-    private lazy var commonMissionView: CommonMissonView = {
+    private let settingButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .red
+        return button
+    }()
+    
+    private var lightImage: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = .red
+        return image
+    }()
+    
+    private var commonMissionView: CommonMissonView = {
         let view = CommonMissonView()
         return view
     }()
@@ -70,10 +79,20 @@ class MainViewController: BaseViewController {
     
     override func render() {
         
+        view.addSubview(lightImage)
+        lightImage.snp.makeConstraints {
+            $0.width.equalTo(30)
+            $0.height.equalTo(30)
+            $0.leading.equalToSuperview().inset(24)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+        }
+        
         view.addSubview(commonMissionView)
         commonMissionView.snp.makeConstraints {
+//            $0.height.equalTo(UIScreen.main.bounds.size.width - 48).multipliedBy(0.4)
+            $0.height.equalTo(200)
             $0.leading.trailing.equalToSuperview().inset(24)
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+            $0.top.equalTo(lightImage.snp.bottom)
             $0.centerX.equalToSuperview()
         }
         
@@ -99,8 +118,10 @@ class MainViewController: BaseViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .automatic
-        let appTitleView = makeBarButtonItem(with: appName)
+        let appTitleView = makeBarButtonItem(with: appTitleView)
+        let settingButtonView = makeBarButtonItem(with: settingButton)
         navigationItem.leftBarButtonItem = appTitleView
+        navigationItem.rightBarButtonItem = settingButtonView
     }
 }
 

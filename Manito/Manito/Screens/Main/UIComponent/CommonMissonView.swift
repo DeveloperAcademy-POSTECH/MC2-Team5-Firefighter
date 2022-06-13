@@ -10,19 +10,21 @@ import SnapKit
 
 final class CommonMissonView: UIView {
     
+    let missonName = "별별인사하기"
+    
     // MARK: - property
     
     private lazy var title: UILabel = {
         let label = UILabel()
         label.text = "오늘의 공통미션"
-        label.textColor = .white
+        label.textColor = .grey003
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
     
     private lazy var mission: UILabel = {
         let label = UILabel()
-        label.text = "별별인사하기"
+        label.text = missonName
         label.textColor = .white
         label.font = .font(.regular, ofSize: 25)
         return label
@@ -43,10 +45,6 @@ final class CommonMissonView: UIView {
     // MARK: - func
     
     private func render() {
-        self.snp.makeConstraints {
-            $0.height.equalTo(200)
-        }
-        
         self.addSubview(title)
         title.snp.makeConstraints {
             $0.top.equalToSuperview().offset(50)
