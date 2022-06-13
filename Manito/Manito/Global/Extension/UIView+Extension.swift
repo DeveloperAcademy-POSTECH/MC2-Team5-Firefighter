@@ -19,4 +19,12 @@ extension UIView {
         layer.shadowRadius = radius
         return self
     }
+    
+    @discardableResult
+    func makeBorderLayer(color: UIColor) -> Self {
+        layer.cornerRadius = 10
+        layer.borderWidth = 1
+        layer.borderColor = color.cgColor
+        return self
+    }
 }

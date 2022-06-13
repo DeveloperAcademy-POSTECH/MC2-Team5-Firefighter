@@ -59,7 +59,6 @@ extension UIColor {
     
     // MARK: - darkGrey
     
-    /// backgroundGrey랑 겹칩니다. 후에 수정할게요.
     static var darkGrey001: UIColor {
         return UIColor(hex: "#3D3D3D")
     }
@@ -74,6 +73,10 @@ extension UIColor {
     
     static var darkGrey004: UIColor {
         return UIColor(hex: "#616161")
+    }
+    
+    static var darkGrey005: UIColor {
+        return UIColor(hex: "#828282")
     }
     
     // MARK: - orange
