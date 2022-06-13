@@ -14,6 +14,12 @@ final class CreateLetterViewController: BaseViewController {
     
     // MARK: - property
 
+    private let indicatorView: UIView = {
+        let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 40, height: 3)))
+        view.backgroundColor = .white.withAlphaComponent(0.8)
+        view.layer.cornerRadius = 5
+        return view
+    }()
     private let missionView = IndividualMissionView(mission: "1000원 이하의 선물 주고 인증샷 받기")
     private let letterTextView = LetterTextView()
     private let letterPhotoView = LetterPhotoView()
@@ -26,6 +32,12 @@ final class CreateLetterViewController: BaseViewController {
     }
     
     override func render() {
+        view.addSubview(indicatorView)
+        indicatorView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(9)
+            $0.centerX.equalToSuperview()
+        }
+        
         view.addSubview(missionView)
         missionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(54)
