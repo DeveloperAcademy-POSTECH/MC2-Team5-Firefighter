@@ -49,6 +49,14 @@ extension UIColor {
         return UIColor(hex: "#DFDFDF")
     }
     
+    static var grey006: UIColor {
+        return UIColor(hex: "#717174")
+    }
+    
+    static var grey007: UIColor {
+        return UIColor(hex: "#353536")
+    }
+    
     // MARK: - darkGrey
     
     /// backgroundGrey랑 겹칩니다. 후에 수정할게요.
