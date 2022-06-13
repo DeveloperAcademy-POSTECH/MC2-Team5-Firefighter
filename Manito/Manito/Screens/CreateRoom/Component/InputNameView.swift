@@ -20,12 +20,8 @@ class InputNameView: UIView {
         ]
         texField.backgroundColor = .subBackgroundGrey
         texField.attributedPlaceholder = NSAttributedString(string: "방 이름을 적어주세요", attributes:attributes)
-        
-        texField.layer.cornerRadius = 10
-        texField.layer.masksToBounds = true
-        texField.layer.borderWidth = 1
-        texField.layer.borderColor = UIColor.white.cgColor
         texField.textAlignment = .center
+        texField.makeBorderLayer(color: .white)
         return texField
     }()
     
