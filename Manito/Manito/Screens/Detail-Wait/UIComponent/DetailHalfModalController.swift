@@ -10,13 +10,13 @@ import UIKit
 import FSCalendar
 import SnapKit
 
-class DetailHalfModalController: UIViewController {
+class DetailModalController: BaseViewController {
 
     var memberCount = 7
 
     // MARK: - property
 
-    private lazy var cancleButton: UIButton = {
+    private lazy var cancelButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { _ in
             self.dismiss(animated: true)
@@ -35,7 +35,7 @@ class DetailHalfModalController: UIViewController {
         return view
     }()
 
-    private lazy var changeText: UIButton = {
+    private lazy var changeButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { _ in
             self.dismiss(animated: true)
@@ -47,14 +47,14 @@ class DetailHalfModalController: UIViewController {
         return button
     }()
 
-    private let titleText: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "방 정보 수정"
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
 
-    private let startSettingText: UILabel = {
+    private let startSettingLabel: UILabel = {
         let label = UILabel()
         label.text = "진행기간 설정"
         label.font = .font(.regular, ofSize: 16)
@@ -66,27 +66,25 @@ class DetailHalfModalController: UIViewController {
         let calendar = FSCalendar()
         calendar.locale = Locale(identifier: "ko_KR")
         calendar.backgroundColor = .darkGrey001
-        calendar.layer.cornerRadius = 13 // 듀나의 코드가 pull이 안되서 좀따 수정하겠슴다
-        calendar.layer.borderWidth = 1
-        calendar.layer.borderColor = UIColor.white.cgColor
+        calendar.makeBorderLayer(color: .grey007)
         calendar.appearance.headerDateFormat = "YYYY년 MM월"
         calendar.appearance.headerTitleColor = .white
         calendar.scrollDirection = .vertical
-        calendar.appearance.headerTitleAlignment = .center // "2022년 6월" 가운데 정렬
+        calendar.appearance.headerTitleAlignment = .center
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
-        calendar.appearance.weekdayTextColor = .grey006 // 월화수목금토일 글자색
-        calendar.appearance.titleWeekendColor = .mainRed.withAlphaComponent(0.8) // 토일 숫자 색
-        calendar.appearance.titleDefaultColor = .white.withAlphaComponent(0.8) // 월화수목금 숫자 색 (너무 쨍해서 0.8로 줬어요)
+        calendar.appearance.weekdayTextColor = .grey005
+        calendar.appearance.titleWeekendColor = .mainRed.withAlphaComponent(0.8)
+        calendar.appearance.titleDefaultColor = .white.withAlphaComponent(0.8)
         // FIXME: weekdayTextColor와 색상이 같아서 수정이 필요해보임
-        calendar.appearance.titlePlaceholderColor = .grey006
+        calendar.appearance.titlePlaceholderColor = .grey005
         calendar.appearance.headerTitleFont = .font(.regular, ofSize: 20)
         calendar.appearance.weekdayFont = .font(.regular, ofSize: 14)
         calendar.appearance.titleFont = .font(.regular, ofSize: 20)
-        calendar.allowsMultipleSelection = true // 다중 선택 가능
+        calendar.allowsMultipleSelection = true
         return calendar
     }()
 
-    private let setMemberText: UILabel = {
+    private let setMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "인원 설정"
         label.font = .font(.regular, ofSize: 18)
@@ -94,7 +92,7 @@ class DetailHalfModalController: UIViewController {
         return label
     }()
 
-    private let minMemberText: UILabel = {
+    private let minMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "5인"
         label.font = .font(.regular, ofSize: 16)
@@ -102,7 +100,7 @@ class DetailHalfModalController: UIViewController {
         return label
     }()
 
-    private let maxMemberText: UILabel = {
+    private let maxMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "15인"
         label.font = .font(.regular, ofSize: 16)
@@ -114,7 +112,7 @@ class DetailHalfModalController: UIViewController {
         let slider = UISlider()
         slider.minimumValue = 5
         slider.maximumValue = 15
-        slider.maximumTrackTintColor = .grey007
+        slider.maximumTrackTintColor = .grey006
         slider.minimumTrackTintColor = .darkRed
         slider.value = Float(memberCount)
         return slider
@@ -124,25 +122,23 @@ class DetailHalfModalController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
-        render()
         setupDelegation()
-        self.navigationController?.isNavigationBarHidden = true
     }
 
-    private func configUI() {
+    override func configUI() {
+        self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .darkGrey002
     }
 
-    private func render() {
-        view.addSubview(cancleButton)
-        cancleButton.snp.makeConstraints {
+    override func render() {
+        view.addSubview(cancelButton)
+        cancelButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
             $0.leading.equalToSuperview().inset(29)
         }
 
-        view.addSubview(changeText)
-        changeText.snp.makeConstraints {
+        view.addSubview(changeButton)
+        changeButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
             $0.trailing.equalToSuperview().inset(29)
         }
@@ -155,51 +151,51 @@ class DetailHalfModalController: UIViewController {
             $0.height.equalTo(3)
         }
 
-        view.addSubview(titleText)
-        titleText.snp.makeConstraints {
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.centerY.equalTo(cancleButton.snp.centerY)
+            $0.centerY.equalTo(cancelButton.snp.centerY)
         }
 
-        view.addSubview(startSettingText)
-        startSettingText.snp.makeConstraints {
-            $0.top.equalTo(cancleButton.snp.bottom).offset(51)
+        view.addSubview(startSettingLabel)
+        startSettingLabel.snp.makeConstraints {
+            $0.top.equalTo(cancelButton.snp.bottom).offset(51)
             $0.leading.equalToSuperview().inset(16)
         }
 
         view.addSubview(calendar)
         calendar.snp.makeConstraints {
-            $0.top.equalTo(startSettingText.snp.bottom).offset(30)
+            $0.top.equalTo(startSettingLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(400)
             $0.width.equalTo(360)
         }
 
-        view.addSubview(setMemberText)
-        setMemberText.snp.makeConstraints {
+        view.addSubview(setMemberLabel)
+        setMemberLabel.snp.makeConstraints {
             $0.top.equalTo(calendar.snp.bottom).offset(45)
             $0.leading.equalToSuperview().inset(16)
         }
 
-        view.addSubview(minMemberText)
-        minMemberText.snp.makeConstraints {
-            $0.top.equalTo(setMemberText.snp.bottom).offset(30)
+        view.addSubview(minMemberLabel)
+        minMemberLabel.snp.makeConstraints {
+            $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(24)
         }
 
-        view.addSubview(maxMemberText)
-        maxMemberText.snp.makeConstraints {
-            $0.top.equalTo(setMemberText.snp.bottom).offset(30)
+        view.addSubview(maxMemberLabel)
+        maxMemberLabel.snp.makeConstraints {
+            $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
             $0.trailing.equalToSuperview().inset(24)
         }
 
         view.addSubview(memberSlider)
         memberSlider.snp.makeConstraints {
-            $0.top.equalTo(setMemberText.snp.bottom).offset(17)
-            $0.leading.equalTo(minMemberText.snp.trailing).offset(5)
-            $0.trailing.equalTo(maxMemberText.snp.leading).offset(-5)
+            $0.top.equalTo(setMemberLabel.snp.bottom).offset(17)
+            $0.leading.equalTo(minMemberLabel.snp.trailing).offset(5)
+            $0.trailing.equalTo(maxMemberLabel.snp.leading).offset(-5)
             $0.height.equalTo(45)
-            $0.centerY.equalTo(minMemberText.snp.centerY)
+            $0.centerY.equalTo(minMemberLabel.snp.centerY)
         }
     }
 
@@ -211,5 +207,5 @@ class DetailHalfModalController: UIViewController {
     }
 }
 
-extension DetailHalfModalController: FSCalendarDelegate { }
-extension DetailHalfModalController: FSCalendarDataSource { }
+extension DetailModalController: FSCalendarDelegate { }
+extension DetailModalController: FSCalendarDataSource { }

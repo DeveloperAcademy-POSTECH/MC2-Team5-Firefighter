@@ -252,8 +252,8 @@ class DetailWaitViewController: BaseViewController {
     }
     
     private func presentModal() {
-        let detailviewController = DetailHalfModalController()
-        let nav = UINavigationController(rootViewController: detailviewController)
+        let modalViewController = DetailModalController()
+        let nav = UINavigationController(rootViewController: modalViewController)
         
         if let sheet = nav.sheetPresentationController {
             sheet.detents = [.large()]
