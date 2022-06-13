@@ -45,18 +45,10 @@ final class LetterPhotoView: UIView {
             $0.top.leading.equalToSuperview()
         }
         
-        addSubview(letterTextView)
-        letterTextView.snp.makeConstraints {
+        addSubview(importPhotosButton)
+        importPhotosButton.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(17)
-            $0.height.equalTo(108)
-            $0.leading.trailing.equalToSuperview()
-        }
-        
-        addSubview(countLabel)
-        countLabel.snp.makeConstraints {
-            $0.top.equalTo(letterTextView.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().inset(12)
-            $0.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 }
