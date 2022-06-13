@@ -66,7 +66,7 @@ class DetailModalController: BaseViewController {
         let calendar = FSCalendar()
         calendar.locale = Locale(identifier: "ko_KR")
         calendar.backgroundColor = .darkGrey001
-        calendar.makeBorderLayer(color: .grey007)
+        calendar.makeBorderLayer(color: .grey002)
         calendar.appearance.headerDateFormat = "YYYY년 MM월"
         calendar.appearance.headerTitleColor = .white
         calendar.scrollDirection = .vertical
