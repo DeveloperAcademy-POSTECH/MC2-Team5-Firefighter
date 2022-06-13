@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 class DetailIngViewController: BaseViewController {
+    
+    var isDone = false
 
     // MARK: - property
     
@@ -28,6 +30,7 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var listIconView: UIImageView!
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
+    @IBOutlet weak var manitoMemoryButton: UIButton!
     
     private let manitoOpenButton: UIButton = {
         let button = MainButton()
@@ -62,22 +65,27 @@ class DetailIngViewController: BaseViewController {
         manitiLabel.font = .font(.regular, ofSize: 15)
         listLabel.font = .font(.regular, ofSize: 15)
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
+        manitoMemoryButton.titleLabel?.font = .font(.regular, ofSize: 15)
     }
     
     private func setupViewLayer() {
         missionBackgroundView.layer.cornerRadius = 10
         missionBackgroundView.layer.borderWidth = 1
-        missionBackgroundView.layer.borderColor = UIColor.systemYellow.cgColor
-        manitiBackView.layer.cornerRadius = 10
-        manitiBackView.layer.borderWidth = 1
-        manitiBackView.layer.borderColor = UIColor.white.cgColor
+        if isDone {
+            missionBackgroundView.layer.borderColor = UIColor.white.cgColor
+            manitoMemoryButton.layer.isHidden = false
+            manitoOpenButton.layer.isHidden = true
+        }
+        else {
+            missionBackgroundView.layer.borderColor = UIColor.systemYellow.cgColor
+            manitoMemoryButton.layer.isHidden = true
+            manitoOpenButton.layer.isHidden = false
+        }
+        manitiBackView.makeBorderLayer(color: .white)
         manitiImageView.layer.cornerRadius = 50
-        listBackView.layer.cornerRadius = 10
-        listBackView.layer.borderWidth = 1
-        listBackView.layer.borderColor = UIColor.white.cgColor
+        listBackView.makeBorderLayer(color: .white)
         listImageView.layer.cornerRadius = 50
-        letterBoxButton.layer.cornerRadius = 10
-        letterBoxButton.layer.borderWidth = 1
-        letterBoxButton.layer.borderColor = UIColor.white.cgColor
+        letterBoxButton.makeBorderLayer(color: .white)
+        manitoMemoryButton.makeBorderLayer(color: .white)
     }
 }
