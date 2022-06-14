@@ -253,9 +253,8 @@ class DetailWaitViewController: BaseViewController {
 
     private func presentModal() {
         let modalViewController = DetailModalController()
-        let nav = UINavigationController(rootViewController: modalViewController)
-
-        present(nav, animated: true, completion: nil)
+        
+        present(modalViewController, animated: true, completion: nil)
     }
 
     // MARK: - private func

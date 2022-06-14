@@ -227,7 +227,7 @@ class DetailModalController: BaseViewController {
 
     @objc
     private func changeMemberCount(sender: UISlider) {
-        memberCountLabel.text = String(Int(sender.value)) + "명"
+        memberCountLabel.text = String(Int(sender.value)) + "인"
         memberCountLabel.font = .font(.regular, ofSize: 24)
         memberCountLabel.textColor = .white
     }
