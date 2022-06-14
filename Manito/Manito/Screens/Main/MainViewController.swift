@@ -16,9 +16,9 @@ class MainViewController: BaseViewController {
     private let nickname = "코비"
     
     private enum Size {
-        static let collectionHorizontalSpacing: CGFloat = 24
-        static let collectionVerticalSpacing: CGFloat = 24
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 3)/2
+        static let collectionHorizontalSpacing: CGFloat = 22
+        static let collectionVerticalSpacing: CGFloat = 17
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2 - collectionVerticalSpacing) / 2
         static let collectionInset = UIEdgeInsets(top: 0,
                                                   left: collectionHorizontalSpacing,
                                                   bottom: collectionVerticalSpacing,
@@ -58,7 +58,8 @@ class MainViewController: BaseViewController {
         flowLayout.scrollDirection = .vertical
         flowLayout.sectionInset = Size.collectionInset
         flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
-        flowLayout.minimumLineSpacing = 24
+        flowLayout.minimumLineSpacing = 16
+        flowLayout.minimumInteritemSpacing = 16
         return flowLayout
     }()
     
@@ -81,8 +82,8 @@ class MainViewController: BaseViewController {
         view.addSubview(lightImage)
         lightImage.snp.makeConstraints {
             $0.width.height.equalTo(30)
-            $0.leading.equalToSuperview().inset(24)
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+            $0.leading.equalToSuperview().inset(13)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
         }
         
         view.addSubview(commonMissionImageView)
@@ -106,7 +107,7 @@ class MainViewController: BaseViewController {
         
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(menuTitle.snp.bottom).offset(18)
+            $0.top.equalTo(menuTitle.snp.bottom).offset(17)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
