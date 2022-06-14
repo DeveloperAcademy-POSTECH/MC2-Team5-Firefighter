@@ -49,6 +49,18 @@ extension UIColor {
         return UIColor(hex: "#DFDFDF")
     }
     
+    static var grey005: UIColor {
+        return UIColor(hex: "#717174")
+    }
+    
+    static var grey006: UIColor {
+        return UIColor(hex: "#353536")
+    }
+    
+    static var grey007: UIColor {
+        return UIColor(hex: "#939393")
+    }
+    
     // MARK: - darkGrey
     
     static var darkGrey001: UIColor {
