@@ -110,10 +110,11 @@ class CreateRoomViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         view.backgroundColor = .backgroundGrey
-        
-        nameView.enableButton = { [weak self] in
-            self?.nextButton.isDisabled = false
-        }
+        toggleButton()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Selectors
@@ -141,30 +142,58 @@ class CreateRoomViewController: BaseViewController {
         })
     }
     
+    @objc private func didReceiveNameNotification(_ notification: Notification) {
+        self.nameView.isHidden = false
+        self.personView.isHidden = true
+        self.dateView.isHidden = true
+    }
+    
+    @objc private func didReceivePersonNotification(_ notification: Notification) {
+        self.nameView.isHidden = true
+        self.personView.isHidden = false
+        self.dateView.isHidden = true
+    }
+    
+    @objc private func didReceiveDateNotification(_ notification: Notification) {
+        self.nameView.isHidden = true
+        self.personView.isHidden = true
+        self.dateView.isHidden = false
+    }
+    
     // MARK: - Functions
     
-    private func changedInputView() {
-        if index % 3 == 0 {
-            self.nameView.isHidden = false
-            self.personView.isHidden = true
-            self.dateView.isHidden = true
+    private func toggleButton() {
+        nameView.enableButton = { [weak self] in
+            self?.nextButton.isDisabled = false
         }
-        else if index % 3 == 1 {
-            self.nameView.isHidden = true
-            self.personView.isHidden = false
-            self.dateView.isHidden = true
+    }
+    
+    private func changedInputView() {
+        if index == 0 {
+            NotificationCenter.default.post(name: NSNotification.Name("NameNotification"), object: nil)
+        }
+        else if index == 1 {
+            NotificationCenter.default.post(name: NSNotification.Name("PersonNotification"), object: nil)
+        }
+        else if index == 2 {
+            NotificationCenter.default.post(name: NSNotification.Name("DateNotification"), object: nil)
         }
         else {
-            self.nameView.isHidden = true
-            self.personView.isHidden = true
-            self.dateView.isHidden = false
+            print("end")
         }
     }
     
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNameNotification(_ :)), name: NSNotification.Name("NameNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceivePersonNotification(_ :)), name: NSNotification.Name("PersonNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateNotification(_ :)), name: NSNotification.Name("DateNotification"), object: nil)
     }
 }
 
+
+protocol Observer {
+    func update(_ notifyValue: Int)
+}
 
