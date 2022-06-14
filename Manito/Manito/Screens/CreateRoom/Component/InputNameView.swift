@@ -11,27 +11,25 @@ import SnapKit
 
 class InputNameView: UIView {
     
+    private var maxLength = 8
+    
     // MARK: - Property
-    private let roomsNameTextField: UITextField = {
+    lazy var roomsNameTextField: UITextField = {
         let texField = UITextField()
         let attributes = [
-            NSAttributedString.Key.foregroundColor : UIColor.white,
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         texField.backgroundColor = .subBackgroundGrey
         texField.attributedPlaceholder = NSAttributedString(string: "방 이름을 적어주세요", attributes:attributes)
-        
-        texField.layer.cornerRadius = 10
-        texField.layer.masksToBounds = true
-        texField.layer.borderWidth = 1
-        texField.layer.borderColor = UIColor.white.cgColor
         texField.textAlignment = .center
+        texField.makeBorderLayer(color: .white)
+        texField.delegate = self
         return texField
     }()
     
-    private let roomsTextLimit : UILabel = {
+    lazy var roomsTextLimit : UILabel = {
         let label = UILabel()
-        label.text = "0/8"
+        label.text = "0/\(maxLength)"
         label.font = .font(.regular, ofSize: 20)
         return label
     }()
@@ -59,5 +57,18 @@ class InputNameView: UIView {
             $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
             $0.right.equalToSuperview()
         }
+    }
+}
+
+extension InputNameView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text as NSString? else { return false }
+        let newString = text.replacingCharacters(in: range, with: string)
+        return newString.count <= maxLength
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        roomsTextLimit.text = "\(text.count)/\(maxLength)"
     }
 }
