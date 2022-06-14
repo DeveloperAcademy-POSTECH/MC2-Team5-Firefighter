@@ -10,6 +10,9 @@
 		392EC77E2855C388006918A9 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC77D2855C388006918A9 /* SettingButton.swift */; };
 		392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */; };
 		392EC783285613C0006918A9 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC782285613C0006918A9 /* ExitButton.swift */; };
+		39373EE02857610100F0E32A /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 39373EDF2857610100F0E32A /* FSCalendar */; };
+		39373EE32857610E00F0E32A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 39373EE22857610E00F0E32A /* SnapKit */; };
+		399D17AB2856C83B00F50D9D /* DetailHalfModalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
 		7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C52854B47F00489E6A /* InputNameView.swift */; };
@@ -54,7 +57,6 @@
 		B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253A2854ABF200614FF7 /* MainButton.swift */; };
 		B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */; };
 		B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525412855C97900614FF7 /* UILabel+Extension.swift */; };
-		B5F525452855CE3F00614FF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B5F525442855CE3F00614FF7 /* SnapKit */; };
 		B5F525492855D01D00614FF7 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525482855D01D00614FF7 /* Letter.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +64,7 @@
 		392EC77D2855C388006918A9 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitTitleView.swift; sourceTree = "<group>"; };
 		392EC782285613C0006918A9 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
+		399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHalfModalController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		7E3058C52854B47F00489E6A /* InputNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputNameView.swift; sourceTree = "<group>"; };
@@ -116,7 +119,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5F525452855CE3F00614FF7 /* SnapKit in Frameworks */,
+				39373EE02857610100F0E32A /* FSCalendar in Frameworks */,
+				39373EE32857610E00F0E32A /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +133,7 @@
 				392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */,
 				392EC77D2855C388006918A9 /* SettingButton.swift */,
 				392EC782285613C0006918A9 /* ExitButton.swift */,
+				399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -412,7 +417,8 @@
 			);
 			name = Manito;
 			packageProductDependencies = (
-				B5F525442855CE3F00614FF7 /* SnapKit */,
+				39373EDF2857610100F0E32A /* FSCalendar */,
+				39373EE22857610E00F0E32A /* SnapKit */,
 			);
 			productName = Manito;
 			productReference = B5F524CB28519AA000614FF7 /* Manito.app */;
@@ -443,7 +449,8 @@
 			);
 			mainGroup = B5F524C228519AA000614FF7;
 			packageReferences = (
-				B5F525432855CE3F00614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				39373EDE2857610100F0E32A /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				39373EE12857610E00F0E32A /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = B5F524CC28519AA000614FF7 /* Products */;
 			projectDirPath = "";
@@ -491,6 +498,7 @@
 				7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
+				399D17AB2856C83B00F50D9D /* DetailHalfModalController.swift in Sources */,
 				B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
@@ -740,9 +748,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B5F525432855CE3F00614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		39373EDE2857610100F0E32A /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		39373EE12857610E00F0E32A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.0;
@@ -751,9 +767,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B5F525442855CE3F00614FF7 /* SnapKit */ = {
+		39373EDF2857610100F0E32A /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B5F525432855CE3F00614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 39373EDE2857610100F0E32A /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+		39373EE22857610E00F0E32A /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39373EE12857610E00F0E32A /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
