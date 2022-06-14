@@ -195,17 +195,30 @@
                                     <constraint firstAttribute="bottom" secondItem="OcH-K7-LfP" secondAttribute="bottom" id="v5C-bY-wA7"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VeD-cY-mVa">
+                                <rect key="frame" x="22" y="687" width="347" height="80"/>
+                                <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="347" id="G1U-gJ-Jv5"/>
+                                    <constraint firstAttribute="height" constant="80" id="frH-nt-IPd"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="함께 했던 기록"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="dp8-IY-L6V" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="1l8-IR-vjQ"/>
                             <constraint firstItem="dp8-IY-L6V" firstAttribute="top" secondItem="PDH-QK-Zi6" secondAttribute="bottom" constant="12" id="4J8-qh-Oae"/>
+                            <constraint firstItem="VeD-cY-mVa" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="22" id="5YZ-pw-YRg"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="ne3-xF-fpF" secondAttribute="trailing" constant="16" id="6W3-7f-QZ7"/>
                             <constraint firstItem="PDH-QK-Zi6" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="GGH-Fx-hOS"/>
                             <constraint firstItem="fZJ-MB-brw" firstAttribute="top" secondItem="ne3-xF-fpF" secondAttribute="bottom" constant="44" id="H33-tB-Yis"/>
                             <constraint firstItem="ne3-xF-fpF" firstAttribute="top" secondItem="dp8-IY-L6V" secondAttribute="bottom" constant="30" id="Hbh-oe-VO8"/>
                             <constraint firstItem="gKn-4u-LDy" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="22" id="Mst-2v-l2H"/>
+                            <constraint firstItem="VeD-cY-mVa" firstAttribute="top" secondItem="gKn-4u-LDy" secondAttribute="bottom" constant="18" id="WWG-hj-1Ff"/>
                             <constraint firstItem="MnW-cb-NGs" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" constant="403" id="fes-qn-Q60"/>
                             <constraint firstItem="PDH-QK-Zi6" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="19" id="mFR-9E-deL"/>
                             <constraint firstItem="gKn-4u-LDy" firstAttribute="top" secondItem="fZJ-MB-brw" secondAttribute="bottom" constant="30" id="ncS-pF-6O4"/>
@@ -227,7 +240,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="informationTitleLabel" destination="fZJ-MB-brw" id="DLK-x1-FBZ"/>
-                        <outlet property="letterBoxButton" destination="OcH-K7-LfP" id="jeR-Wj-pUx"/>
+                        <outlet property="letterBoxButton" destination="OcH-K7-LfP" id="Z16-N3-xNK"/>
                         <outlet property="listBackView" destination="qAr-Z0-8Pd" id="Fcm-jF-9Ql"/>
                         <outlet property="listIconView" destination="Xg5-Qh-RDT" id="va6-q3-2ri"/>
                         <outlet property="listImageView" destination="weP-4O-TyG" id="GO6-ZZ-Xv7"/>
@@ -236,6 +249,7 @@
                         <outlet property="manitiIconView" destination="LWr-fu-P6T" id="vQ7-fM-PmV"/>
                         <outlet property="manitiImageView" destination="g7j-rM-Ytc" id="9wE-hq-MWz"/>
                         <outlet property="manitiLabel" destination="Hpq-VL-lVb" id="trl-DK-Lmx"/>
+                        <outlet property="manitoMemoryButton" destination="VeD-cY-mVa" id="Nb9-xx-ydi"/>
                         <outlet property="missionBackgroundView" destination="ne3-xF-fpF" id="uFi-Vw-aa4"/>
                         <outlet property="missionContentsLabel" destination="vma-X3-7Uq" id="y49-Oc-WnK"/>
                         <outlet property="missionTitleLabel" destination="kHA-mR-fkA" id="u4u-10-1xg"/>

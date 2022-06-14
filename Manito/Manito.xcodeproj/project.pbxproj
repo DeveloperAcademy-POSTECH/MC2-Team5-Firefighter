@@ -10,6 +10,9 @@
 		392EC77E2855C388006918A9 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC77D2855C388006918A9 /* SettingButton.swift */; };
 		392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */; };
 		392EC783285613C0006918A9 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC782285613C0006918A9 /* ExitButton.swift */; };
+		39373EE02857610100F0E32A /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 39373EDF2857610100F0E32A /* FSCalendar */; };
+		39373EE32857610E00F0E32A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 39373EE22857610E00F0E32A /* SnapKit */; };
+		399D17AB2856C83B00F50D9D /* DetailHalfModalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
 		7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C52854B47F00489E6A /* InputNameView.swift */; };
@@ -54,14 +57,19 @@
 		B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253A2854ABF200614FF7 /* MainButton.swift */; };
 		B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */; };
 		B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525412855C97900614FF7 /* UILabel+Extension.swift */; };
-		B5F525452855CE3F00614FF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B5F525442855CE3F00614FF7 /* SnapKit */; };
 		B5F525492855D01D00614FF7 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525482855D01D00614FF7 /* Letter.swift */; };
+		CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */; };
+		CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissonView.swift */; };
+		CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */; };
+		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
+		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		392EC77D2855C388006918A9 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitTitleView.swift; sourceTree = "<group>"; };
 		392EC782285613C0006918A9 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
+		399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHalfModalController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		7E3058C52854B47F00489E6A /* InputNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputNameView.swift; sourceTree = "<group>"; };
@@ -109,6 +117,11 @@
 		B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		B5F525412855C97900614FF7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		B5F525482855D01D00614FF7 /* Letter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
+		CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomCollectionCell.swift; sourceTree = "<group>"; };
+		CB9592B42855D52700847751 /* CommonMissonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissonView.swift; sourceTree = "<group>"; };
+		CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleView.swift; sourceTree = "<group>"; };
+		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
+		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +129,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5F525452855CE3F00614FF7 /* SnapKit in Frameworks */,
+				39373EE02857610100F0E32A /* FSCalendar in Frameworks */,
+				39373EE32857610E00F0E32A /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,8 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */,
-				392EC77D2855C388006918A9 /* SettingButton.swift */,
 				392EC782285613C0006918A9 /* ExitButton.swift */,
+				399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -218,6 +232,8 @@
 		B5F524E628519B0A00614FF7 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				CB9592B32855D51100847751 /* UIComponent */,
+				CB9592B02855BFDD00847751 /* Cell */,
 				B5F524FA28519C2A00614FF7 /* MainViewController.swift */,
 			);
 			path = Main;
@@ -272,6 +288,7 @@
 		B5F524F328519BB100614FF7 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
+				392EC77D2855C388006918A9 /* SettingButton.swift */,
 				B5F5253028545E4C00614FF7 /* BackButton.swift */,
 				B5F5253A2854ABF200614FF7 /* MainButton.swift */,
 			);
@@ -395,6 +412,25 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		CB9592B02855BFDD00847751 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */,
+				CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		CB9592B32855D51100847751 /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				CB9592B42855D52700847751 /* CommonMissonView.swift */,
+				CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */,
+				CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */,
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -412,7 +448,8 @@
 			);
 			name = Manito;
 			packageProductDependencies = (
-				B5F525442855CE3F00614FF7 /* SnapKit */,
+				39373EDF2857610100F0E32A /* FSCalendar */,
+				39373EE22857610E00F0E32A /* SnapKit */,
 			);
 			productName = Manito;
 			productReference = B5F524CB28519AA000614FF7 /* Manito.app */;
@@ -443,7 +480,8 @@
 			);
 			mainGroup = B5F524C228519AA000614FF7;
 			packageReferences = (
-				B5F525432855CE3F00614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				39373EDE2857610100F0E32A /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				39373EE12857610E00F0E32A /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = B5F524CC28519AA000614FF7 /* Products */;
 			projectDirPath = "";
@@ -479,6 +517,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */,
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
 				B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */,
 				392EC783285613C0006918A9 /* ExitButton.swift in Sources */,
@@ -491,10 +530,12 @@
 				7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
+				399D17AB2856C83B00F50D9D /* DetailHalfModalController.swift in Sources */,
 				B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
+				CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
@@ -506,6 +547,8 @@
 				7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */,
 				B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
+				CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */,
+				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
@@ -516,6 +559,7 @@
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
 				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
+				CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */,
 				B5F525242851A25400614FF7 /* UICollectionView+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -740,9 +784,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B5F525432855CE3F00614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		39373EDE2857610100F0E32A /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		39373EE12857610E00F0E32A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.0;
@@ -751,9 +803,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B5F525442855CE3F00614FF7 /* SnapKit */ = {
+		39373EDF2857610100F0E32A /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B5F525432855CE3F00614FF7 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 39373EDE2857610100F0E32A /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+		39373EE22857610E00F0E32A /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39373EE12857610E00F0E32A /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
