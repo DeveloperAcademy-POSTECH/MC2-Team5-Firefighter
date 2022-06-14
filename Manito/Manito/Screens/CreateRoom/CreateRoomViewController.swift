@@ -12,7 +12,7 @@ import SnapKit
 class CreateRoomViewController: BaseViewController {
     
     private var index = 0
-    let maxLength = 8
+//    let maxLength = 8
     
     // MARK: - Property
     private let titleLabel: UILabel = {
@@ -60,7 +60,7 @@ class CreateRoomViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNotificationCenter()
-        setupDelegation()
+//        setupDelegation()
     }
     
     override func render() {
@@ -161,27 +161,5 @@ class CreateRoomViewController: BaseViewController {
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    private func setupDelegation() {
-        nameView.roomsNameTextField.delegate = self
-    }
-}
-
-
-extension CreateRoomViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        print(string)
-        
-        guard let text = textField.text else { return false }
-        if let char = string.cString(using: String.Encoding.utf8) {
-            let isBackSpace = strcmp(char, "\\b")
-            if isBackSpace == -92 {
-                return true
-            }
-        }
-        guard textField.text!.count < 8 else { return false }
-        nameView.roomsTextLimit.text = "\(text.count)"
-        return true
     }
 }

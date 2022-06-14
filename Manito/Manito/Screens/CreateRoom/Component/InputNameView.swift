@@ -23,6 +23,7 @@ class InputNameView: UIView {
         texField.attributedPlaceholder = NSAttributedString(string: "방 이름을 적어주세요", attributes:attributes)
         texField.textAlignment = .center
         texField.makeBorderLayer(color: .white)
+        texField.delegate = self
         return texField
     }()
     
@@ -56,5 +57,18 @@ class InputNameView: UIView {
             $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
             $0.right.equalToSuperview()
         }
+    }
+}
+
+extension InputNameView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text as NSString? else { return false }
+        let newString = text.replacingCharacters(in: range, with: string)
+        return newString.count <= maxLength
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        roomsTextLimit.text = "\(text.count)/\(maxLength)"
     }
 }
