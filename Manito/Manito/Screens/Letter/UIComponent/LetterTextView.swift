@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 final class LetterTextView: UIView {
+    
+    var applySendButtonEnabled: (() -> ())?
 
     // MARK: - property
     
@@ -19,7 +21,7 @@ final class LetterTextView: UIView {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private lazy var letterTextView: UITextView = {
+    lazy var letterTextView: UITextView = {
         let textView = UITextView()
         let paragraphStyle = NSMutableParagraphStyle()
         
@@ -92,5 +94,6 @@ final class LetterTextView: UIView {
 extension LetterTextView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         setCounter(count: textView.text?.count ?? 0)
+        applySendButtonEnabled?()
     }
 }

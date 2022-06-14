@@ -113,6 +113,14 @@ final class CreateLetterViewController: BaseViewController {
         }
     }
     
+    override func configUI() {
+        super.configUI()
+        
+        letterTextView.applySendButtonEnabled = { [weak self] in
+            self?.checkSendButtonEnabled()
+        }
+    }
+    
     override func setupNavigationBar() {
         guard let navigationBar = navigationController?.navigationBar else { return }
         let appearance = UINavigationBarAppearance()
@@ -142,6 +150,14 @@ final class CreateLetterViewController: BaseViewController {
         
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = sendButton
+    }
+    
+    private func checkSendButtonEnabled() {
+        let hasText = letterTextView.letterTextView.hasText
+        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.icCamera
+        let canEnabled = hasText || hasImage
+        
+        sendButton.isEnabled = canEnabled
     }
     
     private func setupButtonAction() {
@@ -180,6 +196,7 @@ extension CreateLetterViewController: UIImagePickerControllerDelegate, UINavigat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             letterPhotoView.importPhotosButton.setImage(image, for: .normal)
+            checkSendButtonEnabled()
         }
         
         dismiss(animated: true, completion: nil)
@@ -196,6 +213,7 @@ extension CreateLetterViewController: PHPickerViewControllerDelegate {
             itemProvider.loadObject(ofClass: UIImage.self) { image, error in
                 DispatchQueue.main.sync {
                     self.letterPhotoView.importPhotosButton.setImage(image as? UIImage, for: .normal)
+                    self.checkSendButtonEnabled()
                 }
             }
         }
