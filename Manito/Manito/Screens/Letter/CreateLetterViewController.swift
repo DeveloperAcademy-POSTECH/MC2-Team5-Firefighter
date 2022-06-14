@@ -42,6 +42,11 @@ final class CreateLetterViewController: BaseViewController {
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
+    private lazy var imagePickerController: UIImagePickerController = {
+        let controller = UIImagePickerController()
+        controller.delegate = self
+        return controller
+    }()
     private let scrollContentView = UIView()
     private let missionView = IndividualMissionView(mission: "1000원 이하의 선물 주고 인증샷 받기")
     private let letterTextView = LetterTextView()
@@ -145,14 +150,20 @@ final class CreateLetterViewController: BaseViewController {
     private func applyActionSheet() -> UIAlertController {
         let alertController = UIAlertController(title: "", message: "마니또에게 보낼 사진을 선택해봐요.", preferredStyle: .actionSheet)
         
-        alertController.addAction(UIAlertAction(title: "사진 촬영", style: .default) { _ in
-            Logger.debugDescription("사진 촬영 시작")
+        alertController.addAction(UIAlertAction(title: "사진 촬영", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.imagePickerController.sourceType = .camera
+            self.present(self.imagePickerController, animated: true, completion: nil)
         })
         alertController.addAction(UIAlertAction(title: "사진 보관함에서 선택", style: .default) { _ in
-            Logger.debugDescription("사진 보관함에서 선택합니다.")
+            Logger.debugDescription("사진 보관함")
         })
         alertController.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         
         return alertController
     }
+}
+
+extension CreateLetterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
 }
