@@ -12,9 +12,13 @@ class FriendListViewController: UIViewController {
     @IBOutlet weak var friendListCollectionView: UICollectionView!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        friendListCollectionView.dataSource = self
-        friendListCollectionView.delegate = self
+            super.viewDidLoad()
+            setupDelegation()
+    }
+
+    private func setupDelegation() {
+            friendListCollectionView.delegate = self
+            friendListCollectionView.dataSource = self
     }
 }
 
