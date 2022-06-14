@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l3i-PW-8lq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4F2-OF-q2M">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -391,20 +391,53 @@
             </objects>
             <point key="canvasLocation" x="1754" y="106"/>
         </scene>
-        <!--Memory View Controller-->
+        <!--함께 했던 기록-->
         <scene sceneID="Qpp-6H-DoO">
             <objects>
                 <viewController storyboardIdentifier="MemoryViewController" id="l3i-PW-8lq" customClass="MemoryViewController" customModule="Manito" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m3F-Wn-N3O">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fwP-xP-e5O">
+                                <rect key="frame" x="60" y="128" width="294" height="32"/>
+                                <segments>
+                                    <segment title="마니띠와의 추억"/>
+                                    <segment title="마니또와의 추억"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="64g-AJ-16z"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fwP-xP-e5O" firstAttribute="top" secondItem="64g-AJ-16z" secondAttribute="top" constant="40" id="cw2-CK-KDo"/>
+                            <constraint firstItem="64g-AJ-16z" firstAttribute="trailing" secondItem="fwP-xP-e5O" secondAttribute="trailing" constant="60" id="jnB-kI-BDz"/>
+                            <constraint firstItem="fwP-xP-e5O" firstAttribute="leading" secondItem="64g-AJ-16z" secondAttribute="leading" constant="60" id="sNc-Zm-HIM"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="함께 했던 기록" id="Jna-FL-XyX"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0zw-yn-17v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3472" y="106"/>
+            <point key="canvasLocation" x="4379.7101449275369" y="105.80357142857143"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="CmM-pL-UIh">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4F2-OF-q2M" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dIn-M5-w6z">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="l3i-PW-8lq" kind="relationship" relationship="rootViewController" id="MzJ-DK-ph4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n3b-LO-AVj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3471.0144927536235" y="105.80357142857143"/>
         </scene>
     </scenes>
     <resources>
