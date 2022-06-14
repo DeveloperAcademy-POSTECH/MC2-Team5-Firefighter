@@ -79,7 +79,7 @@ class CreateRoomViewController: BaseViewController {
             $0.width.height.equalTo(44)
         }
         
-        view.addSubview(nextButton)12
+        view.addSubview(nextButton)
         nextButton.snp.makeConstraints {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(57)
@@ -173,7 +173,13 @@ class CreateRoomViewController: BaseViewController {
     }
     
     @objc private func didReceivePersonNotification(_ notification: Notification) {
-        self.nameView.isHidden = true
+        UIView.animate(withDuration: 1) {
+            self.nameView.transform = CGAffineTransform(translationX: -UIScreen.main.bounds.width, y: 0)
+        }
+        UIView.animate(withDuration: 1) {
+            self.nameView.transform = CGAffineTransform(translationX: -UIScreen.main.bounds.width, y: 0)
+        }
+        self.nameView.isHidden = false
         self.personView.isHidden = false
         self.dateView.isHidden = true
         self.checkView.isHidden = true
