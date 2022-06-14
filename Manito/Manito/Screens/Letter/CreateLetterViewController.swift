@@ -33,6 +33,7 @@ final class CreateLetterViewController: BaseViewController {
         button.setTitle("보내기", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .highlighted)
+        button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .disabled)
         return button
     }()
     private let scrollView: UIScrollView = {
@@ -51,6 +52,7 @@ final class CreateLetterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItem()
+        setupButtonAction()
     }
     
     override func render() {
@@ -120,7 +122,16 @@ final class CreateLetterViewController: BaseViewController {
         let cancelButton = makeBarButtonItem(with: cancelButton)
         let sendButton = makeBarButtonItem(with: sendButton)
         
+        sendButton.isEnabled = false
+        
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = sendButton
+    }
+    
+    private func setupButtonAction() {
+        let action = UIAction { _ in
+            Logger.debugDescription("눌렸습니다.")
+        }
+        sendButton.addAction(action, for: .touchUpInside)
     }
 }
