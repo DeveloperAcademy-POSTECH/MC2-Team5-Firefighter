@@ -5,6 +5,7 @@
 //  Created by SHIN YOON AH on 2022/06/13.
 //
 
+import PhotosUI
 import UIKit
 
 import SnapKit
@@ -46,6 +47,16 @@ final class CreateLetterViewController: BaseViewController {
         let controller = UIImagePickerController()
         controller.delegate = self
         return controller
+    }()
+    private lazy var phPickerController: PHPickerViewController = {
+        let controller = PHPickerViewController(configuration: photoConfiguration)
+        controller.delegate = self
+        return controller
+    }()
+    private var photoConfiguration: PHPickerConfiguration = {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .any(of: [.images, .livePhotos])
+        return configuration
     }()
     private let scrollContentView = UIView()
     private let missionView = IndividualMissionView(mission: "1000원 이하의 선물 주고 인증샷 받기")
@@ -155,8 +166,9 @@ final class CreateLetterViewController: BaseViewController {
             self.imagePickerController.sourceType = .camera
             self.present(self.imagePickerController, animated: true, completion: nil)
         })
-        alertController.addAction(UIAlertAction(title: "사진 보관함에서 선택", style: .default) { _ in
-            Logger.debugDescription("사진 보관함")
+        alertController.addAction(UIAlertAction(title: "사진 보관함에서 선택", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.present(self.phPickerController, animated: true, completion: nil)
         })
         alertController.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         
@@ -171,5 +183,21 @@ extension CreateLetterViewController: UIImagePickerControllerDelegate, UINavigat
         }
         
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension CreateLetterViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        let itemProvider = results.first?.itemProvider
+        if let itemProvider = itemProvider,
+           itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                DispatchQueue.main.sync {
+                    self.letterPhotoView.importPhotosButton.setImage(image as? UIImage, for: .normal)
+                }
+            }
+        }
     }
 }
