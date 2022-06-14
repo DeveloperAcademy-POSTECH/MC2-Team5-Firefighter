@@ -71,6 +71,11 @@ final class LetterViewController: BaseViewController {
     
     // MARK: - life cycle
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupButtonAction()
+    }
+    
     override func render() {
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
@@ -98,6 +103,16 @@ final class LetterViewController: BaseViewController {
     }
     
     // MARK: - func
+    
+    private func setupButtonAction() {
+        let presentSendButtonAction = UIAction { _ in
+            let storyboard = UIStoryboard(name: "Letter", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "CreateLetterNavigationController")
+            self.present(viewController, animated: true, completion: nil)
+        }
+        sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
+                                                  for: .touchUpInside)
+    }
     
     private func reloadCollectionView(with state: LetterState) {
         let isReceivedState = (state == .received)

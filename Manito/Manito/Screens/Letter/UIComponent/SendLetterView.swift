@@ -13,7 +13,7 @@ final class SendLetterView: UIView {
     
     // MARK: - property
     
-    private let sendLetterButton: UIButton = {
+    let sendLetterButton: UIButton = {
         let button = MainButton()
         button.title = "쪽지 쓰기"
         return button
