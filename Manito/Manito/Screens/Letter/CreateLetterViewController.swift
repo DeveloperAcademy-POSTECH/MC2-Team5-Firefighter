@@ -165,5 +165,11 @@ final class CreateLetterViewController: BaseViewController {
 }
 
 extension CreateLetterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            letterPhotoView.importPhotosButton.setImage(image, for: .normal)
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
 }
