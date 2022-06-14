@@ -12,6 +12,7 @@ import SnapKit
 class CreateRoomViewController: BaseViewController {
     
     private var index = 0
+    let maxLength = 8
     
     // MARK: - Property
     private let titleLabel: UILabel = {
@@ -58,6 +59,8 @@ class CreateRoomViewController: BaseViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNotificationCenter()
+        setupDelegation()
     }
     
     override func render() {
@@ -121,7 +124,22 @@ class CreateRoomViewController: BaseViewController {
         changedInputView()
     }
     
+    @objc private func keyboardWillShow(notification:NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 60)
+            })
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification:NSNotification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.nextButton.transform = .identity
+        })
+    }
+    
     // MARK: - Functions
+    
     private func changedInputView() {
         if index % 3 == 0 {
             self.nameView.isHidden = false
@@ -138,5 +156,32 @@ class CreateRoomViewController: BaseViewController {
             self.personView.isHidden = true
             self.dateView.isHidden = false
         }
+    }
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func setupDelegation() {
+        nameView.roomsNameTextField.delegate = self
+    }
+}
+
+
+extension CreateRoomViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        print(string)
+        
+        guard let text = textField.text else { return false }
+        if let char = string.cString(using: String.Encoding.utf8) {
+            let isBackSpace = strcmp(char, "\\b")
+            if isBackSpace == -92 {
+                return true
+            }
+        }
+        guard textField.text!.count < 8 else { return false }
+        nameView.roomsTextLimit.text = "\(text.count)"
+        return true
     }
 }

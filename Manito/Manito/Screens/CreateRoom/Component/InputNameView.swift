@@ -11,11 +11,12 @@ import SnapKit
 
 class InputNameView: UIView {
     
+    private var maxLength = 8
+    
     // MARK: - Property
-    private let roomsNameTextField: UITextField = {
+    lazy var roomsNameTextField: UITextField = {
         let texField = UITextField()
         let attributes = [
-            NSAttributedString.Key.foregroundColor : UIColor.white,
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         texField.backgroundColor = .subBackgroundGrey
@@ -25,9 +26,9 @@ class InputNameView: UIView {
         return texField
     }()
     
-    private let roomsTextLimit : UILabel = {
+    lazy var roomsTextLimit : UILabel = {
         let label = UILabel()
-        label.text = "0/8"
+        label.text = "0/\(maxLength)"
         label.font = .font(.regular, ofSize: 20)
         return label
     }()
