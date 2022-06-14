@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 
 class InputNameView: UIView {
-    
     private var maxLength = 8
     
     // MARK: - Property
@@ -27,12 +26,15 @@ class InputNameView: UIView {
         return texField
     }()
     
-    lazy var roomsTextLimit : UILabel = {
+    private lazy var roomsTextLimit : UILabel = {
         let label = UILabel()
         label.text = "0/\(maxLength)"
         label.font = .font(.regular, ofSize: 20)
+        label.textColor = .grey002
         return label
     }()
+    
+    var enableButton: (() -> ())?
     
     // MARK: - Init
     override init(frame: CGRect) {
@@ -70,5 +72,6 @@ extension InputNameView: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let text = textField.text else { return }
         roomsTextLimit.text = "\(text.count)/\(maxLength)"
+        enableButton?()
     }
 }

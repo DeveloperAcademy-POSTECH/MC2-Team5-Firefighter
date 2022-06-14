@@ -12,7 +12,6 @@ import SnapKit
 class CreateRoomViewController: BaseViewController {
     
     private var index = 0
-//    let maxLength = 8
     
     // MARK: - Property
     private let titleLabel: UILabel = {
@@ -24,16 +23,17 @@ class CreateRoomViewController: BaseViewController {
     
     lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.tintColor = .lightGray
+        button.tintColor = .grey003
         button.setImage(ImageLiterals.icXmark, for: .normal)
         button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         return button
     }()
     
-    private lazy var nextButton: MainButton = {
+    lazy var nextButton: MainButton = {
         let button = MainButton()
         button.title = "다음"
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        button.isDisabled = true
         return button
     }()
     
@@ -60,7 +60,6 @@ class CreateRoomViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNotificationCenter()
-//        setupDelegation()
     }
     
     override func render() {
@@ -111,6 +110,10 @@ class CreateRoomViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         view.backgroundColor = .backgroundGrey
+        
+        nameView.enableButton = { [weak self] in
+            self?.nextButton.isDisabled = false
+        }
     }
     
     // MARK: - Selectors
@@ -163,3 +166,5 @@ class CreateRoomViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
+
+
