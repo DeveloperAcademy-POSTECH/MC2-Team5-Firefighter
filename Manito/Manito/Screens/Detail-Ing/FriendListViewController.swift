@@ -7,18 +7,23 @@
 
 import UIKit
 
-class FriendListViewController: UIViewController {
+class FriendListViewController: BaseViewController {
     
     @IBOutlet weak var friendListCollectionView: UICollectionView!
     
     override func viewDidLoad() {
-            super.viewDidLoad()
-            setupDelegation()
+        super.viewDidLoad()
+        setupDelegation()
     }
-
+    
+    override func configUI() {
+        super.configUI()
+        friendListCollectionView.backgroundColor = .clear
+    }
+    
     private func setupDelegation() {
-            friendListCollectionView.delegate = self
-            friendListCollectionView.dataSource = self
+        friendListCollectionView.delegate = self
+        friendListCollectionView.dataSource = self
     }
 }
 
