@@ -54,8 +54,9 @@ final class CommonMissonView: UIView {
         
         self.addSubview(mission)
         mission.snp.makeConstraints {
-            $0.top.equalTo(self.title.snp.bottom).offset(40)
+            $0.top.equalTo(self.title.snp.bottom).offset(23)
             $0.bottom.leading.trailing.equalToSuperview()
+            $0.height.equalTo(56)
         }
     }
 }
