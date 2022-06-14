@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */; };
+		33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDF5612856E03800564211 /* FriendListViewController.swift */; };
 		392EC77E2855C388006918A9 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC77D2855C388006918A9 /* SettingButton.swift */; };
 		392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */; };
 		392EC783285613C0006918A9 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC782285613C0006918A9 /* ExitButton.swift */; };
@@ -66,6 +68,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewCell.swift; sourceTree = "<group>"; };
+		33BDF5612856E03800564211 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		392EC77D2855C388006918A9 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitTitleView.swift; sourceTree = "<group>"; };
 		392EC782285613C0006918A9 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
@@ -137,6 +141,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		333BF66428571C850039F77F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		392EC77F2855D107006918A9 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,7 +271,9 @@
 		B5F524E928519B3F00614FF7 /* Detail-Ing */ = {
 			isa = PBXGroup;
 			children = (
+				333BF66428571C850039F77F /* Cell */,
 				B5F5250B2851A07000614FF7 /* DetailIngViewController.swift */,
+				33BDF5612856E03800564211 /* FriendListViewController.swift */,
 			);
 			path = "Detail-Ing";
 			sourceTree = "<group>";
@@ -518,6 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */,
+				333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */,
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
 				B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */,
 				392EC783285613C0006918A9 /* ExitButton.swift in Sources */,
@@ -550,6 +565,7 @@
 				CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
+				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
