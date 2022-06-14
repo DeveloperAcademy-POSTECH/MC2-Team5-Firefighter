@@ -126,7 +126,7 @@ class CreateRoomViewController: BaseViewController {
     }
     
     @objc private func didTapNextButton() {
-        switch index{
+        switch index {
         case 0:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
@@ -208,3 +208,5 @@ class CreateRoomViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateNotification(_ :)), name: NSNotification.Name("DateNotification"), object: nil)
     }
 }
+
+// FIXME: 뷰 전환 애니메이션주기

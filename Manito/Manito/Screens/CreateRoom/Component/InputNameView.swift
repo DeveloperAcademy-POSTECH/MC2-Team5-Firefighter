@@ -22,6 +22,8 @@ class InputNameView: UIView {
         texField.attributedPlaceholder = NSAttributedString(string: "방 이름을 적어주세요", attributes:attributes)
         texField.textAlignment = .center
         texField.makeBorderLayer(color: .white)
+        texField.font = .font(.regular, ofSize: 18)
+        texField.returnKeyType = .done
         texField.delegate = self
         return texField
     }()

@@ -47,6 +47,8 @@ class InputPersonView: UIView {
         slider.value = 1
         slider.minimumValue = 5
         slider.maximumValue = 15
+        slider.tintColor = .mainRed
+        slider.setThumbImage(UIImage(systemName: "heart"), for: .normal)
         slider.addTarget(self, action: #selector(didSlider(_:)), for: .valueChanged)
         return slider
     }()
