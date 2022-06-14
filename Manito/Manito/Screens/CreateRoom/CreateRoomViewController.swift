@@ -12,6 +12,9 @@ import SnapKit
 class CreateRoomViewController: BaseViewController {
     
     private var index = 0
+    private var name = ""
+    private var person = 0
+    private var date = 0
     
     // MARK: - Property
     private let titleLabel: UILabel = {
@@ -123,9 +126,23 @@ class CreateRoomViewController: BaseViewController {
     }
     
     @objc private func didTapNextButton() {
-        print("tap")
+        switch index{
+        case 0:
+            guard let text = nameView.roomsNameTextField.text else { return }
+            name = text
+            print(name)
+        case 1:
+            person = Int(personView.personSlider.value)
+            print(person)
+        case 2:
+            print("date")
+        default:
+            print("end")
+        }
+        
         index += 1
         changedInputView()
+        
     }
     
     @objc private func keyboardWillShow(notification:NSNotification) {
@@ -191,9 +208,3 @@ class CreateRoomViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateNotification(_ :)), name: NSNotification.Name("DateNotification"), object: nil)
     }
 }
-
-
-protocol Observer {
-    func update(_ notifyValue: Int)
-}
-
