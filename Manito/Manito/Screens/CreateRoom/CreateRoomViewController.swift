@@ -23,7 +23,6 @@ class CreateRoomViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    
     lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .grey003
@@ -31,7 +30,6 @@ class CreateRoomViewController: BaseViewController {
         button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         return button
     }()
-    
     lazy var nextButton: MainButton = {
         let button = MainButton()
         button.title = "다음"
@@ -39,26 +37,27 @@ class CreateRoomViewController: BaseViewController {
         button.isDisabled = true
         return button
     }()
-    
     private let nameView: InputNameView = {
         let view = InputNameView()
         view.isHidden = false
         return view
         
     }()
-    
     private let personView: InputPersonView = {
         let view = InputPersonView()
         view.isHidden = true
         return view
     }()
-    
     private let dateView: InputDateView = {
         let view = InputDateView()
         view.isHidden = true
         return view
     }()
-    
+    private let checkView: CheckRoomView = {
+        let view = CheckRoomView()
+        view.isHidden = true
+        return view
+    }()
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,6 +102,13 @@ class CreateRoomViewController: BaseViewController {
         
         view.addSubview(dateView)
         dateView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(66)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalTo(nextButton.snp.top)
+        }
+    
+        view.addSubview(checkView)
+        checkView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalTo(nextButton.snp.top)
@@ -163,18 +169,28 @@ class CreateRoomViewController: BaseViewController {
         self.nameView.isHidden = false
         self.personView.isHidden = true
         self.dateView.isHidden = true
+        self.checkView.isHidden = true
     }
     
     @objc private func didReceivePersonNotification(_ notification: Notification) {
         self.nameView.isHidden = true
         self.personView.isHidden = false
         self.dateView.isHidden = true
+        self.checkView.isHidden = true
     }
     
     @objc private func didReceiveDateNotification(_ notification: Notification) {
         self.nameView.isHidden = true
         self.personView.isHidden = true
         self.dateView.isHidden = false
+        self.checkView.isHidden = true
+    }
+    
+    @objc private func didReceiveCheckNotification(_ notification: Notification) {
+        self.nameView.isHidden = true
+        self.personView.isHidden = true
+        self.dateView.isHidden = true
+        self.checkView.isHidden = false
     }
     
     // MARK: - Functions
@@ -196,7 +212,7 @@ class CreateRoomViewController: BaseViewController {
             NotificationCenter.default.post(name: NSNotification.Name("DateNotification"), object: nil)
         }
         else {
-            print("end")
+            NotificationCenter.default.post(name: NSNotification.Name("CheckNotification"), object: nil)
         }
     }
     
@@ -206,6 +222,7 @@ class CreateRoomViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNameNotification(_ :)), name: NSNotification.Name("NameNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceivePersonNotification(_ :)), name: NSNotification.Name("PersonNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateNotification(_ :)), name: NSNotification.Name("DateNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCheckNotification(_ :)), name: NSNotification.Name("CheckNotification"), object: nil)
     }
 }
 
