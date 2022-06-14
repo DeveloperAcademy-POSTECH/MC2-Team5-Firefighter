@@ -10,9 +10,9 @@ import UIKit
 import SnapKit
 
 final class CreateLetterViewController: BaseViewController {
-
+    
     // MARK: - property
-
+    
     private let indicatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .white.withAlphaComponent(0.8)
@@ -108,7 +108,7 @@ final class CreateLetterViewController: BaseViewController {
         appearance.backgroundColor = .clear
         appearance.backgroundImage = nil
         appearance.shadowImage = nil
-            
+        
         navigationBar.standardAppearance = appearance
         navigationBar.compactAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
@@ -129,9 +129,30 @@ final class CreateLetterViewController: BaseViewController {
     }
     
     private func setupButtonAction() {
-        let action = UIAction { _ in
+        let photoAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            let alertController = self.applyActionSheet()
+            self.present(alertController, animated: true)
+        }
+        let sendAction = UIAction { _ in
             Logger.debugDescription("눌렸습니다.")
         }
-        sendButton.addAction(action, for: .touchUpInside)
+        
+        letterPhotoView.importPhotosButton.addAction(photoAction, for: .touchUpInside)
+        sendButton.addAction(sendAction, for: .touchUpInside)
+    }
+    
+    private func applyActionSheet() -> UIAlertController {
+        let alertController = UIAlertController(title: "", message: "마니또에게 보낼 사진을 선택해봐요.", preferredStyle: .actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "사진 촬영", style: .default) { _ in
+            Logger.debugDescription("사진 촬영 시작")
+        })
+        alertController.addAction(UIAlertAction(title: "사진 보관함에서 선택", style: .default) { _ in
+            Logger.debugDescription("사진 보관함에서 선택합니다.")
+        })
+        alertController.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        return alertController
     }
 }

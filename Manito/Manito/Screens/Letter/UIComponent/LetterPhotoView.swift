@@ -19,7 +19,7 @@ final class LetterPhotoView: UIView {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private let importPhotosButton: UIButton = {
+    let importPhotosButton: UIButton = {
         let button = UIButton()
         button.makeBorderLayer(color: .white)
         button.setImage(ImageLiterals.icCamera, for: .normal)
