@@ -99,7 +99,6 @@ class DetailWaitViewController: BaseViewController {
         button.showsMenuAsPrimaryAction = true
         return button
     }()
-
     private lazy var exitButton: UIButton = {
         let button = ExitButton()
         let buttonAction = UIAction { _ in
@@ -108,7 +107,6 @@ class DetailWaitViewController: BaseViewController {
         button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
-
     private let titleView = DetailWaitTitleView()
 
     private let togetherFriendText: UILabel = {
@@ -118,7 +116,6 @@ class DetailWaitViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-
     private lazy var comeInText: UILabel = {
         let label = UILabel()
         label.text = "\(userCount)/\(maxUser)"
@@ -126,16 +123,17 @@ class DetailWaitViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-
-    private let copyButton: UIButton = {
+    private lazy var copyButton: UIButton = {
         let button = UIButton(type: .system)
+        let buttonAction = UIAction { _ in
+            self.touchUpToShowToast()
+        }
         button.setTitle("방 코드 복사", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.addTarget(self, action: #selector(touchUpToShowToast), for: .touchUpInside)
+        button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
-
     private let listTable: UITableView = {
         let table = UITableView()
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -143,7 +141,6 @@ class DetailWaitViewController: BaseViewController {
         table.isScrollEnabled = false
         return table
     }()
-
     private lazy var startButton: UIButton = {
         let button = MainButton()
         if canStart {
@@ -253,7 +250,7 @@ class DetailWaitViewController: BaseViewController {
 
     private func presentModal() {
         let modalViewController = DetailModalController()
-        
+
         present(modalViewController, animated: true, completion: nil)
     }
 
@@ -280,10 +277,7 @@ class DetailWaitViewController: BaseViewController {
             setupExitButton()
         }
     }
-
-    // MARK: - selector
-
-    @objc
+    
     private func touchUpToShowToast() {
         UIPasteboard.general.string = "초대코드"
         self.showToast(message: "코드 복사 완료!")
