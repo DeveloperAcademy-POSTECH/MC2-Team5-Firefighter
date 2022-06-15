@@ -530,7 +530,12 @@
                             <constraint firstItem="64g-AJ-16z" firstAttribute="trailing" secondItem="fbR-3y-SUc" secondAttribute="trailing" constant="27" id="zYz-DL-Hyc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="함께 했던 기록" id="Jna-FL-XyX"/>
+                    <navigationItem key="navigationItem" title="함께 했던 기록" id="Jna-FL-XyX">
+                        <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="Gge-1U-IDn">
+                            <imageReference key="image" image="square.and.arrow.up" catalog="system" symbolScale="default"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0zw-yn-17v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -557,6 +562,7 @@
     </scenes>
     <resources>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
