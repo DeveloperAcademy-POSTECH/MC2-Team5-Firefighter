@@ -11,7 +11,8 @@ import FSCalendar
 import SnapKit
 
 class DetailModalController: BaseViewController {
-
+    var isFirstTap = false
+    var selectStartDate = Date()
     var memberCount = 7
 
     // MARK: - property
@@ -27,14 +28,12 @@ class DetailModalController: BaseViewController {
         button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
-
     private let topIndicator: UIView = {
         let view = UIView()
         view.backgroundColor = .white.withAlphaComponent(0.8)
         view.layer.cornerRadius = 1.5
         return view
     }()
-
     private lazy var changeButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { _ in
@@ -46,14 +45,12 @@ class DetailModalController: BaseViewController {
         button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
-
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "방 정보 수정"
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-
     private let startSettingLabel: UILabel = {
         let label = UILabel()
         label.text = "진행기간 설정"
@@ -61,7 +58,6 @@ class DetailModalController: BaseViewController {
         label.textColor = .white
         return label
     }()
-
     private var calendar: FSCalendar = {
         let calendar = FSCalendar()
         calendar.locale = Locale(identifier: "ko_KR")
@@ -69,7 +65,7 @@ class DetailModalController: BaseViewController {
         calendar.makeBorderLayer(color: .grey002)
         calendar.appearance.headerDateFormat = "YYYY년 MM월"
         calendar.appearance.headerTitleColor = .white
-        calendar.scrollDirection = .vertical
+//        calendar.scrollDirection = .vertical
         calendar.appearance.headerTitleAlignment = .center
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.weekdayTextColor = .grey005
@@ -83,7 +79,13 @@ class DetailModalController: BaseViewController {
         calendar.allowsMultipleSelection = true
         return calendar
     }()
-
+    private let tipLabel: UILabel = {
+        let label = UILabel()
+        label.text = "최대 7일까지 설정할 수 있어요 !"
+        label.textColor = .grey005
+        label.font = .font(.regular, ofSize: 14)
+        return label
+    }()
     private let setMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "인원 설정"
@@ -91,7 +93,6 @@ class DetailModalController: BaseViewController {
         label.textColor = .white
         return label
     }()
-
     private let minMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "5인"
@@ -99,7 +100,6 @@ class DetailModalController: BaseViewController {
         label.textColor = .white
         return label
     }()
-
     private let maxMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "15인"
@@ -107,7 +107,6 @@ class DetailModalController: BaseViewController {
         label.textColor = .white
         return label
     }()
-
     private lazy var memberSlider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 5
@@ -119,10 +118,9 @@ class DetailModalController: BaseViewController {
         slider.addTarget(self, action: #selector(changeMemberCount(sender:)), for: .valueChanged)
         return slider
     }()
-
     private lazy var memberCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(memberCount)명"
+        label.text = "\(memberCount)인"
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
         return label
@@ -181,9 +179,15 @@ class DetailModalController: BaseViewController {
             $0.width.equalTo(360)
         }
 
+        view.addSubview(tipLabel)
+        tipLabel.snp.makeConstraints {
+            $0.top.equalTo(calendar.snp.bottom).offset(8)
+            $0.trailing.equalToSuperview().inset(25)
+        }
+
         view.addSubview(setMemberLabel)
         setMemberLabel.snp.makeConstraints {
-            $0.top.equalTo(calendar.snp.bottom).offset(45)
+            $0.top.equalTo(calendar.snp.bottom).offset(60)
             $0.leading.equalToSuperview().inset(16)
         }
 
@@ -233,5 +237,93 @@ class DetailModalController: BaseViewController {
     }
 }
 
-extension DetailModalController: FSCalendarDelegate { }
+extension DetailModalController: FSCalendarDelegate {
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        isFirstTap ? nil : (isFirstTap = true)
+        if calendar.selectedDates.count == 1 {
+            selectStartDate = date
+            calendar.reloadData()
+        } else if calendar.selectedDates.count == 2 {
+            if countDateRange() > 7 {
+                calendar.deselect(date)
+                makeAlert(title: "인원 수 제한", message: "최대 7일까지 선택가능해요 !")
+            } else {
+                setDateRange()
+                calendar.reloadData()
+            }
+        } else if calendar.selectedDates.count > 2 {
+            for _ in 0 ..< calendar.selectedDates.count - 1 {
+                calendar.deselect(calendar.selectedDates[0])
+            }
+            selectStartDate = date
+            calendar.select(selectStartDate)
+            calendar.reloadData()
+        }
+    }
+
+    func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        for _ in 0 ..< calendar.selectedDates.count {
+            calendar.deselect(calendar.selectedDates[0])
+        }
+        selectStartDate = date
+        calendar.select(date)
+        calendar.reloadData()
+    }
+
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+        if date < Date() - 86400 {
+            makeAlert(title: "과거로 가시게요..?", message: "오늘보다 이전 날짜는 \n 선택하실 수 없어요 !")
+            return false
+        } else {
+            return true
+        }
+    }
+
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        if date < Date() - 86400 {
+            return .grey005.withAlphaComponent(0.4)
+        } else if isFirstTap == false {
+            return .white
+        } else if date < selectStartDate + 604800 && date > selectStartDate - 604800 {
+            return .white
+        } else if calendar.selectedDates.count > 2 {
+            return .white
+        } else {
+            return .grey005.withAlphaComponent(0.6)
+        }
+    }
+
+    // MARK: - func
+
+    func setDateRange() {
+        if countDateRange() <= 7 {
+            var startDate: Date
+            if calendar.selectedDates[0] < calendar.selectedDates[1] {
+                startDate = calendar.selectedDates[0]
+                while startDate < calendar.selectedDates[1] {
+                    startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
+                    calendar.select(startDate)
+                }
+            } else {
+                startDate = calendar.selectedDates[1]
+                while startDate < calendar.selectedDates[0] {
+                    startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
+                    calendar.select(startDate)
+                }
+            }
+        }
+    }
+
+    func countDateRange() -> Int {
+        if calendar.selectedDates[0] < calendar.selectedDates[1] {
+            let rangeCount = calendar.selectedDates[1].timeIntervalSince(calendar.selectedDates[0]) / 86400
+            return Int(rangeCount) + 1
+        } else {
+            let rangeCount = calendar.selectedDates[0].timeIntervalSince(calendar.selectedDates[1]) / 86400
+            return Int(rangeCount) + 1
+        }
+    }
+}
 extension DetailModalController: FSCalendarDataSource { }
+
+extension DetailModalController: FSCalendarDelegateAppearance { }
