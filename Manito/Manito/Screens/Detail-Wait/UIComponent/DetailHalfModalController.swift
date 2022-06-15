@@ -11,9 +11,9 @@ import FSCalendar
 import SnapKit
 
 class DetailModalController: BaseViewController {
-    var isFirstTap = false
-    var selectStartDate = Date()
-    var memberCount = 7
+    private var isFirstTap = false
+    private var selectStartDate = Date()
+    private var memberCount = 7
 
     // MARK: - property
 
@@ -58,6 +58,24 @@ class DetailModalController: BaseViewController {
         label.textColor = .white
         return label
     }()
+    private lazy var preButton: UIButton = {
+        let button = UIButton()
+        let action = UIAction { _ in
+            self.changeMonth(next: false)
+        }
+        button.setTitle("<", for: .normal)
+        button.addAction(action, for: .touchUpInside)
+        return button
+    }()
+    private lazy var nextButton: UIButton = {
+        let button = UIButton()
+        let action = UIAction { _ in
+            self.changeMonth(next: true)
+        }
+        button.setTitle(">", for: .normal)
+        button.addAction(action, for: .touchUpInside)
+        return button
+    }()
     private var calendar: FSCalendar = {
         let calendar = FSCalendar()
         calendar.locale = Locale(identifier: "ko_KR")
@@ -65,7 +83,6 @@ class DetailModalController: BaseViewController {
         calendar.makeBorderLayer(color: .grey002)
         calendar.appearance.headerDateFormat = "YYYY년 MM월"
         calendar.appearance.headerTitleColor = .white
-//        calendar.scrollDirection = .vertical
         calendar.appearance.headerTitleAlignment = .center
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.weekdayTextColor = .grey005
@@ -179,6 +196,18 @@ class DetailModalController: BaseViewController {
             $0.width.equalTo(360)
         }
 
+        view.addSubview(preButton)
+        preButton.snp.makeConstraints {
+            $0.top.equalTo(startSettingLabel.snp.bottom).offset(38)
+            $0.leading.equalToSuperview().inset(100)
+        }
+
+        view.addSubview(nextButton)
+        nextButton.snp.makeConstraints {
+            $0.top.equalTo(startSettingLabel.snp.bottom).offset(38)
+            $0.trailing.equalToSuperview().inset(100)
+        }
+
         view.addSubview(tipLabel)
         tipLabel.snp.makeConstraints {
             $0.top.equalTo(calendar.snp.bottom).offset(8)
@@ -225,6 +254,15 @@ class DetailModalController: BaseViewController {
     private func setupDelegation() {
         calendar.delegate = self
         calendar.dataSource = self
+    }
+
+    private func changeMonth(next: Bool) {
+        let todayCalendar = Calendar.current
+        var currentPage = calendar.currentPage
+        var dateComponents = DateComponents()
+        dateComponents.month = next ? 1 : -1
+        currentPage = todayCalendar.date(byAdding: dateComponents, to: currentPage)!
+        calendar.setCurrentPage(currentPage, animated: true)
     }
 
     // MARK: - selector
