@@ -119,6 +119,8 @@ final class CreateLetterViewController: BaseViewController {
         letterTextView.applySendButtonEnabled = { [weak self] in
             self?.checkSendButtonEnabled()
         }
+        navigationController?.presentationController?.delegate = self
+        isModalInPresentation = true
     }
     
     override func setupNavigationBar() {
@@ -217,5 +219,23 @@ extension CreateLetterViewController: PHPickerViewControllerDelegate {
                 }
             }
         }
+    }
+}
+
+extension CreateLetterViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        guard letterTextView.letterTextView.hasText || letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.icCamera else {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        let alert =  UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let dismiss = UIAlertAction(title: "변경 사항 폐기", style: .destructive) { (_) in
+            self.resignFirstResponder()
+            self.dismiss(animated: true, completion: nil)
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(dismiss)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
 }
