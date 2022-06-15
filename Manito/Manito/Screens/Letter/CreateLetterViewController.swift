@@ -168,11 +168,15 @@ final class CreateLetterViewController: BaseViewController {
             let alertController = self.applyActionSheet()
             self.present(alertController, animated: true)
         }
-        let sendAction = UIAction { _ in
-            Logger.debugDescription("눌렸습니다.")
+        let cancelAction = UIAction { [weak self] _ in
+            self?.presentationControllerDidAttemptToDismissAction()
+        }
+        let sendAction = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
         }
         
         letterPhotoView.importPhotosButton.addAction(photoAction, for: .touchUpInside)
+        cancelButton.addAction(cancelAction, for: .touchUpInside)
         sendButton.addAction(sendAction, for: .touchUpInside)
     }
     
@@ -191,6 +195,22 @@ final class CreateLetterViewController: BaseViewController {
         alertController.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         
         return alertController
+    }
+    
+    private func presentationControllerDidAttemptToDismissAction() {
+        guard letterTextView.letterTextView.hasText || letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.icCamera else {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        let alert =  UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let dismiss = UIAlertAction(title: "변경 사항 폐기", style: .destructive) { (_) in
+            self.resignFirstResponder()
+            self.dismiss(animated: true, completion: nil)
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(dismiss)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -224,18 +244,6 @@ extension CreateLetterViewController: PHPickerViewControllerDelegate {
 
 extension CreateLetterViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
-        guard letterTextView.letterTextView.hasText || letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.icCamera else {
-            dismiss(animated: true, completion: nil)
-            return
-        }
-        let alert =  UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let dismiss = UIAlertAction(title: "변경 사항 폐기", style: .destructive) { (_) in
-            self.resignFirstResponder()
-            self.dismiss(animated: true, completion: nil)
-        }
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        alert.addAction(dismiss)
-        alert.addAction(cancel)
-        present(alert, animated: true, completion: nil)
+        presentationControllerDidAttemptToDismissAction()
     }
 }
