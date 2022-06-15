@@ -5,7 +5,6 @@
 //  Created by SHIN YOON AH on 2022/06/13.
 //
 
-import PhotosUI
 import UIKit
 
 import SnapKit
@@ -43,21 +42,6 @@ final class CreateLetterViewController: BaseViewController {
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
-    private lazy var imagePickerController: UIImagePickerController = {
-        let controller = UIImagePickerController()
-        controller.delegate = self
-        return controller
-    }()
-    private lazy var phPickerController: PHPickerViewController = {
-        let controller = PHPickerViewController(configuration: photoConfiguration)
-        controller.delegate = self
-        return controller
-    }()
-    private var photoConfiguration: PHPickerConfiguration = {
-        var configuration = PHPickerConfiguration()
-        configuration.filter = .any(of: [.images, .livePhotos])
-        return configuration
-    }()
     private let scrollContentView = UIView()
     private let missionView = IndividualMissionView(mission: "1000원 이하의 선물 주고 인증샷 받기")
     private let letterTextView = LetterTextView()
@@ -67,6 +51,7 @@ final class CreateLetterViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkSendButtonEnabled()
         setupNavigationItem()
         setupButtonAction()
     }
@@ -116,9 +101,6 @@ final class CreateLetterViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         
-        letterTextView.applySendButtonEnabled = { [weak self] in
-            self?.checkSendButtonEnabled()
-        }
         navigationController?.presentationController?.delegate = self
         isModalInPresentation = true
     }
@@ -144,6 +126,23 @@ final class CreateLetterViewController: BaseViewController {
     
     // MARK: - func
     
+    private func checkSendButtonEnabled() {
+        letterTextView.applySendButtonEnabled = { [weak self] in
+            self?.changeButtonEnabledState()
+        }
+        letterPhotoView.applySendButtonEnabled = { [weak self] in
+            self?.changeButtonEnabledState()
+        }
+    }
+    
+    private func changeButtonEnabledState() {
+        let hasText = letterTextView.letterTextView.hasText
+        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.icCamera
+        let canEnabled = hasText || hasImage
+        
+        sendButton.isEnabled = canEnabled
+    }
+    
     private func setupNavigationItem() {
         let cancelButton = makeBarButtonItem(with: cancelButton)
         let sendButton = makeBarButtonItem(with: sendButton)
@@ -154,20 +153,7 @@ final class CreateLetterViewController: BaseViewController {
         navigationItem.rightBarButtonItem = sendButton
     }
     
-    private func checkSendButtonEnabled() {
-        let hasText = letterTextView.letterTextView.hasText
-        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.icCamera
-        let canEnabled = hasText || hasImage
-        
-        sendButton.isEnabled = canEnabled
-    }
-    
     private func setupButtonAction() {
-        let photoAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
-            let alertController = self.applyActionSheet()
-            self.present(alertController, animated: true)
-        }
         let cancelAction = UIAction { [weak self] _ in
             self?.presentationControllerDidAttemptToDismissAction()
         }
@@ -175,70 +161,29 @@ final class CreateLetterViewController: BaseViewController {
             self?.dismiss(animated: true, completion: nil)
         }
         
-        letterPhotoView.importPhotosButton.addAction(photoAction, for: .touchUpInside)
         cancelButton.addAction(cancelAction, for: .touchUpInside)
         sendButton.addAction(sendAction, for: .touchUpInside)
     }
     
-    private func applyActionSheet() -> UIAlertController {
-        let alertController = UIAlertController(title: "", message: "마니또에게 보낼 사진을 선택해봐요.", preferredStyle: .actionSheet)
-        
-        alertController.addAction(UIAlertAction(title: "사진 촬영", style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            self.imagePickerController.sourceType = .camera
-            self.present(self.imagePickerController, animated: true, completion: nil)
-        })
-        alertController.addAction(UIAlertAction(title: "사진 보관함에서 선택", style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            self.present(self.phPickerController, animated: true, completion: nil)
-        })
-        alertController.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        
-        return alertController
-    }
-    
     private func presentationControllerDidAttemptToDismissAction() {
-        guard letterTextView.letterTextView.hasText || letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.icCamera else {
+        let hasText = letterTextView.letterTextView.hasText
+        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.icCamera
+        guard hasText || hasImage else {
             dismiss(animated: true, completion: nil)
             return
         }
-        let alert =  UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let dismiss = UIAlertAction(title: "변경 사항 폐기", style: .destructive) { (_) in
-            self.resignFirstResponder()
-            self.dismiss(animated: true, completion: nil)
-        }
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        alert.addAction(dismiss)
-        alert.addAction(cancel)
-        present(alert, animated: true, completion: nil)
-    }
-}
-
-extension CreateLetterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            letterPhotoView.importPhotosButton.setImage(image, for: .normal)
-            checkSendButtonEnabled()
-        }
         
-        dismiss(animated: true, completion: nil)
+        presentActionSheet()
     }
-}
-
-extension CreateLetterViewController: PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: nil)
-        
-        let itemProvider = results.first?.itemProvider
-        if let itemProvider = itemProvider,
-           itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
-                DispatchQueue.main.sync {
-                    self.letterPhotoView.importPhotosButton.setImage(image as? UIImage, for: .normal)
-                    self.checkSendButtonEnabled()
-                }
-            }
+    
+    private func presentActionSheet() {
+        let dismissAction: ((UIAlertAction) -> ()) = { [weak self] _ in
+            self?.resignFirstResponder()
+            self?.dismiss(animated: true, completion: nil)
         }
+        makeActionSheet(actionTitles: ["변경 사항 폐기", "취소"],
+                        actionStyle: [.destructive, .cancel],
+                        actions: [dismissAction, nil])
     }
 }
 

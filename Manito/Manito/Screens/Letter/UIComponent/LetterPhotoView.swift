@@ -5,11 +5,14 @@
 //  Created by SHIN YOON AH on 2022/06/13.
 //
 
+import PhotosUI
 import UIKit
 
 import SnapKit
 
 final class LetterPhotoView: UIView {
+    
+    var applySendButtonEnabled: (() -> ())?
     
     // MARK: - property
     
@@ -18,6 +21,21 @@ final class LetterPhotoView: UIView {
         label.text = "사진 추가"
         label.font = .font(.regular, ofSize: 16)
         return label
+    }()
+    private lazy var imagePickerController: UIImagePickerController = {
+        let controller = UIImagePickerController()
+        controller.delegate = self
+        return controller
+    }()
+    private lazy var phPickerController: PHPickerViewController = {
+        let controller = PHPickerViewController(configuration: photoConfiguration)
+        controller.delegate = self
+        return controller
+    }()
+    private var photoConfiguration: PHPickerConfiguration = {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .any(of: [.images, .livePhotos])
+        return configuration
     }()
     let importPhotosButton: UIButton = {
         let button = UIButton()
@@ -36,6 +54,7 @@ final class LetterPhotoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         render()
+        setupButtonAction()
     }
     
     required init?(coder: NSCoder) {
@@ -55,6 +74,70 @@ final class LetterPhotoView: UIView {
             $0.top.equalTo(titleLabel.snp.bottom).offset(17)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(209)
+        }
+    }
+    
+    private func setupButtonAction() {
+        let photoAction = UIAction { [weak self] _ in
+            self?.presentActionSheet()
+        }
+        
+        importPhotosButton.addAction(photoAction, for: .touchUpInside)
+    }
+    
+    private func presentActionSheet() {
+        guard let viewController = findViewController() else { return }
+        let takePhotoAction: ((UIAlertAction) -> ()) = { [weak self] _ in
+            guard let self = self else { return }
+            self.imagePickerController.sourceType = .camera
+            viewController.present(self.imagePickerController, animated: true, completion: nil)
+        }
+        let photoLibraryAction: ((UIAlertAction) -> ()) = { [weak self] _ in
+            guard let self = self else { return }
+            viewController.present(self.phPickerController, animated: true, completion: nil)
+        }
+        
+        viewController.makeActionSheet(message: "마니또에게 보낼 사진을 선택해봐요.",
+                                       actionTitles: ["사진 촬영", "사진 보관함에서 선택", "취소"],
+                                       actionStyle: [.default, .default, .cancel],
+                                       actions: [takePhotoAction, photoLibraryAction, nil])
+    }
+}
+
+extension LetterPhotoView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let viewController = findViewController() else { return }
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            importPhotosButton.setImage(image, for: .normal)
+            applySendButtonEnabled?()
+        }
+        
+        viewController.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension LetterPhotoView: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        let itemProvider = results.first?.itemProvider
+        if let itemProvider = itemProvider,
+           itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                DispatchQueue.main.sync {
+                    guard let image = image as? UIImage else { return }
+
+                    self.importPhotosButton.setImage(image, for: .normal)
+                    self.applySendButtonEnabled?()
+                }
+                
+                if let error = error {
+                    guard let viewController = self.findViewController() else { return }
+                    viewController.makeAlert(title: "", message: "사진을 불러올 수 없습니다.")
+                    
+                    Logger.debugDescription(error)
+                }
+            }
         }
     }
 }
