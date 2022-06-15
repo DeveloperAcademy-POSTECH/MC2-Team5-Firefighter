@@ -25,9 +25,18 @@ class MemoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupFont()
-        setupViewLayer()
-        // Do any additional setup after loading the view.
+    setupFont()
+    setupViewLayer()
+    // Do any additional setup after loading the view.
+    let font = UIFont.font(.regular, ofSize: 14)
+    let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
+    let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
+    
+    memoryControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
+    memoryControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+    memoryControl.selectedSegmentTintColor = .white
+    memoryControl.backgroundColor = .darkGrey003
+        
     }
     
     private func setupFont() {

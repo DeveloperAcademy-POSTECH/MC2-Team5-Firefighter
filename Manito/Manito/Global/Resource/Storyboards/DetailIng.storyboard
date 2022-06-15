@@ -400,20 +400,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fwP-xP-e5O">
-                                <rect key="frame" x="60" y="128" width="270" height="32.666666666666686"/>
+                                <rect key="frame" x="48" y="128" width="294" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="TxI-la-6bW"/>
+                                    <constraint firstAttribute="width" constant="294" id="bBq-3K-fSE"/>
+                                </constraints>
                                 <segments>
                                     <segment title="마니띠와의 추억"/>
                                     <segment title="마니또와의 추억"/>
                                 </segments>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내가 챙겨줘서 좋았지? 마니띠" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zd-vz-mUZ">
-                                <rect key="frame" x="88" y="261.66666666666669" width="213" height="20.333333333333314"/>
+                                <rect key="frame" x="88" y="266" width="213" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a6Z-4v-pzv">
-                                <rect key="frame" x="27" y="191.66666666666666" width="336" height="40"/>
+                                <rect key="frame" x="27" y="196" width="336" height="40"/>
                                 <color key="backgroundColor" red="0.89411764709999997" green="0.39607843139999999" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="gIb-wK-226"/>
@@ -475,19 +479,19 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZo-3Z-Mbc">
-                                <rect key="frame" x="150" y="432" width="90" height="90"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZo-3Z-Mbc">
+                                <rect key="frame" x="145.66666666666666" y="427.66666666666669" width="99" height="99.000000000000057"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="st8-B3-qxA">
-                                        <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                        <rect key="frame" x="4" y="5" width="90" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.89411764709999997" green="0.39607843139999999" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="99" id="PwF-gQ-gPP"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="99" id="aO4-Zk-Ch6"/>
+                                    <constraint firstAttribute="width" constant="99" id="PwF-gQ-gPP"/>
+                                    <constraint firstAttribute="height" constant="99" id="aO4-Zk-Ch6"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="닉네임" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvB-aX-cBS">
@@ -522,10 +526,9 @@
                             <constraint firstItem="bZo-3Z-Mbc" firstAttribute="centerX" secondItem="m3F-Wn-N3O" secondAttribute="centerX" id="ct9-xW-aGS"/>
                             <constraint firstItem="fwP-xP-e5O" firstAttribute="top" secondItem="64g-AJ-16z" secondAttribute="top" constant="40" id="cw2-CK-KDo"/>
                             <constraint firstItem="64g-AJ-16z" firstAttribute="trailing" secondItem="EvB-aX-cBS" secondAttribute="trailing" constant="88" id="evd-nC-XWS"/>
-                            <constraint firstItem="64g-AJ-16z" firstAttribute="trailing" secondItem="fwP-xP-e5O" secondAttribute="trailing" constant="60" id="jnB-kI-BDz"/>
                             <constraint firstItem="Wgy-YV-fFk" firstAttribute="top" secondItem="4zd-vz-mUZ" secondAttribute="bottom" constant="30" id="nLm-LU-AWG"/>
                             <constraint firstItem="4zd-vz-mUZ" firstAttribute="leading" secondItem="64g-AJ-16z" secondAttribute="leading" constant="88" id="ngJ-tQ-rhK"/>
-                            <constraint firstItem="fwP-xP-e5O" firstAttribute="leading" secondItem="64g-AJ-16z" secondAttribute="leading" constant="60" id="sNc-Zm-HIM"/>
+                            <constraint firstItem="fwP-xP-e5O" firstAttribute="centerX" secondItem="m3F-Wn-N3O" secondAttribute="centerX" id="qpr-r6-CU0"/>
                             <constraint firstItem="64g-AJ-16z" firstAttribute="bottom" secondItem="Wgy-YV-fFk" secondAttribute="bottom" constant="168" id="wOe-x2-l73"/>
                             <constraint firstItem="64g-AJ-16z" firstAttribute="trailing" secondItem="fbR-3y-SUc" secondAttribute="trailing" constant="27" id="zYz-DL-Hyc"/>
                         </constraints>
