@@ -17,6 +17,7 @@ class CreateRoomViewController: BaseViewController {
     private var date = 0
     
     // MARK: - Property
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "방 생성하기"
@@ -58,14 +59,15 @@ class CreateRoomViewController: BaseViewController {
         view.isHidden = true
         return view
     }()
+    
     // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNotificationCenter()
     }
     
     override func render() {
-        
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
@@ -116,6 +118,7 @@ class CreateRoomViewController: BaseViewController {
     }
     
     // MARK: - Configure
+    
     override func configUI() {
         super.configUI()
         view.backgroundColor = .backgroundGrey
@@ -127,8 +130,9 @@ class CreateRoomViewController: BaseViewController {
     }
     
     // MARK: - Selectors
+    
     @objc private func didTapCloseButton() {
-        print("ttaapp")
+        print("didTapCloseButton")
     }
     
     @objc private func didTapNextButton() {
@@ -136,19 +140,16 @@ class CreateRoomViewController: BaseViewController {
         case 0:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
-            print(name)
         case 1:
             person = Int(personView.personSlider.value)
-            print(person)
         case 2:
-            print("date")
+            print("기간 선택 보여주기")
         default:
-            print("end")
+            print("다른 뷰 넘기기")
         }
         
         index += 1
         changedInputView()
-        
     }
     
     @objc private func keyboardWillShow(notification:NSNotification) {
@@ -173,13 +174,7 @@ class CreateRoomViewController: BaseViewController {
     }
     
     @objc private func didReceivePersonNotification(_ notification: Notification) {
-        UIView.animate(withDuration: 1) {
-            self.nameView.transform = CGAffineTransform(translationX: -UIScreen.main.bounds.width, y: 0)
-        }
-        UIView.animate(withDuration: 1) {
-            self.nameView.transform = CGAffineTransform(translationX: -UIScreen.main.bounds.width, y: 0)
-        }
-        self.nameView.isHidden = false
+        self.nameView.isHidden = true
         self.personView.isHidden = false
         self.dateView.isHidden = true
         self.checkView.isHidden = true
@@ -231,5 +226,3 @@ class CreateRoomViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCheckNotification(_ :)), name: NSNotification.Name("CheckNotification"), object: nil)
     }
 }
-
-// FIXME: 뷰 전환 애니메이션주기

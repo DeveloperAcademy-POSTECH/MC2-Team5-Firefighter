@@ -10,6 +10,7 @@ import UIKit
 class CheckRoomView: UIView {
 
     // MARK: - Property
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "명예소방관"
@@ -48,6 +49,7 @@ class CheckRoomView: UIView {
     }
     
     // MARK: - Config
+    
     func render() {
         self.addSubview(nameLabel)
         nameLabel.snp.makeConstraints {

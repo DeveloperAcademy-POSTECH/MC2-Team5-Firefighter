@@ -18,30 +18,24 @@ class InputPersonView: UIView {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    
     private let personBackView: UIView = {
         let view = UIView()
         view.backgroundColor = .darkGray
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.subOrange.cgColor
-        view.layer.cornerRadius = 10
+        view.makeBorderLayer(color: .subOrange)
         return view
     }()
-    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "heart")
         imageView.backgroundColor = .darkGray
         return imageView
     }()
-    
     private var personLabel: UILabel = {
         let label = UILabel()
         label.text = "X 5인"
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
-    
     lazy var personSlider: UISlider = {
         let slider = UISlider()
         slider.value = 1
@@ -52,14 +46,12 @@ class InputPersonView: UIView {
         slider.addTarget(self, action: #selector(didSlider(_:)), for: .valueChanged)
         return slider
     }()
-    
     private var minLabel: UILabel = {
         let label = UILabel()
         label.text = "5인"
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    
     private var maxLabel: UILabel = {
         let label = UILabel()
         label.text = "15인"
@@ -68,6 +60,7 @@ class InputPersonView: UIView {
     }()
     
     // MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         render()
@@ -78,12 +71,14 @@ class InputPersonView: UIView {
     }
     
     // MARK: - Selector
+    
     @objc func didSlider(_ slider: UISlider) {
         let value = slider.value
         personLabel.text = "X \(Int(value))인"
     }
     
     // MARK: - Config
+    
     private func render() {
         self.addSubview(peronsViewLabel)
         peronsViewLabel.snp.makeConstraints {

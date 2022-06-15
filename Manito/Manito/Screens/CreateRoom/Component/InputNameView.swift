@@ -13,6 +13,7 @@ class InputNameView: UIView {
     private var maxLength = 8
     
     // MARK: - Property
+    
     lazy var roomsNameTextField: UITextField = {
         let texField = UITextField()
         let attributes = [
@@ -49,6 +50,7 @@ class InputNameView: UIView {
     }
     
     // MARK: - Config
+    
     private func render() {
         self.addSubview(roomsNameTextField)
         roomsNameTextField.snp.makeConstraints {
@@ -62,18 +64,24 @@ class InputNameView: UIView {
             $0.right.equalToSuperview()
         }
     }
+    
+    // MARK: - Funtions
+    
+    private func setCounter(count: Int) {
+        roomsTextLimit.text = "\(count)/\(maxLength)"
+        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
+    }
+    
+    private func checkMaxLength(textField: UITextField, maxLength: Int) {
+        if (textField.text?.count ?? 0 > maxLength) {
+            textField.deleteBackward()
+        }
+    }
 }
 
 extension InputNameView: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text as NSString? else { return false }
-        let newString = text.replacingCharacters(in: range, with: string)
-        return newString.count <= maxLength
-    }
-    
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        guard let text = textField.text else { return }
-        roomsTextLimit.text = "\(text.count)/\(maxLength)"
+        setCounter(count: textField.text?.count ?? 0)
         enableButton?()
     }
 }
