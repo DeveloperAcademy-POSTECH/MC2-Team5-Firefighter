@@ -21,6 +21,17 @@ final class LetterPhotoView: UIView {
     
     // MARK: - property
     
+    let importPhotosButton: UIButton = {
+        let button = UIButton()
+        button.makeBorderLayer(color: .white)
+        button.clipsToBounds = true
+        button.setImage(ImageLiterals.icCamera, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .darkGrey003
+        return button
+    }()
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "사진 추가"
@@ -41,17 +52,6 @@ final class LetterPhotoView: UIView {
         var configuration = PHPickerConfiguration()
         configuration.filter = .any(of: [.images, .livePhotos])
         return configuration
-    }()
-    let importPhotosButton: UIButton = {
-        let button = UIButton()
-        button.makeBorderLayer(color: .white)
-        button.clipsToBounds = true
-        button.setImage(ImageLiterals.icCamera, for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
-        button.tintColor = .white
-        button.backgroundColor = .darkGrey003
-        return button
     }()
 
     // MARK: - init
@@ -91,7 +91,6 @@ final class LetterPhotoView: UIView {
     }
     
     private func presentActionSheet() {
-        guard let viewController = findViewController() else { return }
         let takePhotoAction: ((UIAlertAction) -> ()) = { [weak self] _ in
             self?.applyPHPickerWithAuthorization(with: .camera)
         }
@@ -99,51 +98,42 @@ final class LetterPhotoView: UIView {
             self?.applyPHPickerWithAuthorization(with: .library)
         }
         
-        viewController.makeActionSheet(message: "마니또에게 보낼 사진을 선택해봐요.",
+        viewController?.makeActionSheet(message: "마니또에게 보낼 사진을 선택해봐요.",
                                        actionTitles: ["사진 촬영", "사진 보관함에서 선택", "취소"],
                                        actionStyle: [.default, .default, .cancel],
                                        actions: [takePhotoAction, photoLibraryAction, nil])
     }
     
     private func applyPHPickerWithAuthorization(with state: PhotoType) {
-        guard let viewController = findViewController() else { return }
-        
         switch (PHPhotoLibrary.authorizationStatus(), state) {
-        case (.denied, _):
+        case (.denied, .library):
             didMoveToSetting()
-        case (.authorized, .camera):
-            imagePickerController.sourceType = .camera
-            viewController.present(imagePickerController, animated: true, completion: nil)
         case (.authorized, .library):
-            viewController.present(phPickerController, animated: true, completion: nil)
-        case (.notDetermined, _):
-            PHPhotoLibrary.requestAuthorization({ photoStatus in
-                switch photoStatus {
-                case .authorized:
-                    switch state {
-                    case .camera:
-                        self.imagePickerController.sourceType = .camera
-                        viewController.present(self.imagePickerController, animated: true, completion: nil)
-                    case .library:
-                        viewController.present(self.phPickerController, animated: true, completion: nil)
+            viewController?.present(phPickerController, animated: true, completion: nil)
+        case (.notDetermined, .library):
+            PHPhotoLibrary.requestAuthorization({ [weak self] photoStatus in
+                guard let self = self else { return }
+                if photoStatus == .authorized {
+                    DispatchQueue.main.async {
+                        self.viewController?.present(self.phPickerController, animated: true, completion: nil)
                     }
-                default:
-                    break
                 }
             })
+        case (_, .camera):
+            self.imagePickerController.sourceType = .camera
+            self.viewController?.present(self.imagePickerController, animated: true, completion: nil)
         default:
             break
         }
     }
     
     private func didMoveToSetting() {
-        guard let viewController = findViewController() else { return }
         let settingAction: ((UIAlertAction) -> ()) = { _ in
             guard let settingURL = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(settingURL)
         }
         if let appName = Bundle.main.infoDictionary!["CFBundleName"] as? String {
-            viewController.makeRequestAlert(title: "설정",
+            viewController?.makeRequestAlert(title: "설정",
                                             message: "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
                                             okAction: settingAction,
                                             completion: nil)
@@ -153,13 +143,12 @@ final class LetterPhotoView: UIView {
 
 extension LetterPhotoView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let viewController = findViewController() else { return }
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             importPhotosButton.setImage(image, for: .normal)
             applySendButtonEnabled?()
         }
         
-        viewController.dismiss(animated: true, completion: nil)
+        viewController?.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -170,7 +159,9 @@ extension LetterPhotoView: PHPickerViewControllerDelegate {
         let itemProvider = results.first?.itemProvider
         if let itemProvider = itemProvider,
            itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                guard let self = self else { return }
+                
                 DispatchQueue.main.sync {
                     guard let image = image as? UIImage else { return }
 
@@ -179,8 +170,7 @@ extension LetterPhotoView: PHPickerViewControllerDelegate {
                 }
                 
                 if let error = error {
-                    guard let viewController = self.findViewController() else { return }
-                    viewController.makeAlert(title: "", message: "사진을 불러올 수 없습니다.")
+                    self.viewController?.makeAlert(title: "", message: "사진을 불러올 수 없습니다.")
                     
                     Logger.debugDescription(error)
                 }
