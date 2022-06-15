@@ -91,17 +91,30 @@ final class LetterPhotoView: UIView {
     }
     
     private func presentActionSheet() {
+        let hasImage = importPhotosButton.imageView?.image != ImageLiterals.icCamera
+        let actionTitles = hasImage ? ["사진 촬영", "사진 보관함에서 선택", "사진 지우기", "취소"] : ["사진 촬영", "사진 보관함에서 선택", "취소"]
+        let actionStyle: [UIAlertAction.Style] = hasImage ? [.default, .default, .default, .cancel] : [.default, .default, .cancel]
+        let actions = getAlertAction(with: hasImage)
+        
+        viewController?.makeActionSheet(message: "마니또에게 보낼 사진을 선택해봐요.",
+                                       actionTitles: actionTitles,
+                                       actionStyle: actionStyle,
+                                       actions: actions)
+    }
+    
+    private func getAlertAction(with state: Bool) -> [((UIAlertAction) -> ())?] {
         let takePhotoAction: ((UIAlertAction) -> ()) = { [weak self] _ in
             self?.applyPHPickerWithAuthorization(with: .camera)
         }
         let photoLibraryAction: ((UIAlertAction) -> ()) = { [weak self] _ in
             self?.applyPHPickerWithAuthorization(with: .library)
         }
+        let removePhotoAction: ((UIAlertAction) -> ()) = { [weak self] _ in
+            self?.importPhotosButton.setImage(ImageLiterals.icCamera, for: .normal)
+        }
         
-        viewController?.makeActionSheet(message: "마니또에게 보낼 사진을 선택해봐요.",
-                                       actionTitles: ["사진 촬영", "사진 보관함에서 선택", "취소"],
-                                       actionStyle: [.default, .default, .cancel],
-                                       actions: [takePhotoAction, photoLibraryAction, nil])
+        return state ? [takePhotoAction, photoLibraryAction, removePhotoAction, nil]
+                     : [takePhotoAction, photoLibraryAction, nil]
     }
     
     private func applyPHPickerWithAuthorization(with state: PhotoType) {
