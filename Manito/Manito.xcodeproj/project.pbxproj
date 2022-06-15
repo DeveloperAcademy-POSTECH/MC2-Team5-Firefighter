@@ -60,6 +60,8 @@
 		B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */; };
 		B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525412855C97900614FF7 /* UILabel+Extension.swift */; };
 		B5F525492855D01D00614FF7 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525482855D01D00614FF7 /* Letter.swift */; };
+		CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */; };
+		CB637A3D28595D9800FF1240 /* ParticipateRoom.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */; };
 		CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */; };
 		CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissonView.swift */; };
 		CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */; };
@@ -121,6 +123,8 @@
 		B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		B5F525412855C97900614FF7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		B5F525482855D01D00614FF7 /* Letter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
+		CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewController.swift; sourceTree = "<group>"; };
+		CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ParticipateRoom.storyboard; sourceTree = "<group>"; };
 		CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomCollectionCell.swift; sourceTree = "<group>"; };
 		CB9592B42855D52700847751 /* CommonMissonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissonView.swift; sourceTree = "<group>"; };
 		CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleView.swift; sourceTree = "<group>"; };
@@ -206,6 +210,7 @@
 		B5F524E328519AC300614FF7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				CB637A3828595BE400FF1240 /* ParticipateRoom */,
 				7E0C5C342855B1EF00F698D1 /* CreateNickName */,
 				B5F524EA28519B4B00614FF7 /* Letter */,
 				B5F524E928519B3F00614FF7 /* Detail-Ing */,
@@ -370,6 +375,7 @@
 				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
 				B5F525172851A10600614FF7 /* Letter.storyboard */,
 				7E0C5C372855B73100F698D1 /* Splash.storyboard */,
+				CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -424,6 +430,22 @@
 				B5F525482855D01D00614FF7 /* Letter.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CB637A3828595BE400FF1240 /* ParticipateRoom */ = {
+			isa = PBXGroup;
+			children = (
+				CB637A3928595BF900FF1240 /* Component */,
+				CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */,
+			);
+			path = ParticipateRoom;
+			sourceTree = "<group>";
+		};
+		CB637A3928595BF900FF1240 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		CB9592B02855BFDD00847751 /* Cell */ = {
@@ -521,6 +543,7 @@
 				B5F5250428519F7A00614FF7 /* DungGeunMo.otf in Resources */,
 				B5F525142851A0DB00614FF7 /* DetailWait.storyboard in Resources */,
 				B5F524D628519AA000614FF7 /* Main.storyboard in Resources */,
+				CB637A3D28595D9800FF1240 /* ParticipateRoom.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,6 +580,7 @@
 				B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */,
 				B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */,
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
+				CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */,
 				B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
 				7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */,
