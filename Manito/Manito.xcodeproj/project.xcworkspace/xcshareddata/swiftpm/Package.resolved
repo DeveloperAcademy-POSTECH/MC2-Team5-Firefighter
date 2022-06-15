@@ -12,7 +12,7 @@
       },
       {
         "package": "SnapKit",
-        "repositoryURL": "https://github.com/SnapKit/SnapKit.git",
+        "repositoryURL": "https://github.com/SnapKit/SnapKit",
         "state": {
           "branch": null,
           "revision": "f222cbdf325885926566172f6f5f06af95473158",
