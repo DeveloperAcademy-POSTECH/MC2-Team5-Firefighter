@@ -433,7 +433,7 @@
                                                 <rect key="frame" x="184" y="0.0" width="174" height="160"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2c3-T5-muo">
-                                                        <rect key="frame" x="0.0" y="0.0" width="174" height="160"/>
+                                                        <rect key="frame" x="17" y="15" width="140" height="130"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <string key="text">안녕, 반가워
 넌 왜 자리에 없니
@@ -455,7 +455,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="174" height="160"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8T0-47-Xth">
-                                                        <rect key="frame" x="0.0" y="0.0" width="174" height="160"/>
+                                                        <rect key="frame" x="17" y="15" width="140" height="130"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <string key="text">c5 15번 사물함
 비밀번호: 4860
@@ -475,19 +475,19 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZo-3Z-Mbc">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZo-3Z-Mbc">
                                 <rect key="frame" x="150" y="432" width="90" height="90"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="st8-B3-qxA">
                                         <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.26274509800000001" green="0.51764705879999995" blue="0.30588235289999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.89411764709999997" green="0.39607843139999999" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="7c9-Ie-CSo"/>
-                                    <constraint firstAttribute="width" constant="90" id="arQ-nU-4Wj"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="99" id="PwF-gQ-gPP"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="99" id="aO4-Zk-Ch6"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="닉네임" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvB-aX-cBS">
@@ -536,6 +536,21 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="fromManitiFirstView" destination="4BN-bG-lQV" id="AMa-ej-Z5C"/>
+                        <outlet property="fromManitiForthLabel" destination="8T0-47-Xth" id="3oI-Gm-6ZR"/>
+                        <outlet property="fromManitiForthView" destination="otn-l7-gmc" id="cmm-5o-5Ga"/>
+                        <outlet property="fromManitiSecondLabel" destination="2c3-T5-muo" id="TdY-kq-rJp"/>
+                        <outlet property="fromManitiSecondView" destination="gRw-W5-PfZ" id="DbC-4x-PZi"/>
+                        <outlet property="fromManitiThirdView" destination="AZU-SV-5Qt" id="yGj-yb-mgO"/>
+                        <outlet property="manitiIconBackView" destination="bZo-3Z-Mbc" id="ERz-Lw-s9O"/>
+                        <outlet property="manitiIconView" destination="st8-B3-qxA" id="Ddb-Ff-9ms"/>
+                        <outlet property="manitiNickLabel" destination="EvB-aX-cBS" id="qUL-3g-gt6"/>
+                        <outlet property="memoriIconBottomView" destination="fbR-3y-SUc" id="Gy9-ab-Jt3"/>
+                        <outlet property="memoryControl" destination="fwP-xP-e5O" id="yTf-ks-icm"/>
+                        <outlet property="memoryIconView" destination="a6Z-4v-pzv" id="0sx-D6-Nqm"/>
+                        <outlet property="memoryManitoLabel" destination="4zd-vz-mUZ" id="Nyf-4W-b7J"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0zw-yn-17v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
