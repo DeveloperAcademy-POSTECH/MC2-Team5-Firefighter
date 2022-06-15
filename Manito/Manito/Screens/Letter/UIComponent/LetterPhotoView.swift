@@ -14,6 +14,11 @@ final class LetterPhotoView: UIView {
     
     var applySendButtonEnabled: (() -> ())?
     
+    private enum PhotoType {
+        case camera
+        case library
+    }
+    
     // MARK: - property
     
     private let titleLabel: UILabel = {
@@ -88,19 +93,61 @@ final class LetterPhotoView: UIView {
     private func presentActionSheet() {
         guard let viewController = findViewController() else { return }
         let takePhotoAction: ((UIAlertAction) -> ()) = { [weak self] _ in
-            guard let self = self else { return }
-            self.imagePickerController.sourceType = .camera
-            viewController.present(self.imagePickerController, animated: true, completion: nil)
+            self?.applyPHPickerWithAuthorization(with: .camera)
         }
         let photoLibraryAction: ((UIAlertAction) -> ()) = { [weak self] _ in
-            guard let self = self else { return }
-            viewController.present(self.phPickerController, animated: true, completion: nil)
+            self?.applyPHPickerWithAuthorization(with: .library)
         }
         
         viewController.makeActionSheet(message: "마니또에게 보낼 사진을 선택해봐요.",
                                        actionTitles: ["사진 촬영", "사진 보관함에서 선택", "취소"],
                                        actionStyle: [.default, .default, .cancel],
                                        actions: [takePhotoAction, photoLibraryAction, nil])
+    }
+    
+    private func applyPHPickerWithAuthorization(with state: PhotoType) {
+        guard let viewController = findViewController() else { return }
+        
+        switch (PHPhotoLibrary.authorizationStatus(), state) {
+        case (.denied, _):
+            didMoveToSetting()
+        case (.authorized, .camera):
+            imagePickerController.sourceType = .camera
+            viewController.present(imagePickerController, animated: true, completion: nil)
+        case (.authorized, .library):
+            viewController.present(phPickerController, animated: true, completion: nil)
+        case (.notDetermined, _):
+            PHPhotoLibrary.requestAuthorization({ photoStatus in
+                switch photoStatus {
+                case .authorized:
+                    switch state {
+                    case .camera:
+                        self.imagePickerController.sourceType = .camera
+                        viewController.present(self.imagePickerController, animated: true, completion: nil)
+                    case .library:
+                        viewController.present(self.phPickerController, animated: true, completion: nil)
+                    }
+                default:
+                    break
+                }
+            })
+        default:
+            break
+        }
+    }
+    
+    private func didMoveToSetting() {
+        guard let viewController = findViewController() else { return }
+        let settingAction: ((UIAlertAction) -> ()) = { _ in
+            guard let settingURL = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(settingURL)
+        }
+        if let appName = Bundle.main.infoDictionary!["CFBundleName"] as? String {
+            viewController.makeRequestAlert(title: "설정",
+                                            message: "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
+                                            okAction: settingAction,
+                                            completion: nil)
+        }
     }
 }
 
