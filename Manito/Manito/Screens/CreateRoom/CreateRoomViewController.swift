@@ -40,23 +40,22 @@ class CreateRoomViewController: BaseViewController {
     }()
     private let nameView: InputNameView = {
         let view = InputNameView()
-        view.isHidden = false
         return view
         
     }()
     private let personView: InputPersonView = {
         let view = InputPersonView()
-        view.isHidden = true
+        view.alpha = 0.0
         return view
     }()
     private let dateView: InputDateView = {
         let view = InputDateView()
-        view.isHidden = true
+        view.alpha = 0.0
         return view
     }()
     private let checkView: CheckRoomView = {
         let view = CheckRoomView()
-        view.isHidden = true
+        view.alpha = 0.0
         return view
     }()
     
@@ -167,31 +166,30 @@ class CreateRoomViewController: BaseViewController {
     }
     
     @objc private func didReceiveNameNotification(_ notification: Notification) {
-        self.nameView.isHidden = false
-        self.personView.isHidden = true
-        self.dateView.isHidden = true
-        self.checkView.isHidden = true
+        UIView.animate(withDuration: 0.3) {
+            self.nameView.alpha = 1.0
+        }
     }
     
     @objc private func didReceivePersonNotification(_ notification: Notification) {
-        self.nameView.isHidden = true
-        self.personView.isHidden = false
-        self.dateView.isHidden = true
-        self.checkView.isHidden = true
+        UIView.animate(withDuration: 0.3) {
+            self.nameView.alpha = 0.0
+            self.personView.alpha = 1.0
+        }
     }
     
     @objc private func didReceiveDateNotification(_ notification: Notification) {
-        self.nameView.isHidden = true
-        self.personView.isHidden = true
-        self.dateView.isHidden = false
-        self.checkView.isHidden = true
+        UIView.animate(withDuration: 0.3) {
+            self.personView.alpha = 0.0
+            self.dateView.alpha = 1.0
+        }
     }
     
     @objc private func didReceiveCheckNotification(_ notification: Notification) {
-        self.nameView.isHidden = true
-        self.personView.isHidden = true
-        self.dateView.isHidden = true
-        self.checkView.isHidden = false
+        UIView.animate(withDuration: 0.3) {
+            self.dateView.alpha = 0.0
+            self.checkView.alpha = 1.0
+        }
     }
     
     // MARK: - Functions
