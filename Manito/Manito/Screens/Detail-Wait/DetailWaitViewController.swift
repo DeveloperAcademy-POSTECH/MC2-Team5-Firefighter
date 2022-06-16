@@ -101,6 +101,11 @@ class DetailWaitViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
+    private let imgNiView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = ImageLiterals.imgNi
+        return imageView
+    }()
     private lazy var comeInText: UILabel = {
         let label = UILabel()
         label.text = "\(userCount)/\(maxUser)"
@@ -158,11 +163,18 @@ class DetailWaitViewController: BaseViewController {
             $0.leading.equalToSuperview().inset(16)
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
+        
+        view.addSubview(imgNiView)
+        imgNiView.snp.makeConstraints {
+            $0.centerY.equalTo(togetherFriendText.snp.centerY)
+            $0.leading.equalTo(togetherFriendText.snp.trailing).offset(7)
+            $0.width.height.equalTo(30)
+        }
 
         view.addSubview(comeInText)
         comeInText.snp.makeConstraints {
-            $0.leading.equalTo(togetherFriendText.snp.trailing).offset(10)
-            $0.centerY.equalTo(togetherFriendText.snp.centerY)
+            $0.leading.equalTo(imgNiView.snp.trailing)
+            $0.centerY.equalTo(imgNiView.snp.centerY)
         }
 
         view.addSubview(copyButton)
