@@ -44,7 +44,8 @@ final class ManittoCollectionViewCell: BaseCollectionViewCell {
     
     // FIXME: - 현재는 더미데이터
     func setManittoCell(with manittoTypeIndex: Int) {
-        backgroundColor = .characterYellow
+        backgroundColor = .characterYellow.withAlphaComponent(0.5)
+        contentView.alpha = 0.5
         characterImageView.image = ImageLiterals.imgMa
     }
 }
