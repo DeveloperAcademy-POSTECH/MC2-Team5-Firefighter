@@ -23,7 +23,7 @@ final class BackButton: UIButton {
     // MARK: - func
     
     private func configUI() {
-        self.setImage(ImageLiterals.icBack, for: .normal)
+        self.setImage(ImageLiterals.btnBack, for: .normal)
         self.tintColor = .white
     }
 }
