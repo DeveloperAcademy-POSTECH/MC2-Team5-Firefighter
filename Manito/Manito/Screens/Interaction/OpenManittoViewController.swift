@@ -88,22 +88,34 @@ final class OpenManittoViewController: BaseViewController {
         let delay: CGFloat = 1.0
         let timeInterval = 0.2
         let durationTime = timeInterval * Double(characters.count)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
             UIView.animate(withDuration: durationTime, animations: {
-                var countNumber = 0
-                Timer.scheduledTimer(withTimeInterval: timeInterval,
-                                     repeats: true) { [weak self] _ in
-                    guard let self = self else { return }
-                    guard countNumber != self.characters.count else { return }
-                    let characterCount = self.characters.count - 1
-                    self.scrollNumberIndex = Int.random(in: 0...characterCount, excluding: self.scrollNumberIndex)
-                    countNumber += 1
-                }
+                self.setRandomAnimationTimer(withTimeInterval: timeInterval)
             }, completion: { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + delay + durationTime, execute: {
-                    self.scrollNumberIndex = self.manittoIndex
-                })
+                self.setManittoAnimation(with: .now() + delay + durationTime)
             })
+        })
+    }
+    
+    private func setRandomAnimationTimer(withTimeInterval timeInterval: TimeInterval) {
+        var countNumber = 0
+        
+        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) {
+            [weak self] _ in
+            guard let self = self,
+                countNumber != self.characters.count
+            else { return }
+            let characterCount = self.characters.count - 1
+            
+            self.scrollNumberIndex = Int.random(in: 0...characterCount, excluding: self.scrollNumberIndex)
+            countNumber += 1
+        }
+    }
+    
+    private func setManittoAnimation(with deadline: DispatchTime) {
+        DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
+            self.scrollNumberIndex = self.manittoIndex
         })
     }
 }
@@ -119,16 +131,5 @@ extension OpenManittoViewController: UICollectionViewDataSource {
         cell.setManittoCell(with: indexPath.item)
         cell.setHighlightCell(with: indexPath.item, matchIndex: scrollNumberIndex)
         return cell
-    }
-}
-
-extension Int {
-    static func random(in range: ClosedRange<Int>, excluding x: Int) -> Int {
-        if range.contains(x) {
-            let r = Int.random(in: Range(uncheckedBounds: (range.lowerBound, range.upperBound)))
-            return r == x ? range.upperBound : r
-        } else {
-            return Int.random(in: range)
-        }
     }
 }

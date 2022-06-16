@@ -30,6 +30,7 @@
 		B50B1B3E285B04580080992C /* Interaction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50B1B3D285B04580080992C /* Interaction.storyboard */; };
 		B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B40285B048A0080992C /* OpenManittoViewController.swift */; };
 		B50B1B44285B146A0080992C /* ManittoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */; };
+		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
 		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
@@ -94,6 +95,7 @@
 		B50B1B3D285B04580080992C /* Interaction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Interaction.storyboard; sourceTree = "<group>"; };
 		B50B1B40285B048A0080992C /* OpenManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoViewController.swift; sourceTree = "<group>"; };
 		B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManittoCollectionViewCell.swift; sourceTree = "<group>"; };
+		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				B5F525252851A26D00614FF7 /* NSObject+Extension.swift */,
 				B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */,
 				B5F525412855C97900614FF7 /* UILabel+Extension.swift */,
+				B5E1F2AD285B2917006D880B /* Int+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
+				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
