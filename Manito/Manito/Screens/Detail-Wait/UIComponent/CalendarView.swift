@@ -50,7 +50,6 @@ class CalendarView: UIView {
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-
     private var calendar: FSCalendar = {
         let calendar = FSCalendar()
         calendar.locale = Locale(identifier: "ko_KR")
@@ -135,6 +134,33 @@ class CalendarView: UIView {
         calendar.select(endDate)
         setDateRange()
     }
+
+    func setDateRange() {
+        guard countDateRange() <= 7 else { return }
+
+        let isFirstClickPastDate = calendar.selectedDates[0] < calendar.selectedDates[1]
+        if isFirstClickPastDate {
+            setSelecteDate(startIndex: 0, endIndex: 1)
+        } else {
+            setSelecteDate(startIndex: 1, endIndex: 0)
+        }
+    }
+
+    func setSelecteDate(startIndex: Int, endIndex: Int) {
+        var startDate = calendar.selectedDates[startIndex]
+        while startDate < calendar.selectedDates[endIndex] {
+            startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
+            calendar.select(startDate)
+        }
+    }
+
+    func countDateRange() -> Int {
+        let isFirstClickPastDate = calendar.selectedDates[0] < calendar.selectedDates[1]
+        let selectdDate = isFirstClickPastDate ? calendar.selectedDates[1].timeIntervalSince(calendar.selectedDates[0]) : calendar.selectedDates[0].timeIntervalSince(calendar.selectedDates[1])
+        let dateRangeCount = selectdDate / 86400
+
+        return Int(dateRangeCount) + 1
+    }
 }
 
 extension CalendarView: FSCalendarDelegate {
@@ -194,35 +220,6 @@ extension CalendarView: FSCalendarDelegate {
         } else {
             return .grey005.withAlphaComponent(0.6)
         }
-    }
-
-    // MARK: - func
-
-    func setDateRange() {
-        guard countDateRange() <= 7 else { return }
-
-        let isFirstClickPastDate = calendar.selectedDates[0] < calendar.selectedDates[1]
-        if isFirstClickPastDate {
-            setSelecteDate(startIndex: 0, endIndex: 1)
-        } else {
-            setSelecteDate(startIndex: 1, endIndex: 0)
-        }
-    }
-
-    func setSelecteDate(startIndex: Int, endIndex: Int) {
-        var startDate = calendar.selectedDates[startIndex]
-        while startDate < calendar.selectedDates[endIndex] {
-            startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
-            calendar.select(startDate)
-        }
-    }
-
-    func countDateRange() -> Int {
-        let isFirstClickPastDate = calendar.selectedDates[0] < calendar.selectedDates[1]
-        let selectdDate = isFirstClickPastDate ? calendar.selectedDates[1].timeIntervalSince(calendar.selectedDates[0]) : calendar.selectedDates[0].timeIntervalSince(calendar.selectedDates[1])
-        let dateRangeCount = selectdDate / 86400
-
-        return Int(dateRangeCount) + 1
     }
 }
 extension CalendarView: FSCalendarDataSource { }
