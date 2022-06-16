@@ -14,6 +14,22 @@ class DetailModalController: BaseViewController {
     private var isFirstTap = false
     private var selectStartDate = Date()
     private var memberCount = 7
+    let testStartString = "2022-06-20"
+    let testEndString = "2022-06-24"
+
+    private enum CalendarMoveType {
+        case previous
+        case next
+
+        var month: Int {
+            switch self {
+            case .previous:
+                return -1
+            case .next:
+                return 1
+            }
+        }
+    }
 
     // MARK: - property
 
@@ -58,10 +74,10 @@ class DetailModalController: BaseViewController {
         label.textColor = .white
         return label
     }()
-    private lazy var preButton: UIButton = {
+    private lazy var previousButton: UIButton = {
         let button = UIButton()
         let action = UIAction { _ in
-            self.changeMonth(next: false)
+            self.changeMonth(with: CalendarMoveType.previous)
         }
         button.setTitle("<", for: .normal)
         button.addAction(action, for: .touchUpInside)
@@ -70,7 +86,7 @@ class DetailModalController: BaseViewController {
     private lazy var nextButton: UIButton = {
         let button = UIButton()
         let action = UIAction { _ in
-            self.changeMonth(next: true)
+            self.changeMonth(with: CalendarMoveType.next)
         }
         button.setTitle(">", for: .normal)
         button.addAction(action, for: .touchUpInside)
@@ -86,7 +102,6 @@ class DetailModalController: BaseViewController {
         calendar.appearance.headerTitleAlignment = .center
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.weekdayTextColor = .grey005
-        calendar.appearance.titleWeekendColor = .mainRed.withAlphaComponent(0.8)
         calendar.appearance.titleDefaultColor = .white.withAlphaComponent(0.8)
         // FIXME: weekdayTextColor와 색상이 같아서 수정이 필요해보임
         calendar.appearance.titlePlaceholderColor = .grey005
@@ -94,6 +109,8 @@ class DetailModalController: BaseViewController {
         calendar.appearance.weekdayFont = .font(.regular, ofSize: 14)
         calendar.appearance.titleFont = .font(.regular, ofSize: 20)
         calendar.allowsMultipleSelection = true
+        calendar.appearance.todayColor = .clear
+        calendar.appearance.titleWeekendColor = .mainRed.withAlphaComponent(0.8)
         return calendar
     }()
     private let tipLabel: UILabel = {
@@ -153,6 +170,7 @@ class DetailModalController: BaseViewController {
     override func configUI() {
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .darkGrey002
+        setupDateRange()
     }
 
     override func render() {
@@ -196,8 +214,8 @@ class DetailModalController: BaseViewController {
             $0.width.equalTo(360)
         }
 
-        view.addSubview(preButton)
-        preButton.snp.makeConstraints {
+        view.addSubview(previousButton)
+        previousButton.snp.makeConstraints {
             $0.top.equalTo(startSettingLabel.snp.bottom).offset(38)
             $0.leading.equalToSuperview().inset(100)
         }
@@ -256,13 +274,27 @@ class DetailModalController: BaseViewController {
         calendar.dataSource = self
     }
 
-    private func changeMonth(next: Bool) {
+    private func changeMonth(with type: CalendarMoveType) {
         let todayCalendar = Calendar.current
         var currentPage = calendar.currentPage
         var dateComponents = DateComponents()
-        dateComponents.month = next ? 1 : -1
+        dateComponents.month = type.month
         currentPage = todayCalendar.date(byAdding: dateComponents, to: currentPage)!
         calendar.setCurrentPage(currentPage, animated: true)
+    }
+
+    private func setupDateRange() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        guard let startDate = formatter.date(from: testStartString) else { return }
+        guard let endDate = formatter.date(from: testEndString) else { return }
+        setupCalendarRange(startDate: startDate, endDate: endDate)
+    }
+
+    private func setupCalendarRange(startDate: Date, endDate: Date) {
+        calendar.select(startDate)
+        calendar.select(endDate)
+        setDateRange()
     }
 
     // MARK: - selector
@@ -277,11 +309,17 @@ class DetailModalController: BaseViewController {
 
 extension DetailModalController: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        isFirstTap ? nil : (isFirstTap = true)
-        if calendar.selectedDates.count == 1 {
+        if !isFirstTap {
+            isFirstTap = true
+        }
+        let isClickedStartDate = calendar.selectedDates.count == 1
+        let isSelectedDateRange = calendar.selectedDates.count == 2
+        let isReclickedStartDate = calendar.selectedDates.count > 2
+
+        if isClickedStartDate {
             selectStartDate = date
             calendar.reloadData()
-        } else if calendar.selectedDates.count == 2 {
+        } else if isSelectedDateRange {
             if countDateRange() > 7 {
                 calendar.deselect(date)
                 makeAlert(title: "인원 수 제한", message: "최대 7일까지 선택가능해요 !")
@@ -289,9 +327,9 @@ extension DetailModalController: FSCalendarDelegate {
                 setDateRange()
                 calendar.reloadData()
             }
-        } else if calendar.selectedDates.count > 2 {
-            for _ in 0 ..< calendar.selectedDates.count - 1 {
-                calendar.deselect(calendar.selectedDates[0])
+        } else if isReclickedStartDate {
+            (calendar.selectedDates).forEach {
+                calendar.deselect($0)
             }
             selectStartDate = date
             calendar.select(selectStartDate)
@@ -318,13 +356,16 @@ extension DetailModalController: FSCalendarDelegate {
     }
 
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
-        if date < Date() - 86400 {
+        let isBeforeToday = date < Date() - 86400
+        let isAWeekBeforeAfter = date < selectStartDate + 604800 && date > selectStartDate - 604800
+        let isDoneSelectedDate = calendar.selectedDates.count > 2
+        if isBeforeToday {
             return .grey005.withAlphaComponent(0.4)
-        } else if isFirstTap == false {
+        } else if !isFirstTap {
             return .white
-        } else if date < selectStartDate + 604800 && date > selectStartDate - 604800 {
+        } else if isAWeekBeforeAfter {
             return .white
-        } else if calendar.selectedDates.count > 2 {
+        } else if isDoneSelectedDate {
             return .white
         } else {
             return .grey005.withAlphaComponent(0.6)
@@ -334,34 +375,37 @@ extension DetailModalController: FSCalendarDelegate {
     // MARK: - func
 
     func setDateRange() {
-        if countDateRange() <= 7 {
-            var startDate: Date
-            if calendar.selectedDates[0] < calendar.selectedDates[1] {
-                startDate = calendar.selectedDates[0]
-                while startDate < calendar.selectedDates[1] {
-                    startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
-                    calendar.select(startDate)
-                }
-            } else {
-                startDate = calendar.selectedDates[1]
-                while startDate < calendar.selectedDates[0] {
-                    startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
-                    calendar.select(startDate)
-                }
-            }
+        guard countDateRange() <= 7 else { return }
+
+        let isFirstClickPastDate = calendar.selectedDates[0] < calendar.selectedDates[1]
+        if isFirstClickPastDate {
+            setSelecteDate(startIndex: 0, endIndex: 1)
+        } else {
+            setSelecteDate(startIndex: 1, endIndex: 0)
+        }
+    }
+
+    func setSelecteDate(startIndex: Int, endIndex: Int) {
+        var startDate = calendar.selectedDates[startIndex]
+        while startDate < calendar.selectedDates[endIndex] {
+            startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
+            calendar.select(startDate)
         }
     }
 
     func countDateRange() -> Int {
-        if calendar.selectedDates[0] < calendar.selectedDates[1] {
-            let rangeCount = calendar.selectedDates[1].timeIntervalSince(calendar.selectedDates[0]) / 86400
-            return Int(rangeCount) + 1
-        } else {
-            let rangeCount = calendar.selectedDates[0].timeIntervalSince(calendar.selectedDates[1]) / 86400
-            return Int(rangeCount) + 1
-        }
+        let isFirstClickPastDate = calendar.selectedDates[0] < calendar.selectedDates[1]
+        let selectdDate = isFirstClickPastDate ? calendar.selectedDates[1].timeIntervalSince(calendar.selectedDates[0]) : calendar.selectedDates[0].timeIntervalSince(calendar.selectedDates[1])
+        let dateRangeCount = selectdDate / 86400
+
+        return Int(dateRangeCount) + 1
     }
 }
 extension DetailModalController: FSCalendarDataSource { }
 
-extension DetailModalController: FSCalendarDelegateAppearance { }
+extension DetailModalController: FSCalendarDelegateAppearance {
+//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
+//        calendar.appearance.titleTodayColor = .green
+//        return .mainRed
+//    }
+}
