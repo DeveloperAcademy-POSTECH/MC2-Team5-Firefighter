@@ -141,7 +141,7 @@ class CreateRoomViewController: BaseViewController {
     
     // MARK: - Selectors
     
-    @objc private func didTapBackButton(){
+    @objc private func didTapBackButton() {
         print(index)
         index = index - 1
         print(index)
