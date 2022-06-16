@@ -30,10 +30,11 @@ class ParticipateRoomViewController: BaseViewController {
     private let nextButton: MainButton = {
         let button = MainButton()
         button.title = "방 입장"
+        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         return button
     }()
     
-    private let nameView = InputNameView()
+    private let inputInvitedCodeView = InputInvitedCodeView()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -63,8 +64,8 @@ class ParticipateRoomViewController: BaseViewController {
             $0.height.equalTo(60)
         }
         
-        view.addSubview(nameView)
-        nameView.snp.makeConstraints {
+        view.addSubview(inputInvitedCodeView)
+        inputInvitedCodeView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalTo(nextButton.snp.top)
@@ -79,10 +80,16 @@ class ParticipateRoomViewController: BaseViewController {
     
     // MARK: - Selectors
     @objc func didTapCloseButton() {
-        print("ttaapp")
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func didTapNextButton() {
-        print("tap")
+        let storyboard = UIStoryboard(name: "CheckRoom", bundle: nil)
+        let CheckRoomVC = storyboard.instantiateViewController(identifier: "CheckRoomViewController")
+        
+        CheckRoomVC.modalPresentationStyle = .overFullScreen
+        CheckRoomVC.modalTransitionStyle = .crossDissolve
+        
+        present(CheckRoomVC, animated: true, completion: nil)
     }
 }
