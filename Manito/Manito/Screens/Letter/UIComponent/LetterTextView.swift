@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 final class LetterTextView: UIView {
+    
+    var applySendButtonEnabled: (() -> ())?
 
     // MARK: - property
     
@@ -19,17 +21,19 @@ final class LetterTextView: UIView {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private let letterTextView: UITextView = {
+    lazy var letterTextView: UITextView = {
         let textView = UITextView()
         let paragraphStyle = NSMutableParagraphStyle()
         
         paragraphStyle.lineSpacing = 6.0
+        
         textView.typingAttributes = [.paragraphStyle: paragraphStyle]
         textView.textContainerInset = UIEdgeInsets(top: 17, left: 12, bottom: 17, right: 12)
         textView.font = .font(.regular, ofSize: 16)
         textView.textColor = .white
         textView.backgroundColor = .darkGrey003
         textView.makeBorderLayer(color: .white)
+        textView.delegate = self
         
         return textView
     }()
@@ -73,5 +77,23 @@ final class LetterTextView: UIView {
             $0.trailing.equalToSuperview().inset(12)
             $0.bottom.equalToSuperview()
         }
+    }
+    
+    private func setCounter(count: Int) {
+        countLabel.text = "\(count)/\(maxCount)"
+        checkMaxLength(textView: letterTextView, maxLength: maxCount)
+    }
+    
+    private func checkMaxLength(textView: UITextView, maxLength: Int) {
+        if (textView.text?.count ?? 0 > maxLength) {
+            textView.deleteBackward()
+        }
+    }
+}
+
+extension LetterTextView: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        setCounter(count: textView.text?.count ?? 0)
+        applySendButtonEnabled?()
     }
 }

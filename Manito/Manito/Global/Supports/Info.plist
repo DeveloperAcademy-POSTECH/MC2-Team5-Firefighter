@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>&apos;마니또&apos;가 마니띠에게 전송할 사진을 위해 사용자의 앨범에 접근하려고 합니다.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>&apos;마니또&apos;가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>DungGeunMo.otf</string>
