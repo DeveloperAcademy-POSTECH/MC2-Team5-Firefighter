@@ -26,7 +26,7 @@ class InputPersonView: UIView {
     }()
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "heart")
+        imageView.image = ImageLiterals.imgNi
         imageView.backgroundColor = .darkGray
         return imageView
     }()
@@ -42,7 +42,7 @@ class InputPersonView: UIView {
         slider.minimumValue = 5
         slider.maximumValue = 15
         slider.tintColor = .mainRed
-        slider.setThumbImage(UIImage(systemName: "heart"), for: .normal)
+        slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         slider.addTarget(self, action: #selector(didSlider(_:)), for: .valueChanged)
         return slider
     }()

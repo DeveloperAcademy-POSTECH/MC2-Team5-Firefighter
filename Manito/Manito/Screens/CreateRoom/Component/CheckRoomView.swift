@@ -29,7 +29,6 @@ class CheckRoomView: UIView {
         imageView.backgroundColor = .darkGray
         return imageView
     }()
-    
     private var personLabel: UILabel = {
         let label = UILabel()
         label.text = "X 5인"

@@ -38,11 +38,7 @@ class CreateRoomViewController: BaseViewController {
         button.isDisabled = true
         return button
     }()
-    private let nameView: InputNameView = {
-        let view = InputNameView()
-        return view
-        
-    }()
+    private let nameView = InputNameView()
     private let personView: InputPersonView = {
         let view = InputPersonView()
         view.alpha = 0.0
