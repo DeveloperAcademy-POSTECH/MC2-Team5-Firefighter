@@ -42,6 +42,10 @@ enum ImageLiterals {
     static var imgMaHoya: UIImage { .load(name: "imgMaHoya") }
     static var imgMaLivvy: UIImage { .load(name: "imgMaLivvy") }
     
+    // MARK: - gif
+    
+    static var gifLogo = "logo"
+    
 }
 
 extension UIImage {
