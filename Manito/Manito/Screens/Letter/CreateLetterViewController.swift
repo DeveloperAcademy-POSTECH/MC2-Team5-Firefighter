@@ -137,7 +137,7 @@ final class CreateLetterViewController: BaseViewController {
     
     private func changeButtonEnabledState() {
         let hasText = letterTextView.letterTextView.hasText
-        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.icCamera
+        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
         let canEnabled = hasText || hasImage
         
         sendButton.isEnabled = canEnabled
@@ -167,7 +167,7 @@ final class CreateLetterViewController: BaseViewController {
     
     private func presentationControllerDidAttemptToDismissAction() {
         let hasText = letterTextView.letterTextView.hasText
-        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.icCamera
+        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
         guard hasText || hasImage else {
             dismiss(animated: true, completion: nil)
             return

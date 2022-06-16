@@ -25,7 +25,7 @@ final class LetterPhotoView: UIView {
         let button = UIButton()
         button.makeBorderLayer(color: .white)
         button.clipsToBounds = true
-        button.setImage(ImageLiterals.icCamera, for: .normal)
+        button.setImage(ImageLiterals.btnCamera, for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         button.tintColor = .white
@@ -91,7 +91,7 @@ final class LetterPhotoView: UIView {
     }
     
     private func presentActionSheet() {
-        let hasImage = importPhotosButton.imageView?.image != ImageLiterals.icCamera
+        let hasImage = importPhotosButton.imageView?.image != ImageLiterals.btnCamera
         let actionTitles = hasImage ? ["사진 촬영", "사진 보관함에서 선택", "사진 지우기", "취소"] : ["사진 촬영", "사진 보관함에서 선택", "취소"]
         let actionStyle: [UIAlertAction.Style] = hasImage ? [.default, .default, .default, .cancel] : [.default, .default, .cancel]
         let actions = getAlertAction(with: hasImage)
@@ -110,7 +110,7 @@ final class LetterPhotoView: UIView {
             self?.applyPHPickerWithAuthorization(with: .library)
         }
         let removePhotoAction: ((UIAlertAction) -> ()) = { [weak self] _ in
-            self?.importPhotosButton.setImage(ImageLiterals.icCamera, for: .normal)
+            self?.importPhotosButton.setImage(ImageLiterals.btnCamera, for: .normal)
         }
         
         return state ? [takePhotoAction, photoLibraryAction, removePhotoAction, nil]
