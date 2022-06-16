@@ -68,7 +68,6 @@ class CalendarView: UIView {
         calendar.appearance.titleFont = .font(.regular, ofSize: 20)
         calendar.allowsMultipleSelection = true
         calendar.appearance.todayColor = .clear
-        calendar.appearance.titleWeekendColor = .mainRed.withAlphaComponent(0.8)
         return calendar
     }()
 
@@ -88,7 +87,6 @@ class CalendarView: UIView {
     func render() {
         self.addSubview(calendar)
         calendar.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
 
