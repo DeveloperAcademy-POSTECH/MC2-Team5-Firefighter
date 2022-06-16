@@ -40,7 +40,7 @@ class CreateRoomViewController: BaseViewController {
     }()
     lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         button.tintColor = .white
         button.isHidden = true
