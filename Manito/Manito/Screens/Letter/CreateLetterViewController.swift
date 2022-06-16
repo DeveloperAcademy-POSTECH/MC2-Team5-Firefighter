@@ -10,9 +10,9 @@ import UIKit
 import SnapKit
 
 final class CreateLetterViewController: BaseViewController {
-
+    
     // MARK: - property
-
+    
     private let indicatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .white.withAlphaComponent(0.8)
@@ -33,6 +33,7 @@ final class CreateLetterViewController: BaseViewController {
         button.setTitle("보내기", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .highlighted)
+        button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .disabled)
         return button
     }()
     private let scrollView: UIScrollView = {
@@ -50,7 +51,9 @@ final class CreateLetterViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkSendButtonEnabled()
         setupNavigationItem()
+        setupButtonAction()
     }
     
     override func render() {
@@ -95,6 +98,13 @@ final class CreateLetterViewController: BaseViewController {
         }
     }
     
+    override func configUI() {
+        super.configUI()
+        
+        navigationController?.presentationController?.delegate = self
+        isModalInPresentation = true
+    }
+    
     override func setupNavigationBar() {
         guard let navigationBar = navigationController?.navigationBar else { return }
         let appearance = UINavigationBarAppearance()
@@ -106,7 +116,7 @@ final class CreateLetterViewController: BaseViewController {
         appearance.backgroundColor = .clear
         appearance.backgroundImage = nil
         appearance.shadowImage = nil
-            
+        
         navigationBar.standardAppearance = appearance
         navigationBar.compactAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
@@ -116,11 +126,69 @@ final class CreateLetterViewController: BaseViewController {
     
     // MARK: - func
     
+    private func checkSendButtonEnabled() {
+        letterTextView.applySendButtonEnabled = { [weak self] in
+            self?.changeButtonEnabledState()
+        }
+        letterPhotoView.applySendButtonEnabled = { [weak self] in
+            self?.changeButtonEnabledState()
+        }
+    }
+    
+    private func changeButtonEnabledState() {
+        let hasText = letterTextView.letterTextView.hasText
+        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
+        let canEnabled = hasText || hasImage
+        
+        sendButton.isEnabled = canEnabled
+    }
+    
     private func setupNavigationItem() {
         let cancelButton = makeBarButtonItem(with: cancelButton)
         let sendButton = makeBarButtonItem(with: sendButton)
         
+        sendButton.isEnabled = false
+        
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = sendButton
+    }
+    
+    private func setupButtonAction() {
+        let cancelAction = UIAction { [weak self] _ in
+            self?.presentationControllerDidAttemptToDismissAction()
+        }
+        let sendAction = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        
+        cancelButton.addAction(cancelAction, for: .touchUpInside)
+        sendButton.addAction(sendAction, for: .touchUpInside)
+    }
+    
+    private func presentationControllerDidAttemptToDismissAction() {
+        let hasText = letterTextView.letterTextView.hasText
+        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
+        guard hasText || hasImage else {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        presentActionSheet()
+    }
+    
+    private func presentActionSheet() {
+        let dismissAction: ((UIAlertAction) -> ()) = { [weak self] _ in
+            self?.resignFirstResponder()
+            self?.dismiss(animated: true, completion: nil)
+        }
+        makeActionSheet(actionTitles: ["변경 사항 폐기", "취소"],
+                        actionStyle: [.destructive, .cancel],
+                        actions: [dismissAction, nil])
+    }
+}
+
+extension CreateLetterViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        presentationControllerDidAttemptToDismissAction()
     }
 }
