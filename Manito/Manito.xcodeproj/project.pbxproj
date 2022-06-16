@@ -11,7 +11,6 @@
 		33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDF5612856E03800564211 /* FriendListViewController.swift */; };
 		392EC77E2855C388006918A9 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC77D2855C388006918A9 /* SettingButton.swift */; };
 		392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */; };
-		392EC783285613C0006918A9 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC782285613C0006918A9 /* ExitButton.swift */; };
 		399D17AB2856C83B00F50D9D /* DetailHalfModalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
@@ -75,7 +74,6 @@
 		33BDF5612856E03800564211 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		392EC77D2855C388006918A9 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitTitleView.swift; sourceTree = "<group>"; };
-		392EC782285613C0006918A9 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
 		399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHalfModalController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */,
-				392EC782285613C0006918A9 /* ExitButton.swift */,
 				399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */,
 			);
 			path = UIComponent;
@@ -562,7 +559,6 @@
 				333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */,
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
 				B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */,
-				392EC783285613C0006918A9 /* ExitButton.swift in Sources */,
 				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */,
 				392EC77E2855C388006918A9 /* SettingButton.swift in Sources */,
