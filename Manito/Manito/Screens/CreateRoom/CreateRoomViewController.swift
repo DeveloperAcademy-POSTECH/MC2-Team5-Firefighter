@@ -142,9 +142,7 @@ class CreateRoomViewController: BaseViewController {
     // MARK: - Selectors
     
     @objc private func didTapBackButton() {
-        print(index)
         index = index - 1
-        print(index)
         changedInputView()
     }
     
@@ -157,10 +155,8 @@ class CreateRoomViewController: BaseViewController {
         case 0:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
-            print(name)
         case 1:
             person = Int(personView.personSlider.value)
-            print(person)
         case 2:
             print("기간 선택 보여주기")
         default:
