@@ -26,7 +26,7 @@
 		B50B1B0728596CB10080992C /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = B50B1B0628596CB10080992C /* FSCalendar */; };
 		B50B1B2A285AB7650080992C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B29285AB7650080992C /* SplashViewController.swift */; };
 		B50B1B33285AC0970080992C /* Gifu in Frameworks */ = {isa = PBXBuildFile; productRef = B50B1B32285AC0970080992C /* Gifu */; };
-		B50B1B38285AC2970080992C /* logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = B50B1B37285AC2970080992C /* logo.gif */; };
+		B50B1B3C285AD2B20080992C /* logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = B50B1B3B285AD2B20080992C /* logo.gif */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
 		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
@@ -87,7 +87,7 @@
 		B50B1AFC2856C3500080992C /* LetterTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterTextView.swift; sourceTree = "<group>"; };
 		B50B1AFE2856D3820080992C /* LetterPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterPhotoView.swift; sourceTree = "<group>"; };
 		B50B1B29285AB7650080992C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
-		B50B1B37285AC2970080992C /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = logo.gif; sourceTree = "<group>"; };
+		B50B1B3B285AD2B20080992C /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = logo.gif; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 		B50B1B36285AC28B0080992C /* GIFs */ = {
 			isa = PBXGroup;
 			children = (
-				B50B1B37285AC2970080992C /* logo.gif */,
+				B50B1B3B285AD2B20080992C /* logo.gif */,
 			);
 			path = GIFs;
 			sourceTree = "<group>";
@@ -539,7 +539,7 @@
 			files = (
 				B5F525102851A0B500614FF7 /* CreateRoom.storyboard in Resources */,
 				B5F525122851A0CB00614FF7 /* InvitedCode.storyboard in Resources */,
-				B50B1B38285AC2970080992C /* logo.gif in Resources */,
+				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
 				B5F525182851A10600614FF7 /* Letter.storyboard in Resources */,
 				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
 				B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */,
