@@ -12,9 +12,11 @@ import SnapKit
 final class OpenManittoViewController: BaseViewController {
     
     private enum Size {
-        static let collectionHorizontalSpacing: CGFloat = 16.0
-        static let collectionVerticalSpacing: CGFloat = 18.0
-        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2
+        static let collectionHorizontalSpacing: CGFloat = 29.0
+        static let collectionVerticalSpacing: CGFloat = 37.0
+        static let cellInterSpacing: CGFloat = 39.0
+        static let cellLineSpacing: CGFloat = 20.0
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - (collectionHorizontalSpacing * 2 + cellInterSpacing * 2)) / 3
         static let collectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
                                                   left: collectionHorizontalSpacing,
                                                   bottom: collectionVerticalSpacing,
@@ -27,7 +29,8 @@ final class OpenManittoViewController: BaseViewController {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.sectionInset = Size.collectionInset
-        flowLayout.minimumLineSpacing = 33
+        flowLayout.minimumLineSpacing = Size.cellLineSpacing
+        flowLayout.minimumInteritemSpacing = Size.cellInterSpacing
         flowLayout.sectionHeadersPinToVisibleBounds = true
         flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
         return flowLayout
@@ -37,6 +40,7 @@ final class OpenManittoViewController: BaseViewController {
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         collectionView.register(cell: LetterCollectionViewCell.self,
                                 forCellWithReuseIdentifier: LetterCollectionViewCell.className)
         return collectionView
@@ -65,9 +69,10 @@ final class OpenManittoViewController: BaseViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension OpenManittoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 15
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
