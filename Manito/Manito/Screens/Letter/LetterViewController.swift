@@ -11,7 +11,7 @@ import SnapKit
 
 final class LetterViewController: BaseViewController {
     
-    private enum LetterState: Int, CaseIterable {
+    private enum LetterState: Int {
         case received = 0
         case sent = 1
         
