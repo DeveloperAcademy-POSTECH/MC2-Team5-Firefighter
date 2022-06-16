@@ -404,8 +404,7 @@ extension DetailModalController: FSCalendarDelegate {
 extension DetailModalController: FSCalendarDataSource { }
 
 extension DetailModalController: FSCalendarDelegateAppearance {
-//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
-//        calendar.appearance.titleTodayColor = .green
-//        return .mainRed
-//    }
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
+        return .darkRed
+    }
 }
