@@ -16,6 +16,7 @@ final class SplashViewController: BaseViewController {
     @IBOutlet weak var gifImageView: GIFImageView!
     
     // MARK: - life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGifImage()
