@@ -19,6 +19,10 @@ enum ImageLiterals {
     
     // MARK: - image
     
+    // MARK: - gif
+    
+    static var gifLogo = "logo"
+    
 }
 
 extension UIImage {

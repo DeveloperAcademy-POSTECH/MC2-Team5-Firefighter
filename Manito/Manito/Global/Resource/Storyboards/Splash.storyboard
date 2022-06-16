@@ -39,14 +39,26 @@
                                     <constraint firstAttribute="width" constant="196" id="t7r-lj-uOj"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.gif" translatesAutoresizingMaskIntoConstraints="NO" id="vJR-dF-fxU" customClass="GIFImageView" customModule="Gifu">
+                                <rect key="frame" x="142" y="315" width="130" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="6BV-Wf-baa"/>
+                                    <constraint firstAttribute="width" constant="130" id="ERG-Eo-XQf"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Qsq-lZ-5vw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Hcb-5r-8Qf" firstAttribute="centerX" secondItem="nM2-Ib-vgR" secondAttribute="centerX" id="8vh-hq-Gad"/>
+                            <constraint firstItem="Hcb-5r-8Qf" firstAttribute="top" secondItem="vJR-dF-fxU" secondAttribute="bottom" constant="3" id="doJ-tx-nPZ"/>
                             <constraint firstItem="Hcb-5r-8Qf" firstAttribute="centerY" secondItem="nM2-Ib-vgR" secondAttribute="centerY" constant="30" id="inV-NA-ELm"/>
+                            <constraint firstItem="vJR-dF-fxU" firstAttribute="centerX" secondItem="nM2-Ib-vgR" secondAttribute="centerX" id="yN1-Cw-4s5"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="gifImageView" destination="vJR-dF-fxU" id="ggr-1Z-nya"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xGI-4A-7Ri" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -54,6 +66,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="logo.gif" width="420" height="420"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
