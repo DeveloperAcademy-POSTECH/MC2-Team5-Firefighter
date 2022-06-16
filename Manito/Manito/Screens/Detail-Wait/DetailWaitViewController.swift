@@ -89,26 +89,11 @@ class DetailWaitViewController: BaseViewController {
 
     private lazy var settingButton: UIButton = {
         let button = SettingButton()
-        button.menu = UIMenu(options: [], children: [
-                UIAction(title: "방 정보 수정", handler: { _ in
-                    self.presentModal()
-                }),
-                UIAction(title: "방 삭제", handler: { _ in
-                    self.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
-                })])
+        button.menu = setExitButtonMenu()
         button.showsMenuAsPrimaryAction = true
         return button
     }()
-    private lazy var exitButton: UIButton = {
-        let button = ExitButton()
-        let buttonAction = UIAction { _ in
-            self.makeRequestAlert(title: AlertText.exit.title, message: AlertText.exit.message, okTitle: AlertText.exit.okTitle, okAction: nil)
-        }
-        button.addAction(buttonAction, for: .touchUpInside)
-        return button
-    }()
     private let titleView = DetailWaitTitleView()
-
     private let togetherFriendText: UILabel = {
         let label = UILabel()
         label.text = "함께하는 친구들"
@@ -209,7 +194,7 @@ class DetailWaitViewController: BaseViewController {
 
     override func configUI() {
         view.backgroundColor = .darkGrey002
-        setupNavigationRightButton()
+        setupSettingButton()
     }
 
     // MARK: - func
@@ -263,21 +248,26 @@ class DetailWaitViewController: BaseViewController {
         navigationItem.rightBarButtonItem = settingButton
     }
 
-    private func setupExitButton() {
-        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: exitButton, offsetX: -10)
-        let exitButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
-
-        navigationItem.rightBarButtonItem = exitButton
-    }
-
-    private func setupNavigationRightButton() {
+    private func setExitButtonMenu() -> UIMenu {
         if isOwner {
-            setupSettingButton()
+            let menu = UIMenu(options: [], children: [
+                    UIAction(title: "방 정보 수정", handler: { _ in
+                        self.presentModal()
+                    }),
+                    UIAction(title: "방 삭제", handler: { _ in
+                        self.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
+                    })])
+            return menu
         } else {
-            setupExitButton()
+            let menu = UIMenu(options: [], children: [
+                    UIAction(title: "방 나가기", handler: { _ in
+                        self.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction: nil)
+                    })
+                ])
+            return menu
         }
     }
-    
+
     private func touchUpToShowToast() {
         UIPasteboard.general.string = "초대코드"
         self.showToast(message: "코드 복사 완료!")
