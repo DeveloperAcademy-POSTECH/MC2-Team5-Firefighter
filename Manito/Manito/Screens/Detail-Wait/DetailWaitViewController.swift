@@ -103,7 +103,7 @@ class DetailWaitViewController: BaseViewController {
     }()
     private let imgNiView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "imgNi")
+        imageView.image = ImageLiterals.imgNi
         return imageView
     }()
     private lazy var comeInText: UILabel = {
