@@ -38,6 +38,14 @@ class CreateRoomViewController: BaseViewController {
         button.isDisabled = true
         return button
     }()
+    lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
+        button.tintColor = .white
+        button.isHidden = true
+        return button
+    }()
     private let nameView = InputNameView()
     private let personView: InputPersonView = {
         let view = InputPersonView()
@@ -73,6 +81,13 @@ class CreateRoomViewController: BaseViewController {
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
             $0.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.width.height.equalTo(44)
+        }
+        
+        view.addSubview(backButton)
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(closeButton)
+            $0.leading.equalTo(view.safeAreaLayoutGuide)
             $0.width.height.equalTo(44)
         }
         
@@ -126,6 +141,13 @@ class CreateRoomViewController: BaseViewController {
     
     // MARK: - Selectors
     
+    @objc private func didTapBackButton(){
+        print(index)
+        index = index - 1
+        print(index)
+        changedInputView()
+    }
+    
     @objc private func didTapCloseButton() {
         print("didTapCloseButton")
     }
@@ -135,14 +157,15 @@ class CreateRoomViewController: BaseViewController {
         case 0:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
+            print(name)
         case 1:
             person = Int(personView.personSlider.value)
+            print(person)
         case 2:
             print("기간 선택 보여주기")
         default:
             print("다른 뷰 넘기기")
         }
-        
         index += 1
         changedInputView()
     }
@@ -164,6 +187,8 @@ class CreateRoomViewController: BaseViewController {
     @objc private func didReceiveNameNotification(_ notification: Notification) {
         UIView.animate(withDuration: 0.3) {
             self.nameView.alpha = 1.0
+            self.personView.alpha = 0.0
+            self.backButton.isHidden = true
         }
     }
     
@@ -171,6 +196,8 @@ class CreateRoomViewController: BaseViewController {
         UIView.animate(withDuration: 0.3) {
             self.nameView.alpha = 0.0
             self.personView.alpha = 1.0
+            self.dateView.alpha = 0.0
+            self.backButton.isHidden = false
         }
     }
     
@@ -178,6 +205,7 @@ class CreateRoomViewController: BaseViewController {
         UIView.animate(withDuration: 0.3) {
             self.personView.alpha = 0.0
             self.dateView.alpha = 1.0
+            self.checkView.alpha = 0.0
         }
     }
     

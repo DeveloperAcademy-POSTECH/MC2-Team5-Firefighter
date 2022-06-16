@@ -25,8 +25,7 @@ class CheckRoomView: UIView {
     }()
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "heart")
-        imageView.backgroundColor = .darkGray
+        imageView.image = ImageLiterals.imgNi
         return imageView
     }()
     private var personLabel: UILabel = {
