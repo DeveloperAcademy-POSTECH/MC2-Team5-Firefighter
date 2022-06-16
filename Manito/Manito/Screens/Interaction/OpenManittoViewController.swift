@@ -7,23 +7,71 @@
 
 import UIKit
 
-class OpenManittoViewController: UIViewController {
+import SnapKit
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+final class OpenManittoViewController: BaseViewController {
+    
+    private enum Size {
+        static let collectionHorizontalSpacing: CGFloat = 16.0
+        static let collectionVerticalSpacing: CGFloat = 18.0
+        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2
+        static let collectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
+                                                  left: collectionHorizontalSpacing,
+                                                  bottom: collectionVerticalSpacing,
+                                                  right: collectionHorizontalSpacing)
+    }
 
-        // Do any additional setup after loading the view.
+    // MARK: - property
+    
+    private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .vertical
+        flowLayout.sectionInset = Size.collectionInset
+        flowLayout.minimumLineSpacing = 33
+        flowLayout.sectionHeadersPinToVisibleBounds = true
+        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
+        return flowLayout
+    }()
+    private lazy var manittoCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
+        collectionView.backgroundColor = .clear
+        collectionView.dataSource = self
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(cell: LetterCollectionViewCell.self,
+                                forCellWithReuseIdentifier: LetterCollectionViewCell.className)
+        return collectionView
+    }()
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "당신의 마니또는?"
+        label.font = .font(.regular, ofSize: 34)
+        return label
+    }()
+    
+    // MARK: - life cycle
+    
+    override func render() {
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(57)
+            $0.leading.equalToSuperview().inset(16)
+        }
+        
+        view.addSubview(manittoCollectionView)
+        manittoCollectionView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+}
+
+extension OpenManittoViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        return cell
     }
-    */
-
 }

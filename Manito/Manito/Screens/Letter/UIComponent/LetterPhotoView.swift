@@ -154,6 +154,7 @@ final class LetterPhotoView: UIView {
     }
 }
 
+// MARK: - UIImagePickerControllerDelegate
 extension LetterPhotoView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
@@ -165,6 +166,7 @@ extension LetterPhotoView: UIImagePickerControllerDelegate, UINavigationControll
     }
 }
 
+// MARK: - PHPickerViewControllerDelegate
 extension LetterPhotoView: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
