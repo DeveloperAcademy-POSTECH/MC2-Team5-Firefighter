@@ -22,7 +22,7 @@ final class OpenManittoViewController: BaseViewController {
                                                   bottom: collectionVerticalSpacing,
                                                   right: collectionHorizontalSpacing)
     }
-
+    
     // MARK: - property
     
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
@@ -51,8 +51,22 @@ final class OpenManittoViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
+    private var scrollNumberIndex = -1 {
+        didSet {
+            self.manittoCollectionView.reloadData()
+        }
+    }
+    
+    // FIXME: - 더미 데이터
+    private let manittoIndex = 4
+    private let characters: [String] = ["", "", "", "", "", "", "", "", "", "", ""]
     
     // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        animateCollectionView()
+    }
     
     override func render() {
         view.addSubview(titleLabel)
@@ -67,17 +81,54 @@ final class OpenManittoViewController: BaseViewController {
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
+    
+    // MARK: - func
+    
+    private func animateCollectionView() {
+        let delay: CGFloat = 1.0
+        let timeInterval = 0.2
+        let durationTime = timeInterval * Double(characters.count)
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+            UIView.animate(withDuration: durationTime, animations: {
+                var countNumber = 0
+                Timer.scheduledTimer(withTimeInterval: timeInterval,
+                                     repeats: true) { [weak self] _ in
+                    guard let self = self else { return }
+                    guard countNumber != self.characters.count else { return }
+                    let characterCount = self.characters.count - 1
+                    self.scrollNumberIndex = Int.random(in: 0...characterCount, excluding: self.scrollNumberIndex)
+                    countNumber += 1
+                }
+            }, completion: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay + durationTime, execute: {
+                    self.scrollNumberIndex = self.manittoIndex
+                })
+            })
+        })
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 extension OpenManittoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 14
+        return characters.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
         cell.setManittoCell(with: indexPath.item)
+        cell.setHighlightCell(with: indexPath.item, matchIndex: scrollNumberIndex)
         return cell
+    }
+}
+
+extension Int {
+    static func random(in range: ClosedRange<Int>, excluding x: Int) -> Int {
+        if range.contains(x) {
+            let r = Int.random(in: Range(uncheckedBounds: (range.lowerBound, range.upperBound)))
+            return r == x ? range.upperBound : r
+        } else {
+            return Int.random(in: range)
+        }
     }
 }

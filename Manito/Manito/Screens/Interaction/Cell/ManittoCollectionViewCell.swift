@@ -48,4 +48,12 @@ final class ManittoCollectionViewCell: BaseCollectionViewCell {
         contentView.alpha = 0.5
         characterImageView.image = ImageLiterals.imgMa
     }
+    
+    func setHighlightCell(with manittoTypeIndex: Int, matchIndex: Int) {
+        if manittoTypeIndex == matchIndex {
+            backgroundColor = .characterYellow
+            contentView.alpha = 1.0
+            characterImageView.image = ImageLiterals.imgMa
+        }
+    }
 }
