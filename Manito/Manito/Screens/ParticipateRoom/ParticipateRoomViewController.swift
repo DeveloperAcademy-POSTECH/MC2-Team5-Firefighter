@@ -22,7 +22,7 @@ class ParticipateRoomViewController: BaseViewController {
     lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
-        button.setImage(ImageLiterals.icXmark, for: .normal)
+        button.setImage(ImageLiterals.btnXmark, for: .normal)
         button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         return button
     }()
