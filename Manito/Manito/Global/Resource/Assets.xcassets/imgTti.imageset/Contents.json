@@ -1,16 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "imgTto.png",
+      "filename" : "imgTti.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imgTto@2x.png",
+      "filename" : "imgTti@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "imgTti@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

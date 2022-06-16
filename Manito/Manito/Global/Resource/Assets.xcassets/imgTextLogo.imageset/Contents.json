@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "imgCreateRoomPerson.png",
+      "filename" : "imgTextLogo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imgCreateRoomPerson@2x.png",
+      "filename" : "imgTextLogo@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "imgCreateRoomPerson@3x.png",
+      "filename" : "imgTextLogo@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -27,14 +27,12 @@ enum ImageLiterals {
     // MARK: - image
     
     static var imgLogo: UIImage { .load(name: "imgLogo") }
+    static var imgTextLogo: UIImage { .load(name: "imgTextLogo")}
     static var imgBackground: UIImage { .load(name: "imgBackground") }
     static var imgStar: UIImage { .load(name: "imgStar") }
     static var imgCodeBackground: UIImage { .load(name: "imgCodeBackground") }
     static var imgCommonMisson: UIImage { .load(name: "imgCommonMisson") }
-    static var imgCheckMa: UIImage { .load(name: "imgCheckMa") }
-    static var imgCreateRoomPerson: UIImage { .load(name: "imgCreateRoomPerson") }
     static var imgEnterRoom: UIImage { .load(name: "imgEnterRoom") }
-    static var imgRoomBaby: UIImage { .load(name: "imgRoomBaby") }
     static var imgMa: UIImage { .load(name: "imgMa") }
     static var imgNi: UIImage { .load(name: "imgNi") }
     static var imgTto: UIImage { .load(name: "imgTto") }
