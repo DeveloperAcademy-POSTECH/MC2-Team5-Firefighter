@@ -41,8 +41,8 @@ final class OpenManittoViewController: BaseViewController {
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
-        collectionView.register(cell: LetterCollectionViewCell.self,
-                                forCellWithReuseIdentifier: LetterCollectionViewCell.className)
+        collectionView.register(cell: ManittoCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ManittoCollectionViewCell.className)
         return collectionView
     }()
     private let titleLabel: UILabel = {
@@ -72,11 +72,12 @@ final class OpenManittoViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension OpenManittoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return 14
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        cell.setManittoCell(with: indexPath.item)
         return cell
     }
 }
