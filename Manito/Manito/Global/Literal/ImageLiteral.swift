@@ -11,25 +11,24 @@ enum ImageLiterals {
     
     // MARK: - icon
     
-    static var icBack: UIImage { .load(systemName: "chevron.backward") }
-    static var icXmark: UIImage { .load(systemName: "xmark.circle.fill") }
-    static var icSetting: UIImage { .load(systemName: "gearshape") }
-    static var icExit: UIImage { .load(systemName: "rectangle.portrait.and.arrow.right") }
-    static var icCamera: UIImage { .load(systemName: "camera.on.rectangle") }
+    static var icList: UIImage { .load(name: "btnList") }
+    static var icManiTti: UIImage { .load(name: "btnManiTti") }
+    static var icNewRoom: UIImage { .load(name: "btnNewRoom") }
     
     // MARK: - button
     
-    static var btnList: UIImage { .load(name: "btnList") }
-    static var btnManiTti: UIImage { .load(name: "btnManiTti") }
-    static var btnNewRoom: UIImage { .load(name: "btnNewRoom") }
-    static var btnSliderThumb: UIImage { .load(name: "btnSliderThumb") }
-    
+    static var btnBack: UIImage { .load(systemName: "chevron.backward") }
+    static var btnXmark: UIImage { .load(systemName: "xmark.circle.fill") }
+    static var btnSetting: UIImage { .load(systemName: "gearshape") }
+    static var btnCamera: UIImage { .load(systemName: "camera.on.rectangle") }
+
     // MARK: - image
     
     static var imgLogo: UIImage { .load(name: "imgLogo") }
     static var imgTextLogo: UIImage { .load(name: "imgTextLogo")}
     static var imgBackground: UIImage { .load(name: "imgBackground") }
     static var imgStar: UIImage { .load(name: "imgStar") }
+    static var imageSliderThumb: UIImage { .load(name: "btnSliderThumb") }
     static var imgCodeBackground: UIImage { .load(name: "imgCodeBackground") }
     static var imgCommonMisson: UIImage { .load(name: "imgCommonMisson") }
     static var imgEnterRoom: UIImage { .load(name: "imgEnterRoom") }

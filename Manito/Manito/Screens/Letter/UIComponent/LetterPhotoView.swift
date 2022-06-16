@@ -22,7 +22,7 @@ final class LetterPhotoView: UIView {
     private let importPhotosButton: UIButton = {
         let button = UIButton()
         button.makeBorderLayer(color: .white)
-        button.setImage(ImageLiterals.icCamera, for: .normal)
+        button.setImage(ImageLiterals.btnCamera, for: .normal)
         button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         button.tintColor = .white
         button.backgroundColor = .darkGrey003
