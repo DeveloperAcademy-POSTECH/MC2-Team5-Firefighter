@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MemoryViewController: UIViewController {
+class MemoryViewController: BaseViewController {
     @IBOutlet weak var memoryControl: UISegmentedControl!
     @IBOutlet weak var memoryIconView: UIImageView!
     @IBOutlet weak var memoryManitoLabel: UILabel!
@@ -24,7 +24,7 @@ class MemoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     setupFont()
     setupViewLayer()
     // Do any additional setup after loading the view.
