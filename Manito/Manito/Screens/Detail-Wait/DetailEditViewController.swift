@@ -56,7 +56,7 @@ class DetailEditViewController: BaseViewController {
         label.textColor = .white
         return label
     }()
-    private let calendar = CalendarView()
+    private let calendarView = CalendarView()
     private let tipLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 7일까지 설정할 수 있어요 !"
@@ -106,13 +106,9 @@ class DetailEditViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
     override func configUI() {
+        super.configUI()
         self.navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = .darkGrey002
     }
 
     override func render() {
