@@ -116,12 +116,14 @@ class DetailEditViewController: BaseViewController {
         cancelButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
             $0.leading.equalToSuperview().inset(29)
+            $0.width.height.equalTo(44)
         }
 
         view.addSubview(changeButton)
         changeButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
             $0.trailing.equalToSuperview().inset(29)
+            $0.width.height.equalTo(44)
         }
 
         view.addSubview(topIndicator)
