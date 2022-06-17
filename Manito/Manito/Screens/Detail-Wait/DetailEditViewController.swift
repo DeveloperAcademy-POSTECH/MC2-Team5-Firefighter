@@ -8,7 +8,6 @@
 import UIKit
 
 import FSCalendar
-import SnapKit
 
 class DetailEditViewController: BaseViewController {
     private var memberCount = 7
@@ -144,8 +143,8 @@ class DetailEditViewController: BaseViewController {
             $0.leading.equalToSuperview().inset(16)
         }
 
-        view.addSubview(calendar)
-        calendar.snp.makeConstraints {
+        view.addSubview(calendarView)
+        calendarView.snp.makeConstraints {
             $0.top.equalTo(startSettingLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(400)
@@ -153,13 +152,13 @@ class DetailEditViewController: BaseViewController {
 
         view.addSubview(tipLabel)
         tipLabel.snp.makeConstraints {
-            $0.top.equalTo(calendar.snp.bottom).offset(8)
+            $0.top.equalTo(calendarView.snp.bottom).offset(8)
             $0.trailing.equalToSuperview().inset(25)
         }
 
         view.addSubview(setMemberLabel)
         setMemberLabel.snp.makeConstraints {
-            $0.top.equalTo(calendar.snp.bottom).offset(60)
+            $0.top.equalTo(calendarView.snp.bottom).offset(60)
             $0.leading.equalToSuperview().inset(16)
         }
 

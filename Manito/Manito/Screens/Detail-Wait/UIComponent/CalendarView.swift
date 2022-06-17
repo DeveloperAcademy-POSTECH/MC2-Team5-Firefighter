@@ -12,7 +12,8 @@ import SnapKit
 
 class CalendarView: UIView {
     private var selectStartDate = Date()
-
+    let oneDayInterval: TimeInterval = 86400
+    let sevenDaysInterval: TimeInterval = 604800
     let testStartString = "2022-06-20"
     let testEndString = "2022-06-24"
 
@@ -59,9 +60,8 @@ class CalendarView: UIView {
         calendar.appearance.headerTitleColor = .white
         calendar.appearance.headerTitleAlignment = .center
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
-        calendar.appearance.weekdayTextColor = .grey005
+        calendar.appearance.weekdayTextColor = .white.withAlphaComponent(0.8)
         calendar.appearance.titleDefaultColor = .white.withAlphaComponent(0.8)
-        // FIXME: weekdayTextColor와 색상이 같아서 수정이 필요해보임
         calendar.appearance.titlePlaceholderColor = .grey005
         calendar.appearance.headerTitleFont = .font(.regular, ofSize: 20)
         calendar.appearance.weekdayFont = .font(.regular, ofSize: 14)
@@ -87,7 +87,7 @@ class CalendarView: UIView {
     func render() {
         self.addSubview(calendar)
         calendar.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
 
         self.addSubview(previousButton)
@@ -112,11 +112,11 @@ class CalendarView: UIView {
 
     private func changeMonth(with type: CalendarMoveType) {
         let todayCalendar = Calendar.current
-        var currentPage = calendar.currentPage
+        let currentPage = calendar.currentPage
         var dateComponents = DateComponents()
         dateComponents.month = type.month
-        currentPage = todayCalendar.date(byAdding: dateComponents, to: currentPage)!
-        calendar.setCurrentPage(currentPage, animated: true)
+        guard let changedCurrentPage = todayCalendar.date(byAdding: dateComponents, to: currentPage) else { return }
+        calendar.setCurrentPage(changedCurrentPage, animated: true)
     }
 
     private func setupDateRange() {
@@ -147,8 +147,9 @@ class CalendarView: UIView {
     func setSelecteDate(startIndex: Int, endIndex: Int) {
         var startDate = calendar.selectedDates[startIndex]
         while startDate < calendar.selectedDates[endIndex] {
-            startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
-            calendar.select(startDate)
+            guard let addDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate) else { return }
+            calendar.select(addDate)
+            startDate += oneDayInterval
         }
     }
 
@@ -188,8 +189,8 @@ extension CalendarView: FSCalendarDelegate {
     }
 
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        for _ in 0 ..< calendar.selectedDates.count {
-            calendar.deselect(calendar.selectedDates[0])
+        (calendar.selectedDates).forEach {
+            calendar.deselect($0)
         }
         selectStartDate = date
         calendar.select(date)
@@ -197,7 +198,7 @@ extension CalendarView: FSCalendarDelegate {
     }
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        if date < Date() - 86400 {
+        if date < Date() - oneDayInterval {
             viewController?.makeAlert(title: "과거로 가시게요..?", message: "오늘보다 이전 날짜는 \n 선택하실 수 없어요 !")
             return false
         } else {
@@ -206,14 +207,12 @@ extension CalendarView: FSCalendarDelegate {
     }
 
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
-        let isBeforeToday = date < Date() - 86400
+        let isBeforeToday = date < Date() - oneDayInterval
         let isAWeekBeforeAfter = date < selectStartDate + 604800 && date > selectStartDate - 604800
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey005.withAlphaComponent(0.4)
-        } else if isAWeekBeforeAfter {
-            return .white
-        } else if isDoneSelectedDate {
+        } else if isAWeekBeforeAfter || isDoneSelectedDate {
             return .white
         } else {
             return .grey005.withAlphaComponent(0.6)
