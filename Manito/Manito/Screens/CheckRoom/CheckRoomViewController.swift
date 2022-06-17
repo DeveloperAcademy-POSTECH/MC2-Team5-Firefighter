@@ -15,7 +15,8 @@ class CheckRoomViewController: BaseViewController {
     
     private var roomInfoImageView: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .red
+        image.image = UIImage(named: "imgEnterRoom.png")!
+        image.isUserInteractionEnabled = true
         return image
     }()
     
@@ -25,6 +26,7 @@ class CheckRoomViewController: BaseViewController {
         let label = UILabel()
         label.text = "이 방으로 입장할까요?"
         label.font = .font(.regular, ofSize: 18)
+        label.makeShadow(color: .black, opacity: 0.25, offset: CGSize(width: 0, height: 3), radius: 0)
         return label
     }()
     
@@ -34,8 +36,8 @@ class CheckRoomViewController: BaseViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 35)
         button.backgroundColor = UIColor(hex: "#EDC845")
+        button.makeShadow(color: UIColor(hex: "#C7A83C"), opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-        button.addTarget(self, action: #selector(didTapNoButton), for: .touchUpInside)
         return button
     }()
     
@@ -45,15 +47,15 @@ class CheckRoomViewController: BaseViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 35)
         button.backgroundColor = UIColor(hex: "#EDC845")
+        button.makeShadow(color: UIColor(hex: "#C7A83C"), opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-        button.addTarget(self, action: #selector(didTapYesButton), for: .touchUpInside)
+        
         return button
     }()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        render()
     }
     
     override func render() {
@@ -67,13 +69,14 @@ class CheckRoomViewController: BaseViewController {
         
         roomInfoImageView.addSubview(roomInfoView)
         roomInfoView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().inset(120)
+            $0.leading.trailing.equalToSuperview()
         }
         
         roomInfoImageView.addSubview(questionLabel)
         questionLabel.snp.makeConstraints {
             $0.top.equalTo(roomInfoView.snp.bottom).offset(50)
-            $0.leading.trailing.equalToSuperview()
+            $0.centerX.equalToSuperview()
         }
         
         roomInfoImageView.addSubview(noButton)
@@ -97,16 +100,20 @@ class CheckRoomViewController: BaseViewController {
     
     // MARK: - Configure
     override func configUI() {
-        super.configUI()
-        view.backgroundColor = .black.withAlphaComponent(0.2)
+        view.backgroundColor = .black.withAlphaComponent(0.7)
+        
+        noButton.addTarget(self, action: #selector(didTapNoButton), for: .touchUpInside)
+        yesButton.addTarget(self, action: #selector(didTapYesButton), for: .touchUpInside)
     }
     
     // MARK: - Selectors
     @objc func didTapNoButton() {
+        print("눌린다")
         dismiss(animated: true, completion: nil)
     }
     
     @objc func didTapYesButton() {
+        print("눌린다")
         dismiss(animated: true, completion: nil)
     }
 }

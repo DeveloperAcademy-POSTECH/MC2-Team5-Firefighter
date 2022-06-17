@@ -15,7 +15,7 @@ final class PeopleInfoView: UIView {
     
     private var peopleImageView: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .blue
+        image.image = UIImage(named: "imgNi.png")!
         return image
     }()
     
@@ -43,8 +43,8 @@ final class PeopleInfoView: UIView {
         self.addSubview(peopleImageView)
         peopleImageView.snp.makeConstraints {
             $0.leading.top.bottom.equalToSuperview()
-            $0.width.equalTo(40)
-            $0.height.equalTo(40)
+            $0.width.equalTo(60)
+            $0.height.equalTo(60)
         }
         
         self.addSubview(peopleLabel)

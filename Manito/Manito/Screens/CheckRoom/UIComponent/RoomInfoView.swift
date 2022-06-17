@@ -22,7 +22,7 @@ final class RoomInfoView: UIView {
     
     lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "22.06.01 ~ 22.06.06"
+        label.text = "2022.06.01 ~ 2022.06.06"
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
@@ -46,19 +46,18 @@ final class RoomInfoView: UIView {
         
         self.addSubview(roomLabel)
         roomLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+            $0.top.centerX.equalToSuperview()
         }
         
         self.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
             $0.top.equalTo(self.roomLabel.snp.bottom).offset(8)
-            $0.leading.trailing.equalToSuperview()
+            $0.centerX.equalToSuperview()
         }
         
         self.addSubview(peopleInfo)
         peopleInfo.snp.makeConstraints {
             $0.top.equalTo(self.dateLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
     }
