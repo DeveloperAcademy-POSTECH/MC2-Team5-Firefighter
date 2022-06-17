@@ -35,8 +35,8 @@ class CheckRoomViewController: BaseViewController {
         button.setTitle("NO", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 35)
-        button.backgroundColor = UIColor(hex: "#EDC845")
-        button.makeShadow(color: UIColor(hex: "#C7A83C"), opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
+        button.backgroundColor = .yellow
+        button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
         return button
     }()
@@ -46,10 +46,9 @@ class CheckRoomViewController: BaseViewController {
         button.setTitle("YES", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 35)
-        button.backgroundColor = UIColor(hex: "#EDC845")
-        button.makeShadow(color: UIColor(hex: "#C7A83C"), opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
+        button.backgroundColor = .yellow
+        button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-        
         return button
     }()
     
