@@ -50,7 +50,7 @@ class CheckRoomView: UIView {
     
     // MARK: - Config
     
-    func render() {
+    private func render() {
         self.addSubview(nameLabel)
         nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)

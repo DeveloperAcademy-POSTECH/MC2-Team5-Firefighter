@@ -46,7 +46,7 @@ class InputDateView: UIView {
     
     // MARK: - Funtion
     
-    func tapGesture() {
+    private func tapGesture() {
         let gestureTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapDateBackView(_:)))
         gestureTapRecognizer.numberOfTapsRequired = 1
         gestureTapRecognizer.numberOfTouchesRequired = 1
@@ -55,7 +55,7 @@ class InputDateView: UIView {
     
     // MARK: - Selector
     
-    @objc func didTapDateBackView(_ gesture: UITapGestureRecognizer) {
+    @objc private func didTapDateBackView(_ gesture: UITapGestureRecognizer) {
         print("gesture")
     }
     

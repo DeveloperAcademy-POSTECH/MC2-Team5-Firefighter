@@ -43,7 +43,7 @@ class InputPersonView: UIView {
         slider.maximumValue = 15
         slider.tintColor = .mainRed
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
-        slider.addTarget(self, action: #selector(didSlider(_:)), for: .valueChanged)
+        slider.addTarget(self, action: #selector(didSlideSlider(_:)), for: .valueChanged)
         return slider
     }()
     private var minLabel: UILabel = {
@@ -72,7 +72,7 @@ class InputPersonView: UIView {
     
     // MARK: - Selector
     
-    @objc func didSlider(_ slider: UISlider) {
+    @objc func didSlideSlider(_ slider: UISlider) {
         let value = slider.value
         personLabel.text = "X \(Int(value))인"
     }

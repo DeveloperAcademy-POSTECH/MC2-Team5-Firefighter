@@ -135,10 +135,6 @@ class CreateRoomViewController: BaseViewController {
         toggleButton()
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     // MARK: - Selectors
     
     @objc private func didTapBackButton() {
@@ -222,25 +218,25 @@ class CreateRoomViewController: BaseViewController {
     
     private func changedInputView() {
         if index == 0 {
-            NotificationCenter.default.post(name: NSNotification.Name("NameNotification"), object: nil)
+            NotificationCenter.default.post(name: .nameNotification, object: nil)
         }
         else if index == 1 {
-            NotificationCenter.default.post(name: NSNotification.Name("PersonNotification"), object: nil)
+            NotificationCenter.default.post(name: .personNotification, object: nil)
         }
         else if index == 2 {
-            NotificationCenter.default.post(name: NSNotification.Name("DateNotification"), object: nil)
+            NotificationCenter.default.post(name: .dateNotification, object: nil)
         }
         else {
-            NotificationCenter.default.post(name: NSNotification.Name("CheckNotification"), object: nil)
+            NotificationCenter.default.post(name: .checkNotification, object: nil)
         }
     }
     
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNameNotification(_ :)), name: NSNotification.Name("NameNotification"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceivePersonNotification(_ :)), name: NSNotification.Name("PersonNotification"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateNotification(_ :)), name: NSNotification.Name("DateNotification"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCheckNotification(_ :)), name: NSNotification.Name("CheckNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNameNotification(_ :)), name: .nameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceivePersonNotification(_ :)), name: .personNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateNotification(_ :)), name: .dateNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCheckNotification(_ :)), name: .checkNotification, object: nil)
     }
 }
