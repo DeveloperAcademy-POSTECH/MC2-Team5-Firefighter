@@ -246,7 +246,7 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func presentModal() {
-        let modalViewController = DetailModalController()
+        let modalViewController = DetailEditViewController()
 
         present(modalViewController, animated: true, completion: nil)
     }
