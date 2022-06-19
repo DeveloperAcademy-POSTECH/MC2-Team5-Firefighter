@@ -107,12 +107,16 @@ class CheckRoomViewController: BaseViewController {
     
     // MARK: - Selectors
     @objc func didTapNoButton() {
-        print("눌린다")
         dismiss(animated: true, completion: nil)
     }
     
     @objc func didTapYesButton() {
-        print("눌린다")
-        dismiss(animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "ChooseCharacter", bundle: nil)
+        let ChooseCharacterVC = storyboard.instantiateViewController(identifier: "ChooseCharacterViewController")
+        
+        ChooseCharacterVC.modalPresentationStyle = .overFullScreen
+        ChooseCharacterVC.modalTransitionStyle = .crossDissolve
+        
+        present(ChooseCharacterVC, animated: true, completion: nil)
     }
 }

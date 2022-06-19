@@ -1,21 +1,29 @@
 //
-//  ParticipateRoomViewController.swift
+//  ChooseRoomViewController.swift
 //  Manito
 //
-//  Created by COBY_PRO on 2022/06/15.
+//  Created by COBY_PRO on 2022/06/18.
 //
 
 import UIKit
 
 import SnapKit
 
-class ParticipateRoomViewController: BaseViewController {
+class ChooseCharacterViewController: BaseViewController {
     
     // MARK: - Property
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "방 참가하기"
+        label.text = "캐릭터 선택"
         label.font = .font(.regular, ofSize: 34)
+        return label
+    }()
+    
+    private let subTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "당신만의 캐릭터를 정해주세요."
+        label.font = .font(.regular, ofSize: 18)
+        label.textColor = .grey002
         return label
     }()
     
@@ -27,14 +35,13 @@ class ParticipateRoomViewController: BaseViewController {
         return button
     }()
     
-    private let nextButton: MainButton = {
+    private let enterButton: MainButton = {
         let button = MainButton()
-        button.title = "방 입장"
-        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        button.title = "선택"
+        button.addTarget(self, action: #selector(didTapEnterButton), for: .touchUpInside)
         return button
     }()
     
-    private let inputInvitedCodeView = InputInvitedCodeView()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -48,6 +55,12 @@ class ParticipateRoomViewController: BaseViewController {
             $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
         
+        view.addSubview(subTitleLabel)
+        subTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(4)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+        }
+        
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
@@ -55,18 +68,11 @@ class ParticipateRoomViewController: BaseViewController {
             $0.width.height.equalTo(44)
         }
         
-        view.addSubview(nextButton)
-        nextButton.snp.makeConstraints {
+        view.addSubview(enterButton)
+        enterButton.snp.makeConstraints {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(57)
             $0.height.equalTo(60)
-        }
-        
-        view.addSubview(inputInvitedCodeView)
-        inputInvitedCodeView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalTo(nextButton.snp.top)
         }
     }
     
@@ -80,13 +86,7 @@ class ParticipateRoomViewController: BaseViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func didTapNextButton() {
-        let storyboard = UIStoryboard(name: "CheckRoom", bundle: nil)
-        let CheckRoomVC = storyboard.instantiateViewController(identifier: "CheckRoomViewController")
-        
-        CheckRoomVC.modalPresentationStyle = .overFullScreen
-        CheckRoomVC.modalTransitionStyle = .crossDissolve
-        
-        present(CheckRoomVC, animated: true, completion: nil)
+    @objc func didTapEnterButton() {
+        dismiss(animated: true, completion: nil)
     }
 }
