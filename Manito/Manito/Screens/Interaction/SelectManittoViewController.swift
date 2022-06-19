@@ -36,16 +36,28 @@ final class SelectManittoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSwipeGesture()
         hiddenImageView()
         setupGifImage()
     }
     
     override func configUI() {
         super.configUI()
+        joystickImageView.isUserInteractionEnabled = true
         informationLabel.font = .font(.regular, ofSize: 20)
     }
     
     // MARK: - func
+    
+    private func setupSwipeGesture() {
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        
+        joystickImageView.addGestureRecognizer(swipeLeft)
+        joystickImageView.addGestureRecognizer(swipeRight)
+    }
     
     private func setupGifImage() {
         switch stageType {
@@ -81,6 +93,22 @@ final class SelectManittoViewController: BaseViewController {
             capsuleImageView.isHidden = true
         case .openName:
             break
+        }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer{
+            switch swipeGesture.direction {
+            case .left:
+                stageType = .capsule
+            case .right:
+                stageType = .capsule
+            default:
+                break
+            }
         }
     }
 }
