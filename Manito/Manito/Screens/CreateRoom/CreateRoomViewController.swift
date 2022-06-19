@@ -42,6 +42,8 @@ class CreateRoomViewController: BaseViewController {
         let button = UIButton(type: .system)
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
+        button.setTitle("이전", for: .normal)
+        button.titleLabel?.font = .font(.regular, ofSize: 16)
         button.tintColor = .white
         button.isHidden = true
         return button
@@ -87,8 +89,8 @@ class CreateRoomViewController: BaseViewController {
         view.addSubview(backButton)
         backButton.snp.makeConstraints {
             $0.top.equalTo(closeButton)
-            $0.leading.equalTo(view.safeAreaLayoutGuide)
-            $0.width.height.equalTo(44)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(44)
         }
         
         view.addSubview(nextButton)
