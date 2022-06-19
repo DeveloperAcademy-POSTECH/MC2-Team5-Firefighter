@@ -27,20 +27,24 @@ class MainViewController: BaseViewController {
     
     // MARK: - property
     
-    private var appTitleView = AppTitleView ()
+    private var appTitleView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = ImageLiterals.imgLogo
+        return imageView
+    }()
     
     private let settingButton = SettingButton()
     
-    private var lightImage: UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = .red
-        return image
+    private var imgStar: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = ImageLiterals.imgStar
+        return imageView
     }()
     
     private var commonMissionImageView: UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = .red
-        return image
+        let imageView = UIImageView()
+        imageView.image = ImageLiterals.imgCommonMisson
+        return imageView
     }()
     
     private let commonMissionView = CommonMissonView()
@@ -79,8 +83,8 @@ class MainViewController: BaseViewController {
     // MARK: - life cycle
     
     override func render() {
-        view.addSubview(lightImage)
-        lightImage.snp.makeConstraints {
+        view.addSubview(imgStar)
+        imgStar.snp.makeConstraints {
             $0.width.height.equalTo(30)
             $0.leading.equalToSuperview().inset(13)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
@@ -89,8 +93,8 @@ class MainViewController: BaseViewController {
         view.addSubview(commonMissionImageView)
         commonMissionImageView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.5)
-            $0.top.equalTo(lightImage.snp.bottom)
+            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.61)
+            $0.top.equalTo(imgStar.snp.bottom)
         }
         
         commonMissionImageView.addSubview(commonMissionView)
@@ -133,7 +137,7 @@ class MainViewController: BaseViewController {
         
         let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: nil)
         let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: nil)
-        let cancel = UIAlertAction(title: "취소", style: .default, handler: nil)
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         
         alert.addAction(createRoom)
         alert.addAction(enterRoom)
