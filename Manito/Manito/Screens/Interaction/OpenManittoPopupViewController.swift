@@ -7,9 +7,26 @@
 
 import UIKit
 
+import SnapKit
+
 final class OpenManittoPopupViewController: BaseViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // MARK: - property
+    
+    private let popupView = UIImageView(image: ImageLiterals.imgEnterRoom)
+    
+    // MARK: - life cycle
+    
+    override func render() {
+        view.addSubview(popupView)
+        popupView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(UIScreen.main.bounds.size.height * 0.15)
+            $0.leading.trailing.equalToSuperview().inset(21)
+            $0.height.equalTo(popupView.snp.width).multipliedBy(1.16)
+        }
+    }
+    
+    override func configUI() {
+        view.backgroundColor = .black.withAlphaComponent(0.8)
     }
 }
