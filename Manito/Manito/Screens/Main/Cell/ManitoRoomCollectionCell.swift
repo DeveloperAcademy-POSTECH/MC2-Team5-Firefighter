@@ -79,7 +79,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         
         addSubview(memberLabel)
         memberLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(14)
+            $0.top.equalToSuperview().inset(18)
             $0.leading.equalTo(imageView.snp.trailing).offset(4)
         }
         
@@ -91,7 +91,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         
         addSubview(roomState)
         roomState.snp.makeConstraints {
-            $0.top.equalTo(roomLabel.snp.bottom).offset(24)
+            $0.top.equalTo(roomLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview().inset(14)
             $0.width.equalTo(60)
             $0.height.equalTo(24)
