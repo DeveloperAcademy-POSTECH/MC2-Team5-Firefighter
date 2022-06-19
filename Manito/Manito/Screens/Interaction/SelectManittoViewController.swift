@@ -68,12 +68,16 @@ final class SelectManittoViewController: BaseViewController {
         case .capsule:
             self.joystickImageView.stopAnimatingGIF()
             DispatchQueue.main.async {
-                self.capsuleImageView.animate(withGIFNamed: ImageLiterals.gifLogo, animationBlock: nil)
+                self.capsuleImageView.animate(withGIFNamed: ImageLiterals.gifLogo, loopCount: 4, animationBlock: { [weak self] in
+                    self?.stageType = .openCapsule
+                })
             }
         case .openCapsule:
             self.capsuleImageView.stopAnimatingGIF()
             DispatchQueue.main.async {
-                self.openCapsuleImageView.animate(withGIFNamed: ImageLiterals.gifJoystick, animationBlock: nil)
+                self.openCapsuleImageView.animate(withGIFNamed: ImageLiterals.gifJoystick, loopCount: 1, animationBlock: { [weak self] in
+                    self?.stageType = .openName
+                })
             }
         case .openName:
             self.openCapsuleImageView.stopAnimatingGIF()
