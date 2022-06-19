@@ -117,6 +117,17 @@ final class OpenManittoViewController: BaseViewController {
         DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
             self.scrollNumberIndex = self.manittoIndex
         })
+        DispatchQueue.main.asyncAfter(deadline: deadline + 1.0, execute: {
+            self.presentPopupViewController()
+        })
+    }
+    
+    private func presentPopupViewController() {
+        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: OpenManittoPopupViewController.className) as? OpenManittoPopupViewController else { return }
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .overCurrentContext
+        present(viewController, animated: true, completion: nil)
     }
 }
 
