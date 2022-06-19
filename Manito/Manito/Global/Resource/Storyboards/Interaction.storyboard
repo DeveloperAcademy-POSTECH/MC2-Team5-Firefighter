@@ -65,6 +65,12 @@
                                     <constraint firstAttribute="width" constant="199" id="x5g-EU-wIE"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DGD-4g-qoI">
+                                <rect key="frame" x="186" y="437.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TuJ-cj-CBa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -72,14 +78,17 @@
                             <constraint firstItem="tfA-tz-Osk" firstAttribute="top" secondItem="Xon-pC-cEy" secondAttribute="bottom" constant="63" id="85a-Zm-Gra"/>
                             <constraint firstItem="Xon-pC-cEy" firstAttribute="centerX" secondItem="FUu-e4-cQM" secondAttribute="centerX" id="Hx9-82-mSH"/>
                             <constraint firstItem="ylg-n1-Ety" firstAttribute="centerX" secondItem="FUu-e4-cQM" secondAttribute="centerX" id="KYq-Mq-ClF"/>
+                            <constraint firstItem="DGD-4g-qoI" firstAttribute="centerY" secondItem="ylg-n1-Ety" secondAttribute="centerY" id="Wkc-TX-zAA"/>
                             <constraint firstItem="ylg-n1-Ety" firstAttribute="centerY" secondItem="FUu-e4-cQM" secondAttribute="centerY" id="XwQ-7C-JhU"/>
                             <constraint firstItem="Xon-pC-cEy" firstAttribute="centerY" secondItem="FUu-e4-cQM" secondAttribute="centerY" id="kke-vn-Ztu"/>
                             <constraint firstItem="tfA-tz-Osk" firstAttribute="centerX" secondItem="FUu-e4-cQM" secondAttribute="centerX" id="s9u-hb-krI"/>
+                            <constraint firstItem="DGD-4g-qoI" firstAttribute="centerX" secondItem="FUu-e4-cQM" secondAttribute="centerX" id="t6h-0e-dXM"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="informationLabel" destination="tfA-tz-Osk" id="LCa-Nb-ref"/>
                         <outlet property="joystickImageView" destination="Xon-pC-cEy" id="tyY-Eo-vpt"/>
+                        <outlet property="nameLabel" destination="DGD-4g-qoI" id="Xc2-8y-TYT"/>
                         <outlet property="openCapsuleImageView" destination="ylg-n1-Ety" id="VQw-FC-2IF"/>
                     </connections>
                 </viewController>

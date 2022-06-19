@@ -22,7 +22,9 @@ final class SelectManittoViewController: BaseViewController {
     @IBOutlet weak var joystickImageView: GIFImageView!
     @IBOutlet weak var informationLabel: UILabel!
     @IBOutlet weak var openCapsuleImageView: GIFImageView!
+    @IBOutlet weak var nameLabel: UILabel!
     
+    private var manittiName: String = "리비"
     private var stageType: StageType = .joystick {
         didSet {
             hiddenImageView()
@@ -43,6 +45,8 @@ final class SelectManittoViewController: BaseViewController {
         super.configUI()
         joystickImageView.isUserInteractionEnabled = true
         informationLabel.font = .font(.regular, ofSize: 20)
+        nameLabel.font = .font(.regular, ofSize: 30)
+        nameLabel.text = manittiName
     }
     
     // MARK: - func
@@ -78,13 +82,14 @@ final class SelectManittoViewController: BaseViewController {
     private func hiddenImageView() {
         switch stageType {
         case .joystick:
+            nameLabel.alpha = 0.0
             openCapsuleImageView.isHidden = true
         case .capsule:
             openCapsuleImageView.isHidden = false
             joystickImageView.isHidden = true
             informationLabel.isHidden = true
         case .openName:
-            break
+            nameLabel.fadeIn()
         }
     }
     
