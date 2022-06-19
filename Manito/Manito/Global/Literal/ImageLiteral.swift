@@ -14,6 +14,7 @@ enum ImageLiterals {
     static var icList: UIImage { .load(name: "btnList") }
     static var icManiTti: UIImage { .load(name: "btnManiTti") }
     static var icNewRoom: UIImage { .load(name: "btnNewRoom") }
+    static var icBack: UIImage { .load(systemName: "chevron.left")}
     
     // MARK: - button
     
@@ -41,6 +42,12 @@ enum ImageLiterals {
     static var imgMaDinner: UIImage { .load(name: "imgMaDinner") }
     static var imgMaHoya: UIImage { .load(name: "imgMaHoya") }
     static var imgMaLivvy: UIImage { .load(name: "imgMaLivvy") }
+    
+    // MARK: - gif
+    
+    static var gifLogo = "logo"
+    static var gifJoystick = "joystick"
+    static var gifCapsule = "capsule"
     
 }
 

@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */; };
+		333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF669285864CE0039F77F /* MemoryViewController.swift */; };
 		33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDF5612856E03800564211 /* FriendListViewController.swift */; };
 		392EC77E2855C388006918A9 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC77D2855C388006918A9 /* SettingButton.swift */; };
 		392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */; };
-		399D17AB2856C83B00F50D9D /* DetailHalfModalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */; };
+		399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */; };
+		39D95265285B097800183B09 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D95264285B097800183B09 /* CalendarView.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
 		7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C52854B47F00489E6A /* InputNameView.swift */; };
@@ -23,6 +25,17 @@
 		B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFE2856D3820080992C /* LetterPhotoView.swift */; };
 		B50B1B0428596C900080992C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B50B1B0328596C900080992C /* SnapKit */; };
 		B50B1B0728596CB10080992C /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = B50B1B0628596CB10080992C /* FSCalendar */; };
+		B50B1B2A285AB7650080992C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B29285AB7650080992C /* SplashViewController.swift */; };
+		B50B1B33285AC0970080992C /* Gifu in Frameworks */ = {isa = PBXBuildFile; productRef = B50B1B32285AC0970080992C /* Gifu */; };
+		B50B1B3C285AD2B20080992C /* logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = B50B1B3B285AD2B20080992C /* logo.gif */; };
+		B50B1B3E285B04580080992C /* Interaction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50B1B3D285B04580080992C /* Interaction.storyboard */; };
+		B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B40285B048A0080992C /* OpenManittoViewController.swift */; };
+		B50B1B44285B146A0080992C /* ManittoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */; };
+		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
+		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
+		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
+		B5E1F2B4285ECCD1006D880B /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5E1F2B3285ECCD1006D880B /* joystick.gif */; };
+		B5E1F2B8285EE2B0006D880B /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5E1F2B7285EE2B0006D880B /* capsule.gif */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
 		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
@@ -73,14 +86,18 @@
 		CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */; };
 		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
+		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
+		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewCell.swift; sourceTree = "<group>"; };
+		333BF669285864CE0039F77F /* MemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
 		33BDF5612856E03800564211 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		392EC77D2855C388006918A9 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitTitleView.swift; sourceTree = "<group>"; };
-		399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHalfModalController.swift; sourceTree = "<group>"; };
+		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
+		39D95264285B097800183B09 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		7E3058C52854B47F00489E6A /* InputNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputNameView.swift; sourceTree = "<group>"; };
@@ -90,6 +107,16 @@
 		B50B1AFA2856B5180080992C /* IndividualMissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualMissionView.swift; sourceTree = "<group>"; };
 		B50B1AFC2856C3500080992C /* LetterTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterTextView.swift; sourceTree = "<group>"; };
 		B50B1AFE2856D3820080992C /* LetterPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterPhotoView.swift; sourceTree = "<group>"; };
+		B50B1B29285AB7650080992C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		B50B1B3B285AD2B20080992C /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = logo.gif; sourceTree = "<group>"; };
+		B50B1B3D285B04580080992C /* Interaction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Interaction.storyboard; sourceTree = "<group>"; };
+		B50B1B40285B048A0080992C /* OpenManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoViewController.swift; sourceTree = "<group>"; };
+		B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManittoCollectionViewCell.swift; sourceTree = "<group>"; };
+		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
+		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
+		B5E1F2B3285ECCD1006D880B /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
+		B5E1F2B7285EE2B0006D880B /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +169,8 @@
 		CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleView.swift; sourceTree = "<group>"; };
 		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
+		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
+		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +180,7 @@
 			files = (
 				B50B1B0428596C900080992C /* SnapKit in Frameworks */,
 				B50B1B0728596CB10080992C /* FSCalendar in Frameworks */,
+				B50B1B33285AC0970080992C /* Gifu in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,7 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */,
-				399D17AA2856C83B00F50D9D /* DetailHalfModalController.swift */,
+				39D95264285B097800183B09 /* CalendarView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -188,8 +218,46 @@
 				7E3058C52854B47F00489E6A /* InputNameView.swift */,
 				7E3058C72854B64D00489E6A /* InputPersonView.swift */,
 				7E3058C92854B7A900489E6A /* InputDateView.swift */,
+				D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		B50B1B28285AB7550080992C /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				B50B1B29285AB7650080992C /* SplashViewController.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		B50B1B36285AC28B0080992C /* GIFs */ = {
+			isa = PBXGroup;
+			children = (
+				B5E1F2B7285EE2B0006D880B /* capsule.gif */,
+				B5E1F2B3285ECCD1006D880B /* joystick.gif */,
+				B50B1B3B285AD2B20080992C /* logo.gif */,
+			);
+			path = GIFs;
+			sourceTree = "<group>";
+		};
+		B50B1B3F285B047C0080992C /* Interaction */ = {
+			isa = PBXGroup;
+			children = (
+				B50B1B42285B14550080992C /* Cell */,
+				B50B1B40285B048A0080992C /* OpenManittoViewController.swift */,
+				B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */,
+				B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */,
+			);
+			path = Interaction;
+			sourceTree = "<group>";
+		};
+		B50B1B42285B14550080992C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		B5F524C228519AA000614FF7 = {
@@ -221,6 +289,8 @@
 		B5F524E328519AC300614FF7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B50B1B3F285B047C0080992C /* Interaction */,
+				B50B1B28285AB7550080992C /* Splash */,
 				CBA15C91285CE1880051EDE2 /* ChooseCharacter */,
 				CB674C1F285969F10063A6B7 /* CheckRoom */,
 				CB637A3828595BE400FF1240 /* ParticipateRoom */,
@@ -282,6 +352,7 @@
 			children = (
 				392EC77F2855D107006918A9 /* UIComponent */,
 				B5F525092851A06700614FF7 /* DetailWaitViewController.swift */,
+				399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */,
 			);
 			path = "Detail-Wait";
 			sourceTree = "<group>";
@@ -292,6 +363,7 @@
 				333BF66428571C850039F77F /* Cell */,
 				B5F5250B2851A07000614FF7 /* DetailIngViewController.swift */,
 				33BDF5612856E03800564211 /* FriendListViewController.swift */,
+				333BF669285864CE0039F77F /* MemoryViewController.swift */,
 			);
 			path = "Detail-Ing";
 			sourceTree = "<group>";
@@ -310,6 +382,7 @@
 		B5F524F228519BA700614FF7 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				B50B1B36285AC28B0080992C /* GIFs */,
 				B5F5250228519F6A00614FF7 /* Fonts */,
 				B5F524D728519AA100614FF7 /* Assets.xcassets */,
 				B5F524F928519BD600614FF7 /* Storyboards */,
@@ -338,6 +411,8 @@
 				B5F525252851A26D00614FF7 /* NSObject+Extension.swift */,
 				B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */,
 				B5F525412855C97900614FF7 /* UILabel+Extension.swift */,
+				D77224DE285DDAB7008B760B /* Notification+Extension.swift */,
+				B5E1F2AD285B2917006D880B /* Int+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -388,6 +463,7 @@
 				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
 				B5F525172851A10600614FF7 /* Letter.storyboard */,
 				7E0C5C372855B73100F698D1 /* Splash.storyboard */,
+				B50B1B3D285B04580080992C /* Interaction.storyboard */,
 				CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */,
 				CB674C2228596A3E0063A6B7 /* CheckRoom.storyboard */,
 				CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */,
@@ -536,6 +612,7 @@
 			packageProductDependencies = (
 				B50B1B0328596C900080992C /* SnapKit */,
 				B50B1B0628596CB10080992C /* FSCalendar */,
+				B50B1B32285AC0970080992C /* Gifu */,
 			);
 			productName = Manito;
 			productReference = B5F524CB28519AA000614FF7 /* Manito.app */;
@@ -568,6 +645,7 @@
 			packageReferences = (
 				B50B1B0228596C900080992C /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B50B1B0528596CB10080992C /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				B50B1B31285AC0970080992C /* XCRemoteSwiftPackageReference "Gifu" */,
 			);
 			productRefGroup = B5F524CC28519AA000614FF7 /* Products */;
 			projectDirPath = "";
@@ -586,14 +664,18 @@
 				B5F525102851A0B500614FF7 /* CreateRoom.storyboard in Resources */,
 				CBA15C96285CE1F00051EDE2 /* ChooseCharacter.storyboard in Resources */,
 				B5F525122851A0CB00614FF7 /* InvitedCode.storyboard in Resources */,
+				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
 				B5F525182851A10600614FF7 /* Letter.storyboard in Resources */,
 				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
 				B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */,
 				B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */,
 				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
 				B5F5250428519F7A00614FF7 /* DungGeunMo.otf in Resources */,
+				B50B1B3E285B04580080992C /* Interaction.storyboard in Resources */,
+				B5E1F2B8285EE2B0006D880B /* capsule.gif in Resources */,
 				B5F525142851A0DB00614FF7 /* DetailWait.storyboard in Resources */,
 				B5F524D628519AA000614FF7 /* Main.storyboard in Resources */,
+				B5E1F2B4285ECCD1006D880B /* joystick.gif in Resources */,
 				CB674C2328596A3E0063A6B7 /* CheckRoom.storyboard in Resources */,
 				CB637A3D28595D9800FF1240 /* ParticipateRoom.storyboard in Resources */,
 			);
@@ -608,6 +690,7 @@
 			files = (
 				CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */,
 				333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */,
+				39D95265285B097800183B09 /* CalendarView.swift in Sources */,
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
 				B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */,
 				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
@@ -621,16 +704,20 @@
 				7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
-				399D17AB2856C83B00F50D9D /* DetailHalfModalController.swift in Sources */,
+				399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */,
 				B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */,
+				B50B1B44285B146A0080992C /* ManittoCollectionViewCell.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
 				CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
+				B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */,
+				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
 				B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */,
+				B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */,
 				B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */,
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
 				CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */,
@@ -640,17 +727,22 @@
 				CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */,
 				B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
+				D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */,
 				CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
+				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
 				B50B1AFD2856C3500080992C /* LetterTextView.swift in Sources */,
+				D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */,
+				B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */,
 				CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */,
 				B5F525222851A24100614FF7 /* UITableView+Extension.swift in Sources */,
 				B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */,
+				B50B1B2A285AB7650080992C /* SplashViewController.swift in Sources */,
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
 				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
@@ -808,6 +900,8 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 앨범에 접근하려고 합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -837,6 +931,8 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 앨범에 접근하려고 합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -896,6 +992,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		B50B1B31285AC0970080992C /* XCRemoteSwiftPackageReference "Gifu" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kaishin/Gifu.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -908,6 +1012,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B50B1B0528596CB10080992C /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
+		};
+		B50B1B32285AC0970080992C /* Gifu */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B50B1B31285AC0970080992C /* XCRemoteSwiftPackageReference "Gifu" */;
+			productName = Gifu;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

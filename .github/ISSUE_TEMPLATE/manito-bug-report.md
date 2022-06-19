@@ -1,6 +1,6 @@
 ---
 name: Manito Bug report
-about: HAVIT 개발 중 생긴 버그를 작성합니다.
+about: MANITO 개발 중 생긴 버그를 작성합니다.
 title: "[BUG]"
 labels: ''
 assignees: ''

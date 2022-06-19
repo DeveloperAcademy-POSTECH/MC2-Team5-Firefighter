@@ -38,4 +38,15 @@ extension UIView {
         layer.borderColor = color.cgColor
         return self
     }
+    
+    func fadeIn(duration: TimeInterval = 0.4,
+                delay: TimeInterval = 0.0,
+                completion: @escaping ((Bool) -> ()) = { (_: Bool) -> () in }) {
+        UIView.animate(withDuration: duration,
+                       delay: delay,
+                       options: .curveEaseIn,
+                       animations: {
+                        self.alpha = 1.0
+                       }, completion: completion)
+    }
 }
