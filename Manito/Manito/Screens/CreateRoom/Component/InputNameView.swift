@@ -10,31 +10,34 @@ import UIKit
 import SnapKit
 
 class InputNameView: UIView {
+    private var maxLength = 8
     
     // MARK: - Property
-    private let roomsNameTextField: UITextField = {
+    
+    lazy var roomsNameTextField: UITextField = {
         let texField = UITextField()
         let attributes = [
-            NSAttributedString.Key.foregroundColor : UIColor.white,
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         texField.backgroundColor = .subBackgroundGrey
         texField.attributedPlaceholder = NSAttributedString(string: "방 이름을 적어주세요", attributes:attributes)
-        
-        texField.layer.cornerRadius = 10
-        texField.layer.masksToBounds = true
-        texField.layer.borderWidth = 1
-        texField.layer.borderColor = UIColor.white.cgColor
         texField.textAlignment = .center
+        texField.makeBorderLayer(color: .white)
+        texField.font = .font(.regular, ofSize: 18)
+        texField.returnKeyType = .done
+        texField.delegate = self
         return texField
     }()
     
-    private let roomsTextLimit : UILabel = {
+    private lazy var roomsTextLimit : UILabel = {
         let label = UILabel()
-        label.text = "0/8"
+        label.text = "0/\(maxLength)"
         label.font = .font(.regular, ofSize: 20)
+        label.textColor = .grey002
         return label
     }()
+    
+    var enableButton: (() -> ())?
     
     // MARK: - Init
     override init(frame: CGRect) {
@@ -47,6 +50,7 @@ class InputNameView: UIView {
     }
     
     // MARK: - Config
+    
     private func render() {
         self.addSubview(roomsNameTextField)
         roomsNameTextField.snp.makeConstraints {
@@ -59,5 +63,25 @@ class InputNameView: UIView {
             $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
             $0.right.equalToSuperview()
         }
+    }
+    
+    // MARK: - Funtions
+    
+    private func setCounter(count: Int) {
+        roomsTextLimit.text = "\(count)/\(maxLength)"
+        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
+    }
+    
+    private func checkMaxLength(textField: UITextField, maxLength: Int) {
+        if (textField.text?.count ?? 0 > maxLength) {
+            textField.deleteBackward()
+        }
+    }
+}
+
+extension InputNameView: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        setCounter(count: textField.text?.count ?? 0)
+        enableButton?()
     }
 }
