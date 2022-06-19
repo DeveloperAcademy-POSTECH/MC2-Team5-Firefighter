@@ -13,13 +13,9 @@ final class PeopleInfoView: UIView {
     
     // MARK: - Property
     
-    private var peopleImageView: UIImageView = {
-        let image = UIImageView()
-        image.image = ImageLiterals.imgNi
-        return image
-    }()
+    private let peopleImageView = UIImageView(image: ImageLiterals.imgNi)
     
-    lazy var peopleLabel: UILabel = {
+    private let peopleLabel: UILabel = {
         let label = UILabel()
         label.text = "X 8인"
         label.font = .font(.regular, ofSize: 24)
@@ -43,8 +39,7 @@ final class PeopleInfoView: UIView {
         self.addSubview(peopleImageView)
         peopleImageView.snp.makeConstraints {
             $0.leading.top.bottom.equalToSuperview()
-            $0.width.equalTo(60)
-            $0.height.equalTo(60)
+            $0.width.height.equalTo(60)
         }
         
         self.addSubview(peopleLabel)

@@ -19,7 +19,7 @@ class ParticipateRoomViewController: BaseViewController {
         return label
     }()
     
-    lazy var closeButton: UIButton = {
+    private let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
@@ -76,13 +76,13 @@ class ParticipateRoomViewController: BaseViewController {
     }
     
     // MARK: - Selectors
-    @objc func didTapCloseButton() {
+    @objc private func didTapCloseButton() {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func didTapNextButton() {
+    @objc private func didTapNextButton() {
         let storyboard = UIStoryboard(name: "CheckRoom", bundle: nil)
-        let CheckRoomVC = storyboard.instantiateViewController(identifier: "CheckRoomViewController")
+        let CheckRoomVC = storyboard.instantiateViewController(identifier: CheckRoomViewController.className)
         
         CheckRoomVC.modalPresentationStyle = .overFullScreen
         CheckRoomVC.modalTransitionStyle = .crossDissolve

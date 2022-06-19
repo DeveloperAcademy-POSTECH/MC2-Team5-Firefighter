@@ -13,14 +13,14 @@ class CheckRoomViewController: BaseViewController {
     
     // MARK: - Property
     
-    private var roomInfoImageView: UIImageView = {
+    private let roomInfoImageView: UIImageView = {
         let image = UIImageView()
         image.image = ImageLiterals.imgEnterRoom
         image.isUserInteractionEnabled = true
         return image
     }()
     
-    private var roomInfoView = RoomInfoView()
+    private let roomInfoView = RoomInfoView()
     
     private let questionLabel: UILabel = {
         let label = UILabel()
@@ -38,6 +38,7 @@ class CheckRoomViewController: BaseViewController {
         button.backgroundColor = .yellow
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
+        button.addTarget(self, action: #selector(didTapNoButton), for: .touchUpInside)
         return button
     }()
     
@@ -49,16 +50,11 @@ class CheckRoomViewController: BaseViewController {
         button.backgroundColor = .yellow
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
+        button.addTarget(self, action: #selector(didTapYesButton), for: .touchUpInside)
         return button
     }()
     
-    // MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func render() {
-        
         view.addSubview(roomInfoImageView)
         roomInfoImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -69,7 +65,7 @@ class CheckRoomViewController: BaseViewController {
         roomInfoImageView.addSubview(roomInfoView)
         roomInfoView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(120)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
         }
         
         roomInfoImageView.addSubview(questionLabel)
@@ -100,19 +96,16 @@ class CheckRoomViewController: BaseViewController {
     // MARK: - Configure
     override func configUI() {
         view.backgroundColor = .black.withAlphaComponent(0.7)
-        
-        noButton.addTarget(self, action: #selector(didTapNoButton), for: .touchUpInside)
-        yesButton.addTarget(self, action: #selector(didTapYesButton), for: .touchUpInside)
     }
     
     // MARK: - Selectors
-    @objc func didTapNoButton() {
+    @objc private func didTapNoButton() {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func didTapYesButton() {
+    @objc private func didTapYesButton() {
         let storyboard = UIStoryboard(name: "ChooseCharacter", bundle: nil)
-        let ChooseCharacterVC = storyboard.instantiateViewController(identifier: "ChooseCharacterViewController")
+        let ChooseCharacterVC = storyboard.instantiateViewController(identifier: ChooseCharacterViewController.className)
         
         ChooseCharacterVC.modalPresentationStyle = .overFullScreen
         ChooseCharacterVC.modalTransitionStyle = .crossDissolve

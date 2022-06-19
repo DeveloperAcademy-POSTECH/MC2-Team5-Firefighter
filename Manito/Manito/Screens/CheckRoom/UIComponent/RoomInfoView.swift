@@ -13,21 +13,21 @@ final class RoomInfoView: UIView {
     
     // MARK: - Property
     
-    let roomLabel: UILabel = {
+    private let roomLabel: UILabel = {
         let label = UILabel()
         label.text = "명예소방관"
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
     
-    lazy var dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "2022.06.01 ~ 2022.06.06"
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
     
-    lazy var peopleInfo = PeopleInfoView()
+    private let peopleInfo = PeopleInfoView()
 
     // MARK: - init
     

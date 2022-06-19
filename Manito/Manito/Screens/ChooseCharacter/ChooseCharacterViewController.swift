@@ -12,6 +12,7 @@ import SnapKit
 class ChooseCharacterViewController: BaseViewController {
     
     // MARK: - Property
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "캐릭터 선택"
@@ -27,7 +28,7 @@ class ChooseCharacterViewController: BaseViewController {
         return label
     }()
     
-    lazy var closeButton: UIButton = {
+    private let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
@@ -41,12 +42,6 @@ class ChooseCharacterViewController: BaseViewController {
         button.addTarget(self, action: #selector(didTapEnterButton), for: .touchUpInside)
         return button
     }()
-    
-    
-    // MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     
     override func render() {
         view.addSubview(titleLabel)
@@ -82,11 +77,11 @@ class ChooseCharacterViewController: BaseViewController {
     }
     
     // MARK: - Selectors
-    @objc func didTapCloseButton() {
+    @objc private func didTapCloseButton() {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func didTapEnterButton() {
+    @objc private func didTapEnterButton() {
         dismiss(animated: true, completion: nil)
     }
 }

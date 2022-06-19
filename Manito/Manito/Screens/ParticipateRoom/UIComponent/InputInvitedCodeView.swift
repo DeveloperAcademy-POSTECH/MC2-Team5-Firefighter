@@ -13,20 +13,21 @@ final class InputInvitedCodeView: UIView {
     
     // MARK: - Property
     private let roomsCodeTextField: UITextField = {
-        let texField = UITextField()
+        let textField = UITextField()
         let attributes = [
             NSAttributedString.Key.foregroundColor : UIColor.white,
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
-        texField.backgroundColor = .subBackgroundGrey
-        texField.attributedPlaceholder = NSAttributedString(string: "초대코드 입력", attributes: attributes)
         
-        texField.layer.cornerRadius = 10
-        texField.layer.masksToBounds = true
-        texField.layer.borderWidth = 1
-        texField.layer.borderColor = UIColor.white.cgColor
-        texField.textAlignment = .center
-        return texField
+        textField.backgroundColor = .subBackgroundGrey
+        textField.attributedPlaceholder = NSAttributedString(string: "초대코드 입력", attributes: attributes)
+        
+        textField.layer.cornerRadius = 10
+        textField.layer.masksToBounds = true
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.white.cgColor
+        textField.textAlignment = .center
+        return textField
     }()
     
     // MARK: - Init
