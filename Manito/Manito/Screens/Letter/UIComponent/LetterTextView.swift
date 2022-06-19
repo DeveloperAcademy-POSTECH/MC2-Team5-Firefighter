@@ -91,6 +91,7 @@ final class LetterTextView: UIView {
     }
 }
 
+// MARK: - UITextViewDelegate
 extension LetterTextView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         setCounter(count: textView.text?.count ?? 0)
