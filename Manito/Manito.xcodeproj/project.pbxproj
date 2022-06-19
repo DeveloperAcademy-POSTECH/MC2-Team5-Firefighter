@@ -32,6 +32,7 @@
 		B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B40285B048A0080992C /* OpenManittoViewController.swift */; };
 		B50B1B44285B146A0080992C /* ManittoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
+		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
 		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
@@ -100,6 +101,7 @@
 		B50B1B40285B048A0080992C /* OpenManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoViewController.swift; sourceTree = "<group>"; };
 		B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManittoCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			children = (
 				B50B1B42285B14550080992C /* Cell */,
 				B50B1B40285B048A0080992C /* OpenManittoViewController.swift */,
+				B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */,
 			);
 			path = Interaction;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
 				B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */,
+				B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */,
 				B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */,
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
 				B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */,

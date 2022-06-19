@@ -23,6 +23,20 @@
             </objects>
             <point key="canvasLocation" x="52" y="106"/>
         </scene>
+        <!--Open Manitto Popup View Controller-->
+        <scene sceneID="56p-44-sfK">
+            <objects>
+                <viewController storyboardIdentifier="OpenManittoPopupViewController" id="KNw-0M-LwW" customClass="OpenManittoPopupViewController" customModule="Manito" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EwZ-WX-NUo">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="CL6-bk-uWt"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zfd-jO-FVN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="904" y="106"/>
+        </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
