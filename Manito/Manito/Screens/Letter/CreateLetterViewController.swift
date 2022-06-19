@@ -187,6 +187,7 @@ final class CreateLetterViewController: BaseViewController {
     }
 }
 
+// MARK: - UIAdaptivePresentationControllerDelegate
 extension CreateLetterViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
         presentationControllerDidAttemptToDismissAction()
