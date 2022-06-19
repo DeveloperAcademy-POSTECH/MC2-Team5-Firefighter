@@ -15,7 +15,7 @@ final class PeopleInfoView: UIView {
     
     private var peopleImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "imgNi.png")!
+        image.image = ImageLiterals.imgNi
         return image
     }()
     

@@ -15,7 +15,7 @@ class CheckRoomViewController: BaseViewController {
     
     private var roomInfoImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "imgEnterRoom.png")!
+        image.image = ImageLiterals.imgEnterRoom
         image.isUserInteractionEnabled = true
         return image
     }()

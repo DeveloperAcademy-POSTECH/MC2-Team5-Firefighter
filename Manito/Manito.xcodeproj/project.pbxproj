@@ -459,18 +459,18 @@
 		CB637A3828595BE400FF1240 /* ParticipateRoom */ = {
 			isa = PBXGroup;
 			children = (
-				CB637A3928595BF900FF1240 /* Component */,
+				CB637A3928595BF900FF1240 /* UIComponent */,
 				CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */,
 			);
 			path = ParticipateRoom;
 			sourceTree = "<group>";
 		};
-		CB637A3928595BF900FF1240 /* Component */ = {
+		CB637A3928595BF900FF1240 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */,
 			);
-			path = Component;
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		CB674C1F285969F10063A6B7 /* CheckRoom */ = {
