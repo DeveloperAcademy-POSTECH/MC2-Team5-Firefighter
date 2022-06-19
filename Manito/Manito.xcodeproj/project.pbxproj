@@ -33,6 +33,7 @@
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
+		B5E1F2B4285ECCD1006D880B /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5E1F2B3285ECCD1006D880B /* joystick.gif */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
 		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
@@ -100,6 +101,7 @@
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
+		B5E1F2B3285ECCD1006D880B /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 		B50B1B36285AC28B0080992C /* GIFs */ = {
 			isa = PBXGroup;
 			children = (
+				B5E1F2B3285ECCD1006D880B /* joystick.gif */,
 				B50B1B3B285AD2B20080992C /* logo.gif */,
 			);
 			path = GIFs;
@@ -583,6 +586,7 @@
 				B50B1B3E285B04580080992C /* Interaction.storyboard in Resources */,
 				B5F525142851A0DB00614FF7 /* DetailWait.storyboard in Resources */,
 				B5F524D628519AA000614FF7 /* Main.storyboard in Resources */,
+				B5E1F2B4285ECCD1006D880B /* joystick.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

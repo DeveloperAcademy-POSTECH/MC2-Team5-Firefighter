@@ -45,6 +45,7 @@ enum ImageLiterals {
     // MARK: - gif
     
     static var gifLogo = "logo"
+    static var gifJoystick = "joystick"
     
 }
 
