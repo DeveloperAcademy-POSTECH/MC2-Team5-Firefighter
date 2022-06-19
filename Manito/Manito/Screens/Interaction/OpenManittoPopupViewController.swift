@@ -14,6 +14,13 @@ final class OpenManittoPopupViewController: BaseViewController {
     // MARK: - property
     
     private let popupView = UIImageView(image: ImageLiterals.imgEnterRoom)
+    private lazy var typingLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.font = .font(.regular, ofSize: 30)
+        label.textAlignment = .center
+        return label
+    }()
     private let openMentLabel: UILabel = {
         let label = UILabel()
         label.text = """
@@ -35,8 +42,14 @@ final class OpenManittoPopupViewController: BaseViewController {
         button.title = "확인"
         return button
     }()
+    var manittoText: String = "디너"
     
     // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setTypingAnimation()
+    }
     
     override func render() {
         view.addSubview(popupView)
@@ -52,6 +65,13 @@ final class OpenManittoPopupViewController: BaseViewController {
             $0.centerX.equalToSuperview()
         }
         
+        popupView.addSubview(typingLabel)
+        typingLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(popupView.frame.height * 0.36)
+            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(10)
+        }
+        
         popupView.addSubview(openMentLabel)
         openMentLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(51)
@@ -61,5 +81,12 @@ final class OpenManittoPopupViewController: BaseViewController {
     
     override func configUI() {
         view.backgroundColor = .black.withAlphaComponent(0.8)
+    }
+    
+    // MARK: - func
+    
+    private func setTypingAnimation() {
+        typingLabel.setTyping(text: "호야의 마니또는\n\(manittoText) 입니다.")
+        typingLabel.addLabelSpacing()
     }
 }
