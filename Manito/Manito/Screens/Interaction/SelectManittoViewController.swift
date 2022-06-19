@@ -15,6 +15,7 @@ final class SelectManittoViewController: BaseViewController {
         case joystick
         case capsule
         case openName
+        case openButton
     }
     
     // MARK: - property
@@ -23,6 +24,7 @@ final class SelectManittoViewController: BaseViewController {
     @IBOutlet weak var informationLabel: UILabel!
     @IBOutlet weak var openCapsuleImageView: GIFImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var confirmButton: MainButton!
     
     private var manittiName: String = "리비"
     private var stageType: StageType = .joystick {
@@ -43,10 +45,13 @@ final class SelectManittoViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
+        
         joystickImageView.isUserInteractionEnabled = true
+        
         informationLabel.font = .font(.regular, ofSize: 20)
         nameLabel.font = .font(.regular, ofSize: 30)
         nameLabel.text = manittiName
+        confirmButton.title = "확인"
     }
     
     // MARK: - func
@@ -76,6 +81,11 @@ final class SelectManittoViewController: BaseViewController {
             }
         case .openName:
             self.openCapsuleImageView.stopAnimatingGIF()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.stageType = .openButton
+            })
+        case .openButton:
+            break
         }
     }
     
@@ -84,12 +94,15 @@ final class SelectManittoViewController: BaseViewController {
         case .joystick:
             nameLabel.alpha = 0.0
             openCapsuleImageView.isHidden = true
+            confirmButton.isHidden = true
         case .capsule:
             openCapsuleImageView.isHidden = false
             joystickImageView.isHidden = true
             informationLabel.isHidden = true
         case .openName:
             nameLabel.fadeIn()
+        case .openButton:
+            confirmButton.isHidden = false
         }
     }
     

@@ -71,6 +71,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LXg-aq-GeL" customClass="MainButton" customModule="Manito" customModuleProvider="target">
+                                <rect key="frame" x="180" y="797" width="54" height="34"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TuJ-cj-CBa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -80,12 +86,15 @@
                             <constraint firstItem="ylg-n1-Ety" firstAttribute="centerX" secondItem="FUu-e4-cQM" secondAttribute="centerX" id="KYq-Mq-ClF"/>
                             <constraint firstItem="DGD-4g-qoI" firstAttribute="centerY" secondItem="ylg-n1-Ety" secondAttribute="centerY" id="Wkc-TX-zAA"/>
                             <constraint firstItem="ylg-n1-Ety" firstAttribute="centerY" secondItem="FUu-e4-cQM" secondAttribute="centerY" id="XwQ-7C-JhU"/>
+                            <constraint firstItem="TuJ-cj-CBa" firstAttribute="bottom" secondItem="LXg-aq-GeL" secondAttribute="bottom" constant="31" id="Zhx-Px-pm0"/>
                             <constraint firstItem="Xon-pC-cEy" firstAttribute="centerY" secondItem="FUu-e4-cQM" secondAttribute="centerY" id="kke-vn-Ztu"/>
+                            <constraint firstItem="LXg-aq-GeL" firstAttribute="centerX" secondItem="FUu-e4-cQM" secondAttribute="centerX" id="qGJ-JQ-VtF"/>
                             <constraint firstItem="tfA-tz-Osk" firstAttribute="centerX" secondItem="FUu-e4-cQM" secondAttribute="centerX" id="s9u-hb-krI"/>
                             <constraint firstItem="DGD-4g-qoI" firstAttribute="centerX" secondItem="FUu-e4-cQM" secondAttribute="centerX" id="t6h-0e-dXM"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="confirmButton" destination="LXg-aq-GeL" id="j4d-YS-C5B"/>
                         <outlet property="informationLabel" destination="tfA-tz-Osk" id="LCa-Nb-ref"/>
                         <outlet property="joystickImageView" destination="Xon-pC-cEy" id="tyY-Eo-vpt"/>
                         <outlet property="nameLabel" destination="DGD-4g-qoI" id="Xc2-8y-TYT"/>
