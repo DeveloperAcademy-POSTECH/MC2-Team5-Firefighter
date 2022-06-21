@@ -51,13 +51,13 @@ final class RoomInfoView: UIView {
         
         self.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
-            $0.top.equalTo(self.roomLabel.snp.bottom).offset(8)
+            $0.top.equalTo(roomLabel.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
         }
         
         self.addSubview(peopleInfo)
         peopleInfo.snp.makeConstraints {
-            $0.top.equalTo(self.dateLabel.snp.bottom).offset(10)
+            $0.top.equalTo(dateLabel.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
         }
     }
