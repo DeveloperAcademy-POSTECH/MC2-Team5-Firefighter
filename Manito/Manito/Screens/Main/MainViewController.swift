@@ -27,25 +27,13 @@ class MainViewController: BaseViewController {
     
     // MARK: - property
     
-    private var appTitleView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgLogo
-        return imageView
-    }()
+    private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
     
     private let settingButton = SettingButton()
     
-    private var imgStar: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgStar
-        return imageView
-    }()
+    private let imgStar = UIImageView(image: ImageLiterals.imgStar)
     
-    private var commonMissionImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgCommonMisson
-        return imageView
-    }()
+    private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
     
     private let commonMissionView = CommonMissonView()
     
@@ -79,10 +67,37 @@ class MainViewController: BaseViewController {
                                 forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
         return collectionView
     }()
+    
+    private let imgNi = UIImageView(image: ImageLiterals.imgNi)
+    
+    private let imgMa = UIImageView(image: ImageLiterals.imgMa)
+    
+    private let imgTto = UIImageView(image: ImageLiterals.imgTto)
 
     // MARK: - life cycle
     
     override func render() {
+        view.addSubview(imgNi)
+        imgNi.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(54)
+            $0.bottom.equalToSuperview().inset(44)
+            $0.height.width.equalTo(75)
+        }
+        
+        view.addSubview(imgMa)
+        imgMa.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(60)
+            $0.height.width.equalTo(75)
+        }
+        
+        view.addSubview(imgTto)
+        imgTto.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(54)
+            $0.bottom.equalToSuperview().inset(44)
+            $0.height.width.equalTo(75)
+        }
+        
         view.addSubview(imgStar)
         imgStar.snp.makeConstraints {
             $0.width.height.equalTo(30)
