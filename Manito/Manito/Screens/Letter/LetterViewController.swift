@@ -107,7 +107,7 @@ final class LetterViewController: BaseViewController {
     private func setupButtonAction() {
         let presentSendButtonAction = UIAction { _ in
             let storyboard = UIStoryboard(name: "Letter", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: CreateLetterViewController.className)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "CreateLetterNavigationController")
             self.present(viewController, animated: true, completion: nil)
         }
         sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
