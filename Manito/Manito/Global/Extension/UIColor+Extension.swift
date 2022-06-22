@@ -23,6 +23,10 @@ extension UIColor {
         return UIColor(hex: "#C84842")
     }
     
+    static var red003: UIColor {
+        return UIColor(hex: "#823029")
+    }
+    
     // MARK: - grey
     
     static var backgroundGrey: UIColor {
@@ -31,10 +35,6 @@ extension UIColor {
     
     static var subBackgroundGrey: UIColor {
         return UIColor(hex: "#5A5A5A")
-    }
-    
-    static var grey001: UIColor {
-        return UIColor(hex: "#6F6F6F")
     }
     
     static var grey002: UIColor {
@@ -51,14 +51,6 @@ extension UIColor {
     
     static var grey005: UIColor {
         return UIColor(hex: "#717174")
-    }
-    
-    static var grey006: UIColor {
-        return UIColor(hex: "#353536")
-    }
-    
-    static var grey007: UIColor {
-        return UIColor(hex: "#939393")
     }
     
     // MARK: - darkGrey

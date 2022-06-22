@@ -215,7 +215,7 @@ extension CalendarView: FSCalendarDelegate {
         } else if isAWeekBeforeAfter || isDoneSelectedDate {
             return .white
         } else {
-            return .grey005.withAlphaComponent(0.6)
+            return .grey005.withAlphaComponent(0.4)
         }
     }
 }
