@@ -60,7 +60,7 @@ class DetailEditViewController: BaseViewController {
     private let tipLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 7일까지 설정할 수 있어요 !"
-        label.textColor = .grey005
+        label.textColor = .grey004
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
@@ -89,7 +89,7 @@ class DetailEditViewController: BaseViewController {
         let slider = UISlider()
         slider.minimumValue = 5
         slider.maximumValue = 15
-        slider.maximumTrackTintColor = .darkGrey001
+        slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001
         slider.value = Float(memberCount)
         slider.isContinuous = true

@@ -18,7 +18,7 @@ final class CommonMissonView: UIView {
     private let title: UILabel = {
         let label = UILabel()
         label.text = "오늘의 공통미션"
-        label.textColor = .grey003
+        label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
         return label
     }()

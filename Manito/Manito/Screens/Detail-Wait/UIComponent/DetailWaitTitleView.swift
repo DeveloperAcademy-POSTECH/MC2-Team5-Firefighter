@@ -33,7 +33,7 @@ class DetailWaitTitleView: UIView {
         label.backgroundColor = .badgeBeige
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 11
-        label.textColor = .darkGrey004
+        label.textColor = .darkGrey001
         label.font = .font(.regular, ofSize: 13)
         label.textAlignment = .center
         return label
@@ -49,7 +49,7 @@ class DetailWaitTitleView: UIView {
     private let durationText: UILabel = {
         let durationText = UILabel()
         durationText.text = "진행 기간"
-        durationText.textColor = .grey003
+        durationText.textColor = .grey001
         durationText.font = .font(.regular, ofSize: 14)
         return durationText
     }()

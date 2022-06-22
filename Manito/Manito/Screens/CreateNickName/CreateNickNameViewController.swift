@@ -26,7 +26,7 @@ class CreateNickNameViewController: BaseViewController {
         let attributes = [
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
-        textField.backgroundColor = .subBackgroundGrey
+        textField.backgroundColor = .darkGrey002
         textField.attributedPlaceholder = NSAttributedString(string: "닉네임을 적어주세요", attributes:attributes)
         textField.font = .font(.regular, ofSize: 18)
         textField.layer.cornerRadius = 10

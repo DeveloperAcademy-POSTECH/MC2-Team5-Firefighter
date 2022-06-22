@@ -23,7 +23,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 14)
-        label.textColor = .darkGrey005
+        label.textColor = .grey003
         return label
     }()
     private var contentLabel: UILabel = {

@@ -63,7 +63,7 @@ final class IndividualMissionView: UIView {
     }
     
     private func configUI() {
-        backgroundColor = .darkGrey003
+        backgroundColor = .darkGrey004
         makeBorderLayer(color: .subOrange)
     }
 }

@@ -54,7 +54,7 @@ class CalendarView: UIView {
     private var calendar: FSCalendar = {
         let calendar = FSCalendar()
         calendar.locale = Locale(identifier: "ko_KR")
-        calendar.backgroundColor = .darkGrey001
+        calendar.backgroundColor = .darkGrey003
         calendar.makeBorderLayer(color: .grey002)
         calendar.appearance.headerDateFormat = "YYYY년 MM월"
         calendar.appearance.headerTitleColor = .white
@@ -62,7 +62,7 @@ class CalendarView: UIView {
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.weekdayTextColor = .white.withAlphaComponent(0.8)
         calendar.appearance.titleDefaultColor = .white.withAlphaComponent(0.8)
-        calendar.appearance.titlePlaceholderColor = .grey005
+        calendar.appearance.titlePlaceholderColor = .grey004
         calendar.appearance.headerTitleFont = .font(.regular, ofSize: 20)
         calendar.appearance.weekdayFont = .font(.regular, ofSize: 14)
         calendar.appearance.titleFont = .font(.regular, ofSize: 20)
@@ -211,11 +211,11 @@ extension CalendarView: FSCalendarDelegate {
         let isAWeekBeforeAfter = date < selectStartDate + 604800 && date > selectStartDate - 604800
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
-            return .grey005.withAlphaComponent(0.4)
+            return .grey004.withAlphaComponent(0.4)
         } else if isAWeekBeforeAfter || isDoneSelectedDate {
             return .white
         } else {
-            return .grey005.withAlphaComponent(0.4)
+            return .grey004.withAlphaComponent(0.4)
         }
     }
 }

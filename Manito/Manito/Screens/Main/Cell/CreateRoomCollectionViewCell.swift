@@ -22,7 +22,7 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
     private var menuLabel: UILabel = {
         let label = UILabel()
         label.text = "새로운 마니또 시작"
-        label.textColor = .grey003
+        label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
@@ -42,7 +42,7 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
     // MARK: - func
 
     func setupView(){
-        backgroundColor = .grey003.withAlphaComponent(0.3)
+        backgroundColor = .grey001.withAlphaComponent(0.3)
         makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
     }
     
