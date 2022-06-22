@@ -90,7 +90,7 @@ class DetailEditViewController: BaseViewController {
         slider.minimumValue = 5
         slider.maximumValue = 15
         slider.maximumTrackTintColor = .darkGrey001
-        slider.minimumTrackTintColor = .darkRed
+        slider.minimumTrackTintColor = .red001
         slider.value = Float(memberCount)
         slider.isContinuous = true
         slider.addTarget(self, action: #selector(changeMemberCount(sender:)), for: .valueChanged)

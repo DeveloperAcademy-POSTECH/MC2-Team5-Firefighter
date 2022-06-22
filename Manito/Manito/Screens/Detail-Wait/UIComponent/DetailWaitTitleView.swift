@@ -41,7 +41,7 @@ class DetailWaitTitleView: UIView {
 
     private let durationView: UIView = {
         let durationView = UIView()
-        durationView.backgroundColor = .red003
+        durationView.backgroundColor = .red002
         durationView.layer.cornerRadius = 8
         return durationView
     }()

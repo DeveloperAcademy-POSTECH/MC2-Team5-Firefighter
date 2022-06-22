@@ -19,11 +19,11 @@ extension UIColor {
         return UIColor(hex: "#A4291F")
     }
     
-    static var darkRed: UIColor {
+    static var red001: UIColor {
         return UIColor(hex: "#C84842")
     }
     
-    static var red003: UIColor {
+    static var red002: UIColor {
         return UIColor(hex: "#823029")
     }
     

@@ -223,6 +223,6 @@ extension CalendarView: FSCalendarDataSource { }
 
 extension CalendarView: FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
-        return .darkRed
+        return .red001
     }
 }
