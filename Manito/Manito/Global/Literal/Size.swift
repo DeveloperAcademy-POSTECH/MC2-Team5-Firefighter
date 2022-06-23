@@ -5,8 +5,8 @@
 //  Created by Mingwan Choi on 2022/06/21.
 //
 
-import Foundation
+import UIKit
 
-enum ValueLiteral {
-    static let leadingTrailingPadding = 21
+enum Size {
+    static let leadingTrailingPadding: CGFloat = 20
 }
