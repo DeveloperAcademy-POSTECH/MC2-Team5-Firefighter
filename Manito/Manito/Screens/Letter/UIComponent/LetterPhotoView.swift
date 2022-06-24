@@ -29,7 +29,7 @@ final class LetterPhotoView: UIView {
         button.imageView?.contentMode = .scaleAspectFill
         button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         button.tintColor = .white
-        button.backgroundColor = .darkGrey003
+        button.backgroundColor = .darkGrey004
         return button
     }()
     private let titleLabel: UILabel = {

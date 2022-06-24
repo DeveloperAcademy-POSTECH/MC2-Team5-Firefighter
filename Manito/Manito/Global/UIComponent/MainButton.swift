@@ -75,6 +75,7 @@ final class MainButton: UIButton {
             setTitle(title, for: .normal)
         }
         
+        // COLOR: disable색상 추가 #823029
         backgroundColor = isDisabled ? .mainRed.withAlphaComponent(0.3) : .mainRed
         setTitleColor(isDisabled ? .white.withAlphaComponent(0.3) : .white, for: .normal)
         isEnabled = !isDisabled

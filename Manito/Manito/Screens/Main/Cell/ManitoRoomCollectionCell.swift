@@ -42,7 +42,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.text = "22.06.01 ~ 22.06.06"
-        label.textColor = .grey003
+        label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
@@ -64,7 +64,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     // MARK: - func
 
     func setupView(){
-        backgroundColor = .grey003.withAlphaComponent(0.3)
+        backgroundColor = .grey001.withAlphaComponent(0.3)
         layer.borderWidth = 1
         layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
         layer.cornerRadius = 10

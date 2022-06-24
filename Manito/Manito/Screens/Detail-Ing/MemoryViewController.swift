@@ -38,7 +38,7 @@ class MemoryViewController: BaseViewController {
         memoryControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
         memoryControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         memoryControl.selectedSegmentTintColor = .white
-        memoryControl.backgroundColor = .darkGrey003
+        memoryControl.backgroundColor = .darkGrey004
     }
     
     private func setupFont() {
