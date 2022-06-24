@@ -24,7 +24,7 @@ final class LetterHeaderView: UICollectionReusableView {
         control.setTitleTextAttributes(normalTextAttributes, for: .normal)
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
-        control.backgroundColor = .darkGrey003
+        control.backgroundColor = .darkGrey004
         control.addTarget(self, action: #selector(changedIndexValue(_:)), for: .valueChanged)
         
         return control

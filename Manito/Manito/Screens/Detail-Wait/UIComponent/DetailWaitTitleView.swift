@@ -33,15 +33,15 @@ class DetailWaitTitleView: UIView {
         label.backgroundColor = .badgeBeige
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 11
-        label.textColor = .darkGrey004
+        label.textColor = .darkGrey001
         label.font = .font(.regular, ofSize: 13)
         label.textAlignment = .center
         return label
     }()
 
-    private lazy var durationView: UIView = {
+    private let durationView: UIView = {
         let durationView = UIView()
-        durationView.backgroundColor = .darkRed.withAlphaComponent(0.65)
+        durationView.backgroundColor = .red002
         durationView.layer.cornerRadius = 8
         return durationView
     }()
@@ -49,7 +49,7 @@ class DetailWaitTitleView: UIView {
     private let durationText: UILabel = {
         let durationText = UILabel()
         durationText.text = "진행 기간"
-        durationText.textColor = .grey004
+        durationText.textColor = .grey001
         durationText.font = .font(.regular, ofSize: 14)
         return durationText
     }()

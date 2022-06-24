@@ -205,7 +205,7 @@ class DetailWaitViewController: BaseViewController {
     }
 
     override func configUI() {
-        view.backgroundColor = .darkGrey002
+        view.backgroundColor = .backgroundGrey
         setupSettingButton()
     }
 
@@ -219,7 +219,7 @@ class DetailWaitViewController: BaseViewController {
 
     private func showToast(message: String) {
         let toastLabel = UILabel()
-        toastLabel.backgroundColor = .grey003
+        toastLabel.backgroundColor = .grey001
         toastLabel.textColor = .black
         toastLabel.font = .font(.regular, ofSize: 14)
         toastLabel.textAlignment = .center
@@ -301,7 +301,7 @@ extension DetailWaitViewController: UITableViewDataSource {
         let cell = listTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
         cell.textLabel?.text = userArr[indexPath.row]
         cell.textLabel?.font = .font(.regular, ofSize: 17)
-        cell.backgroundColor = .darkGrey001
+        cell.backgroundColor = .darkGrey003
         cell.selectionStyle = .none
         return cell
     }

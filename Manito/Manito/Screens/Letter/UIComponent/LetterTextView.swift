@@ -31,7 +31,7 @@ final class LetterTextView: UIView {
         textView.textContainerInset = UIEdgeInsets(top: 17, left: 12, bottom: 17, right: 12)
         textView.font = .font(.regular, ofSize: 16)
         textView.textColor = .white
-        textView.backgroundColor = .darkGrey003
+        textView.backgroundColor = .darkGrey004
         textView.makeBorderLayer(color: .white)
         textView.delegate = self
         
