@@ -84,7 +84,16 @@ extension UIColor {
     static var backgroundBlue: UIColor {
         return UIColor(hex: "#8BC4E7")
     }
-
+    // MARK: - yellow
+    
+    static var yellow: UIColor {
+        return UIColor(hex: "#EDC845")
+    }
+    
+    static var shadowYellow: UIColor {
+        return UIColor(hex: "#C7A83C")
+    }
+    
     // MARK: - badge
 
     static var badgeBeige: UIColor {
