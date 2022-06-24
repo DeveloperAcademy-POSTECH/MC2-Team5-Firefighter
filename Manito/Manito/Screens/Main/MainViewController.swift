@@ -68,31 +68,31 @@ class MainViewController: BaseViewController {
         return collectionView
     }()
     
-    private let imgNi = UIImageView(image: ImageLiterals.imgNi)
+    private let niCharacterImageView = UIImageView(image: ImageLiterals.imgNi)
     
-    private let imgMa = UIImageView(image: ImageLiterals.imgMa)
+    private let maCharacterImageView = UIImageView(image: ImageLiterals.imgMa)
     
-    private let imgTto = UIImageView(image: ImageLiterals.imgTto)
+    private let ttoCharacterImageView = UIImageView(image: ImageLiterals.imgTto)
 
     // MARK: - life cycle
     
     override func render() {
-        view.addSubview(imgNi)
-        imgNi.snp.makeConstraints {
+        view.addSubview(niCharacterImageView)
+        niCharacterImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(54)
             $0.bottom.equalToSuperview().inset(44)
             $0.height.width.equalTo(75)
         }
         
-        view.addSubview(imgMa)
-        imgMa.snp.makeConstraints {
+        view.addSubview(maCharacterImageView)
+        maCharacterImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().inset(60)
             $0.height.width.equalTo(75)
         }
         
-        view.addSubview(imgTto)
-        imgTto.snp.makeConstraints {
+        view.addSubview(ttoCharacterImageView)
+        ttoCharacterImageView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(54)
             $0.bottom.equalToSuperview().inset(44)
             $0.height.width.equalTo(75)

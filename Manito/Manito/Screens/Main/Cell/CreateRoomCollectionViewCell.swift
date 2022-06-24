@@ -13,11 +13,7 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
     
     // MARK: - property
     
-    let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = ImageLiterals.icNewRoom
-        return imageView
-    }()
+    private let imageView = UIImageView(image: ImageLiterals.icNewRoom)
     
     let circleView: UIView = {
         let circleView = UIView()
