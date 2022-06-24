@@ -10,6 +10,7 @@
 		333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */; };
 		333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF669285864CE0039F77F /* MemoryViewController.swift */; };
 		33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDF5612856E03800564211 /* FriendListViewController.swift */; };
+		391B3003286198C200421F1D /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391B3002286198C200421F1D /* Size.swift */; };
 		392EC77E2855C388006918A9 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC77D2855C388006918A9 /* SettingButton.swift */; };
 		392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */; };
 		399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */; };
@@ -94,6 +95,7 @@
 		333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewCell.swift; sourceTree = "<group>"; };
 		333BF669285864CE0039F77F /* MemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
 		33BDF5612856E03800564211 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
+		391B3002286198C200421F1D /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		392EC77D2855C388006918A9 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitTitleView.swift; sourceTree = "<group>"; };
 		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				B5F5250028519EFB00614FF7 /* ImageLiteral.swift */,
+				391B3002286198C200421F1D /* Size.swift */,
 			);
 			path = Literal;
 			sourceTree = "<group>";
@@ -722,6 +725,7 @@
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
 				CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */,
 				B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */,
+				391B3003286198C200421F1D /* Size.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
 				7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */,
 				CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */,
