@@ -19,7 +19,7 @@ final class InputInvitedCodeView: UIView {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         
-        textField.backgroundColor = .subBackgroundGrey
+        textField.backgroundColor = .darkGrey002
         textField.attributedPlaceholder = NSAttributedString(string: "초대코드 입력", attributes: attributes)
         
         textField.layer.cornerRadius = 10
