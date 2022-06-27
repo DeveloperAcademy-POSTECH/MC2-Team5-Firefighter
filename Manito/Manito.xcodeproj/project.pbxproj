@@ -574,7 +574,6 @@
 			isa = PBXGroup;
 			children = (
 				CB9592B42855D52700847751 /* CommonMissonView.swift */,
-				CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */,
 				CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */,
 			);
 			path = UIComponent;
@@ -713,7 +712,6 @@
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
-				CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */,
 				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,

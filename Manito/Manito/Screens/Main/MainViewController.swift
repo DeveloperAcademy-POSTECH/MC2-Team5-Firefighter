@@ -27,21 +27,13 @@ class MainViewController: BaseViewController {
     
     // MARK: - property
     
-    private var appTitleView = AppTitleView ()
+    private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
     
     private let settingButton = SettingButton()
     
-    private var lightImage: UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = .red
-        return image
-    }()
+    private let imgStar = UIImageView(image: ImageLiterals.imgStar)
     
-    private var commonMissionImageView: UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = .red
-        return image
-    }()
+    private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
     
     private let commonMissionView = CommonMissonView()
     
@@ -75,12 +67,39 @@ class MainViewController: BaseViewController {
                                 forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
         return collectionView
     }()
+    
+    private let niCharacterImageView = UIImageView(image: ImageLiterals.imgNi)
+    
+    private let maCharacterImageView = UIImageView(image: ImageLiterals.imgMa)
+    
+    private let ttoCharacterImageView = UIImageView(image: ImageLiterals.imgTto)
 
     // MARK: - life cycle
     
     override func render() {
-        view.addSubview(lightImage)
-        lightImage.snp.makeConstraints {
+        view.addSubview(niCharacterImageView)
+        niCharacterImageView.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(54)
+            $0.bottom.equalToSuperview().inset(44)
+            $0.height.width.equalTo(75)
+        }
+        
+        view.addSubview(maCharacterImageView)
+        maCharacterImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(60)
+            $0.height.width.equalTo(75)
+        }
+        
+        view.addSubview(ttoCharacterImageView)
+        ttoCharacterImageView.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(54)
+            $0.bottom.equalToSuperview().inset(44)
+            $0.height.width.equalTo(75)
+        }
+        
+        view.addSubview(imgStar)
+        imgStar.snp.makeConstraints {
             $0.width.height.equalTo(30)
             $0.leading.equalToSuperview().inset(13)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
@@ -89,8 +108,8 @@ class MainViewController: BaseViewController {
         view.addSubview(commonMissionImageView)
         commonMissionImageView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.5)
-            $0.top.equalTo(lightImage.snp.bottom)
+            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.61)
+            $0.top.equalTo(imgStar.snp.bottom)
         }
         
         commonMissionImageView.addSubview(commonMissionView)

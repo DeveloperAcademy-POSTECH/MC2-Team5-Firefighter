@@ -40,8 +40,7 @@ final class RoomStateView: UIView {
     private func render() {
         self.addSubview(state)
         state.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
     

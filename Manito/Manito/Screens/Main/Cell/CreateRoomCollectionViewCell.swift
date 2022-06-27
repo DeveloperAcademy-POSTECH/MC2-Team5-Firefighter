@@ -13,10 +13,15 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
     
     // MARK: - property
     
-    let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .red
-        return imageView
+    private let imageView = UIImageView(image: ImageLiterals.icNewRoom)
+    
+    let circleView: UIView = {
+        let circleView = UIView()
+        circleView.backgroundColor = .yellow
+        circleView.layer.cornerRadius = 44
+        circleView.layer.borderWidth = 1
+        circleView.layer.borderColor = UIColor.grey003.cgColor
+        return circleView
     }()
     
     private var menuLabel: UILabel = {
@@ -47,11 +52,18 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
     }
     
     func render() {
-        addSubview(imageView)
-        imageView.snp.makeConstraints {
+        addSubview(circleView)
+        circleView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(22)
             $0.centerX.equalToSuperview()
-            $0.width.height.equalTo(85)
+            $0.width.height.equalTo(88)
+        }
+        
+        circleView.addSubview(imageView)
+        imageView.snp.makeConstraints {
+            $0.width.height.equalTo(72)
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(13)
         }
         
         addSubview(menuLabel)

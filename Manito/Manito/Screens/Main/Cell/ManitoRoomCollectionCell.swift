@@ -19,7 +19,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
+        imageView.image = ImageLiterals.imgNi
         return imageView
     }()
     
@@ -74,12 +74,12 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         addSubview(imageView)
         imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(14)
-            $0.width.height.equalTo(20)
+            $0.width.height.equalTo(30)
         }
         
         addSubview(memberLabel)
         memberLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(14)
+            $0.top.equalToSuperview().inset(18)
             $0.leading.equalTo(imageView.snp.trailing).offset(4)
         }
         
@@ -91,7 +91,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         
         addSubview(roomState)
         roomState.snp.makeConstraints {
-            $0.top.equalTo(roomLabel.snp.bottom).offset(24)
+            $0.top.equalTo(roomLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview().inset(14)
             $0.width.equalTo(60)
             $0.height.equalTo(24)
