@@ -14,7 +14,7 @@ class DetailIngViewController: BaseViewController {
     var isDone = false
 
     // MARK: - property
-    
+
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var periodLabel: UILabel!
     @IBOutlet weak var missionBackgroundView: UIView!
@@ -31,16 +31,16 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
     @IBOutlet weak var manitoMemoryButton: UIButton!
-    
+
     private let manitoOpenButton: UIButton = {
         let button = MainButton()
         button.title = "마니또 공개"
         button.hasShadow = true
         return button
     }()
-    
+
     // MARK: - life cycle
-    
+
     override func render() {
         view.addSubview(manitoOpenButton)
         manitoOpenButton.snp.makeConstraints {
@@ -48,14 +48,13 @@ class DetailIngViewController: BaseViewController {
             $0.centerX.equalToSuperview()
         }
     }
-    
+
     override func configUI() {
         super.configUI()
-        
         setupFont()
         setupViewLayer()
     }
-    
+
     private func setupFont() {
         titleLabel.font = .font(.regular, ofSize: 34)
         periodLabel.font = .font(.regular, ofSize: 16)
@@ -67,7 +66,7 @@ class DetailIngViewController: BaseViewController {
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
         manitoMemoryButton.titleLabel?.font = .font(.regular, ofSize: 15)
     }
-    
+
     private func setupViewLayer() {
         missionBackgroundView.layer.cornerRadius = 10
         missionBackgroundView.layer.borderWidth = 1
