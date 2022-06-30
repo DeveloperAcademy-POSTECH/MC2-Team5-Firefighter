@@ -53,6 +53,12 @@ class DetailIngViewController: BaseViewController {
         super.configUI()
         setupFont()
         setupViewLayer()
+        addActionMemoryViewController()
+        addActionPushLetterViewController()
+        addGestureMemberList()
+        addActionOpenManittoViewController()
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
 
     private func setupFont() {
@@ -86,5 +92,40 @@ class DetailIngViewController: BaseViewController {
         listImageView.layer.cornerRadius = 50
         letterBoxButton.makeBorderLayer(color: .white)
         manitoMemoryButton.makeBorderLayer(color: .white)
+    }
+    
+    func addGestureMemberList() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pushFriendListViewController(_:)))
+        listBackView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
+        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func addActionPushLetterViewController() {
+        let action = UIAction { _ in
+            self.navigationController?.pushViewController(LetterViewController(), animated: true)
+        }
+        letterBoxButton.addAction(action, for: .touchUpInside)
+    }
+    
+    func addActionMemoryViewController() {
+        let action = UIAction { _ in
+            let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
+            guard let viewController = storyboard.instantiateViewController(withIdentifier: MemoryViewController.className) as? MemoryViewController else { return }
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+        manitoMemoryButton.addAction(action, for: .touchUpInside)
+    }
+    
+    func addActionOpenManittoViewController() {
+        let action = UIAction { _ in
+            self.navigationController?.pushViewController(OpenManittoViewController(), animated: true)
+        }
+        self.manitoOpenButton.addAction(action, for: .touchUpInside)
     }
 }

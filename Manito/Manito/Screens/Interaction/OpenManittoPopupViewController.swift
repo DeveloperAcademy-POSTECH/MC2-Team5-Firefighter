@@ -37,9 +37,16 @@ final class OpenManittoPopupViewController: BaseViewController {
                          radius: 3)
         return label
     }()
-    private let confirmButton: UIButton = {
+    private lazy var confirmButton: UIButton = {
         let button = MainButton()
+        let action = UIAction { _ in
+            guard let parentViewController = self.presentingViewController as? UINavigationController else { return }
+            self.dismiss(animated: true, completion: {
+                parentViewController.popToRootViewController(animated: true)
+            })
+        }
         button.title = "확인"
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     var manittoText: String = "디너"

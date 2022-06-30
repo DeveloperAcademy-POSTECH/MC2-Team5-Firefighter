@@ -254,7 +254,7 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item < roomData.count {
-            pushDetailView(status: .waiting)
+            pushDetailView(status: .starting)
         } else {
             newRoom()
         }

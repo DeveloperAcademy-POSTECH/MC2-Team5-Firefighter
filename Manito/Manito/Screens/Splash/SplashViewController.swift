@@ -11,23 +11,29 @@ import Gifu
 
 final class SplashViewController: BaseViewController {
 
+    var isLogin = true
+
     // MARK: - property
-    
+
     @IBOutlet weak var gifImageView: GIFImageView!
-    
+
     // MARK: - life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGifImage()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.pushView()
+            if self.isLogin {
+                self.moveMainView()
+            } else {
+                self.moveNinameSettingView()
+            }
         }
     }
-    
+
     // MARK: - func
-    
-    @objc func pushView() {
+
+    func moveMainView() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
         viewController.modalPresentationStyle = .fullScreen
@@ -35,6 +41,13 @@ final class SplashViewController: BaseViewController {
         present(viewController, animated: true, completion: nil)
     }
     
+    func moveNinameSettingView() {
+        let viewController = CreateNickNameViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
+    }
+
     private func setupGifImage() {
         DispatchQueue.main.async {
             self.gifImageView.animate(withGIFNamed: ImageLiterals.gifLogo, animationBlock: nil)
