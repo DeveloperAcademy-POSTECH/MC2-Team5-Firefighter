@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class DetailIngViewController: BaseViewController {
-    
+
     var isDone = false
 
     // MARK: - property

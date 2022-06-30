@@ -11,8 +11,6 @@ import SnapKit
 
 class MainViewController: BaseViewController {
 
-    var completionHandler: ((String) -> (String))?
-
     // 임시 데이터
     let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
     private let nickname = "코비"
@@ -208,13 +206,13 @@ class MainViewController: BaseViewController {
             self.navigationController?.pushViewController(DetailWaitViewController(), animated: true)
         case .starting:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-            let ChooseCharacterVC = storyboard.instantiateViewController(identifier: "DetailViewStoryboardIdentify")
-            present(ChooseCharacterVC, animated: true, completion: nil)
+            guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
+            self.navigationController?.pushViewController(viewController, animated: true)
         case .end:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-            guard let ChooseCharacterVC = storyboard.instantiateViewController(identifier: "DetailViewStoryboardIdentify") as? DetailIngViewController else { return }
-            ChooseCharacterVC.isDone = true
-            present(ChooseCharacterVC, animated: true, completion: nil)
+            guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
+            viewController.isDone = true
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
 }
@@ -256,7 +254,7 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item < roomData.count {
-            pushDetailView(status: .starting)
+            pushDetailView(status: .waiting)
         } else {
             newRoom()
         }

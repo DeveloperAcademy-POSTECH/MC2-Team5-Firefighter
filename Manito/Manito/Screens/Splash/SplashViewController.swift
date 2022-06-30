@@ -27,9 +27,13 @@ final class SplashViewController: BaseViewController {
     
     // MARK: - func
     
-    @objc func pushView(){
-        print("Main으로 이동")
-       }
+    @objc func pushView() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true, completion: nil)
+    }
     
     private func setupGifImage() {
         DispatchQueue.main.async {
