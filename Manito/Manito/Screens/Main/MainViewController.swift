@@ -29,28 +29,6 @@ class MainViewController: BaseViewController {
         case waiting = "대기중"
         case starting = "진행중"
         case end = "완료"
-
-        var storyBoardName: String {
-            switch self {
-            case .waiting:
-                return ""
-            case .starting:
-                return "DetailIng"
-            case .end:
-                return ""
-            }
-        }
-
-        var storyBoardIdentify: String {
-            switch self {
-            case.waiting:
-                return ""
-            case.starting:
-                return "DetailViewStoryboardIdentify"
-            case.end:
-                return ""
-            }
-        }
     }
 
     // MARK: - property
@@ -200,7 +178,7 @@ class MainViewController: BaseViewController {
         present(ParticipateRoomVC, animated: true, completion: nil)
     }
 
-    func pushDetailView(status: RoomStatus) {
+    private func pushDetailView(status: RoomStatus) {
         switch status {
         case .waiting:
             self.navigationController?.pushViewController(DetailWaitViewController(), animated: true)
@@ -254,7 +232,7 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item < roomData.count {
-            pushDetailView(status: .starting)
+            pushDetailView(status: .waiting)
         } else {
             newRoom()
         }

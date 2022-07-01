@@ -94,26 +94,26 @@ class DetailIngViewController: BaseViewController {
         manitoMemoryButton.makeBorderLayer(color: .white)
     }
     
-    func addGestureMemberList() {
+    private func addGestureMemberList() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pushFriendListViewController(_:)))
         listBackView.addGestureRecognizer(tapGesture)
     }
     
     @objc
-    func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
+    private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
         let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func addActionPushLetterViewController() {
+    private func addActionPushLetterViewController() {
         let action = UIAction { _ in
             self.navigationController?.pushViewController(LetterViewController(), animated: true)
         }
         letterBoxButton.addAction(action, for: .touchUpInside)
     }
     
-    func addActionMemoryViewController() {
+    private func addActionMemoryViewController() {
         let action = UIAction { _ in
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: MemoryViewController.className) as? MemoryViewController else { return }
@@ -122,7 +122,7 @@ class DetailIngViewController: BaseViewController {
         manitoMemoryButton.addAction(action, for: .touchUpInside)
     }
     
-    func addActionOpenManittoViewController() {
+    private func addActionOpenManittoViewController() {
         let action = UIAction { _ in
             self.navigationController?.pushViewController(OpenManittoViewController(), animated: true)
         }

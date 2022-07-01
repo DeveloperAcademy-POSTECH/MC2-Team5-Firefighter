@@ -24,16 +24,16 @@ final class SplashViewController: BaseViewController {
         setupGifImage()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             if self.isLogin {
-                self.moveMainView()
+                self.presentMainViewController()
             } else {
-                self.moveNinameSettingView()
+                self.presentNinameSettingViewController()
             }
         }
     }
 
     // MARK: - func
 
-    func moveMainView() {
+    private func presentMainViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
         viewController.modalPresentationStyle = .fullScreen
@@ -41,7 +41,7 @@ final class SplashViewController: BaseViewController {
         present(viewController, animated: true, completion: nil)
     }
     
-    func moveNinameSettingView() {
+    private func presentNinameSettingViewController() {
         let viewController = CreateNickNameViewController()
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
