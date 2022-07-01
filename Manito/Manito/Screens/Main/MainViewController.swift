@@ -25,7 +25,7 @@ class MainViewController: BaseViewController {
             right: collectionHorizontalSpacing)
     }
 
-    enum RoomStatus: String {
+    private enum RoomStatus: String {
         case waiting = "대기중"
         case starting = "진행중"
         case end = "완료"
@@ -34,15 +34,10 @@ class MainViewController: BaseViewController {
     // MARK: - property
 
     private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
-
     private let settingButton = SettingButton()
-
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
-
     private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
-
     private let commonMissionView = CommonMissonView()
-
     private lazy var menuTitle: UILabel = {
         let label = UILabel()
         label.text = "\(nickname)의 마니또"
@@ -50,7 +45,6 @@ class MainViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
@@ -60,7 +54,6 @@ class MainViewController: BaseViewController {
         flowLayout.minimumInteritemSpacing = 16
         return flowLayout
     }()
-
     private lazy var listCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
@@ -73,11 +66,8 @@ class MainViewController: BaseViewController {
             forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
         return collectionView
     }()
-
     private let niCharacterImageView = UIImageView(image: ImageLiterals.imgNi)
-
     private let maCharacterImageView = UIImageView(image: ImageLiterals.imgMa)
-
     private let ttoCharacterImageView = UIImageView(image: ImageLiterals.imgTto)
 
     // MARK: - life cycle
@@ -232,7 +222,7 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item < roomData.count {
-            pushDetailView(status: .waiting)
+            pushDetailView(status: .starting)
         } else {
             newRoom()
         }

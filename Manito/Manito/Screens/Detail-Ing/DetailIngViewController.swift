@@ -99,13 +99,6 @@ class DetailIngViewController: BaseViewController {
         listBackView.addGestureRecognizer(tapGesture)
     }
     
-    @objc
-    private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
-        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
     private func addActionPushLetterViewController() {
         let action = UIAction { _ in
             self.navigationController?.pushViewController(LetterViewController(), animated: true)
@@ -127,5 +120,14 @@ class DetailIngViewController: BaseViewController {
             self.navigationController?.pushViewController(OpenManittoViewController(), animated: true)
         }
         self.manitoOpenButton.addAction(action, for: .touchUpInside)
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
+        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
