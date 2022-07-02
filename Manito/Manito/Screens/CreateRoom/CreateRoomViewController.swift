@@ -54,18 +54,10 @@ class CreateRoomViewController: BaseViewController {
         view.alpha = 0.0
         return view
     }()
-    private let dateView: CalendarView = {
-        let view = CalendarView()
+    private let dateView: InputDateView = {
+        let view = InputDateView()
         view.alpha = 0.0
         return view
-    }()
-    private let checkLabel: UILabel = {
-        let label = UILabel()
-        label.text = "최대 7일까지 설정할 수 있어요 !"
-        label.font = .font(.regular, ofSize: 16)
-        label.textColor = .grey002
-        label.alpha = 0.0
-        return label
     }()
     private let checkView: CheckRoomView = {
         let view = CheckRoomView()
@@ -126,15 +118,9 @@ class CreateRoomViewController: BaseViewController {
         dateView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(420)
+            $0.bottom.equalTo(nextButton.snp.top)
         }
         
-        view.addSubview(checkLabel)
-        checkLabel.snp.makeConstraints {
-            $0.top.equalTo(dateView.snp.bottom).offset(5)
-            $0.trailing.equalToSuperview().inset(16)
-        }
-    
         view.addSubview(checkView)
         checkView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
@@ -205,7 +191,6 @@ class CreateRoomViewController: BaseViewController {
             self.nameView.alpha = 0.0
             self.personView.alpha = 1.0
             self.dateView.alpha = 0.0
-            self.checkLabel.alpha = 0.0
             self.backButton.isHidden = false
         }
     }
@@ -214,7 +199,6 @@ class CreateRoomViewController: BaseViewController {
         UIView.animate(withDuration: 0.3) {
             self.personView.alpha = 0.0
             self.dateView.alpha = 1.0
-            self.checkLabel.alpha = 1.0
             self.checkView.alpha = 0.0
         }
     }
@@ -222,7 +206,6 @@ class CreateRoomViewController: BaseViewController {
     @objc private func didReceiveCheckNotification(_ notification: Notification) {
         UIView.animate(withDuration: 0.3) {
             self.dateView.alpha = 0.0
-            self.checkLabel.alpha = 0.0
             self.checkView.alpha = 1.0
         }
     }

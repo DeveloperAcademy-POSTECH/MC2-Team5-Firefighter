@@ -19,16 +19,15 @@ class InputDateView: UIView {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    private let dateBackView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .darkGray
-        view.makeBorderLayer(color: .subOrange)
+    private let dateBackView: CalendarView = {
+        let view = CalendarView()
         return view
     }()
-    private var dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "2022.06.06 ~ 2022.06.11"
-        label.font = .font(.regular, ofSize: 20)
+        label.text = "최대 7일까지 설정할 수 있어요 !"
+        label.font = .font(.regular, ofSize: 16)
+        label.textColor = .grey002
         return label
     }()
     
@@ -71,12 +70,13 @@ class InputDateView: UIView {
         dateBackView.snp.makeConstraints {
             $0.top.equalTo(dateViewLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(60)
+            $0.height.equalTo(380)
         }
         
         dateBackView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+            $0.top.equalTo(dateBackView.snp.bottom).offset(5)
+            $0.trailing.equalToSuperview()
         }
     }
 }
