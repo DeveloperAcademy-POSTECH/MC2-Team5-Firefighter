@@ -12,6 +12,16 @@ import FSCalendar
 
 class DetailEditViewController: BaseViewController {
     private var memberCount = 7
+    var startDateText = "" {
+        willSet {
+            calendarView.startDateText = newValue
+        }
+    }
+    var endDateText = "" {
+        willSet {
+            calendarView.endDateToText = newValue
+        }
+    }
 
     // MARK: - property
 
@@ -56,7 +66,7 @@ class DetailEditViewController: BaseViewController {
         label.textColor = .white
         return label
     }()
-    private let calendarView = CalendarView()
+    private lazy var calendarView = CalendarView()
     private let tipLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 7일까지 설정할 수 있어요 !"

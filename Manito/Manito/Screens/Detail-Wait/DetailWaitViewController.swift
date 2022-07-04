@@ -15,6 +15,8 @@ class DetailWaitViewController: BaseViewController {
     var maxUser = 15
     lazy var userCount = userArr.count
     let isOwner = true
+    let startDateText = "22-07-10"
+    let endDateText = "22-07-13"
 
     private enum UserStatus: Int, CaseIterable {
         case owner = 0
@@ -93,7 +95,11 @@ class DetailWaitViewController: BaseViewController {
         button.showsMenuAsPrimaryAction = true
         return button
     }()
-    private let titleView = DetailWaitTitleView()
+    private lazy var titleView: UIView = {
+        let view = DetailWaitTitleView()
+        view.dateRangeText = "\(startDateText) ~ \(endDateText)"
+        return view
+    }()
     private let togetherFriendText: UILabel = {
         let label = UILabel()
         label.text = "함께하는 친구들"
@@ -247,7 +253,8 @@ class DetailWaitViewController: BaseViewController {
 
     private func presentModal() {
         let modalViewController = DetailEditViewController()
-
+        modalViewController.startDateText = startDateText
+        modalViewController.endDateText = endDateText
         present(modalViewController, animated: true, completion: nil)
     }
 

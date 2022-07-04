@@ -14,8 +14,16 @@ class CalendarView: UIView {
     private var selectStartDate = Date()
     let oneDayInterval: TimeInterval = 86400
     let sevenDaysInterval: TimeInterval = 604800
-    let testStartString = "2022-06-20"
-    let testEndString = "2022-06-24"
+    var startDateText = "" {
+        didSet {
+            setupDateRange()
+        }
+    }
+    var endDateToText = "" {
+        didSet {
+            setupDateRange()
+        }
+    }
 
     private enum CalendarMoveType {
         case previous
@@ -121,9 +129,9 @@ class CalendarView: UIView {
 
     private func setupDateRange() {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        guard let startDate = formatter.date(from: testStartString) else { return }
-        guard let endDate = formatter.date(from: testEndString) else { return }
+        formatter.dateFormat = "yy-MM-dd"
+        guard let startDate = formatter.date(from: startDateText) else { return }
+        guard let endDate = formatter.date(from: endDateToText) else { return }
         setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 

@@ -10,6 +10,11 @@ import UIKit
 import SnapKit
 
 class DetailWaitTitleView: UIView {
+    var dateRangeText = "" {
+        didSet {
+            durationDateLabel.text = dateRangeText
+        }
+    }
 
     private enum StartStatus: String {
         case waiting = "대기중"
@@ -46,7 +51,7 @@ class DetailWaitTitleView: UIView {
         return durationView
     }()
 
-    private let durationText: UILabel = {
+    private let durationLabel: UILabel = {
         let durationText = UILabel()
         durationText.text = "진행 기간"
         durationText.textColor = .grey001
@@ -54,9 +59,8 @@ class DetailWaitTitleView: UIView {
         return durationText
     }()
 
-    private let durationDateText: UILabel = {
+    private lazy var durationDateLabel: UILabel = {
         let dateText = UILabel()
-        dateText.text = "22.06.06 ~ 22.06.10"
         dateText.textColor = .white
         dateText.font = .font(.regular, ofSize: 18)
         return dateText
@@ -96,14 +100,14 @@ class DetailWaitTitleView: UIView {
             $0.height.equalTo(36)
         }
 
-        durationView.addSubview(durationText)
-        durationText.snp.makeConstraints {
+        durationView.addSubview(durationLabel)
+        durationLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
 
-        durationView.addSubview(durationDateText)
-        durationDateText.snp.makeConstraints {
+        durationView.addSubview(durationDateLabel)
+        durationDateLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(40)
             $0.centerY.equalToSuperview()
         }
