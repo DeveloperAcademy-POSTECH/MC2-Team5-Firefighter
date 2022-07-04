@@ -76,6 +76,11 @@ final class LetterViewController: BaseViewController {
         setupButtonAction()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
     override func render() {
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
