@@ -11,7 +11,7 @@ import SnapKit
 
 class DetailWaitViewController: BaseViewController {
     let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
-    var canStart = false
+    var canStart = true
     var maxUser = 15
     lazy var userCount = userArr.count
     let isOwner = true
@@ -136,6 +136,13 @@ class DetailWaitViewController: BaseViewController {
         if canStart {
             button.title = ButtonText.start.rawValue
             button.isDisabled = false
+            let action = UIAction { _ in
+                let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+                viewController.modalPresentationStyle = .fullScreen
+                self.present(viewController, animated: true)
+            }
+            button.addAction(action, for: .touchUpInside)
         } else {
             button.title = ButtonText.waiting.rawValue
             button.isDisabled = true
@@ -163,7 +170,7 @@ class DetailWaitViewController: BaseViewController {
             $0.leading.equalToSuperview().inset(16)
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
-        
+
         view.addSubview(imgNiView)
         imgNiView.snp.makeConstraints {
             $0.centerY.equalTo(togetherFriendText.snp.centerY)

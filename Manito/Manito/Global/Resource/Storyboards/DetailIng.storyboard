@@ -18,14 +18,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="명예소방관관관관" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDH-QK-Zi6">
-                                <rect key="frame" x="15.999999999999986" y="107" width="235.66666666666663" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="명예소방관관관관" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDH-QK-Zi6">
+                                <rect key="frame" x="15.999999999999986" y="63.000000000000007" width="235.66666666666663" height="84.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22.05.30 ~ 22.06.03" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dp8-IY-L6V">
-                                <rect key="frame" x="16" y="160" width="147.66666666666666" height="19.666666666666657"/>
+                                <rect key="frame" x="16" y="159.66666666666666" width="147.66666666666666" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="292-TW-lZl"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -227,18 +230,6 @@
                             <constraint firstItem="fZJ-MB-brw" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="u1R-jl-vC5"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="FX5-cA-NVi">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="lFJ-0U-0fI">
-                            <imageReference key="image" image="ellipsis" catalog="system" symbolScale="default"/>
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rdm-h0-PkU">
-                                <rect key="frame" x="326" y="0.0" width="48" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="ellipsis" catalog="system"/>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="informationTitleLabel" destination="fZJ-MB-brw" id="DLK-x1-FBZ"/>
                         <outlet property="letterBoxButton" destination="OcH-K7-LfP" id="Z16-N3-xNK"/>
@@ -271,7 +262,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DW5-pm-f3M">
-                                <rect key="frame" x="0.0" y="88" width="390" height="756"/>
+                                <rect key="frame" x="0.0" y="44" width="390" height="800"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UG3-f5-a0L">
                                     <size key="itemSize" width="160" height="160"/>
@@ -354,42 +345,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zAW-5I-gB9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2693" y="106"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="tQJ-G3-8JC">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kVz-4C-tqP" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uCz-f1-AsG">
-                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="Rdh-Mb-lpy"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KNc-hd-0ki" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="60.869565217391312" y="105.80357142857143"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="boF-Qo-B3Y">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0cF-MW-u9o" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="in1-xA-AT3">
-                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="EXr-Ct-gdV" kind="relationship" relationship="rootViewController" id="xiA-4m-S3M"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BLG-0Q-KTz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1754" y="106"/>
         </scene>
         <!--함께 했던 기록-->
         <scene sceneID="Qpp-6H-DoO">
@@ -579,7 +534,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

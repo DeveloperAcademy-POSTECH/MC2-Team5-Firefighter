@@ -10,22 +10,34 @@ import UIKit
 import Gifu
 
 final class SelectManittoViewController: BaseViewController {
-    
+
     private enum StageType {
         case joystick
         case capsule
         case openName
         case openButton
     }
-    
+
     // MARK: - property
-    
+
     @IBOutlet weak var joystickImageView: GIFImageView!
     @IBOutlet weak var informationLabel: UILabel!
     @IBOutlet weak var openCapsuleImageView: GIFImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var confirmButton: MainButton!
-    
+
+    private lazy var okAction: UIAction = {
+        let action = UIAction { _ in
+            guard let parentViewController = self.presentingViewController as? UINavigationController else { return }
+            self.dismiss(animated: true, completion: {
+                let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
+                guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
+                parentViewController.pushViewController(viewController, animated: true)
+            })
+        }
+        return action
+    }()
+
     private var manittiName: String = "리비"
     private var stageType: StageType = .joystick {
         didSet {
@@ -33,39 +45,41 @@ final class SelectManittoViewController: BaseViewController {
             setupGifImage()
         }
     }
-    
+
     // MARK: - life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSwipeGesture()
         hiddenImageView()
         setupGifImage()
     }
-    
+
     override func configUI() {
         super.configUI()
-        
+
         joystickImageView.isUserInteractionEnabled = true
-        
+
         informationLabel.font = .font(.regular, ofSize: 20)
         nameLabel.font = .font(.regular, ofSize: 30)
         nameLabel.text = manittiName
         confirmButton.title = "확인"
+        confirmButton.addAction(okAction, for: .touchUpInside)
+
     }
-    
+
     // MARK: - func
-    
+
     private func setupSwipeGesture() {
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        
+
         joystickImageView.addGestureRecognizer(swipeLeft)
         joystickImageView.addGestureRecognizer(swipeRight)
     }
-    
+
     private func setupGifImage() {
         switch stageType {
         case .joystick:
@@ -82,13 +96,13 @@ final class SelectManittoViewController: BaseViewController {
         case .openName:
             self.openCapsuleImageView.stopAnimatingGIF()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                self.stageType = .openButton
-            })
+                    self.stageType = .openButton
+                })
         case .openButton:
             break
         }
     }
-    
+
     private func hiddenImageView() {
         switch stageType {
         case .joystick:
@@ -105,12 +119,12 @@ final class SelectManittoViewController: BaseViewController {
             confirmButton.isHidden = false
         }
     }
-    
+
     // MARK: - selector
-    
+
     @objc
     private func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer{
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case .left:
                 stageType = .capsule

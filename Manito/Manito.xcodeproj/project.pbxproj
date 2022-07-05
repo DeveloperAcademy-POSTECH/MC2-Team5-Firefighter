@@ -84,7 +84,6 @@
 		CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissonView.swift */; };
 		CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */; };
 		CBA15C96285CE1F00051EDE2 /* ChooseCharacter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */; };
-		CBA4D7A22856BB060018BDC2 /* AppTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */; };
 		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
@@ -168,7 +167,6 @@
 		CB9592B42855D52700847751 /* CommonMissonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissonView.swift; sourceTree = "<group>"; };
 		CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterViewController.swift; sourceTree = "<group>"; };
 		CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChooseCharacter.storyboard; sourceTree = "<group>"; };
-		CBA4D7A12856BB060018BDC2 /* AppTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleView.swift; sourceTree = "<group>"; };
 		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
@@ -291,17 +289,17 @@
 		B5F524E328519AC300614FF7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				B50B1B3F285B047C0080992C /* Interaction */,
 				B50B1B28285AB7550080992C /* Splash */,
+				7E0C5C342855B1EF00F698D1 /* CreateNickName */,
+				B5F524E628519B0A00614FF7 /* Main */,
+				B50B1B3F285B047C0080992C /* Interaction */,
 				CBA15C91285CE1880051EDE2 /* ChooseCharacter */,
 				CB674C1F285969F10063A6B7 /* CheckRoom */,
 				CB637A3828595BE400FF1240 /* ParticipateRoom */,
-				7E0C5C342855B1EF00F698D1 /* CreateNickName */,
 				B5F524EA28519B4B00614FF7 /* Letter */,
 				B5F524E928519B3F00614FF7 /* Detail-Ing */,
 				B5F524E828519B2F00614FF7 /* Detail-Wait */,
 				B5F524E728519B0E00614FF7 /* InvitedCode */,
-				B5F524E628519B0A00614FF7 /* Main */,
 				B5F524E528519ACA00614FF7 /* CreateRoom */,
 			);
 			path = Screens;
@@ -458,6 +456,7 @@
 		B5F524F928519BD600614FF7 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				7E0C5C372855B73100F698D1 /* Splash.storyboard */,
 				B5F524D428519AA000614FF7 /* Main.storyboard */,
 				B5F524D928519AA100614FF7 /* LaunchScreen.storyboard */,
 				B5F5250F2851A0B500614FF7 /* CreateRoom.storyboard */,
@@ -465,7 +464,6 @@
 				B5F525132851A0DB00614FF7 /* DetailWait.storyboard */,
 				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
 				B5F525172851A10600614FF7 /* Letter.storyboard */,
-				7E0C5C372855B73100F698D1 /* Splash.storyboard */,
 				B50B1B3D285B04580080992C /* Interaction.storyboard */,
 				CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */,
 				CB674C2228596A3E0063A6B7 /* CheckRoom.storyboard */,
