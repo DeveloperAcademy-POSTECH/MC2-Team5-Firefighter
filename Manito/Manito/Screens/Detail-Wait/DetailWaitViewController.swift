@@ -15,8 +15,8 @@ class DetailWaitViewController: BaseViewController {
     var maxUser = 15
     lazy var userCount = userArr.count
     let isOwner = true
-    let startDateText = "22-07-10"
-    let endDateText = "22-07-13"
+    let startDateText = "22.07.10"
+    let endDateText = "22.07.13"
 
     private enum UserStatus: Int, CaseIterable {
         case owner = 0

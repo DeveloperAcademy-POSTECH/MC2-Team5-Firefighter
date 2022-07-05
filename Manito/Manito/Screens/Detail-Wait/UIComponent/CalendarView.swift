@@ -129,7 +129,7 @@ class CalendarView: UIView {
 
     private func setupDateRange() {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yy-MM-dd"
+        formatter.dateFormat = "yy.MM.dd"
         guard let startDate = formatter.date(from: startDateText) else { return }
         guard let endDate = formatter.date(from: endDateToText) else { return }
         setupCalendarRange(startDate: startDate, endDate: endDate)
