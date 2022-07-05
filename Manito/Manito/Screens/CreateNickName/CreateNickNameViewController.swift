@@ -78,7 +78,16 @@ class CreateNickNameViewController: BaseViewController {
     @objc private func didTapDoneButton() {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
+            presentMainViewController()
         }
+    }
+    
+    private func presentMainViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
     }
     
     @objc private func keyboardWillShow(notification:NSNotification) {
