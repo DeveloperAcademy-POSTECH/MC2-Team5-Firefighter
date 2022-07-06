@@ -16,7 +16,9 @@ class CalendarView: UIView {
     let sevenDaysInterval: TimeInterval = 604800
     var startDateText = ""
     var endDateToText = ""
-
+    var tempStartDateText = ""
+    var tempEndDateText = ""
+    
     private enum CalendarMoveType {
         case previous
         case next
@@ -149,8 +151,8 @@ class CalendarView: UIView {
             calendar.select(addDate)
             startDate += oneDayInterval
         }
-        startDateText = dateToString(calendar.selectedDates[startIndex])
-        endDateToText = dateToString(calendar.selectedDates[endIndex])
+        tempStartDateText = dateToString(calendar.selectedDates[startIndex])
+        tempEndDateText = dateToString(calendar.selectedDates[endIndex])
     }
 
     func countDateRange() -> Int {

@@ -47,6 +47,7 @@ class DetailEditViewController: BaseViewController {
     private lazy var changeButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { _ in
+            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": self.calendarView.tempStartDateText, "endDate": self.calendarView.tempEndDateText])
             self.dismiss(animated: true)
         }
         button.setTitle("변경", for: .normal)
@@ -121,10 +122,6 @@ class DetailEditViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         self.navigationController?.isNavigationBarHidden = true
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.startDateText, "endDate": calendarView.endDateToText])
     }
 
     override func render() {
