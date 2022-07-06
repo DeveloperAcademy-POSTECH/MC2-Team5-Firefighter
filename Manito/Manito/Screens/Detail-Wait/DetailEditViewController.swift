@@ -20,7 +20,7 @@ class DetailEditViewController: BaseViewController {
     }
     var endDateText = "" {
         didSet {
-            calendarView.endDateToText = endDateText
+            calendarView.endDateText = endDateText
             calendarView.setupDateRange()
         }
     }

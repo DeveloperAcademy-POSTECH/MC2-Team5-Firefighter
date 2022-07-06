@@ -15,7 +15,7 @@ class CalendarView: UIView {
     let oneDayInterval: TimeInterval = 86400
     let sevenDaysInterval: TimeInterval = 604800
     var startDateText = ""
-    var endDateToText = ""
+    var endDateText = ""
     var tempStartDateText = ""
     var tempEndDateText = ""
     
@@ -123,7 +123,7 @@ class CalendarView: UIView {
 
     func setupDateRange() {
         guard let startDate = stringToDate(startDateText) else { return }
-        guard let endDate = stringToDate(endDateToText) else { return }
+        guard let endDate = stringToDate(endDateText) else { return }
         setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 
