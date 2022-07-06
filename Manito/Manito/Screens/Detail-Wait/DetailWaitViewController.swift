@@ -15,12 +15,12 @@ class DetailWaitViewController: BaseViewController {
     var maxUser = 15
     lazy var userCount = userArr.count
     let isOwner = true
-    var startDateText = "22.07.10" {
+    var startDateText = "22.07.03" {
         didSet {
             titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
         }
     }
-    var endDateText = "22.07.13" {
+    var endDateText = "22.07.08" {
         didSet {
             titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
         }
@@ -170,6 +170,7 @@ class DetailWaitViewController: BaseViewController {
         super.viewDidLoad()
         setupDelegation()
         setupNotificationCenter()
+        isPastStartDate()
     }
 
     override func render() {
@@ -267,10 +268,10 @@ class DetailWaitViewController: BaseViewController {
             })
     }
 
-    private func presentModal() {
+    private func presentModal(from startString: String, to endString: String) {
         let modalViewController = DetailEditViewController()
-        modalViewController.startDateText = startDateText
-        modalViewController.endDateText = endDateText
+        modalViewController.startDateText = startString
+        modalViewController.endDateText = endString
         present(modalViewController, animated: true, completion: nil)
     }
 
@@ -287,7 +288,7 @@ class DetailWaitViewController: BaseViewController {
         if isOwner {
             let menu = UIMenu(options: [], children: [
                     UIAction(title: "방 정보 수정", handler: { _ in
-                        self.presentModal()
+                        self.presentModal(from: self.startDateText, to: self.endDateText)
                     }),
                     UIAction(title: "방 삭제", handler: { _ in
                         self.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
@@ -310,6 +311,25 @@ class DetailWaitViewController: BaseViewController {
 
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateRange(_:)), name: .dateRangeNotification, object: nil)
+    }
+
+    private func isPastStartDate() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yy.MM.dd"
+        guard let startDate = formatter.date(from: startDateText) else { return }
+        if startDate < Date() {
+            if isOwner {
+                let action: ((UIAlertAction) -> ()) = { [weak self] _ in
+                    let fiveDaysInterval: TimeInterval = 86400 * 4
+                    let startDate = formatter.string(from: Date())
+                    let endDate = formatter.string(from: Date() + fiveDaysInterval)
+                    self?.presentModal(from: startDate, to: endDate)
+                }
+                makeAlert(title: "날짜를 재설정 해주세요", message: "마니또 시작일이 지났습니다. \n 진행기간을 재설정 해주세요", okAction: action)
+            } else {
+                makeAlert(title: "시작일이 지났어요", message: "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요")
+            }
+        }
     }
 
     // MARK: - selector
