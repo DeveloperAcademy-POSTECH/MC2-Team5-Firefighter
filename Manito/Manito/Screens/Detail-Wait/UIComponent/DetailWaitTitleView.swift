@@ -24,7 +24,7 @@ class DetailWaitTitleView: UIView {
 
     // MARK: - property
 
-    private let roomTitle: UILabel = {
+    private let roomTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "명예소방관"
         label.textColor = .white
@@ -32,7 +32,7 @@ class DetailWaitTitleView: UIView {
         return label
     }()
 
-    private let startStauts: UILabel = {
+    private let startStautsLabel: UILabel = {
         let label = UILabel()
         label.text = StartStatus.waiting.rawValue
         label.backgroundColor = .badgeBeige
@@ -80,22 +80,22 @@ class DetailWaitTitleView: UIView {
     // MARK: - func
 
     func render() {
-        self.addSubview(roomTitle)
-        roomTitle.snp.makeConstraints {
+        self.addSubview(roomTitleLabel)
+        roomTitleLabel.snp.makeConstraints {
             $0.leading.top.equalToSuperview()
         }
 
-        self.addSubview(startStauts)
-        startStauts.snp.makeConstraints {
-            $0.centerY.equalTo(roomTitle.snp.centerY)
-            $0.leading.equalTo(roomTitle.snp.trailing).offset(10)
+        self.addSubview(startStautsLabel)
+        startStautsLabel.snp.makeConstraints {
+            $0.centerY.equalTo(roomTitleLabel.snp.centerY)
+            $0.leading.equalTo(roomTitleLabel.snp.trailing).offset(10)
             $0.width.equalTo(66)
             $0.height.equalTo(23)
         }
 
         self.addSubview(durationView)
         durationView.snp.makeConstraints {
-            $0.top.equalTo(roomTitle.snp.bottom).offset(30)
+            $0.top.equalTo(roomTitleLabel.snp.bottom).offset(30)
             $0.trailing.leading.equalToSuperview()
             $0.height.equalTo(36)
         }

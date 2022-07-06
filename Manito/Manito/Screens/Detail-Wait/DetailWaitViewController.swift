@@ -12,7 +12,7 @@ import SnapKit
 class DetailWaitViewController: BaseViewController {
     let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
     var canStart = true
-    var maxUser = 15
+    var maxUserCount = 15
     lazy var userCount = userArr.count
     let isOwner = true
     var startDateText = "22.07.03" {
@@ -108,7 +108,7 @@ class DetailWaitViewController: BaseViewController {
         view.dateRangeText = "\(startDateText) ~ \(endDateText)"
         return view
     }()
-    private let togetherFriendText: UILabel = {
+    private let togetherFriendLabel: UILabel = {
         let label = UILabel()
         label.text = "함께하는 친구들"
         label.textColor = .white
@@ -120,9 +120,9 @@ class DetailWaitViewController: BaseViewController {
         imageView.image = ImageLiterals.imgNi
         return imageView
     }()
-    private lazy var comeInText: UILabel = {
+    private lazy var comeInLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(userCount)/\(maxUser)"
+        label.text = "\(userCount)/\(maxUserCount)"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 14)
         return label
@@ -181,21 +181,21 @@ class DetailWaitViewController: BaseViewController {
             $0.height.equalTo(86)
         }
 
-        view.addSubview(togetherFriendText)
-        togetherFriendText.snp.makeConstraints {
+        view.addSubview(togetherFriendLabel)
+        togetherFriendLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
 
         view.addSubview(imgNiView)
         imgNiView.snp.makeConstraints {
-            $0.centerY.equalTo(togetherFriendText.snp.centerY)
-            $0.leading.equalTo(togetherFriendText.snp.trailing).offset(7)
+            $0.centerY.equalTo(togetherFriendLabel.snp.centerY)
+            $0.leading.equalTo(togetherFriendLabel.snp.trailing).offset(7)
             $0.width.height.equalTo(30)
         }
 
-        view.addSubview(comeInText)
-        comeInText.snp.makeConstraints {
+        view.addSubview(comeInLabel)
+        comeInLabel.snp.makeConstraints {
             $0.leading.equalTo(imgNiView.snp.trailing)
             $0.centerY.equalTo(imgNiView.snp.centerY)
         }
@@ -203,7 +203,7 @@ class DetailWaitViewController: BaseViewController {
         view.addSubview(copyButton)
         copyButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(16)
-            $0.centerY.equalTo(togetherFriendText.snp.centerY)
+            $0.centerY.equalTo(togetherFriendLabel.snp.centerY)
         }
 
         view.addSubview(listTable)
@@ -213,7 +213,7 @@ class DetailWaitViewController: BaseViewController {
             listTable.isScrollEnabled = true
         }
         listTable.snp.makeConstraints {
-            $0.top.equalTo(togetherFriendText.snp.bottom).offset(30)
+            $0.top.equalTo(togetherFriendLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(tableHeight)
