@@ -208,7 +208,7 @@ extension CalendarView: FSCalendarDelegate {
 
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         let isBeforeToday = date < Date() - oneDayInterval
-        let isAWeekBeforeAfter = date < selectStartDate + 604800 && date > selectStartDate - 604800
+        let isAWeekBeforeAfter = date < selectStartDate + sevenDaysInterval && date > selectStartDate - sevenDaysInterval
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey004.withAlphaComponent(0.4)
