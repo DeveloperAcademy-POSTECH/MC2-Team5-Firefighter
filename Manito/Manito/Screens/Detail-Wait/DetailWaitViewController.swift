@@ -15,8 +15,16 @@ class DetailWaitViewController: BaseViewController {
     var maxUser = 15
     lazy var userCount = userArr.count
     let isOwner = true
-    let startDateText = "22.07.10"
-    let endDateText = "22.07.13"
+    var startDateText = "22.07.10" {
+        didSet {
+            titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
+        }
+    }
+    var endDateText = "22.07.13" {
+        didSet {
+            titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
+        }
+    }
 
     private enum UserStatus: Int, CaseIterable {
         case owner = 0
@@ -95,7 +103,7 @@ class DetailWaitViewController: BaseViewController {
         button.showsMenuAsPrimaryAction = true
         return button
     }()
-    private lazy var titleView: UIView = {
+    private lazy var titleView: DetailWaitTitleView = {
         let view = DetailWaitTitleView()
         view.dateRangeText = "\(startDateText) ~ \(endDateText)"
         return view
@@ -161,6 +169,7 @@ class DetailWaitViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegation()
+        setupNotificationCenter()
     }
 
     override func render() {
@@ -297,6 +306,23 @@ class DetailWaitViewController: BaseViewController {
     private func touchUpToShowToast() {
         UIPasteboard.general.string = "초대코드"
         self.showToast(message: "코드 복사 완료!")
+    }
+
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateRange(_:)), name: .dateRangeNotification, object: nil)
+    }
+
+    // MARK: - selector
+
+    @objc
+    private func didReceiveDateRange(_ notification: Notification) {
+        guard let noti = notification.userInfo else { return }
+
+        guard let startDate = noti["startDate"] as? String else { return }
+        guard let endDate = noti["endDate"] as? String else { return }
+
+        self.startDateText = startDate
+        self.endDateText = endDate
     }
 }
 

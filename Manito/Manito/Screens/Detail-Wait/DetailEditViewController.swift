@@ -13,13 +13,15 @@ import FSCalendar
 class DetailEditViewController: BaseViewController {
     private var memberCount = 7
     var startDateText = "" {
-        willSet {
-            calendarView.startDateText = newValue
+        didSet {
+            calendarView.startDateText = startDateText
+            calendarView.setupDateRange()
         }
     }
     var endDateText = "" {
-        willSet {
-            calendarView.endDateToText = newValue
+        didSet {
+            calendarView.endDateToText = endDateText
+            calendarView.setupDateRange()
         }
     }
 
@@ -119,6 +121,10 @@ class DetailEditViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         self.navigationController?.isNavigationBarHidden = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.startDateText, "endDate": calendarView.endDateToText])
     }
 
     override func render() {

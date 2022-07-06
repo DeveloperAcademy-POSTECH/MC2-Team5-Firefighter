@@ -14,16 +14,8 @@ class CalendarView: UIView {
     private var selectStartDate = Date()
     let oneDayInterval: TimeInterval = 86400
     let sevenDaysInterval: TimeInterval = 604800
-    var startDateText = "" {
-        didSet {
-            setupDateRange()
-        }
-    }
-    var endDateToText = "" {
-        didSet {
-            setupDateRange()
-        }
-    }
+    var startDateText = ""
+    var endDateToText = ""
 
     private enum CalendarMoveType {
         case previous
@@ -127,11 +119,9 @@ class CalendarView: UIView {
         calendar.setCurrentPage(changedCurrentPage, animated: true)
     }
 
-    private func setupDateRange() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yy.MM.dd"
-        guard let startDate = formatter.date(from: startDateText) else { return }
-        guard let endDate = formatter.date(from: endDateToText) else { return }
+    func setupDateRange() {
+        guard let startDate = stringToDate(startDateText) else { return }
+        guard let endDate = stringToDate(endDateToText) else { return }
         setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 
@@ -159,6 +149,8 @@ class CalendarView: UIView {
             calendar.select(addDate)
             startDate += oneDayInterval
         }
+        startDateText = dateToString(calendar.selectedDates[startIndex])
+        endDateToText = dateToString(calendar.selectedDates[endIndex])
     }
 
     func countDateRange() -> Int {
@@ -232,5 +224,19 @@ extension CalendarView: FSCalendarDataSource { }
 extension CalendarView: FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
         return .red001
+    }
+}
+
+extension CalendarView {
+    func dateToString(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yy.MM.dd"
+        return formatter.string(from: date)
+    }
+
+    func stringToDate(_ string: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yy.MM.dd"
+        return formatter.date(from: string)
     }
 }
