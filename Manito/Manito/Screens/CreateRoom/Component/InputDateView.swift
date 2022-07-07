@@ -19,11 +19,8 @@ class InputDateView: UIView {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    private let dateBackView: CalendarView = {
-        let view = CalendarView()
-        return view
-    }()
-    private let dateLabel: UILabel = {
+    private let calendarView = CalendarView()
+    private let dateInfoLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 7일까지 설정할 수 있어요 !"
         label.font = .font(.regular, ofSize: 16)
@@ -66,16 +63,16 @@ class InputDateView: UIView {
             $0.top.leading.trailing.equalToSuperview()
         }
         
-        self.addSubview(dateBackView)
-        dateBackView.snp.makeConstraints {
+        self.addSubview(calendarView)
+        calendarView.snp.makeConstraints {
             $0.top.equalTo(dateViewLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(380)
         }
         
-        dateBackView.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints {
-            $0.top.equalTo(dateBackView.snp.bottom).offset(5)
+        calendarView.addSubview(dateInfoLabel)
+        dateInfoLabel.snp.makeConstraints {
+            $0.top.equalTo(calendarView.snp.bottom).offset(5)
             $0.trailing.equalToSuperview()
         }
     }
