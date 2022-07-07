@@ -293,11 +293,8 @@
 		B5F524E328519AC300614FF7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				D724AF5B287088110003F280 /* Setting */,
 				B50B1B3F285B047C0080992C /* Interaction */,
-=======
->>>>>>> e28bce9aabd076e6100cf5debc09480b6a374c15
 				B50B1B28285AB7550080992C /* Splash */,
 				7E0C5C342855B1EF00F698D1 /* CreateNickName */,
 				B5F524E628519B0A00614FF7 /* Main */,
