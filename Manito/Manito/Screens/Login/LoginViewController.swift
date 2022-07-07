@@ -14,12 +14,7 @@ class LoginViewController: BaseViewController {
 
     // MARK: - property
 
-//    private let logoImageView = UIImageView(image: ImageLiterals.)
-    private let logoImageView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        return view
-    }()
+    private let logoImageView = UIImageView(image: ImageLiterals.imgAppIcon)
     private let logoTextImageView = UIImageView(image: ImageLiterals.imgTextLogo)
     private let appleLoginButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
