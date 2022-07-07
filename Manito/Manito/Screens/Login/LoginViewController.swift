@@ -19,6 +19,7 @@ class LoginViewController: BaseViewController {
         view.backgroundColor = .red
         return view
     }()
+    private let logoTextImageView = UIImageView(image: ImageLiterals.imgTextLogo)
 
     // MARK: - life cycle
 
@@ -32,6 +33,12 @@ class LoginViewController: BaseViewController {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(-92)
             $0.width.height.equalTo(130)
+        }
+        
+        view.addSubview(logoTextImageView)
+        logoTextImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(logoImageView.snp.bottom).offset(7)
         }
     }
 }
