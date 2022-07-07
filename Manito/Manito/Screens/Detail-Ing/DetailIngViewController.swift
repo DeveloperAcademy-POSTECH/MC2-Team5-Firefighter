@@ -10,11 +10,11 @@ import UIKit
 import SnapKit
 
 class DetailIngViewController: BaseViewController {
-    
+
     var isDone = false
 
     // MARK: - property
-    
+
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var periodLabel: UILabel!
     @IBOutlet weak var missionBackgroundView: UIView!
@@ -31,16 +31,16 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
     @IBOutlet weak var manitoMemoryButton: UIButton!
-    
+
     private let manitoOpenButton: UIButton = {
         let button = MainButton()
         button.title = "마니또 공개"
         button.hasShadow = true
         return button
     }()
-    
+
     // MARK: - life cycle
-    
+
     override func render() {
         view.addSubview(manitoOpenButton)
         manitoOpenButton.snp.makeConstraints {
@@ -48,14 +48,19 @@ class DetailIngViewController: BaseViewController {
             $0.centerX.equalToSuperview()
         }
     }
-    
+
     override func configUI() {
         super.configUI()
-        
         setupFont()
         setupViewLayer()
+        addActionMemoryViewController()
+        addActionPushLetterViewController()
+        addGestureMemberList()
+        addActionOpenManittoViewController()
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
-    
+
     private func setupFont() {
         titleLabel.font = .font(.regular, ofSize: 34)
         periodLabel.font = .font(.regular, ofSize: 16)
@@ -67,7 +72,7 @@ class DetailIngViewController: BaseViewController {
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
         manitoMemoryButton.titleLabel?.font = .font(.regular, ofSize: 15)
     }
-    
+
     private func setupViewLayer() {
         missionBackgroundView.layer.cornerRadius = 10
         missionBackgroundView.layer.borderWidth = 1
@@ -87,5 +92,42 @@ class DetailIngViewController: BaseViewController {
         listImageView.layer.cornerRadius = 50
         letterBoxButton.makeBorderLayer(color: .white)
         manitoMemoryButton.makeBorderLayer(color: .white)
+    }
+    
+    private func addGestureMemberList() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pushFriendListViewController(_:)))
+        listBackView.addGestureRecognizer(tapGesture)
+    }
+    
+    private func addActionPushLetterViewController() {
+        let action = UIAction { _ in
+            self.navigationController?.pushViewController(LetterViewController(), animated: true)
+        }
+        letterBoxButton.addAction(action, for: .touchUpInside)
+    }
+    
+    private func addActionMemoryViewController() {
+        let action = UIAction { _ in
+            let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
+            guard let viewController = storyboard.instantiateViewController(withIdentifier: MemoryViewController.className) as? MemoryViewController else { return }
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+        manitoMemoryButton.addAction(action, for: .touchUpInside)
+    }
+    
+    private func addActionOpenManittoViewController() {
+        let action = UIAction { _ in
+            self.navigationController?.pushViewController(OpenManittoViewController(), animated: true)
+        }
+        self.manitoOpenButton.addAction(action, for: .touchUpInside)
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
+        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

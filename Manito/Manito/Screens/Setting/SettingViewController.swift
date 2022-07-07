@@ -26,7 +26,7 @@ class SettingViewController: BaseViewController {
     // MARK: - Property
     
     private lazy var tableView: UITableView = {
-         let tabelView = UITableView()
+         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
