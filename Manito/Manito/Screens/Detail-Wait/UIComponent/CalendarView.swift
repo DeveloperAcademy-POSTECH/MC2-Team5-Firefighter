@@ -122,8 +122,8 @@ class CalendarView: UIView {
     }
 
     func setupDateRange() {
-        guard let startDate = stringToDate(startDateText) else { return }
-        guard let endDate = stringToDate(endDateText) else { return }
+        guard let startDate = startDateText.stringToDate else { return }
+        guard let endDate = endDateText.stringToDate else { return }
         setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 
@@ -151,8 +151,8 @@ class CalendarView: UIView {
             calendar.select(addDate)
             startDate += oneDayInterval
         }
-        tempStartDateText = dateToString(calendar.selectedDates[startIndex])
-        tempEndDateText = dateToString(calendar.selectedDates[endIndex])
+        tempStartDateText = calendar.selectedDates[startIndex].dateToString
+        tempEndDateText = calendar.selectedDates[endIndex].dateToString
     }
 
     func countDateRange() -> Int {
@@ -226,19 +226,5 @@ extension CalendarView: FSCalendarDataSource { }
 extension CalendarView: FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
         return .red001
-    }
-}
-
-extension CalendarView {
-    func dateToString(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yy.MM.dd"
-        return formatter.string(from: date)
-    }
-
-    func stringToDate(_ string: String) -> Date? {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yy.MM.dd"
-        return formatter.date(from: string)
     }
 }
