@@ -76,21 +76,21 @@ class MainViewController: BaseViewController {
         view.addSubview(niCharacterImageView)
         niCharacterImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(54)
-            $0.bottom.equalToSuperview().inset(44)
+            $0.bottom.equalToSuperview().inset(24)
             $0.height.width.equalTo(75)
         }
 
         view.addSubview(maCharacterImageView)
         maCharacterImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(60)
+            $0.bottom.equalToSuperview().inset(40)
             $0.height.width.equalTo(75)
         }
 
         view.addSubview(ttoCharacterImageView)
         ttoCharacterImageView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(54)
-            $0.bottom.equalToSuperview().inset(44)
+            $0.bottom.equalToSuperview().inset(24)
             $0.height.width.equalTo(75)
         }
 
