@@ -86,6 +86,9 @@
 		CBA15C96285CE1F00051EDE2 /* ChooseCharacter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */; };
 		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
+		CBBFF778287AE050006A5964 /* DeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */; };
+		CBBFF77A287AE09F006A5964 /* DeveloperInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBBFF779287AE09F006A5964 /* DeveloperInfo.storyboard */; };
+		CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
 /* End PBXBuildFile section */
@@ -169,6 +172,9 @@
 		CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChooseCharacter.storyboard; sourceTree = "<group>"; };
 		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
+		CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewController.swift; sourceTree = "<group>"; };
+		CBBFF779287AE09F006A5964 /* DeveloperInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DeveloperInfo.storyboard; sourceTree = "<group>"; };
+		CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewCell.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -289,6 +295,7 @@
 		B5F524E328519AC300614FF7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				CBBFF775287AE034006A5964 /* DeveloperInfo */,
 				B50B1B28285AB7550080992C /* Splash */,
 				7E0C5C342855B1EF00F698D1 /* CreateNickName */,
 				B5F524E628519B0A00614FF7 /* Main */,
@@ -468,6 +475,7 @@
 				CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */,
 				CB674C2228596A3E0063A6B7 /* CheckRoom.storyboard */,
 				CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */,
+				CBBFF779287AE09F006A5964 /* DeveloperInfo.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -593,6 +601,23 @@
 			path = UIComponent;
 			sourceTree = "<group>";
 		};
+		CBBFF775287AE034006A5964 /* DeveloperInfo */ = {
+			isa = PBXGroup;
+			children = (
+				CBBFF776287AE03F006A5964 /* Cell */,
+				CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */,
+			);
+			path = DeveloperInfo;
+			sourceTree = "<group>";
+		};
+		CBBFF776287AE03F006A5964 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -668,6 +693,7 @@
 				B5F525182851A10600614FF7 /* Letter.storyboard in Resources */,
 				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
 				B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */,
+				CBBFF77A287AE09F006A5964 /* DeveloperInfo.storyboard in Resources */,
 				B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */,
 				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
 				B5F5250428519F7A00614FF7 /* DungGeunMo.otf in Resources */,
@@ -693,6 +719,7 @@
 				39D95265285B097800183B09 /* CalendarView.swift in Sources */,
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
 				B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */,
+				CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */,
 				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */,
 				CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */,
@@ -739,6 +766,7 @@
 				B50B1AFD2856C3500080992C /* LetterTextView.swift in Sources */,
 				D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */,
 				B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */,
+				CBBFF778287AE050006A5964 /* DeveloperInfoViewController.swift in Sources */,
 				CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */,
 				B5F525222851A24100614FF7 /* UITableView+Extension.swift in Sources */,
 				B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */,
@@ -900,6 +928,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 앨범에 접근하려고 합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -931,6 +960,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 앨범에 접근하려고 합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
