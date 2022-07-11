@@ -43,7 +43,7 @@ class CreateRoomViewController: BaseViewController {
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         button.setTitle("이전", for: .normal)
-        button.titleLabel?.font = .font(.regular, ofSize: 16)
+        button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
         button.isHidden = true
         return button
@@ -120,7 +120,7 @@ class CreateRoomViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalTo(nextButton.snp.top)
         }
-    
+        
         view.addSubview(checkView)
         checkView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
