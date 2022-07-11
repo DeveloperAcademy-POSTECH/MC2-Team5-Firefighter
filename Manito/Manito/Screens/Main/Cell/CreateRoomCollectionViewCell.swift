@@ -47,7 +47,7 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
     // MARK: - func
 
     func setupView(){
-        backgroundColor = .grey001.withAlphaComponent(0.3)
+        backgroundColor = .darkGrey002.withAlphaComponent(0.8)
         makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
     }
     
