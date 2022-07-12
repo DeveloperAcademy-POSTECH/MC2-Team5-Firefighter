@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum MainEndPoint: EndPointable  {
+enum MainEndPoint: EndPointable {
     case getCommonMission
     case getManittoList(page: String, perPage: String)
-    case getRoomStateCheck
+    case getRoomStateCheck(roomId: String)
 
     var requestTimeOut: Float {
         return 30
@@ -48,9 +48,9 @@ enum MainEndPoint: EndPointable  {
             return {
                 return "\(baseURL)/api/rooms?page=\(page)&per_page=\(perPage)"
             }()
-        case .getRoomStateCheck:
+        case .getRoomStateCheck(let roomId):
             return {
-                return "\(baseURL)/api/rooms/:roomId/state"
+                return "\(baseURL)/api/rooms/\(roomId)/state"
             }()
         }
     }
