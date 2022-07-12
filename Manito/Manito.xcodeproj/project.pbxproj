@@ -22,6 +22,10 @@
 		39C957E12879A3CF00A04A2B /* DailyMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957E02879A3CF00A04A2B /* DailyMission.swift */; };
 		39C957ED287AE4D100A04A2B /* MainEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957EC287AE4D100A04A2B /* MainEndPoint.swift */; };
 		39C957EF287AEBB400A04A2B /* Endpointable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957EE287AEBB400A04A2B /* Endpointable.swift */; };
+		39C957F1287D984900A04A2B /* APIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F0287D984900A04A2B /* APIEnvironment.swift */; };
+		39C957F4287D9EB400A04A2B /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F3287D9EB400A04A2B /* APIService.swift */; };
+		39C957F6287D9ED000A04A2B /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F5287D9ED000A04A2B /* NetworkRequest.swift */; };
+		39C957FA287DA4BE00A04A2B /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F9287DA4BE00A04A2B /* BaseModel.swift */; };
 		39D95265285B097800183B09 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D95264285B097800183B09 /* CalendarView.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
@@ -114,6 +118,10 @@
 		39C957E02879A3CF00A04A2B /* DailyMission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMission.swift; sourceTree = "<group>"; };
 		39C957EC287AE4D100A04A2B /* MainEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEndPoint.swift; sourceTree = "<group>"; };
 		39C957EE287AEBB400A04A2B /* Endpointable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpointable.swift; sourceTree = "<group>"; };
+		39C957F0287D984900A04A2B /* APIEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironment.swift; sourceTree = "<group>"; };
+		39C957F3287D9EB400A04A2B /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		39C957F5287D9ED000A04A2B /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
+		39C957F9287DA4BE00A04A2B /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		39D95264285B097800183B09 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
@@ -226,6 +234,10 @@
 				39C957D528799AB900A04A2B /* HTTPMethod.swift */,
 				39C957D728799DB900A04A2B /* NetworkError.swift */,
 				39C957EE287AEBB400A04A2B /* Endpointable.swift */,
+				39C957F0287D984900A04A2B /* APIEnvironment.swift */,
+				39C957F3287D9EB400A04A2B /* APIService.swift */,
+				39C957F5287D9ED000A04A2B /* NetworkRequest.swift */,
+				39C957F9287DA4BE00A04A2B /* BaseModel.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -757,10 +769,12 @@
 				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
 				39C957DF2879A35300A04A2B /* CreateRoom.swift in Sources */,
+				39C957F4287D9EB400A04A2B /* APIService.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */,
 				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
+				39C957F6287D9ED000A04A2B /* NetworkRequest.swift in Sources */,
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
 				B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */,
 				B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */,
@@ -779,6 +793,7 @@
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
+				39C957FA287DA4BE00A04A2B /* BaseModel.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
@@ -786,6 +801,7 @@
 				B50B1AFD2856C3500080992C /* LetterTextView.swift in Sources */,
 				D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */,
 				B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */,
+				39C957F1287D984900A04A2B /* APIEnvironment.swift in Sources */,
 				CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */,
 				B5F525222851A24100614FF7 /* UITableView+Extension.swift in Sources */,
 				B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */,
