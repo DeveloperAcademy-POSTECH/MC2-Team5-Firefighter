@@ -29,6 +29,7 @@ class BaseViewController: UIViewController {
         setupBackButton()
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
+        setupNavigationPopGesture()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,5 +81,10 @@ class BaseViewController: UIViewController {
         let backButton = makeBarButtonItem(with: leftOffsetBackButton)
         
         navigationItem.leftBarButtonItem = backButton
+    }
+    
+    private func setupNavigationPopGesture() {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
 }
