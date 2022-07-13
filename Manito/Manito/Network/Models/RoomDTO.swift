@@ -1,5 +1,5 @@
 //
-//  CreateRoom.swift
+//  RoomDTO.swift
 //  Manito
 //
 //  Created by Mingwan Choi on 2022/07/09.

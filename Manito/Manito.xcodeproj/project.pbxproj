@@ -18,7 +18,7 @@
 		39C957D828799DB900A04A2B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957D728799DB900A04A2B /* NetworkError.swift */; };
 		39C957DB2879A23B00A04A2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957DA2879A23B00A04A2B /* User.swift */; };
 		39C957DD2879A2B600A04A2B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957DC2879A2B600A04A2B /* Room.swift */; };
-		39C957DF2879A35300A04A2B /* CreateRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957DE2879A35300A04A2B /* CreateRoom.swift */; };
+		39C957DF2879A35300A04A2B /* RoomDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957DE2879A35300A04A2B /* RoomDTO.swift */; };
 		39C957E12879A3CF00A04A2B /* DailyMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957E02879A3CF00A04A2B /* DailyMission.swift */; };
 		39C957ED287AE4D100A04A2B /* MainEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957EC287AE4D100A04A2B /* MainEndPoint.swift */; };
 		39C957EF287AEBB400A04A2B /* Endpointable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957EE287AEBB400A04A2B /* Endpointable.swift */; };
@@ -122,7 +122,7 @@
 		39C957D728799DB900A04A2B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		39C957DA2879A23B00A04A2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		39C957DC2879A2B600A04A2B /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
-		39C957DE2879A35300A04A2B /* CreateRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoom.swift; sourceTree = "<group>"; };
+		39C957DE2879A35300A04A2B /* RoomDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDTO.swift; sourceTree = "<group>"; };
 		39C957E02879A3CF00A04A2B /* DailyMission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMission.swift; sourceTree = "<group>"; };
 		39C957EC287AE4D100A04A2B /* MainEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEndPoint.swift; sourceTree = "<group>"; };
 		39C957EE287AEBB400A04A2B /* Endpointable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpointable.swift; sourceTree = "<group>"; };
@@ -594,7 +594,7 @@
 				B5F525482855D01D00614FF7 /* Letter.swift */,
 				39C957DA2879A23B00A04A2B /* User.swift */,
 				39C957DC2879A2B600A04A2B /* Room.swift */,
-				39C957DE2879A35300A04A2B /* CreateRoom.swift */,
+				39C957DE2879A35300A04A2B /* RoomDTO.swift */,
 				39C957E02879A3CF00A04A2B /* DailyMission.swift */,
 			);
 			path = Models;
@@ -795,7 +795,7 @@
 				39C957D628799AB900A04A2B /* HTTPMethod.swift in Sources */,
 				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
-				39C957DF2879A35300A04A2B /* CreateRoom.swift in Sources */,
+				39C957DF2879A35300A04A2B /* RoomDTO.swift in Sources */,
 				39C95808287DB05C00A04A2B /* SettingEndPoint.swift in Sources */,
 				39C957F4287D9EB400A04A2B /* APIService.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
