@@ -7,10 +7,18 @@
 
 import Foundation
 
-// FIXME: DTO 느낌으로 분리하는건 어떤지..??
 struct RoomDTO: Encodable {
     let title: String
     let capacity: Int
     let startDate: String
     let endDate: String
+}
+
+struct CreateRoomDTO: Encodable {
+    var room: RoomDTO
+    var member: Member
+}
+
+struct Member: Encodable {
+    var colorIndex: Int
 }
