@@ -15,7 +15,7 @@ enum DetailWaitEndPoint: EndPointable {
     case deleteRoom(roomId: String)
 
     var requestTimeOut: Float {
-        return 30
+        return 20
     }
 
     var httpMethod: HTTPMethod {
@@ -40,14 +40,14 @@ enum DetailWaitEndPoint: EndPointable {
         case .getWaitingRoomInfo:
             return nil
         case .startManitto(_, let state):
-            let parameters = ["state": state]
-            return parameters.encode()
+            let body = ["state": state]
+            return body.encode()
         case .editRoomInfo(_, let roomInfo):
-            let parameters = ["title": roomInfo.title,
+            let body = ["title": roomInfo.title,
                 "capacity": roomInfo.capacity.description,
                 "startDate": roomInfo.startDate,
                 "endDate": roomInfo.endDate]
-            return parameters.encode()
+            return body.encode()
         case .deleteRoom:
             return nil
         }
