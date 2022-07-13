@@ -25,6 +25,7 @@ enum ImageLiterals {
 
     // MARK: - image
     
+    static var imgAppIcon: UIImage { .load(name: "imgAppIcon")}
     static var imgLogo: UIImage { .load(name: "imgLogo") }
     static var imgTextLogo: UIImage { .load(name: "imgTextLogo")}
     static var imgBackground: UIImage { .load(name: "imgBackground") }

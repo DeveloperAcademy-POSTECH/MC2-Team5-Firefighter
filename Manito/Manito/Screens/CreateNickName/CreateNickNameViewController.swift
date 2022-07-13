@@ -56,13 +56,13 @@ class CreateNickNameViewController: BaseViewController {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
         }
         
         view.addSubview(roomsNameTextField)
         roomsNameTextField.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
             $0.height.equalTo(60)
         }
         
