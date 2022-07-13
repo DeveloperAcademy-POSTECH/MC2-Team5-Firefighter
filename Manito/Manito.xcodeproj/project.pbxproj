@@ -33,6 +33,7 @@
 		39C95804287DAD3000A04A2B /* LetterEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95803287DAD3000A04A2B /* LetterEndPoint.swift */; };
 		39C95806287DAE5700A04A2B /* InteractionEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95805287DAE5700A04A2B /* InteractionEndPoint.swift */; };
 		39C95808287DB05C00A04A2B /* SettingEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95807287DB05C00A04A2B /* SettingEndPoint.swift */; };
+		39C9580A287DC03500A04A2B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95809287DC03500A04A2B /* Encodable+Extension.swift */; };
 		39D95265285B097800183B09 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D95264285B097800183B09 /* CalendarView.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
@@ -136,6 +137,7 @@
 		39C95803287DAD3000A04A2B /* LetterEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterEndPoint.swift; sourceTree = "<group>"; };
 		39C95805287DAE5700A04A2B /* InteractionEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionEndPoint.swift; sourceTree = "<group>"; };
 		39C95807287DB05C00A04A2B /* SettingEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingEndPoint.swift; sourceTree = "<group>"; };
+		39C95809287DC03500A04A2B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		39D95264285B097800183B09 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 				B5F525412855C97900614FF7 /* UILabel+Extension.swift */,
 				D77224DE285DDAB7008B760B /* Notification+Extension.swift */,
 				B5E1F2AD285B2917006D880B /* Int+Extension.swift */,
+				39C95809287DC03500A04A2B /* Encodable+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -775,6 +778,7 @@
 				392EC77E2855C388006918A9 /* SettingButton.swift in Sources */,
 				39C957FC287DAAFA00A04A2B /* DetailWaitEndPoint.swift in Sources */,
 				CB674C2128596A310063A6B7 /* CheckRoomViewController.swift in Sources */,
+				39C9580A287DC03500A04A2B /* Encodable+Extension.swift in Sources */,
 				B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */,
 				B5F525492855D01D00614FF7 /* Letter.swift in Sources */,
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,

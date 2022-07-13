@@ -8,7 +8,7 @@
 import Foundation
 
 // FIXME: DTO 느낌으로 분리하는건 어떤지..??
-struct CreateRoom: Encodable {
+struct RoomDTO: Encodable {
     let title: String
     let capacity: Int
     let startDate: String
