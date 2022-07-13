@@ -13,7 +13,7 @@ enum MainEndPoint: EndPointable {
     case getRoomStateCheck(roomId: String)
 
     var requestTimeOut: Float {
-        return 30
+        return 20
     }
 
     var httpMethod: HTTPMethod {
@@ -41,17 +41,11 @@ enum MainEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .getCommonMission:
-            return {
-                return "\(baseURL)/api/missions/common"
-            }()
+            return "\(baseURL)/api/missions/"
         case .getManittoList(let page, let perPage):
-            return {
-                return "\(baseURL)/api/rooms?page=\(page)&per_page=\(perPage)"
-            }()
+            return "\(baseURL)/api/rooms?page=\(page)&per_page=\(perPage)"
         case .getRoomStateCheck(let roomId):
-            return {
-                return "\(baseURL)/api/rooms/\(roomId)/state"
-            }()
+            return "\(baseURL)/api/rooms/\(roomId)/state"
         }
     }
 }
