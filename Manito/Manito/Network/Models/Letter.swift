@@ -13,20 +13,6 @@ struct Letter: Codable {
     var date: String
 }
 
-struct SendMessageDTO: Encodable {
-    var receiver: UserId
-    var message: Message
-}
-
-struct UserId: Encodable {
-    var id: String
-}
-
-struct Message: Encodable {
-    var content: String
-    var image: String
-}
-
 // FIXME: - 더미로 넣은 Letter 데이터
 
 var receivedLetters: [Letter] = [

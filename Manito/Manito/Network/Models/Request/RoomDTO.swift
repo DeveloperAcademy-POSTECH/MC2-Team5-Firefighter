@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct CreateRoomDTO: Encodable {
+    var room: RoomDTO
+    var member: MemberDTO
+}
+
 struct RoomDTO: Encodable {
     let title: String
     let capacity: Int
@@ -14,11 +19,6 @@ struct RoomDTO: Encodable {
     let endDate: String
 }
 
-struct CreateRoomDTO: Encodable {
-    var room: RoomDTO
-    var member: Member
-}
-
-struct Member: Encodable {
-    var colorIndex: Int
+struct MemberDTO: Encodable {
+    var colorIdx: Int
 }
