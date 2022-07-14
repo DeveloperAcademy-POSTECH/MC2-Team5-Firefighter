@@ -24,10 +24,10 @@ final class APIService {
             throw NetworkError.serverError
         }
         let decoder = JSONDecoder()
-        let baseModelData = try decoder.decode(BaseModel<T>.self, from: data)
-        if baseModelData.data == nil {
+        let baseModelData: T? = try decoder.decode(T.self, from: data)
+        if baseModelData == nil {
             throw NetworkError.clientError(message: "client Error")
         }
-        return baseModelData.data
+        return baseModelData
     }
 }

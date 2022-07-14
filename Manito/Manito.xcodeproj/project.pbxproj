@@ -26,7 +26,6 @@
 		39C957F1287D984900A04A2B /* APIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F0287D984900A04A2B /* APIEnvironment.swift */; };
 		39C957F4287D9EB400A04A2B /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F3287D9EB400A04A2B /* APIService.swift */; };
 		39C957F6287D9ED000A04A2B /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F5287D9ED000A04A2B /* NetworkRequest.swift */; };
-		39C957FA287DA4BE00A04A2B /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F9287DA4BE00A04A2B /* BaseModel.swift */; };
 		39C957FC287DAAFA00A04A2B /* DetailWaitEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957FB287DAAFA00A04A2B /* DetailWaitEndPoint.swift */; };
 		39C957FE287DAB6D00A04A2B /* DetailIngEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957FD287DAB6D00A04A2B /* DetailIngEndPoint.swift */; };
 		39C95800287DAC2900A04A2B /* DetailDoneEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957FF287DAC2900A04A2B /* DetailDoneEndPoint.swift */; };
@@ -132,7 +131,6 @@
 		39C957F0287D984900A04A2B /* APIEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironment.swift; sourceTree = "<group>"; };
 		39C957F3287D9EB400A04A2B /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		39C957F5287D9ED000A04A2B /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
-		39C957F9287DA4BE00A04A2B /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		39C957FB287DAAFA00A04A2B /* DetailWaitEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitEndPoint.swift; sourceTree = "<group>"; };
 		39C957FD287DAB6D00A04A2B /* DetailIngEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIngEndPoint.swift; sourceTree = "<group>"; };
 		39C957FF287DAC2900A04A2B /* DetailDoneEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDoneEndPoint.swift; sourceTree = "<group>"; };
@@ -265,7 +263,6 @@
 				39C957F0287D984900A04A2B /* APIEnvironment.swift */,
 				39C957F3287D9EB400A04A2B /* APIService.swift */,
 				39C957F5287D9ED000A04A2B /* NetworkRequest.swift */,
-				39C957F9287DA4BE00A04A2B /* BaseModel.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -846,7 +843,6 @@
 				39C95802287DACC300A04A2B /* RoomEndPoint.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
-				39C957FA287DA4BE00A04A2B /* BaseModel.swift in Sources */,
 				39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
