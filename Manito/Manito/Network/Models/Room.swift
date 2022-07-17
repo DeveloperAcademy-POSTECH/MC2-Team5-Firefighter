@@ -7,7 +7,6 @@
 
 import Foundation
 
-// FIXME: 모든 변수들을 만들어 뒀다가 조회할 때 추가하는 방식인데 괜찮은지..?
 struct Room: Decodable {
     let id: Int?
     let title: String?
