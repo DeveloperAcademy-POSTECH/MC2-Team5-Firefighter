@@ -69,8 +69,6 @@ class SettingViewController: BaseViewController {
         super.configUI()
     }
     
-    // MARK: - Selectors
-    
     // MARK: - Functions
     
     private func setupDelegate() {
@@ -152,6 +150,7 @@ extension SettingViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].options.count
     }
@@ -163,11 +162,13 @@ extension SettingViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let model = sections[indexPath.section].options[indexPath.row]
         model.handler()
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
