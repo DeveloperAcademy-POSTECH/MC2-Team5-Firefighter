@@ -43,7 +43,7 @@ class CreateRoomViewController: BaseViewController {
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         button.setTitle("이전", for: .normal)
-        button.titleLabel?.font = .font(.regular, ofSize: 16)
+        button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
         button.isHidden = true
         return button
@@ -76,26 +76,25 @@ class CreateRoomViewController: BaseViewController {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
         }
         
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.width.height.equalTo(44)
+            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
         view.addSubview(backButton)
         backButton.snp.makeConstraints {
             $0.top.equalTo(closeButton)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
             $0.height.equalTo(44)
         }
         
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(57)
             $0.height.equalTo(60)
         }
@@ -103,28 +102,28 @@ class CreateRoomViewController: BaseViewController {
         view.addSubview(nameView)
         nameView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
         
         view.addSubview(personView)
         personView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
         
         view.addSubview(dateView)
         dateView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
-    
+        
         view.addSubview(checkView)
         checkView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
     }

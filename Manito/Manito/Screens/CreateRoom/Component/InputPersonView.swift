@@ -107,13 +107,13 @@ class InputPersonView: UIView {
         
         self.addSubview(minLabel)
         minLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalTo(personBackView.snp.bottom).offset(49)
         }
         
         self.addSubview(maxLabel)
         maxLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(16)
+            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalTo(minLabel.snp.top)
         }
         
