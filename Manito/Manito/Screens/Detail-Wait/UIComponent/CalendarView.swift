@@ -14,9 +14,11 @@ class CalendarView: UIView {
     private var selectStartDate = Date()
     let oneDayInterval: TimeInterval = 86400
     let sevenDaysInterval: TimeInterval = 604800
-    let testStartString = "2022-06-20"
-    let testEndString = "2022-06-24"
-
+    var startDateText = ""
+    var endDateText = ""
+    var tempStartDateText = ""
+    var tempEndDateText = ""
+    
     private enum CalendarMoveType {
         case previous
         case next
@@ -119,11 +121,9 @@ class CalendarView: UIView {
         calendar.setCurrentPage(changedCurrentPage, animated: true)
     }
 
-    private func setupDateRange() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        guard let startDate = formatter.date(from: testStartString) else { return }
-        guard let endDate = formatter.date(from: testEndString) else { return }
+    func setupDateRange() {
+        guard let startDate = startDateText.stringToDate else { return }
+        guard let endDate = endDateText.stringToDate else { return }
         setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 
@@ -151,6 +151,8 @@ class CalendarView: UIView {
             calendar.select(addDate)
             startDate += oneDayInterval
         }
+        tempStartDateText = calendar.selectedDates[startIndex].dateToString
+        tempEndDateText = calendar.selectedDates[endIndex].dateToString
     }
 
     func countDateRange() -> Int {
@@ -208,7 +210,7 @@ extension CalendarView: FSCalendarDelegate {
 
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         let isBeforeToday = date < Date() - oneDayInterval
-        let isAWeekBeforeAfter = date < selectStartDate + 604800 && date > selectStartDate - 604800
+        let isAWeekBeforeAfter = date < selectStartDate + sevenDaysInterval && date > selectStartDate - sevenDaysInterval
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey004.withAlphaComponent(0.4)
