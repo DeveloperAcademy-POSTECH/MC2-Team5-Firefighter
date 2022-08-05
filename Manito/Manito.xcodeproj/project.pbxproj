@@ -14,6 +14,9 @@
 		392EC77E2855C388006918A9 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC77D2855C388006918A9 /* SettingButton.swift */; };
 		392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */; };
 		399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */; };
+		39C957D02879521400A04A2B /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957CF2879521400A04A2B /* String+Extension.swift */; };
+		39C957D22879523200A04A2B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957D12879523200A04A2B /* Date+Extension.swift */; };
+		39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957CD2876E2ED00A04A2B /* LoginViewController.swift */; };
 		39D95265285B097800183B09 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D95264285B097800183B09 /* CalendarView.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
@@ -86,6 +89,8 @@
 		CBA15C96285CE1F00051EDE2 /* ChooseCharacter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */; };
 		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
+		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
+		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
 /* End PBXBuildFile section */
@@ -98,6 +103,9 @@
 		392EC77D2855C388006918A9 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitTitleView.swift; sourceTree = "<group>"; };
 		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
+		39C957CF2879521400A04A2B /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		39C957D12879523200A04A2B /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		39C957CD2876E2ED00A04A2B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		39D95264285B097800183B09 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
@@ -169,6 +177,8 @@
 		CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChooseCharacter.storyboard; sourceTree = "<group>"; };
 		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
+		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -202,6 +212,14 @@
 				39D95264285B097800183B09 /* CalendarView.swift */,
 			);
 			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		39C957CC2876E2BE00A04A2B /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				39C957CD2876E2ED00A04A2B /* LoginViewController.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		7E0C5C342855B1EF00F698D1 /* CreateNickName */ = {
@@ -289,7 +307,9 @@
 		B5F524E328519AC300614FF7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				D724AF5B287088110003F280 /* Setting */,
 				B50B1B28285AB7550080992C /* Splash */,
+				39C957CC2876E2BE00A04A2B /* Login */,
 				7E0C5C342855B1EF00F698D1 /* CreateNickName */,
 				B5F524E628519B0A00614FF7 /* Main */,
 				B50B1B3F285B047C0080992C /* Interaction */,
@@ -413,6 +433,8 @@
 				B5F525412855C97900614FF7 /* UILabel+Extension.swift */,
 				D77224DE285DDAB7008B760B /* Notification+Extension.swift */,
 				B5E1F2AD285B2917006D880B /* Int+Extension.swift */,
+				39C957CF2879521400A04A2B /* String+Extension.swift */,
+				39C957D12879523200A04A2B /* Date+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -593,6 +615,15 @@
 			path = UIComponent;
 			sourceTree = "<group>";
 		};
+		D724AF5B287088110003F280 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				D724AF5C287088310003F280 /* SettingViewController.swift */,
+				D724AF5E28708D830003F280 /* ImageRowView.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -703,7 +734,9 @@
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,
 				7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
+				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
+				39C957D02879521400A04A2B /* String+Extension.swift in Sources */,
 				399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */,
 				B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */,
 				B50B1B44285B146A0080992C /* ManittoCollectionViewCell.swift in Sources */,
@@ -712,6 +745,7 @@
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */,
+				D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */,
 				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
@@ -732,6 +766,7 @@
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
+				39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
@@ -745,6 +780,7 @@
 				B50B1B2A285AB7650080992C /* SplashViewController.swift in Sources */,
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
+				D724AF5D287088310003F280 /* SettingViewController.swift in Sources */,
 				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
 				CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */,
 				CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */,
@@ -900,6 +936,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 앨범에 접근하려고 합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -931,6 +968,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 앨범에 접근하려고 합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
