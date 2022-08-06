@@ -12,7 +12,7 @@ import SnapKit
 final class MainButton: UIButton {
     
     private enum Size {
-        static let spacing: CGFloat = 16.0
+        static let spacing: CGFloat = 20.0
         static let height: CGFloat = 60.0
         static let width: CGFloat = UIScreen.main.bounds.size.width - Size.spacing * 2
     }

@@ -156,13 +156,13 @@ class DetailEditViewController: BaseViewController {
         view.addSubview(startSettingLabel)
         startSettingLabel.snp.makeConstraints {
             $0.top.equalTo(cancelButton.snp.bottom).offset(51)
-            $0.leading.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
 
         view.addSubview(calendarView)
         calendarView.snp.makeConstraints {
             $0.top.equalTo(startSettingLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.height.equalTo(400)
         }
 
@@ -175,7 +175,7 @@ class DetailEditViewController: BaseViewController {
         view.addSubview(setMemberLabel)
         setMemberLabel.snp.makeConstraints {
             $0.top.equalTo(calendarView.snp.bottom).offset(60)
-            $0.leading.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
 
         view.addSubview(minMemberLabel)

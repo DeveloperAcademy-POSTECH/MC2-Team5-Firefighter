@@ -176,14 +176,14 @@ class DetailWaitViewController: BaseViewController {
     override func render() {
         view.addSubview(titleView)
         titleView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalToSuperview().offset(100)
             $0.height.equalTo(86)
         }
 
         view.addSubview(togetherFriendLabel)
         togetherFriendLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
 
@@ -202,7 +202,7 @@ class DetailWaitViewController: BaseViewController {
 
         view.addSubview(copyButton)
         copyButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(16)
+            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.centerY.equalTo(togetherFriendLabel.snp.centerY)
         }
 
@@ -214,14 +214,14 @@ class DetailWaitViewController: BaseViewController {
         }
         listTable.snp.makeConstraints {
             $0.top.equalTo(togetherFriendLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(tableHeight)
         }
 
         view.addSubview(startButton)
         startButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(65)
             $0.height.equalTo(60)
         }
