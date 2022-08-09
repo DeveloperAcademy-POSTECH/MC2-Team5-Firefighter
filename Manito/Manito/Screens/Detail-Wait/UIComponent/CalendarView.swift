@@ -192,6 +192,7 @@ extension CalendarView: FSCalendarDelegate {
     }
 
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        tempEndDateText = ""
         isEdited = true
         (calendar.selectedDates).forEach {
             calendar.deselect($0)

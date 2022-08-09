@@ -221,9 +221,11 @@ class DetailEditViewController: BaseViewController {
     private func presentationControllerDidAttemptToDismissAlert() {
         let hasStardDate = calendarView.tempStartDateText.isEmpty
         let hasEndDate = calendarView.tempEndDateText.isEmpty
-        print(calendarView.tempStartDateText)
-        print(calendarView.tempEndDateText)
         guard calendarView.isEdited else {
+            showSaveAlert()
+            return
+        }
+        if !hasStardDate && !hasEndDate {
             showSaveAlert()
             return
         }
@@ -232,7 +234,6 @@ class DetailEditViewController: BaseViewController {
             return
         }
         showDiscardChangAlert()
-        
     }
 
     private func showDiscardChangAlert() {
@@ -240,7 +241,7 @@ class DetailEditViewController: BaseViewController {
             self?.dismiss(animated: true)
         })
     }
-    
+
     private func showSaveAlert() {
         makeRequestAlert(title: "변경사항을 저장합니다", message: "변경사항을 저장하시겠습니까??", okAction: { [weak self] _ in
             self?.dismiss(animated: true)
