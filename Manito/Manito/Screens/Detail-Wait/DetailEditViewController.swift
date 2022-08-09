@@ -122,6 +122,8 @@ class DetailEditViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         self.navigationController?.isNavigationBarHidden = true
+        self.presentationController?.delegate = self
+        isModalInPresentation = true
     }
 
     override func render() {
@@ -212,5 +214,43 @@ class DetailEditViewController: BaseViewController {
         memberCountLabel.text = String(Int(sender.value)) + "인"
         memberCountLabel.font = .font(.regular, ofSize: 24)
         memberCountLabel.textColor = .white
+    }
+
+    // MARK: - func
+
+    private func presentationControllerDidAttemptToDismissAlert() {
+        let hasStardDate = calendarView.tempStartDateText.isEmpty
+        let hasEndDate = calendarView.tempEndDateText.isEmpty
+        print(calendarView.tempStartDateText)
+        print(calendarView.tempEndDateText)
+        guard calendarView.isEdited else {
+            showSaveAlert()
+            return
+        }
+        guard hasStardDate || hasEndDate else {
+            dismiss(animated: true)
+            return
+        }
+        showDiscardChangAlert()
+        
+    }
+
+    private func showDiscardChangAlert() {
+        makeRequestAlert(title: "변경사항을 폐기합니다", message: "변경사항은 저장되지 않고 폐기됩니다. \n 폐기하시겠습니까??", okAction: { [weak self] _ in
+            self?.dismiss(animated: true)
+        })
+    }
+    
+    private func showSaveAlert() {
+        makeRequestAlert(title: "변경사항을 저장합니다", message: "변경사항을 저장하시겠습니까??", okAction: { [weak self] _ in
+            self?.dismiss(animated: true)
+        })
+    }
+}
+
+
+extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        presentationControllerDidAttemptToDismissAlert()
     }
 }
