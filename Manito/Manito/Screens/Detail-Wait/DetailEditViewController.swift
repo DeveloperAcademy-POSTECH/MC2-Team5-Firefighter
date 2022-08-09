@@ -244,6 +244,9 @@ class DetailEditViewController: BaseViewController {
 
     private func showSaveAlert() {
         makeRequestAlert(title: "변경사항을 저장합니다", message: "변경사항을 저장하시겠습니까??", okAction: { [weak self] _ in
+            guard let startDate = self?.calendarView.tempStartDateText else { return }
+            guard let endDate = self?.calendarView.tempEndDateText else { return }
+            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": startDate, "endDate": endDate])
             self?.dismiss(animated: true)
         })
     }
