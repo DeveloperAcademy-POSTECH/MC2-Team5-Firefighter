@@ -11,6 +11,7 @@ import FSCalendar
 import SnapKit
 
 class CalendarView: UIView {
+    var delegate: ChangeButtonProtocol?
     private var selectStartDate = Date()
     let oneDayInterval: TimeInterval = 86400
     let sevenDaysInterval: TimeInterval = 604800
@@ -168,9 +169,11 @@ class CalendarView: UIView {
 extension CalendarView: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         isEdited = true
+        delegate?.sendData(isChanged: false)
         let isSelectedDateRange = calendar.selectedDates.count == 2
         let isReclickedStartDate = calendar.selectedDates.count > 2
         if isSelectedDateRange {
+            delegate?.sendData(isChanged: true)
             tempEndDateText = date.dateToString
             if countDateRange() > 7 {
                 calendar.deselect(date)
@@ -180,6 +183,7 @@ extension CalendarView: FSCalendarDelegate {
                 calendar.reloadData()
             }
         } else if isReclickedStartDate {
+            delegate?.sendData(isChanged: false)
             tempStartDateText = date.dateToString
             tempEndDateText = ""
             (calendar.selectedDates).forEach {
@@ -194,6 +198,7 @@ extension CalendarView: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         tempEndDateText = ""
         isEdited = true
+        delegate?.sendData(isChanged: false)
         (calendar.selectedDates).forEach {
             calendar.deselect($0)
         }
@@ -230,4 +235,8 @@ extension CalendarView: FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
         return .red001
     }
+}
+
+protocol ChangeButtonProtocol {
+    func sendData(isChanged: Bool)
 }
