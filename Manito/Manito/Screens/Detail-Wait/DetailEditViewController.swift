@@ -91,21 +91,21 @@ class DetailEditViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    private let setMemberLabel: UILabel = {
+    private lazy var setMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "인원 설정"
         label.font = .font(.regular, ofSize: 18)
         label.textColor = .white
         return label
     }()
-    private let minMemberLabel: UILabel = {
+    private lazy var minMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "5인"
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
-    private let maxMemberLabel: UILabel = {
+    private lazy var maxMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "15인"
         label.font = .font(.regular, ofSize: 16)
