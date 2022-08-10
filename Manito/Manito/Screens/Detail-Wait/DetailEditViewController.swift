@@ -11,6 +11,14 @@ import SnapKit
 import FSCalendar
 
 class DetailEditViewController: BaseViewController {
+
+    enum EditMode {
+        case dateEditMode
+        case infoEditMode
+    }
+
+    var editMode: EditMode = .infoEditMode
+
     private var memberCount = 7
     var startDateText = "" {
         didSet {
@@ -175,36 +183,38 @@ class DetailEditViewController: BaseViewController {
             $0.trailing.equalToSuperview().inset(25)
         }
 
-        view.addSubview(setMemberLabel)
-        setMemberLabel.snp.makeConstraints {
-            $0.top.equalTo(calendarView.snp.bottom).offset(60)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
-        }
+        if editMode == .infoEditMode {
+            view.addSubview(setMemberLabel)
+            setMemberLabel.snp.makeConstraints {
+                $0.top.equalTo(calendarView.snp.bottom).offset(60)
+                $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            }
 
-        view.addSubview(minMemberLabel)
-        minMemberLabel.snp.makeConstraints {
-            $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(24)
-        }
+            view.addSubview(minMemberLabel)
+            minMemberLabel.snp.makeConstraints {
+                $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
+                $0.leading.equalToSuperview().inset(24)
+            }
 
-        view.addSubview(memberSlider)
-        memberSlider.snp.makeConstraints {
-            $0.leading.equalTo(minMemberLabel.snp.trailing).offset(5)
-            $0.height.equalTo(45)
-            $0.centerY.equalTo(minMemberLabel.snp.centerY)
-        }
+            view.addSubview(memberSlider)
+            memberSlider.snp.makeConstraints {
+                $0.leading.equalTo(minMemberLabel.snp.trailing).offset(5)
+                $0.height.equalTo(45)
+                $0.centerY.equalTo(minMemberLabel.snp.centerY)
+            }
 
-        view.addSubview(maxMemberLabel)
-        maxMemberLabel.snp.makeConstraints {
-            $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
-            $0.leading.equalTo(memberSlider.snp.trailing).offset(5)
-            $0.trailing.equalToSuperview().inset(24)
-        }
+            view.addSubview(maxMemberLabel)
+            maxMemberLabel.snp.makeConstraints {
+                $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
+                $0.leading.equalTo(memberSlider.snp.trailing).offset(5)
+                $0.trailing.equalToSuperview().inset(24)
+            }
 
-        view.addSubview(memberCountLabel)
-        memberCountLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalTo(setMemberLabel.snp.centerY)
+            view.addSubview(memberCountLabel)
+            memberCountLabel.snp.makeConstraints {
+                $0.centerX.equalToSuperview()
+                $0.centerY.equalTo(setMemberLabel.snp.centerY)
+            }
         }
     }
 
