@@ -62,6 +62,7 @@ class DetailEditViewController: BaseViewController {
         }
         button.setTitle("변경", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
+        setChangedButton()
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         button.addAction(buttonAction, for: .touchUpInside)
         return button
@@ -79,11 +80,7 @@ class DetailEditViewController: BaseViewController {
         label.textColor = .white
         return label
     }()
-    private lazy var calendarView: CalendarView = {
-        let view = CalendarView()
-        view.delegate = self
-        return view
-    }()
+    private lazy var calendarView = CalendarView()
     private let tipLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 7일까지 설정할 수 있어요 !"
@@ -267,15 +264,14 @@ class DetailEditViewController: BaseViewController {
             self?.dismiss(animated: true)
         })
     }
-}
 
-extension DetailEditViewController: ChangeButtonProtocol {
-    func sendData(isChanged: Bool) {
-        changeButton.isUserInteractionEnabled = isChanged
-        changeButton.setTitleColor(isChanged ? .subBlue : .grey001, for: .normal)
+    private func setChangedButton() {
+        calendarView.changeButtonState = { [weak self] value in
+            self?.changeButton.isUserInteractionEnabled = value
+            self?.changeButton.setTitleColor(value ? .subBlue : .grey002, for: .normal)
+        }
     }
 }
-
 
 extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
