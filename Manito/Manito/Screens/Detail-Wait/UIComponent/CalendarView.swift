@@ -87,7 +87,7 @@ class CalendarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func render() {
+    private func render() {
         self.addSubview(calendar)
         calendar.snp.makeConstraints {
             $0.edges.equalToSuperview()
