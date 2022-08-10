@@ -106,6 +106,7 @@ class DetailEditViewController: BaseViewController {
         slider.minimumTrackTintColor = .red001
         slider.value = Float(memberCount)
         slider.isContinuous = true
+        slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         slider.addTarget(self, action: #selector(changeMemberCount(sender:)), for: .valueChanged)
         return slider
     }()
