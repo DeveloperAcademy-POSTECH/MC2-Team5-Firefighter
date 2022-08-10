@@ -105,7 +105,9 @@ class DetailWaitViewController: BaseViewController {
     }()
     private lazy var titleView: DetailWaitTitleView = {
         let view = DetailWaitTitleView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
         view.dateRangeText = "\(startDateText) ~ \(endDateText)"
+        view.addGestureRecognizer(tapGesture)
         return view
     }()
     private let togetherFriendLabel: UILabel = {
@@ -346,6 +348,11 @@ class DetailWaitViewController: BaseViewController {
 
         self.startDateText = startDate
         self.endDateText = endDate
+    }
+
+    @objc
+    private func presentDetailEditViewController() {
+        self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
     }
 }
 
