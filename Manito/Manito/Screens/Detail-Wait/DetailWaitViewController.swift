@@ -129,8 +129,8 @@ class DetailWaitViewController: BaseViewController {
     }()
     private lazy var copyButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { _ in
-            self.touchUpToShowToast()
+        let buttonAction = UIAction { [weak self] _ in
+            self?.touchUpToShowToast()
         }
         button.setTitle("방 코드 복사", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
@@ -150,11 +150,11 @@ class DetailWaitViewController: BaseViewController {
         if canStart {
             button.title = ButtonText.start.rawValue
             button.isDisabled = false
-            let action = UIAction { _ in
+            let action = UIAction { [weak self] _ in
                 let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                 guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                 viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true)
+                self?.present(viewController, animated: true)
             }
             button.addAction(action, for: .touchUpInside)
         } else {
@@ -288,17 +288,19 @@ class DetailWaitViewController: BaseViewController {
     private func setExitButtonMenu() -> UIMenu {
         if isOwner {
             let menu = UIMenu(options: [], children: [
-                    UIAction(title: "방 정보 수정", handler: { _ in
-                        self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
+                    UIAction(title: "방 정보 수정", handler: { [weak self] _ in
+                        guard let startText = self?.startDateText else { return }
+                        guard let endText = self?.endDateText else { return }
+                        self?.presentModal(from: startText, to: endText, isDateEdit: false)
                     }),
-                    UIAction(title: "방 삭제", handler: { _ in
-                        self.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
+                    UIAction(title: "방 삭제", handler: { [weak self] _ in
+                        self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
                     })])
             return menu
         } else {
             let menu = UIMenu(options: [], children: [
-                    UIAction(title: "방 나가기", handler: { _ in
-                        self.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction: nil)
+                    UIAction(title: "방 나가기", handler: { [weak self] _ in
+                        self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction: nil)
                     })
                 ])
             return menu

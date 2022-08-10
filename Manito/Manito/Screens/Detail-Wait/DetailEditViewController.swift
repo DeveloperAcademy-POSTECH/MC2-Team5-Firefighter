@@ -37,8 +37,8 @@ class DetailEditViewController: BaseViewController {
 
     private lazy var cancelButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { _ in
-            self.dismiss(animated: true)
+        let buttonAction = UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
         }
         button.setTitle("취소", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -54,9 +54,11 @@ class DetailEditViewController: BaseViewController {
     }()
     private lazy var changeButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { _ in
-            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": self.calendarView.tempStartDateText, "endDate": self.calendarView.tempEndDateText])
-            self.dismiss(animated: true)
+        let buttonAction = UIAction { [weak self] _ in
+            guard let startText = self?.calendarView.tempStartDateText else { return }
+            guard let endText = self?.calendarView.tempEndDateText else { return }
+            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": startText, "endDate": endText])
+            self?.dismiss(animated: true)
         }
         button.setTitle("변경", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
