@@ -237,9 +237,12 @@ class DetailEditViewController: BaseViewController {
     }
 
     private func showDiscardChangAlert() {
-        makeRequestAlert(title: "변경사항을 폐기합니다", message: "변경사항은 저장되지 않고 폐기됩니다. \n 폐기하시겠습니까??", okAction: { [weak self] _ in
+        let actionTitles = ["변경 사항 폐기", "취소"]
+        let actionStyle: [UIAlertAction.Style] = [.destructive, .cancel]
+        let actions: [((UIAlertAction) -> Void)?] = [{ [weak self] _ in
             self?.dismiss(animated: true)
-        })
+        }, nil]
+        makeActionSheet(actionTitles: actionTitles, actionStyle: actionStyle, actions: actions)
     }
 
     private func showSaveAlert() {
