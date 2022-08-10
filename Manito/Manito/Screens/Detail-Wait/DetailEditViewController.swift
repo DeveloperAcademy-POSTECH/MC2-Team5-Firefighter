@@ -221,16 +221,14 @@ class DetailEditViewController: BaseViewController {
     private func presentationControllerDidAttemptToDismissAlert() {
         let hasStardDate = calendarView.tempStartDateText.isEmpty
         let hasEndDate = calendarView.tempEndDateText.isEmpty
-        guard calendarView.isEdited else {
+        let hasDateRange = !hasStardDate && !hasEndDate
+        
+        guard calendarView.isFirstTap else {
             showSaveAlert()
             return
         }
-        if !hasStardDate && !hasEndDate {
+        if hasDateRange {
             showSaveAlert()
-            return
-        }
-        guard hasStardDate || hasEndDate else {
-            dismiss(animated: true)
             return
         }
         showDiscardChangAlert()
