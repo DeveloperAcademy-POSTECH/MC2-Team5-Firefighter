@@ -37,7 +37,6 @@ class DeveloperInfoViewCell: BaseCollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,7 +45,7 @@ class DeveloperInfoViewCell: BaseCollectionViewCell {
     
     // MARK: - func
 
-    func setupView(){
+    override func configUI() {
         backgroundColor = .grey001.withAlphaComponent(0.1)
         layer.borderWidth = 1
         layer.borderColor = UIColor.white.withAlphaComponent(0.1).cgColor
@@ -57,7 +56,7 @@ class DeveloperInfoViewCell: BaseCollectionViewCell {
         addSubview(developerImageView)
         developerImageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.width.height.equalTo(80)
         }
         
