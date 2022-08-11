@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class SettingViewTableCell : UITableViewCell {
+class SettingViewTableCell: UITableViewCell {
     
     // MARK: - Property
     lazy var settingCellView: UIView = {
