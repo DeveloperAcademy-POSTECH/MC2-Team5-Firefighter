@@ -32,6 +32,13 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var letterBoxButton: UIButton!
     @IBOutlet weak var manitoMemoryButton: UIButton!
 
+    private lazy var manitiRealIconView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = ImageLiterals.imgMa
+        imageView.alpha = 0
+        return imageView
+    }()
+    
     private let manitoOpenButton: UIButton = {
         let button = MainButton()
         button.title = "마니또 공개"
@@ -47,6 +54,14 @@ class DetailIngViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
             $0.centerX.equalToSuperview()
         }
+        
+        view.addSubview(manitiRealIconView)
+        manitiRealIconView.snp.makeConstraints {
+            $0.top.equalTo(manitiIconView.snp.top)
+            $0.trailing.equalTo(manitiIconView.snp.trailing)
+            $0.leading.equalTo(manitiIconView.snp.leading)
+            $0.bottom.equalTo(manitiIconView.snp.bottom)
+        }
     }
 
     override func configUI() {
@@ -56,6 +71,7 @@ class DetailIngViewController: BaseViewController {
         addActionMemoryViewController()
         addActionPushLetterViewController()
         addGestureMemberList()
+        addGestureManito()
         addActionOpenManittoViewController()
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -94,6 +110,11 @@ class DetailIngViewController: BaseViewController {
         manitoMemoryButton.makeBorderLayer(color: .white)
     }
     
+    private func addGestureManito() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapManito))
+        manitiBackView.addGestureRecognizer(tapGesture)
+    }
+    
     private func addGestureMemberList() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pushFriendListViewController(_:)))
         listBackView.addGestureRecognizer(tapGesture)
@@ -129,5 +150,20 @@ class DetailIngViewController: BaseViewController {
         let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className)
         self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @objc
+    private func didTapManito() {
+        print("tap")
+        UIView.animate(withDuration: 1.0) {
+            self.manitiIconView.alpha = 0
+            self.manitiRealIconView.alpha = 1
+        } completion: { _ in
+            UIView.animate(withDuration: 1.0, delay: 1.0) {
+                self.manitiIconView.alpha = 1
+                self.manitiRealIconView.alpha = 0
+            }
+        }
+
     }
 }
