@@ -19,14 +19,14 @@ class DeveloperInfoViewCell: BaseCollectionViewCell {
         return imageView
     }()
     
-    lazy var nameLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
     
-    lazy var infoLabel: UILabel = {
+    let infoLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
