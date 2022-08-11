@@ -11,8 +11,6 @@ import SnapKit
 
 class SettingViewTableCell : UITableViewCell {
     
-    static let identifier = "SettingViewTableCell"
-    
     // MARK: - Property
     lazy var settingCellView: UIView = {
         let view = UIView()

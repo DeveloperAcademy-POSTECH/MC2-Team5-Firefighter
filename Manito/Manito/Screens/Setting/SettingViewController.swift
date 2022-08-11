@@ -22,7 +22,7 @@ class SettingViewController: BaseViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(SettingViewTableCell.self, forCellReuseIdentifier: SettingViewTableCell.identifier)
+        tableView.register(SettingViewTableCell.self, forCellReuseIdentifier: SettingViewTableCell.className)
         tableView.separatorStyle = .none
         tableView.alwaysBounceVertical = false
         return tableView
@@ -54,7 +54,7 @@ class SettingViewController: BaseViewController {
             $0.top.equalTo(imageRow.snp.bottom)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.height.equalTo(options.count*70)
+            $0.height.equalTo(options.count * 70)
         }
     }
     
@@ -152,7 +152,7 @@ extension SettingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = options[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.identifier ,for: indexPath) as! SettingViewTableCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as! SettingViewTableCell
         cell.titleLabel.text = model.title
         cell.selectionStyle = .none
         return cell
