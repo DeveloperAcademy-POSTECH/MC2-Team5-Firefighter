@@ -11,16 +11,16 @@ import SnapKit
 
 class DetailWaitViewController: BaseViewController {
     let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
-    var canStart = true
+    var canStartClosure: ((Bool) -> ())?
     var maxUserCount = 15
     lazy var userCount = userArr.count
     let isOwner = true
-    var startDateText = "22.07.03" {
+    var startDateText = "22.08.11" {
         didSet {
             titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
         }
     }
-    var endDateText = "22.07.08" {
+    var endDateText = "22.08.15" {
         didSet {
             titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
         }
@@ -147,19 +147,21 @@ class DetailWaitViewController: BaseViewController {
     }()
     private lazy var startButton: UIButton = {
         let button = MainButton()
-        if canStart {
-            button.title = ButtonText.start.rawValue
-            button.isDisabled = false
-            let action = UIAction { _ in
-                let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-                guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
-                viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true)
+        canStartClosure = { value in
+            if value {
+                button.title = ButtonText.start.rawValue
+                button.isDisabled = false
+                let action = UIAction { _ in
+                    let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                    guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+                    viewController.modalPresentationStyle = .fullScreen
+                    self.present(viewController, animated: true)
+                }
+                button.addAction(action, for: .touchUpInside)
+            } else {
+                button.title = ButtonText.waiting.rawValue
+                button.isDisabled = true
             }
-            button.addAction(action, for: .touchUpInside)
-        } else {
-            button.title = ButtonText.waiting.rawValue
-            button.isDisabled = true
         }
         return button
     }()
@@ -171,6 +173,7 @@ class DetailWaitViewController: BaseViewController {
         setupDelegation()
         setupNotificationCenter()
         isPastStartDate()
+        setStartButton()
     }
 
     override func render() {
@@ -317,7 +320,9 @@ class DetailWaitViewController: BaseViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "yy.MM.dd"
         guard let startDate = formatter.date(from: startDateText) else { return }
-        if startDate < Date() {
+        let isPast = startDate.distance(to: Date()) > 0
+        let isToday = startDate.distance(to: Date()) < 86400
+        if !isPast && !isToday {
             if isOwner {
                 let action: ((UIAlertAction) -> ()) = { [weak self] _ in
                     let fiveDaysInterval: TimeInterval = 86400 * 4
@@ -330,6 +335,15 @@ class DetailWaitViewController: BaseViewController {
                 makeAlert(title: "시작일이 지났어요", message: "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요")
             }
         }
+    }
+
+    private func setStartButton() {
+        guard let startDate = startDateText.stringToDate else { return }
+        guard let todayDate = Date().dateToString.stringToDate else { return }
+        
+        let isToday = startDate.distance(to: todayDate).isZero
+        
+        canStartClosure?(isToday)
     }
 
     // MARK: - selector
