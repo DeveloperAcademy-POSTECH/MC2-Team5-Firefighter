@@ -8,12 +8,12 @@
 import UIKit
 
 import SnapKit
+import Gifu
 
 class MainViewController: BaseViewController {
 
     // 임시 데이터
     let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
-    private let nickname = "코비"
 
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 22
@@ -66,22 +66,27 @@ class MainViewController: BaseViewController {
             forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
         return collectionView
     }()
-    private let niCharacterImageView = UIImageView(image: ImageLiterals.imgNi)
-    private let maCharacterImageView = UIImageView(image: ImageLiterals.imgMa)
-    private let ttoCharacterImageView = UIImageView(image: ImageLiterals.imgTto)
+    private let maCharacterImageView = GIFImageView()
+    private let niCharacterImageView = GIFImageView()
+    private let ttoCharacterImageView = GIFImageView()
 
     // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupGifImage()
+    }
 
     override func render() {
-        view.addSubview(niCharacterImageView)
-        niCharacterImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(54)
-            $0.bottom.equalToSuperview().inset(24)
+        view.addSubview(maCharacterImageView)
+        maCharacterImageView.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(70)
+            $0.bottom.equalToSuperview().inset(20)
             $0.height.width.equalTo(75)
         }
 
-        view.addSubview(maCharacterImageView)
-        maCharacterImageView.snp.makeConstraints {
+        view.addSubview(niCharacterImageView)
+        niCharacterImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().inset(40)
             $0.height.width.equalTo(75)
@@ -89,8 +94,8 @@ class MainViewController: BaseViewController {
 
         view.addSubview(ttoCharacterImageView)
         ttoCharacterImageView.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(54)
-            $0.bottom.equalToSuperview().inset(24)
+            $0.trailing.equalToSuperview().inset(70)
+            $0.bottom.equalToSuperview().inset(30)
             $0.height.width.equalTo(75)
         }
 
@@ -127,10 +132,6 @@ class MainViewController: BaseViewController {
         }
     }
 
-    override func configUI() {
-        super.configUI()
-    }
-
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
@@ -141,6 +142,14 @@ class MainViewController: BaseViewController {
         navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.leftBarButtonItem = appTitleView
         navigationItem.rightBarButtonItem = settingButtonView
+    }
+    
+    private func setupGifImage() {
+        DispatchQueue.main.async {
+            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
+            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
+            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
+        }
     }
 
     func newRoom() {
