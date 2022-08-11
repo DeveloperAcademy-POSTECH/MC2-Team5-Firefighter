@@ -76,7 +76,7 @@ class CheckRoomViewController: BaseViewController {
         
         roomInfoImageView.addSubview(noButton)
         noButton.snp.makeConstraints {
-            $0.top.equalTo(questionLabel.snp.bottom).offset(16)
+            $0.top.equalTo(questionLabel.snp.bottom).offset(Size.leadingTrailingPadding)
             $0.width.equalTo(110)
             $0.height.equalTo(44)
             $0.bottom.equalToSuperview().inset(24)
@@ -85,7 +85,7 @@ class CheckRoomViewController: BaseViewController {
         
         roomInfoImageView.addSubview(yesButton)
         yesButton.snp.makeConstraints {
-            $0.top.equalTo(questionLabel.snp.bottom).offset(16)
+            $0.top.equalTo(questionLabel.snp.bottom).offset(Size.leadingTrailingPadding)
             $0.width.equalTo(110)
             $0.height.equalTo(44)
             $0.bottom.equalToSuperview().inset(24)

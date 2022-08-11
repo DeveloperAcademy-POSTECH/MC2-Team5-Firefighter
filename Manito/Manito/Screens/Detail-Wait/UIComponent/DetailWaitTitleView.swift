@@ -10,6 +10,11 @@ import UIKit
 import SnapKit
 
 class DetailWaitTitleView: UIView {
+    var dateRangeText = "" {
+        didSet {
+            durationDateLabel.text = dateRangeText
+        }
+    }
 
     private enum StartStatus: String {
         case waiting = "대기중"
@@ -19,7 +24,7 @@ class DetailWaitTitleView: UIView {
 
     // MARK: - property
 
-    private let roomTitle: UILabel = {
+    private let roomTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "명예소방관"
         label.textColor = .white
@@ -27,7 +32,7 @@ class DetailWaitTitleView: UIView {
         return label
     }()
 
-    private let startStauts: UILabel = {
+    private let startStautsLabel: UILabel = {
         let label = UILabel()
         label.text = StartStatus.waiting.rawValue
         label.backgroundColor = .badgeBeige
@@ -46,7 +51,7 @@ class DetailWaitTitleView: UIView {
         return durationView
     }()
 
-    private let durationText: UILabel = {
+    private let durationLabel: UILabel = {
         let durationText = UILabel()
         durationText.text = "진행 기간"
         durationText.textColor = .grey001
@@ -54,9 +59,8 @@ class DetailWaitTitleView: UIView {
         return durationText
     }()
 
-    private let durationDateText: UILabel = {
+    private lazy var durationDateLabel: UILabel = {
         let dateText = UILabel()
-        dateText.text = "22.06.06 ~ 22.06.10"
         dateText.textColor = .white
         dateText.font = .font(.regular, ofSize: 18)
         return dateText
@@ -73,37 +77,35 @@ class DetailWaitTitleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - func
-
-    func render() {
-        self.addSubview(roomTitle)
-        roomTitle.snp.makeConstraints {
+    private func render() {
+        self.addSubview(roomTitleLabel)
+        roomTitleLabel.snp.makeConstraints {
             $0.leading.top.equalToSuperview()
         }
 
-        self.addSubview(startStauts)
-        startStauts.snp.makeConstraints {
-            $0.centerY.equalTo(roomTitle.snp.centerY)
-            $0.leading.equalTo(roomTitle.snp.trailing).offset(10)
+        self.addSubview(startStautsLabel)
+        startStautsLabel.snp.makeConstraints {
+            $0.centerY.equalTo(roomTitleLabel.snp.centerY)
+            $0.leading.equalTo(roomTitleLabel.snp.trailing).offset(10)
             $0.width.equalTo(66)
             $0.height.equalTo(23)
         }
 
         self.addSubview(durationView)
         durationView.snp.makeConstraints {
-            $0.top.equalTo(roomTitle.snp.bottom).offset(30)
+            $0.top.equalTo(roomTitleLabel.snp.bottom).offset(30)
             $0.trailing.leading.equalToSuperview()
             $0.height.equalTo(36)
         }
 
-        durationView.addSubview(durationText)
-        durationText.snp.makeConstraints {
+        durationView.addSubview(durationLabel)
+        durationLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
 
-        durationView.addSubview(durationDateText)
-        durationDateText.snp.makeConstraints {
+        durationView.addSubview(durationDateLabel)
+        durationDateLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(40)
             $0.centerY.equalToSuperview()
         }

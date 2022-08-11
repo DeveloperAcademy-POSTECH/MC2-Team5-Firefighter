@@ -13,4 +13,5 @@ extension Notification.Name {
     static let personNotification = Notification.Name("PersonNotification")
     static let dateNotification = Notification.Name("DateNotification")
     static let checkNotification = Notification.Name("CheckNotification")
+    static let dateRangeNotification = Notification.Name("DateRangeNotification")
 }

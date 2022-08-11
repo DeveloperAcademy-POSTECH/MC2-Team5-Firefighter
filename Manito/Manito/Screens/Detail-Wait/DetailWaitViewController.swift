@@ -12,9 +12,19 @@ import SnapKit
 class DetailWaitViewController: BaseViewController {
     let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
     var canStart = true
-    var maxUser = 15
+    var maxUserCount = 15
     lazy var userCount = userArr.count
     let isOwner = true
+    var startDateText = "22.07.03" {
+        didSet {
+            titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
+        }
+    }
+    var endDateText = "22.07.08" {
+        didSet {
+            titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
+        }
+    }
 
     private enum UserStatus: Int, CaseIterable {
         case owner = 0
@@ -93,8 +103,14 @@ class DetailWaitViewController: BaseViewController {
         button.showsMenuAsPrimaryAction = true
         return button
     }()
-    private let titleView = DetailWaitTitleView()
-    private let togetherFriendText: UILabel = {
+    private lazy var titleView: DetailWaitTitleView = {
+        let view = DetailWaitTitleView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
+        view.dateRangeText = "\(startDateText) ~ \(endDateText)"
+        view.addGestureRecognizer(tapGesture)
+        return view
+    }()
+    private let togetherFriendLabel: UILabel = {
         let label = UILabel()
         label.text = "함께하는 친구들"
         label.textColor = .white
@@ -106,17 +122,17 @@ class DetailWaitViewController: BaseViewController {
         imageView.image = ImageLiterals.imgNi
         return imageView
     }()
-    private lazy var comeInText: UILabel = {
+    private lazy var comeInLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(userCount)/\(maxUser)"
+        label.text = "\(userCount)/\(maxUserCount)"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
     private lazy var copyButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { _ in
-            self.touchUpToShowToast()
+        let buttonAction = UIAction { [weak self] _ in
+            self?.touchUpToShowToast()
         }
         button.setTitle("방 코드 복사", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
@@ -136,11 +152,11 @@ class DetailWaitViewController: BaseViewController {
         if canStart {
             button.title = ButtonText.start.rawValue
             button.isDisabled = false
-            let action = UIAction { _ in
+            let action = UIAction { [weak self] _ in
                 let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                 guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                 viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true)
+                self?.present(viewController, animated: true)
             }
             button.addAction(action, for: .touchUpInside)
         } else {
@@ -155,39 +171,41 @@ class DetailWaitViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegation()
+        setupNotificationCenter()
+        isPastStartDate()
     }
 
     override func render() {
         view.addSubview(titleView)
         titleView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalToSuperview().offset(100)
             $0.height.equalTo(86)
         }
 
-        view.addSubview(togetherFriendText)
-        togetherFriendText.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(16)
+        view.addSubview(togetherFriendLabel)
+        togetherFriendLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
 
         view.addSubview(imgNiView)
         imgNiView.snp.makeConstraints {
-            $0.centerY.equalTo(togetherFriendText.snp.centerY)
-            $0.leading.equalTo(togetherFriendText.snp.trailing).offset(7)
+            $0.centerY.equalTo(togetherFriendLabel.snp.centerY)
+            $0.leading.equalTo(togetherFriendLabel.snp.trailing).offset(7)
             $0.width.height.equalTo(30)
         }
 
-        view.addSubview(comeInText)
-        comeInText.snp.makeConstraints {
+        view.addSubview(comeInLabel)
+        comeInLabel.snp.makeConstraints {
             $0.leading.equalTo(imgNiView.snp.trailing)
             $0.centerY.equalTo(imgNiView.snp.centerY)
         }
 
         view.addSubview(copyButton)
         copyButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(16)
-            $0.centerY.equalTo(togetherFriendText.snp.centerY)
+            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.centerY.equalTo(togetherFriendLabel.snp.centerY)
         }
 
         view.addSubview(listTable)
@@ -197,15 +215,15 @@ class DetailWaitViewController: BaseViewController {
             listTable.isScrollEnabled = true
         }
         listTable.snp.makeConstraints {
-            $0.top.equalTo(togetherFriendText.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.top.equalTo(togetherFriendLabel.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(tableHeight)
         }
 
         view.addSubview(startButton)
         startButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(65)
             $0.height.equalTo(60)
         }
@@ -252,9 +270,11 @@ class DetailWaitViewController: BaseViewController {
             })
     }
 
-    private func presentModal() {
+    private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
         let modalViewController = DetailEditViewController()
-
+        modalViewController.editMode = isDateEdit ? .dateEditMode : .infoEditMode
+        modalViewController.startDateText = startString
+        modalViewController.endDateText = endString
         present(modalViewController, animated: true, completion: nil)
     }
 
@@ -270,17 +290,19 @@ class DetailWaitViewController: BaseViewController {
     private func setExitButtonMenu() -> UIMenu {
         if isOwner {
             let menu = UIMenu(options: [], children: [
-                    UIAction(title: "방 정보 수정", handler: { _ in
-                        self.presentModal()
+                    UIAction(title: "방 정보 수정", handler: { [weak self] _ in
+                        guard let startText = self?.startDateText else { return }
+                        guard let endText = self?.endDateText else { return }
+                        self?.presentModal(from: startText, to: endText, isDateEdit: false)
                     }),
-                    UIAction(title: "방 삭제", handler: { _ in
-                        self.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
+                    UIAction(title: "방 삭제", handler: { [weak self] _ in
+                        self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
                     })])
             return menu
         } else {
             let menu = UIMenu(options: [], children: [
-                    UIAction(title: "방 나가기", handler: { _ in
-                        self.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction: nil)
+                    UIAction(title: "방 나가기", handler: { [weak self] _ in
+                        self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction: nil)
                     })
                 ])
             return menu
@@ -290,6 +312,47 @@ class DetailWaitViewController: BaseViewController {
     private func touchUpToShowToast() {
         UIPasteboard.general.string = "초대코드"
         self.showToast(message: "코드 복사 완료!")
+    }
+
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateRange(_:)), name: .dateRangeNotification, object: nil)
+    }
+
+    private func isPastStartDate() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yy.MM.dd"
+        guard let startDate = formatter.date(from: startDateText) else { return }
+        if startDate < Date() {
+            if isOwner {
+                let action: ((UIAlertAction) -> ()) = { [weak self] _ in
+                    let fiveDaysInterval: TimeInterval = 86400 * 4
+                    let startDate = formatter.string(from: Date())
+                    let endDate = formatter.string(from: Date() + fiveDaysInterval)
+                    self?.presentModal(from: startDate, to: endDate, isDateEdit: true)
+                }
+                makeAlert(title: "날짜를 재설정 해주세요", message: "마니또 시작일이 지났습니다. \n 진행기간을 재설정 해주세요", okAction: action)
+            } else {
+                makeAlert(title: "시작일이 지났어요", message: "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요")
+            }
+        }
+    }
+
+    // MARK: - selector
+
+    @objc
+    private func didReceiveDateRange(_ notification: Notification) {
+        guard let noti = notification.userInfo else { return }
+
+        guard let startDate = noti["startDate"] as? String else { return }
+        guard let endDate = noti["endDate"] as? String else { return }
+
+        self.startDateText = startDate
+        self.endDateText = endDate
+    }
+
+    @objc
+    private func presentDetailEditViewController() {
+        self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
     }
 }
 
