@@ -38,9 +38,9 @@ class MainViewController: BaseViewController {
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
     private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
     private let commonMissionView = CommonMissonView()
-    private lazy var menuTitle: UILabel = {
+    private let menuTitle: UILabel = {
         let label = UILabel()
-        label.text = "\(nickname)의 마니또"
+        label.text = "참여중인 애니또"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
@@ -192,28 +192,19 @@ extension MainViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item < roomData.count {
-            let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath)
-
-            guard let ManitoRoomCollectionViewCell = dequeuedCell as? ManitoRoomCollectionViewCell else {
-                assert(false, "Wrong ManitoRoomCollectionViewCell")
+        if indexPath.item == 0 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreateRoomCollectionViewCell.className, for: indexPath) as? CreateRoomCollectionViewCell else {
+                assert(false, "Wrong Cell")
             }
-
-            ManitoRoomCollectionViewCell.roomLabel.text = roomData[indexPath.item]
-
-            // configure your ManitoRoomCollectionViewCell
-
-            return ManitoRoomCollectionViewCell
+            return cell
         } else {
-            let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: CreateRoomCollectionViewCell.className, for: indexPath)
-
-            guard let CreateRoomCollectionViewCell = dequeuedCell as? CreateRoomCollectionViewCell else {
-                assert(false, "Wrong CreateRoomCollectionViewCell")
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath) as? ManitoRoomCollectionViewCell else {
+                assert(false, "Wrong Cell")
             }
-
-            // configure your CreateRoomCollectionViewCell
-
-            return CreateRoomCollectionViewCell
+            
+            cell.roomLabel.text = roomData[indexPath.item - 1]
+            
+            return cell
         }
     }
 }
@@ -221,10 +212,10 @@ extension MainViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item < roomData.count {
-            pushDetailView(status: .waiting)
-        } else {
+        if indexPath.item == 0 {
             newRoom()
+        } else {
+            pushDetailView(status: .waiting)
         }
     }
 }
