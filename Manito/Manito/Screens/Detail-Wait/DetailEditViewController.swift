@@ -12,6 +12,18 @@ import FSCalendar
 
 class DetailEditViewController: BaseViewController {
     private var memberCount = 7
+    var startDateText = "" {
+        didSet {
+            calendarView.startDateText = startDateText
+            calendarView.setupDateRange()
+        }
+    }
+    var endDateText = "" {
+        didSet {
+            calendarView.endDateText = endDateText
+            calendarView.setupDateRange()
+        }
+    }
 
     // MARK: - property
 
@@ -35,6 +47,7 @@ class DetailEditViewController: BaseViewController {
     private lazy var changeButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { _ in
+            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": self.calendarView.tempStartDateText, "endDate": self.calendarView.tempEndDateText])
             self.dismiss(animated: true)
         }
         button.setTitle("변경", for: .normal)
@@ -56,7 +69,7 @@ class DetailEditViewController: BaseViewController {
         label.textColor = .white
         return label
     }()
-    private let calendarView = CalendarView()
+    private lazy var calendarView = CalendarView()
     private let tipLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 7일까지 설정할 수 있어요 !"
@@ -109,6 +122,8 @@ class DetailEditViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         self.navigationController?.isNavigationBarHidden = true
+        self.presentationController?.delegate = self
+        isModalInPresentation = true
     }
 
     override func render() {
@@ -143,13 +158,13 @@ class DetailEditViewController: BaseViewController {
         view.addSubview(startSettingLabel)
         startSettingLabel.snp.makeConstraints {
             $0.top.equalTo(cancelButton.snp.bottom).offset(51)
-            $0.leading.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
 
         view.addSubview(calendarView)
         calendarView.snp.makeConstraints {
             $0.top.equalTo(startSettingLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.height.equalTo(400)
         }
 
@@ -162,7 +177,7 @@ class DetailEditViewController: BaseViewController {
         view.addSubview(setMemberLabel)
         setMemberLabel.snp.makeConstraints {
             $0.top.equalTo(calendarView.snp.bottom).offset(60)
-            $0.leading.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
 
         view.addSubview(minMemberLabel)
@@ -199,5 +214,32 @@ class DetailEditViewController: BaseViewController {
         memberCountLabel.text = String(Int(sender.value)) + "인"
         memberCountLabel.font = .font(.regular, ofSize: 24)
         memberCountLabel.textColor = .white
+    }
+
+    // MARK: - func
+
+    private func presentationControllerDidAttemptToDismissAlert() {
+        guard calendarView.isFirstTap else {
+            dismiss(animated: true)
+            return
+        }
+        
+        showDiscardChangAlert()
+    }
+
+    private func showDiscardChangAlert() {
+        let actionTitles = ["변경 사항 폐기", "취소"]
+        let actionStyle: [UIAlertAction.Style] = [.destructive, .cancel]
+        let actions: [((UIAlertAction) -> Void)?] = [{ [weak self] _ in
+            self?.dismiss(animated: true)
+        }, nil]
+        makeActionSheet(actionTitles: actionTitles, actionStyle: actionStyle, actions: actions)
+    }
+}
+
+
+extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        presentationControllerDidAttemptToDismissAlert()
     }
 }

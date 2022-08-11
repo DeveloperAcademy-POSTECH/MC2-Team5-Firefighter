@@ -9,11 +9,6 @@ import UIKit
 
 import SnapKit
 
-struct Section {
-    let title: String
-    let options: [Option]
-}
-
 struct Option {
     let title: String
     let handler: () -> Void
@@ -21,7 +16,7 @@ struct Option {
 
 class SettingViewController: BaseViewController {
  
-    private var sections = [Section]()
+    private var options = [Option]()
     
     // MARK: - Property
     
@@ -59,7 +54,7 @@ class SettingViewController: BaseViewController {
             $0.top.equalTo(imageRow.snp.bottom)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.height.equalTo(sections.count*70)
+            $0.height.equalTo(options.count*70)
         }
     }
     
@@ -77,41 +72,41 @@ class SettingViewController: BaseViewController {
     }
     
     private func configureModels() {
-        sections.append(Section(title: "닉네임 변경", options: [Option(title: "닉네임 변경하기", handler: { [weak self] in
+        options.append(Option(title: "닉네임 변경하기", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToChangeNickname()
             }
-        })]))
+        }))
         
-        sections.append(Section(title: "계정 복구", options: [Option(title: "개인정보 처리방침", handler: { [weak self] in
+        options.append(Option(title: "개인정보 처리방침", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToPersonalInfomation()
             }
-        })]))
+        }))
         
-        sections.append(Section(title: "이용 약관", options: [Option(title: "이용 약관", handler: { [weak self] in
+        options.append(Option(title: "이용 약관", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToTermsOfService()
             }
-        })]))
+        }))
         
-        sections.append(Section(title: "개발자 정보", options: [Option(title: "개발자 정보", handler: { [weak self] in
+        options.append(Option(title: "개발자 정보", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToDeveloperInfo()
             }
-        })]))
+        }))
         
-        sections.append(Section(title: "문의하기", options: [Option(title: "문의하기", handler: { [weak self] in
+        options.append(Option(title: "문의하기", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToHelp()
             }
-        })]))
+        }))
         
-        sections.append(Section(title: "로그아웃", options: [Option(title: "로그아웃", handler: { [weak self] in
+        options.append(Option(title: "로그아웃", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToLogOut()
             }
-        })]))
+        }))
     }
     
     private func goToChangeNickname() {
@@ -148,15 +143,15 @@ extension SettingViewController: UITableViewDelegate {
 
 extension SettingViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return options.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].options.count
+        return options.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = sections[indexPath.section].options[indexPath.row]
+        let model = options[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.identifier ,for: indexPath) as! SettingViewTableCell
         cell.titleLabel.text = model.title
         cell.selectionStyle = .none
@@ -165,7 +160,7 @@ extension SettingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let model = sections[indexPath.section].options[indexPath.row]
+        let model = options[indexPath.row]
         model.handler()
     }
     

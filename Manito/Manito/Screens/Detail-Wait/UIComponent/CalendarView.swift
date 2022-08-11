@@ -14,9 +14,12 @@ class CalendarView: UIView {
     private var selectStartDate = Date()
     let oneDayInterval: TimeInterval = 86400
     let sevenDaysInterval: TimeInterval = 604800
-    let testStartString = "2022-06-20"
-    let testEndString = "2022-06-24"
-
+    var startDateText = ""
+    var endDateText = ""
+    var tempStartDateText = ""
+    var tempEndDateText = ""
+    var isFirstTap = false
+    
     private enum CalendarMoveType {
         case previous
         case next
@@ -119,11 +122,9 @@ class CalendarView: UIView {
         calendar.setCurrentPage(changedCurrentPage, animated: true)
     }
 
-    private func setupDateRange() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        guard let startDate = formatter.date(from: testStartString) else { return }
-        guard let endDate = formatter.date(from: testEndString) else { return }
+    func setupDateRange() {
+        guard let startDate = startDateText.stringToDate else { return }
+        guard let endDate = endDateText.stringToDate else { return }
         setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 
@@ -151,6 +152,8 @@ class CalendarView: UIView {
             calendar.select(addDate)
             startDate += oneDayInterval
         }
+        tempStartDateText = calendar.selectedDates[startIndex].dateToString
+        tempEndDateText = calendar.selectedDates[endIndex].dateToString
     }
 
     func countDateRange() -> Int {
@@ -164,21 +167,21 @@ class CalendarView: UIView {
 
 extension CalendarView: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        let isClickedStartDate = calendar.selectedDates.count == 1
+        isFirstTap = true
         let isSelectedDateRange = calendar.selectedDates.count == 2
         let isReclickedStartDate = calendar.selectedDates.count > 2
-        if isClickedStartDate {
-            selectStartDate = date
-            calendar.reloadData()
-        } else if isSelectedDateRange {
+        if isSelectedDateRange {
+            tempEndDateText = date.dateToString
             if countDateRange() > 7 {
                 calendar.deselect(date)
-                viewController?.makeAlert(title: "인원 수 제한", message: "최대 7일까지 선택가능해요 !")
+                viewController?.makeAlert(title: "설정 기간 제한", message: "최대 7일까지 선택가능해요 !")
             } else {
                 setDateRange()
                 calendar.reloadData()
             }
         } else if isReclickedStartDate {
+            tempStartDateText = date.dateToString
+            tempEndDateText = ""
             (calendar.selectedDates).forEach {
                 calendar.deselect($0)
             }
@@ -189,6 +192,8 @@ extension CalendarView: FSCalendarDelegate {
     }
 
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        tempEndDateText = ""
+        isFirstTap = true
         (calendar.selectedDates).forEach {
             calendar.deselect($0)
         }
@@ -208,7 +213,7 @@ extension CalendarView: FSCalendarDelegate {
 
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         let isBeforeToday = date < Date() - oneDayInterval
-        let isAWeekBeforeAfter = date < selectStartDate + 604800 && date > selectStartDate - 604800
+        let isAWeekBeforeAfter = date < selectStartDate + sevenDaysInterval && date > selectStartDate - sevenDaysInterval
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey004.withAlphaComponent(0.4)
