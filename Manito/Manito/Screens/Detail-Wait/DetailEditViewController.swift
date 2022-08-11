@@ -122,6 +122,8 @@ class DetailEditViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         self.navigationController?.isNavigationBarHidden = true
+        self.presentationController?.delegate = self
+        isModalInPresentation = true
     }
 
     override func render() {
@@ -212,5 +214,32 @@ class DetailEditViewController: BaseViewController {
         memberCountLabel.text = String(Int(sender.value)) + "인"
         memberCountLabel.font = .font(.regular, ofSize: 24)
         memberCountLabel.textColor = .white
+    }
+
+    // MARK: - func
+
+    private func presentationControllerDidAttemptToDismissAlert() {
+        guard calendarView.isFirstTap else {
+            dismiss(animated: true)
+            return
+        }
+        
+        showDiscardChangAlert()
+    }
+
+    private func showDiscardChangAlert() {
+        let actionTitles = ["변경 사항 폐기", "취소"]
+        let actionStyle: [UIAlertAction.Style] = [.destructive, .cancel]
+        let actions: [((UIAlertAction) -> Void)?] = [{ [weak self] _ in
+            self?.dismiss(animated: true)
+        }, nil]
+        makeActionSheet(actionTitles: actionTitles, actionStyle: actionStyle, actions: actions)
+    }
+}
+
+
+extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        presentationControllerDidAttemptToDismissAlert()
     }
 }
