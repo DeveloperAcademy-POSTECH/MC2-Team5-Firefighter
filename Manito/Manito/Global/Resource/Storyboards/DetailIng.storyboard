@@ -56,8 +56,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000원 이하의 선물 주고 인증샷 받기" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vma-X3-7Uq">
-                                        <rect key="frame" x="24" y="44" width="311" height="40"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1000원 이하의 선물 주고 인증샷 받기" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vma-X3-7Uq">
+                                        <rect key="frame" x="24" y="41" width="311" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="AzM-fe-C6S"/>
                                         </constraints>
@@ -151,8 +151,8 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="마니또 참가명단" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZe-il-0Em">
-                                                <rect key="frame" x="21" y="125" width="119" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="함께하는 친구들" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZe-il-0Em">
+                                                <rect key="frame" x="21" y="125" width="119" height="18"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
@@ -337,7 +337,7 @@
                             <constraint firstItem="DW5-pm-f3M" firstAttribute="leading" secondItem="0Eq-am-Htd" secondAttribute="leading" id="pSl-Af-FoD"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="함께 하는 친구들" id="BnL-5s-02p"/>
+                    <navigationItem key="navigationItem" title="함께하는 친구들" id="BnL-5s-02p"/>
                     <connections>
                         <outlet property="friendListCollectionView" destination="DW5-pm-f3M" id="3QV-xr-yVy"/>
                     </connections>
