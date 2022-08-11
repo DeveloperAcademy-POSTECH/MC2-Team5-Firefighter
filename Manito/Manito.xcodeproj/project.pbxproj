@@ -109,8 +109,11 @@
 		CBA15C96285CE1F00051EDE2 /* ChooseCharacter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */; };
 		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
+<<<<<<< HEAD
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
+=======
+>>>>>>> 101-developer-info-ui
 		CBBFF778287AE050006A5964 /* DeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */; };
 		CBBFF77A287AE09F006A5964 /* DeveloperInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBBFF779287AE09F006A5964 /* DeveloperInfo.storyboard */; };
 		CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */; };
@@ -220,8 +223,11 @@
 		CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChooseCharacter.storyboard; sourceTree = "<group>"; };
 		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
+=======
+>>>>>>> 101-developer-info-ui
 		CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewController.swift; sourceTree = "<group>"; };
 		CBBFF779287AE09F006A5964 /* DeveloperInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DeveloperInfo.storyboard; sourceTree = "<group>"; };
 		CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewCell.swift; sourceTree = "<group>"; };
@@ -390,7 +396,10 @@
 		B5F524E328519AC300614FF7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				D724AF5B287088110003F280 /* Setting */,
+=======
+>>>>>>> 101-developer-info-ui
 				CBBFF775287AE034006A5964 /* DeveloperInfo */,
 				B50B1B28285AB7550080992C /* Splash */,
 				39C957CC2876E2BE00A04A2B /* Login */,
@@ -707,6 +716,7 @@
 			path = UIComponent;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		D724AF5B287088110003F280 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
@@ -714,6 +724,8 @@
 				D724AF5E28708D830003F280 /* ImageRowView.swift */,
 			);
 			path = Setting;
+=======
+>>>>>>> 101-developer-info-ui
 		CBBFF775287AE034006A5964 /* DeveloperInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -899,7 +911,10 @@
 				B50B1AFD2856C3500080992C /* LetterTextView.swift in Sources */,
 				D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */,
 				B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */,
+<<<<<<< HEAD
 				39C957F1287D984900A04A2B /* APIEnvironment.swift in Sources */,
+=======
+>>>>>>> 101-developer-info-ui
 				CBBFF778287AE050006A5964 /* DeveloperInfoViewController.swift in Sources */,
 				CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */,
 				39E099AD287FC020004F464E /* LetterDTO.swift in Sources */,
