@@ -12,44 +12,44 @@ import SnapKit
 class DeveloperInfoViewController: BaseViewController {
     
     // 개발자 정보 데이터
-    let developerData: [[String: String]] = [
+    private let developerData: [[String: String]] = [
         [
-            "imageName": "imgNi",
+            "imageName": "imgMaCoby",
             "name": "김도영 Coby",
             "info": "디너를 좋아하는 코비"
         ],
         [
-            "imageName": "imgNi",
+            "imageName": "imgLeo",
             "name": "방석진 Leo",
             "info": "서버를 위해 온 천사 리오"
         ],
         [
-            "imageName": "imgNi",
+            "imageName": "imgMaDuna",
             "name": "신윤아 Duna",
             "info": "그저 신! 갓듀나^__^"
         ],
         [
-            "imageName": "imgNi",
+            "imageName": "imgMaHoya",
             "name": "이성호 Hoya",
             "info": "아낌없이 주고 (마시는) 호야"
         ],
         [
-            "imageName": "imgNi",
+            "imageName": "imgMaDinner",
             "name": "이정환 Dinner",
             "info": "하면 다 잘 하는 디너"
         ],
         [
-            "imageName": "imgNi",
+            "imageName": "imgMaChemi",
             "name": "최민관 Chemi",
             "info": "우직하고 호기심 가득한 케미"
         ],
         [
-            "imageName": "imgNi",
+            "imageName": "imgMaLivvy",
             "name": "최성희 Livvy",
             "info": "여려 보이지만 강한 리비"
         ],
         [
-            "imageName": "imgNi",
+            "imageName": "imgDaon",
             "name": "홍지혜 Daon",
             "info": "서버를 위해 온 천사 다온"
         ]
@@ -90,13 +90,11 @@ class DeveloperInfoViewController: BaseViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(cell: DeveloperInfoViewCell.self,
             forCellWithReuseIdentifier: DeveloperInfoViewCell.className)
         return collectionView
     }()
-    
 
     // MARK: - life cycle
 
@@ -120,10 +118,6 @@ class DeveloperInfoViewController: BaseViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
-
-    override func configUI() {
-        super.configUI()
-    }
 }
 
 
@@ -134,24 +128,14 @@ extension DeveloperInfoViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: DeveloperInfoViewCell.className, for: indexPath)
-
-        guard let DeveloperInfoViewCell = dequeuedCell as? DeveloperInfoViewCell else {
-            assert(false, "Wrong DeveloperInfoViewCell")
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeveloperInfoViewCell.className, for: indexPath) as? DeveloperInfoViewCell else {
+            assert(false, "Wrong Cell")
         }
-
-        DeveloperInfoViewCell.nameLabel.text = developerData[indexPath.item]["name"]
-        DeveloperInfoViewCell.infoLabel.text = developerData[indexPath.item]["info"]
-
-        // configure your DeveloperInfoViewCell
-
-        return DeveloperInfoViewCell
-    }
-}
-
-
-// MARK: - UICollectionViewDelegate
-extension DeveloperInfoViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        cell.developerImageView.image = ImageLiterals.developerData[indexPath.item]["imageName"]
+        cell.nameLabel.text = developerData[indexPath.item]["name"]
+        cell.infoLabel.text = developerData[indexPath.item]["info"]
+        
+        return cell
     }
 }

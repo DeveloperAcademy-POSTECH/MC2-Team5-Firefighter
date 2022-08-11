@@ -43,6 +43,8 @@ enum ImageLiterals {
     static var imgMaDinner: UIImage { .load(name: "imgMaDinner") }
     static var imgMaHoya: UIImage { .load(name: "imgMaHoya") }
     static var imgMaLivvy: UIImage { .load(name: "imgMaLivvy") }
+    static var imgMaDaon: UIImage { .load(name: "imgMaDaon") }
+    static var imgMaLeo: UIImage { .load(name: "imgMaLeo") }
     
     // MARK: - gif
     

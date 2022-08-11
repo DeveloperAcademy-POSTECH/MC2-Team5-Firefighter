@@ -9,8 +9,7 @@ import UIKit
 
 import SnapKit
 
-class DeveloperInfoViewCell: UICollectionViewCell{
-    static let identifier = "DeveloperInfoViewCell"
+class DeveloperInfoViewCell: BaseCollectionViewCell {
     
     // MARK: - property
     
@@ -39,7 +38,6 @@ class DeveloperInfoViewCell: UICollectionViewCell{
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        render()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -55,7 +53,7 @@ class DeveloperInfoViewCell: UICollectionViewCell{
         layer.cornerRadius = 10
     }
     
-    func render() {
+    override func render() {
         addSubview(developerImageView)
         developerImageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(10)
