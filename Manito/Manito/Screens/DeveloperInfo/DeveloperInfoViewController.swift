@@ -12,44 +12,44 @@ import SnapKit
 class DeveloperInfoViewController: BaseViewController {
     
     // 개발자 정보 데이터
-    private let developerData: [[String: String]] = [
+    private let developerData: [[String: Any]] = [
         [
-            "imageName": "imgMaCoby",
+            "image": ImageLiterals.imgMaCoby,
             "name": "김도영 Coby",
             "info": "디너를 좋아하는 코비"
         ],
         [
-            "imageName": "imgLeo",
+            "image": ImageLiterals.imgMaLeo,
             "name": "방석진 Leo",
             "info": "서버를 위해 온 천사 리오"
         ],
         [
-            "imageName": "imgMaDuna",
+            "image": ImageLiterals.imgMaDuna,
             "name": "신윤아 Duna",
             "info": "그저 신! 갓듀나^__^"
         ],
         [
-            "imageName": "imgMaHoya",
+            "image": ImageLiterals.imgMaHoya,
             "name": "이성호 Hoya",
             "info": "아낌없이 주고 (마시는) 호야"
         ],
         [
-            "imageName": "imgMaDinner",
+            "image": ImageLiterals.imgMaDinner,
             "name": "이정환 Dinner",
             "info": "하면 다 잘 하는 디너"
         ],
         [
-            "imageName": "imgMaChemi",
+            "image": ImageLiterals.imgMaChemi,
             "name": "최민관 Chemi",
             "info": "우직하고 호기심 가득한 케미"
         ],
         [
-            "imageName": "imgMaLivvy",
+            "image": ImageLiterals.imgMaLivvy,
             "name": "최성희 Livvy",
             "info": "여려 보이지만 강한 리비"
         ],
         [
-            "imageName": "imgDaon",
+            "image": ImageLiterals.imgMaDaon,
             "name": "홍지혜 Daon",
             "info": "서버를 위해 온 천사 다온"
         ]
@@ -75,14 +75,14 @@ class DeveloperInfoViewController: BaseViewController {
         return label
     }()
     
-    private let developerRoomView = UIImageView(image: ImageLiterals.imgCommonMisson)
+    private let developerRoomView = UIImageView(image: ImageLiterals.imgDevBackground)
     
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.sectionInset = Size.collectionInset
         flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        flowLayout.minimumLineSpacing = 40
+        flowLayout.minimumLineSpacing = 15
         return flowLayout
     }()
     
@@ -132,9 +132,9 @@ extension DeveloperInfoViewController: UICollectionViewDataSource {
             assert(false, "Wrong Cell")
         }
         
-        cell.developerImageView.image = ImageLiterals.developerData[indexPath.item]["imageName"]
-        cell.nameLabel.text = developerData[indexPath.item]["name"]
-        cell.infoLabel.text = developerData[indexPath.item]["info"]
+        cell.developerImageView.image = developerData[indexPath.item]["image"] as? UIImage
+        cell.nameLabel.text = developerData[indexPath.item]["name"] as? String
+        cell.infoLabel.text = developerData[indexPath.item]["info"] as? String
         
         return cell
     }

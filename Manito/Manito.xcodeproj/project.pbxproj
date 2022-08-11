@@ -95,6 +95,7 @@
 		B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */; };
 		B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525412855C97900614FF7 /* UILabel+Extension.swift */; };
 		B5F525492855D01D00614FF7 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525482855D01D00614FF7 /* Letter.swift */; };
+		CB358C0228A564080084D001 /* DeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB358C0128A564080084D001 /* DeveloperInfoViewController.swift */; };
 		CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */; };
 		CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */; };
 		CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */; };
@@ -205,6 +206,7 @@
 		B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		B5F525412855C97900614FF7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		B5F525482855D01D00614FF7 /* Letter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
+		CB358C0128A564080084D001 /* DeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewController.swift; sourceTree = "<group>"; };
 		CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInfoView.swift; sourceTree = "<group>"; };
 		CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleInfoView.swift; sourceTree = "<group>"; };
 		CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewController.swift; sourceTree = "<group>"; };
@@ -218,7 +220,6 @@
 		CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChooseCharacter.storyboard; sourceTree = "<group>"; };
 		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
-		CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewController.swift; sourceTree = "<group>"; };
 		CBBFF779287AE09F006A5964 /* DeveloperInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DeveloperInfo.storyboard; sourceTree = "<group>"; };
 		CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewCell.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -709,7 +710,7 @@
 			isa = PBXGroup;
 			children = (
 				CBBFF776287AE03F006A5964 /* Cell */,
-				CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */,
+				CB358C0128A564080084D001 /* DeveloperInfoViewController.swift */,
 			);
 			path = DeveloperInfo;
 			sourceTree = "<group>";
@@ -907,6 +908,7 @@
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
 				39C95806287DAE5700A04A2B /* InteractionEndPoint.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
+				CB358C0228A564080084D001 /* DeveloperInfoViewController.swift in Sources */,
 				39C957E12879A3CF00A04A2B /* DailyMission.swift in Sources */,
 				D724AF5D287088310003F280 /* SettingViewController.swift in Sources */,
 				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
