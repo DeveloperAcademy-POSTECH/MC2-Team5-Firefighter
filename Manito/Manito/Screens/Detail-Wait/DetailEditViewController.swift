@@ -219,18 +219,11 @@ class DetailEditViewController: BaseViewController {
     // MARK: - func
 
     private func presentationControllerDidAttemptToDismissAlert() {
-        let hasStardDate = calendarView.tempStartDateText.isEmpty
-        let hasEndDate = calendarView.tempEndDateText.isEmpty
-        let hasDateRange = !hasStardDate && !hasEndDate
-        
         guard calendarView.isFirstTap else {
-            showSaveAlert()
+            dismiss(animated: true)
             return
         }
-        if hasDateRange {
-            showSaveAlert()
-            return
-        }
+        
         showDiscardChangAlert()
     }
 
@@ -241,15 +234,6 @@ class DetailEditViewController: BaseViewController {
             self?.dismiss(animated: true)
         }, nil]
         makeActionSheet(actionTitles: actionTitles, actionStyle: actionStyle, actions: actions)
-    }
-
-    private func showSaveAlert() {
-        makeRequestAlert(title: "변경사항을 저장합니다", message: "변경사항을 저장하시겠습니까??", okAction: { [weak self] _ in
-            guard let startDate = self?.calendarView.tempStartDateText else { return }
-            guard let endDate = self?.calendarView.tempEndDateText else { return }
-            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": startDate, "endDate": endDate])
-            self?.dismiss(animated: true)
-        })
     }
 }
 
