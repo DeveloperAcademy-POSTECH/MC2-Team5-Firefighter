@@ -110,6 +110,7 @@
 		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 		CBBFF778287AE050006A5964 /* DeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */; };
 		CBBFF77A287AE09F006A5964 /* DeveloperInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBBFF779287AE09F006A5964 /* DeveloperInfo.storyboard */; };
 		CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */; };
@@ -117,6 +118,15 @@
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
 >>>>>>> develop
+=======
+		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
+		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
+=======
+>>>>>>> 101-developer-info-ui
+		CBBFF778287AE050006A5964 /* DeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */; };
+		CBBFF77A287AE09F006A5964 /* DeveloperInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBBFF779287AE09F006A5964 /* DeveloperInfo.storyboard */; };
+		CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */; };
+>>>>>>> 101-developer-info-ui
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
 /* End PBXBuildFile section */
@@ -224,6 +234,7 @@
 		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 		CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewController.swift; sourceTree = "<group>"; };
 		CBBFF779287AE09F006A5964 /* DeveloperInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DeveloperInfo.storyboard; sourceTree = "<group>"; };
 		CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewCell.swift; sourceTree = "<group>"; };
@@ -231,6 +242,15 @@
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
 >>>>>>> develop
+=======
+		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
+=======
+>>>>>>> 101-developer-info-ui
+		CBBFF777287AE050006A5964 /* DeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewController.swift; sourceTree = "<group>"; };
+		CBBFF779287AE09F006A5964 /* DeveloperInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DeveloperInfo.storyboard; sourceTree = "<group>"; };
+		CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewCell.swift; sourceTree = "<group>"; };
+>>>>>>> 101-developer-info-ui
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -397,10 +417,17 @@
 			isa = PBXGroup;
 			children = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CBBFF775287AE034006A5964 /* DeveloperInfo */,
 =======
 				D724AF5B287088110003F280 /* Setting */,
 >>>>>>> develop
+=======
+				D724AF5B287088110003F280 /* Setting */,
+=======
+>>>>>>> 101-developer-info-ui
+				CBBFF775287AE034006A5964 /* DeveloperInfo */,
+>>>>>>> 101-developer-info-ui
 				B50B1B28285AB7550080992C /* Splash */,
 				39C957CC2876E2BE00A04A2B /* Login */,
 				7E0C5C342855B1EF00F698D1 /* CreateNickName */,
@@ -717,6 +744,18 @@
 			sourceTree = "<group>";
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		D724AF5B287088110003F280 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				D724AF5C287088310003F280 /* SettingViewController.swift */,
+				D724AF5E28708D830003F280 /* ImageRowView.swift */,
+			);
+			path = Setting;
+=======
+>>>>>>> 101-developer-info-ui
+>>>>>>> 101-developer-info-ui
 		CBBFF775287AE034006A5964 /* DeveloperInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -732,6 +771,7 @@
 				CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */,
 			);
 			path = Cell;
+<<<<<<< HEAD
 =======
 		D724AF5B287088110003F280 /* Setting */ = {
 			isa = PBXGroup;
@@ -741,6 +781,8 @@
 			);
 			path = Setting;
 >>>>>>> develop
+=======
+>>>>>>> 101-developer-info-ui
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -912,10 +954,17 @@
 				D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */,
 				B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CBBFF778287AE050006A5964 /* DeveloperInfoViewController.swift in Sources */,
 =======
 				39C957F1287D984900A04A2B /* APIEnvironment.swift in Sources */,
 >>>>>>> develop
+=======
+				39C957F1287D984900A04A2B /* APIEnvironment.swift in Sources */,
+=======
+>>>>>>> 101-developer-info-ui
+				CBBFF778287AE050006A5964 /* DeveloperInfoViewController.swift in Sources */,
+>>>>>>> 101-developer-info-ui
 				CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */,
 				39E099AD287FC020004F464E /* LetterDTO.swift in Sources */,
 				B5F525222851A24100614FF7 /* UITableView+Extension.swift in Sources */,
