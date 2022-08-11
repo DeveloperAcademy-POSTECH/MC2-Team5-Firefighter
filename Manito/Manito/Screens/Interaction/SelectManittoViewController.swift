@@ -32,7 +32,7 @@ final class SelectManittoViewController: BaseViewController {
             self.dismiss(animated: true, completion: {
                 let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
                 guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
-                parentViewController.popViewController(animated: false)
+                parentViewController.popViewController(animated: true)
                 parentViewController.pushViewController(viewController, animated: true)
             })
         }
