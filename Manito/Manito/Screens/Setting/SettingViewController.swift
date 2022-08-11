@@ -44,7 +44,7 @@ class SettingViewController: BaseViewController {
      
         view.addSubview(imageRow)
         imageRow.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(40)
             $0.centerX.equalToSuperview()
         }
