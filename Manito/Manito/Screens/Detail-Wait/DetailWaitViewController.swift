@@ -30,23 +30,23 @@ class DetailWaitViewController: BaseViewController {
         case owner = 0
         case member = 1
 
-        var buttonTitle: String {
-            switch self {
-            case .owner:
-                return "마니또 시작"
-            case .member:
-                return "시작을 기다리는 중..."
-            }
-        }
+//        var buttonTitle: String {
+//            switch self {
+//            case .owner:
+//                return "마니또 시작"
+//            case .member:
+//                return "시작을 기다리는 중..."
+//            }
+//        }
 
-        var buttonDisabled: Bool {
-            switch self {
-            case .owner:
-                return false
-            case .member:
-                return true
-            }
-        }
+//        var buttonDisabled: Bool {
+//            switch self {
+//            case .owner:
+//                return false
+//            case .member:
+//                return true
+//            }
+//        }
 
         var alertText: AlertText {
             switch self {
@@ -167,6 +167,10 @@ class DetailWaitViewController: BaseViewController {
     }()
 
     // MARK: - life cycle
+
+    deinit {
+        print("deInit")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -290,17 +294,17 @@ class DetailWaitViewController: BaseViewController {
     private func setExitButtonMenu() -> UIMenu {
         if isOwner {
             let menu = UIMenu(options: [], children: [
-                    UIAction(title: "방 정보 수정", handler: { _ in
+                    UIAction(title: "방 정보 수정", handler: { [weak self] _ in
                         self.presentModal(from: self.startDateText, to: self.endDateText)
                     }),
-                    UIAction(title: "방 삭제", handler: { _ in
-                        self.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
+                    UIAction(title: "방 삭제", handler: { [weak self] _ in
+                        self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
                     })])
             return menu
         } else {
             let menu = UIMenu(options: [], children: [
-                    UIAction(title: "방 나가기", handler: { _ in
-                        self.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction: nil)
+                    UIAction(title: "방 나가기", handler: { [weak self] _ in
+                        self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction: nil)
                     })
                 ])
             return menu
