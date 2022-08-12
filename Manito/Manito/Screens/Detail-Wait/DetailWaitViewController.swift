@@ -293,7 +293,17 @@ class DetailWaitViewController: BaseViewController {
                     UIAction(title: "방 정보 수정", handler: { [weak self] _ in
                         guard let startText = self?.startDateText else { return }
                         guard let endText = self?.endDateText else { return }
-                        self?.presentModal(from: startText, to: endText, isDateEdit: false)
+
+                        guard let startDate = startText.stringToDate else { return }
+
+                        if startDate.distance(to: Date()) > 86400 {
+                            let fiveDaysInterval: TimeInterval = 86400 * 4
+                            let defaultStartDate = Date().dateToString
+                            let defaultEndDate = (Date() + fiveDaysInterval).dateToString
+                            self?.presentModal(from: defaultStartDate, to: defaultEndDate, isDateEdit: false)
+                        } else {
+                            self?.presentModal(from: startText, to: endText, isDateEdit: false)
+                        }
                     }),
                     UIAction(title: "방 삭제", handler: { [weak self] _ in
                         self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
