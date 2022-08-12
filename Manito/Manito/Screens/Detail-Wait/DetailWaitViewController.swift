@@ -309,9 +309,7 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func isPastStartDate() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yy.MM.dd"
-        guard let startDate = formatter.date(from: startDateText) else { return }
+        guard let startDate = startDateText.stringToDate else { return }
         let isPast = startDate.distance(to: Date()) > 86400
         let isToday = startDate.distance(to: Date()) < 86400
         let canStart = !isPast && isToday
@@ -319,8 +317,8 @@ class DetailWaitViewController: BaseViewController {
             if isOwner {
                 let action: ((UIAlertAction) -> ()) = { [weak self] _ in
                     let fiveDaysInterval: TimeInterval = 86400 * 4
-                    let startDate = formatter.string(from: Date())
-                    let endDate = formatter.string(from: Date() + fiveDaysInterval)
+                    let startDate = Date().dateToString
+                    let endDate = (Date() + fiveDaysInterval).dateToString
                     self?.presentModal(from: startDate, to: endDate, isDateEdit: true)
                 }
                 makeAlert(title: "날짜를 재설정 해주세요", message: "마니또 시작일이 지났습니다. \n 진행기간을 재설정 해주세요", okAction: action)
