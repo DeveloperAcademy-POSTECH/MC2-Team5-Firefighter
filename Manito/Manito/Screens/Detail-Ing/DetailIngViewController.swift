@@ -33,8 +33,7 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var manitoMemoryButton: UIButton!
 
     private lazy var manitiRealIconView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgMa
+        let imageView = UIImageView(image: ImageLiterals.imgMa)
         imageView.alpha = 0
         return imageView
     }()
@@ -154,7 +153,6 @@ class DetailIngViewController: BaseViewController {
     
     @objc
     private func didTapManito() {
-        print("tap")
         UIView.animate(withDuration: 1.0) {
             self.manitiIconView.alpha = 0
             self.manitiRealIconView.alpha = 1
