@@ -11,6 +11,7 @@ import FSCalendar
 import SnapKit
 
 class CalendarView: UIView {
+    var changeButtonState: ((Bool) -> ())?
     private var selectStartDate = Date()
     let oneDayInterval: TimeInterval = 86400
     let sevenDaysInterval: TimeInterval = 604800
@@ -18,6 +19,7 @@ class CalendarView: UIView {
     var endDateText = ""
     var tempStartDateText = ""
     var tempEndDateText = ""
+    var isFirstTap = false
     
     private enum CalendarMoveType {
         case previous
@@ -86,7 +88,7 @@ class CalendarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func render() {
+    private func render() {
         self.addSubview(calendar)
         calendar.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -166,21 +168,24 @@ class CalendarView: UIView {
 
 extension CalendarView: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        let isClickedStartDate = calendar.selectedDates.count == 1
+        isFirstTap = true
+        changeButtonState?(false)
         let isSelectedDateRange = calendar.selectedDates.count == 2
         let isReclickedStartDate = calendar.selectedDates.count > 2
-        if isClickedStartDate {
-            selectStartDate = date
-            calendar.reloadData()
-        } else if isSelectedDateRange {
+        if isSelectedDateRange {
+            changeButtonState?(true)
+            tempEndDateText = date.dateToString
             if countDateRange() > 7 {
                 calendar.deselect(date)
-                viewController?.makeAlert(title: "인원 수 제한", message: "최대 7일까지 선택가능해요 !")
+                viewController?.makeAlert(title: "설정 기간 제한", message: "최대 7일까지 선택가능해요 !")
             } else {
                 setDateRange()
                 calendar.reloadData()
             }
         } else if isReclickedStartDate {
+            changeButtonState?(false)
+            tempStartDateText = date.dateToString
+            tempEndDateText = ""
             (calendar.selectedDates).forEach {
                 calendar.deselect($0)
             }
@@ -191,6 +196,9 @@ extension CalendarView: FSCalendarDelegate {
     }
 
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        tempEndDateText = ""
+        isFirstTap = true
+        changeButtonState?(false)
         (calendar.selectedDates).forEach {
             calendar.deselect($0)
         }

@@ -77,9 +77,7 @@ class DetailWaitTitleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - func
-
-    func render() {
+    private func render() {
         self.addSubview(roomTitleLabel)
         roomTitleLabel.snp.makeConstraints {
             $0.leading.top.equalToSuperview()
