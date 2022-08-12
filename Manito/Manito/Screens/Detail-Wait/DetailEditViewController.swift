@@ -11,6 +11,14 @@ import SnapKit
 import FSCalendar
 
 class DetailEditViewController: BaseViewController {
+
+    enum EditMode {
+        case dateEditMode
+        case infoEditMode
+    }
+
+    var editMode: EditMode = .infoEditMode
+
     private var memberCount = 7
     var startDateText = "" {
         didSet {
@@ -29,8 +37,8 @@ class DetailEditViewController: BaseViewController {
 
     private lazy var cancelButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { _ in
-            self.dismiss(animated: true)
+        let buttonAction = UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
         }
         button.setTitle("취소", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -46,12 +54,15 @@ class DetailEditViewController: BaseViewController {
     }()
     private lazy var changeButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { _ in
-            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": self.calendarView.tempStartDateText, "endDate": self.calendarView.tempEndDateText])
-            self.dismiss(animated: true)
+        let buttonAction = UIAction { [weak self] _ in
+            guard let startText = self?.calendarView.tempStartDateText else { return }
+            guard let endText = self?.calendarView.tempEndDateText else { return }
+            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": startText, "endDate": endText])
+            self?.dismiss(animated: true)
         }
         button.setTitle("변경", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
+        setChangedButton()
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         button.addAction(buttonAction, for: .touchUpInside)
         return button
@@ -77,21 +88,21 @@ class DetailEditViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    private let setMemberLabel: UILabel = {
+    private lazy var setMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "인원 설정"
         label.font = .font(.regular, ofSize: 18)
         label.textColor = .white
         return label
     }()
-    private let minMemberLabel: UILabel = {
+    private lazy var minMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "5인"
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
-    private let maxMemberLabel: UILabel = {
+    private lazy var maxMemberLabel: UILabel = {
         let label = UILabel()
         label.text = "15인"
         label.font = .font(.regular, ofSize: 16)
@@ -106,6 +117,7 @@ class DetailEditViewController: BaseViewController {
         slider.minimumTrackTintColor = .red001
         slider.value = Float(memberCount)
         slider.isContinuous = true
+        slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         slider.addTarget(self, action: #selector(changeMemberCount(sender:)), for: .valueChanged)
         return slider
     }()
@@ -174,36 +186,38 @@ class DetailEditViewController: BaseViewController {
             $0.trailing.equalToSuperview().inset(25)
         }
 
-        view.addSubview(setMemberLabel)
-        setMemberLabel.snp.makeConstraints {
-            $0.top.equalTo(calendarView.snp.bottom).offset(60)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
-        }
+        if editMode == .infoEditMode {
+            view.addSubview(setMemberLabel)
+            setMemberLabel.snp.makeConstraints {
+                $0.top.equalTo(calendarView.snp.bottom).offset(60)
+                $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            }
 
-        view.addSubview(minMemberLabel)
-        minMemberLabel.snp.makeConstraints {
-            $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(24)
-        }
+            view.addSubview(minMemberLabel)
+            minMemberLabel.snp.makeConstraints {
+                $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
+                $0.leading.equalToSuperview().inset(24)
+            }
 
-        view.addSubview(memberSlider)
-        memberSlider.snp.makeConstraints {
-            $0.leading.equalTo(minMemberLabel.snp.trailing).offset(5)
-            $0.height.equalTo(45)
-            $0.centerY.equalTo(minMemberLabel.snp.centerY)
-        }
+            view.addSubview(memberSlider)
+            memberSlider.snp.makeConstraints {
+                $0.leading.equalTo(minMemberLabel.snp.trailing).offset(5)
+                $0.height.equalTo(45)
+                $0.centerY.equalTo(minMemberLabel.snp.centerY)
+            }
 
-        view.addSubview(maxMemberLabel)
-        maxMemberLabel.snp.makeConstraints {
-            $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
-            $0.leading.equalTo(memberSlider.snp.trailing).offset(5)
-            $0.trailing.equalToSuperview().inset(24)
-        }
+            view.addSubview(maxMemberLabel)
+            maxMemberLabel.snp.makeConstraints {
+                $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
+                $0.leading.equalTo(memberSlider.snp.trailing).offset(5)
+                $0.trailing.equalToSuperview().inset(24)
+            }
 
-        view.addSubview(memberCountLabel)
-        memberCountLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalTo(setMemberLabel.snp.centerY)
+            view.addSubview(memberCountLabel)
+            memberCountLabel.snp.makeConstraints {
+                $0.centerX.equalToSuperview()
+                $0.centerY.equalTo(setMemberLabel.snp.centerY)
+            }
         }
     }
 
@@ -235,8 +249,14 @@ class DetailEditViewController: BaseViewController {
         }, nil]
         makeActionSheet(actionTitles: actionTitles, actionStyle: actionStyle, actions: actions)
     }
-}
 
+    private func setChangedButton() {
+        calendarView.changeButtonState = { [weak self] value in
+            self?.changeButton.isUserInteractionEnabled = value
+            self?.changeButton.setTitleColor(value ? .subBlue : .grey002, for: .normal)
+        }
+    }
+}
 
 extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {

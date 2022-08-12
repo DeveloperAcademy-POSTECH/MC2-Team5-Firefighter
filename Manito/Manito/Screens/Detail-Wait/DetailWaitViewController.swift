@@ -105,7 +105,9 @@ class DetailWaitViewController: BaseViewController {
     }()
     private lazy var titleView: DetailWaitTitleView = {
         let view = DetailWaitTitleView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
         view.dateRangeText = "\(startDateText) ~ \(endDateText)"
+        view.addGestureRecognizer(tapGesture)
         return view
     }()
     private let togetherFriendLabel: UILabel = {
@@ -129,8 +131,8 @@ class DetailWaitViewController: BaseViewController {
     }()
     private lazy var copyButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { _ in
-            self.touchUpToShowToast()
+        let buttonAction = UIAction { [weak self] _ in
+            self?.touchUpToShowToast()
         }
         button.setTitle("방 코드 복사", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
@@ -275,8 +277,9 @@ class DetailWaitViewController: BaseViewController {
             })
     }
 
-    private func presentModal(from startString: String, to endString: String) {
+    private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
         let modalViewController = DetailEditViewController()
+        modalViewController.editMode = isDateEdit ? .dateEditMode : .infoEditMode
         modalViewController.startDateText = startString
         modalViewController.endDateText = endString
         present(modalViewController, animated: true, completion: nil)
@@ -295,9 +298,9 @@ class DetailWaitViewController: BaseViewController {
         if isOwner {
             let menu = UIMenu(options: [], children: [
                     UIAction(title: "방 정보 수정", handler: { [weak self] _ in
-                        guard let startDate = self?.startDateText else { return }
-                        guard let endDate = self?.endDateText else { return }
-                        self?.presentModal(from: startDate, to: endDate)
+                        guard let startText = self?.startDateText else { return }
+                        guard let endText = self?.endDateText else { return }
+                        self?.presentModal(from: startText, to: endText, isDateEdit: false)
                     }),
                     UIAction(title: "방 삭제", handler: { [weak self] _ in
                         self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
@@ -334,7 +337,7 @@ class DetailWaitViewController: BaseViewController {
                     let fiveDaysInterval: TimeInterval = 86400 * 4
                     let startDate = formatter.string(from: Date())
                     let endDate = formatter.string(from: Date() + fiveDaysInterval)
-                    self?.presentModal(from: startDate, to: endDate)
+                    self?.presentModal(from: startDate, to: endDate, isDateEdit: true)
                 }
                 makeAlert(title: "날짜를 재설정 해주세요", message: "마니또 시작일이 지났습니다. \n 진행기간을 재설정 해주세요", okAction: action)
             } else {
@@ -363,6 +366,11 @@ class DetailWaitViewController: BaseViewController {
 
         self.startDateText = startDate
         self.endDateText = endDate
+    }
+
+    @objc
+    private func presentDetailEditViewController() {
+        self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
     }
 }
 
