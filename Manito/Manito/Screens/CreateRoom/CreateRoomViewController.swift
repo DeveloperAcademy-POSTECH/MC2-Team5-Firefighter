@@ -39,10 +39,10 @@ class CreateRoomViewController: BaseViewController {
         return button
     }()
     lazy var backButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
-        button.setTitle("이전", for: .normal)
+        button.setTitle(" 이전", for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
         button.isHidden = true
@@ -134,6 +134,7 @@ class CreateRoomViewController: BaseViewController {
         super.configUI()
         view.backgroundColor = .backgroundGrey
         toggleButton()
+        navigationController?.navigationBar.isHidden = true
     }
     
     // MARK: - Selectors
@@ -159,8 +160,10 @@ class CreateRoomViewController: BaseViewController {
         default:
             print("다른 뷰 넘기기")
         }
-        index += 1
-        changedInputView()
+        if index < 3 {
+            index += 1
+            changedInputView()
+        }
     }
     
     @objc private func keyboardWillShow(notification:NSNotification) {
@@ -218,16 +221,14 @@ class CreateRoomViewController: BaseViewController {
     }
     
     private func changedInputView() {
-        if index == 0 {
+        switch index {
+        case 0:
             NotificationCenter.default.post(name: .nameNotification, object: nil)
-        }
-        else if index == 1 {
+        case 1:
             NotificationCenter.default.post(name: .personNotification, object: nil)
-        }
-        else if index == 2 {
+        case 2:
             NotificationCenter.default.post(name: .dateNotification, object: nil)
-        }
-        else {
+        default:
             NotificationCenter.default.post(name: .checkNotification, object: nil)
         }
     }
