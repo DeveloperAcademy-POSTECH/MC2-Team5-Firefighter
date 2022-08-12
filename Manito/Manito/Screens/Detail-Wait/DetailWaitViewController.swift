@@ -323,6 +323,7 @@ class DetailWaitViewController: BaseViewController {
 
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateRange(_:)), name: .dateRangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeStartButton), name: .changeStartButtonNotification, object: nil)
     }
 
     private func isPastStartDate() {
@@ -371,6 +372,10 @@ class DetailWaitViewController: BaseViewController {
     @objc
     private func presentDetailEditViewController() {
         self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
+    }
+    
+    @objc private func changeStartButton() {
+        setStartButton()
     }
 }
 
