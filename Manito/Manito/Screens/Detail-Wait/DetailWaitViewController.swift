@@ -295,7 +295,9 @@ class DetailWaitViewController: BaseViewController {
         if isOwner {
             let menu = UIMenu(options: [], children: [
                     UIAction(title: "방 정보 수정", handler: { [weak self] _ in
-                        self.presentModal(from: self.startDateText, to: self.endDateText)
+                        guard let startDate = self?.startDateText else { return }
+                        guard let endDate = self?.endDateText else { return }
+                        self?.presentModal(from: startDate, to: endDate)
                     }),
                     UIAction(title: "방 삭제", handler: { [weak self] _ in
                         self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
