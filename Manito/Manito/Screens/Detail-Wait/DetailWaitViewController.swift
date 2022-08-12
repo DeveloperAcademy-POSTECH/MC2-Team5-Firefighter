@@ -30,24 +30,6 @@ class DetailWaitViewController: BaseViewController {
         case owner = 0
         case member = 1
 
-//        var buttonTitle: String {
-//            switch self {
-//            case .owner:
-//                return "마니또 시작"
-//            case .member:
-//                return "시작을 기다리는 중..."
-//            }
-//        }
-
-//        var buttonDisabled: Bool {
-//            switch self {
-//            case .owner:
-//                return false
-//            case .member:
-//                return true
-//            }
-//        }
-
         var alertText: AlertText {
             switch self {
             case .owner:
@@ -330,9 +312,10 @@ class DetailWaitViewController: BaseViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "yy.MM.dd"
         guard let startDate = formatter.date(from: startDateText) else { return }
-        let isPast = startDate.distance(to: Date()) > 0
+        let isPast = startDate.distance(to: Date()) > 86400
         let isToday = startDate.distance(to: Date()) < 86400
-        if !isPast && !isToday {
+        let canStart = !isPast && isToday
+        if !canStart {
             if isOwner {
                 let action: ((UIAlertAction) -> ()) = { [weak self] _ in
                     let fiveDaysInterval: TimeInterval = 86400 * 4
