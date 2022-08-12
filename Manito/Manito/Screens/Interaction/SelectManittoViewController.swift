@@ -29,12 +29,11 @@ final class SelectManittoViewController: BaseViewController {
     private lazy var okAction: UIAction = {
         let action = UIAction { _ in
             guard let parentViewController = self.presentingViewController as? UINavigationController else { return }
-            self.dismiss(animated: true, completion: {
-                let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-                guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
-                parentViewController.popViewController(animated: true)
-                parentViewController.pushViewController(viewController, animated: true)
-            })
+            self.dismiss(animated: true)
+            let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
+            guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
+            parentViewController.popViewController(animated: false)
+            parentViewController.pushViewController(viewController, animated: true)
         }
         return action
     }()
