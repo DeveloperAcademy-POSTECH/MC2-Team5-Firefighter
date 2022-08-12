@@ -139,16 +139,6 @@ class SettingViewController: BaseViewController {
 // MARK: - Extensions
 
 extension SettingViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = options[indexPath.row]
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as? SettingViewTableCell else {
-            return UITableViewCell()
-        }
-        cell.titleLabel.text = model.title
-        cell.selectionStyle = .none
-        return cell
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = options[indexPath.row]
         model.handler()
@@ -162,5 +152,15 @@ extension SettingViewController: UITableViewDelegate {
 extension SettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return options.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let model = options[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as? SettingViewTableCell else {
+            return UITableViewCell()
+        }
+        cell.titleLabel.text = model.title
+        cell.selectionStyle = .none
+        return cell
     }
 }
