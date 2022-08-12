@@ -56,7 +56,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1000원 이하의 선물 주고 인증샷 받기" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vma-X3-7Uq">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000원 이하의 선물 주고 인증샷 받기" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vma-X3-7Uq">
                                         <rect key="frame" x="24" y="41" width="311" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="AzM-fe-C6S"/>
@@ -73,7 +73,7 @@
                                     <constraint firstItem="kHA-mR-fkA" firstAttribute="top" secondItem="ne3-xF-fpF" secondAttribute="top" constant="16" id="ZVo-eI-tCX"/>
                                     <constraint firstAttribute="trailing" secondItem="kHA-mR-fkA" secondAttribute="trailing" constant="120" id="duX-hl-aGi"/>
                                     <constraint firstAttribute="trailing" secondItem="vma-X3-7Uq" secondAttribute="trailing" constant="23" id="hNc-ui-g86"/>
-                                    <constraint firstAttribute="bottom" secondItem="vma-X3-7Uq" secondAttribute="bottom" constant="16" id="ncN-Es-3Bv"/>
+                                    <constraint firstAttribute="bottom" secondItem="vma-X3-7Uq" secondAttribute="bottom" constant="19" id="ncN-Es-3Bv"/>
                                     <constraint firstAttribute="height" constant="100" id="yle-T4-6Dg"/>
                                 </constraints>
                             </view>
