@@ -37,7 +37,7 @@ class InputNameView: UIView {
         return label
     }()
     
-    var changeEnableDisableButton: ((Bool) -> ())?
+    var changeNextButtonEnableStatus: ((Bool) -> ())?
     
     // MARK: - Init
     override init(frame: CGRect) {
@@ -82,11 +82,8 @@ class InputNameView: UIView {
 extension InputNameView: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         setCounter(count: textField.text?.count ?? 0)
-        if roomsNameTextField.hasText {
-            changeEnableDisableButton?(false)
-        }
-        else {
-            changeEnableDisableButton?(true)
-        }
+        
+        let hasText = roomsNameTextField.hasText
+        changeNextButtonEnableStatus?(hasText)
     }
 }

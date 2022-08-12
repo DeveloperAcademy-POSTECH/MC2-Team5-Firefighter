@@ -212,8 +212,8 @@ class CreateRoomViewController: BaseViewController {
     // MARK: - Functions
     
     private func toggleButton() {
-        nameView.changeEnableDisableButton = { [weak self] isDisable in
-            self?.nextButton.isDisabled = isDisable
+        nameView.changeNextButtonEnableStatus = { [weak self] isEnable in
+            self?.nextButton.isDisabled = !isEnable
         }
     }
     
