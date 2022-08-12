@@ -25,6 +25,7 @@ class SettingViewController: BaseViewController {
         tableView.register(SettingViewTableCell.self, forCellReuseIdentifier: SettingViewTableCell.className)
         tableView.separatorStyle = .none
         tableView.alwaysBounceVertical = false
+        tableView.backgroundColor = .backgroundGrey
         return tableView
     }()
 
@@ -54,7 +55,7 @@ class SettingViewController: BaseViewController {
             $0.top.equalTo(imageRow.snp.bottom)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.height.equalTo(options.count * 70)
+            $0.bottom.equalToSuperview()
         }
     }
     
@@ -138,18 +139,6 @@ class SettingViewController: BaseViewController {
 // MARK: - Extensions
 
 extension SettingViewController: UITableViewDelegate {
-    
-}
-
-extension SettingViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return options.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return options.count
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = options[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as? SettingViewTableCell else {
@@ -161,12 +150,17 @@ extension SettingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         let model = options[indexPath.row]
         model.handler()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+}
+
+extension SettingViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return options.count
     }
 }
