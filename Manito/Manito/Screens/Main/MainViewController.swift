@@ -7,8 +7,8 @@
 
 import UIKit
 
-import SnapKit
 import Gifu
+import SnapKit
 
 class MainViewController: BaseViewController {
 
