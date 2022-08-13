@@ -60,7 +60,8 @@ class SettingDeveloperInfoViewController: BaseViewController {
         static let collectionVerticalSpacing: CGFloat = 40
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing*2)
         static let cellHeight: CGFloat = 100
-        static let collectionInset = UIEdgeInsets(top: 27,
+        static let collectionInset = UIEdgeInsets(
+            top: collectionVerticalSpacing,
             left: collectionHorizontalSpacing,
             bottom: collectionVerticalSpacing,
             right: collectionHorizontalSpacing)
@@ -99,7 +100,7 @@ class SettingDeveloperInfoViewController: BaseViewController {
     override func render() {        
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(55)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
