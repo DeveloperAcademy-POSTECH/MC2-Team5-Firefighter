@@ -97,6 +97,9 @@
 		B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525412855C97900614FF7 /* UILabel+Extension.swift */; };
 		B5F525492855D01D00614FF7 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525482855D01D00614FF7 /* Letter.swift */; };
 		CB358C0228A564080084D001 /* DeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB358C0128A564080084D001 /* DeveloperInfoViewController.swift */; };
+		CB2F0FCB28A5468C005F04C8 /* gifMa.gif in Resources */ = {isa = PBXBuildFile; fileRef = CB2F0FC828A5468C005F04C8 /* gifMa.gif */; };
+		CB2F0FCC28A5468C005F04C8 /* gifTto.gif in Resources */ = {isa = PBXBuildFile; fileRef = CB2F0FC928A5468C005F04C8 /* gifTto.gif */; };
+		CB2F0FCD28A5468C005F04C8 /* gifNi.gif in Resources */ = {isa = PBXBuildFile; fileRef = CB2F0FCA28A5468C005F04C8 /* gifNi.gif */; };
 		CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */; };
 		CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */; };
 		CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */; };
@@ -210,6 +213,9 @@
 		B5F525412855C97900614FF7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		B5F525482855D01D00614FF7 /* Letter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
 		CB358C0128A564080084D001 /* DeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewController.swift; sourceTree = "<group>"; };
+		CB2F0FC828A5468C005F04C8 /* gifMa.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifMa.gif; sourceTree = "<group>"; };
+		CB2F0FC928A5468C005F04C8 /* gifTto.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifTto.gif; sourceTree = "<group>"; };
+		CB2F0FCA28A5468C005F04C8 /* gifNi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifNi.gif; sourceTree = "<group>"; };
 		CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInfoView.swift; sourceTree = "<group>"; };
 		CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleInfoView.swift; sourceTree = "<group>"; };
 		CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewController.swift; sourceTree = "<group>"; };
@@ -341,6 +347,9 @@
 				B5E1F2B7285EE2B0006D880B /* capsule.gif */,
 				B5E1F2B3285ECCD1006D880B /* joystick.gif */,
 				B50B1B3B285AD2B20080992C /* logo.gif */,
+				CB2F0FC828A5468C005F04C8 /* gifMa.gif */,
+				CB2F0FCA28A5468C005F04C8 /* gifNi.gif */,
+				CB2F0FC928A5468C005F04C8 /* gifTto.gif */,
 			);
 			path = GIFs;
 			sourceTree = "<group>";
@@ -831,6 +840,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5F525102851A0B500614FF7 /* CreateRoom.storyboard in Resources */,
+				CB2F0FCB28A5468C005F04C8 /* gifMa.gif in Resources */,
+				CB2F0FCD28A5468C005F04C8 /* gifNi.gif in Resources */,
 				CBA15C96285CE1F00051EDE2 /* ChooseCharacter.storyboard in Resources */,
 				B5F525122851A0CB00614FF7 /* InvitedCode.storyboard in Resources */,
 				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
@@ -841,6 +852,7 @@
 				B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */,
 				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
 				B5F5250428519F7A00614FF7 /* DungGeunMo.otf in Resources */,
+				CB2F0FCC28A5468C005F04C8 /* gifTto.gif in Resources */,
 				B50B1B3E285B04580080992C /* Interaction.storyboard in Resources */,
 				B5E1F2B8285EE2B0006D880B /* capsule.gif in Resources */,
 				B5F525142851A0DB00614FF7 /* DetailWait.storyboard in Resources */,

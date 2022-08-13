@@ -52,6 +52,9 @@ enum ImageLiterals {
     static var gifLogo = "logo"
     static var gifJoystick = "joystick"
     static var gifCapsule = "capsule"
+    static var gifMa = "gifMa"
+    static var gifNi = "gifNi"
+    static var gifTto = "gifTto"
     
 }
 
