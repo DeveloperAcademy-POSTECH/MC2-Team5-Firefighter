@@ -46,19 +46,19 @@ class ParticipateRoomViewController: BaseViewController {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.trailing.equalToSuperview()
             $0.width.height.equalTo(44)
         }
         
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(57)
             $0.height.equalTo(60)
         }
@@ -66,7 +66,7 @@ class ParticipateRoomViewController: BaseViewController {
         view.addSubview(inputInvitedCodeView)
         inputInvitedCodeView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
     }
