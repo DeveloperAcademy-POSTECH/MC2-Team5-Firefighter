@@ -154,6 +154,7 @@ class MainViewController: BaseViewController {
             self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
             self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
         }
+    }
 
     @objc func didTapSettingButton() {
         navigationController?.pushViewController(SettingViewController(), animated: true)
@@ -163,7 +164,8 @@ class MainViewController: BaseViewController {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
         let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: { _ in
-            self.navigationController?.pushViewController(CreateRoomViewController(), animated: true)
+            self.navigationController?.pushViewController(SettingDeveloperInfoViewController(), animated: true)
+//            self.navigationController?.pushViewController(CreateRoomViewController(), animated: true)
         })
         let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: { _ in self.presentParticipateRoomViewController() })
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)

@@ -1,5 +1,5 @@
 //
-//  DeveloperInfoViewController.swift
+//  SettingDeveloperInfoViewController.swift
 //  Manito
 //
 //  Created by COBY_PRO on 2022/07/10.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class DeveloperInfoViewController: BaseViewController {
+class SettingDeveloperInfoViewController: BaseViewController {
     
     // 개발자 정보 데이터
     private let developerData: [[String: Any]] = [
@@ -88,9 +88,9 @@ class DeveloperInfoViewController: BaseViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(cell: DeveloperInfoViewCell.self,
             forCellWithReuseIdentifier: DeveloperInfoViewCell.className)
-        collectionView.register(DeveloperInfoHeaderView.self,
+        collectionView.register(SettingDeveloperInfoHeaderView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: DeveloperInfoHeaderView.className)
+                                withReuseIdentifier: SettingDeveloperInfoHeaderView.className)
         return collectionView
     }()
 
@@ -115,7 +115,7 @@ class DeveloperInfoViewController: BaseViewController {
 
 
 // MARK: - UICollectionViewDataSource
-extension DeveloperInfoViewController: UICollectionViewDataSource {
+extension SettingDeveloperInfoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return developerData.count
     }
@@ -135,7 +135,7 @@ extension DeveloperInfoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DeveloperInfoHeaderView.className, for: indexPath) as? DeveloperInfoHeaderView else { assert(false, "do not have reusable view") }
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SettingDeveloperInfoHeaderView.className, for: indexPath) as? SettingDeveloperInfoHeaderView else { assert(false, "do not have reusable view") }
             
             return headerView
         default:
@@ -145,7 +145,7 @@ extension DeveloperInfoViewController: UICollectionViewDataSource {
 }
 
 // MARK: - UICollectionViewDelegate
-extension DeveloperInfoViewController: UICollectionViewDelegateFlowLayout {
+extension SettingDeveloperInfoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: Size.headerWidth, height: Size.headerHeight)
     }

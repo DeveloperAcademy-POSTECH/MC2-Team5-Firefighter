@@ -1,5 +1,5 @@
 //
-//  DeveloperInfoHeaderView.swift
+//  SettingDeveloperInfoHeaderView.swift
 //  Manito
 //
 //  Created by COBY_PRO on 2022/08/13.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class DeveloperInfoHeaderView: UICollectionReusableView {
+final class SettingDeveloperInfoHeaderView: UICollectionReusableView {
     
     // MARK: - property
     
