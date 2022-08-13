@@ -34,7 +34,11 @@ class MainViewController: BaseViewController {
     // MARK: - property
 
     private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
-    private let settingButton = SettingButton()
+    private lazy var settingButton: SettingButton = {
+        let button = SettingButton()
+        button.addTarget(self, action: #selector(didTapSettingButton), for: .touchUpInside)
+        return button
+    }()
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
     private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
     private let commonMissionView = CommonMissonView()
@@ -141,6 +145,10 @@ class MainViewController: BaseViewController {
         navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.leftBarButtonItem = appTitleView
         navigationItem.rightBarButtonItem = settingButtonView
+    }
+    
+    @objc func didTapSettingButton() {
+        navigationController?.pushViewController(SettingViewController(), animated: true)
     }
 
     func newRoom() {
