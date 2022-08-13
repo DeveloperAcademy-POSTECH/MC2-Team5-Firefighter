@@ -19,7 +19,7 @@ class ParticipateRoomViewController: BaseViewController {
         return label
     }()
     
-    private let closeButton: UIButton = {
+    private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
@@ -27,7 +27,7 @@ class ParticipateRoomViewController: BaseViewController {
         return button
     }()
     
-    private let nextButton: MainButton = {
+    private lazy var nextButton: MainButton = {
         let button = MainButton()
         button.title = "방 입장"
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
@@ -39,6 +39,7 @@ class ParticipateRoomViewController: BaseViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNotificationCenter()
     }
     
     override func render() {
@@ -77,7 +78,7 @@ class ParticipateRoomViewController: BaseViewController {
     
     // MARK: - Selectors
     @objc private func didTapCloseButton() {
-        dismiss(animated: true, completion: nil)
+        print("didTapCloseButton")
     }
     
     @objc private func didTapNextButton() {
@@ -88,5 +89,13 @@ class ParticipateRoomViewController: BaseViewController {
         CheckRoomVC.modalTransitionStyle = .crossDissolve
         
         present(CheckRoomVC, animated: true, completion: nil)
+    }
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_ :)), name: .nextNotification, object: nil)
+    }
+    
+    @objc private func didReceiveNextNotification(_ notification: Notification) {
+        self.navigationController?.pushViewController(ChooseCharacterViewController(), animated: true)
     }
 }

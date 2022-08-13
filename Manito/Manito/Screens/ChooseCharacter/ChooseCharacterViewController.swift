@@ -28,7 +28,7 @@ class ChooseCharacterViewController: BaseViewController {
         return label
     }()
     
-    private let closeButton: UIButton = {
+    private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
@@ -36,7 +36,7 @@ class ChooseCharacterViewController: BaseViewController {
         return button
     }()
     
-    private let enterButton: MainButton = {
+    private lazy var enterButton: MainButton = {
         let button = MainButton()
         button.title = "선택"
         button.addTarget(self, action: #selector(didTapEnterButton), for: .touchUpInside)
@@ -78,10 +78,10 @@ class ChooseCharacterViewController: BaseViewController {
     
     // MARK: - Selectors
     @objc private func didTapCloseButton() {
-        dismiss(animated: true, completion: nil)
+        print("didTapCloseButton")
     }
     
     @objc private func didTapEnterButton() {
-        dismiss(animated: true, completion: nil)
+        print("didTapEnterButton")
     }
 }
