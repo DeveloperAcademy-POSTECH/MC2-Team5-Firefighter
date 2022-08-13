@@ -58,24 +58,18 @@ class DeveloperInfoViewController: BaseViewController {
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 20
         static let collectionVerticalSpacing: CGFloat = 40
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 40)
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing*2)
         static let cellHeight: CGFloat = 100
-        static let collectionInset = UIEdgeInsets(top: 0,
+        static let collectionInset = UIEdgeInsets(top: 27,
             left: collectionHorizontalSpacing,
             bottom: collectionVerticalSpacing,
             right: collectionHorizontalSpacing)
+        static let headerWidth: CGFloat = UIScreen.main.bounds.size.width
+        static let headerHeight: CGFloat = headerWidth * 0.62
     }
     
 
     // MARK: - property
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "개발자 정보"
-        label.font = .font(.regular, ofSize: 34)
-        return label
-    }()
-    
-    private let developerRoomView = UIImageView(image: ImageLiterals.imgDevBackground)
     
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -90,33 +84,32 @@ class DeveloperInfoViewController: BaseViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(cell: DeveloperInfoViewCell.self,
             forCellWithReuseIdentifier: DeveloperInfoViewCell.className)
+        collectionView.register(DeveloperInfoHeaderView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: DeveloperInfoHeaderView.className)
         return collectionView
     }()
 
     // MARK: - life cycle
 
-    override func render() {
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
-        }
-        
-        view.addSubview(developerRoomView)
-        developerRoomView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(55)
-            $0.height.equalTo(developerRoomView.snp.width).multipliedBy(0.62)
-        }
-        
+    override func render() {        
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(developerRoomView.snp.bottom).offset(47)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(55)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+    }
+    
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .automatic
+        title = "개발자 정보"
     }
 }
 
@@ -137,5 +130,23 @@ extension DeveloperInfoViewController: UICollectionViewDataSource {
         cell.infoLabel.text = developerData[indexPath.item]["info"] as? String
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DeveloperInfoHeaderView.className, for: indexPath) as? DeveloperInfoHeaderView else { assert(false, "do not have reusable view") }
+            
+            return headerView
+        default:
+            assert(false, "do not use footer")
+        }
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension DeveloperInfoViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: Size.headerWidth, height: Size.headerHeight)
     }
 }

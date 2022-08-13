@@ -103,6 +103,7 @@
 		CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */; };
 		CB674C2128596A310063A6B7 /* CheckRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C2028596A310063A6B7 /* CheckRoomViewController.swift */; };
 		CB674C2328596A3E0063A6B7 /* CheckRoom.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB674C2228596A3E0063A6B7 /* CheckRoom.storyboard */; };
+		CB85DE1F28A76F3400399109 /* DeveloperInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB85DE1E28A76F3400399109 /* DeveloperInfoHeaderView.swift */; };
 		CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */; };
 		CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissonView.swift */; };
 		CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */; };
@@ -214,6 +215,7 @@
 		CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputInvitedCodeView.swift; sourceTree = "<group>"; };
 		CB674C2028596A310063A6B7 /* CheckRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomViewController.swift; sourceTree = "<group>"; };
 		CB674C2228596A3E0063A6B7 /* CheckRoom.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CheckRoom.storyboard; sourceTree = "<group>"; };
+		CB85DE1E28A76F3400399109 /* DeveloperInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoHeaderView.swift; sourceTree = "<group>"; };
 		CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomCollectionCell.swift; sourceTree = "<group>"; };
 		CB9592B42855D52700847751 /* CommonMissonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissonView.swift; sourceTree = "<group>"; };
 		CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterViewController.swift; sourceTree = "<group>"; };
@@ -672,6 +674,14 @@
 			path = CheckRoom;
 			sourceTree = "<group>";
 		};
+		CB85DE1D28A76F1A00399109 /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				CB85DE1E28A76F3400399109 /* DeveloperInfoHeaderView.swift */,
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
 		CB9592B02855BFDD00847751 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -709,6 +719,7 @@
 		CBBFF775287AE034006A5964 /* DeveloperInfo */ = {
 			isa = PBXGroup;
 			children = (
+				CB85DE1D28A76F1A00399109 /* UIComponent */,
 				CBBFF776287AE03F006A5964 /* Cell */,
 				CB358C0128A564080084D001 /* DeveloperInfoViewController.swift */,
 			);
@@ -874,6 +885,7 @@
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
 				39C957FE287DAB6D00A04A2B /* DetailIngEndPoint.swift in Sources */,
 				B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */,
+				CB85DE1F28A76F3400399109 /* DeveloperInfoHeaderView.swift in Sources */,
 				B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */,
 				B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */,
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
