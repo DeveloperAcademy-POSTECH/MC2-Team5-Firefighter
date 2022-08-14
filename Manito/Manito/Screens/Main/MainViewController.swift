@@ -154,6 +154,7 @@ class MainViewController: BaseViewController {
             self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
             self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
         }
+    }
 
     @objc func didTapSettingButton() {
         navigationController?.pushViewController(SettingViewController(), animated: true)
