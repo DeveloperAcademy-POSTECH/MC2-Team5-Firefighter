@@ -29,6 +29,7 @@ enum ImageLiterals {
     static var imgLogo: UIImage { .load(name: "imgLogo") }
     static var imgTextLogo: UIImage { .load(name: "imgTextLogo")}
     static var imgBackground: UIImage { .load(name: "imgBackground") }
+    static var imgDevBackground: UIImage { .load(name: "imgDevBackground") }
     static var imgStar: UIImage { .load(name: "imgStar") }
     static var imageSliderThumb: UIImage { .load(name: "btnSliderThumb") }
     static var imgCodeBackground: UIImage { .load(name: "imgCodeBackground") }
@@ -43,6 +44,8 @@ enum ImageLiterals {
     static var imgMaDinner: UIImage { .load(name: "imgMaDinner") }
     static var imgMaHoya: UIImage { .load(name: "imgMaHoya") }
     static var imgMaLivvy: UIImage { .load(name: "imgMaLivvy") }
+    static var imgMaDaon: UIImage { .load(name: "imgMaDaon") }
+    static var imgMaLeo: UIImage { .load(name: "imgMaLeo") }
     
     // MARK: - gif
     
