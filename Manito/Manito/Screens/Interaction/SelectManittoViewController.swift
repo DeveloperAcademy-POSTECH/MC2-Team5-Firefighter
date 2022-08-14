@@ -97,7 +97,7 @@ final class SelectManittoViewController: BaseViewController {
             self.openCapsuleImageView.stopAnimatingGIF()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                     self.stageType = .openButton
-                })
+            })
         case .openButton:
             break
         }
