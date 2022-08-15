@@ -312,13 +312,21 @@ class DetailWaitViewController: BaseViewController {
         let isAlreadyPastDate = startDate.distance(to: Date()) > 86400
         
         if isAlreadyPastDate {
-            let fiveDaysInterval: TimeInterval = 86400 * 4
-            let defaultStartDate = Date().dateToString
-            let defaultEndDate = (Date() + fiveDaysInterval).dateToString
-            self.presentModal(from: defaultStartDate, to: defaultEndDate, isDateEdit: false)
+            editInfoFromDefaultDate()
         } else {
-            self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
+            editInfoFromCurrentDate()
         }
+    }
+    
+    private func editInfoFromDefaultDate() {
+        let fiveDaysInterval: TimeInterval = 86400 * 4
+        let defaultStartDate = Date().dateToString
+        let defaultEndDate = (Date() + fiveDaysInterval).dateToString
+        self.presentModal(from: defaultStartDate, to: defaultEndDate, isDateEdit: false)
+    }
+    
+    private func editInfoFromCurrentDate() {
+        self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
     }
 
     private func touchUpToShowToast() {
