@@ -58,6 +58,7 @@ class DetailEditViewController: BaseViewController {
             guard let startText = self?.calendarView.tempStartDateText else { return }
             guard let endText = self?.calendarView.tempEndDateText else { return }
             NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": startText, "endDate": endText])
+            NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
             self?.dismiss(animated: true)
         }
         button.setTitle("변경", for: .normal)
