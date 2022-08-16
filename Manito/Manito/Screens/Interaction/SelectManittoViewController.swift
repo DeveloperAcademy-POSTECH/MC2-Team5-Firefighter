@@ -20,6 +20,7 @@ final class SelectManittoViewController: BaseViewController {
 
     // MARK: - property
 
+    @IBOutlet weak var joystickBackgroundView: UIView!
     @IBOutlet weak var joystickImageView: GIFImageView!
     @IBOutlet weak var informationLabel: UILabel!
     @IBOutlet weak var openCapsuleImageView: GIFImageView!
@@ -58,8 +59,6 @@ final class SelectManittoViewController: BaseViewController {
     override func configUI() {
         super.configUI()
 
-        joystickImageView.isUserInteractionEnabled = true
-
         informationLabel.font = .font(.regular, ofSize: 20)
         nameLabel.font = .font(.regular, ofSize: 30)
         nameLabel.text = manittiName
@@ -76,8 +75,8 @@ final class SelectManittoViewController: BaseViewController {
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
 
-        joystickImageView.addGestureRecognizer(swipeLeft)
-        joystickImageView.addGestureRecognizer(swipeRight)
+        joystickBackgroundView.addGestureRecognizer(swipeLeft)
+        joystickBackgroundView.addGestureRecognizer(swipeRight)
     }
 
     private func setupGifImage() {
@@ -97,7 +96,7 @@ final class SelectManittoViewController: BaseViewController {
             self.openCapsuleImageView.stopAnimatingGIF()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                     self.stageType = .openButton
-                })
+            })
         case .openButton:
             break
         }
@@ -111,8 +110,7 @@ final class SelectManittoViewController: BaseViewController {
             confirmButton.isHidden = true
         case .capsule:
             openCapsuleImageView.isHidden = false
-            joystickImageView.isHidden = true
-            informationLabel.isHidden = true
+            joystickBackgroundView.isHidden = true
         case .openName:
             nameLabel.fadeIn()
         case .openButton:
