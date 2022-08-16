@@ -14,14 +14,19 @@ enum ImageLiterals {
     static var icList: UIImage { .load(name: "btnList") }
     static var icManiTti: UIImage { .load(name: "btnManiTti") }
     static var icNewRoom: UIImage { .load(name: "btnNewRoom") }
-    static var icBack: UIImage { .load(systemName: "chevron.left")}
+    static var icBack: UIImage { .load(name: "ic_back")}
+    static var icShare: UIImage { .load(name: "ic_share")}
+    static var icReport: UIImage { .load(name: "ic_report")}
+    static var icMore: UIImage { .load(name: "ic_more")}
+    static var icLetterInfo: UIImage { .load(name: "ic_letterInfo")}
+    static var icMissionInfo: UIImage { .load(name: "ic_missionInfo")}
     
     // MARK: - button
     
-    static var btnBack: UIImage { .load(systemName: "chevron.backward") }
-    static var btnXmark: UIImage { .load(systemName: "xmark.circle.fill") }
-    static var btnSetting: UIImage { .load(systemName: "gearshape") }
-    static var btnCamera: UIImage { .load(systemName: "camera.on.rectangle") }
+    static var btnBack: UIImage { .load(name: "ic_back") }
+    static var btnXmark: UIImage { .load(name: "ic_exit") }
+    static var btnSetting: UIImage { .load(name: "ic_setting") }
+    static var btnCamera: UIImage { .load(name: "ic_camera") }
 
     // MARK: - image
     
