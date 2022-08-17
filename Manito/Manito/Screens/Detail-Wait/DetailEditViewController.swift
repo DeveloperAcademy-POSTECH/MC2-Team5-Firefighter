@@ -55,15 +55,10 @@ class DetailEditViewController: BaseViewController {
     private lazy var changeButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
-            guard let startText = self?.calendarView.tempStartDateText else { return }
-            guard let endText = self?.calendarView.tempEndDateText else { return }
-            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": startText, "endDate": endText])
-            NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
-            self?.dismiss(animated: true)
+            self?.didTapChangeButton()
         }
         button.setTitle("변경", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
-        setChangedButton()
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         button.addAction(buttonAction, for: .touchUpInside)
         return button
@@ -137,6 +132,7 @@ class DetailEditViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.presentationController?.delegate = self
         isModalInPresentation = true
+        setupChangedButton()
     }
 
     override func render() {
@@ -251,11 +247,17 @@ class DetailEditViewController: BaseViewController {
         makeActionSheet(actionTitles: actionTitles, actionStyle: actionStyle, actions: actions)
     }
 
-    private func setChangedButton() {
+    private func setupChangedButton() {
         calendarView.changeButtonState = { [weak self] value in
             self?.changeButton.isUserInteractionEnabled = value
             self?.changeButton.setTitleColor(value ? .subBlue : .grey002, for: .normal)
         }
+    }
+    
+    private func didTapChangeButton() {
+        NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.tempStartDateText, "endDate": calendarView.tempEndDateText])
+        NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
+        dismiss(animated: true)
     }
 }
 
