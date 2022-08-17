@@ -22,7 +22,7 @@ class CreateRoomViewController: BaseViewController {
         case checkRoom = 3
     }
     
-    private var enumIndex: Noti.RawValue = 0
+    private var notiIndex: Noti = .inputName
     
     // MARK: - Property
     
@@ -148,7 +148,7 @@ class CreateRoomViewController: BaseViewController {
     // MARK: - Selectors
     
     @objc private func didTapBackButton() {
-        enumIndex -= 1
+        notiIndex = Noti.init(rawValue: notiIndex.rawValue - 1) ?? Noti.inputName
         changedInputView()
     }
     
@@ -157,19 +157,19 @@ class CreateRoomViewController: BaseViewController {
     }
     
     @objc private func didTapNextButton() {
-        switch enumIndex {
-        case Noti.inputName.rawValue:
+        switch notiIndex {
+        case Noti.inputName:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
-        case Noti.inputPerson.rawValue:
+        case Noti.inputPerson:
             person = Int(personView.personSlider.value)
-        case Noti.inputDate.rawValue:
+        case Noti.inputDate:
             print("기간 선택 보여주기")
         default:
             print("다른 뷰 넘기기")
         }
-        if enumIndex < 3 {
-            enumIndex += 1
+        if notiIndex.rawValue < 3 {
+            notiIndex = Noti.init(rawValue: notiIndex.rawValue + 1) ?? Noti.inputName
             changedInputView()
         }
     }
@@ -229,12 +229,12 @@ class CreateRoomViewController: BaseViewController {
     }
     
     private func changedInputView() {
-        switch enumIndex {
-        case Noti.inputName.rawValue:
+        switch notiIndex {
+        case Noti.inputName:
             NotificationCenter.default.post(name: .nameNotification, object: nil)
-        case Noti.inputPerson.rawValue:
+        case Noti.inputPerson:
             NotificationCenter.default.post(name: .personNotification, object: nil)
-        case Noti.inputDate.rawValue:
+        case Noti.inputDate:
             NotificationCenter.default.post(name: .dateNotification, object: nil)
         default:
             NotificationCenter.default.post(name: .checkNotification, object: nil)
