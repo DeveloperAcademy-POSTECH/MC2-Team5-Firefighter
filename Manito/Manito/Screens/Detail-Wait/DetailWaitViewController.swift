@@ -280,9 +280,7 @@ class DetailWaitViewController: BaseViewController {
         if isOwner {
             let menu = UIMenu(options: [], children: [
                     UIAction(title: "방 정보 수정", handler: { [weak self] _ in
-                        guard let startText = self?.startDateText else { return }
-                        guard let endText = self?.endDateText else { return }
-                        self?.presentModal(from: startText, to: endText, isDateEdit: false)
+                        self?.presentEditRoomView()
                     }),
                     UIAction(title: "방 삭제", handler: { [weak self] _ in
                         self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
@@ -296,6 +294,28 @@ class DetailWaitViewController: BaseViewController {
                 ])
             return menu
         }
+    }
+
+    private func presentEditRoomView() {
+        guard let startDate = startDateText.stringToDate else { return }
+        let isAlreadyPastDate = startDate.distance(to: Date()) > 86400
+        
+        if isAlreadyPastDate {
+            editInfoFromDefaultDate()
+        } else {
+            editInfoFromCurrentDate()
+        }
+    }
+    
+    private func editInfoFromDefaultDate() {
+        let fiveDaysInterval: TimeInterval = 86400 * 4
+        let defaultStartDate = Date().dateToString
+        let defaultEndDate = (Date() + fiveDaysInterval).dateToString
+        self.presentModal(from: defaultStartDate, to: defaultEndDate, isDateEdit: false)
+    }
+    
+    private func editInfoFromCurrentDate() {
+        self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
     }
 
     private func touchUpToShowToast() {
