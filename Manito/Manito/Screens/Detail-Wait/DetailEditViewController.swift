@@ -16,10 +16,9 @@ class DetailEditViewController: BaseViewController {
         case dateEditMode
         case infoEditMode
     }
-    var sliderValue = 15
-
     var editMode: EditMode = .infoEditMode
-
+    var currentUserCount = 0
+    var sliderValue = 10
     var startDateText = "" {
         didSet {
             calendarView.startDateText = startDateText
@@ -222,6 +221,7 @@ class DetailEditViewController: BaseViewController {
 
     @objc
     private func changeMemberCount(sender: UISlider) {
+        sliderValue = Int(sender.value)
         memberCountLabel.text = String(Int(sender.value)) + "인"
         memberCountLabel.font = .font(.regular, ofSize: 24)
         memberCountLabel.textColor = .white
@@ -234,7 +234,6 @@ class DetailEditViewController: BaseViewController {
             dismiss(animated: true)
             return
         }
-        
         showDiscardChangAlert()
     }
 
@@ -253,12 +252,31 @@ class DetailEditViewController: BaseViewController {
             self?.changeButton.setTitleColor(value ? .subBlue : .grey002, for: .normal)
         }
     }
-    
+
     private func didTapChangeButton() {
+        switch editMode {
+        case .dateEditMode:
+            changeRoomDateRange()
+        case .infoEditMode:
+            changeRoomInfo()
+        }
+    }
+
+    private func changeRoomDateRange() {
         NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.tempStartDateText, "endDate": calendarView.tempEndDateText])
         NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
-        NotificationCenter.default.post(name: .editMaxUserNotification, object: nil, userInfo: ["maxUser": memberSlider.value])
         dismiss(animated: true)
+    }
+
+    private func changeRoomInfo() {
+        if currentUserCount <= sliderValue {
+            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.tempStartDateText, "endDate": calendarView.tempEndDateText])
+            NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
+            NotificationCenter.default.post(name: .editMaxUserNotification, object: nil, userInfo: ["maxUser": memberSlider.value])
+            dismiss(animated: true)
+        } else {
+            makeAlert(title: "인원을 다시 설정해 주세요", message: "현재 인원보다 최대 인원을 \n더 적게 설정할 수 없어요.")
+        }
     }
 }
 

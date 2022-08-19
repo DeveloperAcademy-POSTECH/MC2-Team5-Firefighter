@@ -12,7 +12,7 @@ import SnapKit
 class DetailWaitViewController: BaseViewController {
     let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
     var canStartClosure: ((Bool) -> ())?
-    var maxUserCount: Int = 15 {
+    var maxUserCount: Int = 10 {
         didSet {
             comeInLabel.text = "\(userCount)/\(maxUserCount)"
         }
@@ -264,12 +264,13 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
-        let modalViewController = DetailEditViewController()
-        modalViewController.sliderValue = maxUserCount
-        modalViewController.editMode = isDateEdit ? .dateEditMode : .infoEditMode
-        modalViewController.startDateText = startString
-        modalViewController.endDateText = endString
-        present(modalViewController, animated: true, completion: nil)
+        let viewController = DetailEditViewController()
+        viewController.currentUserCount = userCount
+        viewController.sliderValue = maxUserCount
+        viewController.editMode = isDateEdit ? .dateEditMode : .infoEditMode
+        viewController.startDateText = startString
+        viewController.endDateText = endString
+        present(viewController, animated: true, completion: nil)
     }
 
     // MARK: - private func
