@@ -16,6 +16,7 @@ class DetailEditViewController: BaseViewController {
         case dateEditMode
         case infoEditMode
     }
+    var sliderValue = 0
 
     var editMode: EditMode = .infoEditMode
 
@@ -257,6 +258,7 @@ class DetailEditViewController: BaseViewController {
     private func didTapChangeButton() {
         NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.tempStartDateText, "endDate": calendarView.tempEndDateText])
         NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
+        NotificationCenter.default.post(name: .editMaxUserNotification, object: nil, userInfo: ["maxUser": memberSlider.value])
         dismiss(animated: true)
     }
 }
