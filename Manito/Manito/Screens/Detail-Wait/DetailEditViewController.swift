@@ -16,11 +16,10 @@ class DetailEditViewController: BaseViewController {
         case dateEditMode
         case infoEditMode
     }
-    var sliderValue = 0
+    var sliderValue = 15
 
     var editMode: EditMode = .infoEditMode
 
-    private var memberCount = 7
     var startDateText = "" {
         didSet {
             calendarView.startDateText = startDateText
@@ -112,7 +111,7 @@ class DetailEditViewController: BaseViewController {
         slider.maximumValue = 15
         slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001
-        slider.value = Float(memberCount)
+        slider.value = Float(sliderValue)
         slider.isContinuous = true
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         slider.addTarget(self, action: #selector(changeMemberCount(sender:)), for: .valueChanged)
@@ -120,7 +119,7 @@ class DetailEditViewController: BaseViewController {
     }()
     private lazy var memberCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(memberCount)인"
+        label.text = "\(sliderValue)인"
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
         return label

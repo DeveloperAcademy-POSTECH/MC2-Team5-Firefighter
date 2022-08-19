@@ -12,7 +12,11 @@ import SnapKit
 class DetailWaitViewController: BaseViewController {
     let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
     var canStartClosure: ((Bool) -> ())?
-    var maxUserCount: ((Int) -> ())?
+    var maxUserCount: Int = 15 {
+        didSet {
+            comeInLabel.text = "\(userCount)/\(maxUserCount)"
+        }
+    }
     lazy var userCount = userArr.count
     let isOwner = true
     var startDateText = "22.08.11" {
@@ -106,12 +110,9 @@ class DetailWaitViewController: BaseViewController {
     }()
     private lazy var comeInLabel: UILabel = {
         let label = UILabel()
-        maxUserCount = { [weak self] value in
-            guard let count = self?.userCount else { return }
-            label.text = "\(count)/\(value)"
-            label.textColor = .white
-            label.font = .font(.regular, ofSize: 14)
-        }
+        label.text = "\(userCount)/\(maxUserCount)"
+        label.textColor = .white
+        label.font = .font(.regular, ofSize: 14)
         return label
     }()
     private lazy var copyButton: UIButton = {
@@ -165,7 +166,6 @@ class DetailWaitViewController: BaseViewController {
         setupNotificationCenter()
         isPastStartDate()
         setStartButton()
-        setupMaxUserCount()
     }
 
     override func render() {
@@ -265,6 +265,7 @@ class DetailWaitViewController: BaseViewController {
 
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
         let modalViewController = DetailEditViewController()
+        modalViewController.sliderValue = maxUserCount
         modalViewController.editMode = isDateEdit ? .dateEditMode : .infoEditMode
         modalViewController.startDateText = startString
         modalViewController.endDateText = endString
@@ -362,10 +363,6 @@ class DetailWaitViewController: BaseViewController {
         canStartClosure?(isToday)
     }
 
-    private func setupMaxUserCount() {
-        maxUserCount?(15)
-    }
-
     // MARK: - selector
 
     @objc
@@ -386,7 +383,7 @@ class DetailWaitViewController: BaseViewController {
         guard let maxUser = noti["maxUser"] as? Float else { return }
 
         let intMaxUser = Int(maxUser)
-        maxUserCount?(intMaxUser)
+        maxUserCount = intMaxUser
     }
     
     @objc
