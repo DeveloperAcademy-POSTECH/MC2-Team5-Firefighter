@@ -33,26 +33,10 @@ class InputDateView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         render()
-        tapGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Funtion
-    
-    private func tapGesture() {
-        let gestureTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapDateBackView(_:)))
-        gestureTapRecognizer.numberOfTapsRequired = 1
-        gestureTapRecognizer.numberOfTouchesRequired = 1
-        self.addGestureRecognizer(gestureTapRecognizer)
-    }
-    
-    // MARK: - Selector
-    
-    @objc private func didTapDateBackView(_ gesture: UITapGestureRecognizer) {
-        print("gesture")
     }
     
     // MARK: - Config
