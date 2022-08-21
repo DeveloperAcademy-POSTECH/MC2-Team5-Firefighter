@@ -11,10 +11,10 @@ import FSCalendar
 import SnapKit
 
 class CalendarView: UIView {
-    var changeButtonState: ((Bool) -> ())?
     private var selectStartDate = Date()
-    let oneDayInterval: TimeInterval = 86400
-    let sevenDaysInterval: TimeInterval = 604800
+    private let oneDayInterval: TimeInterval = 86400
+    private let sevenDaysInterval: TimeInterval = 604800
+    var changeButtonState: ((Bool) -> ())?
     var startDateText = ""
     var endDateText = ""
     var tempStartDateText = ""
