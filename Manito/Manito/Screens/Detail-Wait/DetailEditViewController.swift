@@ -248,8 +248,9 @@ class DetailEditViewController: BaseViewController {
 
     private func setupChangedButton() {
         calendarView.changeButtonState = { [weak self] value in
-            self?.changeButton.isUserInteractionEnabled = value
-            self?.changeButton.setTitleColor(value ? .subBlue : .grey002, for: .normal)
+            self?.changeButton.isEnabled = value
+            self?.changeButton.setTitleColor(.subBlue, for: .normal)
+            self?.changeButton.setTitleColor(.grey002, for: .disabled)
         }
     }
 

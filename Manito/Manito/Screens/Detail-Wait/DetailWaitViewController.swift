@@ -368,10 +368,8 @@ class DetailWaitViewController: BaseViewController {
 
     @objc
     private func didReceiveDateRange(_ notification: Notification) {
-        guard let noti = notification.userInfo else { return }
-
-        guard let startDate = noti["startDate"] as? String else { return }
-        guard let endDate = noti["endDate"] as? String else { return }
+        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
+        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
 
         self.startDateText = startDate
         self.endDateText = endDate
@@ -379,9 +377,7 @@ class DetailWaitViewController: BaseViewController {
 
     @objc
     private func didReceiveMaxUser(_ notification: Notification) {
-        guard let noti = notification.userInfo else { return }
-
-        guard let maxUser = noti["maxUser"] as? Float else { return }
+        guard let maxUser = notification.userInfo?["maxUser"] as? Float else { return }
 
         let intMaxUser = Int(maxUser)
         maxUserCount = intMaxUser
