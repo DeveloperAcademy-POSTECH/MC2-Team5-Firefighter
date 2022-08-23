@@ -26,9 +26,20 @@ class MainViewController: BaseViewController {
     }
 
     private enum RoomStatus: String {
-        case waiting = "대기중"
-        case starting = "진행중"
-        case end = "완료"
+        case waiting
+        case starting
+        case end
+        
+        var roomStatus: String {
+            switch self {
+            case .waiting:
+                return TextLiteral.mainViewControllerRoomStatusStarting
+            case .starting:
+                return TextLiteral.mainViewControllerRoomStatusWaiting
+            case .end:
+                return TextLiteral.mainViewControllerRoomStatusEnd
+            }
+        }
     }
 
     // MARK: - property
@@ -44,7 +55,7 @@ class MainViewController: BaseViewController {
     private let commonMissionView = CommonMissonView()
     private let menuTitle: UILabel = {
         let label = UILabel()
-        label.text = "참여중인 애니또"
+        label.text = TextLiteral.mainViewcontrollerMenuTitle
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label

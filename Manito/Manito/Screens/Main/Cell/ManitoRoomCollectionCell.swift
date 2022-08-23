@@ -33,7 +33,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     lazy var roomLabel: UILabel = {
         let label = UILabel()
-        label.text = "마니또"
+        label.text = TextLiteral.manitoRoomCollectionViewCellRoomLabelTitle
         label.textColor = .white
         label.font = .font(.regular, ofSize: 20)
         return label
@@ -41,7 +41,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "22.06.01 ~ 22.06.06"
+        label.text = TextLiteral.manitoRoomCollectionViewCellDateLabelTitle
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
         return label

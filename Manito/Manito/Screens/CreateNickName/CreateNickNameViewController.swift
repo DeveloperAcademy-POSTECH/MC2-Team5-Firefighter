@@ -17,7 +17,7 @@ class CreateNickNameViewController: BaseViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "닉네임 설정"
+        label.text = TextLiteral.createNickNameViewControllerTitle
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
@@ -27,7 +27,7 @@ class CreateNickNameViewController: BaseViewController {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         textField.backgroundColor = .darkGrey002
-        textField.attributedPlaceholder = NSAttributedString(string: "닉네임을 적어주세요", attributes:attributes)
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.createNickNameViewControllerAskNickName, attributes:attributes)
         textField.font = .font(.regular, ofSize: 18)
         textField.layer.cornerRadius = 10
         textField.layer.masksToBounds = true
@@ -39,7 +39,7 @@ class CreateNickNameViewController: BaseViewController {
     }()
     private lazy var doneButton: MainButton = {
         let button = MainButton()
-        button.title = "완료"
+        button.title = TextLiteral.done
         button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
         button.isDisabled = true
         return button
