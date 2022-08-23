@@ -80,20 +80,20 @@ final class CreateLetterViewController: BaseViewController {
         scrollContentView.addSubview(missionView)
         missionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(25)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.height.equalTo(100)
         }
         
         scrollContentView.addSubview(letterTextView)
         letterTextView.snp.makeConstraints {
             $0.top.equalTo(missionView.snp.bottom).offset(32)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
         scrollContentView.addSubview(letterPhotoView)
         letterPhotoView.snp.makeConstraints {
             $0.top.equalTo(letterTextView.snp.bottom).offset(22)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(105)
         }
     }
