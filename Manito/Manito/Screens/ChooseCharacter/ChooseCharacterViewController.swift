@@ -94,13 +94,6 @@ class ChooseCharacterViewController: BaseViewController {
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
-        view.addSubview(closeButton)
-        closeButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
-            $0.trailing.equalToSuperview()
-            $0.width.height.equalTo(44)
-        }
-        
         view.addSubview(manittoCollectionView)
         manittoCollectionView.snp.makeConstraints {
             $0.top.equalTo(subTitleLabel.snp.bottom)
@@ -115,9 +108,18 @@ class ChooseCharacterViewController: BaseViewController {
         }
     }
     
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+
+        let closeButtonView = makeBarButtonItem(with: closeButton)
+
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.rightBarButtonItem = closeButtonView
+    }
+    
     // MARK: - Selectors
     @objc private func didTapCloseButton() {
-        print("didTapCloseButton")
+        dismiss(animated: true, completion: nil)
     }
     
     @objc private func didTapEnterButton() {
