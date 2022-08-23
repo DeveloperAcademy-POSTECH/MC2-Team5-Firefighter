@@ -27,10 +27,13 @@ final class LetterViewController: BaseViewController {
     
     private enum Size {
         static let headerHeight: CGFloat = 66.0
-        static let emptyContentHeight: CGFloat = 48.0
         static let collectionHorizontalSpacing: CGFloat = 20.0
         static let collectionVerticalSpacing: CGFloat = 18.0
+        static let cellTopSpacing: CGFloat = 16.0
+        static let cellBottomSpacing: CGFloat = 35.0
+        static let cellHorizontalSpacing: CGFloat = 16.0
         static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2
+        static let imageHeight: CGFloat = 204.0
         static let collectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
                                                   left: collectionHorizontalSpacing,
                                                   bottom: collectionVerticalSpacing,
@@ -45,7 +48,6 @@ final class LetterViewController: BaseViewController {
         flowLayout.sectionInset = Size.collectionInset
         flowLayout.minimumLineSpacing = 33
         flowLayout.sectionHeadersPinToVisibleBounds = true
-        flowLayout.estimatedItemSize = CGSize(width: Size.cellWidth, height: Size.emptyContentHeight)
         return flowLayout
     }()
     private lazy var listCollectionView: UICollectionView = {
@@ -130,6 +132,19 @@ final class LetterViewController: BaseViewController {
         listCollectionView.collectionViewLayout.invalidateLayout()
         listCollectionView.reloadData()
     }
+    
+    private func calculateContentHeight(text: String) -> CGFloat {
+        let width = UIScreen.main.bounds.size.width - Size.collectionHorizontalSpacing * 2 - Size.cellHorizontalSpacing * 2
+        let label = UILabel(frame: CGRect(origin: .zero,
+                                          size: CGSize(width: width,
+                                                       height: .greatestFiniteMagnitude)))
+        label.text = text
+        label.font = .font(.regular, ofSize: 15)
+        label.numberOfLines = 0
+        label.addLabelSpacing()
+        label.sizeToFit()
+        return label.frame.height
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -164,6 +179,20 @@ extension LetterViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension LetterViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var heights = [Size.cellTopSpacing, Size.cellBottomSpacing]
+        
+        if let content = letterState.lists[indexPath.item].content {
+            heights += [calculateContentHeight(text: content)]
+        }
+        
+        if letterState.lists[indexPath.item].image != nil {
+            heights += [Size.imageHeight]
+        }
+        
+        return CGSize(width: Size.cellWidth, height: heights.reduce(0, +))
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.size.width, height: Size.headerHeight)
     }
