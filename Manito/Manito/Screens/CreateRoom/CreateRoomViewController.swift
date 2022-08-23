@@ -158,19 +158,20 @@ class CreateRoomViewController: BaseViewController {
     
     @objc private func didTapNextButton() {
         switch notiIndex {
-        case Noti.inputName:
+        case .inputName:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
-        case Noti.inputPerson:
-            person = Int(personView.personSlider.value)
-        case Noti.inputDate:
-            print("기간 선택 보여주기")
-        default:
-            print("다른 뷰 넘기기")
-        }
-        if notiIndex.rawValue < 3 {
-            notiIndex = Noti.init(rawValue: notiIndex.rawValue + 1) ?? Noti.inputName
+            notiIndex = .inputPerson
             changedInputView()
+        case .inputPerson:
+            person = Int(personView.personSlider.value)
+            notiIndex = .inputDate
+            changedInputView()
+        case .inputDate:
+            notiIndex = .checkRoom
+            changedInputView()
+        case .checkRoom:
+            print("여기는 끝^__^")
         }
     }
     
@@ -188,38 +189,6 @@ class CreateRoomViewController: BaseViewController {
         })
     }
     
-    @objc private func didReceiveNameNotification(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
-            self.nameView.alpha = 1.0
-            self.personView.alpha = 0.0
-            self.backButton.isHidden = true
-        }
-    }
-    
-    @objc private func didReceivePersonNotification(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
-            self.nameView.alpha = 0.0
-            self.personView.alpha = 1.0
-            self.dateView.alpha = 0.0
-            self.backButton.isHidden = false
-        }
-    }
-    
-    @objc private func didReceiveDateNotification(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
-            self.personView.alpha = 0.0
-            self.dateView.alpha = 1.0
-            self.checkView.alpha = 0.0
-        }
-    }
-    
-    @objc private func didReceiveCheckNotification(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
-            self.dateView.alpha = 0.0
-            self.checkView.alpha = 1.0
-        }
-    }
-    
     // MARK: - Functions
     
     private func toggleButton() {
@@ -231,22 +200,34 @@ class CreateRoomViewController: BaseViewController {
     private func changedInputView() {
         switch notiIndex {
         case Noti.inputName:
-            NotificationCenter.default.post(name: .nameNotification, object: nil)
+            UIView.animate(withDuration: 0.3) {
+                self.nameView.alpha = 1.0
+                self.personView.alpha = 0.0
+                self.backButton.isHidden = true
+            }
         case Noti.inputPerson:
-            NotificationCenter.default.post(name: .personNotification, object: nil)
+            UIView.animate(withDuration: 0.3) {
+                self.nameView.alpha = 0.0
+                self.personView.alpha = 1.0
+                self.dateView.alpha = 0.0
+                self.backButton.isHidden = false
+            }
         case Noti.inputDate:
-            NotificationCenter.default.post(name: .dateNotification, object: nil)
+            UIView.animate(withDuration: 0.3) {
+                self.personView.alpha = 0.0
+                self.dateView.alpha = 1.0
+                self.checkView.alpha = 0.0
+            }
         default:
-            NotificationCenter.default.post(name: .checkNotification, object: nil)
+            UIView.animate(withDuration: 0.3) {
+                self.dateView.alpha = 0.0
+                self.checkView.alpha = 1.0
+            }
         }
     }
     
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNameNotification(_ :)), name: .nameNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceivePersonNotification(_ :)), name: .personNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateNotification(_ :)), name: .dateNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCheckNotification(_ :)), name: .checkNotification, object: nil)
     }
 }
