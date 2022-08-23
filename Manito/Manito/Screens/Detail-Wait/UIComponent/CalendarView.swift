@@ -17,8 +17,8 @@ class CalendarView: UIView {
     var changeButtonState: ((Bool) -> ())?
     var startDateText = ""
     var endDateText = ""
-    var tempStartDateText = ""
-    var tempEndDateText = ""
+    private var tempStartDateText = ""
+    private var tempEndDateText = ""
     var isFirstTap = false
     
     private enum CalendarMoveType {
@@ -163,6 +163,14 @@ class CalendarView: UIView {
         let dateRangeCount = selectdDate / 86400
 
         return Int(dateRangeCount) + 1
+    }
+    
+    func getTempStartDate() -> String {
+        return tempStartDateText
+    }
+    
+    func getTemptEndDate() -> String {
+        return tempEndDateText
     }
 }
 

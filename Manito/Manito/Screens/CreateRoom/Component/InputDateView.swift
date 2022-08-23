@@ -19,7 +19,7 @@ class InputDateView: UIView {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    private let calendarView = CalendarView()
+    let calendarView = CalendarView()
     private let dateInfoLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 7일까지 설정할 수 있어요 !"
