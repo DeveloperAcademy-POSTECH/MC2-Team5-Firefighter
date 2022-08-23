@@ -15,14 +15,14 @@ class CreateRoomViewController: BaseViewController {
     private var person = 0
     private var date = 0
     
-    private enum Noti: Int {
+    private enum RoomState: Int {
         case inputName = 0
         case inputPerson = 1
         case inputDate = 2
         case checkRoom = 3
     }
     
-    private var notiIndex: Noti = .inputName
+    private var notiIndex: RoomState = .inputName
     
     // MARK: - Property
     
@@ -148,7 +148,7 @@ class CreateRoomViewController: BaseViewController {
     // MARK: - Selectors
     
     @objc private func didTapBackButton() {
-        notiIndex = Noti.init(rawValue: notiIndex.rawValue - 1) ?? Noti.inputName
+        notiIndex = RoomState.init(rawValue: notiIndex.rawValue - 1) ?? RoomState.inputName
         changedInputView()
     }
     
@@ -199,20 +199,20 @@ class CreateRoomViewController: BaseViewController {
     
     private func changedInputView() {
         switch notiIndex {
-        case Noti.inputName:
+        case RoomState.inputName:
             UIView.animate(withDuration: 0.3) {
                 self.nameView.alpha = 1.0
                 self.personView.alpha = 0.0
                 self.backButton.isHidden = true
             }
-        case Noti.inputPerson:
+        case RoomState.inputPerson:
             UIView.animate(withDuration: 0.3) {
                 self.nameView.alpha = 0.0
                 self.personView.alpha = 1.0
                 self.dateView.alpha = 0.0
                 self.backButton.isHidden = false
             }
-        case Noti.inputDate:
+        case RoomState.inputDate:
             UIView.animate(withDuration: 0.3) {
                 self.personView.alpha = 0.0
                 self.dateView.alpha = 1.0
