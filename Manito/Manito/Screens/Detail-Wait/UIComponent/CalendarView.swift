@@ -170,9 +170,14 @@ extension CalendarView: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         isFirstTap = true
         changeButtonState?(false)
+        let isCreatedRoomOnlySelectedStartDate = calendar.selectedDates.count == 1
         let isSelectedDateRange = calendar.selectedDates.count == 2
         let isReclickedStartDate = calendar.selectedDates.count > 2
-        if isSelectedDateRange {
+        if isCreatedRoomOnlySelectedStartDate {
+            selectStartDate = date
+            calendar.select(selectStartDate)
+            calendar.reloadData()
+        } else if isSelectedDateRange {
             changeButtonState?(true)
             tempEndDateText = date.dateToString
             if countDateRange() > 7 {
@@ -222,6 +227,8 @@ extension CalendarView: FSCalendarDelegate {
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey004.withAlphaComponent(0.4)
+        } else if !isFirstTap {
+            return .white
         } else if isAWeekBeforeAfter || isDoneSelectedDate {
             return .white
         } else {
