@@ -7,13 +7,13 @@
 
 import UIKit
 
+import Gifu
 import SnapKit
 
 class MainViewController: BaseViewController {
 
     // 임시 데이터
     let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
-    private let nickname = "코비"
 
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 22
@@ -34,13 +34,17 @@ class MainViewController: BaseViewController {
     // MARK: - property
 
     private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
-    private let settingButton = SettingButton()
+    private lazy var settingButton: SettingButton = {
+        let button = SettingButton()
+        button.addTarget(self, action: #selector(didTapSettingButton), for: .touchUpInside)
+        return button
+    }()
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
     private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
     private let commonMissionView = CommonMissonView()
-    private lazy var menuTitle: UILabel = {
+    private let menuTitle: UILabel = {
         let label = UILabel()
-        label.text = "\(nickname)의 마니또"
+        label.text = "참여중인 애니또"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
@@ -66,31 +70,36 @@ class MainViewController: BaseViewController {
             forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
         return collectionView
     }()
-    private let niCharacterImageView = UIImageView(image: ImageLiterals.imgNi)
-    private let maCharacterImageView = UIImageView(image: ImageLiterals.imgMa)
-    private let ttoCharacterImageView = UIImageView(image: ImageLiterals.imgTto)
+    private let maCharacterImageView = GIFImageView()
+    private let niCharacterImageView = GIFImageView()
+    private let ttoCharacterImageView = GIFImageView()
 
     // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupGifImage()
+    }
 
     override func render() {
-        view.addSubview(niCharacterImageView)
-        niCharacterImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(54)
-            $0.bottom.equalToSuperview().inset(44)
+        view.addSubview(maCharacterImageView)
+        maCharacterImageView.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(70)
+            $0.bottom.equalToSuperview().inset(20)
             $0.height.width.equalTo(75)
         }
 
-        view.addSubview(maCharacterImageView)
-        maCharacterImageView.snp.makeConstraints {
+        view.addSubview(niCharacterImageView)
+        niCharacterImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(60)
+            $0.bottom.equalToSuperview().inset(40)
             $0.height.width.equalTo(75)
         }
 
         view.addSubview(ttoCharacterImageView)
         ttoCharacterImageView.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(54)
-            $0.bottom.equalToSuperview().inset(44)
+            $0.trailing.equalToSuperview().inset(70)
+            $0.bottom.equalToSuperview().inset(30)
             $0.height.width.equalTo(75)
         }
 
@@ -127,10 +136,6 @@ class MainViewController: BaseViewController {
         }
     }
 
-    override func configUI() {
-        super.configUI()
-    }
-
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
@@ -141,6 +146,18 @@ class MainViewController: BaseViewController {
         navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.leftBarButtonItem = appTitleView
         navigationItem.rightBarButtonItem = settingButtonView
+    }
+    
+    private func setupGifImage() {
+        DispatchQueue.main.async {
+            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
+            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
+            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
+        }
+    }
+
+    @objc func didTapSettingButton() {
+        navigationController?.pushViewController(SettingViewController(), animated: true)
     }
 
     func newRoom() {
@@ -192,28 +209,19 @@ extension MainViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item < roomData.count {
-            let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath)
-
-            guard let ManitoRoomCollectionViewCell = dequeuedCell as? ManitoRoomCollectionViewCell else {
-                assert(false, "Wrong ManitoRoomCollectionViewCell")
+        if indexPath.item == 0 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreateRoomCollectionViewCell.className, for: indexPath) as? CreateRoomCollectionViewCell else {
+                assert(false, "Wrong Cell")
             }
-
-            ManitoRoomCollectionViewCell.roomLabel.text = roomData[indexPath.item]
-
-            // configure your ManitoRoomCollectionViewCell
-
-            return ManitoRoomCollectionViewCell
+            return cell
         } else {
-            let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: CreateRoomCollectionViewCell.className, for: indexPath)
-
-            guard let CreateRoomCollectionViewCell = dequeuedCell as? CreateRoomCollectionViewCell else {
-                assert(false, "Wrong CreateRoomCollectionViewCell")
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath) as? ManitoRoomCollectionViewCell else {
+                assert(false, "Wrong Cell")
             }
-
-            // configure your CreateRoomCollectionViewCell
-
-            return CreateRoomCollectionViewCell
+            
+            cell.roomLabel.text = roomData[indexPath.item - 1]
+            
+            return cell
         }
     }
 }
@@ -221,10 +229,10 @@ extension MainViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item < roomData.count {
-            pushDetailView(status: .waiting)
-        } else {
+        if indexPath.item == 0 {
             newRoom()
+        } else {
+            pushDetailView(status: .waiting)
         }
     }
 }

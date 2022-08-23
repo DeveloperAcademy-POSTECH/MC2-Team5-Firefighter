@@ -64,7 +64,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     // MARK: - func
 
     func setupView(){
-        backgroundColor = .grey001.withAlphaComponent(0.3)
+        backgroundColor = .darkGrey002.withAlphaComponent(0.8)
         layer.borderWidth = 1
         layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
         layer.cornerRadius = 10
