@@ -23,6 +23,7 @@ class BaseViewController: UIViewController {
     lazy var guideBoxImageView = UIImageView(image: ImageLiterals.imgGuideBox)
     lazy var guideLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.font = .font(.regular, ofSize: 14)
         label.contentMode = .center
         return label
@@ -94,6 +95,8 @@ class BaseViewController: UIViewController {
     
     func setupGuideText(title: String, text: String) {
         guideLabel.text = text
+        guideLabel.addLabelSpacing()
+        guideLabel.textAlignment = .center
         guideLabel.applyColor(to: title, with: .subOrange)
     }
     
@@ -114,8 +117,8 @@ class BaseViewController: UIViewController {
     private func renderGuideArea() {
         view.addSubview(guideBoxImageView)
         guideBoxImageView.snp.makeConstraints {
-            $0.top.equalTo(guideButton.snp.bottom)
-            $0.trailing.equalTo(guideButton.snp.trailing)
+            $0.top.equalTo(guideButton.snp.bottom).offset(-10)
+            $0.trailing.equalTo(guideButton.snp.trailing).offset(-12)
             $0.width.equalTo(270)
             $0.height.equalTo(90)
         }

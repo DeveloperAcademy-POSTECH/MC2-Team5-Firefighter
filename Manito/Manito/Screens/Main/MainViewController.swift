@@ -79,6 +79,7 @@ class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGifImage()
+        setupGuideArea()
     }
 
     override func render() {
@@ -134,6 +135,19 @@ class MainViewController: BaseViewController {
             $0.top.equalTo(menuTitle.snp.bottom).offset(17)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+        
+        view.addSubview(guideButton)
+        guideButton.snp.makeConstraints {
+            $0.top.equalTo(commonMissionImageView.snp.top).offset(27)
+            $0.trailing.equalTo(commonMissionView.snp.trailing)
+            $0.width.height.equalTo(44)
+        }
+    }
+    
+    override func configUI() {
+        super.configUI()
+        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
+        setupGuideText(title: "공통 미션이란?", text: "공통 미션이란?\n매일 매일 업데이트되는 미션!\n두근두근 미션을 수행해보세요!")
     }
 
     override func setupNavigationBar() {
