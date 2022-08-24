@@ -39,8 +39,8 @@ class CalendarView: UIView {
 
     private lazy var previousButton: UIButton = {
         let button = UIButton()
-        let action = UIAction { _ in
-            self.changeMonth(with: CalendarMoveType.previous)
+        let action = UIAction { [weak self] _ in
+            self?.changeMonth(with: CalendarMoveType.previous)
         }
         button.setTitle("<", for: .normal)
         button.addAction(action, for: .touchUpInside)
@@ -48,8 +48,8 @@ class CalendarView: UIView {
     }()
     private lazy var nextButton: UIButton = {
         let button = UIButton()
-        let action = UIAction { _ in
-            self.changeMonth(with: CalendarMoveType.next)
+        let action = UIAction { [weak self] _ in
+            self?.changeMonth(with: CalendarMoveType.next)
         }
         button.setTitle(">", for: .normal)
         button.addAction(action, for: .touchUpInside)
