@@ -256,7 +256,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.item == 0 {
             newRoom()
         } else {
-            pushDetailView(status: .waiting)
+            pushDetailView(status: .starting)
         }
     }
 }

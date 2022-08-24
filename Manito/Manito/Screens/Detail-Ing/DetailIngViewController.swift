@@ -46,6 +46,11 @@ class DetailIngViewController: BaseViewController {
     }()
 
     // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupGuideArea()
+    }
 
     override func render() {
         view.addSubview(manitoOpenButton)
@@ -61,6 +66,13 @@ class DetailIngViewController: BaseViewController {
             $0.leading.equalTo(manitiIconView.snp.leading)
             $0.bottom.equalTo(manitiIconView.snp.bottom)
         }
+        
+        view.addSubview(guideButton)
+        guideButton.snp.makeConstraints {
+            $0.top.equalTo(missionBackgroundView.snp.top)
+            $0.trailing.equalTo(missionBackgroundView.snp.trailing)
+            $0.width.height.equalTo(44)
+        }
     }
 
     override func configUI() {
@@ -74,6 +86,12 @@ class DetailIngViewController: BaseViewController {
         addActionOpenManittoViewController()
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    override func setupGuideArea() {
+        super.setupGuideArea()
+        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
+        setupGuideText(title: "개별 미션이란?", text: "개별 미션이란?\n나의 마니띠에게 전하는\n둘만의 미션을 확인할 수 있어요!")
     }
 
     private func setupFont() {
@@ -162,6 +180,12 @@ class DetailIngViewController: BaseViewController {
                 self.manitiRealIconView.alpha = 0
             }
         }
-
+    }
+    
+    @objc
+    override func dismissKeyboard() {
+        if !guideButton.isTouchInside {
+            guideBoxImageView.isHidden = true
+        }
     }
 }
