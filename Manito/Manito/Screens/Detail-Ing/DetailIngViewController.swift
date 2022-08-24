@@ -184,7 +184,7 @@ class DetailIngViewController: BaseViewController {
     }
     
     @objc
-    override func dismissKeyboard() {
+    override func endEditingView() {
         if !guideButton.isTouchInside {
             guideBoxImageView.isHidden = true
         }
