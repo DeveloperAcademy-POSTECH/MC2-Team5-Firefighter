@@ -170,10 +170,6 @@ class MainViewController: BaseViewController {
         }
     }
 
-    @objc func didTapSettingButton() {
-        navigationController?.pushViewController(SettingViewController(), animated: true)
-    }
-
     func newRoom() {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
@@ -212,6 +208,20 @@ class MainViewController: BaseViewController {
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
             viewController.isDone = true
             self.navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func didTapSettingButton() {
+        navigationController?.pushViewController(SettingViewController(), animated: true)
+    }
+    
+    @objc
+    override func dismissKeyboard() {
+        if !guideButton.isTouchInside {
+            guideBoxImageView.isHidden = true
         }
     }
 }
