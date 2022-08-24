@@ -273,14 +273,14 @@ class DetailEditViewController: BaseViewController {
     }
 
     private func changeRoomDateRange() {
-        NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.tempStartDateText, "endDate": calendarView.tempEndDateText])
+        NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.getTempStartDate(), "endDate": calendarView.getTempEndDate()])
         NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
         dismiss(animated: true)
     }
 
     private func changeRoomInfo() {
         if currentUserCount <= sliderValue {
-            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.tempStartDateText, "endDate": calendarView.tempEndDateText])
+            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.getTempStartDate(), "endDate": calendarView.getTempEndDate()])
             NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
             NotificationCenter.default.post(name: .editMaxUserNotification, object: nil, userInfo: ["maxUser": memberSlider.value])
             dismiss(animated: true)
