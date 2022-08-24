@@ -11,14 +11,14 @@ import FSCalendar
 import SnapKit
 
 class CalendarView: UIView {
-    var changeButtonState: ((Bool) -> ())?
     private var selectStartDate = Date()
-    let oneDayInterval: TimeInterval = 86400
-    let sevenDaysInterval: TimeInterval = 604800
+    private let oneDayInterval: TimeInterval = 86400
+    private let sevenDaysInterval: TimeInterval = 604800
+    var changeButtonState: ((Bool) -> ())?
     var startDateText = ""
     var endDateText = ""
-    var tempStartDateText = ""
-    var tempEndDateText = ""
+    private var tempStartDateText = ""
+    private var tempEndDateText = ""
     var isFirstTap = false
     
     private enum CalendarMoveType {
@@ -164,15 +164,28 @@ class CalendarView: UIView {
 
         return Int(dateRangeCount) + 1
     }
+    
+    func getTempStartDate() -> String {
+        return tempStartDateText
+    }
+    
+    func getTempEndDate() -> String {
+        return tempEndDateText
+    }
 }
 
 extension CalendarView: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         isFirstTap = true
         changeButtonState?(false)
+        let isCreatedRoomOnlySelectedStartDate = calendar.selectedDates.count == 1
         let isSelectedDateRange = calendar.selectedDates.count == 2
         let isReclickedStartDate = calendar.selectedDates.count > 2
-        if isSelectedDateRange {
+        if isCreatedRoomOnlySelectedStartDate {
+            selectStartDate = date
+            calendar.select(selectStartDate)
+            calendar.reloadData()
+        } else if isSelectedDateRange {
             changeButtonState?(true)
             tempEndDateText = date.dateToString
             if countDateRange() > 7 {
@@ -222,7 +235,7 @@ extension CalendarView: FSCalendarDelegate {
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey004.withAlphaComponent(0.4)
-        } else if isAWeekBeforeAfter || isDoneSelectedDate {
+        } else if !isFirstTap || (isAWeekBeforeAfter || isDoneSelectedDate) {
             return .white
         } else {
             return .grey004.withAlphaComponent(0.4)
