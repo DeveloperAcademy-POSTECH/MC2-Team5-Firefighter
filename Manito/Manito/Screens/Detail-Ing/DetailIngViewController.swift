@@ -50,6 +50,7 @@ class DetailIngViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGuideArea()
+        renderGuideArea()
     }
 
     override func render() {

@@ -80,6 +80,7 @@ class MainViewController: BaseViewController {
         super.viewDidLoad()
         setupGifImage()
         setupGuideArea()
+        renderGuideArea()
     }
 
     override func render() {
@@ -144,8 +145,8 @@ class MainViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
-        super.configUI()
+    override func setupGuideArea() {
+        super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
         setupGuideText(title: "공통 미션이란?", text: "공통 미션이란?\n매일 매일 업데이트되는 미션!\n두근두근 미션을 수행해보세요!")
     }

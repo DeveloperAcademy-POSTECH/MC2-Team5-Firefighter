@@ -83,14 +83,28 @@ class BaseViewController: UIViewController {
         return offsetView
     }
     
+    func renderGuideArea() {
+        view.addSubview(guideBoxImageView)
+        guideBoxImageView.snp.makeConstraints {
+            $0.top.equalTo(guideButton.snp.bottom).offset(-10)
+            $0.trailing.equalTo(guideButton.snp.trailing).offset(-12)
+            $0.width.equalTo(270)
+            $0.height.equalTo(90)
+        }
+        
+        guideBoxImageView.addSubview(guideLabel)
+        guideLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(15)
+        }
+    }
+    
     func setupGuideArea() {
         let guideAction = UIAction { [weak self] _ in
             self?.guideBoxImageView.isHidden.toggle()
         }
         guideButton.addAction(guideAction, for: .touchUpInside)
         guideBoxImageView.isHidden = true
-        
-        renderGuideArea()
     }
     
     func setupGuideText(title: String, text: String) {
@@ -112,21 +126,5 @@ class BaseViewController: UIViewController {
     private func setupNavigationPopGesture() {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
-    }
-    
-    private func renderGuideArea() {
-        view.addSubview(guideBoxImageView)
-        guideBoxImageView.snp.makeConstraints {
-            $0.top.equalTo(guideButton.snp.bottom).offset(-10)
-            $0.trailing.equalTo(guideButton.snp.trailing).offset(-12)
-            $0.width.equalTo(270)
-            $0.height.equalTo(90)
-        }
-        
-        guideBoxImageView.addSubview(guideLabel)
-        guideLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.leading.trailing.equalToSuperview().inset(15)
-        }
     }
 }

@@ -74,6 +74,8 @@ final class LetterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupButtonAction()
+        setupGuideArea()
+        renderGuideArea()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -92,6 +94,11 @@ final class LetterViewController: BaseViewController {
         sendLetterView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        view.addSubview(guideButton)
+        guideButton.snp.makeConstraints {
+            $0.width.height.equalTo(44)
+        }
     }
     
     override func configUI() {
@@ -101,10 +108,34 @@ final class LetterViewController: BaseViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
+        let guideButton = makeBarButtonItem(with: guideButton)
         
+        navigationItem.rightBarButtonItem = guideButton
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
         title = "쪽지함"
+    }
+    
+    override func setupGuideArea() {
+        super.setupGuideArea()
+        guideButton.setImage(ImageLiterals.icLetterInfo, for: .normal)
+        setupGuideText(title: "쪽지 쓰기는?", text: "쪽지 쓰기는?\n보낸 쪽지함에서 쓰기가 가능해요!\n받은 쪽지함은 확인만 할 수 있어요.")
+    }
+    
+    override func renderGuideArea() {
+        view.addSubview(guideBoxImageView)
+        guideBoxImageView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.trailing.equalTo(view.snp.trailing).inset(Size.collectionHorizontalSpacing)
+            $0.width.equalTo(270)
+            $0.height.equalTo(90)
+        }
+        
+        guideBoxImageView.addSubview(guideLabel)
+        guideLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(15)
+        }
     }
     
     // MARK: - func
@@ -129,6 +160,15 @@ final class LetterViewController: BaseViewController {
         listCollectionView.setContentOffset(CGPoint(x: 0, y: -topPoint), animated: false)
         listCollectionView.collectionViewLayout.invalidateLayout()
         listCollectionView.reloadData()
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    override func dismissKeyboard() {
+        if !guideButton.isTouchInside {
+            guideBoxImageView.isHidden = true
+        }
     }
 }
 
@@ -166,5 +206,11 @@ extension LetterViewController: UICollectionViewDataSource {
 extension LetterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.size.width, height: Size.headerHeight)
+    }
+}
+
+extension LetterViewController: UICollectionViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        guideBoxImageView.isHidden = true
     }
 }
