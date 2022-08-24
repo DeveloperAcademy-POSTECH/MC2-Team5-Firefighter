@@ -169,7 +169,7 @@ class CalendarView: UIView {
         return tempStartDateText
     }
     
-    func getTemptEndDate() -> String {
+    func getTempEndDate() -> String {
         return tempEndDateText
     }
 }
@@ -235,9 +235,7 @@ extension CalendarView: FSCalendarDelegate {
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey004.withAlphaComponent(0.4)
-        } else if !isFirstTap {
-            return .white
-        } else if isAWeekBeforeAfter || isDoneSelectedDate {
+        } else if !isFirstTap || (isAWeekBeforeAfter || isDoneSelectedDate) {
             return .white
         } else {
             return .grey004.withAlphaComponent(0.4)

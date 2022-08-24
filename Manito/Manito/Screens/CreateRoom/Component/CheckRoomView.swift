@@ -11,8 +11,8 @@ import SnapKit
 
 class CheckRoomView: UIView {
     var dateRange = "" {
-        didSet {
-            dateLabel.text = dateRange
+        willSet {
+            dateLabel.text = newValue
         }
     }
 
