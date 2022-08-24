@@ -155,6 +155,7 @@ class CreateRoomViewController: BaseViewController {
         case 1:
             person = Int(personView.personSlider.value)
         case 2:
+            checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
             print("기간 선택 보여주기")
         default:
             print("다른 뷰 넘기기")
