@@ -190,7 +190,7 @@ extension CalendarView: FSCalendarDelegate {
             tempEndDateText = date.dateToString
             if countDateRange() > 7 {
                 calendar.deselect(date)
-                viewController?.makeAlert(title: "설정 기간 제한", message: "최대 7일까지 선택가능해요 !")
+                viewController?.makeAlert(title: "최대 선택 기간을 넘었어요", message: "최대 7일까지 선택가능해요")
             } else {
                 setDateRange()
                 calendar.reloadData()
@@ -222,7 +222,7 @@ extension CalendarView: FSCalendarDelegate {
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         if date < Date() - oneDayInterval {
-            viewController?.makeAlert(title: "과거로 가시게요..?", message: "오늘보다 이전 날짜는 \n 선택하실 수 없어요 !")
+            viewController?.makeAlert(title: "지난 날을 선택하셨어요", message: "오늘보다 이전 날짜는 \n 선택하실 수 없어요")
             return false
         } else {
             return true

@@ -347,9 +347,9 @@ class DetailWaitViewController: BaseViewController {
                     let endDate = (Date() + fiveDaysInterval).dateToString
                     self?.presentModal(from: startDate, to: endDate, isDateEdit: true)
                 }
-                makeAlert(title: "날짜를 재설정 해주세요", message: "마니또 시작일이 지났습니다. \n 진행기간을 재설정 해주세요", okAction: action)
+                makeAlert(title: "마니또 시작일이 지났어요", message: "진행기간을 재설정 해주세요", okAction: action)
             } else {
-                makeAlert(title: "시작일이 지났어요", message: "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요")
+                makeAlert(title: "마니또 시작일이 지났어요", message: "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요.")
             }
         }
     }
