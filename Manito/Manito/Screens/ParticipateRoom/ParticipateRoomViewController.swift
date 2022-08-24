@@ -19,7 +19,7 @@ class ParticipateRoomViewController: BaseViewController {
         return label
     }()
     
-    private let closeButton: UIButton = {
+    private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
@@ -27,7 +27,7 @@ class ParticipateRoomViewController: BaseViewController {
         return button
     }()
     
-    private let nextButton: MainButton = {
+    private lazy var nextButton: MainButton = {
         let button = MainButton()
         button.title = "방 입장"
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
@@ -39,25 +39,19 @@ class ParticipateRoomViewController: BaseViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNotificationCenter()
     }
     
     override func render() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
-        
-        view.addSubview(closeButton)
-        closeButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.width.height.equalTo(44)
-        }
-        
+                
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(57)
             $0.height.equalTo(60)
         }
@@ -65,7 +59,7 @@ class ParticipateRoomViewController: BaseViewController {
         view.addSubview(inputInvitedCodeView)
         inputInvitedCodeView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
     }
@@ -75,18 +69,36 @@ class ParticipateRoomViewController: BaseViewController {
         super.configUI()
     }
     
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+
+        let closeButtonView = makeBarButtonItem(with: closeButton)
+
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.leftBarButtonItem = nil
+        navigationItem.rightBarButtonItem = closeButtonView
+    }
+    
     // MARK: - Selectors
     @objc private func didTapCloseButton() {
         dismiss(animated: true, completion: nil)
     }
     
     @objc private func didTapNextButton() {
-        let storyboard = UIStoryboard(name: "CheckRoom", bundle: nil)
-        let CheckRoomVC = storyboard.instantiateViewController(identifier: CheckRoomViewController.className)
+        let viewController = CheckRoomViewController()
         
-        CheckRoomVC.modalPresentationStyle = .overFullScreen
-        CheckRoomVC.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
         
-        present(CheckRoomVC, animated: true, completion: nil)
+        present(viewController, animated: true, completion: nil)
+    }
+    
+    @objc private func didReceiveNextNotification(_ notification: Notification) {
+        self.navigationController?.pushViewController(ChooseCharacterViewController(), animated: true)
+    }
+    
+    // MARK: - Funtions    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_ :)), name: .nextNotification, object: nil)
     }
 }
