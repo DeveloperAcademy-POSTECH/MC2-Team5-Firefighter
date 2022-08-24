@@ -96,7 +96,7 @@ class CreateRoomViewController: BaseViewController {
         view.addSubview(backButton)
         backButton.snp.makeConstraints {
             $0.top.equalTo(closeButton)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
+            $0.leading.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(44)
         }
         
@@ -218,7 +218,7 @@ class CreateRoomViewController: BaseViewController {
                 self.dateView.alpha = 1.0
                 self.checkView.alpha = 0.0
             }
-        default:
+        case RoomState.checkRoom:
             UIView.animate(withDuration: 0.3) {
                 self.dateView.alpha = 0.0
                 self.checkView.alpha = 1.0
