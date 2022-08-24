@@ -16,7 +16,7 @@ class DetailEditViewController: BaseViewController {
         case dateEditMode
         case infoEditMode
     }
-    var editMode: EditMode = .infoEditMode
+    var editMode: EditMode
     var currentUserCount = 0
     var sliderValue = 10
     var startDateText = "" {
@@ -125,7 +125,16 @@ class DetailEditViewController: BaseViewController {
     }()
 
     // MARK: - life cycle
-
+    
+    init(editMode: EditMode) {
+        self.editMode = editMode
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func configUI() {
         super.configUI()
         self.navigationController?.isNavigationBarHidden = true

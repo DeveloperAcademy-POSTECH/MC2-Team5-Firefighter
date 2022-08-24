@@ -264,10 +264,9 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
-        let viewController = DetailEditViewController()
+        let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode)
         viewController.currentUserCount = userCount
         viewController.sliderValue = maxUserCount
-        viewController.editMode = isDateEdit ? .dateEditMode : .infoEditMode
         viewController.startDateText = startString
         viewController.endDateText = endString
         present(viewController, animated: true, completion: nil)
