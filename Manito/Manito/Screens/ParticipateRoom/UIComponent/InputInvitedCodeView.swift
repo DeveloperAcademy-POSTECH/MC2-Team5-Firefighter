@@ -11,23 +11,19 @@ import SnapKit
 
 final class InputInvitedCodeView: UIView {
     
-    // MARK: - Property
-    private let roomsCodeTextField: UITextField = {
-        let textField = UITextField()
+    // MARK: - Property    
+    lazy var roomsCodeTextField: UITextField = {
+        let texField = UITextField()
         let attributes = [
-            NSAttributedString.Key.foregroundColor : UIColor.white,
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
-        
-        textField.backgroundColor = .darkGrey002
-        textField.attributedPlaceholder = NSAttributedString(string: "초대코드 입력", attributes: attributes)
-        
-        textField.layer.cornerRadius = 10
-        textField.layer.masksToBounds = true
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.white.cgColor
-        textField.textAlignment = .center
-        return textField
+        texField.backgroundColor = .darkGrey002
+        texField.attributedPlaceholder = NSAttributedString(string: "초대코드 입력", attributes: attributes)
+        texField.textAlignment = .center
+        texField.makeBorderLayer(color: .white)
+        texField.font = .font(.regular, ofSize: 18)
+        texField.returnKeyType = .done
+        return texField
     }()
     
     // MARK: - Init

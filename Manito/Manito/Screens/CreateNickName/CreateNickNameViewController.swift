@@ -104,7 +104,7 @@ class CreateNickNameViewController: BaseViewController {
         })
     }
     
-    override func dismissKeyboard() {
+    override func endEditingView() {
         if !doneButton.isTouchInside {
             view.endEditing(true)
         }

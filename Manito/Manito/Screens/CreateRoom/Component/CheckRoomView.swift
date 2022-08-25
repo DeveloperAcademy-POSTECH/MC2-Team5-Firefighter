@@ -10,6 +10,11 @@ import UIKit
 import SnapKit
 
 class CheckRoomView: UIView {
+    var dateRange = "" {
+        willSet {
+            dateLabel.text = newValue
+        }
+    }
 
     // MARK: - Property
     

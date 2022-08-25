@@ -55,8 +55,8 @@ class DetailEditViewController: BaseViewController {
     private lazy var changeButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
-            guard let startText = self?.calendarView.tempStartDateText else { return }
-            guard let endText = self?.calendarView.tempEndDateText else { return }
+            guard let startText = self?.calendarView.getTempStartDate() else { return }
+            guard let endText = self?.calendarView.getTempEndDate() else { return }
             NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": startText, "endDate": endText])
             NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
             self?.dismiss(animated: true)

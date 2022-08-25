@@ -19,7 +19,7 @@ class InputDateView: UIView {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    private let calendarView = CalendarView()
+    let calendarView = CalendarView()
     private let dateInfoLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 7일까지 설정할 수 있어요 !"
@@ -33,26 +33,10 @@ class InputDateView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         render()
-        tapGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Funtion
-    
-    private func tapGesture() {
-        let gestureTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapDateBackView(_:)))
-        gestureTapRecognizer.numberOfTapsRequired = 1
-        gestureTapRecognizer.numberOfTouchesRequired = 1
-        self.addGestureRecognizer(gestureTapRecognizer)
-    }
-    
-    // MARK: - Selector
-    
-    @objc private func didTapDateBackView(_ gesture: UITapGestureRecognizer) {
-        print("gesture")
     }
     
     // MARK: - Config

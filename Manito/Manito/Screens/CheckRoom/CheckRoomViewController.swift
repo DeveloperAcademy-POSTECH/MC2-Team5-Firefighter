@@ -30,7 +30,7 @@ class CheckRoomViewController: BaseViewController {
         return label
     }()
     
-    private let noButton: UIButton = {
+    private lazy var noButton: UIButton = {
         let button = UIButton()
         button.setTitle("NO", for: .normal)
         button.setTitleColor(.black, for: .normal)
@@ -42,7 +42,7 @@ class CheckRoomViewController: BaseViewController {
         return button
     }()
     
-    private let yesButton: UIButton = {
+    private lazy var yesButton: UIButton = {
         let button = UIButton()
         button.setTitle("YES", for: .normal)
         button.setTitleColor(.black, for: .normal)
@@ -104,12 +104,7 @@ class CheckRoomViewController: BaseViewController {
     }
     
     @objc private func didTapYesButton() {
-        let storyboard = UIStoryboard(name: "ChooseCharacter", bundle: nil)
-        let ChooseCharacterVC = storyboard.instantiateViewController(identifier: ChooseCharacterViewController.className)
-        
-        ChooseCharacterVC.modalPresentationStyle = .overFullScreen
-        ChooseCharacterVC.modalTransitionStyle = .crossDissolve
-        
-        present(ChooseCharacterVC, animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
+        NotificationCenter.default.post(name: .nextNotification, object: nil)
     }
 }
