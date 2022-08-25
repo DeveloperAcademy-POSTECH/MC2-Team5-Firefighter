@@ -12,7 +12,11 @@ import SnapKit
 class DetailWaitViewController: BaseViewController {
     let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
     var canStartClosure: ((Bool) -> ())?
-    var maxUserCount = 15
+    var maxUserCount: Int = 10 {
+        didSet {
+            comeInLabel.text = "\(userCount)/\(maxUserCount)"
+        }
+    }
     lazy var userCount = userArr.count
     let isOwner = true
     var startDateText = "22.08.11" {
@@ -260,11 +264,12 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
-        let modalViewController = DetailEditViewController()
-        modalViewController.editMode = isDateEdit ? .dateEditMode : .infoEditMode
-        modalViewController.startDateText = startString
-        modalViewController.endDateText = endString
-        present(modalViewController, animated: true, completion: nil)
+        let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode)
+        viewController.currentUserCount = userCount
+        viewController.sliderValue = maxUserCount
+        viewController.startDateText = startString
+        viewController.endDateText = endString
+        present(viewController, animated: true, completion: nil)
     }
 
     // MARK: - private func
@@ -326,6 +331,7 @@ class DetailWaitViewController: BaseViewController {
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateRange(_:)), name: .dateRangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeStartButton), name: .changeStartButtonNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMaxUser), name: .editMaxUserNotification, object: nil)
     }
 
     private func isPastStartDate() {
@@ -341,9 +347,9 @@ class DetailWaitViewController: BaseViewController {
                     let endDate = (Date() + fiveDaysInterval).dateToString
                     self?.presentModal(from: startDate, to: endDate, isDateEdit: true)
                 }
-                makeAlert(title: "날짜를 재설정 해주세요", message: "마니또 시작일이 지났습니다. \n 진행기간을 재설정 해주세요", okAction: action)
+                makeAlert(title: "마니또 시작일이 지났어요", message: "진행기간을 재설정 해주세요", okAction: action)
             } else {
-                makeAlert(title: "시작일이 지났어요", message: "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요")
+                makeAlert(title: "마니또 시작일이 지났어요", message: "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요.")
             }
         }
     }
@@ -361,15 +367,21 @@ class DetailWaitViewController: BaseViewController {
 
     @objc
     private func didReceiveDateRange(_ notification: Notification) {
-        guard let noti = notification.userInfo else { return }
-
-        guard let startDate = noti["startDate"] as? String else { return }
-        guard let endDate = noti["endDate"] as? String else { return }
+        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
+        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
 
         self.startDateText = startDate
         self.endDateText = endDate
     }
 
+    @objc
+    private func didReceiveMaxUser(_ notification: Notification) {
+        guard let maxUser = notification.userInfo?["maxUser"] as? Float else { return }
+
+        let intMaxUser = Int(maxUser)
+        maxUserCount = intMaxUser
+    }
+    
     @objc
     private func presentDetailEditViewController() {
         self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)

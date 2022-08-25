@@ -11,14 +11,14 @@ import FSCalendar
 import SnapKit
 
 class CalendarView: UIView {
-    var changeButtonState: ((Bool) -> ())?
     private var selectStartDate = Date()
-    let oneDayInterval: TimeInterval = 86400
-    let sevenDaysInterval: TimeInterval = 604800
+    private let oneDayInterval: TimeInterval = 86400
+    private let sevenDaysInterval: TimeInterval = 604800
+    var changeButtonState: ((Bool) -> ())?
     var startDateText = ""
     var endDateText = ""
-    var tempStartDateText = ""
-    var tempEndDateText = ""
+    private var tempStartDateText = ""
+    private var tempEndDateText = ""
     var isFirstTap = false
     
     private enum CalendarMoveType {
@@ -164,20 +164,33 @@ class CalendarView: UIView {
 
         return Int(dateRangeCount) + 1
     }
+    
+    func getTempStartDate() -> String {
+        return tempStartDateText
+    }
+    
+    func getTempEndDate() -> String {
+        return tempEndDateText
+    }
 }
 
 extension CalendarView: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         isFirstTap = true
         changeButtonState?(false)
+        let isCreatedRoomOnlySelectedStartDate = calendar.selectedDates.count == 1
         let isSelectedDateRange = calendar.selectedDates.count == 2
         let isReclickedStartDate = calendar.selectedDates.count > 2
-        if isSelectedDateRange {
+        if isCreatedRoomOnlySelectedStartDate {
+            selectStartDate = date
+            calendar.select(selectStartDate)
+            calendar.reloadData()
+        } else if isSelectedDateRange {
             changeButtonState?(true)
             tempEndDateText = date.dateToString
             if countDateRange() > 7 {
                 calendar.deselect(date)
-                viewController?.makeAlert(title: "설정 기간 제한", message: "최대 7일까지 선택가능해요 !")
+                viewController?.makeAlert(title: "최대 선택 기간을 넘었어요", message: "최대 7일까지 선택가능해요")
             } else {
                 setDateRange()
                 calendar.reloadData()
@@ -209,7 +222,7 @@ extension CalendarView: FSCalendarDelegate {
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         if date < Date() - oneDayInterval {
-            viewController?.makeAlert(title: "과거로 가시게요..?", message: "오늘보다 이전 날짜는 \n 선택하실 수 없어요 !")
+            viewController?.makeAlert(title: "지난 날을 선택하셨어요", message: "오늘보다 이전 날짜는 \n 선택하실 수 없어요")
             return false
         } else {
             return true
@@ -222,7 +235,7 @@ extension CalendarView: FSCalendarDelegate {
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey004.withAlphaComponent(0.4)
-        } else if isAWeekBeforeAfter || isDoneSelectedDate {
+        } else if !isFirstTap || (isAWeekBeforeAfter || isDoneSelectedDate) {
             return .white
         } else {
             return .grey004.withAlphaComponent(0.4)
