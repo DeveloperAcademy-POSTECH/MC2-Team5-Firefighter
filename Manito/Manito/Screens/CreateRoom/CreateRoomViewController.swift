@@ -11,10 +11,18 @@ import SnapKit
 
 class CreateRoomViewController: BaseViewController {
     
-    private var index = 0
     private var name = ""
     private var person = 0
     private var date = 0
+    
+    private enum RoomState: Int {
+        case inputName = 0
+        case inputPerson = 1
+        case inputDate = 2
+        case checkRoom = 3
+    }
+    
+    private var notiIndex: RoomState = .inputName
     
     // MARK: - Property
     
@@ -39,10 +47,10 @@ class CreateRoomViewController: BaseViewController {
         return button
     }()
     lazy var backButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
-        button.setTitle("이전", for: .normal)
+        button.setTitle(" 이전", for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
         button.isHidden = true
@@ -88,7 +96,7 @@ class CreateRoomViewController: BaseViewController {
         view.addSubview(backButton)
         backButton.snp.makeConstraints {
             $0.top.equalTo(closeButton)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
+            $0.leading.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(44)
         }
         
@@ -134,12 +142,13 @@ class CreateRoomViewController: BaseViewController {
         super.configUI()
         view.backgroundColor = .backgroundGrey
         toggleButton()
+        navigationController?.navigationBar.isHidden = true
     }
     
     // MARK: - Selectors
     
     @objc private func didTapBackButton() {
-        index = index - 1
+        notiIndex = RoomState.init(rawValue: notiIndex.rawValue - 1) ?? RoomState.inputName
         changedInputView()
     }
     
@@ -148,20 +157,22 @@ class CreateRoomViewController: BaseViewController {
     }
     
     @objc private func didTapNextButton() {
-        switch index {
-        case 0:
+        switch notiIndex {
+        case .inputName:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
-        case 1:
+            notiIndex = .inputPerson
+            changedInputView()
+        case .inputPerson:
             person = Int(personView.personSlider.value)
-        case 2:
-            checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
-            print("기간 선택 보여주기")
-        default:
-            print("다른 뷰 넘기기")
+            notiIndex = .inputDate
+            changedInputView()
+        case .inputDate:
+            notiIndex = .checkRoom
+            changedInputView()
+        case .checkRoom:
+            print("여기는 끝^__^")
         }
-        index += 1
-        changedInputView()
     }
     
     @objc private func keyboardWillShow(notification:NSNotification) {
@@ -178,38 +189,6 @@ class CreateRoomViewController: BaseViewController {
         })
     }
     
-    @objc private func didReceiveNameNotification(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
-            self.nameView.alpha = 1.0
-            self.personView.alpha = 0.0
-            self.backButton.isHidden = true
-        }
-    }
-    
-    @objc private func didReceivePersonNotification(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
-            self.nameView.alpha = 0.0
-            self.personView.alpha = 1.0
-            self.dateView.alpha = 0.0
-            self.backButton.isHidden = false
-        }
-    }
-    
-    @objc private func didReceiveDateNotification(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
-            self.personView.alpha = 0.0
-            self.dateView.alpha = 1.0
-            self.checkView.alpha = 0.0
-        }
-    }
-    
-    @objc private func didReceiveCheckNotification(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
-            self.dateView.alpha = 0.0
-            self.checkView.alpha = 1.0
-        }
-    }
-    
     // MARK: - Functions
     
     private func toggleButton() {
@@ -219,26 +198,36 @@ class CreateRoomViewController: BaseViewController {
     }
     
     private func changedInputView() {
-        if index == 0 {
-            NotificationCenter.default.post(name: .nameNotification, object: nil)
-        }
-        else if index == 1 {
-            NotificationCenter.default.post(name: .personNotification, object: nil)
-        }
-        else if index == 2 {
-            NotificationCenter.default.post(name: .dateNotification, object: nil)
-        }
-        else {
-            NotificationCenter.default.post(name: .checkNotification, object: nil)
+        switch notiIndex {
+        case RoomState.inputName:
+            UIView.animate(withDuration: 0.3) {
+                self.nameView.alpha = 1.0
+                self.personView.alpha = 0.0
+                self.backButton.isHidden = true
+            }
+        case RoomState.inputPerson:
+            UIView.animate(withDuration: 0.3) {
+                self.nameView.alpha = 0.0
+                self.personView.alpha = 1.0
+                self.dateView.alpha = 0.0
+                self.backButton.isHidden = false
+            }
+        case RoomState.inputDate:
+            UIView.animate(withDuration: 0.3) {
+                self.personView.alpha = 0.0
+                self.dateView.alpha = 1.0
+                self.checkView.alpha = 0.0
+            }
+        case RoomState.checkRoom:
+            UIView.animate(withDuration: 0.3) {
+                self.dateView.alpha = 0.0
+                self.checkView.alpha = 1.0
+            }
         }
     }
     
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNameNotification(_ :)), name: .nameNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceivePersonNotification(_ :)), name: .personNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateNotification(_ :)), name: .dateNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCheckNotification(_ :)), name: .checkNotification, object: nil)
     }
 }
