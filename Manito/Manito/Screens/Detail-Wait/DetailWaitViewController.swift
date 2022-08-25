@@ -139,11 +139,11 @@ class DetailWaitViewController: BaseViewController {
             if value {
                 button.title = ButtonText.start.rawValue
                 button.isDisabled = false
-                let action = UIAction { _ in
+                let action = UIAction { [weak self] _ in
                     let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                     guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                     viewController.modalPresentationStyle = .fullScreen
-                    self.present(viewController, animated: true)
+                    self?.present(viewController, animated: true)
                 }
                 button.addAction(action, for: .touchUpInside)
             } else {

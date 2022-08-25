@@ -28,13 +28,13 @@ final class SelectManittoViewController: BaseViewController {
     @IBOutlet weak var confirmButton: MainButton!
 
     private lazy var okAction: UIAction = {
-        let action = UIAction { _ in
-            guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+        let action = UIAction { [weak self] _ in
+            guard let navigationController = self?.presentingViewController as? UINavigationController else { return }
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
             navigationController.popViewController(animated: true)
             navigationController.pushViewController(viewController, animated: false)
-            self.dismiss(animated: true)
+            self?.dismiss(animated: true)
         }
         return action
     }()
