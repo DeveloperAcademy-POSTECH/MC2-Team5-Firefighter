@@ -79,6 +79,8 @@ class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGifImage()
+        setupGuideArea()
+        renderGuideArea()
     }
 
     override func render() {
@@ -134,6 +136,19 @@ class MainViewController: BaseViewController {
             $0.top.equalTo(menuTitle.snp.bottom).offset(17)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+        
+        view.addSubview(guideButton)
+        guideButton.snp.makeConstraints {
+            $0.top.equalTo(commonMissionImageView.snp.top).offset(27)
+            $0.trailing.equalTo(commonMissionView.snp.trailing)
+            $0.width.height.equalTo(44)
+        }
+    }
+    
+    override func setupGuideArea() {
+        super.setupGuideArea()
+        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
+        setupGuideText(title: "공통 미션이란?", text: "공통 미션이란?\n매일 매일 업데이트되는 미션!\n두근두근 미션을 수행해보세요!")
     }
 
     override func setupNavigationBar() {
@@ -154,10 +169,6 @@ class MainViewController: BaseViewController {
             self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
             self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
         }
-    }
-
-    @objc func didTapSettingButton() {
-        navigationController?.pushViewController(SettingViewController(), animated: true)
     }
 
     func newRoom() {
@@ -205,6 +216,20 @@ class MainViewController: BaseViewController {
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
             viewController.isDone = true
             self.navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func didTapSettingButton() {
+        navigationController?.pushViewController(SettingViewController(), animated: true)
+    }
+    
+    @objc
+    override func endEditingView() {
+        if !guideButton.isTouchInside {
+            guideBoxImageView.isHidden = true
         }
     }
 }

@@ -40,6 +40,7 @@ enum ImageLiterals {
     static var imgCodeBackground: UIImage { .load(name: "imgCodeBackground") }
     static var imgCommonMisson: UIImage { .load(name: "imgCommonMisson") }
     static var imgEnterRoom: UIImage { .load(name: "imgEnterRoom") }
+    static var imgGuideBox: UIImage { .load(name: "img_guideBox") }
     static var imgMa: UIImage { .load(name: "imgMa") }
     static var imgNi: UIImage { .load(name: "imgNi") }
     static var imgTto: UIImage { .load(name: "imgTto") }
