@@ -11,4 +11,5 @@ import Foundation
 extension Notification.Name {
     static let dateRangeNotification = Notification.Name("DateRangeNotification")
     static let changeStartButtonNotification = Notification.Name("ChangeStartButtonNotification")
+    static let editMaxUserNotification = Notification.Name("EditMaxUserNotification")
 }

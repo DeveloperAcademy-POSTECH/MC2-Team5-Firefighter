@@ -16,10 +16,9 @@ class DetailEditViewController: BaseViewController {
         case dateEditMode
         case infoEditMode
     }
-
-    var editMode: EditMode = .infoEditMode
-
-    private var memberCount = 7
+    var editMode: EditMode
+    var currentUserCount = 0
+    var sliderValue = 10
     var startDateText = "" {
         didSet {
             calendarView.startDateText = startDateText
@@ -55,15 +54,10 @@ class DetailEditViewController: BaseViewController {
     private lazy var changeButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
-            guard let startText = self?.calendarView.getTempStartDate() else { return }
-            guard let endText = self?.calendarView.getTempEndDate() else { return }
-            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": startText, "endDate": endText])
-            NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
-            self?.dismiss(animated: true)
+            self?.didTapChangeButton()
         }
         button.setTitle("변경", for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
-        setChangedButton()
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         button.addAction(buttonAction, for: .touchUpInside)
         return button
@@ -116,7 +110,7 @@ class DetailEditViewController: BaseViewController {
         slider.maximumValue = 15
         slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001
-        slider.value = Float(memberCount)
+        slider.value = Float(sliderValue)
         slider.isContinuous = true
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         slider.addTarget(self, action: #selector(changeMemberCount(sender:)), for: .valueChanged)
@@ -124,19 +118,29 @@ class DetailEditViewController: BaseViewController {
     }()
     private lazy var memberCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(memberCount)인"
+        label.text = "\(sliderValue)인"
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
         return label
     }()
 
     // MARK: - life cycle
-
+    
+    init(editMode: EditMode) {
+        self.editMode = editMode
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func configUI() {
         super.configUI()
         self.navigationController?.isNavigationBarHidden = true
         self.presentationController?.delegate = self
         isModalInPresentation = true
+        setupChangedButton()
     }
 
     override func render() {
@@ -226,6 +230,7 @@ class DetailEditViewController: BaseViewController {
 
     @objc
     private func changeMemberCount(sender: UISlider) {
+        sliderValue = Int(sender.value)
         memberCountLabel.text = String(Int(sender.value)) + "인"
         memberCountLabel.font = .font(.regular, ofSize: 24)
         memberCountLabel.textColor = .white
@@ -238,7 +243,6 @@ class DetailEditViewController: BaseViewController {
             dismiss(animated: true)
             return
         }
-        
         showDiscardChangAlert()
     }
 
@@ -251,10 +255,37 @@ class DetailEditViewController: BaseViewController {
         makeActionSheet(actionTitles: actionTitles, actionStyle: actionStyle, actions: actions)
     }
 
-    private func setChangedButton() {
+    private func setupChangedButton() {
         calendarView.changeButtonState = { [weak self] value in
-            self?.changeButton.isUserInteractionEnabled = value
-            self?.changeButton.setTitleColor(value ? .subBlue : .grey002, for: .normal)
+            self?.changeButton.isEnabled = value
+            self?.changeButton.setTitleColor(.subBlue, for: .normal)
+            self?.changeButton.setTitleColor(.grey002, for: .disabled)
+        }
+    }
+
+    private func didTapChangeButton() {
+        switch editMode {
+        case .dateEditMode:
+            changeRoomDateRange()
+        case .infoEditMode:
+            changeRoomInfo()
+        }
+    }
+
+    private func changeRoomDateRange() {
+        NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.getTempStartDate(), "endDate": calendarView.getTempEndDate()])
+        NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
+        dismiss(animated: true)
+    }
+
+    private func changeRoomInfo() {
+        if currentUserCount <= sliderValue {
+            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.getTempStartDate(), "endDate": calendarView.getTempEndDate()])
+            NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
+            NotificationCenter.default.post(name: .editMaxUserNotification, object: nil, userInfo: ["maxUser": memberSlider.value])
+            dismiss(animated: true)
+        } else {
+            makeAlert(title: "인원을 다시 설정해 주세요", message: "현재 인원보다 최대 인원을 \n더 적게 설정할 수 없어요.")
         }
     }
 }
