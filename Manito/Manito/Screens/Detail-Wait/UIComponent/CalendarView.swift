@@ -42,7 +42,7 @@ class CalendarView: UIView {
         let action = UIAction { _ in
             self.changeMonth(with: CalendarMoveType.previous)
         }
-        button.setTitle("<", for: .normal)
+        button.setImage(ImageLiterals.icBack, for: .normal)
         button.addAction(action, for: .touchUpInside)
         return button
     }()
@@ -51,7 +51,7 @@ class CalendarView: UIView {
         let action = UIAction { _ in
             self.changeMonth(with: CalendarMoveType.next)
         }
-        button.setTitle(">", for: .normal)
+        button.setImage(ImageLiterals.icRight, for: .normal)
         button.addAction(action, for: .touchUpInside)
         return button
     }()
@@ -96,14 +96,14 @@ class CalendarView: UIView {
 
         self.addSubview(previousButton)
         previousButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
-            $0.leading.equalToSuperview().inset(88)
+            $0.top.equalToSuperview().inset(5)
+            $0.leading.equalToSuperview().inset(70)
         }
 
         self.addSubview(nextButton)
         nextButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
-            $0.trailing.equalToSuperview().inset(90)
+            $0.top.equalToSuperview().inset(5)
+            $0.trailing.equalToSuperview().inset(72)
         }
     }
 
