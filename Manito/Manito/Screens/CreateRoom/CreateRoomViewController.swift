@@ -153,7 +153,9 @@ class CreateRoomViewController: BaseViewController {
     }
     
     @objc private func didTapCloseButton() {
-        print("didTapCloseButton")
+        DispatchQueue.main.async {
+            self.dismiss(animated: true)
+        }
     }
     
     @objc private func didTapNextButton() {
@@ -169,6 +171,7 @@ class CreateRoomViewController: BaseViewController {
             changedInputView()
         case .inputDate:
             notiIndex = .checkRoom
+            checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
             changedInputView()
         case .checkRoom:
             print("여기는 끝^__^")
