@@ -67,4 +67,12 @@ enum DetailWaitEndPoint: EndPointable {
             return "\(baseURL)/api/rooms/\(roomId)"
         }
     }
+    
+    func createRequest(environment: APIEnvironment) -> NetworkRequest {
+        return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+                              reqBody: requestBody,
+                              reqTimeout: requestTimeOut,
+                              httpMethod: httpMethod
+        )
+    }
 }
