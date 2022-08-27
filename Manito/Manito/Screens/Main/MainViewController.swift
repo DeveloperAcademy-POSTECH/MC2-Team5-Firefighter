@@ -175,7 +175,11 @@ class MainViewController: BaseViewController {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
         let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: { [weak self] _ in
-            self?.navigationController?.pushViewController(CreateRoomViewController(), animated: true)
+            let createVC = CreateRoomViewController()
+            createVC.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(createVC,animated: true)
+            }
         })
         let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: { [weak self] _ in
             let viewController = ParticipateRoomViewController()
