@@ -181,13 +181,13 @@ class MainViewController: BaseViewController {
                 self?.present(createVC,animated: true)
             }
         })
-        let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: { _ in
+        let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: { [weak self] _ in
             let viewController = ParticipateRoomViewController()
             let navigationController = UINavigationController(rootViewController: viewController)
             
             navigationController.modalPresentationStyle = .overFullScreen
             
-            self.present(navigationController, animated: true, completion: nil)
+            self?.present(navigationController, animated: true, completion: nil)
         })
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
