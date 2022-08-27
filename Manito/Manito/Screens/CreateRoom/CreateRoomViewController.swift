@@ -164,10 +164,12 @@ class CreateRoomViewController: BaseViewController {
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
             notiIndex = .inputPerson
+            checkView.name = text
             changedInputView()
         case .inputPerson:
             person = Int(personView.personSlider.value)
             notiIndex = .inputDate
+            checkView.person = person
             changedInputView()
         case .inputDate:
             notiIndex = .checkRoom

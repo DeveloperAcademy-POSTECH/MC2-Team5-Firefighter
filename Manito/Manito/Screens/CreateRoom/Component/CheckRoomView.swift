@@ -15,6 +15,16 @@ class CheckRoomView: UIView {
             dateLabel.text = newValue
         }
     }
+    var name: String = "" {
+        willSet {
+            nameLabel.text = newValue
+        }
+    }
+    var person: Int = 0 {
+        willSet {
+            personLabel.text = "\(String(newValue))인"
+        }
+    }
 
     // MARK: - Property
     
