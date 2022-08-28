@@ -8,12 +8,11 @@
 import Foundation
 
 struct FriendList: Decodable {
-    let count: Int
-    let members: [Member]
+    let count: Int?
+    let members: [Member]?
 }
 
 struct Member: Decodable {
-    let id: String
-    let nickname: String
-    let colorIdx: Int
+    let nickname: String?
+    let colorIdx: Int?
 }
