@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class DetailWaitViewController: BaseViewController {
+    let detailWaitService: DetailWaitProtocol = DetailWaitAPI(apiService: APIService(), environment: .development)
     let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
     var canStartClosure: ((Bool) -> ())?
     var maxUserCount: Int = 10 {
@@ -159,6 +160,12 @@ class DetailWaitViewController: BaseViewController {
     deinit {
         print("deInit")
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("viewDidApear 실행")
+        requestFriendList()
+        requestWaitRoomInfo()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -225,6 +232,43 @@ class DetailWaitViewController: BaseViewController {
     override func configUI() {
         view.backgroundColor = .backgroundGrey
         setupSettingButton()
+    }
+    
+    // MARK: - API
+    
+    func requestFriendList() {
+        Task {
+            do {
+                let data = try await detailWaitService.getWithFriend(roomId: "1")
+                if let friendList = data {
+                    print(friendList)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+    
+    func requestWaitRoomInfo() {
+        Task {
+            do {
+                let data = try await
+                detailWaitService.getWaitingRoomInfo(roomId: "1")
+                if let roomInfo = data {
+                    print(roomInfo)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
     }
 
     // MARK: - func
