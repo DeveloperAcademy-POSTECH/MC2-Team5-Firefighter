@@ -58,7 +58,7 @@ class SettingDeveloperInfoViewController: BaseViewController {
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 20
         static let collectionVerticalSpacing: CGFloat = 40
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing*2)
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2)
         static let cellHeight: CGFloat = 100
         static let collectionInset = UIEdgeInsets(
             top: collectionVerticalSpacing,
@@ -90,14 +90,14 @@ class SettingDeveloperInfoViewController: BaseViewController {
         collectionView.register(cell: DeveloperInfoViewCell.self,
             forCellWithReuseIdentifier: DeveloperInfoViewCell.className)
         collectionView.register(SettingDeveloperInfoHeaderView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: SettingDeveloperInfoHeaderView.className)
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SettingDeveloperInfoHeaderView.className)
         return collectionView
     }()
 
     // MARK: - life cycle
 
-    override func render() {        
+    override func render() {
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)

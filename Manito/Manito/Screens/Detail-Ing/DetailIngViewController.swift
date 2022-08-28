@@ -139,24 +139,24 @@ class DetailIngViewController: BaseViewController {
     }
     
     private func addActionPushLetterViewController() {
-        let action = UIAction { _ in
-            self.navigationController?.pushViewController(LetterViewController(), animated: true)
+        let action = UIAction { [weak self] _ in
+            self?.navigationController?.pushViewController(LetterViewController(), animated: true)
         }
         letterBoxButton.addAction(action, for: .touchUpInside)
     }
     
     private func addActionMemoryViewController() {
-        let action = UIAction { _ in
+        let action = UIAction { [weak self] _ in
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: MemoryViewController.className) as? MemoryViewController else { return }
-            self.navigationController?.pushViewController(viewController, animated: true)
+            self?.navigationController?.pushViewController(viewController, animated: true)
         }
         manitoMemoryButton.addAction(action, for: .touchUpInside)
     }
     
     private func addActionOpenManittoViewController() {
-        let action = UIAction { _ in
-            self.navigationController?.pushViewController(OpenManittoViewController(), animated: true)
+        let action = UIAction { [weak self] _ in
+            self?.navigationController?.pushViewController(OpenManittoViewController(), animated: true)
         }
         self.manitoOpenButton.addAction(action, for: .touchUpInside)
     }

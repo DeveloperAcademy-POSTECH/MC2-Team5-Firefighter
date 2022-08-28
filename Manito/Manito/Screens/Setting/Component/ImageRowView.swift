@@ -9,31 +9,31 @@ import UIKit
 
 import SnapKit
 
-class ImageRowView : UIView {
+class ImageRowView: UIView {
     
     // MARK: - Property
     
-    private let imgMaDuna : UIImageView = {
+    private let imgMaDuna: UIImageView = {
         let imageView = UIImageView()
         imageView.image = ImageLiterals.imgMaDuna
         return imageView
     }()
-    private let imgMaHoya : UIImageView = {
+    private let imgMaHoya: UIImageView = {
         let imageView = UIImageView()
         imageView.image = ImageLiterals.imgMaHoya
         return imageView
     }()
-    private let imgNi : UIImageView = {
+    private let imgNi: UIImageView = {
         let imageView = UIImageView()
         imageView.image = ImageLiterals.imgNi
         return imageView
     }()
-    private let imgMaChemi : UIImageView = {
+    private let imgMaChemi: UIImageView = {
         let imageView = UIImageView()
         imageView.image = ImageLiterals.imgMaChemi
         return imageView
     }()
-    private let imgMaLivvy : UIImageView = {
+    private let imgMaLivvy: UIImageView = {
         let imageView = UIImageView()
         imageView.image = ImageLiterals.imgMaLivvy
         return imageView

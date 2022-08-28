@@ -146,10 +146,10 @@ final class LetterViewController: BaseViewController {
     // MARK: - func
     
     private func setupButtonAction() {
-        let presentSendButtonAction = UIAction { _ in
+        let presentSendButtonAction = UIAction { [weak self] _ in
             let storyboard = UIStoryboard(name: "Letter", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "CreateLetterNavigationController")
-            self.present(viewController, animated: true, completion: nil)
+            self?.present(viewController, animated: true, completion: nil)
         }
         sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
                                                   for: .touchUpInside)
