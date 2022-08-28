@@ -9,7 +9,7 @@ import Foundation
 
 enum DetailWaitEndPoint: EndPointable {
     case getWithFriend(roomId: String)
-    case getWaitingRoomInfo(roomId: String, state: String)
+    case getWaitingRoomInfo(roomId: String)
     case startManitto(roomId: String, state: String)
     case editRoomInfo(roomId: String, roomInfo: RoomDTO)
     case deleteRoom(roomId: String)
@@ -56,15 +56,15 @@ enum DetailWaitEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .getWithFriend(let roomId):
-            return "\(baseURL)/api/rooms/\(roomId))/participants"
-        case .getWaitingRoomInfo(let roomId, let state):
-            return "\(baseURL)/api/rooms/\(roomId)?state=\(state))"
+            return "\(baseURL)/rooms/\(roomId)/participants"
+        case .getWaitingRoomInfo(let roomId):
+            return "\(baseURL)/rooms/\(roomId)"
         case .startManitto(let roomId, _):
-            return "\(baseURL)/api/rooms/\(roomId)/state"
+            return "\(baseURL)/rooms/\(roomId)/state"
         case .editRoomInfo(let roomId, _):
-            return "\(baseURL)/api/rooms/\(roomId)"
+            return "\(baseURL)/rooms/\(roomId)"
         case .deleteRoom(let roomId):
-            return "\(baseURL)/api/rooms/\(roomId)"
+            return "\(baseURL)/rooms/\(roomId)"
         }
     }
     

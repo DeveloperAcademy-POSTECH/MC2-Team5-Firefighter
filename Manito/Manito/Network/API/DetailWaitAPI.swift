@@ -23,9 +23,9 @@ struct DetailWaitAPI: DetailWaitProtocol {
         return try await apiService.request(request)
     }
     
-    func getWaitingRoomInfo(roomId: String, state: String) async throws -> Room? {
+    func getWaitingRoomInfo(roomId: String) async throws -> Room? {
         let request = DetailWaitEndPoint
-            .getWaitingRoomInfo(roomId: roomId, state: state)
+            .getWaitingRoomInfo(roomId: roomId)
             .createRequest(environment: environment)
         return try await apiService.request(request)
     }
