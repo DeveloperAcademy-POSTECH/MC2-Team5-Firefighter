@@ -9,16 +9,19 @@ import Foundation
 
 struct NetworkRequest {
     let url: String
+    let headers: [String: String]?
     let body: Data?
     let requestTimeOut: Float?
     let httpMethod: HTTPMethod
 
     init(url: String,
+        headers: [String: String]? = nil,
         reqBody: Data? = nil,
         reqTimeout: Float? = nil,
         httpMethod: HTTPMethod
     ) {
         self.url = url
+        self.headers = headers
         self.body = reqBody
         self.requestTimeOut = reqTimeout
         self.httpMethod = httpMethod
@@ -28,6 +31,7 @@ struct NetworkRequest {
         var urlRequest = URLRequest(url: url)
         urlRequest.setValue("Bearer " + APIEnvironment.development.token, forHTTPHeaderField: "Authorization")
         urlRequest.httpMethod = httpMethod.rawValue
+        urlRequest.allHTTPHeaderFields = headers ?? [:]
         urlRequest.httpBody = body
         return urlRequest
     }
