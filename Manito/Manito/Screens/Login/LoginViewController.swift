@@ -16,9 +16,13 @@ class LoginViewController: BaseViewController {
 
     private let logoImageView = UIImageView(image: ImageLiterals.imgAppIcon)
     private let logoTextImageView = UIImageView(image: ImageLiterals.imgTextLogo)
-    private let appleLoginButton: ASAuthorizationAppleIDButton = {
+    private lazy var appleLoginButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
+        let action = UIAction { [weak self] _ in
+            self?.appleSignIn()
+        }
         button.cornerRadius = 25
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
 
@@ -50,5 +54,53 @@ class LoginViewController: BaseViewController {
             $0.height.equalTo(50)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(35)
         }
+    }
+
+    // MARK: - func
+
+    private func appleSignIn() {
+        let provider = ASAuthorizationAppleIDProvider()
+        let request = provider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let userIdentifier = appleIDCredential.user
+            
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            appleIDProvider.getCredentialState(forUserID: userIdentifier) { (credentialState, error) in
+                switch credentialState {
+                case .authorized:
+                    // The Apple ID credential is valid. Show Home UI Here
+                    print("userIdentifier = \(userIdentifier)")
+                    break
+                case .revoked:
+                    // The Apple ID credential is revoked. Show SignIn UI Here.
+                    break
+                case .notFound:
+                    // No credential was found. Show SignIn UI Here.
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print(error)
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return view.window!
     }
 }
