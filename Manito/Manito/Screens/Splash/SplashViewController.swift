@@ -35,7 +35,8 @@ final class SplashViewController: BaseViewController {
 
     private func presentMainViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+//        let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+        let viewController = LoginViewController()
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
         present(viewController, animated: true, completion: nil)

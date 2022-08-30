@@ -5,6 +5,7 @@
 //  Created by SHIN YOON AH on 2022/06/09.
 //
 
+import AuthenticationServices
 import UIKit
 
 @main
@@ -13,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        getCredentialState()
         return true
     }
 
@@ -33,5 +34,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        print("applicationWillEnterForeground")
+        getCredentialState()
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        print("applicationDidBecomeActive")
+        getCredentialState()
+    }
+}
+
+extension AppDelegate {
+    private func getCredentialState() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: "001013.8214f350c91a4be6848766ae372dad02.0727") { (credentialState, error) in
+            switch credentialState {
+            case .authorized:
+                print("authorized")
+                //인증성공 상태
+            case .revoked:
+                print("revoked")
+                //인증만료 상태
+            default:
+                print("default")
+                //.notFound 등 이외 상태
+            }
+        }
     }
 }
