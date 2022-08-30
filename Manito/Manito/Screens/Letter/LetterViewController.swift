@@ -12,8 +12,8 @@ import SnapKit
 final class LetterViewController: BaseViewController {
     
     private enum LetterState: Int {
-        case received = 0
-        case sent = 1
+        case sent = 0
+        case received = 1
         
         var lists: [Letter] {
             switch self {
@@ -65,7 +65,7 @@ final class LetterViewController: BaseViewController {
     }()
     private let sendLetterView = SendLetterView()
     
-    private var letterState: LetterState = .received {
+    private var letterState: LetterState = .sent {
         didSet {
             reloadCollectionView(with: self.letterState)
         }
