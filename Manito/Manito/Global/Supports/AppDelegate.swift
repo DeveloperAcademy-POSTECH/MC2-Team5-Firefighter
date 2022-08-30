@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     private func getCredentialState() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
-        appleIDProvider.getCredentialState(forUserID: "001013.8214f350c91a4be6848766ae372dad02.0727") { (credentialState, error) in
+        appleIDProvider.getCredentialState(forUserID: UserDefaultStorage.userID) { (credentialState, error) in
             switch credentialState {
             case .authorized:
                 print("authorized")

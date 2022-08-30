@@ -80,6 +80,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                 case .authorized:
                     // The Apple ID credential is valid. Show Home UI Here
                     print("userIdentifier = \(userIdentifier)")
+                    UserDefaultHandler.setUserID(userID: userIdentifier)
                     break
                 case .revoked:
                     // The Apple ID credential is revoked. Show SignIn UI Here.

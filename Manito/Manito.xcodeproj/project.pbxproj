@@ -64,6 +64,8 @@
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
 		B5E1F2B4285ECCD1006D880B /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5E1F2B3285ECCD1006D880B /* joystick.gif */; };
 		B5E1F2B8285EE2B0006D880B /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5E1F2B7285EE2B0006D880B /* capsule.gif */; };
+		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
+		B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
 		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
@@ -182,6 +184,8 @@
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B3285ECCD1006D880B /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
 		B5E1F2B7285EE2B0006D880B /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
+		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
+		B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -395,6 +399,15 @@
 				B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		B5F31BAE28BE1C7900F61D0F /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */,
+				B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 		B5F524C228519AA000614FF7 = {
@@ -656,6 +669,7 @@
 		B5F525462855D00B00614FF7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				B5F31BAE28BE1C7900F61D0F /* Storage */,
 				397A241528BA519200454E4F /* Protocol */,
 				397A241128BA513E00454E4F /* API */,
 				39C957EA287AE45900A04A2B /* EndPoint */,
@@ -962,6 +976,8 @@
 				B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
 				D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */,
+				B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */,
+				B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */,
 				CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				39C95802287DACC300A04A2B /* RoomEndPoint.swift in Sources */,
