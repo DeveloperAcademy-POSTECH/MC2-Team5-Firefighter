@@ -46,6 +46,9 @@
 		7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C52854B47F00489E6A /* InputNameView.swift */; };
 		7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C72854B64D00489E6A /* InputPersonView.swift */; };
 		7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C92854B7A900489E6A /* InputDateView.swift */; };
+		7E77DB0428BF9A6700E95D4B /* RoomProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */; };
+		7E77DB0628BF9C0600E95D4B /* VerificationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0528BF9C0600E95D4B /* VerificationCode.swift */; };
+		7E77DB0828BF9D2400E95D4B /* RoomAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */; };
 		7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */; };
 		B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */; };
 		B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFA2856B5180080992C /* IndividualMissionView.swift */; };
@@ -166,6 +169,9 @@
 		7E3058C52854B47F00489E6A /* InputNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputNameView.swift; sourceTree = "<group>"; };
 		7E3058C72854B64D00489E6A /* InputPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPersonView.swift; sourceTree = "<group>"; };
 		7E3058C92854B7A900489E6A /* InputDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDateView.swift; sourceTree = "<group>"; };
+		7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomProtocol.swift; sourceTree = "<group>"; };
+		7E77DB0528BF9C0600E95D4B /* VerificationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCode.swift; sourceTree = "<group>"; };
+		7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAPI.swift; sourceTree = "<group>"; };
 		7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewTableCell.swift; sourceTree = "<group>"; };
 		B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterViewController.swift; sourceTree = "<group>"; };
 		B50B1AFA2856B5180080992C /* IndividualMissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualMissionView.swift; sourceTree = "<group>"; };
@@ -280,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				397A241328BA516B00454E4F /* DetailWaitAPI.swift */,
+				7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -288,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				397A241728BA51B400454E4F /* DetailWaitProtocol.swift */,
+				7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -670,6 +678,7 @@
 				B5F525482855D01D00614FF7 /* Letter.swift */,
 				39C957DA2879A23B00A04A2B /* User.swift */,
 				39C957DC2879A2B600A04A2B /* Room.swift */,
+				7E77DB0528BF9C0600E95D4B /* VerificationCode.swift */,
 				39C957E02879A3CF00A04A2B /* DailyMission.swift */,
 				397A241928BA532A00454E4F /* FriendList.swift */,
 			);
@@ -927,6 +936,7 @@
 				39C957DD2879A2B600A04A2B /* Room.swift in Sources */,
 				B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */,
 				39C95804287DAD3000A04A2B /* LetterEndPoint.swift in Sources */,
+				7E77DB0828BF9D2400E95D4B /* RoomAPI.swift in Sources */,
 				B50B1B44285B146A0080992C /* ManittoCollectionViewCell.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				39C957D628799AB900A04A2B /* HTTPMethod.swift in Sources */,
@@ -954,6 +964,7 @@
 				B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */,
 				391B3003286198C200421F1D /* Size.swift in Sources */,
 				39C95800287DAC2900A04A2B /* DetailDoneEndPoint.swift in Sources */,
+				7E77DB0428BF9A6700E95D4B /* RoomProtocol.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
 				7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */,
 				CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */,
@@ -981,6 +992,7 @@
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
 				39C95806287DAE5700A04A2B /* InteractionEndPoint.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
+				7E77DB0628BF9C0600E95D4B /* VerificationCode.swift in Sources */,
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
 				39C957E12879A3CF00A04A2B /* DailyMission.swift in Sources */,
 				D724AF5D287088310003F280 /* SettingViewController.swift in Sources */,

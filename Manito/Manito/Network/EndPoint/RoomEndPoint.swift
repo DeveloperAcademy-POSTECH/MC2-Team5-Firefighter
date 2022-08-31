@@ -51,4 +51,12 @@ enum RoomEndPoint: EndPointable {
             return "\(baseURL)/api/rooms/\(roomId)/participaticipants"
         }
     }
+    
+    func createRequest(environment: APIEnvironment) -> NetworkRequest {
+        return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+                              reqBody: requestBody,
+                              reqTimeout: requestTimeOut,
+                              httpMethod: httpMethod
+        )
+    }
 }
