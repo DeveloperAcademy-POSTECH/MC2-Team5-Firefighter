@@ -54,6 +54,9 @@ class DetailIngViewController: BaseViewController {
     }
 
     override func render() {
+        manitiIconView.image = ImageLiterals.icManiTti
+        listIconView.image = ImageLiterals.icList
+        
         view.addSubview(manitoOpenButton)
         manitoOpenButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
