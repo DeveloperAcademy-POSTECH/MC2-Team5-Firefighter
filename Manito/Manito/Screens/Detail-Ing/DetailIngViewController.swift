@@ -140,7 +140,9 @@ class DetailIngViewController: BaseViewController {
     
     private func addActionPushLetterViewController() {
         let action = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(LetterViewController(), animated: true)
+            // TODO: - POST로 지정해두었기 때문에 들어오는 값에 따라서 다른 값이 들어오도록 해야 함
+            let letterViewController = LetterViewController(roomState: "POST")
+            self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         letterBoxButton.addAction(action, for: .touchUpInside)
     }

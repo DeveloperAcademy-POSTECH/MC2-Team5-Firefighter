@@ -63,12 +63,24 @@ final class LetterViewController: BaseViewController {
                                 withReuseIdentifier: LetterHeaderView.className)
         return collectionView
     }()
-    private let sendLetterView = SendLetterView()
+    private lazy var sendLetterView = SendLetterView()
     
     private var letterState: LetterState = .sent {
         didSet {
             reloadCollectionView(with: self.letterState)
         }
+    }
+    private var roomState: String
+    
+    // MARK: - init
+    
+    init(roomState: String) {
+        self.roomState = roomState
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - life cycle
@@ -93,14 +105,16 @@ final class LetterViewController: BaseViewController {
             $0.bottom.equalToSuperview()
         }
         
-        view.addSubview(sendLetterView)
-        sendLetterView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-        
         view.addSubview(guideButton)
         guideButton.snp.makeConstraints {
             $0.width.height.equalTo(44)
+        }
+        
+        if roomState != "POST" {
+            view.addSubview(sendLetterView)
+            sendLetterView.snp.makeConstraints {
+                $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            }
         }
     }
     
