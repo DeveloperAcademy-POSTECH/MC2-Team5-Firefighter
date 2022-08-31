@@ -11,6 +11,8 @@ import SnapKit
 
 final class LetterCollectionViewCell: BaseCollectionViewCell {
     
+    var didTappedReport:(() -> ())?
+    
     // MARK: - property
     
     private let stackView: UIStackView = {
@@ -49,6 +51,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupReportAction()
     }
     
     required init?(coder: NSCoder) {
@@ -101,6 +104,13 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     }
     
     // MARK: - func
+    
+    private func setupReportAction() {
+        let reportAction = UIAction { [weak self] _ in
+            self?.didTappedReport?()
+        }
+        reportButton.addAction(reportAction, for: .touchUpInside)
+    }
     
     func setLetterData(with data: Letter, isHidden: Bool) {
         dateLabel.text = data.date
