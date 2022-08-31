@@ -39,9 +39,9 @@ final class OpenManittoPopupViewController: BaseViewController {
     }()
     private lazy var confirmButton: UIButton = {
         let button = MainButton()
-        let action = UIAction { _ in
-            guard let parentViewController = self.presentingViewController as? UINavigationController else { return }
-            self.dismiss(animated: true, completion: {
+        let action = UIAction { [weak self] _ in
+            guard let parentViewController = self?.presentingViewController as? UINavigationController else { return }
+            self?.dismiss(animated: true, completion: {
                 parentViewController.popToRootViewController(animated: true)
             })
         }
