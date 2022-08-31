@@ -176,7 +176,9 @@ class CreateRoomViewController: BaseViewController {
             checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
             changedInputView()
         case .checkRoom:
-            print("여기는 끝^__^")
+            DispatchQueue.main.async {
+                self.dismiss(animated: true)
+            }
         }
     }
     
