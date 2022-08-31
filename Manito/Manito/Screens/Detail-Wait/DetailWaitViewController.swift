@@ -10,7 +10,8 @@ import UIKit
 import SnapKit
 
 class DetailWaitViewController: BaseViewController {
-    let detailWaitService: DetailWaitProtocol = DetailWaitAPI(apiService: APIService(), environment: .development)
+    let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService(), environment: .development)
+    var roomIndex: Int
     private var userArr: [String] = [] {
         didSet {
             renderTableView()
@@ -159,6 +160,15 @@ class DetailWaitViewController: BaseViewController {
     }()
 
     // MARK: - life cycle
+    
+    init(index: Int) {
+        roomIndex = index
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     deinit {
         print("deInit")
@@ -227,7 +237,7 @@ class DetailWaitViewController: BaseViewController {
     func requestFriendList() {
         Task {
             do {
-                let data = try await detailWaitService.getWithFriend(roomId: "1")
+                let data = try await detailWaitService.getWithFriend(roomId: "\(roomIndex)")
                 if let friendList = data {
                     guard let friendList = friendList.members else { return }
                     userArr = friendList.map { $0.nickname ?? "" }
