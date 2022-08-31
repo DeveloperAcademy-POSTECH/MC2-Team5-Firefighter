@@ -102,8 +102,9 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - func
     
-    func setLetterData(with data: Letter) {
+    func setLetterData(with data: Letter, isHidden: Bool) {
         dateLabel.text = data.date
+        reportButton.isHidden = isHidden
         
         if let content = data.content {
             contentLabel.text = content

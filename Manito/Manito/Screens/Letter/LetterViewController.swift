@@ -23,6 +23,15 @@ final class LetterViewController: BaseViewController {
                 return sentLetters
             }
         }
+        
+        var isHidden: Bool {
+            switch self {
+            case .received:
+                return false
+            case .sent:
+                return true
+            }
+        }
     }
     
     private enum Size {
@@ -207,7 +216,8 @@ extension LetterViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setLetterData(with: letterState.lists[indexPath.item])
+        cell.setLetterData(with: letterState.lists[indexPath.item],
+                           isHidden: letterState.isHidden)
         return cell
     }
     
