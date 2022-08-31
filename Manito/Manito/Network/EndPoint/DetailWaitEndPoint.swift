@@ -44,9 +44,9 @@ enum DetailWaitEndPoint: EndPointable {
             return body.encode()
         case .editRoomInfo(_, let roomInfo):
             let body = ["title": roomInfo.title,
-                "capacity": roomInfo.capacity.description,
-                "startDate": roomInfo.startDate,
-                "endDate": roomInfo.endDate]
+                        "capacity": roomInfo.capacity.description,
+                        "startDate": roomInfo.startDate,
+                        "endDate": roomInfo.endDate]
             return body.encode()
         case .deleteRoom:
             return nil
