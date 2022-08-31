@@ -279,7 +279,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="닉네임" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lXy-TY-rYw">
-                                                    <rect key="frame" x="31" y="128" width="99" height="16"/>
+                                                    <rect key="frame" x="10" y="128" width="140" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="aPn-4T-ErS"/>
                                                     </constraints>
@@ -288,10 +288,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" verticalCompressionResistancePriority="753" translatesAutoresizingMaskIntoConstraints="NO" id="9bQ-q4-MsQ">
-                                                    <rect key="frame" x="31" y="16" width="99" height="98"/>
+                                                    <rect key="frame" x="31" y="16" width="98" height="98"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sT9-3p-TZj">
-                                                            <rect key="frame" x="4" y="4" width="91" height="90"/>
+                                                            <rect key="frame" x="4" y="4" width="90" height="90"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="90" id="3oR-CM-2FS"/>
                                                                 <constraint firstAttribute="width" constant="90" id="dHP-P3-pZG"/>
@@ -308,13 +308,11 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="lXy-TY-rYw" firstAttribute="leading" secondItem="L7W-vs-yGN" secondAttribute="leading" constant="31" id="GrX-8D-UgX"/>
-                                                <constraint firstAttribute="trailing" secondItem="lXy-TY-rYw" secondAttribute="trailing" constant="30" id="REW-0H-3C1"/>
-                                                <constraint firstAttribute="bottom" secondItem="lXy-TY-rYw" secondAttribute="bottom" priority="999" constant="14" id="SZd-O9-tsF"/>
+                                                <constraint firstItem="9bQ-q4-MsQ" firstAttribute="centerX" secondItem="L7W-vs-yGN" secondAttribute="centerX" id="0ub-Se-rxe"/>
+                                                <constraint firstItem="lXy-TY-rYw" firstAttribute="leading" secondItem="L7W-vs-yGN" secondAttribute="leading" constant="10" id="GrX-8D-UgX"/>
+                                                <constraint firstAttribute="trailing" secondItem="lXy-TY-rYw" secondAttribute="trailing" constant="10" id="REW-0H-3C1"/>
                                                 <constraint firstItem="lXy-TY-rYw" firstAttribute="top" secondItem="9bQ-q4-MsQ" secondAttribute="bottom" constant="14" id="XMm-DI-IEm"/>
                                                 <constraint firstItem="9bQ-q4-MsQ" firstAttribute="top" secondItem="L7W-vs-yGN" secondAttribute="top" constant="16" id="afb-B3-Adr"/>
-                                                <constraint firstItem="9bQ-q4-MsQ" firstAttribute="leading" secondItem="L7W-vs-yGN" secondAttribute="leading" constant="31" id="eBe-no-Lhh"/>
-                                                <constraint firstAttribute="trailing" secondItem="9bQ-q4-MsQ" secondAttribute="trailing" constant="30" id="eaX-Kl-hZf"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
