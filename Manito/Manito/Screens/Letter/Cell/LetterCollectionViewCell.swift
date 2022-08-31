@@ -39,6 +39,11 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
+    private let reportButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.icReport, for: .normal)
+        return button
+    }()
     
     // MARK: - init
     
@@ -62,7 +67,14 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(14).priority(.low)
-            $0.trailing.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(15)
+        }
+        
+        contentView.addSubview(reportButton)
+        reportButton.snp.makeConstraints {
+            $0.centerY.equalTo(dateLabel.snp.centerY)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.width.height.equalTo(22)
         }
         
         contentView.addSubview(stackView)
@@ -70,7 +82,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         stackView.addArrangedSubview(contentLabel)
         stackView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(dateLabel.snp.top).offset(-8).priority(.required)
+            $0.bottom.equalTo(dateLabel.snp.top).offset(-10).priority(.required)
         }
         
         contentLabel.snp.makeConstraints {
