@@ -81,6 +81,7 @@ class MainViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         print("viewDidApear 실행")
         requestCommonMission()
+        requestManittoList()()
     }
     
     override func viewDidLoad() {
@@ -186,6 +187,23 @@ class MainViewController: BaseViewController {
                 let data = try await mainService.getCommonMission()
                 if let commonMission = data {
                     print(commonMission)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+    
+    func requestManittoList() {
+        Task {
+            do {
+                let data = try await mainService.getManittoList()
+                if let manittoList = data {
+                    print(manittoList)
                 }
             } catch NetworkError.serverError {
                 print("server Error")

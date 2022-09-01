@@ -9,5 +9,5 @@ import Foundation
 
 protocol MainProtocol {
     func getCommonMission() async throws -> String?
-//    func getManittoList(page: String, perPage: String) async throws -> String?
+    func getManittoList() async throws -> [Room]?
 }
