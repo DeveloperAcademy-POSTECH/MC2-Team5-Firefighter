@@ -81,7 +81,7 @@ class MainViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         print("viewDidApear 실행")
         requestCommonMission()
-        requestManittoList()()
+        requestManittoList()
     }
     
     override func viewDidLoad() {
