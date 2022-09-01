@@ -12,6 +12,7 @@ import SnapKit
 class DetailWaitViewController: BaseViewController {
     let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService(), environment: .development)
     var roomIndex: Int
+    var inviteCode: String = ""
     private var userArr: [String] = [] {
         didSet {
             renderTableView()
@@ -175,7 +176,7 @@ class DetailWaitViewController: BaseViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        requestFriendList()
+        requestWaitRoomInfo()
     }
 
     override func viewDidLoad() {
@@ -234,31 +235,24 @@ class DetailWaitViewController: BaseViewController {
     
     // MARK: - API
     
-    func requestFriendList() {
-        Task {
-            do {
-                let data = try await detailWaitService.getWithFriend(roomId: "\(roomIndex)")
-                if let friendList = data {
-                    guard let friendList = friendList.members else { return }
-                    userArr = friendList.map { $0.nickname ?? "" }
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
-            }
-        }
-    }
-    
     func requestWaitRoomInfo() {
         Task {
             do {
                 let data = try await
-                detailWaitService.getWaitingRoomInfo(roomId: "1")
+                detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
-                    print(roomInfo)
+                    guard let title = roomInfo.room?.title else { return }
+                    guard let code = roomInfo.invitation?.code else { return }
+                    guard let startDate = roomInfo.room?.startDate else { return }
+                    guard let endDate = roomInfo.room?.endDate else { return }
+                    guard let state = roomInfo.room?.state else { return }
+                    guard let members = roomInfo.participants?.members else { return }
+                    titleView.roomTitleLabel.text = title
+                    inviteCode = code
+                    startDateText = startDate
+                    endDateText = endDate
+                    titleView.setStartState(state: state)
+                    userArr = members.map { $0.nickname ?? "" }
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -367,7 +361,7 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func touchUpToShowToast() {
-        UIPasteboard.general.string = "초대코드"
+        UIPasteboard.general.string = inviteCode
         self.showToast(message: "코드 복사 완료!")
     }
 

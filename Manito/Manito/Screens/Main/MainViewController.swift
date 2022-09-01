@@ -207,10 +207,10 @@ class MainViewController: BaseViewController {
         present(ParticipateRoomVC, animated: true, completion: nil)
     }
 
-    private func pushDetailView(status: RoomStatus) {
+    private func pushDetailView(status: RoomStatus, index: Int) {
         switch status {
         case .waiting:
-            self.navigationController?.pushViewController(DetailWaitViewController(), animated: true)
+            self.navigationController?.pushViewController(DetailWaitViewController(index: index), animated: true)
         case .starting:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
@@ -268,7 +268,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.item == 0 {
             newRoom()
         } else {
-            pushDetailView(status: .starting)
+            pushDetailView(status: .waiting, index: indexPath.item)
         }
     }
 }
