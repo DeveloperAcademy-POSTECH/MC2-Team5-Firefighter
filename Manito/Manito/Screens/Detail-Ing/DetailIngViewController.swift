@@ -54,9 +54,6 @@ class DetailIngViewController: BaseViewController {
     }
 
     override func render() {
-        manitiIconView.image = ImageLiterals.icManiTti
-        listIconView.image = ImageLiterals.icList
-        
         view.addSubview(manitoOpenButton)
         manitoOpenButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
@@ -88,6 +85,10 @@ class DetailIngViewController: BaseViewController {
         addGestureMemberList()
         addGestureManito()
         addActionOpenManittoViewController()
+        
+        manitiIconView.image = ImageLiterals.icManiTti
+        listIconView.image = ImageLiterals.icList
+        
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
