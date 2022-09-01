@@ -36,9 +36,9 @@ enum MainEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .getCommonMission:
-            return "\(baseURL)/api/missions/"
+            return "\(baseURL)/missions/common/"
         case .getManittoList:
-            return "\(baseURL)/api/rooms/"
+            return "\(baseURL)/rooms/"
         }
     }
     
