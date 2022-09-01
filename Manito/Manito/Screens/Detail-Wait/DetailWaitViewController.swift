@@ -16,6 +16,7 @@ class DetailWaitViewController: BaseViewController {
     private var userArr: [String] = [] {
         didSet {
             renderTableView()
+            userCount = userArr.count
         }
     }
     var canStartClosure: ((Bool) -> ())?
@@ -24,8 +25,16 @@ class DetailWaitViewController: BaseViewController {
             comeInLabel.text = "\(userCount)/\(maxUserCount)"
         }
     }
-    lazy var userCount = userArr.count
-    let isOwner = true
+    lazy var userCount = 0 {
+        didSet {
+            comeInLabel.text = "\(userCount)/\(maxUserCount)"
+        }
+    }
+    var isOwner = false {
+        didSet {
+            settingButton.menu = setExitButtonMenu()
+        }
+    }
     var startDateText = "22.09.11" {
         didSet {
             titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
@@ -247,12 +256,14 @@ class DetailWaitViewController: BaseViewController {
                     guard let endDate = roomInfo.room?.endDate else { return }
                     guard let state = roomInfo.room?.state else { return }
                     guard let members = roomInfo.participants?.members else { return }
+                    guard let isAdmin = roomInfo.admin else { return }
                     titleView.roomTitleLabel.text = title
                     inviteCode = code
                     startDateText = startDate
                     endDateText = endDate
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
+                    isOwner = isAdmin
                 }
             } catch NetworkError.serverError {
                 print("server Error")
