@@ -23,7 +23,6 @@
 		39C957D22879523200A04A2B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957D12879523200A04A2B /* Date+Extension.swift */; };
 		39C957D628799AB900A04A2B /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957D528799AB900A04A2B /* HTTPMethod.swift */; };
 		39C957D828799DB900A04A2B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957D728799DB900A04A2B /* NetworkError.swift */; };
-		39C957DB2879A23B00A04A2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957DA2879A23B00A04A2B /* User.swift */; };
 		39C957DD2879A2B600A04A2B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957DC2879A2B600A04A2B /* Room.swift */; };
 		39C957DF2879A35300A04A2B /* RoomDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957DE2879A35300A04A2B /* RoomDTO.swift */; };
 		39C957E12879A3CF00A04A2B /* DailyMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957E02879A3CF00A04A2B /* DailyMission.swift */; };
@@ -142,7 +141,6 @@
 		39C957D12879523200A04A2B /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		39C957D528799AB900A04A2B /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		39C957D728799DB900A04A2B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		39C957DA2879A23B00A04A2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		39C957DC2879A2B600A04A2B /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		39C957DE2879A35300A04A2B /* RoomDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDTO.swift; sourceTree = "<group>"; };
 		39C957E02879A3CF00A04A2B /* DailyMission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMission.swift; sourceTree = "<group>"; };
@@ -668,7 +666,6 @@
 			children = (
 				39E099AB287FBFD2004F464E /* Request */,
 				B5F525482855D01D00614FF7 /* Letter.swift */,
-				39C957DA2879A23B00A04A2B /* User.swift */,
 				39C957DC2879A2B600A04A2B /* Room.swift */,
 				39C957E02879A3CF00A04A2B /* DailyMission.swift */,
 				397A241928BA532A00454E4F /* FriendList.swift */,
@@ -902,7 +899,6 @@
 				39C957ED287AE4D100A04A2B /* MainEndPoint.swift in Sources */,
 				39C957EF287AEBB400A04A2B /* Endpointable.swift in Sources */,
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
-				39C957DB2879A23B00A04A2B /* User.swift in Sources */,
 				B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */,
 				397A241A28BA532A00454E4F /* FriendList.swift in Sources */,
 				397A241028BA494100454E4F /* APIEnvironment.swift in Sources */,
