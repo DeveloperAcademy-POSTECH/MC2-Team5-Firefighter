@@ -11,6 +11,8 @@ import Gifu
 import SnapKit
 
 class MainViewController: BaseViewController {
+    
+    let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
 
     // 임시 데이터
     let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
@@ -75,6 +77,11 @@ class MainViewController: BaseViewController {
     private let ttoCharacterImageView = GIFImageView()
 
     // MARK: - life cycle
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("viewDidApear 실행")
+        requestCommonMission()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,6 +175,25 @@ class MainViewController: BaseViewController {
             self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
             self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
             self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
+        }
+    }
+    
+    // MARK: - API
+    
+    func requestCommonMission() {
+        Task {
+            do {
+                let data = try await mainService.getCommonMission()
+                if let commonMission = data {
+                    print(commonMission)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
         }
     }
 
