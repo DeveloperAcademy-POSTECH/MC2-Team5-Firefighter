@@ -30,9 +30,9 @@ struct DetailWaitAPI: DetailWaitProtocol {
         return try await apiService.request(request)
     }
 
-    func startManitto(roomId: String, state: String) async throws -> String? {
+    func startManitto(roomId: String) async throws -> String? {
         let request = DetailWaitEndPoint
-            .startManitto(roomId: roomId, state: state)
+            .startManitto(roomId: roomId)
             .createRequest(environment: environment)
         return try await apiService.request(request)
     }

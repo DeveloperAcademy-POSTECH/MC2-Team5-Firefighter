@@ -160,6 +160,7 @@ class DetailWaitViewController: BaseViewController {
                     guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                     viewController.modalPresentationStyle = .fullScreen
                     self?.present(viewController, animated: true)
+                    self?.requestStartManitto()
                 }
                 button.addAction(action, for: .touchUpInside)
             } else {
@@ -280,6 +281,20 @@ class DetailWaitViewController: BaseViewController {
             do {
                 print("roomDto = \(roomDto)")
                 let _ = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+    
+    func requestStartManitto() {
+        Task {
+            do {
+                let _ = try await detailWaitService.startManitto(roomId: "\(roomIndex)")
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {

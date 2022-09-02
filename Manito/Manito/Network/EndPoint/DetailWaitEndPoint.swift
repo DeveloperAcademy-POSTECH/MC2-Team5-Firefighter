@@ -10,7 +10,7 @@ import Foundation
 enum DetailWaitEndPoint: EndPointable {
     case getWithFriend(roomId: String)
     case getWaitingRoomInfo(roomId: String)
-    case startManitto(roomId: String, state: String)
+    case startManitto(roomId: String)
     case editRoomInfo(roomId: String, roomInfo: RoomDTO)
     case deleteRoom(roomId: String)
 
@@ -39,9 +39,8 @@ enum DetailWaitEndPoint: EndPointable {
             return nil
         case .getWaitingRoomInfo:
             return nil
-        case .startManitto(_, let state):
-            let body = ["state": state]
-            return body.encode()
+        case .startManitto:
+            return nil
         case .editRoomInfo(_, let roomInfo):
             let body = ["title": roomInfo.title,
                         "capacity": roomInfo.capacity.description,
@@ -59,7 +58,7 @@ enum DetailWaitEndPoint: EndPointable {
             return "\(baseURL)/rooms/\(roomId)/participants"
         case .getWaitingRoomInfo(let roomId):
             return "\(baseURL)/rooms/\(roomId)"
-        case .startManitto(let roomId, _):
+        case .startManitto(let roomId):
             return "\(baseURL)/rooms/\(roomId)/state"
         case .editRoomInfo(let roomId, _):
             return "\(baseURL)/rooms/\(roomId)"
