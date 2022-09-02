@@ -279,10 +279,21 @@ class DetailWaitViewController: BaseViewController {
         Task {
             do {
                 print("roomDto = \(roomDto)")
-                let data = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
-                if let dto = data {
-                    print(dto)
-                }
+                let _ = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+    
+    func requestDeleteRoom() {
+        Task {
+            do {
+                let _ = try await detailWaitService.deleteRoom(roomId: "\(roomIndex)")
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
@@ -354,7 +365,10 @@ class DetailWaitViewController: BaseViewController {
                         self?.presentEditRoomView()
                     }),
                     UIAction(title: "방 삭제", handler: { [weak self] _ in
-                        self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
+                        self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: { _ in
+                            self?.requestDeleteRoom()
+                            self?.navigationController?.popViewController(animated: true)
+                        })
                     })])
             return menu
         } else {
