@@ -275,6 +275,7 @@ class DetailEditViewController: BaseViewController {
     private func changeRoomDateRange() {
         NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.getTempStartDate(), "endDate": calendarView.getTempEndDate()])
         NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
+        NotificationCenter.default.post(name: .requestDateRangeNotification, object: nil, userInfo: ["startDate": "20\(calendarView.getTempStartDate())", "endDate": "20\(calendarView.getTempEndDate())"])
         dismiss(animated: true)
     }
 
@@ -283,6 +284,7 @@ class DetailEditViewController: BaseViewController {
             NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.getTempStartDate(), "endDate": calendarView.getTempEndDate()])
             NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
             NotificationCenter.default.post(name: .editMaxUserNotification, object: nil, userInfo: ["maxUser": memberSlider.value])
+            NotificationCenter.default.post(name: .requestRoomInfoNotification, object: nil, userInfo: ["startDate": "20\(calendarView.getTempStartDate())", "endDate": "20\(calendarView.getTempEndDate())", "maxUser": Int(memberSlider.value)])
             dismiss(animated: true)
         } else {
             makeAlert(title: "인원을 다시 설정해 주세요", message: "현재 인원보다 최대 인원을 \n더 적게 설정할 수 없어요.")

@@ -33,6 +33,7 @@ class DetailWaitViewController: BaseViewController {
     var isOwner = false {
         didSet {
             settingButton.menu = setExitButtonMenu()
+            isPastStartDate()
         }
     }
     var startDateText = "22.09.11" {
@@ -192,7 +193,6 @@ class DetailWaitViewController: BaseViewController {
         super.viewDidLoad()
         setupDelegation()
         setupNotificationCenter()
-        isPastStartDate()
         setStartButton()
     }
 
@@ -264,6 +264,24 @@ class DetailWaitViewController: BaseViewController {
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
                     isOwner = isAdmin
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+    
+    func requestChangeRoomInfo(roomDto: RoomDTO) {
+        Task {
+            do {
+                print("roomDto = \(roomDto)")
+                let data = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
+                if let dto = data {
+                    print(dto)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -380,6 +398,8 @@ class DetailWaitViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateRange(_:)), name: .dateRangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeStartButton), name: .changeStartButtonNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMaxUser), name: .editMaxUserNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(requestDateRange(_:)), name: .requestDateRangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(requestRoomInfo(_:)), name: .requestRoomInfoNotification, object: nil)
     }
 
     private func isPastStartDate() {
@@ -455,6 +475,19 @@ class DetailWaitViewController: BaseViewController {
     
     @objc private func changeStartButton() {
         setStartButton()
+    }
+    
+    @objc private func requestDateRange(_ notification: Notification) {
+        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
+        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
+        requestChangeRoomInfo(roomDto: RoomDTO(title: titleView.roomTitleLabel.text ?? "", capacity: maxUserCount, startDate: startDate, endDate: endDate))
+    }
+    
+    @objc private func requestRoomInfo(_ notification: Notification) {
+        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
+        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
+        guard let capacity = notification.userInfo?["maxUser"] as? Int else { return }
+        requestChangeRoomInfo(roomDto: RoomDTO(title: titleView.roomTitleLabel.text ?? "", capacity: capacity, startDate: startDate, endDate: endDate))
     }
 }
 
