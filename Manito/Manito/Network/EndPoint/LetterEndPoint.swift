@@ -48,20 +48,20 @@ enum LetterEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .dispatchLetter(let roomId, _):
-            return "\(baseURL)/api/rooms/\(roomId)/messages"
+            return "\(baseURL)/rooms/\(roomId)/messages"
         case .fetchSendLetter(let roomId):
-            return "\(baseURL)/api/v1/rooms/\(roomId)/messages-sent"
+            return "\(baseURL)/rooms/\(roomId)/messages-sent"
         case .fetchReceiveLetter(let roomId):
-            return "\(baseURL)/api/rooms/\(roomId)/messages"
+            return "\(baseURL)/rooms/\(roomId)/messages"
         case .patchReadMessage(let roomId, _):
-            return "\(baseURL)/api/rooms/\(roomId)/messages/status"
+            return "\(baseURL)/rooms/\(roomId)/messages/status"
         }
     }
     
     func createRequest(environment: APIEnvironment) -> NetworkRequest {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
-        headers["authorization"] = APIEnvironment.development.token
+        headers["authorization"] = "Bearer \(APIEnvironment.development.token)"
         return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
                               headers: headers,
                               reqBody: requestBody,

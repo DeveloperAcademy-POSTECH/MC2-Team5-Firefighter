@@ -18,9 +18,9 @@ final class LetterViewController: BaseViewController {
         var lists: [Letter] {
             switch self {
             case .received:
-                return receivedLetters
+                return []
             case .sent:
-                return sentLetters
+                return []
             }
         }
     }
@@ -82,6 +82,11 @@ final class LetterViewController: BaseViewController {
         setupGuideArea()
         renderGuideArea()
         hideGuideViewWhenTappedAround()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchSendLetter(roomId: "1")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -228,7 +233,7 @@ extension LetterViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setLetterData(with: letterState.lists[indexPath.item])
+//        cell.setLetterData(with: letterState.lists[indexPath.item])
         return cell
     }
     
@@ -255,13 +260,13 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var heights = [Size.cellTopSpacing, Size.cellBottomSpacing]
         
-        if let content = letterState.lists[indexPath.item].content {
-            heights += [calculateContentHeight(text: content)]
-        }
-        
-        if letterState.lists[indexPath.item].image != nil {
-            heights += [Size.imageHeight]
-        }
+//        if let content = letterState.lists[indexPath.item].content {
+//            heights += [calculateContentHeight(text: content)]
+//        }
+//
+//        if letterState.lists[indexPath.item].image != nil {
+//            heights += [Size.imageHeight]
+//        }
         
         return CGSize(width: Size.cellWidth, height: heights.reduce(0, +))
     }
