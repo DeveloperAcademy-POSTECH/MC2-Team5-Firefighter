@@ -16,7 +16,7 @@ class ChooseCharacterViewController: BaseViewController {
         static let collectionHorizontalSpacing: CGFloat = 29.0
         static let collectionVerticalSpacing: CGFloat = 37.0
         static let cellInterSpacing: CGFloat = 39.0
-        static let cellLineSpacing: CGFloat = 20.0
+        static let cellLineSpacing: CGFloat = 24.0
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - (collectionHorizontalSpacing * 2 + cellInterSpacing * 2)) / 3
         static let collectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
                                                   left: collectionHorizontalSpacing,
@@ -136,13 +136,14 @@ extension ChooseCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: CharacterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
         
+        cell.characterBackground = Character.allCases[indexPath.item].color
+        cell.characterImageView.image = Character.allCases[indexPath.item].image
+        cell.setImageBackgroundColor()
+        
         if indexPath.item == 0 {
             cell.isSelected = true
             collectionView.selectItem(at: indexPath, animated: false , scrollPosition: .init())
         }
-        
-        cell.backgroundColor = Character.allCases[indexPath.item].color
-        cell.characterImageView.image = Character.allCases[indexPath.item].image
         
         return cell
     }

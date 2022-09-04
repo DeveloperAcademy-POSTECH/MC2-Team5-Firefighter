@@ -11,9 +11,11 @@ import SnapKit
 
 final class CharacterCollectionViewCell: BaseCollectionViewCell {
     
+    var characterBackground: UIColor?
+    
     // MARK: - property
     
-    var characterImageView: UIImageView = {
+    lazy var characterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = ImageLiterals.imgMa
@@ -40,19 +42,19 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
     
     override func configUI() {
         makeBorderLayer(color: .white)
-        backgroundColor = .characterYellow
+//        backgroundColor = characterBackground?.withAlphaComponent(0.5)
         layer.cornerRadius = self.frame.size.width / 2
     }
     
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                backgroundColor = backgroundColor?.withAlphaComponent(0.5)
-                contentView.alpha = 0.5
-            } else {
-                backgroundColor = backgroundColor?.withAlphaComponent(1.0)
-                contentView.alpha = 1.0
-            }
+            backgroundColor = isSelected ? characterBackground : characterBackground?.withAlphaComponent(0.5)
+            contentView.alpha = isSelected ? 1.0 : 0.5
         }
+    }
+    
+    func setImageBackgroundColor() {
+        backgroundColor = characterBackground?.withAlphaComponent(0.5)
+        contentView.alpha = 0.5
     }
 }
