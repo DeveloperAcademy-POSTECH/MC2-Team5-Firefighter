@@ -34,7 +34,7 @@ final class LetterPhotoView: UIView {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "사진 추가"
+        label.text = TextLiteral.letterPhotoViewTitleLabel
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
@@ -92,11 +92,11 @@ final class LetterPhotoView: UIView {
     
     private func presentActionSheet() {
         let hasImage = importPhotosButton.imageView?.image != ImageLiterals.btnCamera
-        let actionTitles = hasImage ? ["사진 촬영", "사진 보관함에서 선택", "사진 지우기", "취소"] : ["사진 촬영", "사진 보관함에서 선택", "취소"]
+        let actionTitles = hasImage ? [TextLiteral.letterPhotoViewTakePhoto, TextLiteral.letterPhotoViewChoosePhoto, TextLiteral.letterPhotoViewDeletePhoto, TextLiteral.cancel] : [TextLiteral.letterPhotoViewTakePhoto, TextLiteral.letterPhotoViewChoosePhoto, TextLiteral.cancel]
         let actionStyle: [UIAlertAction.Style] = hasImage ? [.default, .default, .default, .cancel] : [.default, .default, .cancel]
         let actions = getAlertAction(with: hasImage)
         
-        viewController?.makeActionSheet(message: "마니또에게 보낼 사진을 선택해봐요.",
+        viewController?.makeActionSheet(message: TextLiteral.letterPhotoViewChoosePhotoToManitto,
                                        actionTitles: actionTitles,
                                        actionStyle: actionStyle,
                                        actions: actions)
@@ -146,7 +146,7 @@ final class LetterPhotoView: UIView {
             UIApplication.shared.open(settingURL)
         }
         if let appName = Bundle.main.infoDictionary!["CFBundleName"] as? String {
-            viewController?.makeRequestAlert(title: "설정",
+            viewController?.makeRequestAlert(title: TextLiteral.letterPhotoViewSetting,
                                             message: "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
                                             okAction: settingAction,
                                             completion: nil)
@@ -185,7 +185,7 @@ extension LetterPhotoView: PHPickerViewControllerDelegate {
                 }
                 
                 if let error = error {
-                    self.viewController?.makeAlert(title: "", message: "사진을 불러올 수 없습니다.")
+                    self.viewController?.makeAlert(title: "", message: TextLiteral.letterPhotoViewFail)
                     
                     Logger.debugDescription(error)
                 }

@@ -23,6 +23,15 @@ final class LetterViewController: BaseViewController {
                 return sentLetters
             }
         }
+        
+        var isHidden: Bool {
+            switch self {
+            case .received:
+                return false
+            case .sent:
+                return true
+            }
+        }
     }
     
     private enum Size {
@@ -63,12 +72,24 @@ final class LetterViewController: BaseViewController {
                                 withReuseIdentifier: LetterHeaderView.className)
         return collectionView
     }()
-    private let sendLetterView = SendLetterView()
+    private lazy var sendLetterView = SendLetterView()
     
     private var letterState: LetterState = .sent {
         didSet {
             reloadCollectionView(with: self.letterState)
         }
+    }
+    private var roomState: String
+    
+    // MARK: - init
+    
+    init(roomState: String) {
+        self.roomState = roomState
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - life cycle
@@ -93,14 +114,16 @@ final class LetterViewController: BaseViewController {
             $0.bottom.equalToSuperview()
         }
         
-        view.addSubview(sendLetterView)
-        sendLetterView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-        
         view.addSubview(guideButton)
         guideButton.snp.makeConstraints {
             $0.width.height.equalTo(44)
+        }
+        
+        if roomState != "POST" {
+            view.addSubview(sendLetterView)
+            sendLetterView.snp.makeConstraints {
+                $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            }
         }
     }
     
@@ -116,13 +139,13 @@ final class LetterViewController: BaseViewController {
         navigationItem.rightBarButtonItem = guideButton
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
-        title = "쪽지함"
+        title = TextLiteral.letterViewControllerTitle
     }
     
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icLetterInfo, for: .normal)
-        setupGuideText(title: "쪽지 쓰기는?", text: "쪽지 쓰기는?\n보낸 쪽지함에서 쓰기가 가능해요!\n받은 쪽지함은 확인만 할 수 있어요.")
+        setupGuideText(title: TextLiteral.letterViewControllerGuideTitle, text: TextLiteral.letterViewControllerGuideText)
     }
     
     override func renderGuideArea() {
@@ -207,7 +230,12 @@ extension LetterViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setLetterData(with: letterState.lists[indexPath.item])
+        cell.setLetterData(with: letterState.lists[indexPath.item],
+                           isHidden: letterState.isHidden)
+        cell.didTappedReport = { [weak self] in
+            self?.sendReportMail(userNickname: "호야",
+                                 content: self?.letterState.lists[indexPath.item].content ?? "글 내용 없음")
+        }
         return cell
     }
     
@@ -229,7 +257,7 @@ extension LetterViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegateFlowLayout
 extension LetterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var heights = [Size.cellTopSpacing, Size.cellBottomSpacing]
@@ -250,6 +278,7 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension LetterViewController: UICollectionViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         guideBoxImageView.isHidden = true
