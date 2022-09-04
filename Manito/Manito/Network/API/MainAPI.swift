@@ -16,7 +16,7 @@ struct MainAPI: MainProtocol {
         self.environment = environment
     }
 
-    func fetchCommonMission() async throws -> String? {
+    func fetchCommonMission() async throws -> DailyMission? {
         let request = MainEndPoint
             .fetchCommonMission
             .createRequest(environment: environment)
