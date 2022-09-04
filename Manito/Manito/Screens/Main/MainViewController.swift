@@ -79,7 +79,7 @@ class MainViewController: BaseViewController {
     // MARK: - life cycle
     
     override func viewDidAppear(_ animated: Bool) {
-        requestCommonMission()
+//        requestCommonMission()
         requestManittoList()
     }
     
@@ -199,6 +199,7 @@ class MainViewController: BaseViewController {
         Task {
             do {
                 let data = try await mainService.fetchManittoList()
+                
                 if let manittoList = data {
                     print(manittoList)
                 }
