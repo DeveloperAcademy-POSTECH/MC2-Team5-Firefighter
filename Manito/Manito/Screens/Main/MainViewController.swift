@@ -13,9 +13,7 @@ import SnapKit
 class MainViewController: BaseViewController {
     
     private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
-
-    // 임시 데이터
-    let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
+    private var rooms: [Room]?
 
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 22
@@ -201,7 +199,10 @@ class MainViewController: BaseViewController {
                 let data = try await mainService.fetchManittoList()
                 
                 if let manittoList = data {
-                    print(manittoList)
+                    rooms = manittoList.participatingRooms
+                    collectionViewFlowLayout.collectionView?.reloadData()
+                    
+                    print(rooms?[0])
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -281,7 +282,11 @@ class MainViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return roomData.count + 1
+        if let count = rooms?.count {
+            return count + 1
+        }
+        
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -295,7 +300,17 @@ extension MainViewController: UICollectionViewDataSource {
                 assert(false, "Wrong Cell")
             }
             
-            cell.roomLabel.text = roomData[indexPath.item - 1]
+            guard let roomData = rooms?[indexPath.item - 1] else { return cell }
+            
+            let participatingCount = roomData.participatingCount ?? 0
+            let capacity = roomData.capacity ?? 0
+            let title = roomData.title ?? ""
+            let startDate = roomData.startDate?.suffix(8) ?? ""
+            let endDate = roomData.endDate?.suffix(8) ?? ""
+            
+            cell.memberLabel.text = "\(participatingCount)/\(capacity)"
+            cell.roomLabel.text = "\(title)"
+            cell.dateLabel.text = "\(startDate) ~ \(endDate)"
             
             return cell
         }

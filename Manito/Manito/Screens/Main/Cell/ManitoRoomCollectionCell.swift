@@ -12,9 +12,6 @@ import SnapKit
 class ManitoRoomCollectionViewCell: UICollectionViewCell{
     static let identifier = "ManitoRoomCollectionViewCell"
     
-    let currentMember = 5
-    let goalMember = 10
-    
     // MARK: - property
     
     let imageView: UIImageView = {
@@ -25,7 +22,6 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     lazy var memberLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(currentMember)/\(goalMember)"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
@@ -33,17 +29,19 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     lazy var roomLabel: UILabel = {
         let label = UILabel()
-        label.text = "마니또"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 20)
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "22.06.01 ~ 22.06.06"
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -87,6 +85,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         roomLabel.snp.makeConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(24)
             $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(14)
         }
         
         addSubview(roomState)
