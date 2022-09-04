@@ -11,7 +11,7 @@ import SnapKit
 
 class ManitoRoomCollectionViewCell: UICollectionViewCell{
     static let identifier = "ManitoRoomCollectionViewCell"
-    
+    // 삭제필요
     let currentMember = 5
     let goalMember = 10
     
@@ -33,7 +33,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     lazy var roomLabel: UILabel = {
         let label = UILabel()
-        label.text = "마니또"
+        label.text = TextLiteral.manitoRoomCollectionViewCellRoomLabelTitle
         label.textColor = .white
         label.font = .font(.regular, ofSize: 20)
         return label

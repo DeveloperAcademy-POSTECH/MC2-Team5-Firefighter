@@ -110,7 +110,7 @@ class SettingDeveloperInfoViewController: BaseViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
-        title = "개발자 정보"
+        title = TextLiteral.settingDeveloperInfoTitle
     }
 }
 

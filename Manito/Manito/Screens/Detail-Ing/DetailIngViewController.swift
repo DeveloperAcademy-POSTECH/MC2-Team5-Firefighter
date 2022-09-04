@@ -40,7 +40,7 @@ class DetailIngViewController: BaseViewController {
     
     private let manitoOpenButton: UIButton = {
         let button = MainButton()
-        button.title = "마니또 공개"
+        button.title = TextLiteral.detailIngViewControllerManitoOpenButton
         button.hasShadow = true
         return button
     }()
@@ -96,7 +96,7 @@ class DetailIngViewController: BaseViewController {
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        setupGuideText(title: "개별 미션이란?", text: "개별 미션이란?\n나의 마니띠에게 전하는\n둘만의 미션을 확인할 수 있어요!")
+        setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
     }
 
     private func setupFont() {
