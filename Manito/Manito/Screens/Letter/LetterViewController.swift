@@ -23,6 +23,15 @@ final class LetterViewController: BaseViewController {
                 return sentLetters
             }
         }
+        
+        var isHidden: Bool {
+            switch self {
+            case .received:
+                return false
+            case .sent:
+                return true
+            }
+        }
     }
     
     private enum Size {
@@ -207,7 +216,12 @@ extension LetterViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setLetterData(with: letterState.lists[indexPath.item])
+        cell.setLetterData(with: letterState.lists[indexPath.item],
+                           isHidden: letterState.isHidden)
+        cell.didTappedReport = { [weak self] in
+            self?.sendReportMail(userNickname: "호야",
+                                 content: self?.letterState.lists[indexPath.item].content ?? "글 내용 없음")
+        }
         return cell
     }
     
@@ -229,7 +243,7 @@ extension LetterViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegateFlowLayout
 extension LetterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var heights = [Size.cellTopSpacing, Size.cellBottomSpacing]
@@ -250,6 +264,7 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension LetterViewController: UICollectionViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         guideBoxImageView.isHidden = true
