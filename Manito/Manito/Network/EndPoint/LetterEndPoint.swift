@@ -52,7 +52,7 @@ enum LetterEndPoint: EndPointable {
         case .fetchSendLetter(let roomId):
             return "\(baseURL)/rooms/\(roomId)/messages-sent"
         case .fetchReceiveLetter(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/messages"
+            return "\(baseURL)/rooms/\(roomId)/messages-received"
         case .patchReadMessage(let roomId, _):
             return "\(baseURL)/rooms/\(roomId)/messages/status"
         }

@@ -87,6 +87,7 @@ final class LetterViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchSendLetter(roomId: "1")
+        fetchReceviedLetter(roomId: "1")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -211,9 +212,25 @@ final class LetterViewController: BaseViewController {
     private func fetchSendLetter(roomId: String) {
         Task {
             do {
-                async let letterContent = try await letterSevice.fetchSendLetter(roomId: roomId)
+                let letterContent = try await letterSevice.fetchSendLetter(roomId: roomId)
                 
-                if let content = try await letterContent {
+                if let content = letterContent {
+                    dump(content)
+                }
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
+        }
+    }
+    
+    private func fetchReceviedLetter(roomId: String) {
+        Task {
+            do {
+                let letterContent = try await letterSevice.fetchReceiveLetter(roomId: roomId)
+                
+                if let content = letterContent {
                     dump(content)
                 }
             } catch NetworkError.serverError {

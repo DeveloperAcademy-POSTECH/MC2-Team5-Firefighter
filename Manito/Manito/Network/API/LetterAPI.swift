@@ -23,5 +23,11 @@ struct LetterAPI: LetterProtocol {
             .createRequest(environment: environment)
         return try await self.apiService.request(request)
     }
+    
+    func fetchReceiveLetter(roomId: String) async throws -> Letter? {
+        let request = LetterEndPoint
+            .fetchReceiveLetter(roomId: roomId)
+            .createRequest(environment: environment)
+        return try await self.apiService.request(request)
+    }
 }
-

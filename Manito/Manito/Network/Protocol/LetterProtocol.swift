@@ -9,4 +9,5 @@ import Foundation
 
 protocol LetterProtocol {
     func fetchSendLetter(roomId: String) async throws -> Letter?
+    func fetchReceiveLetter(roomId: String) async throws -> Letter?
 }
