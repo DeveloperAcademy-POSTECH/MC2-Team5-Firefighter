@@ -21,7 +21,7 @@ struct Room: Decodable {
     let historyWithManitto: [Letter]?
     let historyWithManitte: [Letter]?
     let inviteCode: String?
-    let mission: String?
+    let mission: Mission?
     let letters: [Letter]?
     let admin: Bool?
     let message: Int?
@@ -58,3 +58,9 @@ struct Room1: Codable {
     let id: Int?
     let title, startDate, endDate, state: String?
 }
+
+struct Mission: Codable {
+    let id: Int?
+    let content: String?
+}
+

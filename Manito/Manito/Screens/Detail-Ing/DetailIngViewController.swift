@@ -15,7 +15,7 @@ class DetailIngViewController: BaseViewController {
     lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService(),
                                                         environment: .development)
 
-    let roomIndex: Int = 2
+    let roomIndex: Int = 1
     var isDone = false
     var friendList: FriendList?
 
@@ -189,6 +189,12 @@ class DetailIngViewController: BaseViewController {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: "\(roomIndex)")
                 if let info = data {
                     dump(info)
+                    titleLabel.text = info.room?.title
+                    guard let startDate = info.room?.startDate,
+                          let endDate = info.room?.endDate,
+                          let content = info.mission?.content
+                    else { return }
+                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                 }
             } catch NetworkError.serverError {
                 print("server Error")
