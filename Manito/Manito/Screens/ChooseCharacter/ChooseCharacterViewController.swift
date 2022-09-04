@@ -24,6 +24,54 @@ class ChooseCharacterViewController: BaseViewController {
                                                   right: collectionHorizontalSpacing)
     }
     
+    private let charactersData: [[String: Any]] = [
+        [
+            "id": 0,
+            "image": ImageLiterals.imgCharacterPink,
+            "color": UIColor.characterYellow
+        ],
+        [
+            "id": 1,
+            "image": ImageLiterals.imgCharacterBrown,
+            "color": UIColor.characterRed
+        ],
+        [
+            "id": 2,
+            "image": ImageLiterals.imgCharacterBlue,
+            "color": UIColor.characterOrange
+        ],
+        [
+            "id": 3,
+            "image": ImageLiterals.imgCharacterRed,
+            "color": UIColor.characterBlue
+        ],
+        [
+            "id": 4,
+            "image": ImageLiterals.imgCharacterOrange,
+            "color": UIColor.characterLightGreen
+        ],
+        [
+            "id": 5,
+            "image": ImageLiterals.imgCharacterYellow,
+            "color": UIColor.characterPurple
+        ],
+        [
+            "id": 6,
+            "image": ImageLiterals.imgCharacterLightGreen,
+            "color": UIColor.characterGreen
+        ],
+        [
+            "id": 7,
+            "image": ImageLiterals.imgCharacterHeavyPink,
+            "color": UIColor.backgroundGrey
+        ],
+        [
+            "id": 8,
+            "image": ImageLiterals.imgCharacterPurple,
+            "color": UIColor.characterPink
+        ],
+    ]
+    
     // MARK: - Property
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -77,10 +125,6 @@ class ChooseCharacterViewController: BaseViewController {
         return button
     }()
     
-    // FIXME: - 더미 데이터
-    private let manittoIndex = 0
-    private let characters: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    
     override func render() {
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
@@ -133,7 +177,7 @@ class ChooseCharacterViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension ChooseCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return characters.count
+        return charactersData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -143,6 +187,9 @@ extension ChooseCharacterViewController: UICollectionViewDataSource {
             cell.isSelected = true
             collectionView.selectItem(at: indexPath, animated: false , scrollPosition: .init())
         }
+        
+        cell.backgroundColor = charactersData[indexPath.item]["color"] as? UIColor
+        cell.characterImageView.image = charactersData[indexPath.item]["image"] as? UIImage
         
         return cell
     }

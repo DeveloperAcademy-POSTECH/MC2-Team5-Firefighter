@@ -13,7 +13,7 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - property
     
-    private let characterImageView: UIImageView = {
+    var characterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = ImageLiterals.imgMa
