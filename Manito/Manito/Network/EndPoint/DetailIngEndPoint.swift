@@ -8,8 +8,8 @@
 import Foundation
 
 enum DetailIngEndPoint: EndPointable {
-    case getWithFriend(roomId: String)
-    case getStartingRoomInfo(roomId: String, state: String)
+    case requestWithFriend(roomId: String)
+    case requestStartingRoomInfo(roomId: String)
 
     var requestTimeOut: Float {
         return 20
@@ -17,28 +17,36 @@ enum DetailIngEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .getWithFriend:
+        case .requestWithFriend:
             return .get
-        case .getStartingRoomInfo:
+        case .requestStartingRoomInfo:
             return .get
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .getWithFriend:
+        case .requestWithFriend:
             return nil
-        case .getStartingRoomInfo:
+        case .requestStartingRoomInfo:
             return nil
         }
     }
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .getWithFriend(let roomId):
-            return "\(baseURL)/api/rooms/\(roomId))/participants"
-        case .getStartingRoomInfo(let roomId, let state):
-            return "\(baseURL)/api/rooms/\(roomId)?state=\(state)"
+        case .requestWithFriend(let roomId):
+            return "\(baseURL)/rooms/\(roomId))/participants"
+        case .requestStartingRoomInfo(let roomId):
+            return "\(baseURL)/rooms/\(roomId)"
         }
+    }
+    
+    func createRequest(environment: APIEnvironment) -> NetworkRequest {
+        return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+                              reqBody: requestBody,
+                              reqTimeout: requestTimeOut,
+                              httpMethod: httpMethod
+        )
     }
 }
