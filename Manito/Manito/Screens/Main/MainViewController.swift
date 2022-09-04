@@ -84,11 +84,6 @@ class MainViewController: BaseViewController {
 
     // MARK: - life cycle
     
-    override func viewDidAppear(_ animated: Bool) {
-        requestCommonMission()
-        requestManittoList()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGifImage()
@@ -98,7 +93,8 @@ class MainViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionViewFlowLayout.collectionView?.reloadData()
+        requestCommonMission()
+        requestManittoList()
     }
 
     override func render() {
@@ -213,7 +209,7 @@ class MainViewController: BaseViewController {
                 
                 if let manittoList = data {
                     rooms = manittoList.participatingRooms
-                    collectionViewFlowLayout.collectionView?.reloadData()
+                    listCollectionView.reloadData()
                 }
             } catch NetworkError.serverError {
                 print("serverError")
