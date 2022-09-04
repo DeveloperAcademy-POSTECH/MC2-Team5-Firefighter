@@ -103,7 +103,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         
         addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
-            $0.top.equalTo(roomState.snp.bottom).offset(7)
+            $0.bottom.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
         }
     }
