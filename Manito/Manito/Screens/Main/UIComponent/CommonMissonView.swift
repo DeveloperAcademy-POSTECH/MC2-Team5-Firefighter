@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 
 final class CommonMissonView: UIView {
-    
-    let missonName = TextLiteral.commonMissionView
+    // 미손 수정필요
+    let missonName = "별별 인사하기"
     
     // MARK: - property
     

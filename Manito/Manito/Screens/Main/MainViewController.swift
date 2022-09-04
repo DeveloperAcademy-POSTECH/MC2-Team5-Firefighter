@@ -33,11 +33,11 @@ class MainViewController: BaseViewController {
         var roomStatus: String {
             switch self {
             case .waiting:
-                return TextLiteral.mainViewControllerRoomStatusStarting
+                return TextLiteral.waiting
             case .starting:
-                return TextLiteral.mainViewControllerRoomStatusWaiting
+                return TextLiteral.doing
             case .end:
-                return TextLiteral.mainViewControllerRoomStatusEnd
+                return TextLiteral.done
             }
         }
     }
@@ -55,7 +55,7 @@ class MainViewController: BaseViewController {
     private let commonMissionView = CommonMissonView()
     private let menuTitle: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.mainViewcontrollerMenuTitle
+        label.text = TextLiteral.mainViewControllerMenuTitle
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
@@ -159,7 +159,7 @@ class MainViewController: BaseViewController {
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        setupGuideText(title: "공통 미션이란?", text: "공통 미션이란?\n매일 매일 업데이트되는 미션!\n두근두근 미션을 수행해보세요!")
+        setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
     }
 
     override func setupNavigationBar() {
@@ -183,16 +183,16 @@ class MainViewController: BaseViewController {
     }
 
     func newRoom() {
-        let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+        let alert = UIAlertController(title: TextLiteral.mainViewControllerNewRoomAlert, message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
-        let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: { [weak self] _ in
+        let createRoom = UIAlertAction(title: TextLiteral.createRoom, style: .default, handler: { [weak self] _ in
             let createVC = CreateRoomViewController()
             createVC.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(createVC,animated: true)
             }
         })
-        let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: { [weak self] _ in
+        let enterRoom = UIAlertAction(title: TextLiteral.enterRoom, style: .default, handler: { [weak self] _ in
             let viewController = ParticipateRoomViewController()
             let navigationController = UINavigationController(rootViewController: viewController)
             
@@ -200,7 +200,7 @@ class MainViewController: BaseViewController {
             
             self?.present(navigationController, animated: true, completion: nil)
         })
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: TextLiteral.cancel, style: .cancel, handler: nil)
 
         alert.addAction(createRoom)
         alert.addAction(enterRoom)

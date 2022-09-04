@@ -39,7 +39,7 @@ class DetailEditViewController: BaseViewController {
         let buttonAction = UIAction { [weak self] _ in
             self?.dismiss(animated: true)
         }
-        button.setTitle("취소", for: .normal)
+        button.setTitle(TextLiteral.cancel, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         button.addAction(buttonAction, for: .touchUpInside)
@@ -56,7 +56,7 @@ class DetailEditViewController: BaseViewController {
         let buttonAction = UIAction { [weak self] _ in
             self?.didTapChangeButton()
         }
-        button.setTitle("변경", for: .normal)
+        button.setTitle(TextLiteral.change, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         button.addAction(buttonAction, for: .touchUpInside)
@@ -64,13 +64,13 @@ class DetailEditViewController: BaseViewController {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "방 정보 수정"
+        label.text = TextLiteral.modifiedRoomInfo
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
     private let startSettingLabel: UILabel = {
         let label = UILabel()
-        label.text = "진행기간 설정"
+        label.text = TextLiteral.detailEditViewControllerStartSetting
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
@@ -78,28 +78,28 @@ class DetailEditViewController: BaseViewController {
     private lazy var calendarView = CalendarView()
     private let tipLabel: UILabel = {
         let label = UILabel()
-        label.text = "최대 7일까지 설정할 수 있어요 !"
+        label.text = TextLiteral.maxMessage
         label.textColor = .grey004
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
     private lazy var setMemberLabel: UILabel = {
         let label = UILabel()
-        label.text = "인원 설정"
+        label.text = TextLiteral.detailEditViewControllerSetMember
         label.font = .font(.regular, ofSize: 18)
         label.textColor = .white
         return label
     }()
     private lazy var minMemberLabel: UILabel = {
         let label = UILabel()
-        label.text = "5인"
+        label.text = TextLiteral.minMember
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
     private lazy var maxMemberLabel: UILabel = {
         let label = UILabel()
-        label.text = "15인"
+        label.text = TextLiteral.maxMember
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
@@ -118,7 +118,7 @@ class DetailEditViewController: BaseViewController {
     }()
     private lazy var memberCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(sliderValue)인"
+        label.text = "\(sliderValue)" + TextLiteral.per
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
         return label
@@ -231,7 +231,7 @@ class DetailEditViewController: BaseViewController {
     @objc
     private func changeMemberCount(sender: UISlider) {
         sliderValue = Int(sender.value)
-        memberCountLabel.text = String(Int(sender.value)) + "인"
+        memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
         memberCountLabel.font = .font(.regular, ofSize: 24)
         memberCountLabel.textColor = .white
     }
@@ -247,7 +247,7 @@ class DetailEditViewController: BaseViewController {
     }
 
     private func showDiscardChangAlert() {
-        let actionTitles = ["변경 사항 폐기", "취소"]
+        let actionTitles = [TextLiteral.destructive, TextLiteral.cancel]
         let actionStyle: [UIAlertAction.Style] = [.destructive, .cancel]
         let actions: [((UIAlertAction) -> Void)?] = [{ [weak self] _ in
             self?.dismiss(animated: true)
@@ -285,7 +285,7 @@ class DetailEditViewController: BaseViewController {
             NotificationCenter.default.post(name: .editMaxUserNotification, object: nil, userInfo: ["maxUser": memberSlider.value])
             dismiss(animated: true)
         } else {
-            makeAlert(title: "인원을 다시 설정해 주세요", message: "현재 인원보다 최대 인원을 \n더 적게 설정할 수 없어요.")
+            makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle, message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
         }
     }
 }

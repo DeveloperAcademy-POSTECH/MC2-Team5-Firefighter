@@ -28,7 +28,7 @@ class CreateRoomViewController: BaseViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "방 생성하기"
+        label.text = TextLiteral.createRoom
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
@@ -41,7 +41,7 @@ class CreateRoomViewController: BaseViewController {
     }()
     lazy var nextButton: MainButton = {
         let button = MainButton()
-        button.title = "다음"
+        button.title = TextLiteral.next
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         button.isDisabled = true
         return button
@@ -50,7 +50,7 @@ class CreateRoomViewController: BaseViewController {
         let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
-        button.setTitle(" 이전", for: .normal)
+        button.setTitle(" " + TextLiteral.previous, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
         button.isHidden = true
@@ -173,6 +173,7 @@ class CreateRoomViewController: BaseViewController {
             changedInputView()
         case .inputDate:
             notiIndex = .checkRoom
+            checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
             changedInputView()
         case .checkRoom:
             DispatchQueue.main.async {

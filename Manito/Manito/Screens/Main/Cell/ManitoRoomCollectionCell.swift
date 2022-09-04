@@ -11,7 +11,7 @@ import SnapKit
 
 class ManitoRoomCollectionViewCell: UICollectionViewCell{
     static let identifier = "ManitoRoomCollectionViewCell"
-    
+    // 삭제필요
     let currentMember = 5
     let goalMember = 10
     
@@ -41,7 +41,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.manitoRoomCollectionViewCellDateLabelTitle
+        label.text = "22.06.01 ~ 22.06.06"
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
         return label

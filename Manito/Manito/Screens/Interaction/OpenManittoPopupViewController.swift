@@ -23,10 +23,7 @@ final class OpenManittoPopupViewController: BaseViewController {
     }()
     private let openMentLabel: UILabel = {
         let label = UILabel()
-        label.text = """
-        함께 했던 추억이 열렸습니다.
-        마니또 방에서 확인해보세요!
-        """
+        label.text = TextLiteral.openManittoPopupViewControllerOpenMentLabel
         label.numberOfLines = 2
         label.font = .font(.regular, ofSize: 18)
         label.addLabelSpacing()
@@ -45,7 +42,7 @@ final class OpenManittoPopupViewController: BaseViewController {
                 parentViewController.popToRootViewController(animated: true)
             })
         }
-        button.title = "확인"
+        button.title = TextLiteral.confirm
         button.addAction(action, for: .touchUpInside)
         return button
     }()

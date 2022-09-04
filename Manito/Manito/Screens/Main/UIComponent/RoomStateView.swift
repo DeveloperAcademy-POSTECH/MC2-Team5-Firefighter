@@ -11,7 +11,7 @@ import SnapKit
 
 final class RoomStateView: UIView {
     
-    let roomState = TextLiteral.roomStateViewTitle
+    let roomState = TextLiteral.doing
     
     // MARK: - property
     
