@@ -24,7 +24,7 @@ class CheckRoomViewController: BaseViewController {
     
     private let questionLabel: UILabel = {
         let label = UILabel()
-        label.text = "이 방으로 입장할까요?"
+        label.text = TextLiteral.checkRoomViewControllerQuestionLabel
         label.font = .font(.regular, ofSize: 18)
         label.makeShadow(color: .black, opacity: 0.25, offset: CGSize(width: 0, height: 3), radius: 0)
         return label
@@ -32,7 +32,7 @@ class CheckRoomViewController: BaseViewController {
     
     private lazy var noButton: UIButton = {
         let button = UIButton()
-        button.setTitle("NO", for: .normal)
+        button.setTitle(TextLiteral.checkRoomViewControllerNoButtonLabel, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 35)
         button.backgroundColor = .yellow
@@ -44,7 +44,7 @@ class CheckRoomViewController: BaseViewController {
     
     private lazy var yesButton: UIButton = {
         let button = UIButton()
-        button.setTitle("YES", for: .normal)
+        button.setTitle(TextLiteral.checkRoomViewControllerYesBUttonLabel, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 35)
         button.backgroundColor = .yellow

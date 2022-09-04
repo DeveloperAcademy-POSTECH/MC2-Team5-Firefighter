@@ -26,7 +26,7 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
     
     private var menuLabel: UILabel = {
         let label = UILabel()
-        label.text = "새로운 마니또 시작"
+        label.text = TextLiteral.createRoomCollectionViewCellMenuLabel
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
         return label

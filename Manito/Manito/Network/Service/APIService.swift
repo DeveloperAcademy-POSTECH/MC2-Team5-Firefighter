@@ -20,16 +20,16 @@ final class APIService {
         print("encodedUrl = \(encodedUrl)")
 
         let (data, response) = try await URLSession.shared.data(for: request.buildURLRequest(with: url))
-        guard let httpResponse = response as? HTTPURLResponse,
-            (200..<500) ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else { throw NetworkError.serverError }
+        switch httpResponse.statusCode {
+        case (200..<300):
+            let decoder = JSONDecoder()
+            let baseModelData: T? = try decoder.decode(T.self, from: data)
+            return baseModelData
+        case (300..<500):
+            throw NetworkError.clientError(message: "\(httpResponse.statusCode)")
+        default:
             throw NetworkError.serverError
         }
-        print("statusCode = \(httpResponse.statusCode)")
-        let decoder = JSONDecoder()
-        let baseModelData: T? = try decoder.decode(T.self, from: data)
-        if baseModelData == nil {
-            throw NetworkError.clientError(message: "client Error")
-        }
-        return baseModelData
     }
 }
