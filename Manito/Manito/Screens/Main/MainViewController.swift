@@ -90,6 +90,8 @@ class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGifImage()
+        setupGuideArea()
+        renderGuideArea()
     }
 
     override func render() {
@@ -145,6 +147,19 @@ class MainViewController: BaseViewController {
             $0.top.equalTo(menuTitle.snp.bottom).offset(17)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+        
+        view.addSubview(guideButton)
+        guideButton.snp.makeConstraints {
+            $0.top.equalTo(commonMissionImageView.snp.top).offset(27)
+            $0.trailing.equalTo(commonMissionView.snp.trailing)
+            $0.width.height.equalTo(44)
+        }
+    }
+    
+    override func setupGuideArea() {
+        super.setupGuideArea()
+        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
+        setupGuideText(title: "공통 미션이란?", text: "공통 미션이란?\n매일 매일 업데이트되는 미션!\n두근두근 미션을 수행해보세요!")
     }
 
     override func setupNavigationBar() {
@@ -167,17 +182,24 @@ class MainViewController: BaseViewController {
         }
     }
 
-    @objc func didTapSettingButton() {
-        navigationController?.pushViewController(SettingViewController(), animated: true)
-    }
-
     func newRoom() {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
-        let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: { _ in
-            self.navigationController?.pushViewController(CreateRoomViewController(), animated: true)
+        let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: { [weak self] _ in
+            let createVC = CreateRoomViewController()
+            createVC.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(createVC,animated: true)
+            }
         })
-        let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: { _ in self.presentParticipateRoomViewController() })
+        let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: { [weak self] _ in
+            let viewController = ParticipateRoomViewController()
+            let navigationController = UINavigationController(rootViewController: viewController)
+            
+            navigationController.modalPresentationStyle = .overFullScreen
+            
+            self?.present(navigationController, animated: true, completion: nil)
+        })
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
         alert.addAction(createRoom)
@@ -209,6 +231,20 @@ class MainViewController: BaseViewController {
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
             viewController.isDone = true
             self.navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func didTapSettingButton() {
+        navigationController?.pushViewController(SettingViewController(), animated: true)
+    }
+    
+    @objc
+    override func endEditingView() {
+        if !guideButton.isTouchInside {
+            guideBoxImageView.isHidden = true
         }
     }
 }

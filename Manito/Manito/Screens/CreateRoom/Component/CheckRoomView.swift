@@ -10,6 +10,21 @@ import UIKit
 import SnapKit
 
 class CheckRoomView: UIView {
+    var dateRange = "" {
+        willSet {
+            dateLabel.text = newValue
+        }
+    }
+    var name: String = "" {
+        willSet {
+            nameLabel.text = newValue
+        }
+    }
+    var person: Int = 0 {
+        willSet {
+            personLabel.text = "\(newValue.description)인"
+        }
+    }
 
     // MARK: - Property
     

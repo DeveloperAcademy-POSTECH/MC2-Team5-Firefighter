@@ -17,12 +17,14 @@ final class APIService {
             let url = URL(string: encodedUrl) else {
             throw NetworkError.encodingError
         }
+        print("encodedUrl = \(encodedUrl)")
 
         let (data, response) = try await URLSession.shared.data(for: request.buildURLRequest(with: url))
         guard let httpResponse = response as? HTTPURLResponse,
             (200..<500) ~= httpResponse.statusCode else {
             throw NetworkError.serverError
         }
+        print("statusCode = \(httpResponse.statusCode)")
         let decoder = JSONDecoder()
         let baseModelData: T? = try decoder.decode(T.self, from: data)
         if baseModelData == nil {

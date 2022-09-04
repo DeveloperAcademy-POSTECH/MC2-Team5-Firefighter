@@ -10,9 +10,14 @@ import UIKit
 import SnapKit
 
 class DetailWaitViewController: BaseViewController {
+    let detailWaitService: DetailWaitProtocol = DetailWaitAPI(apiService: APIService(), environment: .development)
     let userArr = ["호야", "리비", "듀나", "코비", "디너", "케미"]
     var canStartClosure: ((Bool) -> ())?
-    var maxUserCount = 15
+    var maxUserCount: Int = 10 {
+        didSet {
+            comeInLabel.text = "\(userCount)/\(maxUserCount)"
+        }
+    }
     lazy var userCount = userArr.count
     let isOwner = true
     var startDateText = "22.08.11" {
@@ -135,11 +140,11 @@ class DetailWaitViewController: BaseViewController {
             if value {
                 button.title = ButtonText.start.rawValue
                 button.isDisabled = false
-                let action = UIAction { _ in
+                let action = UIAction { [weak self] _ in
                     let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                     guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                     viewController.modalPresentationStyle = .fullScreen
-                    self.present(viewController, animated: true)
+                    self?.present(viewController, animated: true)
                 }
                 button.addAction(action, for: .touchUpInside)
             } else {
@@ -154,6 +159,12 @@ class DetailWaitViewController: BaseViewController {
 
     deinit {
         print("deInit")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("viewDidApear 실행")
+        requestFriendList()
+        requestWaitRoomInfo()
     }
 
     override func viewDidLoad() {
@@ -222,6 +233,43 @@ class DetailWaitViewController: BaseViewController {
         view.backgroundColor = .backgroundGrey
         setupSettingButton()
     }
+    
+    // MARK: - API
+    
+    func requestFriendList() {
+        Task {
+            do {
+                let data = try await detailWaitService.getWithFriend(roomId: "1")
+                if let friendList = data {
+                    print(friendList)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+    
+    func requestWaitRoomInfo() {
+        Task {
+            do {
+                let data = try await
+                detailWaitService.getWaitingRoomInfo(roomId: "1")
+                if let roomInfo = data {
+                    print(roomInfo)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
 
     // MARK: - func
 
@@ -260,11 +308,12 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
-        let modalViewController = DetailEditViewController()
-        modalViewController.editMode = isDateEdit ? .dateEditMode : .infoEditMode
-        modalViewController.startDateText = startString
-        modalViewController.endDateText = endString
-        present(modalViewController, animated: true, completion: nil)
+        let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode)
+        viewController.currentUserCount = userCount
+        viewController.sliderValue = maxUserCount
+        viewController.startDateText = startString
+        viewController.endDateText = endString
+        present(viewController, animated: true, completion: nil)
     }
 
     // MARK: - private func
@@ -326,6 +375,7 @@ class DetailWaitViewController: BaseViewController {
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateRange(_:)), name: .dateRangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeStartButton), name: .changeStartButtonNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMaxUser), name: .editMaxUserNotification, object: nil)
     }
 
     private func isPastStartDate() {
@@ -341,9 +391,9 @@ class DetailWaitViewController: BaseViewController {
                     let endDate = (Date() + fiveDaysInterval).dateToString
                     self?.presentModal(from: startDate, to: endDate, isDateEdit: true)
                 }
-                makeAlert(title: "날짜를 재설정 해주세요", message: "마니또 시작일이 지났습니다. \n 진행기간을 재설정 해주세요", okAction: action)
+                makeAlert(title: "마니또 시작일이 지났어요", message: "진행기간을 재설정 해주세요", okAction: action)
             } else {
-                makeAlert(title: "시작일이 지났어요", message: "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요")
+                makeAlert(title: "마니또 시작일이 지났어요", message: "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요.")
             }
         }
     }
@@ -361,15 +411,21 @@ class DetailWaitViewController: BaseViewController {
 
     @objc
     private func didReceiveDateRange(_ notification: Notification) {
-        guard let noti = notification.userInfo else { return }
-
-        guard let startDate = noti["startDate"] as? String else { return }
-        guard let endDate = noti["endDate"] as? String else { return }
+        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
+        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
 
         self.startDateText = startDate
         self.endDateText = endDate
     }
 
+    @objc
+    private func didReceiveMaxUser(_ notification: Notification) {
+        guard let maxUser = notification.userInfo?["maxUser"] as? Float else { return }
+
+        let intMaxUser = Int(maxUser)
+        maxUserCount = intMaxUser
+    }
+    
     @objc
     private func presentDetailEditViewController() {
         self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)

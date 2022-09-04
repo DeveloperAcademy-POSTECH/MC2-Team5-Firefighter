@@ -11,14 +11,14 @@ import FSCalendar
 import SnapKit
 
 class CalendarView: UIView {
-    var changeButtonState: ((Bool) -> ())?
     private var selectStartDate = Date()
-    let oneDayInterval: TimeInterval = 86400
-    let sevenDaysInterval: TimeInterval = 604800
+    private let oneDayInterval: TimeInterval = 86400
+    private let sevenDaysInterval: TimeInterval = 604800
+    var changeButtonState: ((Bool) -> ())?
     var startDateText = ""
     var endDateText = ""
-    var tempStartDateText = ""
-    var tempEndDateText = ""
+    private var tempStartDateText = ""
+    private var tempEndDateText = ""
     var isFirstTap = false
     
     private enum CalendarMoveType {
@@ -39,19 +39,19 @@ class CalendarView: UIView {
 
     private lazy var previousButton: UIButton = {
         let button = UIButton()
-        let action = UIAction { _ in
-            self.changeMonth(with: CalendarMoveType.previous)
+        let action = UIAction { [weak self] _ in
+            self?.changeMonth(with: CalendarMoveType.previous)
         }
-        button.setTitle("<", for: .normal)
+        button.setImage(ImageLiterals.icBack, for: .normal)
         button.addAction(action, for: .touchUpInside)
         return button
     }()
     private lazy var nextButton: UIButton = {
         let button = UIButton()
-        let action = UIAction { _ in
-            self.changeMonth(with: CalendarMoveType.next)
+        let action = UIAction { [weak self] _ in
+            self?.changeMonth(with: CalendarMoveType.next)
         }
-        button.setTitle(">", for: .normal)
+        button.setImage(ImageLiterals.icRight, for: .normal)
         button.addAction(action, for: .touchUpInside)
         return button
     }()
@@ -96,15 +96,20 @@ class CalendarView: UIView {
 
         self.addSubview(previousButton)
         previousButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
-            $0.leading.equalToSuperview().inset(88)
+            $0.top.equalToSuperview().inset(5)
+            $0.leading.equalToSuperview().inset(70)
         }
 
         self.addSubview(nextButton)
         nextButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
-            $0.trailing.equalToSuperview().inset(90)
+            $0.top.equalToSuperview().inset(5)
+            $0.trailing.equalToSuperview().inset(72)
         }
+    }
+    
+    func setupButtonState() {
+        let hasDate = tempStartDateText != "" && tempEndDateText != ""
+        changeButtonState?(hasDate)
     }
 
     // MARK: - func
@@ -164,26 +169,36 @@ class CalendarView: UIView {
 
         return Int(dateRangeCount) + 1
     }
+    
+    func getTempStartDate() -> String {
+        return tempStartDateText
+    }
+    
+    func getTempEndDate() -> String {
+        return tempEndDateText
+    }
 }
 
 extension CalendarView: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         isFirstTap = true
-        changeButtonState?(false)
+        let isCreatedRoomOnlySelectedStartDate = calendar.selectedDates.count == 1
         let isSelectedDateRange = calendar.selectedDates.count == 2
         let isReclickedStartDate = calendar.selectedDates.count > 2
-        if isSelectedDateRange {
-            changeButtonState?(true)
+        if isCreatedRoomOnlySelectedStartDate {
+            selectStartDate = date
+            calendar.select(selectStartDate)
+            calendar.reloadData()
+        } else if isSelectedDateRange {
             tempEndDateText = date.dateToString
             if countDateRange() > 7 {
                 calendar.deselect(date)
-                viewController?.makeAlert(title: "설정 기간 제한", message: "최대 7일까지 선택가능해요 !")
+                viewController?.makeAlert(title: "최대 선택 기간을 넘었어요", message: "최대 7일까지 선택가능해요")
             } else {
                 setDateRange()
                 calendar.reloadData()
             }
         } else if isReclickedStartDate {
-            changeButtonState?(false)
             tempStartDateText = date.dateToString
             tempEndDateText = ""
             (calendar.selectedDates).forEach {
@@ -193,23 +208,25 @@ extension CalendarView: FSCalendarDelegate {
             calendar.select(selectStartDate)
             calendar.reloadData()
         }
+        
+        setupButtonState()
     }
 
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         tempEndDateText = ""
         isFirstTap = true
-        changeButtonState?(false)
         (calendar.selectedDates).forEach {
             calendar.deselect($0)
         }
         selectStartDate = date
         calendar.select(date)
         calendar.reloadData()
+        setupButtonState()
     }
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         if date < Date() - oneDayInterval {
-            viewController?.makeAlert(title: "과거로 가시게요..?", message: "오늘보다 이전 날짜는 \n 선택하실 수 없어요 !")
+            viewController?.makeAlert(title: "지난 날을 선택하셨어요", message: "오늘보다 이전 날짜는 \n 선택하실 수 없어요")
             return false
         } else {
             return true
@@ -222,7 +239,7 @@ extension CalendarView: FSCalendarDelegate {
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey004.withAlphaComponent(0.4)
-        } else if isAWeekBeforeAfter || isDoneSelectedDate {
+        } else if !isFirstTap || (isAWeekBeforeAfter || isDoneSelectedDate) {
             return .white
         } else {
             return .grey004.withAlphaComponent(0.4)

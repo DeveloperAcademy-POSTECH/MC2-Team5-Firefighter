@@ -50,19 +50,6 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        super.preferredLayoutAttributesFitting(layoutAttributes)
-        layoutIfNeeded()
-        
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var frame = layoutAttributes.frame
-        
-        frame.size.height = ceil(size.height)
-        layoutAttributes.frame = frame
-        
-        return layoutAttributes
-    }
-    
     override func prepareForReuse() {
         contentLabel.text = nil
         photoImageView.image = nil
