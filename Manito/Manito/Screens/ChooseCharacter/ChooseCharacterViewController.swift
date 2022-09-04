@@ -24,54 +24,6 @@ class ChooseCharacterViewController: BaseViewController {
                                                   right: collectionHorizontalSpacing)
     }
     
-    private let charactersData: [[String: Any]] = [
-        [
-            "colorIdx": 0,
-            "image": ImageLiterals.imgCharacterPink,
-            "color": UIColor.characterYellow
-        ],
-        [
-            "colorIdx": 1,
-            "image": ImageLiterals.imgCharacterBrown,
-            "color": UIColor.characterRed
-        ],
-        [
-            "colorIdx": 2,
-            "image": ImageLiterals.imgCharacterBlue,
-            "color": UIColor.characterOrange
-        ],
-        [
-            "colorIdx": 3,
-            "image": ImageLiterals.imgCharacterRed,
-            "color": UIColor.characterBlue
-        ],
-        [
-            "colorIdx": 4,
-            "image": ImageLiterals.imgCharacterOrange,
-            "color": UIColor.characterLightGreen
-        ],
-        [
-            "colorIdx": 5,
-            "image": ImageLiterals.imgCharacterYellow,
-            "color": UIColor.characterPurple
-        ],
-        [
-            "colorIdx": 6,
-            "image": ImageLiterals.imgCharacterLightGreen,
-            "color": UIColor.characterGreen
-        ],
-        [
-            "colorIdx": 7,
-            "image": ImageLiterals.imgCharacterHeavyPink,
-            "color": UIColor.backgroundGrey
-        ],
-        [
-            "colorIdx": 8,
-            "image": ImageLiterals.imgCharacterPurple,
-            "color": UIColor.characterPink
-        ],
-    ]
-    
     // MARK: - Property
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -178,7 +130,7 @@ class ChooseCharacterViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension ChooseCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return charactersData.count
+        return Character.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -189,8 +141,8 @@ extension ChooseCharacterViewController: UICollectionViewDataSource {
             collectionView.selectItem(at: indexPath, animated: false , scrollPosition: .init())
         }
         
-        cell.backgroundColor = charactersData[indexPath.item]["color"] as? UIColor
-        cell.characterImageView.image = charactersData[indexPath.item]["image"] as? UIImage
+        cell.backgroundColor = Character.allCases[indexPath.item].color
+        cell.characterImageView.image = Character.allCases[indexPath.item].image
         
         return cell
     }
@@ -200,6 +152,6 @@ extension ChooseCharacterViewController: UICollectionViewDataSource {
 extension ChooseCharacterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 선택한 마니또 이미지 정보 출력
-        print(charactersData[indexPath.item])
+        print(indexPath.item)
     }
 }
