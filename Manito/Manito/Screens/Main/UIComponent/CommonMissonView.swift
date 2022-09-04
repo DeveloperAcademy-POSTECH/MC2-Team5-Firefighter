@@ -11,8 +11,6 @@ import SnapKit
 
 final class CommonMissonView: UIView {
     
-    let missonName = "별별인사하기"
-    
     // MARK: - property
     
     private let title: UILabel = {
@@ -23,9 +21,8 @@ final class CommonMissonView: UIView {
         return label
     }()
     
-    private lazy var mission: UILabel = {
+    lazy var mission: UILabel = {
         let label = UILabel()
-        label.text = missonName
         label.numberOfLines = 2
         label.textAlignment = .center
         label.textColor = .white

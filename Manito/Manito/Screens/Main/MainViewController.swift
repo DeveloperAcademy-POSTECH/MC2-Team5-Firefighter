@@ -77,7 +77,7 @@ class MainViewController: BaseViewController {
     // MARK: - life cycle
     
     override func viewDidAppear(_ animated: Bool) {
-//        requestCommonMission()
+        requestCommonMission()
         requestManittoList()
     }
     
@@ -182,8 +182,8 @@ class MainViewController: BaseViewController {
         Task {
             do {
                 let data = try await mainService.fetchCommonMission()
-                if let commonMission = data {
-                    print(commonMission)
+                if let commonMission = data?.mission {
+                    commonMissionView.mission.text = commonMission
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -201,8 +201,6 @@ class MainViewController: BaseViewController {
                 if let manittoList = data {
                     rooms = manittoList.participatingRooms
                     collectionViewFlowLayout.collectionView?.reloadData()
-                    
-                    print(rooms?[0])
                 }
             } catch NetworkError.serverError {
                 print("serverError")
