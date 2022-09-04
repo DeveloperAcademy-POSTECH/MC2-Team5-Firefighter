@@ -45,6 +45,12 @@ class ParticipateRoomViewController: BaseViewController {
     }
     
     override func render() {
+        view.addSubview(closeButton)
+        closeButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
+            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+        }
+        
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
@@ -73,12 +79,8 @@ class ParticipateRoomViewController: BaseViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-
-        let closeButtonView = makeBarButtonItem(with: closeButton)
-
+        navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.leftBarButtonItem = nil
-        navigationItem.rightBarButtonItem = closeButtonView
     }
     
     // MARK: - Selectors
