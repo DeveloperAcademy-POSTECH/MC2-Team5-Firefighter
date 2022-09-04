@@ -17,7 +17,7 @@ final class LetterTextView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "쪽지 작성"
+        label.text = TextLiteral.letterTextViewTitleLabel
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
