@@ -248,16 +248,15 @@ class DetailWaitViewController: BaseViewController {
     func requestWaitRoomInfo() {
         Task {
             do {
-                let data = try await
-                detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
+                let data = try await detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
-                    guard let title = roomInfo.room?.title else { return }
-                    guard let code = roomInfo.invitation?.code else { return }
-                    guard let startDate = roomInfo.room?.startDate else { return }
-                    guard let endDate = roomInfo.room?.endDate else { return }
-                    guard let state = roomInfo.room?.state else { return }
-                    guard let members = roomInfo.participants?.members else { return }
-                    guard let isAdmin = roomInfo.admin else { return }
+                    guard let title = roomInfo.room?.title,
+                          let code = roomInfo.invitation?.code,
+                          let startDate = roomInfo.room?.startDate,
+                          let endDate = roomInfo.room?.endDate,
+                          let state = roomInfo.room?.state,
+                          let members = roomInfo.participants?.members,
+                          let isAdmin = roomInfo.admin else { return }
                     titleView.roomTitleLabel.text = title
                     inviteCode = code
                     startDateText = startDate

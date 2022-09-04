@@ -8,10 +8,10 @@
 import Foundation
 
 enum DetailWaitEndPoint: EndPointable {
-    case getWithFriend(roomId: String)
-    case getWaitingRoomInfo(roomId: String)
-    case startManitto(roomId: String)
-    case editRoomInfo(roomId: String, roomInfo: RoomDTO)
+    case fetchWithFriend(roomId: String)
+    case fetchWaitingRoomInfo(roomId: String)
+    case patchStartManitto(roomId: String)
+    case putRoomInfo(roomId: String, roomInfo: RoomDTO)
     case deleteRoom(roomId: String)
 
     var requestTimeOut: Float {
@@ -20,13 +20,13 @@ enum DetailWaitEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .getWithFriend:
+        case .fetchWithFriend:
             return .get
-        case .getWaitingRoomInfo:
+        case .fetchWaitingRoomInfo:
             return .get
-        case .startManitto:
+        case .patchStartManitto:
             return .patch
-        case .editRoomInfo:
+        case .putRoomInfo:
             return .put
         case .deleteRoom:
             return .delete
@@ -35,13 +35,13 @@ enum DetailWaitEndPoint: EndPointable {
 
     var requestBody: Data? {
         switch self {
-        case .getWithFriend:
+        case .fetchWithFriend:
             return nil
-        case .getWaitingRoomInfo:
+        case .fetchWaitingRoomInfo:
             return nil
-        case .startManitto:
+        case .patchStartManitto:
             return nil
-        case .editRoomInfo(_, let roomInfo):
+        case .putRoomInfo(_, let roomInfo):
             let body = ["title": roomInfo.title,
                         "capacity": roomInfo.capacity.description,
                         "startDate": roomInfo.startDate,
@@ -54,13 +54,13 @@ enum DetailWaitEndPoint: EndPointable {
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .getWithFriend(let roomId):
+        case .fetchWithFriend(let roomId):
             return "\(baseURL)/rooms/\(roomId)/participants"
-        case .getWaitingRoomInfo(let roomId):
+        case .fetchWaitingRoomInfo(let roomId):
             return "\(baseURL)/rooms/\(roomId)"
-        case .startManitto(let roomId):
+        case .patchStartManitto(let roomId):
             return "\(baseURL)/rooms/\(roomId)/state"
-        case .editRoomInfo(let roomId, _):
+        case .putRoomInfo(let roomId, _):
             return "\(baseURL)/rooms/\(roomId)"
         case .deleteRoom(let roomId):
             return "\(baseURL)/rooms/\(roomId)"
