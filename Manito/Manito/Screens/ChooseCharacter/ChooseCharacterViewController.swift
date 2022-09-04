@@ -26,47 +26,47 @@ class ChooseCharacterViewController: BaseViewController {
     
     private let charactersData: [[String: Any]] = [
         [
-            "id": 0,
+            "colorIdx": 0,
             "image": ImageLiterals.imgCharacterPink,
             "color": UIColor.characterYellow
         ],
         [
-            "id": 1,
+            "colorIdx": 1,
             "image": ImageLiterals.imgCharacterBrown,
             "color": UIColor.characterRed
         ],
         [
-            "id": 2,
+            "colorIdx": 2,
             "image": ImageLiterals.imgCharacterBlue,
             "color": UIColor.characterOrange
         ],
         [
-            "id": 3,
+            "colorIdx": 3,
             "image": ImageLiterals.imgCharacterRed,
             "color": UIColor.characterBlue
         ],
         [
-            "id": 4,
+            "colorIdx": 4,
             "image": ImageLiterals.imgCharacterOrange,
             "color": UIColor.characterLightGreen
         ],
         [
-            "id": 5,
+            "colorIdx": 5,
             "image": ImageLiterals.imgCharacterYellow,
             "color": UIColor.characterPurple
         ],
         [
-            "id": 6,
+            "colorIdx": 6,
             "image": ImageLiterals.imgCharacterLightGreen,
             "color": UIColor.characterGreen
         ],
         [
-            "id": 7,
+            "colorIdx": 7,
             "image": ImageLiterals.imgCharacterHeavyPink,
             "color": UIColor.backgroundGrey
         ],
         [
-            "id": 8,
+            "colorIdx": 8,
             "image": ImageLiterals.imgCharacterPurple,
             "color": UIColor.characterPink
         ],
@@ -111,6 +111,7 @@ class ChooseCharacterViewController: BaseViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
         collectionView.register(cell: CharacterCollectionViewCell.self,
@@ -192,5 +193,13 @@ extension ChooseCharacterViewController: UICollectionViewDataSource {
         cell.characterImageView.image = charactersData[indexPath.item]["image"] as? UIImage
         
         return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension ChooseCharacterViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 선택한 마니또 이미지 정보 출력
+        print(charactersData[indexPath.item])
     }
 }
