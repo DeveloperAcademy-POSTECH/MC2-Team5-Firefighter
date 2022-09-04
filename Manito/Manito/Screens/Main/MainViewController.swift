@@ -16,13 +16,10 @@ class MainViewController: BaseViewController {
     private var rooms: [Room]?
 
     private enum Size {
-        static let collectionHorizontalSpacing: CGFloat = 22
-        static let collectionVerticalSpacing: CGFloat = 17
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2 - collectionVerticalSpacing) / 2
-        static let collectionInset = UIEdgeInsets(top: 0,
-            left: collectionHorizontalSpacing,
-            bottom: collectionVerticalSpacing,
-            right: collectionHorizontalSpacing)
+        static let collectionHorizontalSpacing: CGFloat = 17
+        static let collectionVerticalSpacing: CGFloat = 12
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 20 * 2 - collectionHorizontalSpacing) / 2
+        static let collectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20)
     }
 
     private enum RoomStatus: String {
@@ -97,6 +94,11 @@ class MainViewController: BaseViewController {
         setupGifImage()
         setupGuideArea()
         renderGuideArea()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionViewFlowLayout.collectionView?.reloadData()
     }
 
     override func render() {
