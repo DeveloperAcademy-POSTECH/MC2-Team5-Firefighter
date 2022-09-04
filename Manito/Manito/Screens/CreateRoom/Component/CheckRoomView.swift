@@ -22,7 +22,7 @@ class CheckRoomView: UIView {
     }
     var person: Int = 0 {
         willSet {
-            personLabel.text = "\(newValue.description)인"
+            personLabel.text = "\(newValue.description)" + TextLiteral.per
         }
     }
 
@@ -30,13 +30,13 @@ class CheckRoomView: UIView {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "명예소방관"
+        label.text = ""
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "2022.06.06 ~ 2022.06.12"
+        label.text = ""
         label.font = .font(.regular, ofSize: 22)
         return label
     }()
@@ -47,7 +47,7 @@ class CheckRoomView: UIView {
     }()
     private var personLabel: UILabel = {
         let label = UILabel()
-        label.text = "X 5인"
+        label.text = ""
         label.font = .font(.regular, ofSize: 24)
         return label
     }()

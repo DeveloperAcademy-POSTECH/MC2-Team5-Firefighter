@@ -52,34 +52,43 @@ class DetailWaitViewController: BaseViewController {
         var title: String {
             switch self {
             case .delete:
-                return "방을 삭제하실건가요?"
+                return TextLiteral.datailWaitViewControllerDeleteTitle
             case .exit:
-                return "정말 나가실거예요?"
+                return TextLiteral.datailWaitViewControllerExitTitle
             }
         }
 
         var message: String {
             switch self {
             case .delete:
-                return "방을 삭제하시면 다시 되돌릴 수 없습니다."
+                return TextLiteral.datailWaitViewControllerDeleteMessage
             case .exit:
-                return "초대코드를 입력하면 \n 다시 들어올 수 있어요."
+                return TextLiteral.datailWaitViewControllerExitMessage
             }
         }
 
         var okTitle: String {
             switch self {
             case .delete:
-                return "삭제"
+                return TextLiteral.delete
             case .exit:
-                return "나가기"
+                return TextLiteral.leave
             }
         }
     }
 
     private enum ButtonText: String {
-        case waiting = "시작을 기다리는 중..."
-        case start = "마니또 시작"
+        case waiting
+        case start
+        
+        var status: String {
+            switch self {
+            case .waiting:
+                return TextLiteral.datailWaitViewControllerButtonWaitingText
+            case .start:
+                return TextLiteral.datailWaitViewControllerButtonStartText
+            }
+        }
     }
 
     // MARK: - property
@@ -99,7 +108,7 @@ class DetailWaitViewController: BaseViewController {
     }()
     private let togetherFriendLabel: UILabel = {
         let label = UILabel()
-        label.text = "함께하는 친구들"
+        label.text = TextLiteral.togetherFriend
         label.textColor = .white
         label.font = .font(.regular, ofSize: 16)
         return label
@@ -121,7 +130,7 @@ class DetailWaitViewController: BaseViewController {
         let buttonAction = UIAction { [weak self] _ in
             self?.touchUpToShowToast()
         }
-        button.setTitle("방 코드 복사", for: .normal)
+        button.setTitle(TextLiteral.copyCode, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         button.addAction(buttonAction, for: .touchUpInside)
@@ -138,7 +147,7 @@ class DetailWaitViewController: BaseViewController {
         let button = MainButton()
         canStartClosure = { value in
             if value {
-                button.title = ButtonText.start.rawValue
+                button.title = ButtonText.start.status
                 button.isDisabled = false
                 let action = UIAction { [weak self] _ in
                     let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
@@ -148,7 +157,7 @@ class DetailWaitViewController: BaseViewController {
                 }
                 button.addAction(action, for: .touchUpInside)
             } else {
-                button.title = ButtonText.waiting.rawValue
+                button.title = ButtonText.waiting.status
                 button.isDisabled = true
             }
         }
@@ -328,16 +337,16 @@ class DetailWaitViewController: BaseViewController {
     private func setExitButtonMenu() -> UIMenu {
         if isOwner {
             let menu = UIMenu(options: [], children: [
-                    UIAction(title: "방 정보 수정", handler: { [weak self] _ in
+                UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
                         self?.presentEditRoomView()
                     }),
-                    UIAction(title: "방 삭제", handler: { [weak self] _ in
+                UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
                         self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: nil)
                     })])
             return menu
         } else {
             let menu = UIMenu(options: [], children: [
-                    UIAction(title: "방 나가기", handler: { [weak self] _ in
+                UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
                         self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction: nil)
                     })
                 ])
@@ -368,8 +377,8 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func touchUpToShowToast() {
-        UIPasteboard.general.string = "초대코드"
-        self.showToast(message: "코드 복사 완료!")
+        UIPasteboard.general.string = TextLiteral.detailWaitViewControllerCode
+        self.showToast(message: TextLiteral.detailWaitViewControllerCopyCode)
     }
 
     private func setupNotificationCenter() {
@@ -391,9 +400,9 @@ class DetailWaitViewController: BaseViewController {
                     let endDate = (Date() + fiveDaysInterval).dateToString
                     self?.presentModal(from: startDate, to: endDate, isDateEdit: true)
                 }
-                makeAlert(title: "마니또 시작일이 지났어요", message: "진행기간을 재설정 해주세요", okAction: action)
+                makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage, okAction: action)
             } else {
-                makeAlert(title: "마니또 시작일이 지났어요", message: "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요.")
+                makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastAlertMessage)
             }
         }
     }

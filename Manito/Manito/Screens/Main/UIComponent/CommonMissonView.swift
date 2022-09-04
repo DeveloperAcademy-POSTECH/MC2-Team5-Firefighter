@@ -10,14 +10,14 @@ import UIKit
 import SnapKit
 
 final class CommonMissonView: UIView {
-    
-    let missonName = "별별인사하기"
+    // 미손 수정필요
+    let missonName = "별별 인사하기"
     
     // MARK: - property
     
     private let title: UILabel = {
         let label = UILabel()
-        label.text = "오늘의 공통미션"
+        label.text = TextLiteral.commonMissionViewTitle
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 15)
         return label

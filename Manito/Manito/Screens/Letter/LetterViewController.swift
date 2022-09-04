@@ -139,13 +139,13 @@ final class LetterViewController: BaseViewController {
         navigationItem.rightBarButtonItem = guideButton
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
-        title = "쪽지함"
+        title = TextLiteral.letterViewControllerTitle
     }
     
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icLetterInfo, for: .normal)
-        setupGuideText(title: "쪽지 쓰기는?", text: "쪽지 쓰기는?\n보낸 쪽지함에서 쓰기가 가능해요!\n받은 쪽지함은 확인만 할 수 있어요.")
+        setupGuideText(title: TextLiteral.letterViewControllerGuideTitle, text: TextLiteral.letterViewControllerGuideText)
     }
     
     override func renderGuideArea() {

@@ -62,7 +62,7 @@ final class SelectManittoViewController: BaseViewController {
         informationLabel.font = .font(.regular, ofSize: 20)
         nameLabel.font = .font(.regular, ofSize: 30)
         nameLabel.text = manittiName
-        confirmButton.title = "확인"
+        confirmButton.title = TextLiteral.confirm
         confirmButton.addAction(okAction, for: .touchUpInside)
 
     }

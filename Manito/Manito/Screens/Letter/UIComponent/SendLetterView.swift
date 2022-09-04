@@ -15,7 +15,7 @@ final class SendLetterView: UIView {
     
     let sendLetterButton: UIButton = {
         let button = MainButton()
-        button.title = "쪽지 쓰기"
+        button.title = TextLiteral.sendLetterViewSendLetterButton
         return button
     }()
 
