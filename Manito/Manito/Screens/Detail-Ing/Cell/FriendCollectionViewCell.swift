@@ -27,6 +27,7 @@ class FriendCollectionViewCell: UICollectionViewCell {
     }
     
     func setFriendImage(index: Int) {
-        // FIXME: imageLiteral 생기면 값 적용
+        friendListBackView.backgroundColor = Character.allCases[index].color
+        friendListImageView.image = Character.allCases[index].image
     }
 }
