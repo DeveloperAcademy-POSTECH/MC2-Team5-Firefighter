@@ -65,8 +65,8 @@ class ChooseCharacterViewController: BaseViewController {
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
-        collectionView.register(cell: ManittoCollectionViewCell.self,
-                                forCellWithReuseIdentifier: ManittoCollectionViewCell.className)
+        collectionView.register(cell: CharacterCollectionViewCell.self,
+                                forCellWithReuseIdentifier: CharacterCollectionViewCell.className)
         return collectionView
     }()
     
@@ -79,7 +79,7 @@ class ChooseCharacterViewController: BaseViewController {
     
     // FIXME: - 더미 데이터
     private let manittoIndex = 0
-    private let characters: [String] = ["", "", "", "", "", "", "", "", "", "", ""]
+    private let characters: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     
     override func render() {
         view.addSubview(closeButton)
@@ -137,9 +137,13 @@ extension ChooseCharacterViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setManittoCell(with: indexPath.item)
-        cell.setHighlightCell(with: indexPath.item, matchIndex: manittoIndex)
+        let cell: CharacterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        
+        if indexPath.item == 0 {
+            cell.isSelected = true
+            collectionView.selectItem(at: indexPath, animated: false , scrollPosition: .init())
+        }
+        
         return cell
     }
 }
