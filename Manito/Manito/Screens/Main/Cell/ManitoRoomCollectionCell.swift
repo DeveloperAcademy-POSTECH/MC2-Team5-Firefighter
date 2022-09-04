@@ -11,7 +11,7 @@ import SnapKit
 
 class ManitoRoomCollectionViewCell: UICollectionViewCell{
     static let identifier = "ManitoRoomCollectionViewCell"
-    
+
     private enum RoomStatus: String {
         case PRE = "대기중"
         case PROCESSING = "진행중"
@@ -35,6 +35,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     lazy var roomLabel: UILabel = {
         let label = UILabel()
+        label.text = TextLiteral.manitoRoomCollectionViewCellRoomLabelTitle
         label.textColor = .white
         label.font = .font(.regular, ofSize: 20)
         label.textAlignment = .center

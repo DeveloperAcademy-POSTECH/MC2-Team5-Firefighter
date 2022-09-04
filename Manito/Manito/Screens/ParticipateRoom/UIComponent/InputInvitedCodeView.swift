@@ -18,7 +18,7 @@ final class InputInvitedCodeView: UIView {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         texField.backgroundColor = .darkGrey002
-        texField.attributedPlaceholder = NSAttributedString(string: "초대코드 입력", attributes: attributes)
+        texField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputInvitedCodeViewRoomCodeText, attributes: attributes)
         texField.textAlignment = .center
         texField.makeBorderLayer(color: .white)
         texField.font = .font(.regular, ofSize: 18)

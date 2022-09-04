@@ -27,14 +27,14 @@ class ChooseCharacterViewController: BaseViewController {
     // MARK: - Property
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "캐릭터 선택"
+        label.text = TextLiteral.chooseCharacterViewControllerTitleLabel
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
     
     private let subTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "당신만의 캐릭터를 정해주세요."
+        label.text = TextLiteral.chooseCharacterViewControllerSubTitleLabel
         label.font = .font(.regular, ofSize: 18)
         label.textColor = .grey002
         return label
@@ -72,7 +72,7 @@ class ChooseCharacterViewController: BaseViewController {
     
     private lazy var enterButton: MainButton = {
         let button = MainButton()
-        button.title = "선택"
+        button.title = TextLiteral.choose
         button.addTarget(self, action: #selector(didTapEnterButton), for: .touchUpInside)
         return button
     }()

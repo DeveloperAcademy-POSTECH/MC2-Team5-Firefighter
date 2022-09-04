@@ -17,9 +17,20 @@ class DetailWaitTitleView: UIView {
     }
 
     private enum StartStatus: String {
-        case waiting = "대기중"
-        case starting = "진행중"
-        case complete = "완료"
+        case waiting
+        case starting
+        case complete
+        
+        var status: String{
+            switch self {
+            case .waiting:
+                return TextLiteral.waiting
+            case .starting:
+                return TextLiteral.doing
+            case .complete:
+                return TextLiteral.cancel
+            }
+        }
     }
 
     // MARK: - property
@@ -34,7 +45,7 @@ class DetailWaitTitleView: UIView {
 
     private let startStautsLabel: UILabel = {
         let label = UILabel()
-        label.text = StartStatus.waiting.rawValue
+        label.text = StartStatus.waiting.status
         label.backgroundColor = .badgeBeige
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 11
@@ -53,7 +64,7 @@ class DetailWaitTitleView: UIView {
 
     private let durationLabel: UILabel = {
         let durationText = UILabel()
-        durationText.text = "진행 기간"
+        durationText.text = TextLiteral.during
         durationText.textColor = .grey001
         durationText.font = .font(.regular, ofSize: 14)
         return durationText

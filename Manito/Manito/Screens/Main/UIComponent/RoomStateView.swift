@@ -10,7 +10,9 @@ import UIKit
 import SnapKit
 
 final class RoomStateView: UIView {
-
+    
+    let roomState = TextLiteral.doing
+    
     // MARK: - property
     
     lazy var state: UILabel = {

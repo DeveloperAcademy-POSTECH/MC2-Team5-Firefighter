@@ -19,16 +19,6 @@ final class MainButton: UIButton {
     
     // MARK: - property
     
-    override var isHighlighted: Bool {
-         get {
-             return super.isHighlighted
-         }
-         set {
-             backgroundColor = isHighlighted ? .mainRed : .mainRed.withAlphaComponent(0.5)
-             super.isHighlighted = newValue
-         }
-     }
-    
     var title: String? {
         didSet { setupAttribute() }
     }
@@ -65,9 +55,15 @@ final class MainButton: UIButton {
     }
     
     private func configUI() {
+        layer.masksToBounds = true
         layer.cornerRadius = 30
         titleLabel?.font = .font(.regular, ofSize: 20)
         setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
+        setTitleColor(.white, for: .normal)
+        setTitleColor(.white.withAlphaComponent(0.3), for: .disabled)
+        setBackgroundColor(.mainRed, for: .normal)
+        setBackgroundColor(.mainRed.withAlphaComponent(0.3), for: .disabled)
+        setBackgroundColor(.mainRed.withAlphaComponent(0.5), for: .highlighted)
     }
     
     private func setupAttribute() {
@@ -76,8 +72,6 @@ final class MainButton: UIButton {
         }
         
         // COLOR: disable색상 추가 #823029
-        backgroundColor = isDisabled ? .mainRed.withAlphaComponent(0.3) : .mainRed
-        setTitleColor(isDisabled ? .white.withAlphaComponent(0.3) : .white, for: .normal)
         isEnabled = !isDisabled
     }
     
