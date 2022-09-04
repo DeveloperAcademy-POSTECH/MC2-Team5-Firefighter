@@ -319,7 +319,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.item == 0 {
             newRoom()
         } else {
-            pushDetailView(status: .waiting, index: indexPath.item)
+            pushDetailView(status: .starting, index: indexPath.item)
         }
     }
 }

@@ -37,6 +37,7 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
     @IBOutlet weak var manitoMemoryButton: UIButton!
+    @IBOutlet weak var manitteAnimationLabel: UILabel!
 
     private lazy var manitiRealIconView: UIImageView = {
         let imageView = UIImageView(image: ImageLiterals.imgMa)
@@ -100,6 +101,9 @@ class DetailIngViewController: BaseViewController {
         addGestureManito()
         addActionOpenManittoViewController()
         
+        manitteAnimationLabel.text = "코비"
+        manitteAnimationLabel.alpha = 0
+        
         manitiIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
         
@@ -120,6 +124,7 @@ class DetailIngViewController: BaseViewController {
         missionContentsLabel.font = .font(.regular, ofSize: 18)
         informationTitleLabel.font = .font(.regular, ofSize: 16)
         manitiLabel.font = .font(.regular, ofSize: 15)
+        manitteAnimationLabel.font = .font(.regular, ofSize: 15)
         listLabel.font = .font(.regular, ofSize: 15)
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
         manitoMemoryButton.titleLabel?.font = .font(.regular, ofSize: 15)
@@ -195,6 +200,7 @@ class DetailIngViewController: BaseViewController {
                           let content = info.mission?.content
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                    missionContentsLabel.text = content
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -272,13 +278,18 @@ class DetailIngViewController: BaseViewController {
     
     @objc
     private func didTapManito() {
-        UIView.animate(withDuration: 1.0) {
+        UIView.animate(withDuration: 2.0) {
+            self.manitiLabel.alpha = 0
             self.manitiIconView.alpha = 0
             self.manitiRealIconView.alpha = 1
+            self.manitteAnimationLabel.alpha = 1
         } completion: { _ in
             UIView.animate(withDuration: 1.0, delay: 1.0) {
                 self.manitiIconView.alpha = 1
                 self.manitiRealIconView.alpha = 0
+                self.manitiLabel.text = "호야의 마니띠"
+                self.manitteAnimationLabel.alpha = 0
+                self.manitiLabel.alpha = 1
             }
         }
     }

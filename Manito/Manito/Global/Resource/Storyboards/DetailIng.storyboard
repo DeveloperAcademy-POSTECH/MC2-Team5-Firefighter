@@ -110,6 +110,13 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8u6-m2-Pzx">
+                                                <rect key="frame" x="21" y="124" width="119" height="17"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.82114897190000002" green="0.84723506240000002" blue="0.88235294819999999" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
@@ -240,6 +247,7 @@
                         <outlet property="manitiImageView" destination="g7j-rM-Ytc" id="9wE-hq-MWz"/>
                         <outlet property="manitiLabel" destination="Hpq-VL-lVb" id="trl-DK-Lmx"/>
                         <outlet property="manitoMemoryButton" destination="VeD-cY-mVa" id="Nb9-xx-ydi"/>
+                        <outlet property="manitteAnimationLabel" destination="8u6-m2-Pzx" id="Kg5-FB-QAi"/>
                         <outlet property="missionBackgroundView" destination="ne3-xF-fpF" id="uFi-Vw-aa4"/>
                         <outlet property="missionContentsLabel" destination="vma-X3-7Uq" id="y49-Oc-WnK"/>
                         <outlet property="missionTitleLabel" destination="kHA-mR-fkA" id="u4u-10-1xg"/>

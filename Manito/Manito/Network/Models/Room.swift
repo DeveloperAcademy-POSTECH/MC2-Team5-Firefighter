@@ -13,17 +13,13 @@ struct ParticipatingRooms: Decodable {
 
 struct Room: Decodable {
     let room: RoomInfo?
-    let capacity: Int?
-    var startDate: String?
-    var endDate: String?
-    let state: String?
     let participants: Participants?
-    let manittee: String?
+    let manittee: Manittee?
     let invitation: Invitation?
     var didViewRoulette: Bool?
     let mission: Mission?
     let admin: Bool?
-    let messages: Int?
+    let messages: Message1?
 }
 
 struct Friend: Decodable {
@@ -55,4 +51,12 @@ struct Mission: Codable {
 
 struct Invitation: Decodable {
     let code: String?
+}
+
+struct Message1: Decodable {
+    let count: Int?
+}
+
+struct Manittee: Decodable {
+    let nickname: String?
 }
