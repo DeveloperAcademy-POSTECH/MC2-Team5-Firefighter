@@ -8,8 +8,21 @@
 import UIKit
 
 class FriendListViewController: BaseViewController {
+    var friendArray: [Member] = [] {
+        didSet {
+            friendListCollectionView.reloadData()
+        }
+    }
+    var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService(),
+                                                environment: .development)
+    
+    var roomIndex: Int = 0
     
     @IBOutlet weak var friendListCollectionView: UICollectionView!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        requestWithFriends()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +38,30 @@ class FriendListViewController: BaseViewController {
         friendListCollectionView.delegate = self
         friendListCollectionView.dataSource = self
     }
+    
+    // MARK: - API
+    
+    private func requestWithFriends() {
+        Task {
+            do {
+                let data = try await detailIngService.requestWithFriends(roomId: "\(roomIndex)")
+                if let list = data {
+                    friendArray = list.members ?? []
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
 }
 
 extension FriendListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return friendArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -37,6 +69,7 @@ extension FriendListViewController: UICollectionViewDataSource {
         cell.setupFont()
         cell.setupViewLayer()
         cell.makeBorderLayer(color: .white)
+        cell.setFriendName(name: friendArray[indexPath.item].nickname ?? "닉네임")
         return cell
     }
 }

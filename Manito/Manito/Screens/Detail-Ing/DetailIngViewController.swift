@@ -10,8 +10,14 @@ import UIKit
 import SnapKit
 
 class DetailIngViewController: BaseViewController {
+    lazy var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService(),
+                                                    environment: .development)
+    lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService(),
+                                                        environment: .development)
 
+    let roomIndex: Int = 2
     var isDone = false
+    var friendList: FriendList?
 
     // MARK: - property
 
@@ -46,6 +52,14 @@ class DetailIngViewController: BaseViewController {
     }()
 
     // MARK: - life cycle
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if isDone {
+            requestDoneRoomInfo()
+        } else {
+            requestRoomInfo()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,12 +179,86 @@ class DetailIngViewController: BaseViewController {
         self.manitoOpenButton.addAction(action, for: .touchUpInside)
     }
     
+    // MARK: - DetailStarting API
+    
+    private func requestRoomInfo() {
+        Task {
+            do {
+                let data = try await detailIngService.requestStartingRoomInfo(roomId: "\(roomIndex)")
+                if let info = data {
+                    dump(info)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestWithFriends() {
+        Task {
+            do {
+                let data = try await detailIngService.requestWithFriends(roomId: "\(roomIndex)")
+                if let list = data {
+                    friendList = list
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    // MARK: - DetailDone API
+    
+    private func requestDoneRoomInfo() {
+        Task {
+            do {
+                let data = try await detailDoneService.requestDoneRoomInfo(roomId: "\(roomIndex)")
+                if let info = data {
+                    dump(info)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestMemory() {
+        Task {
+            do {
+                let data = try await detailDoneService.requestMemory(roomId: "\(roomIndex)")
+                if let memory = data {
+                    dump(memory)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
     // MARK: - selector
     
     @objc
     private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
+        requestWithFriends()
         let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className) as? FriendListViewController else { return }
+        viewController.roomIndex = roomIndex
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
