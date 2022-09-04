@@ -12,9 +12,15 @@ import SnapKit
 class ManitoRoomCollectionViewCell: UICollectionViewCell{
     static let identifier = "ManitoRoomCollectionViewCell"
     
+    private enum RoomStatus: String {
+        case PRE = "대기중"
+        case PROCESSING = "진행중"
+        case POST = "완료"
+    }
+    
     // MARK: - property
     
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = ImageLiterals.imgNi
         return imageView
@@ -45,7 +51,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         return label
     }()
     
-    private lazy var roomState = RoomStateView()
+    lazy var roomState = RoomStateView()
     
     // MARK: - init
     

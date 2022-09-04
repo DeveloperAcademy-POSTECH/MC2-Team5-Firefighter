@@ -307,10 +307,26 @@ extension MainViewController: UICollectionViewDataSource {
             let title = roomData.title ?? ""
             let startDate = roomData.startDate?.suffix(8) ?? ""
             let endDate = roomData.endDate?.suffix(8) ?? ""
+            let state = roomData.state ?? ""
             
             cell.memberLabel.text = "\(participatingCount)/\(capacity)"
             cell.roomLabel.text = "\(title)"
             cell.dateLabel.text = "\(startDate) ~ \(endDate)"
+            
+            switch state {
+            case "PRE":
+                cell.roomState.state.text = "대기중"
+                cell.roomState.state.textColor = .darkGrey001
+                cell.roomState.backgroundColor = .badgeBeige
+            case "PROCESSING":
+                cell.roomState.state.text = "진행중"
+                cell.roomState.backgroundColor = .red
+            case "POST":
+                cell.roomState.state.text = "완료"
+                cell.roomState.backgroundColor = .grey002
+            default:
+                print("방 정보 없음")
+            }
             
             return cell
         }
