@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MessageUI
 
 import SnapKit
 
@@ -15,7 +16,7 @@ struct Option {
 }
 
 class SettingViewController: BaseViewController {
- 
+    
     private var options = [Option]()
     
     // MARK: - Property
@@ -28,12 +29,12 @@ class SettingViewController: BaseViewController {
         tableView.backgroundColor = .backgroundGrey
         return tableView
     }()
-
+    
     private let imageRow: ImageRowView = {
         let view = ImageRowView()
         return view
     }()
-
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         configureModels()
@@ -41,8 +42,13 @@ class SettingViewController: BaseViewController {
         setupDelegate()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
     override func render() {
-     
+        
         view.addSubview(imageRow)
         imageRow.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -65,11 +71,18 @@ class SettingViewController: BaseViewController {
         super.configUI()
     }
     
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
     // MARK: - Functions
     
     private func setupDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
     
     private func configureModels() {
@@ -111,23 +124,27 @@ class SettingViewController: BaseViewController {
     }
     
     private func goToChangeNickname() {
-        print("goToChangeNickname")
+        navigationController?.pushViewController(ChangeNickNameViewController(), animated: true)
     }
     
     private func goToPersonalInfomation() {
-        print("goToPersonalInfomation")
+        if let url = URL(string: "https://torpid-spy-8e4.notion.site/767e80eea1734539aead3b814016b361") {
+            UIApplication.shared.open(url, options: [:])
+        }
     }
     
     private func goToTermsOfService() {
-        print("goToTermsOfService")
+        if let url = URL(string: "https://torpid-spy-8e4.notion.site/445bd6a8c8dc459d915158935dcc3298") {
+            UIApplication.shared.open(url, options: [:])
+        }
     }
     
     private func goToDeveloperInfo() {
-        print("goToDeveloperInfo")
+        navigationController?.pushViewController(SettingDeveloperInfoViewController(), animated: true)
     }
     
     private func goToHelp() {
-        print("goToHelp")
+        self.sendReportMail()
     }
     
     private func goToLogOut() {
@@ -162,5 +179,52 @@ extension SettingViewController: UITableViewDataSource {
         cell.titleLabel.text = model.title
         cell.selectionStyle = .none
         return cell
+    }
+}
+
+// MARK: - MFMailComposeViewControllerDelegate
+extension SettingViewController: MFMailComposeViewControllerDelegate {
+    func sendReportMail() {
+        if MFMailComposeViewController.canSendMail() {
+            let composeVC = MFMailComposeViewController()
+            let aenittoEmail = "aenitto@gmail.com"
+            let messageBody = """
+                              
+                              -----------------------------
+                              
+                              - 문의하는 닉네임:
+                              - 문의 메시지 제목 한줄 요약:
+                              - 문의 날짜: \(Date())
+                              
+                              ------------------------------
+                              
+                              문의 내용을 작성해주세요.
+                              
+                              """
+            
+            composeVC.mailComposeDelegate = self
+            composeVC.setToRecipients([aenittoEmail])
+            composeVC.setSubject("[문의 사항]")
+            composeVC.setMessageBody(messageBody, isHTML: false)
+            
+            self.present(composeVC, animated: true, completion: nil)
+        }
+        else {
+            self.showSendMailErrorAlert()
+        }
+    }
+    
+    private func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) {
+            (action) in
+            print("확인")
+        }
+        sendMailErrorAlert.addAction(confirmAction)
+        self.present(sendMailErrorAlert, animated: true, completion: nil)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }

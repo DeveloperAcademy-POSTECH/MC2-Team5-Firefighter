@@ -48,6 +48,7 @@
 		7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C52854B47F00489E6A /* InputNameView.swift */; };
 		7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C72854B64D00489E6A /* InputPersonView.swift */; };
 		7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C92854B7A900489E6A /* InputDateView.swift */; };
+		7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */; };
 		7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */; };
 		B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */; };
 		B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFA2856B5180080992C /* IndividualMissionView.swift */; };
@@ -171,6 +172,7 @@
 		7E3058C52854B47F00489E6A /* InputNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputNameView.swift; sourceTree = "<group>"; };
 		7E3058C72854B64D00489E6A /* InputPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPersonView.swift; sourceTree = "<group>"; };
 		7E3058C92854B7A900489E6A /* InputDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDateView.swift; sourceTree = "<group>"; };
+		7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNickNameViewController.swift; sourceTree = "<group>"; };
 		7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewTableCell.swift; sourceTree = "<group>"; };
 		B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterViewController.swift; sourceTree = "<group>"; };
 		B50B1AFA2856B5180080992C /* IndividualMissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualMissionView.swift; sourceTree = "<group>"; };
@@ -786,6 +788,7 @@
 				D75ECB6E28A5EDC400A5B271 /* Component */,
 				D75ECB6D28A5EDBC00A5B271 /* Cell */,
 				D724AF5C287088310003F280 /* SettingViewController.swift */,
+				7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -949,6 +952,7 @@
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */,
 				397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */,
+				7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */,
 				D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */,
 				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
@@ -1147,9 +1151,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = RGZ8HP6A2J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
@@ -1168,6 +1173,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1179,9 +1185,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = RGZ8HP6A2J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
@@ -1200,6 +1207,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
