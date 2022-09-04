@@ -327,9 +327,11 @@ extension MainViewController: UICollectionViewDataSource {
                 cell.roomState.backgroundColor = .badgeBeige
             case "PROCESSING":
                 cell.roomState.state.text = "진행중"
+                cell.roomState.state.textColor = .white
                 cell.roomState.backgroundColor = .red
             case "POST":
                 cell.roomState.state.text = "완료"
+                cell.roomState.state.textColor = .white
                 cell.roomState.backgroundColor = .grey002
             default:
                 print("방 정보 없음")
