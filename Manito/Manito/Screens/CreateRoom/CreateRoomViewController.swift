@@ -77,6 +77,7 @@ class CreateRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        toggleButton()
         setupNotificationCenter()
     }
     
@@ -141,7 +142,6 @@ class CreateRoomViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         view.backgroundColor = .backgroundGrey
-        toggleButton()
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -163,17 +163,16 @@ class CreateRoomViewController: BaseViewController {
         case .inputName:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
-            notiIndex = .inputPerson
             checkView.name = text
+            notiIndex = .inputPerson
             changedInputView()
         case .inputPerson:
             person = Int(personView.personSlider.value)
-            notiIndex = .inputDate
             checkView.person = person
+            notiIndex = .inputDate
             changedInputView()
         case .inputDate:
             notiIndex = .checkRoom
-            checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
             changedInputView()
         case .checkRoom:
             DispatchQueue.main.async {
@@ -202,6 +201,10 @@ class CreateRoomViewController: BaseViewController {
         nameView.changeNextButtonEnableStatus = { [weak self] isEnable in
             self?.nextButton.isDisabled = !isEnable
         }
+        
+        dateView.calendarView.changeButtonState = { [weak self] isEnabled in
+            self?.nextButton.isDisabled = !isEnabled
+        }
     }
     
     private func changedInputView() {
@@ -213,6 +216,7 @@ class CreateRoomViewController: BaseViewController {
                 self.backButton.isHidden = true
             }
         case RoomState.inputPerson:
+            nextButton.isDisabled = false
             UIView.animate(withDuration: 0.3) {
                 self.nameView.alpha = 0.0
                 self.personView.alpha = 1.0
@@ -220,6 +224,7 @@ class CreateRoomViewController: BaseViewController {
                 self.backButton.isHidden = false
             }
         case RoomState.inputDate:
+            dateView.calendarView.setupButtonState()
             UIView.animate(withDuration: 0.3) {
                 self.personView.alpha = 0.0
                 self.dateView.alpha = 1.0
