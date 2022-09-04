@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class CreateRoomViewController: BaseViewController {
-ㅎ
+    let roomService: RoomProtocol = RoomAPI(apiService: APIService(), environment: .development)
     private var name = ""
     private var person = 0
     private var date = 0
