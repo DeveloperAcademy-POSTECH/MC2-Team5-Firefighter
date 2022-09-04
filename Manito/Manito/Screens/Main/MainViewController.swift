@@ -11,6 +11,8 @@ import Gifu
 import SnapKit
 
 class MainViewController: BaseViewController {
+    
+    private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
 
     // 임시 데이터
     let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
@@ -26,9 +28,20 @@ class MainViewController: BaseViewController {
     }
 
     private enum RoomStatus: String {
-        case waiting = "대기중"
-        case starting = "진행중"
-        case end = "완료"
+        case waiting
+        case starting
+        case end
+        
+        var roomStatus: String {
+            switch self {
+            case .waiting:
+                return TextLiteral.waiting
+            case .starting:
+                return TextLiteral.doing
+            case .end:
+                return TextLiteral.done
+            }
+        }
     }
 
     // MARK: - property
@@ -44,7 +57,7 @@ class MainViewController: BaseViewController {
     private let commonMissionView = CommonMissonView()
     private let menuTitle: UILabel = {
         let label = UILabel()
-        label.text = "참여중인 애니또"
+        label.text = TextLiteral.mainViewControllerMenuTitle
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
@@ -75,6 +88,11 @@ class MainViewController: BaseViewController {
     private let ttoCharacterImageView = GIFImageView()
 
     // MARK: - life cycle
+    
+    override func viewDidAppear(_ animated: Bool) {
+//        requestCommonMission()
+        requestManittoList()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,7 +166,7 @@ class MainViewController: BaseViewController {
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        setupGuideText(title: "공통 미션이란?", text: "공통 미션이란?\n매일 매일 업데이트되는 미션!\n두근두근 미션을 수행해보세요!")
+        setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
     }
 
     override func setupNavigationBar() {
@@ -170,18 +188,51 @@ class MainViewController: BaseViewController {
             self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
         }
     }
+    
+    // MARK: - API
+    
+    private func requestCommonMission() {
+        Task {
+            do {
+                let data = try await mainService.fetchCommonMission()
+                if let commonMission = data {
+                    print(commonMission)
+                }
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestManittoList() {
+        Task {
+            do {
+                let data = try await mainService.fetchManittoList()
+                
+                if let manittoList = data {
+                    print(manittoList)
+                }
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
+        }
+    }
 
-    func newRoom() {
+    private func newRoom() {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
-        let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: { [weak self] _ in
+        let createRoom = UIAlertAction(title: TextLiteral.createRoom, style: .default, handler: { [weak self] _ in
             let createVC = CreateRoomViewController()
             createVC.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(createVC,animated: true)
             }
         })
-        let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: { [weak self] _ in
+        let enterRoom = UIAlertAction(title: TextLiteral.enterRoom, style: .default, handler: { [weak self] _ in
             let viewController = ParticipateRoomViewController()
             let navigationController = UINavigationController(rootViewController: viewController)
             
@@ -189,7 +240,7 @@ class MainViewController: BaseViewController {
             
             self?.present(navigationController, animated: true, completion: nil)
         })
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: TextLiteral.cancel, style: .cancel, handler: nil)
 
         alert.addAction(createRoom)
         alert.addAction(enterRoom)
@@ -197,7 +248,7 @@ class MainViewController: BaseViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    func presentParticipateRoomViewController() {
+    private func presentParticipateRoomViewController() {
         let storyboard = UIStoryboard(name: "ParticipateRoom", bundle: nil)
         let ParticipateRoomVC = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
 

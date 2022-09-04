@@ -73,37 +73,37 @@ class SettingViewController: BaseViewController {
     }
     
     private func configureModels() {
-        options.append(Option(title: "닉네임 변경하기", handler: { [weak self] in
+        options.append(Option(title: TextLiteral.settingViewControllerChangeNickNameTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToChangeNickname()
             }
         }))
         
-        options.append(Option(title: "개인정보 처리방침", handler: { [weak self] in
+        options.append(Option(title: TextLiteral.settingViewControllerPersonalInfomationTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToPersonalInfomation()
             }
         }))
         
-        options.append(Option(title: "이용 약관", handler: { [weak self] in
+        options.append(Option(title: TextLiteral.settingViewControllerTermsOfServiceTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToTermsOfService()
             }
         }))
         
-        options.append(Option(title: "개발자 정보", handler: { [weak self] in
+        options.append(Option(title: TextLiteral.settingViewControllerDeveloperInfoTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToDeveloperInfo()
             }
         }))
         
-        options.append(Option(title: "문의하기", handler: { [weak self] in
+        options.append(Option(title: TextLiteral.settingViewControllerHelpTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToHelp()
             }
         }))
         
-        options.append(Option(title: "로그아웃", handler: { [weak self] in
+        options.append(Option(title: TextLiteral.settingViewControllerLogoutTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToLogOut()
             }

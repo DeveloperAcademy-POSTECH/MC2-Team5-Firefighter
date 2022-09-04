@@ -47,7 +47,7 @@ final class OpenManittoViewController: BaseViewController {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "당신의 마니또는?"
+        label.text = TextLiteral.openManittoViewController
         label.font = .font(.regular, ofSize: 34)
         return label
     }()

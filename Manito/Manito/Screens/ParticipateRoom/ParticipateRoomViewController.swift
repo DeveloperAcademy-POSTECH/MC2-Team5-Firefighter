@@ -14,7 +14,7 @@ class ParticipateRoomViewController: BaseViewController {
     // MARK: - Property
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "방 참가하기"
+        label.text = TextLiteral.enterRoom
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
@@ -29,7 +29,7 @@ class ParticipateRoomViewController: BaseViewController {
     
     private lazy var nextButton: MainButton = {
         let button = MainButton()
-        button.title = "방 입장"
+        button.title = TextLiteral.enterRoom //확인
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         return button
     }()

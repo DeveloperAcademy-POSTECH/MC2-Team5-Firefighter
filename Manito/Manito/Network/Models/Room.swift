@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct ParticipatingRooms: Decodable {
+    let participatingRooms: [Room]
+}
+
 struct Room: Decodable {
     let room: RoomInfo?
     let capacity: Int?
