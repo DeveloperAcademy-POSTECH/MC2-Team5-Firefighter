@@ -16,16 +16,16 @@ struct MainAPI: MainProtocol {
         self.environment = environment
     }
 
-    func getCommonMission() async throws -> String? {
+    func fetchCommonMission() async throws -> String? {
         let request = MainEndPoint
-            .getCommonMission
+            .fetchCommonMission
             .createRequest(environment: environment)
         return try await apiService.request(request)
     }
     
-    func getManittoList() async throws -> [Room]? {
+    func fetchManittoList() async throws -> [Room]? {
         let request = MainEndPoint
-            .getManittoList
+            .fetchManittoList
             .createRequest(environment: environment)
         return try await apiService.request(request)
     }

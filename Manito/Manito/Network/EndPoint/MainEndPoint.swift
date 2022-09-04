@@ -8,8 +8,8 @@
 import Foundation
 
 enum MainEndPoint: EndPointable {
-    case getCommonMission
-    case getManittoList
+    case fetchCommonMission
+    case fetchManittoList
 
     var requestTimeOut: Float {
         return 20
@@ -17,33 +17,37 @@ enum MainEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .getCommonMission:
+        case .fetchCommonMission:
             return .get
-        case.getManittoList:
+        case .fetchManittoList:
             return .get
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .getCommonMission:
+        case .fetchCommonMission:
             return nil
-        case .getManittoList:
+        case .fetchManittoList:
             return nil
         }
     }
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .getCommonMission:
+        case .fetchCommonMission:
             return "\(baseURL)/missions/common/"
-        case .getManittoList:
+        case .fetchManittoList:
             return "\(baseURL)/rooms/"
         }
     }
     
     func createRequest(environment: APIEnvironment) -> NetworkRequest {
+        var headers: [String: String] = [:]
+        headers["Content-Type"] = "application/json"
+        headers["authorization"] = "Bearer \(APIEnvironment.development.token)"
         return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+                              headers: headers,
                               reqBody: requestBody,
                               reqTimeout: requestTimeOut,
                               httpMethod: httpMethod

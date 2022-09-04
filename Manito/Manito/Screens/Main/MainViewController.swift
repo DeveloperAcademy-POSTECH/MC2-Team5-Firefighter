@@ -12,7 +12,7 @@ import SnapKit
 
 class MainViewController: BaseViewController {
     
-    let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
+    private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
 
     // 임시 데이터
     let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
@@ -79,7 +79,6 @@ class MainViewController: BaseViewController {
     // MARK: - life cycle
     
     override func viewDidAppear(_ animated: Bool) {
-        print("viewDidApear 실행")
         requestCommonMission()
         requestManittoList()
     }
@@ -181,41 +180,37 @@ class MainViewController: BaseViewController {
     
     // MARK: - API
     
-    func requestCommonMission() {
+    private func requestCommonMission() {
         Task {
             do {
-                let data = try await mainService.getCommonMission()
+                let data = try await mainService.fetchCommonMission()
                 if let commonMission = data {
                     print(commonMission)
                 }
             } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
+                print("serverError")
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
+                print("clientError:\(String(describing: message))")
             }
         }
     }
     
-    func requestManittoList() {
+    private func requestManittoList() {
         Task {
             do {
-                let data = try await mainService.getManittoList()
+                let data = try await mainService.fetchManittoList()
                 if let manittoList = data {
                     print(manittoList)
                 }
             } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
+                print("serverError")
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
+                print("clientError:\(String(describing: message))")
             }
         }
     }
 
-    func newRoom() {
+    private func newRoom() {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
         let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: { [weak self] _ in
@@ -241,7 +236,7 @@ class MainViewController: BaseViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    func presentParticipateRoomViewController() {
+    private func presentParticipateRoomViewController() {
         let storyboard = UIStoryboard(name: "ParticipateRoom", bundle: nil)
         let ParticipateRoomVC = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
 

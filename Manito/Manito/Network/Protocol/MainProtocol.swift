@@ -8,6 +8,6 @@
 import Foundation
 
 protocol MainProtocol {
-    func getCommonMission() async throws -> String?
-    func getManittoList() async throws -> [Room]?
+    func fetchCommonMission() async throws -> String?
+    func fetchManittoList() async throws -> [Room]?
 }
