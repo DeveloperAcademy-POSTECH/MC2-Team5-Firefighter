@@ -11,6 +11,8 @@ import Gifu
 import SnapKit
 
 class MainViewController: BaseViewController {
+    
+    private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
 
     // 임시 데이터
     let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
@@ -86,6 +88,11 @@ class MainViewController: BaseViewController {
     private let ttoCharacterImageView = GIFImageView()
 
     // MARK: - life cycle
+    
+    override func viewDidAppear(_ animated: Bool) {
+//        requestCommonMission()
+        requestManittoList()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -181,9 +188,42 @@ class MainViewController: BaseViewController {
             self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
         }
     }
+    
+    // MARK: - API
+    
+    private func requestCommonMission() {
+        Task {
+            do {
+                let data = try await mainService.fetchCommonMission()
+                if let commonMission = data {
+                    print(commonMission)
+                }
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestManittoList() {
+        Task {
+            do {
+                let data = try await mainService.fetchManittoList()
+                
+                if let manittoList = data {
+                    print(manittoList)
+                }
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
+        }
+    }
 
-    func newRoom() {
-        let alert = UIAlertController(title: TextLiteral.mainViewControllerNewRoomAlert, message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+    private func newRoom() {
+        let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
         let createRoom = UIAlertAction(title: TextLiteral.createRoom, style: .default, handler: { [weak self] _ in
             let createVC = CreateRoomViewController()
@@ -208,7 +248,7 @@ class MainViewController: BaseViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    func presentParticipateRoomViewController() {
+    private func presentParticipateRoomViewController() {
         let storyboard = UIStoryboard(name: "ParticipateRoom", bundle: nil)
         let ParticipateRoomVC = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
 
@@ -218,10 +258,10 @@ class MainViewController: BaseViewController {
         present(ParticipateRoomVC, animated: true, completion: nil)
     }
 
-    private func pushDetailView(status: RoomStatus) {
+    private func pushDetailView(status: RoomStatus, index: Int) {
         switch status {
         case .waiting:
-            self.navigationController?.pushViewController(DetailWaitViewController(), animated: true)
+            self.navigationController?.pushViewController(DetailWaitViewController(index: index), animated: true)
         case .starting:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
@@ -279,7 +319,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.item == 0 {
             newRoom()
         } else {
-            pushDetailView(status: .starting)
+            pushDetailView(status: .waiting, index: indexPath.item)
         }
     }
 }
