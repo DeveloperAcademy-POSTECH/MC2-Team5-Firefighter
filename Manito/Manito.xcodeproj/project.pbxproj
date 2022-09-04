@@ -107,6 +107,8 @@
 		CB2F0FCC28A5468C005F04C8 /* gifTto.gif in Resources */ = {isa = PBXBuildFile; fileRef = CB2F0FC928A5468C005F04C8 /* gifTto.gif */; };
 		CB2F0FCD28A5468C005F04C8 /* gifNi.gif in Resources */ = {isa = PBXBuildFile; fileRef = CB2F0FCA28A5468C005F04C8 /* gifNi.gif */; };
 		CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB358C0128A564080084D001 /* SettingDeveloperInfoViewController.swift */; };
+		CB4C77E428C0D4C9007A1AD2 /* MainProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4C77E328C0D4C9007A1AD2 /* MainProtocol.swift */; };
+		CB4C77E628C0D4EB007A1AD2 /* MainAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4C77E528C0D4EB007A1AD2 /* MainAPI.swift */; };
 		CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */; };
 		CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */; };
 		CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */; };
@@ -229,6 +231,8 @@
 		CB2F0FC928A5468C005F04C8 /* gifTto.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifTto.gif; sourceTree = "<group>"; };
 		CB2F0FCA28A5468C005F04C8 /* gifNi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifNi.gif; sourceTree = "<group>"; };
 		CB358C0128A564080084D001 /* SettingDeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoViewController.swift; sourceTree = "<group>"; };
+		CB4C77E328C0D4C9007A1AD2 /* MainProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocol.swift; sourceTree = "<group>"; };
+		CB4C77E528C0D4EB007A1AD2 /* MainAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAPI.swift; sourceTree = "<group>"; };
 		CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInfoView.swift; sourceTree = "<group>"; };
 		CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleInfoView.swift; sourceTree = "<group>"; };
 		CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewController.swift; sourceTree = "<group>"; };
@@ -286,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				397A241328BA516B00454E4F /* DetailWaitAPI.swift */,
+				CB4C77E528C0D4EB007A1AD2 /* MainAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -294,6 +299,7 @@
 			isa = PBXGroup;
 			children = (
 				397A241728BA51B400454E4F /* DetailWaitProtocol.swift */,
+				CB4C77E328C0D4C9007A1AD2 /* MainProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -956,6 +962,7 @@
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
 				39C957FE287DAB6D00A04A2B /* DetailIngEndPoint.swift in Sources */,
 				B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */,
+				CB4C77E428C0D4C9007A1AD2 /* MainProtocol.swift in Sources */,
 				CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */,
 				B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */,
 				B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */,
@@ -974,6 +981,7 @@
 				CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				39C95802287DACC300A04A2B /* RoomEndPoint.swift in Sources */,
+				CB4C77E628C0D4EB007A1AD2 /* MainAPI.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
 				39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */,
