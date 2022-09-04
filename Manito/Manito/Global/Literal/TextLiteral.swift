@@ -13,7 +13,7 @@ enum TextLiteral {
     static let done: String = "완료"
     static let cancel: String = "취소"
     static let doing: String = "진행중"
-    static let waiting: String = "대기1중"
+    static let waiting: String = "대기중"
     static let confirm: String = "확인"
     static let choose: String = "선택"
     static let enterRoom: String = "방 참가하기"
@@ -105,7 +105,7 @@ enum TextLiteral {
     static let letterPhotoViewTakePhoto: String = "사진 쵤영"
     static let letterPhotoViewChoosePhoto: String = "사진 보관함에서 선택"
     static let letterPhotoViewDeletePhoto: String = "사진 지우기"
-    static let letterPhotoViewChoosePhotoToManitto: String = "마니또에게 보낼 사진을 선택해봐요"
+    static let letterPhotoViewChoosePhotoToManitto: String = "마니또에게 보낼 사진 선택"
     static let letterPhotoViewSetting: String = "설정"
     static let letterPhotoViewFail: String = "사진을 불러올 수 없습니다."
     
