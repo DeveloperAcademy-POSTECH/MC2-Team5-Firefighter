@@ -85,6 +85,10 @@ class DetailIngViewController: BaseViewController {
         addGestureMemberList()
         addGestureManito()
         addActionOpenManittoViewController()
+        
+        manitiIconView.image = ImageLiterals.icManiTti
+        listIconView.image = ImageLiterals.icList
+        
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
