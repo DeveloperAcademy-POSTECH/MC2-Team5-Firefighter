@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class CreateRoomViewController: BaseViewController {
-    
+ㅎ
     private var name = ""
     private var person = 0
     private var date = 0
@@ -80,6 +80,11 @@ class CreateRoomViewController: BaseViewController {
         setupNotificationCenter()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
     override func render() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
@@ -145,6 +150,25 @@ class CreateRoomViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    // MARK: - API
+    
+    func requestCreateRoom(room: CreateRoomDTO) {
+        Task {
+            do {
+                let data = try await roomService.postCreateRoom(body: room)
+                if let room = data {
+                    print(room)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+    
     // MARK: - Selectors
     
     @objc private func didTapBackButton() {
@@ -174,7 +198,7 @@ class CreateRoomViewController: BaseViewController {
             checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
             changedInputView()
         case .checkRoom:
-            print("여기는 끝^__^")
+            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: name, capacity: person, startDate: dateView.calendarView.getTempStartDate(), endDate: dateView.calendarView.getTempEndDate()), member: MemberDTO(colorIdx: 3)))
         }
     }
     

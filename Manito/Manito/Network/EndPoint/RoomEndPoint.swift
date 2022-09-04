@@ -44,16 +44,20 @@ enum RoomEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .createRoom(_):
-            return "\(baseURL)/api/rooms"
+            return "\(baseURL)/rooms"
         case .verifyCode:
-            return "\(baseURL)/api/invitations/verification"
+            return "\(baseURL)/invitations/verification"
         case .joinRoom(let roomId, _):
-            return "\(baseURL)/api/rooms/\(roomId)/participaticipants"
+            return "\(baseURL)/rooms/\(roomId)/participaticipants"
         }
     }
     
     func createRequest(environment: APIEnvironment) -> NetworkRequest {
+        var headers: [String: String] = [:]
+        headers["Content-Type"] = "application/json"
+        headers["authorization"] = "Bearer \(APIEnvironment.development.token)"
         return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+                              headers: headers,
                               reqBody: requestBody,
                               reqTimeout: requestTimeOut,
                               httpMethod: httpMethod
