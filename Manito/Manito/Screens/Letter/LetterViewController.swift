@@ -71,6 +71,9 @@ final class LetterViewController: BaseViewController {
         }
     }
     
+    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
+                                                    environment: .development)
+    
     // MARK: - life cycle
     
     override func viewDidLoad() {
@@ -195,6 +198,24 @@ final class LetterViewController: BaseViewController {
     private func dismissGuideView() {
         if !guideButton.isTouchInside {
             guideBoxImageView.isHidden = true
+        }
+    }
+    
+    // MARK: - network
+    
+    private func fetchSendLetter(roomId: String) {
+        Task {
+            do {
+                async let letterContent = try await letterSevice.fetchSendLetter(roomId: roomId)
+                
+                if let content = try await letterContent {
+                    dump(content)
+                }
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
         }
     }
 }

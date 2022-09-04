@@ -64,6 +64,9 @@
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
 		B5E1F2B4285ECCD1006D880B /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5E1F2B3285ECCD1006D880B /* joystick.gif */; };
 		B5E1F2B8285EE2B0006D880B /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5E1F2B7285EE2B0006D880B /* capsule.gif */; };
+		B5F31C5228BFA64F00F61D0F /* LetterAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C5128BFA64F00F61D0F /* LetterAPI.swift */; };
+		B5F31C5428BFA70100F61D0F /* LetterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C5328BFA70100F61D0F /* LetterProtocol.swift */; };
+		B5F31C5628BFA87700F61D0F /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C5528BFA87700F61D0F /* Requestable.swift */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
 		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
@@ -181,6 +184,9 @@
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B3285ECCD1006D880B /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
 		B5E1F2B7285EE2B0006D880B /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
+		B5F31C5128BFA64F00F61D0F /* LetterAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterAPI.swift; sourceTree = "<group>"; };
+		B5F31C5328BFA70100F61D0F /* LetterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterProtocol.swift; sourceTree = "<group>"; };
+		B5F31C5528BFA87700F61D0F /* Requestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -280,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				397A241328BA516B00454E4F /* DetailWaitAPI.swift */,
+				B5F31C5128BFA64F00F61D0F /* LetterAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -288,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				397A241728BA51B400454E4F /* DetailWaitProtocol.swift */,
+				B5F31C5328BFA70100F61D0F /* LetterProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -309,6 +317,7 @@
 				39C957F0287D984900A04A2B /* APIEnvironment.swift */,
 				39C957F3287D9EB400A04A2B /* APIService.swift */,
 				39C957F5287D9ED000A04A2B /* NetworkRequest.swift */,
+				B5F31C5528BFA87700F61D0F /* Requestable.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -905,6 +914,7 @@
 				39C957DB2879A23B00A04A2B /* User.swift in Sources */,
 				B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */,
 				397A241A28BA532A00454E4F /* FriendList.swift in Sources */,
+				B5F31C5628BFA87700F61D0F /* Requestable.swift in Sources */,
 				397A241028BA494100454E4F /* APIEnvironment.swift in Sources */,
 				CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */,
 				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
@@ -952,6 +962,7 @@
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
 				CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */,
 				B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */,
+				B5F31C5228BFA64F00F61D0F /* LetterAPI.swift in Sources */,
 				391B3003286198C200421F1D /* Size.swift in Sources */,
 				39C95800287DAC2900A04A2B /* DetailDoneEndPoint.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
@@ -959,6 +970,7 @@
 				CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */,
 				B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
+				B5F31C5428BFA70100F61D0F /* LetterProtocol.swift in Sources */,
 				D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */,
 				CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,

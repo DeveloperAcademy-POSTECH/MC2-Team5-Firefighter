@@ -90,15 +90,16 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - func
     
-    func setLetterData(with data: Letter) {
-        dateLabel.text = data.date
+    func setLetterData(with data: Message) {
+        // TODO: - 날짜 정리가 필요
+        dateLabel.text = "2022.09.01"
         
         if let content = data.content {
             contentLabel.text = content
             contentLabel.addLabelSpacing()
         }
         
-        if let image = data.image {
+        if let image = data.imageUrl {
             // FIXME: - 현재는 더미데이터라서 heart.fill
             photoImageView.image = UIImage(systemName: "heart.fill")
             photoImageView.snp.updateConstraints {
