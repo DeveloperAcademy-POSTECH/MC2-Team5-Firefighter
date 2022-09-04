@@ -31,6 +31,7 @@ class ParticipateRoomViewController: BaseViewController {
         let button = MainButton()
         button.title = "방 입장"
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        button.isDisabled = true
         return button
     }()
     
@@ -39,6 +40,7 @@ class ParticipateRoomViewController: BaseViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        toggleButton()
         setupNotificationCenter()
     }
     
@@ -100,5 +102,11 @@ class ParticipateRoomViewController: BaseViewController {
     // MARK: - Funtions    
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_ :)), name: .nextNotification, object: nil)
+    }
+    
+    private func toggleButton() {
+        inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
+            self?.nextButton.isDisabled = !isEnable
+        }
     }
 }
