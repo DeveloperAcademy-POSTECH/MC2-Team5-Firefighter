@@ -54,13 +54,16 @@ class DetailIngViewController: BaseViewController {
 
     // MARK: - life cycle
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         if isDone {
             requestDoneRoomInfo()
         } else {
             requestRoomInfo()
         }
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,7 +104,7 @@ class DetailIngViewController: BaseViewController {
         addGestureManito()
         addActionOpenManittoViewController()
         
-        manitteAnimationLabel.text = "코비"
+        manitteAnimationLabel.text = ""
         manitteAnimationLabel.alpha = 0
         
         manitiIconView.image = ImageLiterals.icManiTti
@@ -197,10 +200,12 @@ class DetailIngViewController: BaseViewController {
                     titleLabel.text = info.room?.title
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
-                          let content = info.mission?.content
+                          let missionContent = info.mission?.content,
+                          let minittee = info.manittee?.nickname
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
-                    missionContentsLabel.text = content
+                    missionContentsLabel.text = missionContent
+                    manitteAnimationLabel.text = minittee
                 }
             } catch NetworkError.serverError {
                 print("server Error")

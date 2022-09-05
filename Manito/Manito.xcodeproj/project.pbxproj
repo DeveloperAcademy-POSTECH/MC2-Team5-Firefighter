@@ -361,7 +361,6 @@
 			children = (
 				39C957DE2879A35300A04A2B /* RoomDTO.swift */,
 				39E099AC287FC020004F464E /* LetterDTO.swift */,
-				39CD581E28C4C19100496E91 /* Memory.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -704,6 +703,7 @@
 				39C957DC2879A2B600A04A2B /* Room.swift */,
 				39C957E02879A3CF00A04A2B /* DailyMission.swift */,
 				397A241928BA532A00454E4F /* FriendList.swift */,
+				39CD581E28C4C19100496E91 /* Memory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

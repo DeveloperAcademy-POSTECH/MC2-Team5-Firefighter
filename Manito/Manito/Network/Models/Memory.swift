@@ -8,10 +8,10 @@
 import Foundation
 
 struct Memory: Decodable {
-    let memoriesWithManitto, memoriesWithManittee: MemoriesWithManitt?
+    let memoriesWithManitto, memoriesWithManittee: MemoriesWithManitte?
 }
 
-struct MemoriesWithManitt: Decodable {
+struct MemoriesWithManitte: Decodable {
     let member: User?
     let messages: [Message]?
 }
