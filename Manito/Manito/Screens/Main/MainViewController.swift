@@ -309,9 +309,9 @@ extension MainViewController: UICollectionViewDataSource {
             
             guard let roomData = rooms?[indexPath.item - 1] else { return cell }
             
-            let participatingCount = roomData.participatingCount ?? 0
+            let participatingCount = roomData.capacity ?? 0
             let capacity = roomData.capacity ?? 0
-            let title = roomData.title ?? ""
+//            let title = roomData.title ?? ""
             let startDate = roomData.startDate?.suffix(8) ?? ""
             let endDate = roomData.endDate?.suffix(8) ?? ""
             let state = roomData.state ?? ""
@@ -348,7 +348,17 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.item == 0 {
             newRoom()
         } else {
-            pushDetailView(status: .waiting, index: indexPath.item)
+            guard let roomData = rooms?[indexPath.item - 1] else { return }
+            var roomState: RoomStatus = .waiting
+            switch roomData.state {
+            case "PRE":
+                roomState = .waiting
+            case "PROCESSING":
+                roomState = .starting
+            default:
+                roomState = .end
+            }
+            pushDetailView(status: roomState, index: indexPath.item)
         }
     }
 }
