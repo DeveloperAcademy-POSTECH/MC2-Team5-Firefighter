@@ -13,7 +13,7 @@ class ChangeNickNameViewController: BaseViewController {
     private var maxLength = 5
     
     // MARK: - Property
-    private lazy var roomsNameTextField: UITextField = {
+    private lazy var nameTextField: UITextField = {
         let textField = UITextField()
         let attributes = [
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
@@ -28,11 +28,12 @@ class ChangeNickNameViewController: BaseViewController {
         textField.layer.borderColor = UIColor.white.cgColor
         textField.textAlignment = .center
         textField.returnKeyType = .done
+        textField.becomeFirstResponder()
         return textField
     }()
     private lazy var roomsTextLimit : UILabel = {
         let label = UILabel()
-        label.text = "\(String(describing: roomsNameTextField.text?.count ?? 0))/\(maxLength)"
+        label.text = "\(String(describing: nameTextField.text?.count ?? 0))/\(maxLength)"
         label.font = .font(.regular, ofSize: 20)
         label.textColor = .grey002
         return label
@@ -53,16 +54,16 @@ class ChangeNickNameViewController: BaseViewController {
     }
     
     override func render() {
-        view.addSubview(roomsNameTextField)
-        roomsNameTextField.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
+        view.addSubview(nameTextField)
+        nameTextField.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
             $0.height.equalTo(60)
         }
         
         view.addSubview(roomsTextLimit)
         roomsTextLimit.snp.makeConstraints {
-            $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
+            $0.top.equalTo(nameTextField.snp.bottom).offset(10)
             $0.right.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
@@ -76,7 +77,7 @@ class ChangeNickNameViewController: BaseViewController {
     // MARK: - Seletors
     
     @objc private func didTapDoneButton() {
-        if let text = roomsNameTextField.text, !text.isEmpty {
+        if let text = nameTextField.text, !text.isEmpty {
             nickname = text
             navigationController?.popViewController(animated: true)
         }
@@ -105,7 +106,7 @@ class ChangeNickNameViewController: BaseViewController {
     // MARK: - Funtions
     
     private func setupDelegation() {
-        roomsNameTextField.delegate = self
+        nameTextField.delegate = self
     }
     
     private func setupNotificationCenter() {
@@ -115,7 +116,7 @@ class ChangeNickNameViewController: BaseViewController {
     
     private func setCounter(count: Int) {
         roomsTextLimit.text = "\(count)/\(maxLength)"
-        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
+        checkMaxLength(textField: nameTextField, maxLength: maxLength)
     }
     private func checkMaxLength(textField: UITextField, maxLength: Int) {
         if (textField.text?.count ?? 0 > maxLength) {
@@ -138,14 +139,14 @@ class ChangeNickNameViewController: BaseViewController {
 // MARK: - Extension
 extension ChangeNickNameViewController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        roomsNameTextField.resignFirstResponder()
+        nameTextField.resignFirstResponder()
         return true
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         setCounter(count: textField.text?.count ?? 0)
         
-        let hasText = roomsNameTextField.hasText
+        let hasText = nameTextField.hasText
         if hasText {
             doneButton.isDisabled = !textField.hasText
         }
