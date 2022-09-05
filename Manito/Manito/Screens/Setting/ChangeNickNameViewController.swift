@@ -147,8 +147,6 @@ extension ChangeNickNameViewController : UITextFieldDelegate {
         setCounter(count: textField.text?.count ?? 0)
         
         let hasText = nameTextField.hasText
-        if hasText {
-            doneButton.isDisabled = !textField.hasText
-        }
+        doneButton.isDisabled = !hasText
     }
 }

@@ -164,8 +164,6 @@ extension CreateNickNameViewController : UITextFieldDelegate {
         setCounter(count: textField.text?.count ?? 0)
         
         let hasText = roomsNameTextField.hasText
-        if hasText {
-            doneButton.isDisabled = !textField.hasText
-        }
+        doneButton.isDisabled = !hasText
     }
 }
