@@ -330,7 +330,7 @@ extension MainViewController: UICollectionViewDataSource {
             case .starting:
                 cell.roomState.state.text = "진행중"
                 cell.roomState.state.textColor = .white
-                cell.roomState.backgroundColor = .red
+                cell.roomState.backgroundColor = .mainRed
             case .end:
                 cell.roomState.state.text = "완료"
                 cell.roomState.state.textColor = .white

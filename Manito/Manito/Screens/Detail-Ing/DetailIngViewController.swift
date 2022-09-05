@@ -23,6 +23,7 @@ class DetailIngViewController: BaseViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var periodLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var missionBackgroundView: UIView!
     @IBOutlet weak var missionTitleLabel: UILabel!
     @IBOutlet weak var missionContentsLabel: UILabel!
@@ -104,6 +105,14 @@ class DetailIngViewController: BaseViewController {
         manitteAnimationLabel.text = ""
         manitteAnimationLabel.alpha = 0
         
+        statusLabel.text = isDone ? TextLiteral.done : TextLiteral.doing
+        statusLabel.backgroundColor = isDone ? .grey002 : .mainRed
+        statusLabel.layer.masksToBounds = true
+        statusLabel.layer.cornerRadius = 11
+        statusLabel.textColor = .white
+        statusLabel.font = .font(.regular, ofSize: 13)
+        statusLabel.textAlignment = .center
+        
         manitiIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
         
@@ -120,6 +129,7 @@ class DetailIngViewController: BaseViewController {
     private func setupFont() {
         titleLabel.font = .font(.regular, ofSize: 34)
         periodLabel.font = .font(.regular, ofSize: 16)
+        statusLabel.font = .font(.regular, ofSize: 13)
         missionTitleLabel.font = .font(.regular, ofSize: 14)
         missionContentsLabel.font = .font(.regular, ofSize: 18)
         informationTitleLabel.font = .font(.regular, ofSize: 16)
