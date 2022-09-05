@@ -12,6 +12,7 @@ import SnapKit
 class CreateNickNameViewController: BaseViewController {
     
     private var nickname: String = ""
+    private var maxLength = 5
     
     // MARK: - Property
     
@@ -36,6 +37,13 @@ class CreateNickNameViewController: BaseViewController {
         textField.textAlignment = .center
         textField.returnKeyType = .done
         return textField
+    }()
+    private lazy var roomsTextLimit : UILabel = {
+        let label = UILabel()
+        label.text = "0/\(maxLength)"
+        label.font = .font(.regular, ofSize: 20)
+        label.textColor = .grey002
+        return label
     }()
     private lazy var doneButton: MainButton = {
         let button = MainButton()
@@ -64,6 +72,12 @@ class CreateNickNameViewController: BaseViewController {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
             $0.height.equalTo(60)
+        }
+        
+        view.addSubview(roomsTextLimit)
+        roomsTextLimit.snp.makeConstraints {
+            $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
+            $0.right.equalToSuperview()
         }
         
         view.addSubview(doneButton)
@@ -121,6 +135,17 @@ class CreateNickNameViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    private func setCounter(count: Int) {
+        roomsTextLimit.text = "\(count)/\(maxLength)"
+        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
+    }
+    
+    private func checkMaxLength(textField: UITextField, maxLength: Int) {
+        if (textField.text?.count ?? 0 > maxLength) {
+            textField.deleteBackward()
+        }
+    }
+    
     // MARK: - Configure
     
     override func configUI() {
@@ -131,11 +156,16 @@ class CreateNickNameViewController: BaseViewController {
 // MARK: - Extension
 extension CreateNickNameViewController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            roomsNameTextField.resignFirstResponder()
-            return true
-        }
+        roomsNameTextField.resignFirstResponder()
+        return true
+    }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        doneButton.isDisabled = !textField.hasText
+        setCounter(count: textField.text?.count ?? 0)
+        
+        let hasText = roomsNameTextField.hasText
+        if hasText {
+            doneButton.isDisabled = !textField.hasText
+        }
     }
 }
