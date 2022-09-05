@@ -35,7 +35,7 @@ class DetailWaitTitleView: UIView {
 
     // MARK: - property
 
-    private let roomTitleLabel: UILabel = {
+    let roomTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "명예소방관"
         label.textColor = .white
@@ -119,6 +119,21 @@ class DetailWaitTitleView: UIView {
         durationDateLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(40)
             $0.centerY.equalToSuperview()
+        }
+    }
+    
+    // MARK: - func
+    
+    func setStartState(state: String) {
+        switch state {
+        case "PRE":
+            startStautsLabel.text = StartStatus.waiting.rawValue
+        case "PROCESSING":
+            startStautsLabel.text = StartStatus.starting.rawValue
+        case "POST":
+            startStautsLabel.text = StartStatus.complete.rawValue
+        default:
+            startStautsLabel.text = StartStatus.waiting.rawValue
         }
     }
 }

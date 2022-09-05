@@ -15,9 +15,8 @@ final class RoomStateView: UIView {
     
     // MARK: - property
     
-    private lazy var state: UILabel = {
+    lazy var state: UILabel = {
         let label = UILabel()
-        label.text = roomState
         label.textColor = .white
         label.font = .font(.regular, ofSize: 12)
         return label
@@ -45,7 +44,6 @@ final class RoomStateView: UIView {
     }
     
     private func configUI() {
-        backgroundColor = .red
         layer.cornerRadius = 12
     }
 }

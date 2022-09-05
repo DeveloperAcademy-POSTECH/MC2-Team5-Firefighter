@@ -21,4 +21,13 @@ class FriendCollectionViewCell: UICollectionViewCell {
         friendListImageView.layer.cornerRadius = 45
         friendListBackView.layer.cornerRadius = 49
     }
+    
+    func setFriendName(name: String) {
+        friendListNameLabel.text = name
+    }
+    
+    func setFriendImage(index: Int) {
+        friendListBackView.backgroundColor = Character.allCases[index].color
+        friendListImageView.image = Character.allCases[index].image
+    }
 }
