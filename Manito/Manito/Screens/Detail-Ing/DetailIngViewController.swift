@@ -15,7 +15,7 @@ class DetailIngViewController: BaseViewController {
     lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService(),
                                                         environment: .development)
 
-    let roomIndex: Int = 1
+    var roomIndex: Int = 0
     var isDone = false
     var friendList: FriendList?
 
@@ -61,9 +61,6 @@ class DetailIngViewController: BaseViewController {
             requestRoomInfo()
         }
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -196,7 +193,6 @@ class DetailIngViewController: BaseViewController {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: "\(roomIndex)")
                 if let info = data {
-                    dump(info)
                     titleLabel.text = info.room?.title
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
@@ -240,8 +236,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 let data = try await detailDoneService.requestDoneRoomInfo(roomId: "\(roomIndex)")
-                if let info = data {
-                    dump(info)
+                if let _ = data {
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -257,8 +252,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 let data = try await detailDoneService.requestMemory(roomId: "\(roomIndex)")
-                if let memory = data {
-                    dump(memory)
+                if let _ = data {
                 }
             } catch NetworkError.serverError {
                 print("server Error")
