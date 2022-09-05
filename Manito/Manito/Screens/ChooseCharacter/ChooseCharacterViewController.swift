@@ -16,7 +16,7 @@ class ChooseCharacterViewController: BaseViewController {
         static let collectionHorizontalSpacing: CGFloat = 29.0
         static let collectionVerticalSpacing: CGFloat = 37.0
         static let cellInterSpacing: CGFloat = 39.0
-        static let cellLineSpacing: CGFloat = 20.0
+        static let cellLineSpacing: CGFloat = 24.0
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - (collectionHorizontalSpacing * 2 + cellInterSpacing * 2)) / 3
         static let collectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
                                                   left: collectionHorizontalSpacing,
@@ -27,14 +27,14 @@ class ChooseCharacterViewController: BaseViewController {
     // MARK: - Property
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "캐릭터 선택"
+        label.text = TextLiteral.chooseCharacterViewControllerTitleLabel
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
     
     private let subTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "당신만의 캐릭터를 정해주세요."
+        label.text = TextLiteral.chooseCharacterViewControllerSubTitleLabel
         label.font = .font(.regular, ofSize: 18)
         label.textColor = .grey002
         return label
@@ -63,25 +63,28 @@ class ChooseCharacterViewController: BaseViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
-        collectionView.register(cell: ManittoCollectionViewCell.self,
-                                forCellWithReuseIdentifier: ManittoCollectionViewCell.className)
+        collectionView.register(cell: CharacterCollectionViewCell.self,
+                                forCellWithReuseIdentifier: CharacterCollectionViewCell.className)
         return collectionView
     }()
     
     private lazy var enterButton: MainButton = {
         let button = MainButton()
-        button.title = "선택"
+        button.title = TextLiteral.choose
         button.addTarget(self, action: #selector(didTapEnterButton), for: .touchUpInside)
         return button
     }()
     
-    // FIXME: - 더미 데이터
-    private let manittoIndex = 0
-    private let characters: [String] = ["", "", "", "", "", "", "", "", "", "", ""]
-    
     override func render() {
+        view.addSubview(closeButton)
+        closeButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
+            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+        }
+        
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
@@ -110,11 +113,8 @@ class ChooseCharacterViewController: BaseViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-
-        let closeButtonView = makeBarButtonItem(with: closeButton)
-
+        navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.rightBarButtonItem = closeButtonView
     }
     
     // MARK: - Selectors
@@ -130,13 +130,29 @@ class ChooseCharacterViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension ChooseCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return characters.count
+        return Character.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setManittoCell(with: indexPath.item)
-        cell.setHighlightCell(with: indexPath.item, matchIndex: manittoIndex)
+        let cell: CharacterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        
+        cell.characterBackground = Character.allCases[indexPath.item].color
+        cell.characterImageView.image = Character.allCases[indexPath.item].image
+        cell.setImageBackgroundColor()
+        
+        if indexPath.item == 0 {
+            cell.isSelected = true
+            collectionView.selectItem(at: indexPath, animated: false , scrollPosition: .init())
+        }
+        
         return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension ChooseCharacterViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 선택한 마니또 이미지 정보 출력
+        print(indexPath.item)
     }
 }

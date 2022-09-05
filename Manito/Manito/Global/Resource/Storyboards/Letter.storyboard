@@ -8,22 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Letter View Controller-->
-        <scene sceneID="s0d-6b-0kx">
-            <objects>
-                <viewController storyboardIdentifier="LetterViewController" id="Y6W-OH-hqX" customClass="LetterViewController" customModule="Manito" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="VAt-mZ-qJ6"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="971.01449275362324" y="105.80357142857143"/>
-        </scene>
         <!--Create Letter View Controller-->
         <scene sceneID="YQI-Gc-gP8">
             <objects>
@@ -43,7 +27,6 @@
         <!--Navigation Controller-->
         <scene sceneID="MRp-N2-TO2">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2RJ-7d-4Xd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="CreateLetterNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="4Ti-HA-7f9" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="866-Cc-mkB">
@@ -55,6 +38,7 @@
                         <segue destination="wwe-Dx-Lxd" kind="relationship" relationship="rootViewController" id="d1v-Dy-7Cn"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2RJ-7d-4Xd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2215.9420289855075" y="105.80357142857143"/>
         </scene>

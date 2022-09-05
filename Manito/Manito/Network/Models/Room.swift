@@ -7,26 +7,23 @@
 
 import Foundation
 
+struct ParticipatingRooms: Decodable {
+    let participatingRooms: [Room]
+}
+
 struct Room: Decodable {
-    let id: Int?
-    let title: String?
-    let state: String?
-    let participatingCount: Int?
+    let room: RoomInfo?
     let capacity: Int?
     var startDate: String?
     var endDate: String?
-    let manittee: String?
-    var didViewRoulette: Bool?
-    let withFriends: [Friend]?
-    let historyWithManitto: [Letter]?
-    let historyWithManitte: [Letter]?
-    let inviteCode: String?
-    let mission: String?
-    let letters: [Letter]?
-    let admin: Bool?
-    let message: Int?
-    let room: Room1?
+    let state: String?
     let participants: Participants?
+    let manittee: String?
+    let invitation: Invitation?
+    var didViewRoulette: Bool?
+    let mission: String?
+    let admin: Bool?
+    let messages: Int?
 }
 
 struct Friend: Decodable {
@@ -34,27 +31,23 @@ struct Friend: Decodable {
     let name: String?
 }
 
-struct RoomInfo: Codable {
-    let room: Room1?
-    let participants: Participants?
-    let manittee, mission: String?
-    let didViewRoulette, admin: Bool?
-    let messages: Int?
-}
-
 // MARK: - Participants
-struct Participants: Codable {
+struct Participants: Decodable {
     let count: Int?
-    let members: [Member1]?
+    let members: [User]?
 }
 
 // MARK: - Member
-struct Member1: Codable {
+struct User: Decodable {
     let id, nickname: String?
 }
 
 // MARK: - Room
-struct Room1: Codable {
+struct RoomInfo: Decodable {
     let id: Int?
     let title, startDate, endDate, state: String?
+}
+
+struct Invitation: Decodable {
+    let code: String?
 }

@@ -15,7 +15,7 @@ final class IndividualMissionView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "오늘의 개별 미션"
+        label.text = TextLiteral.individualMissionViewTitleLabel
         label.font = .font(.regular, ofSize: 14)
         label.textColor = .grey002
         return label
