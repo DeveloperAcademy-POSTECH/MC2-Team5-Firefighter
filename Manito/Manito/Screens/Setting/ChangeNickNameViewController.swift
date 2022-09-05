@@ -12,7 +12,7 @@ class ChangeNickNameViewController: BaseViewController {
     private var nickname: String = "호야"
     
     // MARK: - Property
-    private lazy var roomsNameTextField: UITextField = {
+    private lazy var nameTextField: UITextField = {
         let textField = UITextField()
         let attributes = [
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
@@ -27,6 +27,7 @@ class ChangeNickNameViewController: BaseViewController {
         textField.layer.borderColor = UIColor.white.cgColor
         textField.textAlignment = .center
         textField.returnKeyType = .done
+        textField.becomeFirstResponder()
         return textField
     }()
     private lazy var doneButton: MainButton = {
@@ -45,9 +46,9 @@ class ChangeNickNameViewController: BaseViewController {
     }
     
     override func render() {
-        view.addSubview(roomsNameTextField)
-        roomsNameTextField.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
+        view.addSubview(nameTextField)
+        nameTextField.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
             $0.height.equalTo(60)
         }
@@ -62,7 +63,7 @@ class ChangeNickNameViewController: BaseViewController {
     // MARK: - Seletors
     
     @objc private func didTapDoneButton() {
-        if let text = roomsNameTextField.text, !text.isEmpty {
+        if let text = nameTextField.text, !text.isEmpty {
             nickname = text
             navigationController?.popViewController(animated: true)
         }
@@ -91,7 +92,7 @@ class ChangeNickNameViewController: BaseViewController {
     // MARK: - Funtions
     
     private func setupDelegation() {
-        roomsNameTextField.delegate = self
+        nameTextField.delegate = self
     }
     
     private func setupNotificationCenter() {
@@ -114,9 +115,9 @@ class ChangeNickNameViewController: BaseViewController {
 // MARK: - Extension
 extension ChangeNickNameViewController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            roomsNameTextField.resignFirstResponder()
-            return true
-        }
+        nameTextField.resignFirstResponder()
+        return true
+    }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         doneButton.isDisabled = !textField.hasText
