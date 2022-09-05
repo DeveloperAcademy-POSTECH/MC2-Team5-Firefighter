@@ -224,9 +224,10 @@ class MainViewController: BaseViewController {
 
         let createRoom = UIAlertAction(title: TextLiteral.createRoom, style: .default, handler: { [weak self] _ in
             let createVC = CreateRoomViewController()
-            createVC.modalPresentationStyle = .fullScreen
+            let navigationController = UINavigationController(rootViewController: createVC)
+            navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
-                self?.present(createVC,animated: true)
+                self?.present(navigationController,animated: true)
             }
         })
         let enterRoom = UIAlertAction(title: TextLiteral.enterRoom, style: .default, handler: { [weak self] _ in
