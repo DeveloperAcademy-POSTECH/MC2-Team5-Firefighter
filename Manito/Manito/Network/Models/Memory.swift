@@ -13,10 +13,10 @@ struct Memory: Decodable {
 
 struct MemoriesWithManitte: Decodable {
     let member: User?
-    let messages: [Message]?
+    let messages: [Message2]?
 }
 
-struct Message: Decodable {
+struct Message2: Decodable {
     let id: Int?
     let content, imageUrl: String?
 }

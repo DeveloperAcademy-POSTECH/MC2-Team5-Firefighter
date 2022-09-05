@@ -8,7 +8,14 @@
 import Foundation
 
 struct ParticipatingRooms: Decodable {
-    let participatingRooms: [Room]
+    let participatingRooms: [ParticipatingRoom]?
+}
+
+struct ParticipatingRoom: Decodable {
+    let id: Int?
+    let title, state: String?
+    let participatingCount, capacity: Int?
+    let startDate, endDate: String?
 }
 
 struct Room: Decodable {
