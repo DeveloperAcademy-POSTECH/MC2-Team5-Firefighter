@@ -195,7 +195,7 @@ class DetailWaitViewController: BaseViewController {
         print("deInit")
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         requestWaitRoomInfo()
     }
 

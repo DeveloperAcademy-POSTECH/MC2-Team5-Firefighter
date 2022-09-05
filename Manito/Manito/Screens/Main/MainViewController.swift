@@ -13,7 +13,7 @@ import SnapKit
 class MainViewController: BaseViewController {
     
     private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
-    private var rooms: [Room]?
+    private var rooms: [ParticipatingRoom]?
 
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 17
@@ -348,7 +348,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.item == 0 {
             newRoom()
         } else {
-            pushDetailView(status: .waiting, index: indexPath.item)
+            pushDetailView(status: .end, index: indexPath.item)
         }
     }
 }
