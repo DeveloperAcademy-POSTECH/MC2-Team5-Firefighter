@@ -10,14 +10,15 @@ import UIKit
 import SnapKit
 
 class ManitoRoomCollectionViewCell: UICollectionViewCell{
-    static let identifier = "ManitoRoomCollectionViewCell"
-    
-    let currentMember = 5
-    let goalMember = 10
+    private enum RoomStatus: String {
+        case PRE = "대기중"
+        case PROCESSING = "진행중"
+        case POST = "완료"
+    }
     
     // MARK: - property
     
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = ImageLiterals.imgNi
         return imageView
@@ -25,7 +26,6 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     lazy var memberLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(currentMember)/\(goalMember)"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
@@ -33,21 +33,24 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     lazy var roomLabel: UILabel = {
         let label = UILabel()
-        label.text = "마니또"
+        label.text = TextLiteral.manitoRoomCollectionViewCellRoomLabelTitle
         label.textColor = .white
         label.font = .font(.regular, ofSize: 20)
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "22.06.01 ~ 22.06.06"
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
-    private lazy var roomState = RoomStateView()
+    lazy var roomState = RoomStateView()
     
     // MARK: - init
     
@@ -73,33 +76,34 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     func render() {
         addSubview(imageView)
         imageView.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(14)
+            $0.top.leading.equalToSuperview().inset(9)
             $0.width.height.equalTo(30)
         }
         
         addSubview(memberLabel)
         memberLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(18)
+            $0.top.equalToSuperview().inset(14)
             $0.leading.equalTo(imageView.snp.trailing).offset(4)
         }
         
         addSubview(roomLabel)
         roomLabel.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(24)
+            $0.top.equalTo(imageView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(17)
         }
         
         addSubview(roomState)
         roomState.snp.makeConstraints {
-            $0.top.equalTo(roomLabel.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().inset(14)
+            $0.top.equalTo(roomLabel.snp.bottom).offset(24)
+            $0.leading.equalToSuperview().inset(12)
             $0.width.equalTo(60)
             $0.height.equalTo(24)
         }
         
         addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(14)
+            $0.bottom.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
         }
     }

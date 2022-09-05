@@ -28,7 +28,7 @@ class CreateRoomViewController: BaseViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "방 생성하기"
+        label.text = TextLiteral.createRoom
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
@@ -41,7 +41,7 @@ class CreateRoomViewController: BaseViewController {
     }()
     lazy var nextButton: MainButton = {
         let button = MainButton()
-        button.title = "다음"
+        button.title = TextLiteral.next
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         button.isDisabled = true
         return button
@@ -50,7 +50,7 @@ class CreateRoomViewController: BaseViewController {
         let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
-        button.setTitle(" 이전", for: .normal)
+        button.setTitle(" " + TextLiteral.previous, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
         button.isHidden = true
@@ -77,6 +77,7 @@ class CreateRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        toggleButton()
         setupNotificationCenter()
     }
     
@@ -146,7 +147,6 @@ class CreateRoomViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         view.backgroundColor = .backgroundGrey
-        toggleButton()
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -187,10 +187,12 @@ class CreateRoomViewController: BaseViewController {
         case .inputName:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
+            checkView.name = text
             notiIndex = .inputPerson
             changedInputView()
         case .inputPerson:
             person = Int(personView.personSlider.value)
+            checkView.person = person
             notiIndex = .inputDate
             changedInputView()
         case .inputDate:
@@ -199,6 +201,9 @@ class CreateRoomViewController: BaseViewController {
             changedInputView()
         case .checkRoom:
             requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: name, capacity: person, startDate: dateView.calendarView.getTempStartDate(), endDate: dateView.calendarView.getTempEndDate()), member: MemberDTO(colorIdx: 3)))
+            DispatchQueue.main.async {
+                self.dismiss(animated: true)
+            }
         }
     }
     
@@ -222,6 +227,10 @@ class CreateRoomViewController: BaseViewController {
         nameView.changeNextButtonEnableStatus = { [weak self] isEnable in
             self?.nextButton.isDisabled = !isEnable
         }
+        
+        dateView.calendarView.changeButtonState = { [weak self] isEnabled in
+            self?.nextButton.isDisabled = !isEnabled
+        }
     }
     
     private func changedInputView() {
@@ -233,6 +242,7 @@ class CreateRoomViewController: BaseViewController {
                 self.backButton.isHidden = true
             }
         case RoomState.inputPerson:
+            nextButton.isDisabled = false
             UIView.animate(withDuration: 0.3) {
                 self.nameView.alpha = 0.0
                 self.personView.alpha = 1.0
@@ -240,6 +250,7 @@ class CreateRoomViewController: BaseViewController {
                 self.backButton.isHidden = false
             }
         case RoomState.inputDate:
+            dateView.calendarView.setupButtonState()
             UIView.animate(withDuration: 0.3) {
                 self.personView.alpha = 0.0
                 self.dateView.alpha = 1.0

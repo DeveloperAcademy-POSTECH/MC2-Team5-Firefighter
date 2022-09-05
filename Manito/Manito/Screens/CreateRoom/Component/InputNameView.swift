@@ -20,7 +20,7 @@ class InputNameView: UIView {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         texField.backgroundColor = .darkGrey002
-        texField.attributedPlaceholder = NSAttributedString(string: "방 이름을 적어주세요", attributes:attributes)
+        texField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText, attributes:attributes)
         texField.textAlignment = .center
         texField.makeBorderLayer(color: .white)
         texField.font = .font(.regular, ofSize: 18)
