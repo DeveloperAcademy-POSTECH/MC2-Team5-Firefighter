@@ -13,18 +13,13 @@ import SnapKit
 class MainViewController: BaseViewController {
     
     private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
-
-    // 임시 데이터
-    let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
+    private var rooms: [Room]?
 
     private enum Size {
-        static let collectionHorizontalSpacing: CGFloat = 22
-        static let collectionVerticalSpacing: CGFloat = 17
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2 - collectionVerticalSpacing) / 2
-        static let collectionInset = UIEdgeInsets(top: 0,
-            left: collectionHorizontalSpacing,
-            bottom: collectionVerticalSpacing,
-            right: collectionHorizontalSpacing)
+        static let collectionHorizontalSpacing: CGFloat = 17
+        static let collectionVerticalSpacing: CGFloat = 12
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 20 * 2 - collectionHorizontalSpacing) / 2
+        static let collectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20)
     }
 
     private enum RoomStatus: String {
@@ -89,16 +84,17 @@ class MainViewController: BaseViewController {
 
     // MARK: - life cycle
     
-    override func viewDidAppear(_ animated: Bool) {
-//        requestCommonMission()
-        requestManittoList()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGifImage()
         setupGuideArea()
         renderGuideArea()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        requestCommonMission()
+        requestManittoList()
     }
 
     override func render() {
@@ -195,8 +191,8 @@ class MainViewController: BaseViewController {
         Task {
             do {
                 let data = try await mainService.fetchCommonMission()
-                if let commonMission = data {
-                    print(commonMission)
+                if let commonMission = data?.mission {
+                    commonMissionView.mission.text = commonMission
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -212,7 +208,8 @@ class MainViewController: BaseViewController {
                 let data = try await mainService.fetchManittoList()
                 
                 if let manittoList = data {
-                    print(manittoList)
+                    rooms = manittoList.participatingRooms
+                    listCollectionView.reloadData()
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -292,7 +289,11 @@ class MainViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return roomData.count + 1
+        if let count = rooms?.count {
+            return count + 1
+        }
+        
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -306,7 +307,35 @@ extension MainViewController: UICollectionViewDataSource {
                 assert(false, "Wrong Cell")
             }
             
-            cell.roomLabel.text = roomData[indexPath.item - 1]
+            guard let roomData = rooms?[indexPath.item - 1] else { return cell }
+            
+            let participatingCount = roomData.participatingCount ?? 0
+            let capacity = roomData.capacity ?? 0
+            let title = roomData.title ?? ""
+            let startDate = roomData.startDate?.suffix(8) ?? ""
+            let endDate = roomData.endDate?.suffix(8) ?? ""
+            let state = roomData.state ?? ""
+            
+            cell.memberLabel.text = "\(participatingCount)/\(capacity)"
+            cell.roomLabel.text = "\(title)"
+            cell.dateLabel.text = "\(startDate) ~ \(endDate)"
+            
+            switch state {
+            case "PRE":
+                cell.roomState.state.text = "대기중"
+                cell.roomState.state.textColor = .darkGrey001
+                cell.roomState.backgroundColor = .badgeBeige
+            case "PROCESSING":
+                cell.roomState.state.text = "진행중"
+                cell.roomState.state.textColor = .white
+                cell.roomState.backgroundColor = .red
+            case "POST":
+                cell.roomState.state.text = "완료"
+                cell.roomState.state.textColor = .white
+                cell.roomState.backgroundColor = .grey002
+            default:
+                print("방 정보 없음")
+            }
             
             return cell
         }

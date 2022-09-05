@@ -8,10 +8,10 @@
 import Foundation
 
 enum LetterEndPoint: EndPointable {
-    case sendLetter(roomId: String, dto: SendMessageDTO)
-    case getSendLetter(roomId: String)
-    case getReceiveLetter(roomId: String)
-    case changeReadMessage(roomId: String, status: String)
+    case dispatchLetter(roomId: String, dto: SendMessageDTO)
+    case fetchSendLetter(roomId: String)
+    case fetchReceiveLetter(roomId: String)
+    case patchReadMessage(roomId: String, status: String)
 
     var requestTimeOut: Float {
         return 20
@@ -19,27 +19,27 @@ enum LetterEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .sendLetter:
+        case .dispatchLetter:
             return .post
-        case .getSendLetter:
+        case .fetchSendLetter:
             return .get
-        case .getReceiveLetter:
+        case .fetchReceiveLetter:
             return .get
-        case .changeReadMessage:
+        case .patchReadMessage:
             return .patch
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .sendLetter(_, let dto):
+        case .dispatchLetter(_, let dto):
             let body = dto
             return body.encode()
-        case .getSendLetter:
+        case .fetchSendLetter:
             return nil
-        case .getReceiveLetter:
+        case .fetchReceiveLetter:
             return nil
-        case .changeReadMessage(_, let status):
+        case .patchReadMessage(_, let status):
             let body = ["status": status]
             return body.encode()
         }
@@ -47,14 +47,25 @@ enum LetterEndPoint: EndPointable {
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .sendLetter(let roomId, _):
-            return "\(baseURL)/api/rooms/\(roomId)/messages"
-        case .getSendLetter(let roomId):
-            return "\(baseURL)/api/rooms/\(roomId)/messages"
-        case .getReceiveLetter(let roomId):
-            return "\(baseURL)/api/rooms/\(roomId)/messages"
-        case .changeReadMessage(let roomId, _):
-            return "\(baseURL)/api/rooms/\(roomId)/messages/status"
+        case .dispatchLetter(let roomId, _):
+            return "\(baseURL)/rooms/\(roomId)/messages"
+        case .fetchSendLetter(let roomId):
+            return "\(baseURL)/rooms/\(roomId)/messages-sent"
+        case .fetchReceiveLetter(let roomId):
+            return "\(baseURL)/rooms/\(roomId)/messages-received"
+        case .patchReadMessage(let roomId, _):
+            return "\(baseURL)/rooms/\(roomId)/messages/status"
         }
+    }
+    
+    func createRequest(environment: APIEnvironment) -> NetworkRequest {
+        var headers: [String: String] = [:]
+        headers["Content-Type"] = "application/json"
+        headers["authorization"] = "Bearer \(APIEnvironment.development.token)"
+        return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+                              headers: headers,
+                              reqBody: requestBody,
+                              reqTimeout: requestTimeOut,
+                              httpMethod: httpMethod)
     }
 }
