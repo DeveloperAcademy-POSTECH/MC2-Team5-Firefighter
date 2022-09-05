@@ -22,7 +22,7 @@ final class CreateLetterViewController: BaseViewController {
     private let cancelButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.setTitle("취소", for: .normal)
+        button.setTitle(TextLiteral.cancel, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
         return button
@@ -126,7 +126,7 @@ final class CreateLetterViewController: BaseViewController {
         navigationBar.compactAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
         
-        title = "쪽지 작성하기"
+        title = TextLiteral.createLetterViewControllerTitle
     }
     
     // MARK: - func
@@ -189,7 +189,7 @@ final class CreateLetterViewController: BaseViewController {
             self?.resignFirstResponder()
             self?.dismiss(animated: true, completion: nil)
         }
-        makeActionSheet(actionTitles: ["변경 사항 폐기", "취소"],
+        makeActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
                         actionStyle: [.destructive, .cancel],
                         actions: [dismissAction, nil])
     }

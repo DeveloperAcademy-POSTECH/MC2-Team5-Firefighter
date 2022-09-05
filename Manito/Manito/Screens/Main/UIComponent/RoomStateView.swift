@@ -11,13 +11,12 @@ import SnapKit
 
 final class RoomStateView: UIView {
     
-    let roomState = "진행중"
+    let roomState = TextLiteral.doing
     
     // MARK: - property
     
-    private lazy var state: UILabel = {
+    lazy var state: UILabel = {
         let label = UILabel()
-        label.text = roomState
         label.textColor = .white
         label.font = .font(.regular, ofSize: 12)
         return label
@@ -45,7 +44,6 @@ final class RoomStateView: UIView {
     }
     
     private func configUI() {
-        backgroundColor = .red
         layer.cornerRadius = 12
     }
 }

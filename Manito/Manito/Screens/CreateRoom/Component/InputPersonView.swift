@@ -32,7 +32,7 @@ class InputPersonView: UIView {
     }()
     private var personLabel: UILabel = {
         let label = UILabel()
-        label.text = "X 5인"
+        label.text = TextLiteral.x + TextLiteral.minMember
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
@@ -48,13 +48,13 @@ class InputPersonView: UIView {
     }()
     private var minLabel: UILabel = {
         let label = UILabel()
-        label.text = "5인"
+        label.text = TextLiteral.minMember
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
     private var maxLabel: UILabel = {
         let label = UILabel()
-        label.text = "15인"
+        label.text = TextLiteral.maxMember
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
@@ -74,7 +74,7 @@ class InputPersonView: UIView {
     
     @objc func didSlideSlider(_ slider: UISlider) {
         let value = slider.value
-        personLabel.text = "X \(Int(value))인"
+        personLabel.text = TextLiteral.x + " \(Int(value))인"
     }
     
     // MARK: - Config
