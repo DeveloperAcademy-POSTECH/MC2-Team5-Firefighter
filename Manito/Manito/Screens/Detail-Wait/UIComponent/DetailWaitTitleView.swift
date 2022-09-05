@@ -43,7 +43,7 @@ class DetailWaitTitleView: UIView {
         return label
     }()
 
-    private let startStautsLabel: UILabel = {
+    let startStautsLabel: UILabel = {
         let label = UILabel()
         label.text = StartStatus.waiting.status
         label.backgroundColor = .badgeBeige
@@ -127,13 +127,13 @@ class DetailWaitTitleView: UIView {
     func setStartState(state: String) {
         switch state {
         case "PRE":
-            startStautsLabel.text = StartStatus.waiting.rawValue
+            startStautsLabel.text = StartStatus.waiting.status
         case "PROCESSING":
-            startStautsLabel.text = StartStatus.starting.rawValue
+            startStautsLabel.text = StartStatus.starting.status
         case "POST":
-            startStautsLabel.text = StartStatus.complete.rawValue
+            startStautsLabel.text = StartStatus.complete.status
         default:
-            startStautsLabel.text = StartStatus.waiting.rawValue
+            startStautsLabel.text = StartStatus.waiting.status
         }
     }
 }
