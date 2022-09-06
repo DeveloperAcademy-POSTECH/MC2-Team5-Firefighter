@@ -14,13 +14,6 @@ class MainViewController: BaseViewController {
     
     private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
     private var rooms: [ParticipatingRoom]?
-//    {
-//        didSet {
-//            sortRoomList()
-//            rooms?.sort { $0.startDate ?? "" < $1.startDate ?? "" }
-//            rooms?.sort { $0.state ?? "" > $1.state ?? "" }
-//        }
-//    }
 
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 17
