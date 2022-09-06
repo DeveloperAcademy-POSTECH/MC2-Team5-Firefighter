@@ -215,6 +215,16 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="함께 했던 기록"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xGt-0r-dA8">
+                                <rect key="frame" x="257.66666666666669" y="94" width="66" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="fjY-HK-DoD"/>
+                                    <constraint firstAttribute="height" constant="23" id="nQ0-yk-Y2k"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -227,6 +237,8 @@
                             <constraint firstItem="fZJ-MB-brw" firstAttribute="top" secondItem="ne3-xF-fpF" secondAttribute="bottom" constant="44" id="H33-tB-Yis"/>
                             <constraint firstItem="ne3-xF-fpF" firstAttribute="top" secondItem="dp8-IY-L6V" secondAttribute="bottom" constant="30" id="Hbh-oe-VO8"/>
                             <constraint firstItem="gKn-4u-LDy" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="22" id="Mst-2v-l2H"/>
+                            <constraint firstItem="xGt-0r-dA8" firstAttribute="centerY" secondItem="PDH-QK-Zi6" secondAttribute="centerY" id="QFz-WH-tw7"/>
+                            <constraint firstItem="xGt-0r-dA8" firstAttribute="leading" secondItem="PDH-QK-Zi6" secondAttribute="trailing" constant="6" id="VAD-y0-pod"/>
                             <constraint firstItem="VeD-cY-mVa" firstAttribute="top" secondItem="gKn-4u-LDy" secondAttribute="bottom" constant="18" id="WWG-hj-1Ff"/>
                             <constraint firstItem="MnW-cb-NGs" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" constant="403" id="fes-qn-Q60"/>
                             <constraint firstItem="PDH-QK-Zi6" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="19" id="mFR-9E-deL"/>
@@ -252,6 +264,7 @@
                         <outlet property="missionContentsLabel" destination="vma-X3-7Uq" id="y49-Oc-WnK"/>
                         <outlet property="missionTitleLabel" destination="kHA-mR-fkA" id="u4u-10-1xg"/>
                         <outlet property="periodLabel" destination="dp8-IY-L6V" id="QRF-nD-GAC"/>
+                        <outlet property="statusLabel" destination="xGt-0r-dA8" id="X9g-Ii-Iof"/>
                         <outlet property="titleLabel" destination="PDH-QK-Zi6" id="w5e-21-Vnq"/>
                     </connections>
                 </viewController>

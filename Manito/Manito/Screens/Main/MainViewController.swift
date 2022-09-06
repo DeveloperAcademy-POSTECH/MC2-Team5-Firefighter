@@ -23,9 +23,9 @@ class MainViewController: BaseViewController {
     }
 
     private enum RoomStatus: String {
-        case waiting
-        case starting
-        case end
+        case waiting = "PRE"
+        case starting = "PROCESSING"
+        case end = "POST"
         
         var roomStatus: String {
             switch self {
@@ -262,11 +262,13 @@ class MainViewController: BaseViewController {
         case .starting:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
+            viewController.roomIndex = index
             self.navigationController?.pushViewController(viewController, animated: true)
         case .end:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
             viewController.isDone = true
+            viewController.roomIndex = index
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -303,38 +305,35 @@ extension MainViewController: UICollectionViewDataSource {
             }
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath) as? ManitoRoomCollectionViewCell else {
-                assert(false, "Wrong Cell")
-            }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath) as? ManitoRoomCollectionViewCell else { assert(false, "Wrong Cell") }
             
             guard let roomData = rooms?[indexPath.item - 1] else { return cell }
             
-            let participatingCount = roomData.participatingCount ?? 0
-            let capacity = roomData.capacity ?? 0
-            let title = roomData.title ?? ""
-            let startDate = roomData.startDate?.suffix(8) ?? ""
-            let endDate = roomData.endDate?.suffix(8) ?? ""
-            let state = roomData.state ?? ""
+            guard let participatingCount = roomData.participatingCount,
+                  let capacity = roomData.capacity,
+                  let title = roomData.title,
+                  let startDate = roomData.startDate?.suffix(8),
+                  let endDate = roomData.endDate?.suffix(8),
+                  let state = roomData.state else { return cell }
+            guard let roomStatus = RoomStatus.init(rawValue: state) else { return cell }
             
             cell.memberLabel.text = "\(participatingCount)/\(capacity)"
             cell.roomLabel.text = "\(title)"
             cell.dateLabel.text = "\(startDate) ~ \(endDate)"
             
-            switch state {
-            case "PRE":
+            switch roomStatus {
+            case .waiting:
                 cell.roomState.state.text = "대기중"
                 cell.roomState.state.textColor = .darkGrey001
                 cell.roomState.backgroundColor = .badgeBeige
-            case "PROCESSING":
+            case .starting:
                 cell.roomState.state.text = "진행중"
                 cell.roomState.state.textColor = .white
-                cell.roomState.backgroundColor = .red
-            case "POST":
+                cell.roomState.backgroundColor = .mainRed
+            case .end:
                 cell.roomState.state.text = "완료"
                 cell.roomState.state.textColor = .white
                 cell.roomState.backgroundColor = .grey002
-            default:
-                print("방 정보 없음")
             }
             
             return cell
@@ -348,7 +347,11 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.item == 0 {
             newRoom()
         } else {
-            pushDetailView(status: .end, index: indexPath.item)
+            guard let state = rooms?[indexPath.item - 1].state,
+                  let index = rooms?[indexPath.item - 1].id,
+                  let roomStatus = RoomStatus.init(rawValue: state)
+            else { return }
+            pushDetailView(status: roomStatus, index: index)
         }
     }
 }
