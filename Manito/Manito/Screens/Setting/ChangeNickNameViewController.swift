@@ -11,7 +11,7 @@ import SnapKit
 
 class ChangeNickNameViewController: BaseViewController {
     
-    private var nickname: String = "호야"
+    private var nickname: String = UserDefaults.standard.nickname ?? "이성호"
     private var maxLength = 5
     
     // MARK: - Property
@@ -81,6 +81,7 @@ class ChangeNickNameViewController: BaseViewController {
     @objc private func didTapDoneButton() {
         if let text = nameTextField.text, !text.isEmpty {
             nickname = text
+            UserDefaults.standard.nickname = nickname
             navigationController?.popViewController(animated: true)
         }
     }
