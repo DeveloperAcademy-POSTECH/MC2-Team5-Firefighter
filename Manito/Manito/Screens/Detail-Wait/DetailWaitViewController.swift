@@ -20,7 +20,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
     var canStartClosure: ((Bool) -> ())?
-    var maxUserCount: Int = 10 {
+    var maxUserCount: Int = 15 {
         didSet {
             comeInLabel.text = "\(userCount)/\(maxUserCount)"
         }
@@ -263,6 +263,7 @@ class DetailWaitViewController: BaseViewController {
                           let code = roomInfo.invitation?.code,
                           let startDate = roomInfo.room?.startDate,
                           let endDate = roomInfo.room?.endDate,
+                          let capacity = roomInfo.room?.capacity,
                           let state = roomInfo.room?.state,
                           let members = roomInfo.participants?.members,
                           let isAdmin = roomInfo.admin else { return }
@@ -270,6 +271,7 @@ class DetailWaitViewController: BaseViewController {
                     inviteCode = code
                     startDateText = startDate
                     endDateText = endDate
+                    maxUserCount = capacity
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
                     isOwner = isAdmin
