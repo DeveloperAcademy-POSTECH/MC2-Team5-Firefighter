@@ -94,7 +94,6 @@ class ChooseCharacterViewController: BaseViewController {
         let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
-        button.setTitle(" " + TextLiteral.previous, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
         return button
