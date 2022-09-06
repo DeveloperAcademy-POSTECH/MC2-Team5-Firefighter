@@ -96,22 +96,14 @@ class DetailIngViewController: BaseViewController {
         super.configUI()
         setupFont()
         setupViewLayer()
+        setupStatusLabel()
+        setupManitteLabel()
+        
         addActionMemoryViewController()
         addActionPushLetterViewController()
         addGestureMemberList()
         addGestureManito()
         addActionOpenManittoViewController()
-        
-        manitteAnimationLabel.text = ""
-        manitteAnimationLabel.alpha = 0
-        
-        statusLabel.text = isDone ? TextLiteral.done : TextLiteral.doing
-        statusLabel.backgroundColor = isDone ? .grey002 : .mainRed
-        statusLabel.layer.masksToBounds = true
-        statusLabel.layer.cornerRadius = 11
-        statusLabel.textColor = .white
-        statusLabel.font = .font(.regular, ofSize: 13)
-        statusLabel.textAlignment = .center
         
         manitiIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
@@ -159,6 +151,21 @@ class DetailIngViewController: BaseViewController {
         listImageView.layer.cornerRadius = 50
         letterBoxButton.makeBorderLayer(color: .white)
         manitoMemoryButton.makeBorderLayer(color: .white)
+    }
+    
+    private func setupStatusLabel() {
+        statusLabel.text = isDone ? TextLiteral.done : TextLiteral.doing
+        statusLabel.backgroundColor = isDone ? .grey002 : .mainRed
+        statusLabel.layer.masksToBounds = true
+        statusLabel.layer.cornerRadius = 11
+        statusLabel.textColor = .white
+        statusLabel.font = .font(.regular, ofSize: 13)
+        statusLabel.textAlignment = .center
+    }
+    
+    private func setupManitteLabel() {
+        manitteAnimationLabel.text = ""
+        manitteAnimationLabel.alpha = 0
     }
     
     private func addGestureManito() {

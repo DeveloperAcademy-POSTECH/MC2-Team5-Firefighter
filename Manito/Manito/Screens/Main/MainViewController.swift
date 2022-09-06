@@ -256,7 +256,6 @@ class MainViewController: BaseViewController {
     }
 
     private func pushDetailView(status: RoomStatus, index: Int) {
-        print("index = \(index)")
         switch status {
         case .waiting:
             self.navigationController?.pushViewController(DetailWaitViewController(index: index), animated: true)
