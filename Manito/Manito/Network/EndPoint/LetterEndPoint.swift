@@ -12,7 +12,7 @@ enum LetterEndPoint: EndPointable {
     case fetchSendLetter(roomId: String)
     case fetchReceiveLetter(roomId: String)
     case patchReadMessage(roomId: String, status: String)
-
+    
     var requestTimeOut: Float {
         return 20
     }
@@ -33,14 +33,13 @@ enum LetterEndPoint: EndPointable {
     var requestBody: Data? {
         switch self {
         case .dispatchLetter(_, let image, let letter):
-            let boundary = generateBoundaryString()
             let id: String? = "eec7ef46-fa5a-4ba3-94d5-4985beabd4c2"
-            
+        
             let parameters: [String: String?] = ["manitteeId": id,
                                                  "messageContent": letter.messageContent]
             let dataBody = createDataBody(withParameters: parameters,
                                           media: image ?? nil,
-                                          boundary: boundary)
+                                          boundary: "123")
             
             let stringValue = String(decoding: dataBody, as: UTF8.self)
             print(stringValue)
@@ -71,16 +70,15 @@ enum LetterEndPoint: EndPointable {
     
     func createRequest(environment: APIEnvironment) -> NetworkRequest {
         var headers: [String: String] = [:]
-        let boundary = generateBoundaryString()
         
         switch self {
         case .dispatchLetter:
-            headers["Content-Type"] = "multipart/form-data; boundary=\"\(boundary)\""
+            headers["Content-Type"] = "multipart/form-data; boundary=123"
         default:
             headers["Content-Type"] = "application/json"
         }
         
-        headers["authorization"] = "Bearer \(APIEnvironment.development.token)"
+        headers["Authorization"] = "Bearer \(APIEnvironment.development.token)"
         return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
                               headers: headers,
                               reqBody: requestBody,
@@ -98,8 +96,6 @@ extension LetterEndPoint {
         
         for (key, value) in params {
             guard let value = value else { continue }
-            print("key : ", key)
-            print("value : ", value)
             body.append("--\(boundary + lineBreak)")
             body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
             body.append("\(value + lineBreak)")
@@ -109,7 +105,7 @@ extension LetterEndPoint {
             let mediaKey = "image"
             body.append("--\(boundary + lineBreak)")
             body.append("Content-Disposition: form-data; name=\"\(mediaKey)\"; filename=\"\(arc4random()).png\"\(lineBreak)")
-            body.append("Content-Type: image/png \(lineBreak + lineBreak)")
+            body.append("Content-Type: image/png\(lineBreak + lineBreak)")
             body.append(media)
             body.append(lineBreak)
         }

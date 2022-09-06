@@ -35,6 +35,9 @@ struct LetterAPI: LetterProtocol {
         let request = LetterEndPoint
             .dispatchLetter(roomId: roomId, image: image, letter: letter)
             .createRequest(environment: environment)
+        
+        print(request.headers?.debugDescription)
+        
         return try await self.apiService.request(request)
     }
 }
