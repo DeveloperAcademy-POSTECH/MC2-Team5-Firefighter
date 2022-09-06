@@ -33,32 +33,19 @@ enum LetterEndPoint: EndPointable {
     var requestBody: Data? {
         switch self {
         case .dispatchLetter(_, let image, let letter):
-            var body = Data()
             let boundary = generateBoundaryString()
-            let boundaryPrefix = "--\(boundary)\r\n"
-            let jsonEncoder = JSONEncoder()
+            let id: String? = "eec7ef46-fa5a-4ba3-94d5-4985beabd4c2"
             
-            let imgDataKey = "image"
-            if let image = image {
-                body.append(boundaryPrefix.data(using: .utf8)!)
-                body.append("Content-Disposition: form-data; name=\"\(imgDataKey)\"; filename=\"image.png\"\r\n".data(using: .utf8)!)
-                body.append("Content-Type: image/png\r\n".data(using: .utf8)!)
-                body.append(image)
-                body.append("\r\n".data(using: .utf8)!)
-            }
+            let parameters: [String: String?] = ["manitteeId": id,
+                                                 "messageContent": letter.messageContent]
+            let dataBody = createDataBody(withParameters: parameters,
+                                          media: image ?? nil,
+                                          boundary: boundary)
             
-            let messageDataKey = "sendMessageRequest"
-            let messageJsonData = try! jsonEncoder.encode(letter)
-            let messageJson = String(data: messageJsonData, encoding: String.Encoding.utf8)
-            if let json = messageJson {
-                body.append(boundaryPrefix.data(using: .utf8)!)
-                body.append("Content-Disposition: form-data; name=\"\(messageDataKey)\"\r\n".data(using: .utf8)!)
-                body.append("Content-Type: application/json; charset=utf-8\r\n".data(using: .utf8)!)
-                body.append("\(json)\r\n".data(using: .utf8)!)
-                body.append(boundaryPrefix.data(using: .utf8)!)
-            }
+            let stringValue = String(decoding: dataBody, as: UTF8.self)
+            print(stringValue)
             
-            return body
+            return dataBody
         case .fetchSendLetter:
             return nil
         case .fetchReceiveLetter:
@@ -72,7 +59,7 @@ enum LetterEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .dispatchLetter(let roomId,_,_):
-            return "\(baseURL)/rooms/\(roomId)/messages"
+            return "\(baseURL)/rooms/\(roomId)/messages-separate"
         case .fetchSendLetter(let roomId):
             return "\(baseURL)/rooms/\(roomId)/messages-sent"
         case .fetchReceiveLetter(let roomId):
@@ -84,7 +71,7 @@ enum LetterEndPoint: EndPointable {
     
     func createRequest(environment: APIEnvironment) -> NetworkRequest {
         var headers: [String: String] = [:]
-        let boundary = "Boundary-\(UUID().uuidString)"
+        let boundary = generateBoundaryString()
         
         switch self {
         case .dispatchLetter:
@@ -92,6 +79,7 @@ enum LetterEndPoint: EndPointable {
         default:
             headers["Content-Type"] = "application/json"
         }
+        
         headers["authorization"] = "Bearer \(APIEnvironment.development.token)"
         return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
                               headers: headers,
@@ -102,7 +90,44 @@ enum LetterEndPoint: EndPointable {
 }
 
 extension LetterEndPoint {
+    func createDataBody(withParameters params: [String: String?],
+                        media: Data?,
+                        boundary: String) -> Data {
+        let lineBreak = "\r\n"
+        var body = Data()
+        
+        for (key, value) in params {
+            guard let value = value else { continue }
+            print("key : ", key)
+            print("value : ", value)
+            body.append("--\(boundary + lineBreak)")
+            body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
+            body.append("\(value + lineBreak)")
+        }
+
+        if let media = media {
+            let mediaKey = "image"
+            body.append("--\(boundary + lineBreak)")
+            body.append("Content-Disposition: form-data; name=\"\(mediaKey)\"; filename=\"\(arc4random()).png\"\(lineBreak)")
+            body.append("Content-Type: image/png \(lineBreak + lineBreak)")
+            body.append(media)
+            body.append(lineBreak)
+        }
+
+        body.append("--\(boundary)--\(lineBreak)")
+
+        return body
+    }
+    
     private func generateBoundaryString() -> String {
         return "Boundary-\(UUID().uuidString)"
+    }
+}
+
+extension Data {
+    mutating func append(_ string: String) {
+        if let data = string.data(using: .utf8) {
+            append(data)
+        }
     }
 }

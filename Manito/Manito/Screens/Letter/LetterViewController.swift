@@ -109,8 +109,8 @@ final class LetterViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchSendLetter(roomId: "1")
-        fetchReceviedLetter(roomId: "1")
+        fetchSendLetter(roomId: "9")
+        fetchReceviedLetter(roomId: "9")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -188,7 +188,7 @@ final class LetterViewController: BaseViewController {
             else { return }
             
             viewController.manitteId = self?.manitteId
-            viewController.roomId = "1"
+            viewController.roomId = "9"
             
             self?.present(navigationController, animated: true, completion: nil)
         }

@@ -200,7 +200,8 @@ final class CreateLetterViewController: BaseViewController {
         Task {
             do {
                 if let content = letterTextView.letterTextView.text,
-                   let image = letterPhotoView.importPhotosButton.imageView?.image {
+                   let image = letterPhotoView.importPhotosButton.imageView?.image,
+                   image != ImageLiterals.btnCamera {
                     guard let pngData = image.pngData() else { return }
                     let dto = LetterDTO(manitteeId: manitteId, messageContent: content)
                     let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
@@ -215,7 +216,8 @@ final class CreateLetterViewController: BaseViewController {
                     if let content = letterContent {
                         dump(content)
                     }
-                } else if let image = letterPhotoView.importPhotosButton.imageView?.image {
+                } else if let image = letterPhotoView.importPhotosButton.imageView?.image,
+                          image != ImageLiterals.btnCamera {
                     guard let pngData = image.pngData() else { return }
                     let dto = LetterDTO(manitteeId: manitteId)
                     let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)

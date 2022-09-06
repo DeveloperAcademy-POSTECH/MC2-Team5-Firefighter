@@ -13,7 +13,7 @@ import SnapKit
 class MainViewController: BaseViewController {
     
     private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
-    private var rooms: [Room]?
+    private var rooms: [ParticipatingRoom]?
 
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 17
@@ -311,7 +311,7 @@ extension MainViewController: UICollectionViewDataSource {
             
             let participatingCount = roomData.capacity ?? 0
             let capacity = roomData.capacity ?? 0
-//            let title = roomData.title ?? ""
+//            let title = roomData.title
             let startDate = roomData.startDate?.suffix(8) ?? ""
             let endDate = roomData.endDate?.suffix(8) ?? ""
             let state = roomData.state ?? ""
