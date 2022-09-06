@@ -138,6 +138,7 @@
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
+		D777D2C928C7780E008655BD /* UrlLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* UrlLiteral.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
 /* End PBXBuildFile section */
 
@@ -272,6 +273,7 @@
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
+		D777D2C828C7780E008655BD /* UrlLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlLiteral.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -634,6 +636,7 @@
 				391B3002286198C200421F1D /* Size.swift */,
 				CB7B23A728C4ECA8004A4CF3 /* Character.swift */,
 				7E15F67D28B35B3D00441305 /* TextLiteral.swift */,
+				D777D2C828C7780E008655BD /* UrlLiteral.swift */,
 			);
 			path = Literal;
 			sourceTree = "<group>";
@@ -1003,6 +1006,7 @@
 				CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */,
 				B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */,
 				B5F31C5228BFA64F00F61D0F /* LetterAPI.swift in Sources */,
+				D777D2C928C7780E008655BD /* UrlLiteral.swift in Sources */,
 				391B3003286198C200421F1D /* Size.swift in Sources */,
 				39C95800287DAC2900A04A2B /* DetailDoneEndPoint.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,

@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 class ChangeNickNameViewController: BaseViewController {
     
     private var nickname: String = "호야"
@@ -128,10 +130,11 @@ class ChangeNickNameViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
-        title = TextLiteral.changeNickNameViewControllerTitle
     }
+    
     override func setupNavigationBar() {
         super.setupNavigationBar()
+        title = TextLiteral.changeNickNameViewControllerTitle
         navigationController?.navigationBar.prefersLargeTitles = true
     }
 }

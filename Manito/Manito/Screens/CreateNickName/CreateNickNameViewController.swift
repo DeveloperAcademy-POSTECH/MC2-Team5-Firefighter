@@ -12,7 +12,7 @@ import SnapKit
 class CreateNickNameViewController: BaseViewController {
     
     private var nickname: String = ""
-    private var maxLength = 5
+    private let maxLength = 5
     
     // MARK: - Property
     

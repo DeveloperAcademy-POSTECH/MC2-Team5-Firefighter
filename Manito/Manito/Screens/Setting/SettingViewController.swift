@@ -48,7 +48,6 @@ class SettingViewController: BaseViewController {
     }
     
     override func render() {
-        
         view.addSubview(imageRow)
         imageRow.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -128,13 +127,13 @@ class SettingViewController: BaseViewController {
     }
     
     private func goToPersonalInfomation() {
-        if let url = URL(string: "https://torpid-spy-8e4.notion.site/767e80eea1734539aead3b814016b361") {
+        if let url = URL(string: UrlLiteral.personalInfomationUrl) {
             UIApplication.shared.open(url, options: [:])
         }
     }
     
     private func goToTermsOfService() {
-        if let url = URL(string: "https://torpid-spy-8e4.notion.site/445bd6a8c8dc459d915158935dcc3298") {
+        if let url = URL(string: UrlLiteral.termsOfServiceUrl) {
             UIApplication.shared.open(url, options: [:])
         }
     }
