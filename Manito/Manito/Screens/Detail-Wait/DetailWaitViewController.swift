@@ -16,7 +16,6 @@ class DetailWaitViewController: BaseViewController {
     private var userArr: [String] = [] {
         didSet {
             renderTableView()
-            userCount = userArr.count
         }
     }
     var canStartClosure: ((Bool) -> ())?
@@ -28,6 +27,7 @@ class DetailWaitViewController: BaseViewController {
     lazy var userCount = 0 {
         didSet {
             comeInLabel.text = "\(userCount)/\(maxUserCount)"
+            setStartButton()
         }
     }
     var isOwner = false {
@@ -263,6 +263,7 @@ class DetailWaitViewController: BaseViewController {
                           let code = roomInfo.invitation?.code,
                           let startDate = roomInfo.room?.startDate,
                           let endDate = roomInfo.room?.endDate,
+                          let count = roomInfo.participants?.count,
                           let capacity = roomInfo.room?.capacity,
                           let state = roomInfo.room?.state,
                           let members = roomInfo.participants?.members,
@@ -271,6 +272,7 @@ class DetailWaitViewController: BaseViewController {
                     inviteCode = code
                     startDateText = startDate
                     endDateText = endDate
+                    userCount = count
                     maxUserCount = capacity
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
@@ -466,8 +468,9 @@ class DetailWaitViewController: BaseViewController {
         guard let todayDate = Date().dateToString.stringToDate else { return }
         
         let isToday = startDate.distance(to: todayDate).isZero
-        
-        canStartClosure?(isToday)
+        let isMinimumUserCount = userCount >= 5
+
+        canStartClosure?(isToday && isMinimumUserCount)
     }
     
     private func renderTableView() {
