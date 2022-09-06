@@ -184,7 +184,7 @@ class CreateRoomViewController: BaseViewController {
             checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
             changedInputView()
         case .checkRoom:
-            roomInfo = RoomDTO(title: name, capacity: person, startDate: dateView.calendarView.startDateText, endDate: dateView.calendarView.endDateText)
+            roomInfo = RoomDTO(title: name, capacity: person, startDate: "20\(dateView.calendarView.getTempStartDate())", endDate: "20\(dateView.calendarView.getTempEndDate())")
             let chooseVC = ChooseCharacterViewController(statusMode: .createRoom)
             chooseVC.roomInfo = roomInfo
             navigationController?.pushViewController(chooseVC, animated: true)
