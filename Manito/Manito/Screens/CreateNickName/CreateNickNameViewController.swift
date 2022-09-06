@@ -11,6 +11,8 @@ import SnapKit
 
 class CreateNickNameViewController: BaseViewController {
     
+    let settingService: SettingProtocol = SettingAPI(apiService: APIService(), environment: .development)
+    
     private var nickname: String = ""
     private let maxLength = 5
     
@@ -60,6 +62,24 @@ class CreateNickNameViewController: BaseViewController {
         setupNotificationCenter()
     }
     
+    // MARK: - API
+    func requestNickname(nickname: String) {
+        Task {
+            do {
+                let data = try await settingService.putNickname(body: nickname)
+                if let nickname = data {
+                    print(nickname)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+    
     override func render() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
@@ -93,6 +113,7 @@ class CreateNickNameViewController: BaseViewController {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
             UserDefaults.standard.nickname = nickname
+            requestNickname(nickname: nickname)
             presentMainViewController()
         }
     }

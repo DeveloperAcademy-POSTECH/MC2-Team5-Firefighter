@@ -35,4 +35,16 @@ enum SettingEndPoint: EndPointable {
             return "\(baseURL)/api/user"
         }
     }
+    
+    func createRequest(environment: APIEnvironment) -> NetworkRequest {
+        var headers: [String: String] = [:]
+        headers["Content-Type"] = "application/json"
+        headers["authorization"] = "Bearer \(APIEnvironment.development.token)"
+        return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+                              headers: headers,
+                              reqBody: requestBody,
+                              reqTimeout: requestTimeOut,
+                              httpMethod: httpMethod
+        )
+    }
 }
