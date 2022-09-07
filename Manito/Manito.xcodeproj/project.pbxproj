@@ -93,7 +93,6 @@
 		B5F525122851A0CB00614FF7 /* InvitedCode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F525112851A0CB00614FF7 /* InvitedCode.storyboard */; };
 		B5F525142851A0DB00614FF7 /* DetailWait.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F525132851A0DB00614FF7 /* DetailWait.storyboard */; };
 		B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F525152851A0F600614FF7 /* DetailIng.storyboard */; };
-		B5F525182851A10600614FF7 /* Letter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F525172851A10600614FF7 /* Letter.storyboard */; };
 		B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525192851A12600614FF7 /* BaseViewController.swift */; };
 		B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5251B2851A19A00614FF7 /* BaseCollectionViewCell.swift */; };
 		B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5251D2851A1C700614FF7 /* BaseTableViewCell.swift */; };
@@ -228,7 +227,6 @@
 		B5F525112851A0CB00614FF7 /* InvitedCode.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = InvitedCode.storyboard; sourceTree = "<group>"; };
 		B5F525132851A0DB00614FF7 /* DetailWait.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailWait.storyboard; sourceTree = "<group>"; };
 		B5F525152851A0F600614FF7 /* DetailIng.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailIng.storyboard; sourceTree = "<group>"; };
-		B5F525172851A10600614FF7 /* Letter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Letter.storyboard; sourceTree = "<group>"; };
 		B5F525192851A12600614FF7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B5F5251B2851A19A00614FF7 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5F5251D2851A1C700614FF7 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -650,7 +648,6 @@
 				B5F525112851A0CB00614FF7 /* InvitedCode.storyboard */,
 				B5F525132851A0DB00614FF7 /* DetailWait.storyboard */,
 				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
-				B5F525172851A10600614FF7 /* Letter.storyboard */,
 				B50B1B3D285B04580080992C /* Interaction.storyboard */,
 				CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */,
 				CB674C2228596A3E0063A6B7 /* CheckRoom.storyboard */,
@@ -919,7 +916,6 @@
 				CBA15C96285CE1F00051EDE2 /* ChooseCharacter.storyboard in Resources */,
 				B5F525122851A0CB00614FF7 /* InvitedCode.storyboard in Resources */,
 				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
-				B5F525182851A10600614FF7 /* Letter.storyboard in Resources */,
 				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
 				B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */,
 				CBBFF77A287AE09F006A5964 /* SettingDeveloperInfo.storyboard in Resources */,

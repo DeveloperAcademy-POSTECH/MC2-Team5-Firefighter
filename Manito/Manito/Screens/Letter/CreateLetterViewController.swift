@@ -43,14 +43,28 @@ final class CreateLetterViewController: BaseViewController {
         return scrollView
     }()
     private let scrollContentView = UIView()
-    private let missionView = IndividualMissionView(mission: "1000원 이하의 선물 주고 인증샷 받기")
+    private lazy var missionView = IndividualMissionView(mission: mission)
     private let letterTextView = LetterTextView()
     private let letterPhotoView = LetterPhotoView()
     
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
                                                     environment: .development)
-    var manitteId: String?
-    var roomId: String?
+    var manitteeId: String
+    var roomId: String
+    var mission: String
+    
+    // MARK: - init
+    
+    init(manitteeId: String, roomId: String, mission: String) {
+        self.manitteeId = manitteeId
+        self.roomId = roomId
+        self.mission = mission
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - life cycle
     
@@ -203,14 +217,14 @@ final class CreateLetterViewController: BaseViewController {
                    let image = letterPhotoView.importPhotosButton.imageView?.image,
                    image != ImageLiterals.btnCamera {
                     guard let pngData = image.pngData() else { return }
-                    let dto = LetterDTO(manitteeId: manitteId, messageContent: content)
+                    let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
                     let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
                     
                     if let content = letterContent {
                         dump(content)
                     }
                 } else if let content = letterTextView.letterTextView.text {
-                    let dto = LetterDTO(manitteeId: manitteId, messageContent: content)
+                    let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
                     let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, letter: dto)
                     
                     if let content = letterContent {
@@ -219,7 +233,7 @@ final class CreateLetterViewController: BaseViewController {
                 } else if let image = letterPhotoView.importPhotosButton.imageView?.image,
                           image != ImageLiterals.btnCamera {
                     guard let pngData = image.pngData() else { return }
-                    let dto = LetterDTO(manitteeId: manitteId)
+                    let dto = LetterDTO(manitteeId: manitteeId)
                     let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
                     
                     if let content = letterContent {

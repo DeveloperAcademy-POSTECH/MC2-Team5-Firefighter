@@ -79,15 +79,17 @@ final class LetterViewController: BaseViewController {
     
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
                                                     environment: .development)
-    private var manitteId: String?
+    private var manitteeId: String?
     private var roomId: String
     private var roomState: String
+    private var mission: String
     
     // MARK: - init
     
-    init(roomState: String, roomId: String) {
+    init(roomState: String, roomId: String, mission: String) {
         self.roomState = roomState
         self.roomId = roomId
+        self.mission = mission
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -176,16 +178,13 @@ final class LetterViewController: BaseViewController {
     
     private func setupButtonAction() {
         let presentSendButtonAction = UIAction { [weak self] _ in
-            let storyboard = UIStoryboard(name: "Letter", bundle: nil)
-            guard
-                let navigationController = storyboard.instantiateViewController(withIdentifier: "CreateLetterNavigationController") as? UINavigationController,
-                let viewController = navigationController.topViewController as? CreateLetterViewController
+            guard let self = self,
+                  let manitteeId = self.manitteeId
             else { return }
             
-            viewController.manitteId = self?.manitteId
-            viewController.roomId = self?.roomId
-            
-            self?.present(navigationController, animated: true, completion: nil)
+            let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission)
+            let navigationController = UINavigationController(rootViewController: viewController)
+            self.present(navigationController, animated: true, completion: nil)
         }
         sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
                                                   for: .touchUpInside)
@@ -249,7 +248,7 @@ final class LetterViewController: BaseViewController {
                 
                 if let content = letterContent {
                     dump(content)
-                    manitteId = content.manittee?.id
+                    manitteeId = content.manittee?.id
                     letterList = content.messages
                 }
             } catch NetworkError.serverError {
