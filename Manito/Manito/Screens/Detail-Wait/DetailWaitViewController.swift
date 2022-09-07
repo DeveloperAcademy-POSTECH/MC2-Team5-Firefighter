@@ -460,6 +460,7 @@ class DetailWaitViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMaxUser), name: .editMaxUserNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(requestDateRange(_:)), name: .requestDateRangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(requestRoomInfo(_:)), name: .requestRoomInfoNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didTapEnterButton), name: .createRoomInvitedCode, object: nil)
     }
 
     private func isPastStartDate() {
@@ -511,6 +512,13 @@ class DetailWaitViewController: BaseViewController {
     }
 
     // MARK: - selector
+    @objc
+    private func didTapEnterButton() {
+        let vc = InvitedCodeViewController()
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalTransitionStyle = .crossDissolve
+        present(vc, animated: true)
+    }
 
     @objc
     private func didReceiveDateRange(_ notification: Notification) {

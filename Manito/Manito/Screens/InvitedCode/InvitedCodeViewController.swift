@@ -26,7 +26,17 @@ class InvitedCodeViewController: BaseViewController {
     // MARK: - configure
     override func render() {
         view.addSubview(invitedImageView)
-        invitedImageView
+        invitedImageView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(142)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(238)
+            
+            
+        }
+    }
+    
+    override func configUI() {
+        view.backgroundColor = .black.withAlphaComponent(0.8)
     }
     
     // MARK: - selectors

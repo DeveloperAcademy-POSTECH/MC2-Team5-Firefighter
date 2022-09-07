@@ -175,6 +175,9 @@ class ChooseCharacterViewController: BaseViewController {
     }
     
     // MARK: - Selectors
+    @objc private func didTapEnterButtonNoti() {
+        
+    }
     @objc private func didTapBackButton() {
         navigationController?.popViewController(animated: true)
     }
@@ -186,16 +189,26 @@ class ChooseCharacterViewController: BaseViewController {
         switch statusMode {
         case .createRoom:
             guard let roomInfo = roomInfo else { return }
-            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
-                                                                capacity: roomInfo.capacity,
-                                                                startDate: roomInfo.startDate,
-                                                                endDate: roomInfo.endDate) ,
-                                                  member: MemberDTO(colorIdx: colorIdx)))
+//            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
+//                                                                capacity: roomInfo.capacity,
+//                                                                startDate: roomInfo.startDate,
+//                                                                endDate: roomInfo.endDate) ,
+//                                                  member: MemberDTO(colorIdx: colorIdx)))
+            guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+            let viewController = DetailWaitViewController(index: 4)
+            navigationController.popViewController(animated: true)
+            navigationController.pushViewController(viewController, animated: false)
+            
+            self.dismiss(animated: true) {
+                NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
+            }
         case .enterRoom:
             print("enter")
         }
         
     }
+    
+
 }
 
 // MARK: - UICollectionViewDataSource
