@@ -47,7 +47,7 @@ struct User: Decodable {
 
 // MARK: - Room
 struct RoomInfo: Decodable {
-    let id: Int?
+    let id, capacity: Int?
     let title, startDate, endDate, state: String?
 }
 
