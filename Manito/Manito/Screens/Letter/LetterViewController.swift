@@ -184,6 +184,9 @@ final class LetterViewController: BaseViewController {
             
             let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission)
             let navigationController = UINavigationController(rootViewController: viewController)
+            viewController.createLetter = {
+                self.fetchSendLetter(roomId: self.roomId)
+            }
             self.present(navigationController, animated: true, completion: nil)
         }
         sendLetterView.sendLetterButton.addAction(presentSendButtonAction,

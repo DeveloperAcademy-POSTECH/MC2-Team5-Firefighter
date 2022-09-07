@@ -11,6 +11,8 @@ import SnapKit
 
 final class CreateLetterViewController: BaseViewController {
     
+    var createLetter: (() -> ())?
+    
     // MARK: - property
     
     private let indicatorView: UIView = {
@@ -180,7 +182,11 @@ final class CreateLetterViewController: BaseViewController {
             guard let roomId = self?.roomId else { return }
 
             self?.dispatchLetter(roomId: roomId)
-            self?.dismiss(animated: true, completion: nil)
+            self?.dismiss(animated: true, completion: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    self?.createLetter?()
+                })
+            })
         }
         
         cancelButton.addAction(cancelAction, for: .touchUpInside)
@@ -218,27 +224,18 @@ final class CreateLetterViewController: BaseViewController {
                    image != ImageLiterals.btnCamera {
                     guard let pngData = image.pngData() else { return }
                     let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
-                    let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
                     
-                    if let content = letterContent {
-                        dump(content)
-                    }
+                    try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
                 } else if let content = letterTextView.letterTextView.text {
                     let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
-                    let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, letter: dto)
                     
-                    if let content = letterContent {
-                        dump(content)
-                    }
+                    try await letterSevice.dispatchLetter(roomId: roomId, letter: dto)
                 } else if let image = letterPhotoView.importPhotosButton.imageView?.image,
                           image != ImageLiterals.btnCamera {
                     guard let pngData = image.pngData() else { return }
                     let dto = LetterDTO(manitteeId: manitteeId)
-                    let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
                     
-                    if let content = letterContent {
-                        dump(content)
-                    }
+                    try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
                 }
                 
             } catch NetworkError.serverError {
