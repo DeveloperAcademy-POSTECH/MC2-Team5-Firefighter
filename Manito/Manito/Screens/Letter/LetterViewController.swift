@@ -252,7 +252,7 @@ final class LetterViewController: BaseViewController {
                 if let content = letterContent {
                     dump(content)
                     manitteeId = content.manittee?.id
-                    letterList = content.messages.reversed()
+                    letterList = content.messages
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -269,7 +269,7 @@ final class LetterViewController: BaseViewController {
                 
                 if let content = letterContent {
                     dump(content)
-                    letterList = content.messages.reversed()
+                    letterList = content.messages
                 }
             } catch NetworkError.serverError {
                 print("serverError")
