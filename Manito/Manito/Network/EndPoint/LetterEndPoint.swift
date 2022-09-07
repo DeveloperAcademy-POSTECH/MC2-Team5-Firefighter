@@ -8,11 +8,11 @@
 import Foundation
 
 enum LetterEndPoint: EndPointable {
-    case dispatchLetter(roomId: String, dto: SendMessageDTO)
+    case dispatchLetter(roomId: String, image: Data?, letter: LetterDTO)
     case fetchSendLetter(roomId: String)
     case fetchReceiveLetter(roomId: String)
     case patchReadMessage(roomId: String, status: String)
-
+    
     var requestTimeOut: Float {
         return 20
     }
@@ -32,9 +32,19 @@ enum LetterEndPoint: EndPointable {
 
     var requestBody: Data? {
         switch self {
-        case .dispatchLetter(_, let dto):
-            let body = dto
-            return body.encode()
+        case .dispatchLetter(_, let image, let letter):
+            let id: String = "eec7ef46-fa5a-4ba3-94d5-4985beabd4c2"
+        
+            let parameters: [String: String?] = ["manitteeId": id,
+                                                "messageContent": letter.messageContent]
+            let dataBody = createDataBody(withParameters: parameters,
+                                          media: image ?? nil,
+                                          boundary: "123")
+            
+            let stringValue = String(decoding: dataBody, as: UTF8.self)
+            print(stringValue)
+            
+            return dataBody
         case .fetchSendLetter:
             return nil
         case .fetchReceiveLetter:
@@ -47,8 +57,8 @@ enum LetterEndPoint: EndPointable {
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .dispatchLetter(let roomId, _):
-            return "\(baseURL)/rooms/\(roomId)/messages"
+        case .dispatchLetter(let roomId,_,_):
+            return "\(baseURL)/rooms/\(roomId)/messages-separate"
         case .fetchSendLetter(let roomId):
             return "\(baseURL)/rooms/\(roomId)/messages-sent"
         case .fetchReceiveLetter(let roomId):
@@ -60,12 +70,60 @@ enum LetterEndPoint: EndPointable {
     
     func createRequest(environment: APIEnvironment) -> NetworkRequest {
         var headers: [String: String] = [:]
-        headers["Content-Type"] = "application/json"
-        headers["authorization"] = "Bearer \(APIEnvironment.development.token)"
+        
+        switch self {
+        case .dispatchLetter:
+            headers["Content-Type"] = "multipart/form-data; boundary=123"
+        default:
+            headers["Content-Type"] = "application/json"
+        }
+        
+        headers["Authorization"] = "Bearer \(APIEnvironment.development.token)"
         return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
                               headers: headers,
                               reqBody: requestBody,
                               reqTimeout: requestTimeOut,
                               httpMethod: httpMethod)
+    }
+}
+
+extension LetterEndPoint {
+    func createDataBody(withParameters params: [String: String?],
+                        media: Data?,
+                        boundary: String) -> Data {
+        let lineBreak = "\r\n"
+        var body = Data()
+        
+        for (key, value) in params {
+            guard let value = value else { continue }
+            body.append("--\(boundary + lineBreak)")
+            body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
+            body.append("\(value + lineBreak)")
+        }
+
+        if let media = media {
+            let mediaKey = "image"
+            body.append("--\(boundary + lineBreak)")
+            body.append("Content-Disposition: form-data; name=\"\(mediaKey)\"; filename=\"\(arc4random()).png\"\(lineBreak)")
+            body.append("Content-Type: image/png\(lineBreak + lineBreak)")
+            body.append(media)
+            body.append(lineBreak)
+        }
+
+        body.append("--\(boundary)--\(lineBreak)")
+
+        return body
+    }
+    
+    private func generateBoundaryString() -> String {
+        return "Boundary-\(UUID().uuidString)"
+    }
+}
+
+extension Data {
+    mutating func append(_ string: String) {
+        if let data = string.data(using: .utf8) {
+            append(data)
+        }
     }
 }

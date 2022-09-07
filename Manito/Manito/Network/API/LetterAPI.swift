@@ -30,4 +30,11 @@ struct LetterAPI: LetterProtocol {
             .createRequest(environment: environment)
         return try await self.apiService.request(request)
     }
+    
+    func dispatchLetter(roomId: String, image: Data? = nil, letter: LetterDTO) async throws -> Letter? {
+        let request = LetterEndPoint
+            .dispatchLetter(roomId: roomId, image: image, letter: letter)
+            .createRequest(environment: environment)
+        return try await self.apiService.request(request)
+    }
 }
