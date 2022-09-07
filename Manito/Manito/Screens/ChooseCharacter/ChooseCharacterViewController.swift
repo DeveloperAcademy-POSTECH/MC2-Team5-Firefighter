@@ -11,6 +11,8 @@ import SnapKit
 
 class ChooseCharacterViewController: BaseViewController {
     
+    let roomService: RoomProtocol = RoomAPI(apiService: APIService(), environment: .development)
+    
     private enum Size {
         static let leadingTrailingPadding: CGFloat = 20
         static let collectionHorizontalSpacing: CGFloat = 29.0
@@ -23,6 +25,16 @@ class ChooseCharacterViewController: BaseViewController {
                                                   bottom: collectionVerticalSpacing,
                                                   right: collectionHorizontalSpacing)
     }
+    
+    enum Status {
+        case createRoom
+        case enterRoom
+    }
+    
+    var statusMode: Status
+    var roomInfo: RoomDTO?
+    
+    private var colorIdx: Int = 0
     
     // MARK: - Property
     private let titleLabel: UILabel = {
@@ -73,10 +85,33 @@ class ChooseCharacterViewController: BaseViewController {
     
     private lazy var enterButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.choose
         button.addTarget(self, action: #selector(didTapEnterButton), for: .touchUpInside)
+        switch statusMode {
+        case .createRoom:
+            button.title = TextLiteral.createRoom
+        case .enterRoom:
+            button.title = TextLiteral.choose
+        }
         return button
     }()
+    
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.icBack, for: .normal)
+        button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
+        button.titleLabel?.font = .font(.regular, ofSize: 14)
+        button.tintColor = .white
+        return button
+    }()
+    
+    init(statusMode: Status) {
+        self.statusMode = statusMode
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func render() {
         view.addSubview(closeButton)
@@ -95,6 +130,12 @@ class ChooseCharacterViewController: BaseViewController {
         subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+        }
+        
+        view.addSubview(backButton)
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(closeButton)
+            $0.leading.equalTo(view.safeAreaLayoutGuide)
         }
         
         view.addSubview(manittoCollectionView)
@@ -117,13 +158,43 @@ class ChooseCharacterViewController: BaseViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
+    // MARK: - API
+    
+    func requestCreateRoom(room: CreateRoomDTO) {
+        Task {
+            do {
+                let _ = try await roomService.postCreateRoom(body: room)
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+    
     // MARK: - Selectors
+    @objc private func didTapBackButton() {
+        navigationController?.popViewController(animated: true)
+    }
     @objc private func didTapCloseButton() {
         dismiss(animated: true, completion: nil)
     }
     
     @objc private func didTapEnterButton() {
-        print("didTapEnterButton")
+        switch statusMode {
+        case .createRoom:
+            guard let roomInfo = roomInfo else { return }
+            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
+                                                                capacity: roomInfo.capacity,
+                                                                startDate: roomInfo.startDate,
+                                                                endDate: roomInfo.endDate) ,
+                                                  member: MemberDTO(colorIdx: colorIdx)))
+        case .enterRoom:
+            print("enter")
+        }
+        
     }
 }
 
@@ -153,6 +224,6 @@ extension ChooseCharacterViewController: UICollectionViewDataSource {
 extension ChooseCharacterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 선택한 마니또 이미지 정보 출력
-        print(indexPath.item)
+        colorIdx = indexPath.item
     }
 }

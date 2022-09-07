@@ -98,7 +98,7 @@ class ParticipateRoomViewController: BaseViewController {
     }
     
     @objc private func didReceiveNextNotification(_ notification: Notification) {
-        self.navigationController?.pushViewController(ChooseCharacterViewController(), animated: true)
+        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom), animated: true)
     }
     
     // MARK: - Funtions    
