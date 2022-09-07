@@ -326,6 +326,20 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
+    
+    func requestDeleteLeaveRoom() {
+        Task {
+            do {
+                let _ = try await detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
 
     // MARK: - func
 
@@ -397,9 +411,14 @@ class DetailWaitViewController: BaseViewController {
         } else {
             let menu = UIMenu(options: [], children: [
                 UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                        self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction: nil)
+                    self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction:  { _ in
+                        self?.requestDeleteLeaveRoom()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self?.navigationController?.popViewController(animated: true)
+                        }
                     })
-                ])
+                })
+            ])
             return menu
         }
     }
