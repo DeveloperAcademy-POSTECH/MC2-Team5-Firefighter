@@ -21,7 +21,7 @@ enum RoomEndPoint: EndPointable {
         case .dispatchCreateRoom:
             return .post
         case .fetchVerifyCode:
-            return .get
+            return .post
         case .dispatchJoinRoom:
             return .post
         }
