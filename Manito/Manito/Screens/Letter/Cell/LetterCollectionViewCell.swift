@@ -113,8 +113,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     }
     
     func setLetterData(with data: Message, isHidden: Bool) {
-        // TODO: - 날짜 정리가 필요
-        dateLabel.text = "2022.09.01"
+        dateLabel.text = data.date
         reportButton.isHidden = isHidden
         
         if let content = data.content {
