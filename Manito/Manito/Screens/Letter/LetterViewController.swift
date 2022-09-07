@@ -70,7 +70,6 @@ final class LetterViewController: BaseViewController {
             reloadCollectionView(with: self.letterState)
         }
     }
-    private var roomState: String
     
     private var letterList: [Message] = [] {
         didSet {
@@ -81,12 +80,14 @@ final class LetterViewController: BaseViewController {
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
                                                     environment: .development)
     private var manitteId: String?
-    private var roomId: String?
+    private var roomId: String
+    private var roomState: String
     
     // MARK: - init
     
-    init(roomState: String) {
+    init(roomState: String, roomId: String) {
         self.roomState = roomState
+        self.roomId = roomId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -182,7 +183,7 @@ final class LetterViewController: BaseViewController {
             else { return }
             
             viewController.manitteId = self?.manitteId
-            viewController.roomId = "9"
+            viewController.roomId = self?.roomId
             
             self?.present(navigationController, animated: true, completion: nil)
         }
@@ -202,9 +203,9 @@ final class LetterViewController: BaseViewController {
         
         switch state {
         case .sent:
-            fetchSendLetter(roomId: "9")
+            fetchSendLetter(roomId: roomId)
         case .received:
-            fetchReceviedLetter(roomId: "9")
+            fetchReceviedLetter(roomId: roomId)
         }
     }
     
