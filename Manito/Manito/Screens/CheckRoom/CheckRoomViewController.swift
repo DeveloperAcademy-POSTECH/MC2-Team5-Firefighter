@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 class CheckRoomViewController: BaseViewController {
+    private let checkRoomInfoService: RoomProtocol = RoomAPI(apiService: APIService(), environment: .development)
+    var inviteCode: String?
     
     // MARK: - Property
     
@@ -20,7 +22,7 @@ class CheckRoomViewController: BaseViewController {
         return image
     }()
     
-    private let roomInfoView = RoomInfoView()
+    let roomInfoView = RoomInfoView()
     
     private let questionLabel: UILabel = {
         let label = UILabel()
@@ -53,6 +55,13 @@ class CheckRoomViewController: BaseViewController {
         button.addTarget(self, action: #selector(didTapYesButton), for: .touchUpInside)
         return button
     }()
+    
+    
+    // MARK: - life cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        requestVerificationRoomCode()
+    }
     
     override func render() {
         view.addSubview(roomInfoImageView)
@@ -93,7 +102,6 @@ class CheckRoomViewController: BaseViewController {
         }
     }
     
-    // MARK: - Configure
     override func configUI() {
         view.backgroundColor = .black.withAlphaComponent(0.7)
     }
@@ -106,5 +114,33 @@ class CheckRoomViewController: BaseViewController {
     @objc private func didTapYesButton() {
         dismiss(animated: true, completion: nil)
         NotificationCenter.default.post(name: .nextNotification, object: nil)
+    }
+    
+    // MARK: - API
+    
+    private func requestVerificationRoomCode() {
+        Task {
+            do {
+                let response = try await checkRoomInfoService
+                    .getVerification(body: inviteCode ?? "")
+                dump(response)
+                if let data = response {
+                    guard let title = data.title,
+                          let startDate = data.startDate,
+                          let endDate = data.endDate,
+                          let capacity = data.capacity
+                    else { return }
+                    roomInfoView.roomLabel.text = title
+                    roomInfoView.dateLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                    roomInfoView.peopleInfo.peopleLabel.text = "X \(capacity)인"
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
     }
 }
