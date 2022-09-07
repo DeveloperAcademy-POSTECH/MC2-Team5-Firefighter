@@ -23,6 +23,7 @@ class CreateRoomViewController: BaseViewController {
     }
     
     private var notiIndex: RoomState = .inputName
+    private var roomInfo: RoomDTO?
     
     // MARK: - Property
     
@@ -150,24 +151,7 @@ class CreateRoomViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-    // MARK: - API
     
-    func requestCreateRoom(room: CreateRoomDTO) {
-        Task {
-            do {
-                let data = try await roomService.postCreateRoom(body: room)
-                if let room = data {
-                    print(room)
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
-            }
-        }
-    }
     
     // MARK: - Selectors
     
@@ -200,10 +184,10 @@ class CreateRoomViewController: BaseViewController {
             checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
             changedInputView()
         case .checkRoom:
-            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: name, capacity: person, startDate: dateView.calendarView.getTempStartDate(), endDate: dateView.calendarView.getTempEndDate()), member: MemberDTO(colorIdx: 3)))
-            DispatchQueue.main.async {
-                self.dismiss(animated: true)
-            }
+            roomInfo = RoomDTO(title: name, capacity: person, startDate: "20\(dateView.calendarView.getTempStartDate())", endDate: "20\(dateView.calendarView.getTempEndDate())")
+            let chooseVC = ChooseCharacterViewController(statusMode: .createRoom)
+            chooseVC.roomInfo = roomInfo
+            navigationController?.pushViewController(chooseVC, animated: true)
         }
     }
     

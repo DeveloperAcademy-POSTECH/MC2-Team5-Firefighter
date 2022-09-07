@@ -15,7 +15,7 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
     
     private let imageView = UIImageView(image: ImageLiterals.icNewRoom)
     
-    let circleView: UIView = {
+    private let circleView: UIView = {
         let circleView = UIView()
         circleView.backgroundColor = .yellow
         circleView.layer.cornerRadius = 44
@@ -24,7 +24,7 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
         return circleView
     }()
     
-    private var menuLabel: UILabel = {
+    private let menuLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.createRoomCollectionViewCellMenuLabel
         label.textColor = .grey001
@@ -46,12 +46,12 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
     
     // MARK: - func
 
-    func setupView(){
+    private func setupView(){
         backgroundColor = .darkGrey002.withAlphaComponent(0.8)
         makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
     }
     
-    func render() {
+    private func render() {
         addSubview(circleView)
         circleView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(22)

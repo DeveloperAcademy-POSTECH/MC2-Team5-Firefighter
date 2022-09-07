@@ -18,28 +18,28 @@ struct DetailWaitAPI: DetailWaitProtocol {
 
     func getWithFriend(roomId: String) async throws -> FriendList? {
         let request = DetailWaitEndPoint
-            .getWithFriend(roomId: roomId)
+            .fetchWithFriend(roomId: roomId)
             .createRequest(environment: environment)
         return try await apiService.request(request)
     }
     
     func getWaitingRoomInfo(roomId: String) async throws -> Room? {
         let request = DetailWaitEndPoint
-            .getWaitingRoomInfo(roomId: roomId)
+            .fetchWaitingRoomInfo(roomId: roomId)
             .createRequest(environment: environment)
         return try await apiService.request(request)
     }
 
-    func startManitto(roomId: String, state: String) async throws -> String? {
+    func startManitto(roomId: String) async throws -> String? {
         let request = DetailWaitEndPoint
-            .startManitto(roomId: roomId, state: state)
+            .patchStartManitto(roomId: roomId)
             .createRequest(environment: environment)
         return try await apiService.request(request)
     }
 
     func editRoomInfo(roomId: String, roomInfo: RoomDTO) async throws -> String? {
         let request = DetailWaitEndPoint
-            .editRoomInfo(roomId: roomId, roomInfo: roomInfo)
+            .putRoomInfo(roomId: roomId, roomInfo: roomInfo)
             .createRequest(environment: environment)
         return try await apiService.request(request)
     }

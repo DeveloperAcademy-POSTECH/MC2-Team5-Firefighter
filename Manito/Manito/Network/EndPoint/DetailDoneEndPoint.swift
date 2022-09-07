@@ -8,10 +8,9 @@
 import Foundation
 
 enum DetailDoneEndPoint: EndPointable {
-    case getWithFriend(roomId: String)
-    case getHistoryWithManitto(roomId: String, subject: String)
-    case getHistoryWithManitte(roomId: String, subject: String)
-    case getDoneRoomInfo(roomId: String, subject: String)
+    case requestWithFriend(roomId: String)
+    case requestMemory(roomId: String)
+    case requestDoneRoomInfo(roomId: String)
 
     var requestTimeOut: Float {
         return 20
@@ -19,40 +18,42 @@ enum DetailDoneEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .getWithFriend:
+        case .requestWithFriend:
             return .get
-        case .getHistoryWithManitto:
+        case .requestMemory:
             return .get
-        case .getHistoryWithManitte:
-            return .get
-        case .getDoneRoomInfo:
+        case .requestDoneRoomInfo:
             return .get
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .getWithFriend:
+        case .requestWithFriend:
             return nil
-        case .getHistoryWithManitto:
+        case .requestMemory:
             return nil
-        case .getHistoryWithManitte:
-            return nil
-        case .getDoneRoomInfo:
+        case .requestDoneRoomInfo:
             return nil
         }
     }
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .getWithFriend(let roomId):
-            return "\(baseURL)/api/rooms/\(roomId))/participants"
-        case .getHistoryWithManitto(let roomId, let subject):
-            return "\(baseURL)/api/rooms/\(roomId)/memories?subject=\(subject)"
-        case .getHistoryWithManitte(let roomId, let subject):
-            return "\(baseURL)/api/rooms/\(roomId)/memories?subject=\(subject)"
-        case .getDoneRoomInfo(let roomId, let subject):
-            return "\(baseURL)/api/rooms/\(roomId)?state=\(subject)"
+        case .requestWithFriend(let roomId):
+            return "\(baseURL)/rooms/\(roomId))/participants"
+        case .requestMemory(let roomId):
+            return "\(baseURL)/rooms/\(roomId)/memories"
+        case .requestDoneRoomInfo(let roomId):
+            return "\(baseURL)/rooms/\(roomId)"
         }
+    }
+    
+    func createRequest(environment: APIEnvironment) -> NetworkRequest {
+        return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+                              reqBody: requestBody,
+                              reqTimeout: requestTimeOut,
+                              httpMethod: httpMethod
+        )
     }
 }
