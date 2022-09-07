@@ -15,7 +15,7 @@ class DetailIngViewController: BaseViewController {
     lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService(),
                                                         environment: .development)
 
-    let roomIndex: Int = 1
+    var roomIndex: Int = 0
     var isDone = false
     var friendList: FriendList?
 
@@ -23,6 +23,7 @@ class DetailIngViewController: BaseViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var periodLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var missionBackgroundView: UIView!
     @IBOutlet weak var missionTitleLabel: UILabel!
     @IBOutlet weak var missionContentsLabel: UILabel!
@@ -62,9 +63,6 @@ class DetailIngViewController: BaseViewController {
         }
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGuideArea()
@@ -98,14 +96,14 @@ class DetailIngViewController: BaseViewController {
         super.configUI()
         setupFont()
         setupViewLayer()
+        setupStatusLabel()
+        setupManitteLabel()
+        
         addActionMemoryViewController()
         addActionPushLetterViewController()
         addGestureMemberList()
         addGestureManito()
         addActionOpenManittoViewController()
-        
-        manitteAnimationLabel.text = ""
-        manitteAnimationLabel.alpha = 0
         
         manitiIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
@@ -123,6 +121,7 @@ class DetailIngViewController: BaseViewController {
     private func setupFont() {
         titleLabel.font = .font(.regular, ofSize: 34)
         periodLabel.font = .font(.regular, ofSize: 16)
+        statusLabel.font = .font(.regular, ofSize: 13)
         missionTitleLabel.font = .font(.regular, ofSize: 14)
         missionContentsLabel.font = .font(.regular, ofSize: 18)
         informationTitleLabel.font = .font(.regular, ofSize: 16)
@@ -152,6 +151,21 @@ class DetailIngViewController: BaseViewController {
         listImageView.layer.cornerRadius = 50
         letterBoxButton.makeBorderLayer(color: .white)
         manitoMemoryButton.makeBorderLayer(color: .white)
+    }
+    
+    private func setupStatusLabel() {
+        statusLabel.text = isDone ? TextLiteral.done : TextLiteral.doing
+        statusLabel.backgroundColor = isDone ? .grey002 : .mainRed
+        statusLabel.layer.masksToBounds = true
+        statusLabel.layer.cornerRadius = 11
+        statusLabel.textColor = .white
+        statusLabel.font = .font(.regular, ofSize: 13)
+        statusLabel.textAlignment = .center
+    }
+    
+    private func setupManitteLabel() {
+        manitteAnimationLabel.text = ""
+        manitteAnimationLabel.alpha = 0
     }
     
     private func addGestureManito() {
@@ -196,7 +210,6 @@ class DetailIngViewController: BaseViewController {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: "\(roomIndex)")
                 if let info = data {
-                    dump(info)
                     titleLabel.text = info.room?.title
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
@@ -240,8 +253,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 let data = try await detailDoneService.requestDoneRoomInfo(roomId: "\(roomIndex)")
-                if let info = data {
-                    dump(info)
+                if let _ = data {
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -257,8 +269,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 let data = try await detailDoneService.requestMemory(roomId: "\(roomIndex)")
-                if let memory = data {
-                    dump(memory)
+                if let _ = data {
                 }
             } catch NetworkError.serverError {
                 print("server Error")

@@ -33,10 +33,10 @@ enum LetterEndPoint: EndPointable {
     var requestBody: Data? {
         switch self {
         case .dispatchLetter(_, let image, let letter):
-            let id: String? = "eec7ef46-fa5a-4ba3-94d5-4985beabd4c2"
+            let id: String = "eec7ef46-fa5a-4ba3-94d5-4985beabd4c2"
         
             let parameters: [String: String?] = ["manitteeId": id,
-                                                 "messageContent": letter.messageContent]
+                                                "messageContent": letter.messageContent]
             let dataBody = createDataBody(withParameters: parameters,
                                           media: image ?? nil,
                                           boundary: "123")
