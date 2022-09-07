@@ -13,6 +13,7 @@ enum DetailWaitEndPoint: EndPointable {
     case patchStartManitto(roomId: String)
     case putRoomInfo(roomId: String, roomInfo: RoomDTO)
     case deleteRoom(roomId: String)
+    case deleteLeaveRoom(roomId: String)
 
     var requestTimeOut: Float {
         return 20
@@ -29,6 +30,8 @@ enum DetailWaitEndPoint: EndPointable {
         case .putRoomInfo:
             return .put
         case .deleteRoom:
+            return .delete
+        case .deleteLeaveRoom:
             return .delete
         }
     }
@@ -49,6 +52,8 @@ enum DetailWaitEndPoint: EndPointable {
             return body.encode()
         case .deleteRoom:
             return nil
+        case .deleteLeaveRoom:
+            return nil
         }
     }
 
@@ -64,6 +69,8 @@ enum DetailWaitEndPoint: EndPointable {
             return "\(baseURL)/rooms/\(roomId)"
         case .deleteRoom(let roomId):
             return "\(baseURL)/rooms/\(roomId)"
+        case .deleteLeaveRoom(let roomId):
+            return "\(baseURL)/rooms/\(roomId)/participants"
         }
     }
     

@@ -13,4 +13,5 @@ protocol DetailWaitProtocol {
     func startManitto(roomId: String) async throws -> String?
     func editRoomInfo(roomId: String, roomInfo: RoomDTO) async throws -> String?
     func deleteRoom(roomId: String) async throws -> String?
+    func deleteLeaveRoom(roomId: String) async throws -> String?
 }
