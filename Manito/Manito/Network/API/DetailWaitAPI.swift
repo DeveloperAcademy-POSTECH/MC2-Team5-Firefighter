@@ -50,4 +50,11 @@ struct DetailWaitAPI: DetailWaitProtocol {
             .createRequest(environment: environment)
         return try await apiService.request(request)
     }
+    
+    func deleteLeaveRoom(roomId: String) async throws -> String? {
+        let request = DetailWaitEndPoint
+            .deleteLeaveRoom(roomId: roomId)
+            .createRequest(environment: environment)
+        return try await apiService.request(request)
+    }
 }
