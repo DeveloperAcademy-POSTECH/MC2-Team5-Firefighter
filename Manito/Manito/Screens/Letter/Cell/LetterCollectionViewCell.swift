@@ -122,9 +122,8 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
             contentLabel.addLabelSpacing()
         }
         
-        if let image = data.imageUrl {
-            // FIXME: - 현재는 더미데이터라서 heart.fill
-            photoImageView.image = UIImage(systemName: "heart.fill")
+        if let imageUrl = data.imageUrl {
+            photoImageView.loadImageUrl(imageUrl)
             photoImageView.snp.updateConstraints {
                 $0.height.equalTo(204)
             }
