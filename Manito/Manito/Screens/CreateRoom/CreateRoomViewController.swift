@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class CreateRoomViewController: BaseViewController {
-    
+    let roomService: RoomProtocol = RoomAPI(apiService: APIService(), environment: .development)
     private var name = ""
     private var person = 0
     private var date = 0
@@ -23,6 +23,7 @@ class CreateRoomViewController: BaseViewController {
     }
     
     private var notiIndex: RoomState = .inputName
+    private var roomInfo: RoomDTO?
     
     // MARK: - Property
     
@@ -80,7 +81,7 @@ class CreateRoomViewController: BaseViewController {
         toggleButton()
         setupNotificationCenter()
     }
-    
+        
     override func render() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
@@ -145,6 +146,8 @@ class CreateRoomViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    
+    
     // MARK: - Selectors
     
     @objc private func didTapBackButton() {
@@ -176,9 +179,10 @@ class CreateRoomViewController: BaseViewController {
             checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
             changedInputView()
         case .checkRoom:
-            DispatchQueue.main.async {
-                self.dismiss(animated: true)
-            }
+            roomInfo = RoomDTO(title: name, capacity: person, startDate: "20\(dateView.calendarView.getTempStartDate())", endDate: "20\(dateView.calendarView.getTempEndDate())")
+            let chooseVC = ChooseCharacterViewController(statusMode: .createRoom)
+            chooseVC.roomInfo = roomInfo
+            navigationController?.pushViewController(chooseVC, animated: true)
         }
     }
     

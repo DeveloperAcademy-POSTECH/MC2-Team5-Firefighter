@@ -160,4 +160,7 @@ enum TextLiteral {
     
     // MARK: - InputDateView
     static let inputDateViewTitle: String = "진행 기간을 설정해 주세요"
+    
+    // MARK: - ChangeNickNameViewController
+    static let changeNickNameViewControllerTitle: String = "닉네임 변경하기"
 }

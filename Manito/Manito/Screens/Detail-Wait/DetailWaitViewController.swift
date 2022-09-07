@@ -16,11 +16,10 @@ class DetailWaitViewController: BaseViewController {
     private var userArr: [String] = [] {
         didSet {
             renderTableView()
-            userCount = userArr.count
         }
     }
     var canStartClosure: ((Bool) -> ())?
-    var maxUserCount: Int = 10 {
+    var maxUserCount: Int = 15 {
         didSet {
             comeInLabel.text = "\(userCount)/\(maxUserCount)"
         }
@@ -28,6 +27,7 @@ class DetailWaitViewController: BaseViewController {
     lazy var userCount = 0 {
         didSet {
             comeInLabel.text = "\(userCount)/\(maxUserCount)"
+            setStartButton()
         }
     }
     var isOwner = false {
@@ -263,6 +263,8 @@ class DetailWaitViewController: BaseViewController {
                           let code = roomInfo.invitation?.code,
                           let startDate = roomInfo.room?.startDate,
                           let endDate = roomInfo.room?.endDate,
+                          let count = roomInfo.participants?.count,
+                          let capacity = roomInfo.room?.capacity,
                           let state = roomInfo.room?.state,
                           let members = roomInfo.participants?.members,
                           let isAdmin = roomInfo.admin else { return }
@@ -270,6 +272,8 @@ class DetailWaitViewController: BaseViewController {
                     inviteCode = code
                     startDateText = startDate
                     endDateText = endDate
+                    userCount = count
+                    maxUserCount = capacity
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
                     isOwner = isAdmin
@@ -317,6 +321,20 @@ class DetailWaitViewController: BaseViewController {
         Task {
             do {
                 let _ = try await detailWaitService.deleteRoom(roomId: "\(roomIndex)")
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+    
+    func requestDeleteLeaveRoom() {
+        Task {
+            do {
+                let _ = try await detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
@@ -397,9 +415,14 @@ class DetailWaitViewController: BaseViewController {
         } else {
             let menu = UIMenu(options: [], children: [
                 UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                        self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction: nil)
+                    self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction:  { _ in
+                        self?.requestDeleteLeaveRoom()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self?.navigationController?.popViewController(animated: true)
+                        }
                     })
-                ])
+                })
+            ])
             return menu
         }
     }
@@ -464,8 +487,9 @@ class DetailWaitViewController: BaseViewController {
         guard let todayDate = Date().dateToString.stringToDate else { return }
         
         let isToday = startDate.distance(to: todayDate).isZero
-        
-        canStartClosure?(isToday)
+        let isMinimumUserCount = userCount >= 5
+
+        canStartClosure?(isToday && isMinimumUserCount)
     }
     
     private func renderTableView() {
