@@ -201,7 +201,6 @@ class MainViewController: BaseViewController {
                 
                 if let manittoList = data {
                     rooms = manittoList.participatingRooms
-                    sortRoomListByStatus()
                     listCollectionView.reloadData()
                 }
             } catch NetworkError.serverError {
@@ -272,11 +271,6 @@ class MainViewController: BaseViewController {
             viewController.isDone = true
             self.navigationController?.pushViewController(viewController, animated: true)
         }
-    }
-    
-    private func sortRoomListByStatus() {
-        rooms?.sort { $0.startDate ?? "" < $1.startDate ?? "" }
-        rooms?.sort { $0.state ?? "" > $1.state ?? "" }
     }
     
     // MARK: - selector
