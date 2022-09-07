@@ -142,7 +142,7 @@
 		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
 		D739C36328C7B69D00161117 /* SettingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36228C7B69D00161117 /* SettingProtocol.swift */; };
 		D739C36528C7B75400161117 /* SettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36428C7B75400161117 /* SettingAPI.swift */; };
-		D739C36728C7B82500161117 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* Setting.swift */; };
+		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* UrlLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* UrlLiteral.swift */; };
 		D777D2CB28C7AFEA008655BD /* UserDefault+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2CA28C7AFEA008655BD /* UserDefault+Extension.swift */; };
@@ -284,7 +284,7 @@
 		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
 		D739C36228C7B69D00161117 /* SettingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingProtocol.swift; sourceTree = "<group>"; };
 		D739C36428C7B75400161117 /* SettingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAPI.swift; sourceTree = "<group>"; };
-		D739C36628C7B82500161117 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* UrlLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlLiteral.swift; sourceTree = "<group>"; };
 		D777D2CA28C7AFEA008655BD /* UserDefault+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+Extension.swift"; sourceTree = "<group>"; };
@@ -738,7 +738,7 @@
 				39C957E02879A3CF00A04A2B /* DailyMission.swift */,
 				397A241928BA532A00454E4F /* FriendList.swift */,
 				39CD581E28C4C19100496E91 /* Memory.swift */,
-				D739C36628C7B82500161117 /* Setting.swift */,
+				D739C36628C7B82500161117 /* NicknameDTO.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1019,7 +1019,7 @@
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
 				39C957F6287D9ED000A04A2B /* NetworkRequest.swift in Sources */,
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
-				D739C36728C7B82500161117 /* Setting.swift in Sources */,
+				D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */,
 				39C957FE287DAB6D00A04A2B /* DetailIngEndPoint.swift in Sources */,
 				B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */,
 				CB4C77E428C0D4C9007A1AD2 /* MainProtocol.swift in Sources */,

@@ -84,7 +84,7 @@ class ChangeNickNameViewController: BaseViewController {
         if let text = nameTextField.text, !text.isEmpty {
             nickname = text
             UserDefaults.standard.nickname = nickname
-            requestNickname(nickname: nickname)
+            requestChangeNickname(nickname: NicknameDTO(nickname: nickname))
             navigationController?.popViewController(animated: true)
         }
     }
@@ -110,13 +110,10 @@ class ChangeNickNameViewController: BaseViewController {
     }
     
     // MARK: - API
-    func requestNickname(nickname: String) {
+    func requestChangeNickname(nickname: NicknameDTO) {
         Task {
             do {
-                let data = try await settingService.putNickname(body: nickname)
-                if let nickname = data {
-                    print(nickname)
-                }
+                let _ = try await settingService.putChangeNickname(body: nickname)
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {

@@ -63,10 +63,10 @@ class CreateNickNameViewController: BaseViewController {
     }
     
     // MARK: - API
-    func requestNickname(nickname: String) {
+    func requestNickname(setting: NicknameDTO) {
         Task {
             do {
-                let data = try await settingService.putNickname(body: nickname)
+                let data = try await settingService.putChangeNickname(body: setting)
                 if let nickname = data {
                     print(nickname)
                 }
@@ -113,7 +113,7 @@ class CreateNickNameViewController: BaseViewController {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
             UserDefaults.standard.nickname = nickname
-            requestNickname(nickname: nickname)
+            requestNickname(setting: NicknameDTO(nickname: nickname))
             presentMainViewController()
         }
     }
