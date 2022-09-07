@@ -34,7 +34,7 @@ class ChooseCharacterViewController: BaseViewController {
     var statusMode: Status
     var roomInfo: RoomDTO?
     
-    private var colorIdx: Int = 0
+    private var colorIdx: Int?
     
     // MARK: - Property
     private let titleLabel: UILabel = {
@@ -188,10 +188,12 @@ class ChooseCharacterViewController: BaseViewController {
     @objc private func didTapEnterButton() {
         switch statusMode {
         case .createRoom:
-            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo?.title ?? "",
-                                                                capacity: roomInfo?.capacity ?? 0,
-                                                                startDate: roomInfo?.startDate ?? "",
-                                                                endDate: roomInfo?.endDate ?? "") ,
+            guard let roomInfo = roomInfo,
+                  let colorIdx = colorIdx else { return }
+            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
+                                                                capacity: roomInfo.capacity,
+                                                                startDate: roomInfo.startDate,
+                                                                endDate: roomInfo.endDate) ,
                                                   member: MemberDTO(colorIdx: colorIdx)))
         case .enterRoom:
             print("enter")

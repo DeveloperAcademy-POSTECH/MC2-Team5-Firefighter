@@ -81,12 +81,7 @@ class CreateRoomViewController: BaseViewController {
         toggleButton()
         setupNotificationCenter()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-    }
-    
     override func render() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
