@@ -10,5 +10,5 @@ import Foundation
 protocol RoomProtocol {
     func postCreateRoom(body: CreateRoomDTO) async throws -> String?
     func getVerification(body: String) async throws -> VerificationCode?
-    func postJoinRoom(roodId: String, body: Int) async throws -> String?
+    func dispatchJoinRoom(roodId: String, roomDto: RoomDTO) async throws -> String?
 }

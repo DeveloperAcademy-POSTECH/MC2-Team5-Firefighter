@@ -8,9 +8,9 @@
 import Foundation
 
 enum RoomEndPoint: EndPointable {
-    case createRoom(roomInfo: CreateRoomDTO)
-    case verifyCode(code: String)
-    case joinRoom(roomId: String, colorIndex: Int)
+    case dispatchCreateRoom(roomInfo: CreateRoomDTO)
+    case fetchVerifyCode(code: String)
+    case dispatchJoinRoom(roomId: String, roomDto: RoomDTO)
 
     var requestTimeOut: Float {
         return 20
@@ -18,36 +18,36 @@ enum RoomEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .createRoom:
+        case .dispatchCreateRoom:
             return .post
-        case .verifyCode:
+        case .fetchVerifyCode:
             return .get
-        case .joinRoom:
+        case .dispatchJoinRoom:
             return .post
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .createRoom(let roomInfo):
+        case .dispatchCreateRoom(let roomInfo):
             let body = roomInfo
             return body.encode()
-        case .verifyCode(let code):
+        case .fetchVerifyCode(let code):
             let body = ["invitationCode": code]
             return body.encode()
-        case .joinRoom(_, let colorIndex):
-            let body = ["colorIdx": colorIndex.description]
+        case .dispatchJoinRoom(_, let roomDto):
+            let body = roomDto
             return body.encode()
         }
     }
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .createRoom(_):
+        case .dispatchCreateRoom(_):
             return "\(baseURL)/rooms"
-        case .verifyCode:
+        case .fetchVerifyCode:
             return "\(baseURL)/invitations/verification"
-        case .joinRoom(let roomId, _):
+        case .dispatchJoinRoom(let roomId, _):
             return "\(baseURL)/rooms/\(roomId)/participaticipants"
         }
     }
