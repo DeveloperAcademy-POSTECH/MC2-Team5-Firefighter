@@ -15,15 +15,6 @@ final class LetterViewController: BaseViewController {
         case sent = 0
         case received = 1
         
-        var lists: [Letter] {
-            switch self {
-            case .received:
-                return []
-            case .sent:
-                return []
-            }
-        }
-        
         var isHidden: Bool {
             switch self {
             case .received:
@@ -81,6 +72,12 @@ final class LetterViewController: BaseViewController {
     }
     private var roomState: String
     
+    private var letterList: [Message] = [] {
+        didSet {
+            listCollectionView.reloadData()
+        }
+    }
+    
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
                                                     environment: .development)
     private var manitteId: String?
@@ -110,7 +107,6 @@ final class LetterViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchSendLetter(roomId: "9")
-        fetchReceviedLetter(roomId: "9")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -205,7 +201,13 @@ final class LetterViewController: BaseViewController {
         listCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
         listCollectionView.setContentOffset(CGPoint(x: 0, y: -topPoint), animated: false)
         listCollectionView.collectionViewLayout.invalidateLayout()
-        listCollectionView.reloadData()
+        
+        switch state {
+        case .sent:
+            fetchSendLetter(roomId: "9")
+        case .received:
+            fetchReceviedLetter(roomId: "9")
+        }
     }
     
     private func calculateContentHeight(text: String) -> CGFloat {
@@ -249,6 +251,7 @@ final class LetterViewController: BaseViewController {
                 if let content = letterContent {
                     dump(content)
                     manitteId = content.manittee?.id
+                    letterList = content.messages
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -265,6 +268,7 @@ final class LetterViewController: BaseViewController {
                 
                 if let content = letterContent {
                     dump(content)
+                    letterList = content.messages
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -278,15 +282,15 @@ final class LetterViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return letterState.lists.count
+        return letterList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-//        cell.setLetterData(with: letterState.lists[indexPath.item], isHidden: letterState.isHidden)
+        cell.setLetterData(with: letterList[indexPath.item], isHidden: letterState.isHidden)
         cell.didTappedReport = { [weak self] in
-//            self?.sendReportMail(userNickname: "호야",
-//                                 content: self?.letterState.lists[indexPath.item].content ?? "글 내용 없음")
+            self?.sendReportMail(userNickname: "호야",
+                                 content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
         }
         return cell
     }
@@ -314,13 +318,13 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var heights = [Size.cellTopSpacing, Size.cellBottomSpacing]
         
-//        if let content = letterState.lists[indexPath.item].content {
-//            heights += [calculateContentHeight(text: content)]
-//        }
-//
-//        if letterState.lists[indexPath.item].image != nil {
-//            heights += [Size.imageHeight]
-//        }
+        if let content = letterList[indexPath.item].content {
+            heights += [calculateContentHeight(text: content)]
+        }
+
+        if letterList[indexPath.item].imageUrl != nil {
+            heights += [Size.imageHeight]
+        }
         
         return CGSize(width: Size.cellWidth, height: heights.reduce(0, +))
     }
