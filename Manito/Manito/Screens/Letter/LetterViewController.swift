@@ -106,7 +106,7 @@ final class LetterViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchSendLetter(roomId: "9")
+        letterState = .sent
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -117,8 +117,7 @@ final class LetterViewController: BaseViewController {
     override func render() {
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalToSuperview()
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         view.addSubview(guideButton)
@@ -136,7 +135,6 @@ final class LetterViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
-        sendLetterView.isHidden = (letterState == .received)
     }
     
     override func setupNavigationBar() {
