@@ -34,7 +34,7 @@ class ChooseCharacterViewController: BaseViewController {
     var statusMode: Status
     var roomInfo: RoomDTO?
     
-    private var colorIdx: Int?
+    private var colorIdx: Int = 0
     
     // MARK: - Property
     private let titleLabel: UILabel = {
@@ -163,10 +163,7 @@ class ChooseCharacterViewController: BaseViewController {
     func requestCreateRoom(room: CreateRoomDTO) {
         Task {
             do {
-                let data = try await roomService.postCreateRoom(body: room)
-                if let room = data {
-                    print(room)
-                }
+                let _ = try await roomService.postCreateRoom(body: room)
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
@@ -188,8 +185,7 @@ class ChooseCharacterViewController: BaseViewController {
     @objc private func didTapEnterButton() {
         switch statusMode {
         case .createRoom:
-            guard let roomInfo = roomInfo,
-                  let colorIdx = colorIdx else { return }
+            guard let roomInfo = roomInfo else { return }
             requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
                                                                 capacity: roomInfo.capacity,
                                                                 startDate: roomInfo.startDate,
