@@ -7,9 +7,28 @@
 
 import UIKit
 
-class InvitedCodeViewController: UIViewController {
+import SnapKit
 
+class InvitedCodeViewController: BaseViewController {
+
+    // MARK: - property
+    private let invitedImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = ImageLiterals.imgCodeBackground
+        return imageView
+    }()
+    
+    // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    // MARK: - configure
+    override func render() {
+        view.addSubview(invitedImageView)
+        invitedImageView
+    }
+    
+    // MARK: - selectors
+    // MARK: - functions
 }
