@@ -26,8 +26,8 @@ struct RoomAPI: RoomProtocol {
         return try await apiService.request(request)
     }
     
-    func dispatchJoinRoom(roodId: String, roomDto: RoomDTO) async throws -> String? {
-        let request = RoomEndPoint.dispatchJoinRoom(roomId: roodId, roomDto: roomDto).createRequest(environment: environment)
+    func dispatchJoinRoom(roodId: String, dto: MemberDTO) async throws -> String? {
+        let request = RoomEndPoint.dispatchJoinRoom(roomId: roodId, roomDto: dto).createRequest(environment: environment)
         return try await apiService.request(request)
     }
 }

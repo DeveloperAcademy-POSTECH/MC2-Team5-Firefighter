@@ -10,7 +10,7 @@ import Foundation
 enum RoomEndPoint: EndPointable {
     case dispatchCreateRoom(roomInfo: CreateRoomDTO)
     case fetchVerifyCode(code: String)
-    case dispatchJoinRoom(roomId: String, roomDto: RoomDTO)
+    case dispatchJoinRoom(roomId: String, roomDto: MemberDTO)
 
     var requestTimeOut: Float {
         return 20
@@ -48,7 +48,7 @@ enum RoomEndPoint: EndPointable {
         case .fetchVerifyCode:
             return "\(baseURL)/invitations/verification"
         case .dispatchJoinRoom(let roomId, _):
-            return "\(baseURL)/rooms/\(roomId)/participaticipants"
+            return "\(baseURL)/rooms/\(roomId)/participants"
         }
     }
     
