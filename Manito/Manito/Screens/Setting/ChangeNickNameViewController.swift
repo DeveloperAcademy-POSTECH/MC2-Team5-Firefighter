@@ -13,7 +13,7 @@ class ChangeNickNameViewController: BaseViewController {
     
     let settingService: SettingProtocol = SettingAPI(apiService: APIService(), environment: .development)
     
-    private var nickname: String = UserDefaults.standard.nickname ?? "이성호"
+    private var nickname: String = UserDefaults.standard.nickname ?? ""
     private var maxLength = 5
     
     // MARK: - Property
