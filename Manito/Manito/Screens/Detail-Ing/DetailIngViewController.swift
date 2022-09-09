@@ -210,7 +210,6 @@ class DetailIngViewController: BaseViewController {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: "\(roomIndex)")
                 if let info = data {
-                    dump(info)
                     titleLabel.text = info.room?.title
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
