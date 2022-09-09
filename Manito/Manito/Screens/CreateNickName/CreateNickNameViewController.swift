@@ -92,6 +92,7 @@ class CreateNickNameViewController: BaseViewController {
     @objc private func didTapDoneButton() {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
+            UserData.setValue(nickname, forKey: .nickname)
             presentMainViewController()
         }
     }

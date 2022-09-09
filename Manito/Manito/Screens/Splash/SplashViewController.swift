@@ -11,7 +11,8 @@ import Gifu
 
 final class SplashViewController: BaseViewController {
 
-    var isLogin = true
+    let isLogin = UserData<String>.getValue(forKey: .accessToken)
+    let nickname = UserData<String>.getValue(forKey: .nickname)
 
     // MARK: - property
 
@@ -23,15 +24,31 @@ final class SplashViewController: BaseViewController {
         super.viewDidLoad()
         setupGifImage()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            if self.isLogin {
-                self.presentMainViewController()
+            if self.isLogin == nil {
+                self.presentLoginViewConroller()
+            } else if self.isLogin != nil && self.nickname == nil {
+                self.presentNicknameSettingViewController()
             } else {
-                self.presentNinameSettingViewController()
+                self.presentMainViewController()
             }
         }
     }
 
     // MARK: - func
+    
+    private func presentLoginViewConroller() {
+        let viewController = LoginViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
+    }
+    
+    private func presentNicknameSettingViewController() {
+        let viewController = CreateNickNameViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
+    }
 
     private func presentMainViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -41,13 +58,6 @@ final class SplashViewController: BaseViewController {
         present(viewController, animated: true, completion: nil)
     }
     
-    private func presentNinameSettingViewController() {
-        let viewController = CreateNickNameViewController()
-        viewController.modalPresentationStyle = .fullScreen
-        viewController.modalTransitionStyle = .crossDissolve
-        present(viewController, animated: true)
-    }
-
     private func setupGifImage() {
         DispatchQueue.main.async {
             self.gifImageView.animate(withGIFNamed: ImageLiterals.gifLogo, animationBlock: nil)

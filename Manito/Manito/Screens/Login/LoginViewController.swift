@@ -11,6 +11,8 @@ import UIKit
 import SnapKit
 
 class LoginViewController: BaseViewController {
+    let loginService: LoginAPI = LoginAPI(apiService: APIService(),
+                                                    environment: .development)
 
     // MARK: - property
 
@@ -72,6 +74,7 @@ class LoginViewController: BaseViewController {
 extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            
             let userIdentifier = appleIDCredential.user
             
             let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -79,6 +82,24 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                 switch credentialState {
                 case .authorized:
                     // The Apple ID credential is valid. Show Home UI Here
+                    guard let token = appleIDCredential.identityToken else { return }
+                    guard let tokenToString = String(data: token, encoding: .utf8) else { return }
+                    Task {
+                        do {
+                            let data = try await self.loginService.dispatchAppleLogin(dto: LoginDTO(identityToken: tokenToString))
+                            if let tokens = data {
+                                UserDefaultHandler.setAccessToken(accessToken: tokens.accessToken ?? "")
+                                UserDefaultHandler.setRefreshToken(refreshToken: tokens.refreshToken ?? "")
+                            }
+                            self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
+                        } catch NetworkError.serverError {
+                            print("server Error")
+                        } catch NetworkError.encodingError {
+                            print("encoding Error")
+                        } catch NetworkError.clientError(let message) {
+                            print("client Error: \(String(describing: message))")
+                        }
+                    }
                     print("userIdentifier = \(userIdentifier)")
                     UserDefaultHandler.setUserID(userID: userIdentifier)
                     break
