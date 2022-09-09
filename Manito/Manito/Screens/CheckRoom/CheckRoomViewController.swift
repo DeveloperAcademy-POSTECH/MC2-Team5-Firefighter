@@ -143,7 +143,7 @@ class CheckRoomViewController: BaseViewController {
             } catch NetworkError.encodingError {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
-                makeAlert(title: "해당하는 애니또 방이 없습니다", message: "이미 참여중인 방이거나,\n 초대 코드를 확인해 주세요", okAction: { [weak self] _ in
+                makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage, okAction: { [weak self] _ in
                     self?.dismiss(animated: true)
                 })
                 print("client Error: \(String(describing: message))")

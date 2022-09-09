@@ -29,7 +29,7 @@ class ParticipateRoomViewController: BaseViewController {
     
     private lazy var nextButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.enterRoom
+        button.title = TextLiteral.searchRoom
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         button.isDisabled = true
         return button

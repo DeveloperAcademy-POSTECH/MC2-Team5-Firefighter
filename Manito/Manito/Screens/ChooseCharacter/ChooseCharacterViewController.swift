@@ -92,7 +92,7 @@ class ChooseCharacterViewController: BaseViewController {
         case .createRoom:
             button.title = TextLiteral.createRoom
         case .enterRoom:
-            button.title = TextLiteral.choose
+            button.title = TextLiteral.enterRoom
         }
         return button
     }()
@@ -246,7 +246,6 @@ extension ChooseCharacterViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension ChooseCharacterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 선택한 마니또 이미지 정보 출력
         colorIdx = indexPath.item
     }
 }

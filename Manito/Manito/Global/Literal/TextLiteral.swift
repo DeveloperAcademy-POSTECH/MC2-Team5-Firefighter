@@ -17,6 +17,7 @@ enum TextLiteral {
     static let confirm: String = "확인"
     static let choose: String = "선택"
     static let enterRoom: String = "방 참가하기"
+    static let searchRoom: String = "방 조회하기"
     static let during: String = "진행 기간"
     static let delete: String = "삭제"
     static let leave: String = "나가기"
@@ -83,6 +84,8 @@ enum TextLiteral {
     static let checkRoomViewControllerQuestionLabel: String = "이 방으로 입장할까요?"
     static let checkRoomViewControllerNoButtonLabel: String = "NO"
     static let checkRoomViewControllerYesBUttonLabel: String = "YES"
+    static let checkRoomViewControllerErrorAlertTitle: String = "해당하는 애니또 방이 없어요"
+    static let checkRoomViewControllerErrorAlertMessage: String = "이미 참여중인 방이거나,\n 초대 코드를 확인해 주세요"
     
     // MARK: - InputInvitedCodeView
     static let inputInvitedCodeViewRoomCodeText: String = "초대코드 입력"
