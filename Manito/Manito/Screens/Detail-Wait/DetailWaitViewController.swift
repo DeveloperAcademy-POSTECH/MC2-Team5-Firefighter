@@ -13,6 +13,7 @@ class DetailWaitViewController: BaseViewController {
     let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService(), environment: .development)
     var roomIndex: Int
     var inviteCode: String = ""
+    private var roomInfo: RoomDTO?
     private var userArr: [String] = [] {
         didSet {
             renderTableView()
@@ -277,6 +278,10 @@ class DetailWaitViewController: BaseViewController {
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
                     isOwner = isAdmin
+                    self.roomInfo = RoomDTO(title: title,
+                                       capacity: capacity,
+                                       startDate: startDate,
+                                       endDate: endDate)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -514,7 +519,14 @@ class DetailWaitViewController: BaseViewController {
     // MARK: - selector
     @objc
     private func didTapEnterButton() {
+//        guard let roomInfo = roomInfo else { return }
+//        let vc = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
+//                                                             capacity: roomInfo.capacity,
+//                                                             startDate: roomInfo.startDate,
+//                                                             endDate: roomInfo.endDate))
         let vc = InvitedCodeViewController()
+        guard let roomInfo = roomInfo else { return }
+        vc.roomInfo = roomInfo
         vc.modalPresentationStyle = .overCurrentContext
         vc.modalTransitionStyle = .crossDissolve
         present(vc, animated: true)

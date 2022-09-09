@@ -10,6 +10,11 @@ import UIKit
 import SnapKit
 
 class InvitedCodeViewController: BaseViewController {
+    
+    var roomInfo: RoomDTO = RoomDTO(title: "",
+                                    capacity: 0,
+                                    startDate: "",
+                                    endDate: "")
 
     // MARK: - property
     private let invitedImageView = UIImageView(image: ImageLiterals.imgCodeBackground)
@@ -22,23 +27,23 @@ class InvitedCodeViewController: BaseViewController {
         button.setImage(ImageLiterals.btnXmark, for: .normal)
         return button
     }()
-    private let roomTitleLabel: UILabel = {
+    private lazy var roomTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 34)
-        label.text = "명예소방관"
+        label.text = roomInfo.title
         return label
     }()
-    private let roomDateLabel: UILabel = {
+    private lazy var roomDateLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
-        label.text = "2022.06.06 ~ 2022.06.12"
+        label.text = "\(roomInfo.startDate) ~ \(roomInfo.endDate)"
         return label
     }()
     private let roomImage = UIImageView(image: ImageLiterals.imgCharacterBrown)
-    private let roomPersonLabel: UILabel = {
+    private lazy var roomPersonLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
-        label.text = "X 8인"
+        label.text = "X \(roomInfo.capacity)인"
         return label
     }()
     private lazy var roomPersonView: UIView = {
