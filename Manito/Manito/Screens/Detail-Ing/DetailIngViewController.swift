@@ -210,6 +210,7 @@ class DetailIngViewController: BaseViewController {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: "\(roomIndex)")
                 if let info = data {
+                    dump(info)
                     titleLabel.text = info.room?.title
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
@@ -253,7 +254,15 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 let data = try await detailDoneService.requestDoneRoomInfo(roomId: "\(roomIndex)")
-                if let _ = data {
+                if let info = data {
+                    titleLabel.text = info.room?.title
+                    guard let startDate = info.room?.startDate,
+                          let endDate = info.room?.endDate,
+                          let minittee = info.manittee?.nickname
+                    else { return }
+                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                    manitteAnimationLabel.text = minittee
+                    missionContentsLabel.text = TextLiteral.detailIngViewControllerDoneMissionText
                 }
             } catch NetworkError.serverError {
                 print("server Error")
