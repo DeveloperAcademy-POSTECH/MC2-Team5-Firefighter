@@ -83,7 +83,7 @@ extension InputInvitedCodeView: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         setCounter(count: textField.text?.count ?? 0)
         
-        let hasText = roomCodeTextField.hasText
+        let hasText = roomCodeTextField.text?.count == 6
         changeNextButtonEnableStatus?(hasText)
     }
 }
