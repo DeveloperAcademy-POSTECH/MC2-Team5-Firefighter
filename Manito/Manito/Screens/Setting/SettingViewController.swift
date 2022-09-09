@@ -147,7 +147,11 @@ class SettingViewController: BaseViewController {
     }
     
     private func goToLogOut() {
-        print("goToLogOut")
+        UserDefaultHandler.clearAllData()
+        let viewController = LoginViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
     }
 }
 
