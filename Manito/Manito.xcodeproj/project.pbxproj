@@ -148,8 +148,12 @@
 		CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */; };
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
+		D739C36328C7B69D00161117 /* SettingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36228C7B69D00161117 /* SettingProtocol.swift */; };
+		D739C36528C7B75400161117 /* SettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36428C7B75400161117 /* SettingAPI.swift */; };
+		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* UrlLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* UrlLiteral.swift */; };
+		D777D2CB28C7AFEA008655BD /* UserDefault+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2CA28C7AFEA008655BD /* UserDefault+Extension.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
 /* End PBXBuildFile section */
 
@@ -295,8 +299,12 @@
 		CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewCell.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
+		D739C36228C7B69D00161117 /* SettingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingProtocol.swift; sourceTree = "<group>"; };
+		D739C36428C7B75400161117 /* SettingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAPI.swift; sourceTree = "<group>"; };
+		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* UrlLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlLiteral.swift; sourceTree = "<group>"; };
+		D777D2CA28C7AFEA008655BD /* UserDefault+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+Extension.swift"; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -341,6 +349,7 @@
 				CB4C77E528C0D4EB007A1AD2 /* MainAPI.swift */,
 				B5F31C5128BFA64F00F61D0F /* LetterAPI.swift */,
 				39EEF65B28CB3CD600437654 /* LoginAPI.swift */,
+				D739C36428C7B75400161117 /* SettingAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -355,6 +364,7 @@
 				CB4C77E328C0D4C9007A1AD2 /* MainProtocol.swift */,
 				B5F31C5328BFA70100F61D0F /* LetterProtocol.swift */,
 				39EEF65528CB3BB200437654 /* LoginProtocol.swift */,
+				D739C36228C7B69D00161117 /* SettingProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -637,6 +647,7 @@
 				39C957CF2879521400A04A2B /* String+Extension.swift */,
 				39C957D12879523200A04A2B /* Date+Extension.swift */,
 				39018F4128C4708A00C78DBA /* UIButton+Extension.swift */,
+				D777D2CA28C7AFEA008655BD /* UserDefault+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -761,6 +772,7 @@
 				39CD581E28C4C19100496E91 /* Memory.swift */,
 				39EEF65728CB3C1100437654 /* Login.swift */,
 				39EEF65928CB3C7B00437654 /* RefreshToken.swift */,
+				D739C36628C7B82500161117 /* NicknameDTO.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1035,6 +1047,7 @@
 				39C957DF2879A35300A04A2B /* RoomDTO.swift in Sources */,
 				39C95808287DB05C00A04A2B /* SettingEndPoint.swift in Sources */,
 				39C957F4287D9EB400A04A2B /* APIService.swift in Sources */,
+				D777D2CB28C7AFEA008655BD /* UserDefault+Extension.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */,
 				397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */,
@@ -1045,10 +1058,12 @@
 				39C957F6287D9ED000A04A2B /* NetworkRequest.swift in Sources */,
 				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
 				39EEF65C28CB3CD600437654 /* LoginAPI.swift in Sources */,
+				D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */,
 				39C957FE287DAB6D00A04A2B /* DetailIngEndPoint.swift in Sources */,
 				B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */,
 				CB4C77E428C0D4C9007A1AD2 /* MainProtocol.swift in Sources */,
 				CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */,
+				D739C36528C7B75400161117 /* SettingAPI.swift in Sources */,
 				B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */,
 				B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */,
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
@@ -1059,6 +1074,7 @@
 				391B3003286198C200421F1D /* Size.swift in Sources */,
 				39C95800287DAC2900A04A2B /* DetailDoneEndPoint.swift in Sources */,
 				7E77DB0428BF9A6700E95D4B /* RoomProtocol.swift in Sources */,
+				D739C36328C7B69D00161117 /* SettingProtocol.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
 				39EEF66028CB3D6200437654 /* LoginDTO.swift in Sources */,
 				7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */,

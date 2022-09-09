@@ -11,6 +11,8 @@ import SnapKit
 
 class CreateNickNameViewController: BaseViewController {
     
+    let settingService: SettingProtocol = SettingAPI(apiService: APIService(), environment: .development)
+    
     private var nickname: String = ""
     private let maxLength = 5
     
@@ -58,6 +60,24 @@ class CreateNickNameViewController: BaseViewController {
         super.viewDidLoad()
         setupDelegation()
         setupNotificationCenter()
+    }
+    
+    // MARK: - API
+    func requestNickname(setting: NicknameDTO) {
+        Task {
+            do {
+                let data = try await settingService.putChangeNickname(body: setting)
+                if let nickname = data {
+                    print(nickname)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
     }
     
     override func render() {
