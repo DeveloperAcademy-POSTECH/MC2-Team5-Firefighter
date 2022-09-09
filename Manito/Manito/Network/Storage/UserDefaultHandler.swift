@@ -12,6 +12,10 @@ struct UserDefaultHandler {
         UserData<Any>.clearAll()
     }
     
+    static func setIsLogin(isLogin: Bool) {
+        UserData.setValue(isLogin, forKey: .isLogin)
+    }
+    
     static func setUserID(userID: String) {
         UserData.setValue(userID, forKey: .userID)
     }

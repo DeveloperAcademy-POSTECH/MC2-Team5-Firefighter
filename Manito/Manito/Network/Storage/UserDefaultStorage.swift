@@ -8,6 +8,7 @@
 import Foundation
 
 enum DataKeys: String, CaseIterable {
+    case isLogin = "isLogin"
     case userID = "userID"
     case accessToken = "accessToken"
     case refreshToken = "refreshToken"
@@ -15,8 +16,24 @@ enum DataKeys: String, CaseIterable {
 }
 
 struct UserDefaultStorage {
+    static var isLogin: Bool {
+        return UserData<Bool>.getValue(forKey: .isLogin) ?? false
+    }
+    
     static var userID: String {
         return UserData<String>.getValue(forKey: .userID) ?? ""
+    }
+    
+    static var accessToken: String {
+        return UserData<String>.getValue(forKey: .accessToken) ?? ""
+    }
+    
+    static var refreshToken: String {
+        return UserData<String>.getValue(forKey: .refreshToken) ?? ""
+    }
+    
+    static var nickname: String {
+        return UserData<String>.getValue(forKey: .nickname) ?? ""
     }
 }
 
@@ -35,6 +52,7 @@ struct UserData<T> {
     
     static func clearAll() {
         DataKeys.allCases.forEach { key in
+            print(key.rawValue)
             UserDefaults.standard.removeObject(forKey: key.rawValue)
         }
     }
