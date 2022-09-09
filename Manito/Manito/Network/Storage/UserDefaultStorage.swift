@@ -9,6 +9,9 @@ import Foundation
 
 enum DataKeys: String, CaseIterable {
     case userID = "userID"
+    case accessToken = "accessToken"
+    case refreshToken = "refreshToken"
+    case nickname = "nickname"
 }
 
 struct UserDefaultStorage {
