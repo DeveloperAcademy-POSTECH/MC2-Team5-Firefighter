@@ -25,7 +25,11 @@ class InvitedCodeViewController: BaseViewController {
     }
     
     // MARK: - property
-    private let invitedImageView = UIImageView(image: ImageLiterals.imgCodeBackground)
+    private let invitedImageView: UIImageView = {
+        let imageView = UIImageView(image: ImageLiterals.imgCodeBackground)
+        imageView.isUserInteractionEnabled = true
+        return imageView
+    }()
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         let action = UIAction { [weak self] _ in
@@ -69,12 +73,18 @@ class InvitedCodeViewController: BaseViewController {
         }
         return view
     }()
-    private lazy var roomInviteCodeLabel: UILabel = {
-        let label = UILabel()
-        label.font = .font(.regular, ofSize: 50)
-        label.text = code
-        label.textColor = .codeBlue
-        return label
+    private let roomInviteCodeButton: UIButton = {
+        let button = UIButton(type: .system)
+        let buttonAction = UIAction { _ in
+            print("S")
+        }
+        button.setTitle("HSHSHS", for: .normal)
+        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.blue.withAlphaComponent(0.8), for: .highlighted)
+        button.titleLabel?.font = .font(.regular, ofSize: 50)
+        button.addAction(buttonAction, for: .touchUpInside)
+        button.backgroundColor = .red
+        return button
     }()
     private let roomInviteInfoLabel: UILabel = {
         let label = UILabel()
@@ -121,15 +131,17 @@ class InvitedCodeViewController: BaseViewController {
             $0.height.equalTo(60)
         }
         
-        invitedImageView.addSubview(roomInviteCodeLabel)
-        roomInviteCodeLabel.snp.makeConstraints {
+        invitedImageView.addSubview(roomInviteCodeButton)
+        roomInviteCodeButton.snp.makeConstraints {
             $0.top.equalTo(roomPersonView.snp.bottom).offset(80)
             $0.centerX.equalToSuperview()
+            $0.width.equalTo(192)
+            $0.height.equalTo(35)
         }
         
         invitedImageView.addSubview(roomInviteInfoLabel)
         roomInviteInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(roomInviteCodeLabel.snp.bottom).offset(40)
+            $0.top.equalTo(roomInviteCodeButton.snp.bottom).offset(40)
             $0.centerX.equalToSuperview()
         }
     }
