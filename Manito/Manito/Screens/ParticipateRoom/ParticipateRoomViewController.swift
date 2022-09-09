@@ -99,13 +99,14 @@ class ParticipateRoomViewController: BaseViewController {
         present(viewController, animated: true, completion: nil)
     }
     
-    @objc private func didReceiveNextNotification() {
-        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom), animated: true)
+    @objc private func didReceiveNextNotification(_ notification: Notification) {
+        guard let id = notification.userInfo?["roomId"] as? Int else { return }
+        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom, roomId: id), animated: true)
     }
     
-    // MARK: - Funtions    
+    // MARK: - Funtions
     private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification), name: .nextNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
     }
     
     private func toggleButton() {

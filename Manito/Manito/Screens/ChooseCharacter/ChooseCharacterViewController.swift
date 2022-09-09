@@ -33,10 +33,12 @@ class ChooseCharacterViewController: BaseViewController {
     
     var statusMode: Status
     var roomInfo: RoomDTO?
+    var roomId: Int?
     
     private var colorIdx: Int = 0
     
     // MARK: - Property
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.chooseCharacterViewControllerTitleLabel
@@ -104,8 +106,11 @@ class ChooseCharacterViewController: BaseViewController {
         return button
     }()
     
-    init(statusMode: Status) {
+    // MARK: - life cycle
+    
+    init(statusMode: Status, roomId: Int?) {
         self.statusMode = statusMode
+        self.roomId = roomId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -174,6 +179,23 @@ class ChooseCharacterViewController: BaseViewController {
         }
     }
     
+    private func requestJoinRoom() {
+        Task {
+            do {
+                guard let id = roomId else { return }
+                let _ = try await roomService.dispatchJoinRoom(roodId: id.description,
+                                                               dto: MemberDTO(colorIdx: colorIdx))
+                // FIXME: - api 튜플 형식으로 받고 status code로 alert 표시
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
     // MARK: - Selectors
     @objc private func didTapBackButton() {
         navigationController?.popViewController(animated: true)
@@ -192,13 +214,14 @@ class ChooseCharacterViewController: BaseViewController {
                                                                 endDate: roomInfo.endDate) ,
                                                   member: MemberDTO(colorIdx: colorIdx)))
         case .enterRoom:
-            print("enter")
+            requestJoinRoom()
         }
         
     }
 }
 
-// MARK: - UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
+
 extension ChooseCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Character.allCases.count
