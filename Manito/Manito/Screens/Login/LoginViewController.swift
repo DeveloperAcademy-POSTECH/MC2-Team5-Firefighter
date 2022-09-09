@@ -88,10 +88,20 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         do {
                             let data = try await self.loginService.dispatchAppleLogin(dto: LoginDTO(identityToken: tokenToString))
                             if let tokens = data {
+                                UserDefaultHandler.setIsLogin(isLogin: true)
                                 UserDefaultHandler.setAccessToken(accessToken: tokens.accessToken ?? "")
                                 UserDefaultHandler.setRefreshToken(refreshToken: tokens.refreshToken ?? "")
+                                UserDefaultHandler.setNickname(nickname: tokens.nickname ?? "")
+                                if UserData.getValue(forKey: .nickname) == "" {
+                                    self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
+                                } else {
+                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                    let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+                                    viewController.modalPresentationStyle = .fullScreen
+                                    viewController.modalTransitionStyle = .crossDissolve
+                                    self.present(viewController, animated: true, completion: nil)
+                                }
                             }
-                            self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
                         } catch NetworkError.serverError {
                             print("server Error")
                         } catch NetworkError.encodingError {
