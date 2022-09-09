@@ -83,6 +83,8 @@ final class LetterViewController: BaseViewController {
     
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
                                                     environment: .development)
+    private var manitteId: String?
+    private var roomId: String?
     
     // MARK: - init
     
@@ -107,8 +109,8 @@ final class LetterViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchSendLetter(roomId: "1")
-        fetchReceviedLetter(roomId: "1")
+        fetchSendLetter(roomId: "9")
+        fetchReceviedLetter(roomId: "9")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -180,8 +182,15 @@ final class LetterViewController: BaseViewController {
     private func setupButtonAction() {
         let presentSendButtonAction = UIAction { [weak self] _ in
             let storyboard = UIStoryboard(name: "Letter", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "CreateLetterNavigationController")
-            self?.present(viewController, animated: true, completion: nil)
+            guard
+                let navigationController = storyboard.instantiateViewController(withIdentifier: "CreateLetterNavigationController") as? UINavigationController,
+                let viewController = navigationController.topViewController as? CreateLetterViewController
+            else { return }
+            
+            viewController.manitteId = self?.manitteId
+            viewController.roomId = "9"
+            
+            self?.present(navigationController, animated: true, completion: nil)
         }
         sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
                                                   for: .touchUpInside)
@@ -239,6 +248,7 @@ final class LetterViewController: BaseViewController {
                 
                 if let content = letterContent {
                     dump(content)
+                    manitteId = content.manittee?.id
                 }
             } catch NetworkError.serverError {
                 print("serverError")

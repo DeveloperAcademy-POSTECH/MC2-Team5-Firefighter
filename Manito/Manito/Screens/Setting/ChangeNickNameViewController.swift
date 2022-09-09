@@ -11,7 +11,9 @@ import SnapKit
 
 class ChangeNickNameViewController: BaseViewController {
     
-    private var nickname: String = "호야"
+    let settingService: SettingProtocol = SettingAPI(apiService: APIService(), environment: .development)
+    
+    private var nickname: String = UserDefaults.standard.nickname ?? ""
     private var maxLength = 5
     
     // MARK: - Property
@@ -81,6 +83,8 @@ class ChangeNickNameViewController: BaseViewController {
     @objc private func didTapDoneButton() {
         if let text = nameTextField.text, !text.isEmpty {
             nickname = text
+            UserDefaults.standard.nickname = nickname
+            requestChangeNickname(nickname: NicknameDTO(nickname: nickname))
             navigationController?.popViewController(animated: true)
         }
     }
@@ -105,6 +109,21 @@ class ChangeNickNameViewController: BaseViewController {
         }
     }
     
+    // MARK: - API
+    func requestChangeNickname(nickname: NicknameDTO) {
+        Task {
+            do {
+                let _ = try await settingService.putChangeNickname(body: nickname)
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(message)")
+            }
+        }
+    }
+
     // MARK: - Funtions
     
     private func setupDelegation() {
