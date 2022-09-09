@@ -519,13 +519,11 @@ class DetailWaitViewController: BaseViewController {
     // MARK: - selector
     @objc
     private func didTapEnterButton() {
-//        guard let roomInfo = roomInfo else { return }
-//        let vc = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
-//                                                             capacity: roomInfo.capacity,
-//                                                             startDate: roomInfo.startDate,
-//                                                             endDate: roomInfo.endDate))
-        let vc = InvitedCodeViewController()
         guard let roomInfo = roomInfo else { return }
+        let vc = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
+                                                             capacity: roomInfo.capacity,
+                                                             startDate: roomInfo.startDate,
+                                                             endDate: roomInfo.endDate), code: inviteCode)
         vc.roomInfo = roomInfo
         vc.modalPresentationStyle = .overCurrentContext
         vc.modalTransitionStyle = .crossDissolve

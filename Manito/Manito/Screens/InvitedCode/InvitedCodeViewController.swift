@@ -11,11 +11,19 @@ import SnapKit
 
 class InvitedCodeViewController: BaseViewController {
     
-    var roomInfo: RoomDTO = RoomDTO(title: "",
-                                    capacity: 0,
-                                    startDate: "",
-                                    endDate: "")
-
+    var roomInfo: RoomDTO
+    var code: String
+    
+    init(roomInfo: RoomDTO, code: String){
+        self.roomInfo = roomInfo
+        self.code = code
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - property
     private let invitedImageView = UIImageView(image: ImageLiterals.imgCodeBackground)
     private lazy var closeButton: UIButton = {
@@ -61,10 +69,10 @@ class InvitedCodeViewController: BaseViewController {
         }
         return view
     }()
-    private let roomInviteCodeLabel: UILabel = {
+    private lazy var roomInviteCodeLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 50)
-        label.text = "HSSSER"
+        label.text = code
         label.textColor = .codeBlue
         return label
     }()
