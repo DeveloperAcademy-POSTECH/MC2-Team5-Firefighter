@@ -11,24 +11,32 @@ import Gifu
 import SnapKit
 
 class MainViewController: BaseViewController {
-
-    // 임시 데이터
-    let roomData = ["명예소방관1", "명예소방관2", "명예소방관3", "명예소방관4", "명예소방관5"]
+    
+    private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
+    private var rooms: [ParticipatingRoom]?
 
     private enum Size {
-        static let collectionHorizontalSpacing: CGFloat = 22
-        static let collectionVerticalSpacing: CGFloat = 17
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2 - collectionVerticalSpacing) / 2
-        static let collectionInset = UIEdgeInsets(top: 0,
-            left: collectionHorizontalSpacing,
-            bottom: collectionVerticalSpacing,
-            right: collectionHorizontalSpacing)
+        static let collectionHorizontalSpacing: CGFloat = 17
+        static let collectionVerticalSpacing: CGFloat = 12
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 20 * 2 - collectionHorizontalSpacing) / 2
+        static let collectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20)
     }
 
     private enum RoomStatus: String {
-        case waiting = "대기중"
-        case starting = "진행중"
-        case end = "완료"
+        case waiting = "PRE"
+        case starting = "PROCESSING"
+        case end = "POST"
+        
+        var roomStatus: String {
+            switch self {
+            case .waiting:
+                return TextLiteral.waiting
+            case .starting:
+                return TextLiteral.doing
+            case .end:
+                return TextLiteral.done
+            }
+        }
     }
 
     // MARK: - property
@@ -44,7 +52,7 @@ class MainViewController: BaseViewController {
     private let commonMissionView = CommonMissonView()
     private let menuTitle: UILabel = {
         let label = UILabel()
-        label.text = "참여중인 애니또"
+        label.text = TextLiteral.mainViewControllerMenuTitle
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
@@ -81,6 +89,12 @@ class MainViewController: BaseViewController {
         setupGifImage()
         setupGuideArea()
         renderGuideArea()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        requestCommonMission()
+        requestManittoList()
     }
 
     override func render() {
@@ -148,7 +162,7 @@ class MainViewController: BaseViewController {
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        setupGuideText(title: "공통 미션이란?", text: "공통 미션이란?\n매일 매일 업데이트되는 미션!\n두근두근 미션을 수행해보세요!")
+        setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
     }
 
     override func setupNavigationBar() {
@@ -170,18 +184,53 @@ class MainViewController: BaseViewController {
             self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
         }
     }
+    
+    // MARK: - API
+    
+    private func requestCommonMission() {
+        Task {
+            do {
+                let data = try await mainService.fetchCommonMission()
+                if let commonMission = data?.mission {
+                    commonMissionView.mission.text = commonMission
+                }
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestManittoList() {
+        Task {
+            do {
+                let data = try await mainService.fetchManittoList()
+                
+                if let manittoList = data {
+                    rooms = manittoList.participatingRooms
+                    listCollectionView.reloadData()
+                }
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
+        }
+    }
 
-    func newRoom() {
+    private func newRoom() {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
-        let createRoom = UIAlertAction(title: "방 생성하기", style: .default, handler: { [weak self] _ in
+        let createRoom = UIAlertAction(title: TextLiteral.createRoom, style: .default, handler: { [weak self] _ in
             let createVC = CreateRoomViewController()
-            createVC.modalPresentationStyle = .fullScreen
+            let navigationController = UINavigationController(rootViewController: createVC)
+            navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
-                self?.present(createVC,animated: true)
+                self?.present(navigationController,animated: true)
             }
         })
-        let enterRoom = UIAlertAction(title: "방 참가하기", style: .default, handler: { [weak self] _ in
+        let enterRoom = UIAlertAction(title: TextLiteral.enterRoom, style: .default, handler: { [weak self] _ in
             let viewController = ParticipateRoomViewController()
             let navigationController = UINavigationController(rootViewController: viewController)
             
@@ -189,7 +238,7 @@ class MainViewController: BaseViewController {
             
             self?.present(navigationController, animated: true, completion: nil)
         })
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: TextLiteral.cancel, style: .cancel, handler: nil)
 
         alert.addAction(createRoom)
         alert.addAction(enterRoom)
@@ -197,7 +246,7 @@ class MainViewController: BaseViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    func presentParticipateRoomViewController() {
+    private func presentParticipateRoomViewController() {
         let storyboard = UIStoryboard(name: "ParticipateRoom", bundle: nil)
         let ParticipateRoomVC = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
 
@@ -207,18 +256,20 @@ class MainViewController: BaseViewController {
         present(ParticipateRoomVC, animated: true, completion: nil)
     }
 
-    private func pushDetailView(status: RoomStatus) {
+    private func pushDetailView(status: RoomStatus, index: Int) {
         switch status {
         case .waiting:
-            self.navigationController?.pushViewController(DetailWaitViewController(), animated: true)
+            self.navigationController?.pushViewController(DetailWaitViewController(index: index), animated: true)
         case .starting:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
+            viewController.roomIndex = index
             self.navigationController?.pushViewController(viewController, animated: true)
         case .end:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
             viewController.isDone = true
+            viewController.roomIndex = index
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -241,7 +292,11 @@ class MainViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return roomData.count + 1
+        if let count = rooms?.count {
+            return count + 1
+        }
+        
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -251,11 +306,36 @@ extension MainViewController: UICollectionViewDataSource {
             }
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath) as? ManitoRoomCollectionViewCell else {
-                assert(false, "Wrong Cell")
-            }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath) as? ManitoRoomCollectionViewCell else { assert(false, "Wrong Cell") }
             
-            cell.roomLabel.text = roomData[indexPath.item - 1]
+            guard let roomData = rooms?[indexPath.item - 1] else { return cell }
+            
+            guard let participatingCount = roomData.participatingCount,
+                  let capacity = roomData.capacity,
+                  let title = roomData.title,
+                  let startDate = roomData.startDate?.suffix(8),
+                  let endDate = roomData.endDate?.suffix(8),
+                  let state = roomData.state else { return cell }
+            guard let roomStatus = RoomStatus.init(rawValue: state) else { return cell }
+            
+            cell.memberLabel.text = "\(participatingCount)/\(capacity)"
+            cell.roomLabel.text = "\(title)"
+            cell.dateLabel.text = "\(startDate) ~ \(endDate)"
+            
+            switch roomStatus {
+            case .waiting:
+                cell.roomState.state.text = "대기중"
+                cell.roomState.state.textColor = .darkGrey001
+                cell.roomState.backgroundColor = .badgeBeige
+            case .starting:
+                cell.roomState.state.text = "진행중"
+                cell.roomState.state.textColor = .white
+                cell.roomState.backgroundColor = .mainRed
+            case .end:
+                cell.roomState.state.text = "완료"
+                cell.roomState.state.textColor = .white
+                cell.roomState.backgroundColor = .grey002
+            }
             
             return cell
         }
@@ -268,7 +348,11 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.item == 0 {
             newRoom()
         } else {
-            pushDetailView(status: .starting)
+            guard let state = rooms?[indexPath.item - 1].state,
+                  let index = rooms?[indexPath.item - 1].id,
+                  let roomStatus = RoomStatus.init(rawValue: state)
+            else { return }
+            pushDetailView(status: roomStatus, index: index)
         }
     }
 }

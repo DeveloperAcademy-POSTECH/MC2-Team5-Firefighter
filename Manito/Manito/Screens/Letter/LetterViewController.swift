@@ -12,15 +12,24 @@ import SnapKit
 final class LetterViewController: BaseViewController {
     
     private enum LetterState: Int {
-        case received = 0
-        case sent = 1
+        case sent = 0
+        case received = 1
         
         var lists: [Letter] {
             switch self {
             case .received:
-                return receivedLetters
+                return []
             case .sent:
-                return sentLetters
+                return []
+            }
+        }
+        
+        var isHidden: Bool {
+            switch self {
+            case .received:
+                return false
+            case .sent:
+                return true
             }
         }
     }
@@ -63,12 +72,29 @@ final class LetterViewController: BaseViewController {
                                 withReuseIdentifier: LetterHeaderView.className)
         return collectionView
     }()
-    private let sendLetterView = SendLetterView()
+    private lazy var sendLetterView = SendLetterView()
     
-    private var letterState: LetterState = .received {
+    private var letterState: LetterState = .sent {
         didSet {
             reloadCollectionView(with: self.letterState)
         }
+    }
+    private var roomState: String
+    
+    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
+                                                    environment: .development)
+    private var manitteId: String?
+    private var roomId: String?
+    
+    // MARK: - init
+    
+    init(roomState: String) {
+        self.roomState = roomState
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - life cycle
@@ -79,6 +105,12 @@ final class LetterViewController: BaseViewController {
         setupGuideArea()
         renderGuideArea()
         hideGuideViewWhenTappedAround()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchSendLetter(roomId: "9")
+        fetchReceviedLetter(roomId: "9")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -93,14 +125,16 @@ final class LetterViewController: BaseViewController {
             $0.bottom.equalToSuperview()
         }
         
-        view.addSubview(sendLetterView)
-        sendLetterView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-        
         view.addSubview(guideButton)
         guideButton.snp.makeConstraints {
             $0.width.height.equalTo(44)
+        }
+        
+        if roomState != "POST" {
+            view.addSubview(sendLetterView)
+            sendLetterView.snp.makeConstraints {
+                $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            }
         }
     }
     
@@ -116,13 +150,13 @@ final class LetterViewController: BaseViewController {
         navigationItem.rightBarButtonItem = guideButton
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
-        title = "쪽지함"
+        title = TextLiteral.letterViewControllerTitle
     }
     
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icLetterInfo, for: .normal)
-        setupGuideText(title: "쪽지 쓰기는?", text: "쪽지 쓰기는?\n보낸 쪽지함에서 쓰기가 가능해요!\n받은 쪽지함은 확인만 할 수 있어요.")
+        setupGuideText(title: TextLiteral.letterViewControllerGuideTitle, text: TextLiteral.letterViewControllerGuideText)
     }
     
     override func renderGuideArea() {
@@ -148,8 +182,15 @@ final class LetterViewController: BaseViewController {
     private func setupButtonAction() {
         let presentSendButtonAction = UIAction { [weak self] _ in
             let storyboard = UIStoryboard(name: "Letter", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "CreateLetterNavigationController")
-            self?.present(viewController, animated: true, completion: nil)
+            guard
+                let navigationController = storyboard.instantiateViewController(withIdentifier: "CreateLetterNavigationController") as? UINavigationController,
+                let viewController = navigationController.topViewController as? CreateLetterViewController
+            else { return }
+            
+            viewController.manitteId = self?.manitteId
+            viewController.roomId = "9"
+            
+            self?.present(navigationController, animated: true, completion: nil)
         }
         sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
                                                   for: .touchUpInside)
@@ -197,6 +238,41 @@ final class LetterViewController: BaseViewController {
             guideBoxImageView.isHidden = true
         }
     }
+    
+    // MARK: - network
+    
+    private func fetchSendLetter(roomId: String) {
+        Task {
+            do {
+                let letterContent = try await letterSevice.fetchSendLetter(roomId: roomId)
+                
+                if let content = letterContent {
+                    dump(content)
+                    manitteId = content.manittee?.id
+                }
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
+        }
+    }
+    
+    private func fetchReceviedLetter(roomId: String) {
+        Task {
+            do {
+                let letterContent = try await letterSevice.fetchReceiveLetter(roomId: roomId)
+                
+                if let content = letterContent {
+                    dump(content)
+                }
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -207,7 +283,11 @@ extension LetterViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setLetterData(with: letterState.lists[indexPath.item])
+//        cell.setLetterData(with: letterState.lists[indexPath.item], isHidden: letterState.isHidden)
+        cell.didTappedReport = { [weak self] in
+//            self?.sendReportMail(userNickname: "호야",
+//                                 content: self?.letterState.lists[indexPath.item].content ?? "글 내용 없음")
+        }
         return cell
     }
     
@@ -229,18 +309,18 @@ extension LetterViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegateFlowLayout
 extension LetterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var heights = [Size.cellTopSpacing, Size.cellBottomSpacing]
         
-        if let content = letterState.lists[indexPath.item].content {
-            heights += [calculateContentHeight(text: content)]
-        }
-        
-        if letterState.lists[indexPath.item].image != nil {
-            heights += [Size.imageHeight]
-        }
+//        if let content = letterState.lists[indexPath.item].content {
+//            heights += [calculateContentHeight(text: content)]
+//        }
+//
+//        if letterState.lists[indexPath.item].image != nil {
+//            heights += [Size.imageHeight]
+//        }
         
         return CGSize(width: Size.cellWidth, height: heights.reduce(0, +))
     }
@@ -250,6 +330,7 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension LetterViewController: UICollectionViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         guideBoxImageView.isHidden = true

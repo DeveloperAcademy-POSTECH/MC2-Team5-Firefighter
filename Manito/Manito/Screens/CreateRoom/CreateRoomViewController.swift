@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class CreateRoomViewController: BaseViewController {
-    
+    let roomService: RoomProtocol = RoomAPI(apiService: APIService(), environment: .development)
     private var name = ""
     private var person = 0
     private var date = 0
@@ -23,12 +23,13 @@ class CreateRoomViewController: BaseViewController {
     }
     
     private var notiIndex: RoomState = .inputName
+    private var roomInfo: RoomDTO?
     
     // MARK: - Property
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "방 생성하기"
+        label.text = TextLiteral.createRoom
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
@@ -41,7 +42,7 @@ class CreateRoomViewController: BaseViewController {
     }()
     lazy var nextButton: MainButton = {
         let button = MainButton()
-        button.title = "다음"
+        button.title = TextLiteral.next
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         button.isDisabled = true
         return button
@@ -50,7 +51,7 @@ class CreateRoomViewController: BaseViewController {
         let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
-        button.setTitle(" 이전", for: .normal)
+        button.setTitle(" " + TextLiteral.previous, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
         button.isHidden = true
@@ -77,9 +78,10 @@ class CreateRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        toggleButton()
         setupNotificationCenter()
     }
-    
+        
     override func render() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
@@ -141,9 +143,10 @@ class CreateRoomViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         view.backgroundColor = .backgroundGrey
-        toggleButton()
         navigationController?.navigationBar.isHidden = true
     }
+    
+    
     
     // MARK: - Selectors
     
@@ -163,10 +166,12 @@ class CreateRoomViewController: BaseViewController {
         case .inputName:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
+            checkView.name = text
             notiIndex = .inputPerson
             changedInputView()
         case .inputPerson:
             person = Int(personView.personSlider.value)
+            checkView.person = person
             notiIndex = .inputDate
             changedInputView()
         case .inputDate:
@@ -174,7 +179,10 @@ class CreateRoomViewController: BaseViewController {
             checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
             changedInputView()
         case .checkRoom:
-            print("여기는 끝^__^")
+            roomInfo = RoomDTO(title: name, capacity: person, startDate: "20\(dateView.calendarView.getTempStartDate())", endDate: "20\(dateView.calendarView.getTempEndDate())")
+            let chooseVC = ChooseCharacterViewController(statusMode: .createRoom)
+            chooseVC.roomInfo = roomInfo
+            navigationController?.pushViewController(chooseVC, animated: true)
         }
     }
     
@@ -198,6 +206,10 @@ class CreateRoomViewController: BaseViewController {
         nameView.changeNextButtonEnableStatus = { [weak self] isEnable in
             self?.nextButton.isDisabled = !isEnable
         }
+        
+        dateView.calendarView.changeButtonState = { [weak self] isEnabled in
+            self?.nextButton.isDisabled = !isEnabled
+        }
     }
     
     private func changedInputView() {
@@ -209,6 +221,7 @@ class CreateRoomViewController: BaseViewController {
                 self.backButton.isHidden = true
             }
         case RoomState.inputPerson:
+            nextButton.isDisabled = false
             UIView.animate(withDuration: 0.3) {
                 self.nameView.alpha = 0.0
                 self.personView.alpha = 1.0
@@ -216,6 +229,7 @@ class CreateRoomViewController: BaseViewController {
                 self.backButton.isHidden = false
             }
         case RoomState.inputDate:
+            dateView.calendarView.setupButtonState()
             UIView.animate(withDuration: 0.3) {
                 self.personView.alpha = 0.0
                 self.dateView.alpha = 1.0

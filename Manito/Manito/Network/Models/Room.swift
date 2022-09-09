@@ -7,26 +7,26 @@
 
 import Foundation
 
-struct Room: Decodable {
+struct ParticipatingRooms: Decodable {
+    let participatingRooms: [ParticipatingRoom]?
+}
+
+struct ParticipatingRoom: Decodable {
     let id: Int?
-    let title: String?
-    let state: String?
-    let participatingCount: Int?
-    let capacity: Int?
-    var startDate: String?
-    var endDate: String?
-    let manittee: String?
-    var didViewRoulette: Bool?
-    let withFriends: [Friend]?
-    let historyWithManitto: [Letter]?
-    let historyWithManitte: [Letter]?
-    let inviteCode: String?
-    let mission: String?
-    let letters: [Letter]?
-    let admin: Bool?
-    let message: Int?
-    let room: Room1?
+    let title, state: String?
+    let participatingCount, capacity: Int?
+    let startDate, endDate: String?
+}
+
+struct Room: Decodable {
+    let room: RoomInfo?
     let participants: Participants?
+    let manittee: Manittee?
+    let invitation: Invitation?
+    var didViewRoulette: Bool?
+    let mission: Mission?
+    let admin: Bool?
+    let messages: Message1?
 }
 
 struct Friend: Decodable {
@@ -34,27 +34,36 @@ struct Friend: Decodable {
     let name: String?
 }
 
-struct RoomInfo: Codable {
-    let room: Room1?
-    let participants: Participants?
-    let manittee, mission: String?
-    let didViewRoulette, admin: Bool?
-    let messages: Int?
-}
-
 // MARK: - Participants
-struct Participants: Codable {
+struct Participants: Decodable {
     let count: Int?
-    let members: [Member1]?
+    let members: [User]?
 }
 
 // MARK: - Member
-struct Member1: Codable {
+struct User: Decodable {
     let id, nickname: String?
 }
 
 // MARK: - Room
-struct Room1: Codable {
-    let id: Int?
+struct RoomInfo: Decodable {
+    let id, capacity: Int?
     let title, startDate, endDate, state: String?
+}
+
+struct Mission: Codable {
+    let id: Int?
+    let content: String?
+}
+
+struct Invitation: Decodable {
+    let code: String?
+}
+
+struct Message1: Decodable {
+    let count: Int?
+}
+
+struct Manittee: Decodable {
+    let nickname: String?
 }

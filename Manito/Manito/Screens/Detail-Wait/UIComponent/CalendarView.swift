@@ -106,6 +106,11 @@ class CalendarView: UIView {
             $0.trailing.equalToSuperview().inset(72)
         }
     }
+    
+    func setupButtonState() {
+        let hasDate = tempStartDateText != "" && tempEndDateText != ""
+        changeButtonState?(hasDate)
+    }
 
     // MARK: - func
 
@@ -177,7 +182,6 @@ class CalendarView: UIView {
 extension CalendarView: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         isFirstTap = true
-        changeButtonState?(false)
         let isCreatedRoomOnlySelectedStartDate = calendar.selectedDates.count == 1
         let isSelectedDateRange = calendar.selectedDates.count == 2
         let isReclickedStartDate = calendar.selectedDates.count > 2
@@ -186,17 +190,15 @@ extension CalendarView: FSCalendarDelegate {
             calendar.select(selectStartDate)
             calendar.reloadData()
         } else if isSelectedDateRange {
-            changeButtonState?(true)
             tempEndDateText = date.dateToString
             if countDateRange() > 7 {
                 calendar.deselect(date)
-                viewController?.makeAlert(title: "최대 선택 기간을 넘었어요", message: "최대 7일까지 선택가능해요")
+                viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle, message: TextLiteral.maxMessage)
             } else {
                 setDateRange()
                 calendar.reloadData()
             }
         } else if isReclickedStartDate {
-            changeButtonState?(false)
             tempStartDateText = date.dateToString
             tempEndDateText = ""
             (calendar.selectedDates).forEach {
@@ -206,23 +208,25 @@ extension CalendarView: FSCalendarDelegate {
             calendar.select(selectStartDate)
             calendar.reloadData()
         }
+        
+        setupButtonState()
     }
 
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         tempEndDateText = ""
         isFirstTap = true
-        changeButtonState?(false)
         (calendar.selectedDates).forEach {
             calendar.deselect($0)
         }
         selectStartDate = date
         calendar.select(date)
         calendar.reloadData()
+        setupButtonState()
     }
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         if date < Date() - oneDayInterval {
-            viewController?.makeAlert(title: "지난 날을 선택하셨어요", message: "오늘보다 이전 날짜는 \n 선택하실 수 없어요")
+            viewController?.makeAlert(title: TextLiteral.calendarViewAlertPastTitle, message: TextLiteral.calendarViewAlertPastMessage)
             return false
         } else {
             return true

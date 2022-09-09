@@ -63,6 +63,16 @@ enum ImageLiterals {
     static var gifNi = "gifNi"
     static var gifTto = "gifTto"
     
+    // MARK: - character
+    static var imgCharacterPink: UIImage { .load(name: "imgCharacterPink") }
+    static var imgCharacterBrown: UIImage { .load(name: "imgCharacterBrown") }
+    static var imgCharacterBlue: UIImage { .load(name: "imgCharacterBlue") }
+    static var imgCharacterRed: UIImage { .load(name: "imgCharacterRed") }
+    static var imgCharacterOrange: UIImage { .load(name: "imgCharacterOrange") }
+    static var imgCharacterYellow: UIImage { .load(name: "imgCharacterYellow") }
+    static var imgCharacterLightGreen: UIImage { .load(name: "imgCharacterLightGreen") }
+    static var imgCharacterHeavyPink: UIImage { .load(name: "imgCharacterHeavyPink") }
+    static var imgCharacterPurple: UIImage { .load(name: "imgCharacterPurple") }
 }
 
 extension UIImage {

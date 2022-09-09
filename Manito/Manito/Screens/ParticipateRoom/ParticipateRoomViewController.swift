@@ -14,7 +14,7 @@ class ParticipateRoomViewController: BaseViewController {
     // MARK: - Property
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "방 참가하기"
+        label.text = TextLiteral.enterRoom
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
@@ -29,8 +29,9 @@ class ParticipateRoomViewController: BaseViewController {
     
     private lazy var nextButton: MainButton = {
         let button = MainButton()
-        button.title = "방 입장"
+        button.title = TextLiteral.enterRoom //확인
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        button.isDisabled = true
         return button
     }()
     
@@ -39,10 +40,17 @@ class ParticipateRoomViewController: BaseViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        toggleButton()
         setupNotificationCenter()
     }
     
     override func render() {
+        view.addSubview(closeButton)
+        closeButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
+            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+        }
+        
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
@@ -71,12 +79,8 @@ class ParticipateRoomViewController: BaseViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-
-        let closeButtonView = makeBarButtonItem(with: closeButton)
-
+        navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.leftBarButtonItem = nil
-        navigationItem.rightBarButtonItem = closeButtonView
     }
     
     // MARK: - Selectors
@@ -94,11 +98,17 @@ class ParticipateRoomViewController: BaseViewController {
     }
     
     @objc private func didReceiveNextNotification(_ notification: Notification) {
-        self.navigationController?.pushViewController(ChooseCharacterViewController(), animated: true)
+        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom), animated: true)
     }
     
     // MARK: - Funtions    
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_ :)), name: .nextNotification, object: nil)
+    }
+    
+    private func toggleButton() {
+        inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
+            self?.nextButton.isDisabled = !isEnable
+        }
     }
 }

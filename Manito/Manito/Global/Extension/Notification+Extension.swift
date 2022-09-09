@@ -13,4 +13,6 @@ extension Notification.Name {
     static let dateRangeNotification = Notification.Name("DateRangeNotification")
     static let changeStartButtonNotification = Notification.Name("ChangeStartButtonNotification")
     static let editMaxUserNotification = Notification.Name("EditMaxUserNotification")
+    static let requestDateRangeNotification = Notification.Name("RequestDateRangeNotification")
+    static let requestRoomInfoNotification = Notification.Name("RequestRoomInfoNotification")
 }

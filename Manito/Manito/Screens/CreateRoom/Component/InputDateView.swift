@@ -15,14 +15,14 @@ class InputDateView: UIView {
     
     private let dateViewLabel: UILabel = {
         let label = UILabel()
-        label.text = "활동 기간을 설정해 주세요"
+        label.text = TextLiteral.inputDateViewTitle
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
     let calendarView = CalendarView()
     private let dateInfoLabel: UILabel = {
         let label = UILabel()
-        label.text = "최대 7일까지 설정할 수 있어요 !"
+        label.text = TextLiteral.maxMessage
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .grey002
         return label

@@ -8,11 +8,12 @@
 import Foundation
 
 enum DetailWaitEndPoint: EndPointable {
-    case getWithFriend(roomId: String)
-    case getWaitingRoomInfo(roomId: String)
-    case startManitto(roomId: String, state: String)
-    case editRoomInfo(roomId: String, roomInfo: RoomDTO)
+    case fetchWithFriend(roomId: String)
+    case fetchWaitingRoomInfo(roomId: String)
+    case patchStartManitto(roomId: String)
+    case putRoomInfo(roomId: String, roomInfo: RoomDTO)
     case deleteRoom(roomId: String)
+    case deleteLeaveRoom(roomId: String)
 
     var requestTimeOut: Float {
         return 20
@@ -20,56 +21,65 @@ enum DetailWaitEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .getWithFriend:
+        case .fetchWithFriend:
             return .get
-        case .getWaitingRoomInfo:
+        case .fetchWaitingRoomInfo:
             return .get
-        case .startManitto:
+        case .patchStartManitto:
             return .patch
-        case .editRoomInfo:
+        case .putRoomInfo:
             return .put
         case .deleteRoom:
+            return .delete
+        case .deleteLeaveRoom:
             return .delete
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .getWithFriend:
+        case .fetchWithFriend:
             return nil
-        case .getWaitingRoomInfo:
+        case .fetchWaitingRoomInfo:
             return nil
-        case .startManitto(_, let state):
-            let body = ["state": state]
-            return body.encode()
-        case .editRoomInfo(_, let roomInfo):
+        case .patchStartManitto:
+            return nil
+        case .putRoomInfo(_, let roomInfo):
             let body = ["title": roomInfo.title,
-                "capacity": roomInfo.capacity.description,
-                "startDate": roomInfo.startDate,
-                "endDate": roomInfo.endDate]
+                        "capacity": roomInfo.capacity.description,
+                        "startDate": roomInfo.startDate,
+                        "endDate": roomInfo.endDate]
             return body.encode()
         case .deleteRoom:
+            return nil
+        case .deleteLeaveRoom:
             return nil
         }
     }
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .getWithFriend(let roomId):
+        case .fetchWithFriend(let roomId):
             return "\(baseURL)/rooms/\(roomId)/participants"
-        case .getWaitingRoomInfo(let roomId):
+        case .fetchWaitingRoomInfo(let roomId):
             return "\(baseURL)/rooms/\(roomId)"
-        case .startManitto(let roomId, _):
+        case .patchStartManitto(let roomId):
             return "\(baseURL)/rooms/\(roomId)/state"
-        case .editRoomInfo(let roomId, _):
+        case .putRoomInfo(let roomId, _):
             return "\(baseURL)/rooms/\(roomId)"
         case .deleteRoom(let roomId):
             return "\(baseURL)/rooms/\(roomId)"
+        case .deleteLeaveRoom(let roomId):
+            return "\(baseURL)/rooms/\(roomId)/participants"
         }
     }
     
     func createRequest(environment: APIEnvironment) -> NetworkRequest {
+        var headers: [String: String] = [:]
+        headers["Content-Type"] = "application/json"
+        headers["authorization"] = "Bearer \(APIEnvironment.development.token)"
         return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+                              headers: headers,
                               reqBody: requestBody,
                               reqTimeout: requestTimeOut,
                               httpMethod: httpMethod

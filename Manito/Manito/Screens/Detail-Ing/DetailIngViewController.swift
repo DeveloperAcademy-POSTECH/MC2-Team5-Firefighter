@@ -10,13 +10,20 @@ import UIKit
 import SnapKit
 
 class DetailIngViewController: BaseViewController {
+    lazy var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService(),
+                                                    environment: .development)
+    lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService(),
+                                                        environment: .development)
 
+    var roomIndex: Int = 0
     var isDone = false
+    var friendList: FriendList?
 
     // MARK: - property
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var periodLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var missionBackgroundView: UIView!
     @IBOutlet weak var missionTitleLabel: UILabel!
     @IBOutlet weak var missionContentsLabel: UILabel!
@@ -31,6 +38,7 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
     @IBOutlet weak var manitoMemoryButton: UIButton!
+    @IBOutlet weak var manitteAnimationLabel: UILabel!
 
     private lazy var manitiRealIconView: UIImageView = {
         let imageView = UIImageView(image: ImageLiterals.imgMa)
@@ -40,12 +48,20 @@ class DetailIngViewController: BaseViewController {
     
     private let manitoOpenButton: UIButton = {
         let button = MainButton()
-        button.title = "마니또 공개"
+        button.title = TextLiteral.detailIngViewControllerManitoOpenButton
         button.hasShadow = true
         return button
     }()
 
     // MARK: - life cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if isDone {
+            requestDoneRoomInfo()
+        } else {
+            requestRoomInfo()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,11 +96,18 @@ class DetailIngViewController: BaseViewController {
         super.configUI()
         setupFont()
         setupViewLayer()
+        setupStatusLabel()
+        setupManitteLabel()
+        
         addActionMemoryViewController()
         addActionPushLetterViewController()
         addGestureMemberList()
         addGestureManito()
         addActionOpenManittoViewController()
+        
+        manitiIconView.image = ImageLiterals.icManiTti
+        listIconView.image = ImageLiterals.icList
+        
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
@@ -92,16 +115,18 @@ class DetailIngViewController: BaseViewController {
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        setupGuideText(title: "개별 미션이란?", text: "개별 미션이란?\n나의 마니띠에게 전하는\n둘만의 미션을 확인할 수 있어요!")
+        setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
     }
 
     private func setupFont() {
         titleLabel.font = .font(.regular, ofSize: 34)
         periodLabel.font = .font(.regular, ofSize: 16)
+        statusLabel.font = .font(.regular, ofSize: 13)
         missionTitleLabel.font = .font(.regular, ofSize: 14)
         missionContentsLabel.font = .font(.regular, ofSize: 18)
         informationTitleLabel.font = .font(.regular, ofSize: 16)
         manitiLabel.font = .font(.regular, ofSize: 15)
+        manitteAnimationLabel.font = .font(.regular, ofSize: 15)
         listLabel.font = .font(.regular, ofSize: 15)
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
         manitoMemoryButton.titleLabel?.font = .font(.regular, ofSize: 15)
@@ -128,6 +153,21 @@ class DetailIngViewController: BaseViewController {
         manitoMemoryButton.makeBorderLayer(color: .white)
     }
     
+    private func setupStatusLabel() {
+        statusLabel.text = isDone ? TextLiteral.done : TextLiteral.doing
+        statusLabel.backgroundColor = isDone ? .grey002 : .mainRed
+        statusLabel.layer.masksToBounds = true
+        statusLabel.layer.cornerRadius = 11
+        statusLabel.textColor = .white
+        statusLabel.font = .font(.regular, ofSize: 13)
+        statusLabel.textAlignment = .center
+    }
+    
+    private func setupManitteLabel() {
+        manitteAnimationLabel.text = ""
+        manitteAnimationLabel.alpha = 0
+    }
+    
     private func addGestureManito() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapManito))
         manitiBackView.addGestureRecognizer(tapGesture)
@@ -140,7 +180,9 @@ class DetailIngViewController: BaseViewController {
     
     private func addActionPushLetterViewController() {
         let action = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(LetterViewController(), animated: true)
+            // TODO: - POST로 지정해두었기 때문에 들어오는 값에 따라서 다른 값이 들어오도록 해야 함
+            let letterViewController = LetterViewController(roomState: "PROCESSING")
+            self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         letterBoxButton.addAction(action, for: .touchUpInside)
     }
@@ -161,24 +203,109 @@ class DetailIngViewController: BaseViewController {
         self.manitoOpenButton.addAction(action, for: .touchUpInside)
     }
     
+    // MARK: - DetailStarting API
+    
+    private func requestRoomInfo() {
+        Task {
+            do {
+                let data = try await detailIngService.requestStartingRoomInfo(roomId: "\(roomIndex)")
+                if let info = data {
+                    titleLabel.text = info.room?.title
+                    guard let startDate = info.room?.startDate,
+                          let endDate = info.room?.endDate,
+                          let missionContent = info.mission?.content,
+                          let minittee = info.manittee?.nickname
+                    else { return }
+                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                    missionContentsLabel.text = missionContent
+                    manitteAnimationLabel.text = minittee
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestWithFriends() {
+        Task {
+            do {
+                let data = try await detailIngService.requestWithFriends(roomId: "\(roomIndex)")
+                if let list = data {
+                    friendList = list
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    // MARK: - DetailDone API
+    
+    private func requestDoneRoomInfo() {
+        Task {
+            do {
+                let data = try await detailDoneService.requestDoneRoomInfo(roomId: "\(roomIndex)")
+                if let _ = data {
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestMemory() {
+        Task {
+            do {
+                let data = try await detailDoneService.requestMemory(roomId: "\(roomIndex)")
+                if let _ = data {
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
     // MARK: - selector
     
     @objc
     private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
+        requestWithFriends()
         let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className) as? FriendListViewController else { return }
+        viewController.roomIndex = roomIndex
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc
     private func didTapManito() {
-        UIView.animate(withDuration: 1.0) {
+        UIView.animate(withDuration: 2.0) {
+            self.manitiLabel.alpha = 0
             self.manitiIconView.alpha = 0
             self.manitiRealIconView.alpha = 1
+            self.manitteAnimationLabel.alpha = 1
         } completion: { _ in
             UIView.animate(withDuration: 1.0, delay: 1.0) {
                 self.manitiIconView.alpha = 1
                 self.manitiRealIconView.alpha = 0
+                self.manitiLabel.text = "호야의 마니띠"
+                self.manitteAnimationLabel.alpha = 0
+                self.manitiLabel.alpha = 1
             }
         }
     }

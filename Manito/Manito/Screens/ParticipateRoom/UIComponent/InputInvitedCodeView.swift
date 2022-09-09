@@ -12,19 +12,22 @@ import SnapKit
 final class InputInvitedCodeView: UIView {
     
     // MARK: - Property    
-    lazy var roomsCodeTextField: UITextField = {
-        let texField = UITextField()
+    lazy var roomCodeTextField: UITextField = {
+        let textField = UITextField()
         let attributes = [
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
-        texField.backgroundColor = .darkGrey002
-        texField.attributedPlaceholder = NSAttributedString(string: "초대코드 입력", attributes: attributes)
-        texField.textAlignment = .center
-        texField.makeBorderLayer(color: .white)
-        texField.font = .font(.regular, ofSize: 18)
-        texField.returnKeyType = .done
-        return texField
+        textField.backgroundColor = .darkGrey002
+        textField.attributedPlaceholder = NSAttributedString(string: "초대코드 입력", attributes: attributes)
+        textField.textAlignment = .center
+        textField.makeBorderLayer(color: .white)
+        textField.font = .font(.regular, ofSize: 18)
+        textField.returnKeyType = .done
+        textField.delegate = self
+        return textField
     }()
+    
+    var changeNextButtonEnableStatus: ((Bool) -> ())?
     
     // MARK: - Init
     override init(frame: CGRect) {
@@ -38,10 +41,17 @@ final class InputInvitedCodeView: UIView {
     
     // MARK: - Config
     private func render() {
-        self.addSubview(roomsCodeTextField)
-        roomsCodeTextField.snp.makeConstraints {
+        self.addSubview(roomCodeTextField)
+        roomCodeTextField.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(60)
         }
+    }
+}
+
+extension InputInvitedCodeView: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {        
+        let hasText = roomCodeTextField.hasText
+        changeNextButtonEnableStatus?(hasText)
     }
 }
