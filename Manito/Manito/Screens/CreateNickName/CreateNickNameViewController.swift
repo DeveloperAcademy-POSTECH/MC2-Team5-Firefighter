@@ -113,6 +113,7 @@ class CreateNickNameViewController: BaseViewController {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
             UserData.setValue(nickname, forKey: .nickname)
+            requestNickname(setting: NicknameDTO(nickname: nickname))
             presentMainViewController()
         }
     }
