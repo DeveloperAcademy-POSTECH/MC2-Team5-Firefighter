@@ -204,8 +204,6 @@ class ChooseCharacterViewController: BaseViewController {
         }
         
     }
-    
-
 }
 
 // MARK: - UICollectionViewDataSource
