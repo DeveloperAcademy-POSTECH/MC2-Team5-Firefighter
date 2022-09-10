@@ -189,11 +189,11 @@ class ChooseCharacterViewController: BaseViewController {
         switch statusMode {
         case .createRoom:
             guard let roomInfo = roomInfo else { return }
-//            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
-//                                                                capacity: roomInfo.capacity,
-//                                                                startDate: roomInfo.startDate,
-//                                                                endDate: roomInfo.endDate) ,
-//                                                  member: MemberDTO(colorIdx: colorIdx)))
+            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
+                                                                capacity: roomInfo.capacity,
+                                                                startDate: roomInfo.startDate,
+                                                                endDate: roomInfo.endDate) ,
+                                                  member: MemberDTO(colorIdx: colorIdx)))
             guard let navigationController = self.presentingViewController as? UINavigationController else { return }
             let viewController = DetailWaitViewController(index: 12)
             navigationController.popViewController(animated: true)
