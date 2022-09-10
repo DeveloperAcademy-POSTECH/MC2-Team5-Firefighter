@@ -177,14 +177,6 @@ class MainViewController: BaseViewController {
         navigationItem.rightBarButtonItem = settingButtonView
     }
     
-    private func setupGifImage() {
-        DispatchQueue.main.async {
-            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
-            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
-            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
-        }
-    }
-    
     // MARK: - API
     
     private func requestCommonMission() {
@@ -216,6 +208,16 @@ class MainViewController: BaseViewController {
             } catch NetworkError.clientError(let message) {
                 print("clientError:\(String(describing: message))")
             }
+        }
+    }
+    
+    // MARK: - func
+    
+    private func setupGifImage() {
+        DispatchQueue.main.async {
+            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
+            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
+            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
         }
     }
 
