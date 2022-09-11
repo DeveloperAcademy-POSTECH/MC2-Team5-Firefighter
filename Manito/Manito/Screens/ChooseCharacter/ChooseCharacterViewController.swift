@@ -201,7 +201,7 @@ class ChooseCharacterViewController: BaseViewController {
             }
         case .enterRoom:
             print("enter")
-        }g
+        }
     }
 }
 
