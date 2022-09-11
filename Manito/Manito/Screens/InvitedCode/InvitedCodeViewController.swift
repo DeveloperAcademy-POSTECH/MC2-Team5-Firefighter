@@ -10,7 +10,20 @@ import UIKit
 import SnapKit
 
 class InvitedCodeViewController: BaseViewController {
-
+    
+    var roomInfo: RoomDTO
+    var code: String
+    
+    init(roomInfo: RoomDTO, code: String){
+        self.roomInfo = roomInfo
+        self.code = code
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - property
     private let invitedImageView: UIImageView = {
         let imageView = UIImageView(image: ImageLiterals.imgCodeBackground)
@@ -26,23 +39,23 @@ class InvitedCodeViewController: BaseViewController {
         button.setImage(ImageLiterals.btnXmark, for: .normal)
         return button
     }()
-    private let roomTitleLabel: UILabel = {
+    private lazy var roomTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 34)
-        label.text = "명예소방관"
+        label.text = roomInfo.title
         return label
     }()
-    private let roomDateLabel: UILabel = {
+    private lazy var roomDateLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
-        label.text = "2022.06.06 ~ 2022.06.12"
+        label.text = "\(roomInfo.startDate) ~ \(roomInfo.endDate)"
         return label
     }()
     private let roomImage = UIImageView(image: ImageLiterals.imgCharacterBrown)
-    private let roomPersonLabel: UILabel = {
+    private lazy var roomPersonLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
-        label.text = "X 8인"
+        label.text = "X \(roomInfo.capacity)인"
         return label
     }()
     private lazy var roomPersonView: UIView = {
@@ -60,17 +73,16 @@ class InvitedCodeViewController: BaseViewController {
         }
         return view
     }()
-    private let roomInviteCodeButton: UIButton = {
+    private lazy var roomInviteCodeButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { _ in
-            print("S")
+        let buttonAction = UIAction { [weak self] _ in
+            self?.touchUpToShowToast()
         }
-        button.setTitle("HSHSHS", for: .normal)
+        button.setTitle(code, for: .normal)
         button.setTitleColor(.blue, for: .normal)
         button.setTitleColor(.blue.withAlphaComponent(0.8), for: .highlighted)
         button.titleLabel?.font = .font(.regular, ofSize: 50)
         button.addAction(buttonAction, for: .touchUpInside)
-        button.backgroundColor = .red
         return button
     }()
     private let roomInviteInfoLabel: UILabel = {
@@ -80,8 +92,7 @@ class InvitedCodeViewController: BaseViewController {
         label.textColor = .backgroundGrey
         return label
     }()
-    
-    // MARK: - life cycle
+
     // MARK: - configure
     override func render() {
         view.addSubview(invitedImageView)
@@ -122,18 +133,52 @@ class InvitedCodeViewController: BaseViewController {
         roomInviteCodeButton.snp.makeConstraints {
             $0.top.equalTo(roomPersonView.snp.bottom).offset(80)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(192)
-            $0.height.equalTo(35)
+            $0.width.equalTo(242)
+            $0.height.equalTo(65)
         }
         
         invitedImageView.addSubview(roomInviteInfoLabel)
         roomInviteInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(roomInviteCodeButton.snp.bottom).offset(40)
+            $0.top.equalTo(roomInviteCodeButton.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
         }
     }
     
     override func configUI() {
         view.backgroundColor = .black.withAlphaComponent(0.8)
+    }
+    
+    // MARK: - functions
+    private func touchUpToShowToast() {
+        UIPasteboard.general.string = code
+        showToast(message: TextLiteral.detailWaitViewControllerCopyCode)
+    }
+    
+    private func showToast(message: String) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = .grey001
+        toastLabel.textColor = .black
+        toastLabel.font = .font(.regular, ofSize: 14)
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
+        toastLabel.alpha = 0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        self.view.addSubview(toastLabel)
+        toastLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(150)
+            $0.width.equalTo(140)
+            $0.height.equalTo(40)
+        }
+        UIView.animate(withDuration: 1.5, animations: {
+            toastLabel.alpha = 0.8
+        }, completion: { isCompleted in
+                UIView.animate(withDuration: 1.5, animations: {
+                    toastLabel.alpha = 0
+                }, completion: { isCompleted in
+                        toastLabel.removeFromSuperview()
+                    })
+            })
     }
 }
