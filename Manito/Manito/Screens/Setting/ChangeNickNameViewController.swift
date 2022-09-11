@@ -32,6 +32,8 @@ class ChangeNickNameViewController: BaseViewController {
         textField.layer.borderColor = UIColor.white.cgColor
         textField.textAlignment = .center
         textField.returnKeyType = .done
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
         textField.becomeFirstResponder()
         return textField
     }()

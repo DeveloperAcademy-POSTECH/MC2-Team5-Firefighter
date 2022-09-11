@@ -29,6 +29,8 @@ final class InputInvitedCodeView: UIView {
         textField.font = .font(.regular, ofSize: 18)
         textField.returnKeyType = .done
         textField.delegate = self
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
         return textField
     }()
     
