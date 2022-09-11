@@ -413,7 +413,9 @@ class DetailWaitViewController: BaseViewController {
                 UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
                         self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: { _ in
                             self?.requestDeleteRoom()
-                            self?.navigationController?.popViewController(animated: true)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {                            
+                                self?.navigationController?.popViewController(animated: true)
+                            }
                         })
                     })])
             return menu
