@@ -272,7 +272,8 @@ class DetailIngViewController: BaseViewController {
     private func requestDoneRoomInfo() {
         Task {
             do {
-                let data = try await detailDoneService.requestDoneRoomInfo(roomId: "\(roomIndex)")
+                guard let roomId = roomInformation?.id?.description else { return }
+                let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId)
                 if let info = data {
                     titleLabel.text = info.room?.title
                     guard let startDate = info.room?.startDate,
