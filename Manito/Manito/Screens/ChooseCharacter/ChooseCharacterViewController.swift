@@ -213,10 +213,17 @@ class ChooseCharacterViewController: BaseViewController {
                                                                 startDate: roomInfo.startDate,
                                                                 endDate: roomInfo.endDate) ,
                                                   member: MemberDTO(colorIdx: colorIdx)))
+            guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+            let viewController = DetailWaitViewController(index: 4)
+            navigationController.popViewController(animated: true)
+            navigationController.pushViewController(viewController, animated: false)
+            
+            self.dismiss(animated: true) {
+                NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
+            }
         case .enterRoom:
             requestJoinRoom()
         }
-        
     }
 }
 
