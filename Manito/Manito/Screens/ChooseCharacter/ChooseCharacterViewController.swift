@@ -175,9 +175,6 @@ class ChooseCharacterViewController: BaseViewController {
     }
     
     // MARK: - Selectors
-    @objc private func didTapEnterButtonNoti() {
-        
-    }
     @objc private func didTapBackButton() {
         navigationController?.popViewController(animated: true)
     }

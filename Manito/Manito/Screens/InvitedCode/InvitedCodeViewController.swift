@@ -136,7 +136,4 @@ class InvitedCodeViewController: BaseViewController {
     override func configUI() {
         view.backgroundColor = .black.withAlphaComponent(0.8)
     }
-    
-    // MARK: - selectors
-    // MARK: - functions
 }
