@@ -92,8 +92,7 @@ class InvitedCodeViewController: BaseViewController {
         label.textColor = .backgroundGrey
         return label
     }()
-    
-    // MARK: - life cycle
+
     // MARK: - configure
     override func render() {
         view.addSubview(invitedImageView)
@@ -149,7 +148,6 @@ class InvitedCodeViewController: BaseViewController {
         view.backgroundColor = .black.withAlphaComponent(0.8)
     }
     
-    // MARK: - selectors
     // MARK: - functions
     private func touchUpToShowToast() {
         UIPasteboard.general.string = code
