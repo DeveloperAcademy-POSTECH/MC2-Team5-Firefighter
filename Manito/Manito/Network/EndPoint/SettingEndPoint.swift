@@ -8,7 +8,7 @@
 import Foundation
 
 enum SettingEndPoint: EndPointable {
-    case editUserInfo(nickName: String)
+    case editUserInfo(nickNameDto: NicknameDTO)
 
     var requestTimeOut: Float {
         return 20
@@ -23,8 +23,8 @@ enum SettingEndPoint: EndPointable {
 
     var requestBody: Data? {
         switch self {
-        case .editUserInfo(let nickName):
-            let body = ["nickName": nickName]
+        case .editUserInfo(let setting):
+            let body = setting
             return body.encode()
         }
     }
@@ -32,7 +32,19 @@ enum SettingEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .editUserInfo(_):
-            return "\(baseURL)/api/user"
+            return "\(baseURL)/members/nickname"
         }
+    }
+    
+    func createRequest(environment: APIEnvironment) -> NetworkRequest {
+        var headers: [String: String] = [:]
+        headers["Content-Type"] = "application/json"
+        headers["authorization"] = "Bearer \(APIEnvironment.development.token)"
+        return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+                              headers: headers,
+                              reqBody: requestBody,
+                              reqTimeout: requestTimeOut,
+                              httpMethod: httpMethod
+        )
     }
 }

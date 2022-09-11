@@ -252,7 +252,7 @@ final class LetterViewController: BaseViewController {
                 if let content = letterContent {
                     dump(content)
                     manitteeId = content.manittee?.id
-                    letterList = content.messages.reversed()
+                    letterList = content.messages
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -269,7 +269,7 @@ final class LetterViewController: BaseViewController {
                 
                 if let content = letterContent {
                     dump(content)
-                    letterList = content.messages.reversed()
+                    letterList = content.messages
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -290,6 +290,7 @@ extension LetterViewController: UICollectionViewDataSource {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
         cell.setLetterData(with: letterList[indexPath.item], isHidden: letterState.isHidden)
         cell.didTappedReport = { [weak self] in
+            // FIXME: - nickname 변경 필요
             self?.sendReportMail(userNickname: "호야",
                                  content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
         }

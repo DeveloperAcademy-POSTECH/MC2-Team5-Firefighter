@@ -183,7 +183,7 @@ final class CreateLetterViewController: BaseViewController {
 
             self?.dispatchLetter(roomId: roomId)
             self?.dismiss(animated: true, completion: {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
                     self?.createLetter?()
                 })
             })

@@ -32,7 +32,7 @@ class InputPersonView: UIView {
     }()
     private var personLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.x + TextLiteral.minMember
+        label.text = TextLiteral.x + " \(TextLiteral.minMember)"
         label.font = .font(.regular, ofSize: 24)
         return label
     }()

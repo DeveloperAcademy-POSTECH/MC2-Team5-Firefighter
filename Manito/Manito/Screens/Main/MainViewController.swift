@@ -177,14 +177,6 @@ class MainViewController: BaseViewController {
         navigationItem.rightBarButtonItem = settingButtonView
     }
     
-    private func setupGifImage() {
-        DispatchQueue.main.async {
-            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
-            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
-            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
-        }
-    }
-    
     // MARK: - API
     
     private func requestCommonMission() {
@@ -218,15 +210,26 @@ class MainViewController: BaseViewController {
             }
         }
     }
+    
+    // MARK: - func
+    
+    private func setupGifImage() {
+        DispatchQueue.main.async {
+            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
+            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
+            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
+        }
+    }
 
     private func newRoom() {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
         let createRoom = UIAlertAction(title: TextLiteral.createRoom, style: .default, handler: { [weak self] _ in
             let createVC = CreateRoomViewController()
-            createVC.modalPresentationStyle = .fullScreen
+            let navigationController = UINavigationController(rootViewController: createVC)
+            navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
-                self?.present(createVC,animated: true)
+                self?.present(navigationController,animated: true)
             }
         })
         let enterRoom = UIAlertAction(title: TextLiteral.enterRoom, style: .default, handler: { [weak self] _ in
