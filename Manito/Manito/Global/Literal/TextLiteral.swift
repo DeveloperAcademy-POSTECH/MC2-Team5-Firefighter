@@ -168,5 +168,5 @@ enum TextLiteral {
     static let changeNickNameViewControllerTitle: String = "닉네임 변경하기"
     
     // MARK: - InvitedCodeViewController
-    static let invitedCodeViewCOntroller: String = "글자를 눌러서 코드를 복사하세요"
+    static let invitedCodeViewCOntroller: String = "글자를 탭하여 코드를 복사하세요"
 }
