@@ -514,10 +514,10 @@ class DetailWaitViewController: BaseViewController {
     // MARK: - selector
     @objc
     private func didTapEnterButton() {
-        let vc = InvitedCodeViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.modalTransitionStyle = .crossDissolve
-        present(vc, animated: true)
+        let viewController = InvitedCodeViewController()
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
     }
 
     @objc
