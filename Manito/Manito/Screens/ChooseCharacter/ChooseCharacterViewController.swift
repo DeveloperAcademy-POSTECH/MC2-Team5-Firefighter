@@ -192,7 +192,7 @@ class ChooseCharacterViewController: BaseViewController {
                                                                 endDate: roomInfo.endDate) ,
                                                   member: MemberDTO(colorIdx: colorIdx)))
             guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-            let viewController = DetailWaitViewController(index: 12)
+            let viewController = DetailWaitViewController(index: 12) //FIXME
             navigationController.popViewController(animated: true)
             navigationController.pushViewController(viewController, animated: false)
             
