@@ -123,6 +123,7 @@ enum TextLiteral {
     static let detailIngViewControllerManitoOpenButton: String = "마니또 공개"
     static let detailIngViewControllerGuideTitle: String = "개별 미션이란?"
     static let detailIngViewControllerText: String = "개별 미션이란?\n나의 마니띠에게 전하는\n둘만의 미션을 확인할 수 있어요!"
+    static let detailIngViewControllerDoneMissionText: String = "종료된 마니또예요"
     
     // MARK: - CalendarView
     static let calendarViewAlertMaxTitle: String = "최대 선택 기간을 넘었어요"
