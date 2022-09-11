@@ -15,9 +15,8 @@ final class PeopleInfoView: UIView {
     
     private let peopleImageView = UIImageView(image: ImageLiterals.imgNi)
     
-    private let peopleLabel: UILabel = {
+    lazy var peopleLabel: UILabel = {
         let label = UILabel()
-        label.text = "X 8인"
         label.font = .font(.regular, ofSize: 24)
         return label
     }()

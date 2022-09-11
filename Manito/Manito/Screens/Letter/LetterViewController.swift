@@ -15,15 +15,6 @@ final class LetterViewController: BaseViewController {
         case sent = 0
         case received = 1
         
-        var lists: [Letter] {
-            switch self {
-            case .received:
-                return []
-            case .sent:
-                return []
-            }
-        }
-        
         var isHidden: Bool {
             switch self {
             case .received:
@@ -79,17 +70,26 @@ final class LetterViewController: BaseViewController {
             reloadCollectionView(with: self.letterState)
         }
     }
-    private var roomState: String
+    
+    private var letterList: [Message] = [] {
+        didSet {
+            listCollectionView.reloadData()
+        }
+    }
     
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
                                                     environment: .development)
-    private var manitteId: String?
-    private var roomId: String?
+    private var manitteeId: String?
+    private var roomId: String
+    private var roomState: String
+    private var mission: String
     
     // MARK: - init
     
-    init(roomState: String) {
+    init(roomState: String, roomId: String, mission: String) {
         self.roomState = roomState
+        self.roomId = roomId
+        self.mission = mission
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -109,8 +109,7 @@ final class LetterViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchSendLetter(roomId: "9")
-        fetchReceviedLetter(roomId: "9")
+        letterState = .sent
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -121,8 +120,7 @@ final class LetterViewController: BaseViewController {
     override func render() {
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalToSuperview()
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         view.addSubview(guideButton)
@@ -140,7 +138,6 @@ final class LetterViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
-        sendLetterView.isHidden = (letterState == .received)
     }
     
     override func setupNavigationBar() {
@@ -181,16 +178,16 @@ final class LetterViewController: BaseViewController {
     
     private func setupButtonAction() {
         let presentSendButtonAction = UIAction { [weak self] _ in
-            let storyboard = UIStoryboard(name: "Letter", bundle: nil)
-            guard
-                let navigationController = storyboard.instantiateViewController(withIdentifier: "CreateLetterNavigationController") as? UINavigationController,
-                let viewController = navigationController.topViewController as? CreateLetterViewController
+            guard let self = self,
+                  let manitteeId = self.manitteeId
             else { return }
             
-            viewController.manitteId = self?.manitteId
-            viewController.roomId = "9"
-            
-            self?.present(navigationController, animated: true, completion: nil)
+            let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission)
+            let navigationController = UINavigationController(rootViewController: viewController)
+            viewController.createLetter = {
+                self.fetchSendLetter(roomId: self.roomId)
+            }
+            self.present(navigationController, animated: true, completion: nil)
         }
         sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
                                                   for: .touchUpInside)
@@ -205,7 +202,13 @@ final class LetterViewController: BaseViewController {
         listCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
         listCollectionView.setContentOffset(CGPoint(x: 0, y: -topPoint), animated: false)
         listCollectionView.collectionViewLayout.invalidateLayout()
-        listCollectionView.reloadData()
+        
+        switch state {
+        case .sent:
+            fetchSendLetter(roomId: roomId)
+        case .received:
+            fetchReceviedLetter(roomId: roomId)
+        }
     }
     
     private func calculateContentHeight(text: String) -> CGFloat {
@@ -248,7 +251,8 @@ final class LetterViewController: BaseViewController {
                 
                 if let content = letterContent {
                     dump(content)
-                    manitteId = content.manittee?.id
+                    manitteeId = content.manittee?.id
+                    letterList = content.messages
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -265,6 +269,7 @@ final class LetterViewController: BaseViewController {
                 
                 if let content = letterContent {
                     dump(content)
+                    letterList = content.messages
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -278,15 +283,16 @@ final class LetterViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return letterState.lists.count
+        return letterList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-//        cell.setLetterData(with: letterState.lists[indexPath.item], isHidden: letterState.isHidden)
+        cell.setLetterData(with: letterList[indexPath.item], isHidden: letterState.isHidden)
         cell.didTappedReport = { [weak self] in
-//            self?.sendReportMail(userNickname: "호야",
-//                                 content: self?.letterState.lists[indexPath.item].content ?? "글 내용 없음")
+            // FIXME: - nickname 변경 필요
+            self?.sendReportMail(userNickname: "호야",
+                                 content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
         }
         return cell
     }
@@ -314,13 +320,13 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var heights = [Size.cellTopSpacing, Size.cellBottomSpacing]
         
-//        if let content = letterState.lists[indexPath.item].content {
-//            heights += [calculateContentHeight(text: content)]
-//        }
-//
-//        if letterState.lists[indexPath.item].image != nil {
-//            heights += [Size.imageHeight]
-//        }
+        if let content = letterList[indexPath.item].content {
+            heights += [calculateContentHeight(text: content)]
+        }
+
+        if letterList[indexPath.item].imageUrl != nil {
+            heights += [Size.imageHeight]
+        }
         
         return CGSize(width: Size.cellWidth, height: heights.reduce(0, +))
     }

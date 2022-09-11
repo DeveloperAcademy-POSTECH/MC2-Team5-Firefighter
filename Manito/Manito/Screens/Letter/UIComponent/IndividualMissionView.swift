@@ -52,6 +52,7 @@ final class IndividualMissionView: UIView {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
+            $0.height.equalTo(15)
         }
         
         addSubview(missionLabel)
