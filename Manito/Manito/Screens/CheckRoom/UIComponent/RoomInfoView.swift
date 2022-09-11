@@ -15,14 +15,12 @@ final class RoomInfoView: UIView {
     
     lazy var roomLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
     
     lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.font = .font(.regular, ofSize: 18)
         return label
     }()

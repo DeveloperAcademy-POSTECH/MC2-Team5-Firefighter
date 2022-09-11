@@ -17,7 +17,6 @@ final class PeopleInfoView: UIView {
     
     lazy var peopleLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
