@@ -180,7 +180,7 @@ class CreateRoomViewController: BaseViewController {
             changedInputView()
         case .checkRoom:
             roomInfo = RoomDTO(title: name, capacity: person, startDate: "20\(dateView.calendarView.getTempStartDate())", endDate: "20\(dateView.calendarView.getTempEndDate())")
-            let chooseVC = ChooseCharacterViewController(statusMode: .createRoom)
+            let chooseVC = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
             chooseVC.roomInfo = roomInfo
             navigationController?.pushViewController(chooseVC, animated: true)
         }

@@ -13,6 +13,7 @@ class DetailWaitViewController: BaseViewController {
     let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService(), environment: .development)
     var roomIndex: Int
     var inviteCode: String = ""
+    private var roomInfo: RoomDTO?
     private var userArr: [String] = [] {
         didSet {
             renderTableView()
@@ -277,6 +278,10 @@ class DetailWaitViewController: BaseViewController {
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
                     isOwner = isAdmin
+                    self.roomInfo = RoomDTO(title: title,
+                                       capacity: capacity,
+                                       startDate: startDate,
+                                       endDate: endDate)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -462,6 +467,7 @@ class DetailWaitViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMaxUser), name: .editMaxUserNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(requestDateRange(_:)), name: .requestDateRangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(requestRoomInfo(_:)), name: .requestRoomInfoNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didTapEnterButton), name: .createRoomInvitedCode, object: nil)
     }
 
     private func isPastStartDate() {
@@ -513,6 +519,18 @@ class DetailWaitViewController: BaseViewController {
     }
 
     // MARK: - selector
+    @objc
+    private func didTapEnterButton() {
+        guard let roomInfo = roomInfo else { return }
+        let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
+                                                             capacity: roomInfo.capacity,
+                                                             startDate: roomInfo.startDate,
+                                                             endDate: roomInfo.endDate), code: inviteCode)
+        viewController.roomInfo = roomInfo
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
+    }
 
     @objc
     private func didReceiveDateRange(_ notification: Notification) {

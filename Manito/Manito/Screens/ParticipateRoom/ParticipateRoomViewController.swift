@@ -29,7 +29,7 @@ class ParticipateRoomViewController: BaseViewController {
     
     private lazy var nextButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.enterRoom //확인
+        button.title = TextLiteral.searchRoom
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         button.isDisabled = true
         return button
@@ -38,6 +38,7 @@ class ParticipateRoomViewController: BaseViewController {
     private let inputInvitedCodeView = InputInvitedCodeView()
     
     // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         toggleButton()
@@ -93,17 +94,19 @@ class ParticipateRoomViewController: BaseViewController {
         
         viewController.modalPresentationStyle = .overFullScreen
         viewController.modalTransitionStyle = .crossDissolve
+        viewController.inviteCode = inputInvitedCodeView.roomCodeTextField.text ?? ""
         
         present(viewController, animated: true, completion: nil)
     }
     
     @objc private func didReceiveNextNotification(_ notification: Notification) {
-        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom), animated: true)
+        guard let id = notification.userInfo?["roomId"] as? Int else { return }
+        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom, roomId: id), animated: true)
     }
     
-    // MARK: - Funtions    
+    // MARK: - Funtions
     private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_ :)), name: .nextNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
     }
     
     private func toggleButton() {
