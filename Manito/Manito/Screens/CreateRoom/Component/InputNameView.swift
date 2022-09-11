@@ -68,13 +68,26 @@ class InputNameView: UIView {
     // MARK: - Funtions
     
     private func setCounter(count: Int) {
-        roomsTextLimit.text = "\(count)/\(maxLength)"
-        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
+        if count <= maxLength {
+            roomsTextLimit.text = "\(count)/\(maxLength)"
+        } else {
+            roomsTextLimit.text = "\(maxLength)/\(maxLength)"
+        }
     }
     
     private func checkMaxLength(textField: UITextField, maxLength: Int) {
-        if (textField.text?.count ?? 0 > maxLength) {
-            textField.deleteBackward()
+        if let text = textField.text {
+            if text.count > maxLength {
+                let endIndex = text.index(text.startIndex, offsetBy: maxLength)
+                let fixedText = text[text.startIndex..<endIndex]
+                textField.text = fixedText + " "
+                
+                let when = DispatchTime.now() + 0.01
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    self.roomsNameTextField.text = String(fixedText)
+                    self.setCounter(count: textField.text?.count ?? 0)
+                }
+            }
         }
     }
 }
@@ -82,6 +95,7 @@ class InputNameView: UIView {
 extension InputNameView: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         setCounter(count: textField.text?.count ?? 0)
+        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
         
         let hasText = roomsNameTextField.hasText
         changeNextButtonEnableStatus?(hasText)

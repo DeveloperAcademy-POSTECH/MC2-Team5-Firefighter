@@ -136,12 +136,26 @@ class ChangeNickNameViewController: BaseViewController {
     }
     
     private func setCounter(count: Int) {
-        roomsTextLimit.text = "\(count)/\(maxLength)"
-        checkMaxLength(textField: nameTextField, maxLength: maxLength)
+        if count <= maxLength {
+            roomsTextLimit.text = "\(count)/\(maxLength)"
+        } else {
+            roomsTextLimit.text = "\(maxLength)/\(maxLength)"
+        }
     }
+    
     private func checkMaxLength(textField: UITextField, maxLength: Int) {
-        if (textField.text?.count ?? 0 > maxLength) {
-            textField.deleteBackward()
+        if let text = textField.text {
+            if text.count > maxLength {
+                let endIndex = text.index(text.startIndex, offsetBy: maxLength)
+                let fixedText = text[text.startIndex..<endIndex]
+                textField.text = fixedText + " "
+                
+                let when = DispatchTime.now() + 0.01
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    self.nameTextField.text = String(fixedText)
+                    self.setCounter(count: textField.text?.count ?? 0)
+                }
+            }
         }
     }
     
@@ -167,6 +181,7 @@ extension ChangeNickNameViewController : UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         setCounter(count: textField.text?.count ?? 0)
+        checkMaxLength(textField: nameTextField, maxLength: maxLength)
         
         let hasText = nameTextField.hasText
         doneButton.isDisabled = !hasText
