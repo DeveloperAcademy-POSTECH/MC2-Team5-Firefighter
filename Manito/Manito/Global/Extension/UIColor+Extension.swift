@@ -12,7 +12,7 @@ extension UIColor {
     // MARK: - red
 
     static var mainRed: UIColor {
-        return UIColor(hex: "#E13B2D")
+        return UIColor(hex: "#CA2214")
     }
 
     static var shadowRed: UIColor {
