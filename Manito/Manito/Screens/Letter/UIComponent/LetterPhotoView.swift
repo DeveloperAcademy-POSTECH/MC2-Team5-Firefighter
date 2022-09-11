@@ -179,7 +179,6 @@ extension LetterPhotoView: PHPickerViewControllerDelegate {
                 
                 DispatchQueue.main.sync {
                     guard let image = image as? UIImage else { return }
-
                     self.importPhotosButton.setImage(image, for: .normal)
                     self.applySendButtonEnabled?()
                 }

@@ -112,9 +112,8 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         reportButton.addAction(reportAction, for: .touchUpInside)
     }
     
-    func setLetterData(with data: Message) {
-        // TODO: - 날짜 정리가 필요
-        dateLabel.text = "2022.09.01"
+    func setLetterData(with data: Message, isHidden: Bool) {
+        dateLabel.text = data.date
         reportButton.isHidden = isHidden
         
         if let content = data.content {
@@ -122,9 +121,8 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
             contentLabel.addLabelSpacing()
         }
         
-        if let image = data.imageUrl {
-            // FIXME: - 현재는 더미데이터라서 heart.fill
-            photoImageView.image = UIImage(systemName: "heart.fill")
+        if let imageUrl = data.imageUrl {
+            photoImageView.loadImageUrl(imageUrl)
             photoImageView.snp.updateConstraints {
                 $0.height.equalTo(204)
             }
