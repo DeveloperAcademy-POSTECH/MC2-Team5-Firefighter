@@ -181,5 +181,4 @@ class InvitedCodeViewController: BaseViewController {
                     })
             })
     }
-    
 }

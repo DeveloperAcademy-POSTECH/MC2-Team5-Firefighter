@@ -10,14 +10,24 @@ import UIKit
 import SnapKit
 
 class DetailIngViewController: BaseViewController {
+    
+    private enum RoomType: String {
+        case PROCESSING
+        case POST
+    }
+    
     lazy var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService(),
                                                     environment: .development)
     lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService(),
                                                         environment: .development)
 
-    var roomIndex: Int = 0
-    var isDone = false
     var friendList: FriendList?
+    var roomInformation: ParticipatingRoom? {
+        willSet {
+            guard let state = newValue?.state else { return }
+            roomType = RoomType(rawValue: state)
+        }
+    }
 
     // MARK: - property
 
@@ -52,14 +62,20 @@ class DetailIngViewController: BaseViewController {
         button.hasShadow = true
         return button
     }()
+    
+    private var roomType: RoomType?
 
     // MARK: - life cycle
     
     override func viewWillAppear(_ animated: Bool) {
-        if isDone {
+        super.viewWillAppear(animated)
+        
+        switch roomType {
+        case .POST:
             requestDoneRoomInfo()
-        } else {
+        case .PROCESSING:
             requestRoomInfo()
+        case .none: break
         }
     }
     
@@ -135,12 +151,11 @@ class DetailIngViewController: BaseViewController {
     private func setupViewLayer() {
         missionBackgroundView.layer.cornerRadius = 10
         missionBackgroundView.layer.borderWidth = 1
-        if isDone {
+        if roomType == .POST {
             missionBackgroundView.layer.borderColor = UIColor.white.cgColor
             manitoMemoryButton.layer.isHidden = false
             manitoOpenButton.layer.isHidden = true
-        }
-        else {
+        } else {
             missionBackgroundView.layer.borderColor = UIColor.systemYellow.cgColor
             manitoMemoryButton.layer.isHidden = true
             manitoOpenButton.layer.isHidden = false
@@ -154,8 +169,8 @@ class DetailIngViewController: BaseViewController {
     }
     
     private func setupStatusLabel() {
-        statusLabel.text = isDone ? TextLiteral.done : TextLiteral.doing
-        statusLabel.backgroundColor = isDone ? .grey002 : .mainRed
+        statusLabel.text = roomType == .POST ? TextLiteral.done : TextLiteral.doing
+        statusLabel.backgroundColor = roomType == .POST ? .grey002 : .mainRed
         statusLabel.layer.masksToBounds = true
         statusLabel.layer.cornerRadius = 11
         statusLabel.textColor = .white
@@ -180,8 +195,11 @@ class DetailIngViewController: BaseViewController {
     
     private func addActionPushLetterViewController() {
         let action = UIAction { [weak self] _ in
-            // TODO: - POST로 지정해두었기 때문에 들어오는 값에 따라서 다른 값이 들어오도록 해야 함
-            let letterViewController = LetterViewController(roomState: "PROCESSING")
+            guard let roomType = self?.roomType,
+                  let roomId = self?.roomInformation?.id,
+                  let mission = self?.missionContentsLabel.text
+            else { return }
+            let letterViewController = LetterViewController(roomState: roomType.rawValue, roomId: roomId.description, mission: mission)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         letterBoxButton.addAction(action, for: .touchUpInside)
@@ -208,7 +226,8 @@ class DetailIngViewController: BaseViewController {
     private func requestRoomInfo() {
         Task {
             do {
-                let data = try await detailIngService.requestStartingRoomInfo(roomId: "\(roomIndex)")
+                guard let roomId = roomInformation?.id?.description else { return }
+                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
                 if let info = data {
                     titleLabel.text = info.room?.title
                     guard let startDate = info.room?.startDate,
@@ -233,7 +252,8 @@ class DetailIngViewController: BaseViewController {
     private func requestWithFriends() {
         Task {
             do {
-                let data = try await detailIngService.requestWithFriends(roomId: "\(roomIndex)")
+                guard let roomId = roomInformation?.id?.description else { return }
+                let data = try await detailIngService.requestWithFriends(roomId: roomId)
                 if let list = data {
                     friendList = list
                 }
@@ -252,8 +272,17 @@ class DetailIngViewController: BaseViewController {
     private func requestDoneRoomInfo() {
         Task {
             do {
-                let data = try await detailDoneService.requestDoneRoomInfo(roomId: "\(roomIndex)")
-                if let _ = data {
+                guard let roomId = roomInformation?.id?.description else { return }
+                let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId)
+                if let info = data {
+                    titleLabel.text = info.room?.title
+                    guard let startDate = info.room?.startDate,
+                          let endDate = info.room?.endDate,
+                          let minittee = info.manittee?.nickname
+                    else { return }
+                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                    manitteAnimationLabel.text = minittee
+                    missionContentsLabel.text = TextLiteral.detailIngViewControllerDoneMissionText
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -268,7 +297,8 @@ class DetailIngViewController: BaseViewController {
     private func requestMemory() {
         Task {
             do {
-                let data = try await detailDoneService.requestMemory(roomId: "\(roomIndex)")
+                guard let roomId = roomInformation?.id?.description else { return }
+                let data = try await detailDoneService.requestMemory(roomId: roomId)
                 if let _ = data {
                 }
             } catch NetworkError.serverError {
@@ -288,7 +318,8 @@ class DetailIngViewController: BaseViewController {
         requestWithFriends()
         let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className) as? FriendListViewController else { return }
-        viewController.roomIndex = roomIndex
+        guard let roomId = roomInformation?.id else { return }
+        viewController.roomIndex = roomId
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
