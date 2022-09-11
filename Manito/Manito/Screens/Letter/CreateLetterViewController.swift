@@ -222,20 +222,20 @@ final class CreateLetterViewController: BaseViewController {
                 if let content = letterTextView.letterTextView.text,
                    let image = letterPhotoView.importPhotosButton.imageView?.image,
                    image != ImageLiterals.btnCamera {
-                    guard let pngData = image.pngData() else { return }
+                    guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
                     
-                    try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
+                    try await letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
                 } else if let content = letterTextView.letterTextView.text {
                     let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
                     
                     try await letterSevice.dispatchLetter(roomId: roomId, letter: dto)
                 } else if let image = letterPhotoView.importPhotosButton.imageView?.image,
                           image != ImageLiterals.btnCamera {
-                    guard let pngData = image.pngData() else { return }
+                    guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: manitteeId)
                     
-                    try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
+                    try await letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
                 }
                 
             } catch NetworkError.serverError {

@@ -37,11 +37,7 @@ enum LetterEndPoint: EndPointable {
                                                 "messageContent": letter.messageContent]
             let dataBody = createDataBody(withParameters: parameters,
                                           media: image ?? nil,
-                                          boundary: "123")
-            
-            let stringValue = String(decoding: dataBody, as: UTF8.self)
-            print(stringValue)
-            
+                                          boundary: APIEnvironment.development.boundary)
             return dataBody
         case .fetchSendLetter:
             return nil
@@ -71,12 +67,13 @@ enum LetterEndPoint: EndPointable {
         
         switch self {
         case .dispatchLetter:
-            headers["Content-Type"] = "multipart/form-data; boundary=123"
+            headers["Content-Type"] = "multipart/form-data; boundary=\(APIEnvironment.development.boundary)"
         default:
             headers["Content-Type"] = "application/json"
         }
         
         headers["Authorization"] = "Bearer \(APIEnvironment.development.token)"
+        
         return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
                               headers: headers,
                               reqBody: requestBody,
@@ -102,8 +99,8 @@ extension LetterEndPoint {
         if let media = media {
             let mediaKey = "image"
             body.append("--\(boundary + lineBreak)")
-            body.append("Content-Disposition: form-data; name=\"\(mediaKey)\"; filename=\"\(arc4random()).png\"\(lineBreak)")
-            body.append("Content-Type: image/png\(lineBreak + lineBreak)")
+            body.append("Content-Disposition: form-data; name=\"\(mediaKey)\"; filename=\"\(arc4random()).jpeg\"\(lineBreak)")
+            body.append("Content-Type: image/jpeg\(lineBreak + lineBreak)")
             body.append(media)
             body.append(lineBreak)
         }
@@ -111,10 +108,6 @@ extension LetterEndPoint {
         body.append("--\(boundary)--\(lineBreak)")
 
         return body
-    }
-    
-    private func generateBoundaryString() -> String {
-        return "Boundary-\(UUID().uuidString)"
     }
 }
 
