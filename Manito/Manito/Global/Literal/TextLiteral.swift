@@ -64,8 +64,6 @@ enum TextLiteral {
     static let mainViewControllerGuideDescription: String = "공통 미션이란?\n매일 매일 업데이트되는 미션!\n두근두근 미션을 수행해보세요!"
     static let mainViewControllerNewRoomAlert: String = "새로운 마니또 시작"
 
-    
-    
     // MARK: - OpenManittoViewController
     static let openManittoViewController: String = "당신의 마니또는?"
     
@@ -102,7 +100,7 @@ enum TextLiteral {
     
     // MARK: - LetterPhotoView
     static let letterPhotoViewTitleLabel: String = "사진 추가"
-    static let letterPhotoViewTakePhoto: String = "사진 쵤영"
+    static let letterPhotoViewTakePhoto: String = "사진 촬영"
     static let letterPhotoViewChoosePhoto: String = "사진 보관함에서 선택"
     static let letterPhotoViewDeletePhoto: String = "사진 지우기"
     static let letterPhotoViewChoosePhotoToManitto: String = "마니또에게 보낼 사진 선택"
