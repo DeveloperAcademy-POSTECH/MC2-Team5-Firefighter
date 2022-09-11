@@ -47,6 +47,11 @@ final class CreateLetterViewController: BaseViewController {
     private let letterTextView = LetterTextView()
     private let letterPhotoView = LetterPhotoView()
     
+    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
+                                                    environment: .development)
+    var manitteId: String?
+    var roomId: String?
+    
     // MARK: - life cycle
     
     override func viewDidLoad() {
@@ -158,6 +163,9 @@ final class CreateLetterViewController: BaseViewController {
             self?.presentationControllerDidAttemptToDismissAction()
         }
         let sendAction = UIAction { [weak self] _ in
+            guard let roomId = self?.roomId else { return }
+
+            self?.dispatchLetter(roomId: roomId)
             self?.dismiss(animated: true, completion: nil)
         }
         
@@ -184,6 +192,47 @@ final class CreateLetterViewController: BaseViewController {
         makeActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
                         actionStyle: [.destructive, .cancel],
                         actions: [dismissAction, nil])
+    }
+    
+    // MARK: - network
+    
+    private func dispatchLetter(roomId: String) {
+        Task {
+            do {
+                if let content = letterTextView.letterTextView.text,
+                   let image = letterPhotoView.importPhotosButton.imageView?.image,
+                   image != ImageLiterals.btnCamera {
+                    guard let pngData = image.pngData() else { return }
+                    let dto = LetterDTO(manitteeId: manitteId, messageContent: content)
+                    let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
+                    
+                    if let content = letterContent {
+                        dump(content)
+                    }
+                } else if let content = letterTextView.letterTextView.text {
+                    let dto = LetterDTO(manitteeId: manitteId, messageContent: content)
+                    let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, letter: dto)
+                    
+                    if let content = letterContent {
+                        dump(content)
+                    }
+                } else if let image = letterPhotoView.importPhotosButton.imageView?.image,
+                          image != ImageLiterals.btnCamera {
+                    guard let pngData = image.pngData() else { return }
+                    let dto = LetterDTO(manitteeId: manitteId)
+                    let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
+                    
+                    if let content = letterContent {
+                        dump(content)
+                    }
+                }
+                
+            } catch NetworkError.serverError {
+                print("serverError")
+            } catch NetworkError.clientError(let message) {
+                print("clientError:\(String(describing: message))")
+            }
+        }
     }
 }
 

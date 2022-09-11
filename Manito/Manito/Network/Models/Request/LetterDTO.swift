@@ -7,16 +7,12 @@
 
 import Foundation
 
-struct SendMessageDTO: Encodable {
-    var receiver: UserIdDTO
-    var message: MessageDTO
-}
-
-struct UserIdDTO: Encodable {
-    var id: String
-}
-
-struct MessageDTO: Encodable {
-    var content: String
-    var image: String
+struct LetterDTO: Encodable {
+    var manitteeId: String?
+    var messageContent: String?
+    
+    init(manitteeId: String?, messageContent: String? = nil) {
+        self.manitteeId = manitteeId
+        self.messageContent = messageContent
+    }
 }
