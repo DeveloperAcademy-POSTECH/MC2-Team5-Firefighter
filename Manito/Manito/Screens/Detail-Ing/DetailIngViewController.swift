@@ -56,10 +56,9 @@ class DetailIngViewController: BaseViewController {
         return imageView
     }()
     
-    private let manitoOpenButton: UIButton = {
+    private let manitoOpenButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
-        button.hasShadow = true
         return button
     }()
     
@@ -75,6 +74,7 @@ class DetailIngViewController: BaseViewController {
             requestDoneRoomInfo()
         case .PROCESSING:
             requestRoomInfo()
+            setupOpenManittoButton()
         case .none: break
         }
     }
@@ -219,6 +219,17 @@ class DetailIngViewController: BaseViewController {
             self?.navigationController?.pushViewController(OpenManittoViewController(), animated: true)
         }
         self.manitoOpenButton.addAction(action, for: .touchUpInside)
+    }
+    
+    private func setupOpenManittoButton() {
+        guard let endDate = roomInformation?.endDate else { return }
+        guard let endDateToDate = endDate.stringToDateYYYY() else { return }
+
+        if endDateToDate.isOpenManitto() {
+            manitoOpenButton.isDisabled = false
+        } else {
+            manitoOpenButton.isDisabled = true
+        }
     }
     
     // MARK: - DetailStarting API
