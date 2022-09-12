@@ -99,7 +99,7 @@ class CreateNickNameViewController: BaseViewController {
         view.addSubview(roomsTextLimit)
         roomsTextLimit.snp.makeConstraints {
             $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
-            $0.right.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
         view.addSubview(doneButton)
