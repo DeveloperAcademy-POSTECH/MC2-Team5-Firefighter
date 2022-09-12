@@ -25,4 +25,8 @@ extension APIEnvironment {
     var token: String {
         return "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLrk4DrgpgiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2MjA0NDAxMCwiZXhwIjoxNjY5ODIwMDEwfQ.TLoUhusGdPShmT6BksOOJPsMvSGgjm96rXsmTETMhrE"
     }
+    
+    var boundary: String {
+        return "com.TeamFirefighter.Manito"
+    }
 }
