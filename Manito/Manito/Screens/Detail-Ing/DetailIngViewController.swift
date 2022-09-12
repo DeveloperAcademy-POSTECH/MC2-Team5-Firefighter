@@ -222,10 +222,10 @@ class DetailIngViewController: BaseViewController {
     }
     
     private func setupOpenManittoButton() {
-        guard let endDate = roomInformation?.endDate else { return }
-        guard let endDateToDate = endDate.stringToDateYYYY() else { return }
+        guard let endDateToString = roomInformation?.endDate else { return }
+        guard let endDate = endDateToString.stringToDateYYYY() else { return }
 
-        if endDateToDate.isOpenManitto() {
+        if endDate.isOpenManitto() {
             manitoOpenButton.isDisabled = false
         } else {
             manitoOpenButton.isDisabled = true
