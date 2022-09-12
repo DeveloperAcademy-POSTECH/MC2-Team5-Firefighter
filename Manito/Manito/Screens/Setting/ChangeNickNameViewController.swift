@@ -68,7 +68,7 @@ class ChangeNickNameViewController: BaseViewController {
         view.addSubview(roomsTextLimit)
         roomsTextLimit.snp.makeConstraints {
             $0.top.equalTo(nameTextField.snp.bottom).offset(10)
-            $0.right.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
         view.addSubview(doneButton)
