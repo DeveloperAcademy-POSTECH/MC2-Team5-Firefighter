@@ -105,7 +105,7 @@ class CreateRoomViewController: BaseViewController {
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(57)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
             $0.height.equalTo(60)
         }
         
