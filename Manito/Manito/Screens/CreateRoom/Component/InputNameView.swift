@@ -15,18 +15,20 @@ class InputNameView: UIView {
     // MARK: - Property
     
     lazy var roomsNameTextField: UITextField = {
-        let texField = UITextField()
+        let textField = UITextField()
         let attributes = [
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
-        texField.backgroundColor = .darkGrey002
-        texField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText, attributes:attributes)
-        texField.textAlignment = .center
-        texField.makeBorderLayer(color: .white)
-        texField.font = .font(.regular, ofSize: 18)
-        texField.returnKeyType = .done
-        texField.delegate = self
-        return texField
+        textField.backgroundColor = .darkGrey002
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText, attributes:attributes)
+        textField.textAlignment = .center
+        textField.makeBorderLayer(color: .white)
+        textField.font = .font(.regular, ofSize: 18)
+        textField.returnKeyType = .done
+        textField.delegate = self
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        return textField
     }()
     
     private lazy var roomsTextLimit : UILabel = {

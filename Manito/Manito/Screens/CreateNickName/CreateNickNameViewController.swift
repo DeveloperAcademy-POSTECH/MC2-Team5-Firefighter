@@ -38,6 +38,8 @@ class CreateNickNameViewController: BaseViewController {
         textField.layer.borderColor = UIColor.white.cgColor
         textField.textAlignment = .center
         textField.returnKeyType = .done
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
         return textField
     }()
     private lazy var roomsTextLimit : UILabel = {
