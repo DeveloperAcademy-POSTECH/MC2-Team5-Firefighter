@@ -23,11 +23,7 @@ extension Date {
     func isToday() -> Bool {
         let now = Date()
         let distance = self.distance(to: now)
-        if distance > 0 && distance < 86400 {
-            return true
-        } else {
-            return false
-        }
+        return distance > 0 && distance < 86400
     }
     
     func isOverOpenTime() -> Bool {
@@ -35,11 +31,7 @@ extension Date {
         let nineHoursTimeInterval: TimeInterval = 32400
         let dateAddNineHours = self + nineHoursTimeInterval
         let distance = dateAddNineHours.distance(to: now)
-        if distance > 0 && distance < 54000 {
-            return true
-        } else {
-            return false
-        }
+        return distance > 0 && distance < 54000
     }
     
     func isOpenManitto() -> Bool {
