@@ -35,10 +35,6 @@ extension Date {
     }
     
     func isOpenManitto() -> Bool {
-        if self.isToday() && self.isOverOpenTime() {
-            return true
-        } else {
-            return false
-        }
+        return self.isToday() && self.isOverOpenTime()
     }
 }
