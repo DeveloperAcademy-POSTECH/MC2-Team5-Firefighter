@@ -20,13 +20,13 @@ extension Date {
         return formatter.string(from: self)
     }
     
-    func isToday() -> Bool {
+    var isToday: Bool {
         let now = Date()
         let distance = self.distance(to: now)
         return distance > 0 && distance < 86400
     }
     
-    func isOverOpenTime() -> Bool {
+    var isOverOpenTime: Bool {
         let now = Date()
         let nineHoursTimeInterval: TimeInterval = 32400
         let dateAddNineHours = self + nineHoursTimeInterval
@@ -34,7 +34,7 @@ extension Date {
         return distance > 0 && distance < 54000
     }
     
-    func isOpenManitto() -> Bool {
-        return self.isToday() && self.isOverOpenTime()
+    var isOpenManitto: Bool {
+        return self.isToday && self.isOverOpenTime
     }
 }

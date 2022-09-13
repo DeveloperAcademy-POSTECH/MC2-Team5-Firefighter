@@ -225,7 +225,7 @@ class DetailIngViewController: BaseViewController {
         guard let endDateToString = roomInformation?.endDate else { return }
         guard let endDate = endDateToString.stringToDateYYYY() else { return }
 
-        manitoOpenButton.isDisabled = !endDate.isOpenManitto()
+        manitoOpenButton.isDisabled = !endDate.isOpenManitto
     }
     
     // MARK: - DetailStarting API
