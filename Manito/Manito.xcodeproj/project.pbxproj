@@ -94,7 +94,6 @@
 		B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5250B2851A07000614FF7 /* DetailIngViewController.swift */; };
 		B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5250D2851A07700614FF7 /* LetterViewController.swift */; };
 		B5F525102851A0B500614FF7 /* CreateRoom.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F5250F2851A0B500614FF7 /* CreateRoom.storyboard */; };
-		B5F525122851A0CB00614FF7 /* InvitedCode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F525112851A0CB00614FF7 /* InvitedCode.storyboard */; };
 		B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F525152851A0F600614FF7 /* DetailIng.storyboard */; };
 		B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525192851A12600614FF7 /* BaseViewController.swift */; };
 		B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5251B2851A19A00614FF7 /* BaseCollectionViewCell.swift */; };
@@ -232,7 +231,6 @@
 		B5F5250B2851A07000614FF7 /* DetailIngViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIngViewController.swift; sourceTree = "<group>"; };
 		B5F5250D2851A07700614FF7 /* LetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewController.swift; sourceTree = "<group>"; };
 		B5F5250F2851A0B500614FF7 /* CreateRoom.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateRoom.storyboard; sourceTree = "<group>"; };
-		B5F525112851A0CB00614FF7 /* InvitedCode.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = InvitedCode.storyboard; sourceTree = "<group>"; };
 		B5F525152851A0F600614FF7 /* DetailIng.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailIng.storyboard; sourceTree = "<group>"; };
 		B5F525192851A12600614FF7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B5F5251B2851A19A00614FF7 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -659,7 +657,6 @@
 				B5F524D428519AA000614FF7 /* Main.storyboard */,
 				B5F524D928519AA100614FF7 /* LaunchScreen.storyboard */,
 				B5F5250F2851A0B500614FF7 /* CreateRoom.storyboard */,
-				B5F525112851A0CB00614FF7 /* InvitedCode.storyboard */,
 				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
 				B50B1B3D285B04580080992C /* Interaction.storyboard */,
 			);
@@ -925,7 +922,6 @@
 				B5F525102851A0B500614FF7 /* CreateRoom.storyboard in Resources */,
 				CB2F0FCB28A5468C005F04C8 /* gifMa.gif in Resources */,
 				CB2F0FCD28A5468C005F04C8 /* gifNi.gif in Resources */,
-				B5F525122851A0CB00614FF7 /* InvitedCode.storyboard in Resources */,
 				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
 				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
 				B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */,
