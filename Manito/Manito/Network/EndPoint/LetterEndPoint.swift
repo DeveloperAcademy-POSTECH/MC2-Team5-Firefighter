@@ -37,7 +37,7 @@ enum LetterEndPoint: EndPointable {
                                                 "messageContent": letter.messageContent]
             let dataBody = createDataBody(withParameters: parameters,
                                           media: image ?? nil,
-                                          boundary: APIEnvironment.development.boundary)
+                                          boundary: APIEnvironment.boundary)
             return dataBody
         case .fetchSendLetter:
             return nil

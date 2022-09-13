@@ -49,8 +49,7 @@ final class CreateLetterViewController: BaseViewController {
     private let letterTextView = LetterTextView()
     private let letterPhotoView = LetterPhotoView()
     
-    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
-                                                    environment: .development)
+    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
     var manitteeId: String
     var roomId: String
     var mission: String

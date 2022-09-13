@@ -11,7 +11,7 @@ import SnapKit
 
 class CreateNickNameViewController: BaseViewController {
     
-    let settingService: SettingProtocol = SettingAPI(apiService: APIService(), environment: .development)
+    let settingService: SettingProtocol = SettingAPI(apiService: APIService())
     
     private var nickname: String = ""
     private let maxLength = 5

@@ -11,7 +11,7 @@ import SnapKit
 
 class ChooseCharacterViewController: BaseViewController {
     
-    let roomService: RoomProtocol = RoomAPI(apiService: APIService(), environment: .development)
+    let roomService: RoomProtocol = RoomAPI(apiService: APIService())
     
     private enum Size {
         static let leadingTrailingPadding: CGFloat = 20

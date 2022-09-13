@@ -13,8 +13,7 @@ class FriendListViewController: BaseViewController {
             friendListCollectionView.reloadData()
         }
     }
-    var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService(),
-                                                environment: .development)
+    var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
     
     var roomIndex: Int = 0
     

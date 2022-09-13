@@ -17,14 +17,14 @@ struct MainAPI: MainProtocol {
     func fetchCommonMission() async throws -> DailyMission? {
         let request = MainEndPoint
             .fetchCommonMission
-            .createRequest(environment: environment)
+            .createRequest()
         return try await apiService.request(request)
     }
     
     func fetchManittoList() async throws -> ParticipatingRooms? {
         let request = MainEndPoint
             .fetchManittoList
-            .createRequest(environment: environment)
+            .createRequest()
         return try await apiService.request(request)
     }
 }

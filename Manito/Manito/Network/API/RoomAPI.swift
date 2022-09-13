@@ -15,17 +15,23 @@ struct RoomAPI: RoomProtocol {
     }
     
     func postCreateRoom(body: CreateRoomDTO) async throws -> String? {
-        let request = RoomEndPoint.dispatchCreateRoom(roomInfo: body).createRequest(environment: environment)
+        let request = RoomEndPoint
+            .dispatchCreateRoom(roomInfo: body)
+            .createRequest()
         return try await apiService.request(request)
     }
     
     func getVerification(body: String) async throws -> VerificationCode? {
-        let request = RoomEndPoint.fetchVerifyCode(code: body).createRequest(environment: environment)
+        let request = RoomEndPoint
+            .fetchVerifyCode(code: body)
+            .createRequest()
         return try await apiService.request(request)
     }
     
     func dispatchJoinRoom(roodId: String, dto: MemberDTO) async throws -> String? {
-        let request = RoomEndPoint.dispatchJoinRoom(roomId: roodId, roomDto: dto).createRequest(environment: environment)
+        let request = RoomEndPoint
+            .dispatchJoinRoom(roomId: roodId, roomDto: dto)
+            .createRequest()
         return try await apiService.request(request)
     }
 }

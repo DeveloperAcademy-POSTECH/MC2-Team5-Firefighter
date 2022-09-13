@@ -17,14 +17,14 @@ struct LetterAPI: LetterProtocol {
     func fetchSendLetter(roomId: String) async throws -> Letter? {
         let request = LetterEndPoint
             .fetchSendLetter(roomId: roomId)
-            .createRequest(environment: environment)
+            .createRequest()
         return try await self.apiService.request(request)
     }
     
     func fetchReceiveLetter(roomId: String) async throws -> Letter? {
         let request = LetterEndPoint
             .fetchReceiveLetter(roomId: roomId)
-            .createRequest(environment: environment)
+            .createRequest()
         return try await self.apiService.request(request)
     }
     
@@ -32,7 +32,7 @@ struct LetterAPI: LetterProtocol {
     func dispatchLetter(roomId: String, image: Data? = nil, letter: LetterDTO) async throws -> Letter? {
         let request = LetterEndPoint
             .dispatchLetter(roomId: roomId, image: image, letter: letter)
-            .createRequest(environment: environment)
+            .createRequest()
         return try await self.apiService.request(request)
     }
 }
