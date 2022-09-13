@@ -128,7 +128,6 @@
 		CB637A3D28595D9800FF1240 /* ParticipateRoom.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */; };
 		CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */; };
 		CB674C2128596A310063A6B7 /* CheckRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C2028596A310063A6B7 /* CheckRoomViewController.swift */; };
-		CB674C2328596A3E0063A6B7 /* CheckRoom.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB674C2228596A3E0063A6B7 /* CheckRoom.storyboard */; };
 		CB7B23A828C4ECA8004A4CF3 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7B23A728C4ECA8004A4CF3 /* Character.swift */; };
 		CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */; };
 		CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */; };
@@ -269,7 +268,6 @@
 		CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ParticipateRoom.storyboard; sourceTree = "<group>"; };
 		CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputInvitedCodeView.swift; sourceTree = "<group>"; };
 		CB674C2028596A310063A6B7 /* CheckRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomViewController.swift; sourceTree = "<group>"; };
-		CB674C2228596A3E0063A6B7 /* CheckRoom.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CheckRoom.storyboard; sourceTree = "<group>"; };
 		CB7B23A728C4ECA8004A4CF3 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoHeaderView.swift; sourceTree = "<group>"; };
 		CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomCollectionCell.swift; sourceTree = "<group>"; };
@@ -670,7 +668,6 @@
 				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
 				B50B1B3D285B04580080992C /* Interaction.storyboard */,
 				CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */,
-				CB674C2228596A3E0063A6B7 /* CheckRoom.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -947,7 +944,6 @@
 				B5F525142851A0DB00614FF7 /* DetailWait.storyboard in Resources */,
 				B5F524D628519AA000614FF7 /* Main.storyboard in Resources */,
 				B5E1F2B4285ECCD1006D880B /* joystick.gif in Resources */,
-				CB674C2328596A3E0063A6B7 /* CheckRoom.storyboard in Resources */,
 				CB637A3D28595D9800FF1240 /* ParticipateRoom.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
