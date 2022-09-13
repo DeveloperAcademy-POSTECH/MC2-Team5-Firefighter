@@ -9,11 +9,9 @@ import Foundation
 
 struct DetailDoneAPI: DetailDoneProtocol {
     private let apiService: APIService
-    private let environment: APIEnvironment
     
-    init(apiService: APIService, environment: APIEnvironment) {
+    init(apiService: APIService) {
         self.apiService = apiService
-        self.environment = environment
     }
     
     func requestMemory(roomId: String) async throws -> Memory? {

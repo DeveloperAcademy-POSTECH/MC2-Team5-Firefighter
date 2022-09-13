@@ -8,13 +8,10 @@
 import Foundation
 
 struct SettingAPI: SettingProtocol {
-    
     private let apiService: APIService
-    private let environment: APIEnvironment
     
-    init(apiService: APIService, environment: APIEnvironment) {
+    init(apiService: APIService) {
         self.apiService = apiService
-        self.environment = environment
     }
     
     func putChangeNickname(body: NicknameDTO) async throws -> String? {

@@ -62,19 +62,19 @@ enum LetterEndPoint: EndPointable {
         }
     }
     
-    func createRequest(environment: APIEnvironment) -> NetworkRequest {
+    func createRequest() -> NetworkRequest {
         var headers: [String: String] = [:]
         
         switch self {
         case .dispatchLetter:
-            headers["Content-Type"] = "multipart/form-data; boundary=\(APIEnvironment.development.boundary)"
+            headers["Content-Type"] = "multipart/form-data; boundary=\(APIEnvironment.boundary)"
         default:
             headers["Content-Type"] = "application/json"
         }
         
-        headers["Authorization"] = "Bearer \(APIEnvironment.development.token)"
+        headers["Authorization"] = "Bearer \(APIEnvironment.token)"
         
-        return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
                               headers: headers,
                               reqBody: requestBody,
                               reqTimeout: requestTimeOut,

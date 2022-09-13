@@ -8,13 +8,10 @@
 import Foundation
 
 struct LetterAPI: LetterProtocol {
-    
     private let apiService: Requestable
-    private let environment: APIEnvironment
 
-    init(apiService: Requestable, environment: APIEnvironment) {
+    init(apiService: Requestable) {
         self.apiService = apiService
-        self.environment = environment
     }
     
     func fetchSendLetter(roomId: String) async throws -> Letter? {

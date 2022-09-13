@@ -9,11 +9,9 @@ import Foundation
 
 struct DetailIngAPI: DetailStartingProtocol {
     private let apiService: APIService
-    private let environment: APIEnvironment
     
-    init(apiService: APIService, environment: APIEnvironment) {
+    init(apiService: APIService) {
         self.apiService = apiService
-        self.environment = environment
     }
     
     func requestStartingRoomInfo(roomId: String) async throws -> Room? {
