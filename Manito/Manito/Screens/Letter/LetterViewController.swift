@@ -68,11 +68,13 @@ final class LetterViewController: BaseViewController {
     private var letterState: LetterState = .sent {
         didSet {
             reloadCollectionView(with: self.letterState)
+            setupEmptyView()
         }
     }
     
     private var letterList: [Message] = [] {
         didSet {
+            emptyLabel.isHidden = true
             listCollectionView.reloadData()
         }
     }
@@ -83,6 +85,15 @@ final class LetterViewController: BaseViewController {
     private var roomId: String
     private var roomState: String
     private var mission: String
+    
+    private let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.font = .font(.regular, ofSize: 16)
+        label.addLabelSpacing()
+        label.textAlignment = .center
+        return label
+    }()
     
     // MARK: - init
     
@@ -134,6 +145,10 @@ final class LetterViewController: BaseViewController {
                 $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
             }
         }
+        view.addSubview(emptyLabel)
+        emptyLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+        }
     }
     
     override func configUI() {
@@ -175,6 +190,17 @@ final class LetterViewController: BaseViewController {
     }
     
     // MARK: - func
+    
+    private func setupEmptyView() {
+        if letterState == .sent && letterList.isEmpty {
+            emptyLabel.isHidden = false
+            emptyLabel.text = TextLiteral.letterViewControllerEmptyViewTo
+        }
+        else if letterState == .received && letterList.isEmpty {
+            emptyLabel.isHidden = false
+            emptyLabel.text = TextLiteral.letterViewControllerEmptyViewFrom
+        }
+    }
     
     private func setupButtonAction() {
         let presentSendButtonAction = UIAction { [weak self] _ in
