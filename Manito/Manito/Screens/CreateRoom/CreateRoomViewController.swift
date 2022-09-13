@@ -142,7 +142,6 @@ class CreateRoomViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
-        view.backgroundColor = .backgroundGrey
         navigationController?.navigationBar.isHidden = true
     }
     
