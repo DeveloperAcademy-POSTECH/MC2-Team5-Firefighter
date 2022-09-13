@@ -137,7 +137,6 @@
 		CBA15C96285CE1F00051EDE2 /* ChooseCharacter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */; };
 		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
-		CBBFF77A287AE09F006A5964 /* SettingDeveloperInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBBFF779287AE09F006A5964 /* SettingDeveloperInfo.storyboard */; };
 		CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */; };
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
@@ -280,7 +279,6 @@
 		CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChooseCharacter.storyboard; sourceTree = "<group>"; };
 		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
-		CBBFF779287AE09F006A5964 /* SettingDeveloperInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingDeveloperInfo.storyboard; sourceTree = "<group>"; };
 		CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewCell.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
@@ -676,7 +674,6 @@
 				CB637A3C28595D9800FF1240 /* ParticipateRoom.storyboard */,
 				CB674C2228596A3E0063A6B7 /* CheckRoom.storyboard */,
 				CBA15C95285CE1F00051EDE2 /* ChooseCharacter.storyboard */,
-				CBBFF779287AE09F006A5964 /* SettingDeveloperInfo.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -945,7 +942,6 @@
 				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
 				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
 				B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */,
-				CBBFF77A287AE09F006A5964 /* SettingDeveloperInfo.storyboard in Resources */,
 				B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */,
 				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
 				B5F5250428519F7A00614FF7 /* DungGeunMo.otf in Resources */,
