@@ -23,6 +23,15 @@ final class LetterViewController: BaseViewController {
                 return true
             }
         }
+        
+        var labelText: String {
+            switch self {
+            case .sent:
+                return TextLiteral.letterViewControllerEmptyViewTo
+            case .received:
+                return TextLiteral.letterViewControllerEmptyViewFrom
+            }
+        }
     }
     
     private enum Size {
@@ -68,14 +77,14 @@ final class LetterViewController: BaseViewController {
     private var letterState: LetterState = .sent {
         didSet {
             reloadCollectionView(with: self.letterState)
-            setupEmptyView()
+            emptyLabel.text = letterState.labelText
         }
     }
     
     private var letterList: [Message] = [] {
         didSet {
-            emptyLabel.isHidden = true
             listCollectionView.reloadData()
+            setupEmptyView()
         }
     }
     
@@ -90,6 +99,7 @@ final class LetterViewController: BaseViewController {
         let label = UILabel()
         label.numberOfLines = 2
         label.font = .font(.regular, ofSize: 16)
+        label.text = TextLiteral.letterViewControllerEmptyViewTo
         label.addLabelSpacing()
         label.textAlignment = .center
         return label
@@ -192,13 +202,11 @@ final class LetterViewController: BaseViewController {
     // MARK: - func
     
     private func setupEmptyView() {
-        if letterState == .sent && letterList.isEmpty {
+        if letterList.isEmpty {
             emptyLabel.isHidden = false
-            emptyLabel.text = TextLiteral.letterViewControllerEmptyViewTo
         }
-        else if letterState == .received && letterList.isEmpty {
-            emptyLabel.isHidden = false
-            emptyLabel.text = TextLiteral.letterViewControllerEmptyViewFrom
+        else {
+            emptyLabel.isHidden = true
         }
     }
     
