@@ -1,47 +1,47 @@
 //
-//  MainEndPoint.swift
+//  LoginEndPoint.swift
 //  Manito
 //
-//  Created by Mingwan Choi on 2022/07/10.
+//  Created by Mingwan Choi on 2022/09/09.
 //
 
 import Foundation
 
-enum MainEndPoint: EndPointable {
-    case fetchCommonMission
-    case fetchManittoList
-
+enum LoginEndPoint: EndPointable {
+    case dispatchAppleLogin(body: LoginDTO)
+    case putRefreshToken(body: RefreshToken)
+    
     var requestTimeOut: Float {
         return 20
     }
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .fetchCommonMission:
-            return .get
-        case .fetchManittoList:
-            return .get
+        case .dispatchAppleLogin:
+            return .post
+        case .putRefreshToken:
+            return .put
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .fetchCommonMission:
-            return nil
-        case .fetchManittoList:
-            return nil
+        case .dispatchAppleLogin(let body):
+            return body.encode()
+        case .putRefreshToken(let body):
+            return body.encode()
         }
     }
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .fetchCommonMission:
-            return "\(baseURL)/missions/common/"
-        case .fetchManittoList:
-            return "\(baseURL)/rooms/"
+        case .dispatchAppleLogin:
+            return "\(baseURL)/login"
+        case .putRefreshToken:
+            return "\(baseURL)/auth/reissue"
         }
     }
-    
+
     func createRequest() -> NetworkRequest {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
@@ -53,4 +53,5 @@ enum MainEndPoint: EndPointable {
                               httpMethod: httpMethod
         )
     }
+
 }

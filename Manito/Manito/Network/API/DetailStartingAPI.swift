@@ -9,24 +9,22 @@ import Foundation
 
 struct DetailIngAPI: DetailStartingProtocol {
     private let apiService: APIService
-    private let environment: APIEnvironment
     
-    init(apiService: APIService, environment: APIEnvironment) {
+    init(apiService: APIService) {
         self.apiService = apiService
-        self.environment = environment
     }
     
     func requestStartingRoomInfo(roomId: String) async throws -> Room? {
         let request = DetailIngEndPoint
             .requestStartingRoomInfo(roomId: roomId)
-            .createRequest(environment: environment)
+            .createRequest()
         return try await apiService.request(request)
     }
     
     func requestWithFriends(roomId: String) async throws -> FriendList? {
         let request = DetailIngEndPoint
             .requestWithFriend(roomId: roomId)
-            .createRequest(environment: environment)
+            .createRequest()
         return try await apiService.request(request)
     }
 }

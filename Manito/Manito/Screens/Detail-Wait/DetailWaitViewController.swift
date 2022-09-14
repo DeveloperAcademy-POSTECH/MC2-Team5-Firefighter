@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class DetailWaitViewController: BaseViewController {
-    let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService(), environment: .development)
+    let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     var roomIndex: Int
     var inviteCode: String = ""
     private var roomInfo: RoomDTO?

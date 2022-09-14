@@ -9,24 +9,22 @@ import Foundation
 
 struct MainAPI: MainProtocol {
     private let apiService: APIService
-    private let environment: APIEnvironment
     
-    init(apiService: APIService, environment: APIEnvironment) {
+    init(apiService: APIService) {
         self.apiService = apiService
-        self.environment = environment
     }
 
     func fetchCommonMission() async throws -> DailyMission? {
         let request = MainEndPoint
             .fetchCommonMission
-            .createRequest(environment: environment)
+            .createRequest()
         return try await apiService.request(request)
     }
     
     func fetchManittoList() async throws -> ParticipatingRooms? {
         let request = MainEndPoint
             .fetchManittoList
-            .createRequest(environment: environment)
+            .createRequest()
         return try await apiService.request(request)
     }
 }

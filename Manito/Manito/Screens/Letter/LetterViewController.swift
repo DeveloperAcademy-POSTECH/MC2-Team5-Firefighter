@@ -77,8 +77,7 @@ final class LetterViewController: BaseViewController {
         }
     }
     
-    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
-                                                    environment: .development)
+    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
     private var manitteeId: String?
     private var roomId: String
     private var roomState: String
