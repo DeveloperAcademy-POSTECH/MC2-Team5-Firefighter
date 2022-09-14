@@ -147,7 +147,13 @@ class SettingViewController: BaseViewController {
     }
     
     private func goToLogOut() {
-        print("goToLogOut")
+        UserDefaultHandler.clearAllData()
+        let viewController = LoginViewController()
+        let navigationViewController = UINavigationController(rootViewController: viewController)
+        navigationViewController.modalPresentationStyle = .fullScreen
+        navigationViewController.modalTransitionStyle = .crossDissolve
+        navigationViewController.setNavigationBarHidden(true, animated: true)
+        present(navigationViewController, animated: true)
     }
 }
 
