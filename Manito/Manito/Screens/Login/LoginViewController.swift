@@ -52,10 +52,6 @@ final class LoginViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(35)
         }
     }
-    
-    override func configUI() {
-        view.backgroundColor = .backgroundGrey
-    }
 
     private func appleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
