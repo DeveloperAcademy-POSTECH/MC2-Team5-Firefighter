@@ -160,7 +160,7 @@ final class LetterViewController: BaseViewController {
         }
         view.addSubview(emptyLabel)
         emptyLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
     
@@ -205,12 +205,7 @@ final class LetterViewController: BaseViewController {
     // MARK: - func
     
     private func setupEmptyView() {
-        if letterList.isEmpty {
-            emptyLabel.isHidden = false
-        }
-        else {
-            emptyLabel.isHidden = true
-        }
+        emptyLabel.isHidden = !letterList.isEmpty
     }
     
     private func setupButtonAction() {
