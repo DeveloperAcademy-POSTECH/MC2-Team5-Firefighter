@@ -34,7 +34,7 @@ class DetailWaitViewController: BaseViewController {
     var isOwner = false {
         didSet {
             settingButton.menu = setExitButtonMenu()
-            isPastStartDate()
+            setupTitleViewGesture()
         }
     }
     var startDateText = "22.09.11" {
@@ -118,9 +118,7 @@ class DetailWaitViewController: BaseViewController {
     }()
     private lazy var titleView: DetailWaitTitleView = {
         let view = DetailWaitTitleView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
         view.dateRangeText = "\(startDateText) ~ \(endDateText)"
-        view.addGestureRecognizer(tapGesture)
         return view
     }()
     private let togetherFriendLabel: UILabel = {
@@ -515,6 +513,13 @@ class DetailWaitViewController: BaseViewController {
                 $0.centerX.equalToSuperview()
                 $0.height.equalTo(tableHeight)
             }
+        }
+    }
+    
+    private func setupTitleViewGesture() {
+        if isOwner {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
+            view.addGestureRecognizer(tapGesture)
         }
     }
 
