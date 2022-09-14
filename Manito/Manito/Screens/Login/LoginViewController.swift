@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-class LoginViewController: BaseViewController {
+final class LoginViewController: BaseViewController {
     let loginService: LoginAPI = LoginAPI(apiService: APIService())
 
     // MARK: - property
@@ -27,11 +27,7 @@ class LoginViewController: BaseViewController {
         return button
     }()
 
-    // MARK: - life cycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    // MARK: - func
 
     override func render() {
         view.addSubview(logoImageView)
@@ -56,8 +52,6 @@ class LoginViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(35)
         }
     }
-
-    // MARK: - func
 
     private func appleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()

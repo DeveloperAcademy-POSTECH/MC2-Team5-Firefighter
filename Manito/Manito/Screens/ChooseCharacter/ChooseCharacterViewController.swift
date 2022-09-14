@@ -111,7 +111,7 @@ class ChooseCharacterViewController: BaseViewController {
     init(statusMode: Status, roomId: Int?) {
         self.statusMode = statusMode
         self.roomId = roomId
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder: NSCoder) {

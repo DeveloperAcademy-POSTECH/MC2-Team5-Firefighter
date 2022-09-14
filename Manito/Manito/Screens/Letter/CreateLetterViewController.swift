@@ -60,7 +60,7 @@ final class CreateLetterViewController: BaseViewController {
         self.manitteeId = manitteeId
         self.roomId = roomId
         self.mission = mission
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder: NSCoder) {
