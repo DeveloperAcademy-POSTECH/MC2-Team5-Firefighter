@@ -231,7 +231,7 @@ class DetailIngViewController: BaseViewController {
         guard let endDateToString = roomInformation?.endDate else { return }
         guard let endDate = endDateToString.stringToDateYYYY() else { return }
 
-        manitoOpenButton.isDisabled = !endDate.isOpenManitto
+        manitoOpenButton.isHidden = !endDate.isOpenManitto
     }
     
     // MARK: - DetailStarting API
@@ -247,7 +247,8 @@ class DetailIngViewController: BaseViewController {
                           let endDate = info.room?.endDate,
                           let missionContent = info.mission?.content,
                           let minittee = info.manittee?.nickname,
-                          let didView = info.didViewRoulette
+                          let didView = info.didViewRoulette,
+                          let manitto = info.manitto?.nickname
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
@@ -257,6 +258,7 @@ class DetailIngViewController: BaseViewController {
                         guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                         viewController.modalPresentationStyle = .fullScreen
                         viewController.roomInformation = roomInformation
+                        viewController.manittiName = manitto
                         present(viewController, animated: true)
                     }
                 }
