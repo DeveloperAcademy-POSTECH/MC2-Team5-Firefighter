@@ -11,8 +11,7 @@ import UIKit
 import SnapKit
 
 class LoginViewController: BaseViewController {
-    let loginService: LoginAPI = LoginAPI(apiService: APIService(),
-                                                    environment: .development)
+    let loginService: LoginAPI = LoginAPI(apiService: APIService())
 
     // MARK: - property
 
