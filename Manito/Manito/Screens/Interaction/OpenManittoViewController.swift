@@ -67,7 +67,7 @@ final class OpenManittoViewController: BaseViewController {
     
     init(roomId: Int) {
         self.roomId = roomId
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder: NSCoder) {

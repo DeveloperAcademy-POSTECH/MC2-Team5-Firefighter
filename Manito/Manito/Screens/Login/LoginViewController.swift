@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class LoginViewController: UIViewController {
+final class LoginViewController: BaseViewController {
     let loginService: LoginAPI = LoginAPI(apiService: APIService())
 
     // MARK: - property
@@ -26,18 +26,10 @@ final class LoginViewController: UIViewController {
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-    
-    // MARK: - life cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        render()
-        configUI()
-    }
 
     // MARK: - func
 
-    private func render() {
+    override func render() {
         view.addSubview(logoImageView)
         logoImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -61,7 +53,7 @@ final class LoginViewController: UIViewController {
         }
     }
     
-    private func configUI() {
+    override func configUI() {
         view.backgroundColor = .backgroundGrey
     }
 
