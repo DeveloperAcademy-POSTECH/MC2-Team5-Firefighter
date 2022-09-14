@@ -223,6 +223,12 @@ class ChooseCharacterViewController: BaseViewController {
             }
         case .enterRoom:
             requestJoinRoom()
+            guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+            guard let id = self.roomId else { return }
+            let viewController = DetailWaitViewController(index: id)
+            self.dismiss(animated: true) {
+                navigationController.pushViewController(viewController, animated: true)
+            }
         }
     }
 }
