@@ -29,6 +29,24 @@ class BaseViewController: UIViewController {
         return label
     }()
     
+    private let tokenService: TokenAPI = TokenAPI(apiService: APIService())
+    
+    // MARK: - init
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        putRefreshToken()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        putRefreshToken()
+    }
+    
     // MARK: - life cycle
     
     override func viewDidLoad() {
@@ -39,11 +57,6 @@ class BaseViewController: UIViewController {
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
         setupNavigationPopGesture()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
     }
     
     func render() {
@@ -112,6 +125,25 @@ class BaseViewController: UIViewController {
         guideLabel.addLabelSpacing()
         guideLabel.textAlignment = .center
         guideLabel.applyColor(to: title, with: .subOrange)
+    }
+    
+    func putRefreshToken() {
+        Task {
+            do {
+                let token = Token(accessToken: UserDefaultStorage.accessToken,
+                                  refreshToken: UserDefaultStorage.refreshToken)
+                let response = try await tokenService.patchRefreshToken(dto: token)
+                if let accessToken = response?.accessToken,
+                   let refreshToken = response?.refreshToken {
+                    UserDefaultHandler.setAccessToken(accessToken: accessToken)
+                    UserDefaultHandler.setRefreshToken(refreshToken: refreshToken)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
     }
     
     // MARK: - private func

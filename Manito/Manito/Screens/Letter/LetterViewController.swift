@@ -113,7 +113,7 @@ final class LetterViewController: BaseViewController {
         self.roomState = roomState
         self.roomId = roomId
         self.mission = mission
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder: NSCoder) {

@@ -17,7 +17,7 @@ class InvitedCodeViewController: BaseViewController {
     init(roomInfo: RoomDTO, code: String){
         self.roomInfo = roomInfo
         self.code = code
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder: NSCoder) {
