@@ -31,7 +31,7 @@ class DetailWaitViewController: BaseViewController {
             setStartButton()
         }
     }
-    var isOwner = UserStatus.member {
+    var memberType = UserStatus.member {
         didSet {
             settingButton.menu = setExitButtonMenu()
             setupTitleViewGesture()
@@ -275,7 +275,7 @@ class DetailWaitViewController: BaseViewController {
                     maxUserCount = capacity
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
-                    isOwner = isAdmin ? .owner : .member
+                    memberType = isAdmin ? .owner : .member
                     self.roomInfo = RoomDTO(title: title,
                                        capacity: capacity,
                                        startDate: startDate,
@@ -403,7 +403,7 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func setExitButtonMenu() -> UIMenu {
-        switch isOwner {
+        switch memberType {
         case .owner:
             let menu = UIMenu(options: [], children: [
                 UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
@@ -475,7 +475,7 @@ class DetailWaitViewController: BaseViewController {
         let isToday = startDate.distance(to: Date()) < 86400
         let canStart = !isPast && isToday
         if !canStart {
-            switch isOwner {
+            switch memberType {
             case .owner:
                 let action: ((UIAlertAction) -> ()) = { [weak self] _ in
                     let fiveDaysInterval: TimeInterval = 86400 * 4
@@ -519,7 +519,7 @@ class DetailWaitViewController: BaseViewController {
     }
     
     private func setupTitleViewGesture() {
-        if isOwner == .owner {
+        if memberType == .owner {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
             view.addGestureRecognizer(tapGesture)
         }
