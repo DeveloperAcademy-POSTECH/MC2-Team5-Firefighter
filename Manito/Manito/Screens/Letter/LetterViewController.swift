@@ -78,6 +78,7 @@ final class LetterViewController: BaseViewController {
         didSet {
             reloadCollectionView(with: self.letterState)
             emptyLabel.text = letterState.labelText
+            emptyLabel.isHidden = true
         }
     }
     
@@ -100,6 +101,7 @@ final class LetterViewController: BaseViewController {
         label.numberOfLines = 2
         label.font = .font(.regular, ofSize: 16)
         label.text = TextLiteral.letterViewControllerEmptyViewTo
+        label.isHidden = true
         label.textColor = .grey003
         label.addLabelSpacing(lineSpacing: 16)
         label.textAlignment = .center
