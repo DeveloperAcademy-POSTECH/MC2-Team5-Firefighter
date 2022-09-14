@@ -31,7 +31,7 @@ class DetailWaitViewController: BaseViewController {
             setStartButton()
         }
     }
-    var isOwner = false {
+    var isOwner = UserStatus.member {
         didSet {
             settingButton.menu = setExitButtonMenu()
             setupTitleViewGesture()
@@ -48,9 +48,9 @@ class DetailWaitViewController: BaseViewController {
         }
     }
 
-    private enum UserStatus: Int, CaseIterable {
-        case owner = 0
-        case member = 1
+    enum UserStatus: CaseIterable {
+        case owner
+        case member
 
         var alertText: AlertText {
             switch self {
@@ -62,7 +62,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
 
-    private enum AlertText {
+    enum AlertText {
         case delete
         case exit
 
@@ -275,7 +275,7 @@ class DetailWaitViewController: BaseViewController {
                     maxUserCount = capacity
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
-                    isOwner = isAdmin
+                    isOwner = isAdmin ? .owner : .member
                     self.roomInfo = RoomDTO(title: title,
                                        capacity: capacity,
                                        startDate: startDate,
@@ -403,7 +403,8 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func setExitButtonMenu() -> UIMenu {
-        if isOwner {
+        switch isOwner {
+        case .owner:
             let menu = UIMenu(options: [], children: [
                 UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
                         self?.presentEditRoomView()
@@ -411,13 +412,13 @@ class DetailWaitViewController: BaseViewController {
                 UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
                         self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: { _ in
                             self?.requestDeleteRoom()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                 self?.navigationController?.popViewController(animated: true)
                             }
                         })
                     })])
             return menu
-        } else {
+        case .member:
             let menu = UIMenu(options: [], children: [
                 UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
                     self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction:  { _ in
@@ -474,7 +475,8 @@ class DetailWaitViewController: BaseViewController {
         let isToday = startDate.distance(to: Date()) < 86400
         let canStart = !isPast && isToday
         if !canStart {
-            if isOwner {
+            switch isOwner {
+            case .owner:
                 let action: ((UIAlertAction) -> ()) = { [weak self] _ in
                     let fiveDaysInterval: TimeInterval = 86400 * 4
                     let startDate = Date().dateToString
@@ -482,7 +484,7 @@ class DetailWaitViewController: BaseViewController {
                     self?.presentModal(from: startDate, to: endDate, isDateEdit: true)
                 }
                 makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage, okAction: action)
-            } else {
+            case .member:
                 makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastAlertMessage)
             }
         }
@@ -517,7 +519,7 @@ class DetailWaitViewController: BaseViewController {
     }
     
     private func setupTitleViewGesture() {
-        if isOwner {
+        if isOwner == .owner {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
             view.addGestureRecognizer(tapGesture)
         }
