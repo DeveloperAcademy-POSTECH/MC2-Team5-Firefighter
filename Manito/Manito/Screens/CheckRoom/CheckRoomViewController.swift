@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class CheckRoomViewController: BaseViewController {
-    private let checkRoomInfoService: RoomProtocol = RoomAPI(apiService: APIService(), environment: .development)
+    private let checkRoomInfoService: RoomProtocol = RoomAPI(apiService: APIService())
     var inviteCode: String?
     var roomId: Int?
     

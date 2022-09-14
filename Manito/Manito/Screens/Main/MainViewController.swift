@@ -12,7 +12,7 @@ import SnapKit
 
 class MainViewController: BaseViewController {
     
-    private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
+    private let mainService: MainProtocol = MainAPI(apiService: APIService())
     private var rooms: [ParticipatingRoom]?
 
     private enum Size {
