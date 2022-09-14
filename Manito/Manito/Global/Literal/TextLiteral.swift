@@ -70,8 +70,8 @@ enum TextLiteral {
     
     // MARK: - OpenManittoPopupViewController
     static let openManittoPopupViewControllerOpenMentLabel: String = """
-        함께 했던 추억이 열렸습니다.
-        마니또 방에서 확인해보세요!
+        내일 함께 했던 추억이 열립니다.
+        마니또 방에서 확인해 보세요!
         """
 
     // MARK: - ChooseCharacterViewController
@@ -114,6 +114,14 @@ enum TextLiteral {
     static let letterViewControllerTitle = "쪽지함"
     static let letterViewControllerGuideTitle = "쪽지 쓰기는?"
     static let letterViewControllerGuideText = "쪽지 쓰기는?\n보낸 쪽지함에서 쓰기가 가능해요!\n받은 쪽지함은 확인만 할 수 있어요."
+    static let letterViewControllerEmptyViewFrom = """
+        쪽지함이 비었어요.
+        곧 마니또가 쪽지를 보낼거에요!
+        """
+    static let letterViewControllerEmptyViewTo = """
+        쪽지함이 비었어요.
+        마니띠에게 쪽지를 보내볼까요?
+        """
     
     // MARK: - CreateLetterViewController
     static let createLetterViewControllerSendButton: String = "보내기"
