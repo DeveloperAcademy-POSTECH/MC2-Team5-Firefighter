@@ -44,7 +44,6 @@ final class ManittoCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - func
     
-    // FIXME: - 현재는 더미데이터
     func setManittoCell(with manittoTypeIndex: Int) {
         backgroundColor = Character.allCases[manittoTypeIndex].color.withAlphaComponent(0.5)
         contentView.alpha = 0.5
