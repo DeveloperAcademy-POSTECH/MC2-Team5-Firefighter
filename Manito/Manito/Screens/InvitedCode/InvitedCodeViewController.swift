@@ -18,6 +18,7 @@ class InvitedCodeViewController: BaseViewController {
         self.roomInfo = roomInfo
         self.code = code
         super.init()
+        patchRefreshToken()
     }
     
     required init?(coder: NSCoder) {
