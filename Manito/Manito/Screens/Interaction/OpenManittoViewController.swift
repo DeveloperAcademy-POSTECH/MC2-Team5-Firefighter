@@ -10,8 +10,7 @@ import UIKit
 import SnapKit
 
 final class OpenManittoViewController: BaseViewController {
-    private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService(),
-                                                    environment: .development)
+    private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService())
     
     private var roomId: Int
     private var manittoIndex = 0
