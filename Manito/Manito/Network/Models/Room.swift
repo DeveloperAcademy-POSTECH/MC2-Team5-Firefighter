@@ -22,6 +22,7 @@ struct Room: Decodable {
     let room: RoomInfo?
     let participants: Participants?
     let manittee: Manittee?
+    let manitto: Manitto?
     let invitation: Invitation?
     var didViewRoulette: Bool?
     let mission: Mission?
@@ -65,5 +66,9 @@ struct Message1: Decodable {
 }
 
 struct Manittee: Decodable {
+    let nickname: String?
+}
+
+struct Manitto: Decodable {
     let nickname: String?
 }
