@@ -158,13 +158,12 @@ class SettingViewController: BaseViewController {
     }
     
     private func goToLogOut() {
-        UserDefaultHandler.clearAllData()
-        let viewController = LoginViewController()
-        let navigationViewController = UINavigationController(rootViewController: viewController)
-        navigationViewController.modalPresentationStyle = .fullScreen
-        navigationViewController.modalTransitionStyle = .crossDissolve
-        navigationViewController.setNavigationBarHidden(true, animated: true)
-        present(navigationViewController, animated: true)
+        makeRequestAlert(title: "로그아웃 하시겠습니까?", message: "", okTitle: "확인", cancelTitle: "취소", okAction: { _ in
+            UserDefaultHandler.clearAllData()
+            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
+                    as? SceneDelegate else { return }
+            sceneDelegate.logout()
+        })
     }
 }
 

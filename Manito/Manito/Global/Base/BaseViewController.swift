@@ -142,6 +142,7 @@ class BaseViewController: UIViewController {
                         as? SceneDelegate else { return }
                 
                 self.makeAlert(title: "토큰이 만료되었네요", message: "다시 로그인을 진행해주세요", okAction: { _ in
+                    UserDefaultHandler.clearAllData()
                     sceneDelegate.logout()
                 })
                 
