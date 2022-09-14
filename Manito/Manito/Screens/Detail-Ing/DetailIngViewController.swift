@@ -240,11 +240,19 @@ class DetailIngViewController: BaseViewController {
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
                           let missionContent = info.mission?.content,
-                          let minittee = info.manittee?.nickname
+                          let minittee = info.manittee?.nickname,
+                          let didView = info.didViewRoulette
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
                     manitteAnimationLabel.text = minittee
+                    if !didView {
+                        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                        guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+                        viewController.modalPresentationStyle = .fullScreen
+                        viewController.roomInformation = roomInformation
+                        present(viewController, animated: true)
+                    }
                 }
             } catch NetworkError.serverError {
                 print("server Error")
