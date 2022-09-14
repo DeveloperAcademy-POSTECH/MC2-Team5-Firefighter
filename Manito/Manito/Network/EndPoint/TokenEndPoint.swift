@@ -24,6 +24,8 @@ enum TokenEndPoint: EndPointable {
     var requestBody: Data? {
         switch self {
         case .patchRefreshToken(let body):
+            let body = ["accessToken": body.accessToken,
+                        "refreshToken": body.refreshToken]
             return body.encode()
         }
     }

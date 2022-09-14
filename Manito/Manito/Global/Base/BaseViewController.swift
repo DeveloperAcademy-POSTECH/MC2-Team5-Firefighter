@@ -35,6 +35,7 @@ class BaseViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
+        putRefreshToken()
 
     }
     
@@ -44,6 +45,7 @@ class BaseViewController: UIViewController {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        putRefreshToken()
     }
     
     // MARK: - life cycle
@@ -56,11 +58,6 @@ class BaseViewController: UIViewController {
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
         setupNavigationPopGesture()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        putRefreshToken()
     }
     
     func render() {
@@ -131,21 +128,7 @@ class BaseViewController: UIViewController {
         guideLabel.applyColor(to: title, with: .subOrange)
     }
     
-    // MARK: - private func
-    
-    private func setupBackButton() {
-        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
-        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
-        
-        navigationItem.leftBarButtonItem = backButton
-    }
-    
-    private func setupNavigationPopGesture() {
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
-    }
-    
-    private func putRefreshToken() {
+    func putRefreshToken() {
         Task {
             do {
                 let token = Token(accessToken: UserDefaultStorage.accessToken,
@@ -162,5 +145,19 @@ class BaseViewController: UIViewController {
                 print("client Error: \(String(describing: message))")
             }
         }
+    }
+    
+    // MARK: - private func
+    
+    private func setupBackButton() {
+        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
+        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
+        
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
+    private func setupNavigationPopGesture() {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
 }
