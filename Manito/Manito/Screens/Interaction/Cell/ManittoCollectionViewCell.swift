@@ -46,16 +46,16 @@ final class ManittoCollectionViewCell: BaseCollectionViewCell {
     
     // FIXME: - 현재는 더미데이터
     func setManittoCell(with manittoTypeIndex: Int) {
-        backgroundColor = .characterYellow.withAlphaComponent(0.5)
+        backgroundColor = Character.allCases[manittoTypeIndex].color.withAlphaComponent(0.5)
         contentView.alpha = 0.5
-        characterImageView.image = ImageLiterals.imgMa
+        characterImageView.image = Character.allCases[manittoTypeIndex].image
     }
     
-    func setHighlightCell(with manittoTypeIndex: Int, matchIndex: Int) {
+    func setHighlightCell(with manittoTypeIndex: Int, matchIndex: Int, imageIndex: Int) {
         if manittoTypeIndex == matchIndex {
-            backgroundColor = .characterYellow
+            backgroundColor = Character.allCases[imageIndex].color
             contentView.alpha = 1.0
-            characterImageView.image = ImageLiterals.imgMa
+            characterImageView.image = Character.allCases[imageIndex].image
         }
     }
 }
