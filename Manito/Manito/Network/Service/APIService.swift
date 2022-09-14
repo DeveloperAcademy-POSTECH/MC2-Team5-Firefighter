@@ -26,14 +26,12 @@ final class APIService: Requestable {
         }
     }
     
-    func request<T: Decodable>(_ request: NetworkRequest) async throws -> (T?, Int) {
-        let (data, httpResponse) = try await requestDataToUrl(request)
+    func request(_ request: NetworkRequest) async throws -> Int {
+        let (_, httpResponse) = try await requestDataToUrl(request)
         
         switch httpResponse.statusCode {
         case (200..<300):
-            let decoder = JSONDecoder()
-            let baseModelData: T? = try decoder.decode(T.self, from: data)
-            return (baseModelData, httpResponse.statusCode)
+            return httpResponse.statusCode
         case (300..<500):
             throw NetworkError.clientError(message: httpResponse.statusCode.description)
         default:
