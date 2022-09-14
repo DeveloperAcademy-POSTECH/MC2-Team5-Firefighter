@@ -10,6 +10,12 @@ import UIKit
 import SnapKit
 
 final class OpenManittoViewController: BaseViewController {
+    private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+    
+    private var roomId: Int
+    private var manittoIndex = 0
+    private var friendsList: FriendList = FriendList(count: 0, members: [])
+    private var manitto: String = ""
     
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 29.0
@@ -57,15 +63,20 @@ final class OpenManittoViewController: BaseViewController {
         }
     }
     
-    // FIXME: - 더미 데이터
-    private let manittoIndex = 4
-    private let characters: [String] = ["", "", "", "", "", "", "", "", "", "", ""]
-    
     // MARK: - life cycle
+    
+    init(roomId: Int) {
+        self.roomId = roomId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        animateCollectionView()
+        requestWithFriends(roomId: roomId.description)
     }
     
     override func render() {
@@ -86,8 +97,9 @@ final class OpenManittoViewController: BaseViewController {
     
     private func animateCollectionView() {
         let delay: CGFloat = 1.0
-        let timeInterval = 0.2
-        let durationTime = timeInterval * Double(characters.count)
+        let timeInterval = 0.3
+        guard let count = friendsList.count else { return }
+        let durationTime = timeInterval * Double(count)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
             UIView.animate(withDuration: durationTime, animations: {
@@ -104,9 +116,10 @@ final class OpenManittoViewController: BaseViewController {
         Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) {
             [weak self] _ in
             guard let self = self,
-                countNumber != self.characters.count
+                  countNumber != self.friendsList.count
             else { return }
-            let characterCount = self.characters.count - 1
+            guard let count = self.friendsList.count else { return }
+            let characterCount = count - 1
             
             self.scrollNumberIndex = Int.random(in: 0...characterCount, excluding: self.scrollNumberIndex)
             countNumber += 1
@@ -125,22 +138,70 @@ final class OpenManittoViewController: BaseViewController {
     private func presentPopupViewController() {
         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: OpenManittoPopupViewController.className) as? OpenManittoPopupViewController else { return }
+        viewController.manittoText = manitto
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .overCurrentContext
         present(viewController, animated: true, completion: nil)
+    }
+    
+    // MARK: - API
+    
+    private func requestWithFriends(roomId: String) {
+        Task {
+            do {
+                let data = try await openManittoService.requestWithFriends(roomId: roomId)
+                if let list = data {
+                    friendsList = list
+                    DispatchQueue.main.async {
+                        self.requestRoomInfo(roomId: roomId.description)
+                        self.animateCollectionView()
+                        self.manittoCollectionView.reloadData()
+                    }
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestRoomInfo(roomId: String) {
+        Task {
+            do {
+                let data = try await openManittoService.requestStartingRoomInfo(roomId: roomId)
+                if let info = data {
+                    guard let nickname = info.manitto?.nickname else { return }
+                    manitto = nickname
+                    
+                    manittoIndex = friendsList.members?.firstIndex(where: { $0.nickname == manitto }) ?? 0
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
     }
 }
 
 // MARK: - UICollectionViewDataSource
 extension OpenManittoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return characters.count
+        guard let count = friendsList.count else { return 0 }
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setManittoCell(with: indexPath.item)
-        cell.setHighlightCell(with: indexPath.item, matchIndex: scrollNumberIndex)
+        if let colorIdx = friendsList.members?[indexPath.item].colorIdx {
+            cell.setManittoCell(with: colorIdx)
+            cell.setHighlightCell(with: indexPath.item, matchIndex: scrollNumberIndex, imageIndex: colorIdx)
+        }
         return cell
     }
 }

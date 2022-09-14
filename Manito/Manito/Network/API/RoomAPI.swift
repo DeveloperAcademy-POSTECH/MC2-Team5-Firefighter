@@ -14,11 +14,11 @@ struct RoomAPI: RoomProtocol {
         self.apiService = apiService
     }
     
-    func postCreateRoom(body: CreateRoomDTO) async throws -> String? {
+    func postCreateRoom(body: CreateRoomDTO) async throws -> Int? {
         let request = RoomEndPoint
             .dispatchCreateRoom(roomInfo: body)
             .createRequest()
-        return try await apiService.request(request)
+        return try await apiService.requestCreateRoom(request)
     }
     
     func getVerification(body: String) async throws -> VerificationCode? {

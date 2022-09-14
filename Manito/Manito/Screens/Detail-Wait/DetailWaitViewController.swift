@@ -195,13 +195,10 @@ class DetailWaitViewController: BaseViewController {
     deinit {
         print("deInit")
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        requestWaitRoomInfo()
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestWaitRoomInfo()
         setupDelegation()
         setupNotificationCenter()
         setStartButton()

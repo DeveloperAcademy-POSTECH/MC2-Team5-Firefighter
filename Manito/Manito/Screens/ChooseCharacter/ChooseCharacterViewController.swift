@@ -168,7 +168,17 @@ class ChooseCharacterViewController: BaseViewController {
     func requestCreateRoom(room: CreateRoomDTO) {
         Task {
             do {
-                let _ = try await roomService.postCreateRoom(body: room)
+                guard
+                    let roomId = try await roomService.postCreateRoom(body: room),
+                    let navigationController = self.presentingViewController as? UINavigationController
+                else { return }
+                let viewController = DetailWaitViewController(index: roomId)
+                navigationController.popViewController(animated: true)
+                navigationController.pushViewController(viewController, animated: false)
+                
+                self.dismiss(animated: true) {
+                    NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
+                }
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
@@ -213,16 +223,14 @@ class ChooseCharacterViewController: BaseViewController {
                                                                 startDate: roomInfo.startDate,
                                                                 endDate: roomInfo.endDate) ,
                                                   member: MemberDTO(colorIdx: colorIdx)))
-            guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-            let viewController = DetailWaitViewController(index: 51) //FIXME
-            navigationController.popViewController(animated: true)
-            navigationController.pushViewController(viewController, animated: false)
-            
-            self.dismiss(animated: true) {
-                NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
-            }
         case .enterRoom:
             requestJoinRoom()
+            guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+            guard let id = self.roomId else { return }
+            let viewController = DetailWaitViewController(index: id)
+            self.dismiss(animated: true) {
+                navigationController.pushViewController(viewController, animated: true)
+            }
         }
     }
 }
