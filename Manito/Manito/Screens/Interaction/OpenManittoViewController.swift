@@ -198,8 +198,10 @@ extension OpenManittoViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setManittoCell(with: friendsList.members?[indexPath.item].colorIdx ?? 0)
-        cell.setHighlightCell(with: indexPath.item, matchIndex: scrollNumberIndex, imageIndex: friendsList.members?[indexPath.item].colorIdx ?? 0)
+        if let colorIdx = friendsList.members?[indexPath.item].colorIdx {
+            cell.setManittoCell(with: colorIdx)
+            cell.setHighlightCell(with: indexPath.item, matchIndex: scrollNumberIndex, imageIndex: colorIdx)
+        }
         return cell
     }
 }
