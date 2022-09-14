@@ -23,6 +23,15 @@ final class LetterViewController: BaseViewController {
                 return true
             }
         }
+        
+        var labelText: String {
+            switch self {
+            case .sent:
+                return TextLiteral.letterViewControllerEmptyViewTo
+            case .received:
+                return TextLiteral.letterViewControllerEmptyViewFrom
+            }
+        }
     }
     
     private enum Size {
@@ -68,12 +77,15 @@ final class LetterViewController: BaseViewController {
     private var letterState: LetterState = .sent {
         didSet {
             reloadCollectionView(with: self.letterState)
+            emptyLabel.text = letterState.labelText
+            emptyLabel.isHidden = true
         }
     }
     
     private var letterList: [Message] = [] {
         didSet {
             listCollectionView.reloadData()
+            setupEmptyView()
         }
     }
     
@@ -82,6 +94,18 @@ final class LetterViewController: BaseViewController {
     private var roomId: String
     private var roomState: String
     private var mission: String
+    
+    private let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.font = .font(.regular, ofSize: 16)
+        label.text = TextLiteral.letterViewControllerEmptyViewTo
+        label.isHidden = true
+        label.textColor = .grey003
+        label.addLabelSpacing(lineSpacing: 16)
+        label.textAlignment = .center
+        return label
+    }()
     
     // MARK: - init
     
@@ -133,6 +157,10 @@ final class LetterViewController: BaseViewController {
                 $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
             }
         }
+        view.addSubview(emptyLabel)
+        emptyLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
     
     override func configUI() {
@@ -174,6 +202,10 @@ final class LetterViewController: BaseViewController {
     }
     
     // MARK: - func
+    
+    private func setupEmptyView() {
+        emptyLabel.isHidden = !letterList.isEmpty
+    }
     
     private func setupButtonAction() {
         let presentSendButtonAction = UIAction { [weak self] _ in
