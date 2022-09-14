@@ -1,22 +1,22 @@
 //
-//  LoginAPI.swift
+//  TokenAPI.swift
 //  Manito
 //
-//  Created by Mingwan Choi on 2022/09/09.
+//  Created by SHIN YOON AH on 2022/09/14.
 //
 
 import Foundation
 
-struct LoginAPI: LoginProtocol {
+struct TokenAPI: TokenProtocol {
     private let apiService: Requestable
 
     init(apiService: Requestable) {
         self.apiService = apiService
     }
     
-    func dispatchAppleLogin(dto: LoginDTO) async throws -> Login? {
-        let request = LoginEndPoint
-            .dispatchAppleLogin(body: dto)
+    func patchRefreshToken(dto: Token) async throws -> Token? {
+        let request = TokenEndPoint
+            .patchRefreshToken(body: dto)
             .createRequest()
         return try await apiService.request(request)
     }

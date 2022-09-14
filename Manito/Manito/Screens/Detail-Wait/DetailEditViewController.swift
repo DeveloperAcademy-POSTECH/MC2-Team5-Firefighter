@@ -128,7 +128,7 @@ class DetailEditViewController: BaseViewController {
     
     init(editMode: EditMode) {
         self.editMode = editMode
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder: NSCoder) {

@@ -1,14 +1,14 @@
 //
-//  LoginEndPoint.swift
+//  TokenEndPoint.swift
 //  Manito
 //
-//  Created by Mingwan Choi on 2022/09/09.
+//  Created by SHIN YOON AH on 2022/09/14.
 //
 
 import Foundation
 
-enum LoginEndPoint: EndPointable {
-    case dispatchAppleLogin(body: LoginDTO)
+enum TokenEndPoint: EndPointable {
+    case patchRefreshToken(body: Token)
     
     var requestTimeOut: Float {
         return 20
@@ -16,22 +16,22 @@ enum LoginEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .dispatchAppleLogin:
-            return .post
+        case .patchRefreshToken:
+            return .patch
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .dispatchAppleLogin(let body):
+        case .patchRefreshToken(let body):
             return body.encode()
         }
     }
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .dispatchAppleLogin:
-            return "\(baseURL)/login"
+        case .patchRefreshToken:
+            return "\(baseURL)/auth/reissue"
         }
     }
 

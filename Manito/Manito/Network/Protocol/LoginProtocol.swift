@@ -9,5 +9,4 @@ import Foundation
 
 protocol LoginProtocol {
     func dispatchAppleLogin(dto: LoginDTO) async throws -> Login?
-    func putRefreshToken(dto: RefreshToken) async throws -> RefreshToken?
 }

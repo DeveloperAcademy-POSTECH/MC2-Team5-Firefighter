@@ -29,6 +29,23 @@ class BaseViewController: UIViewController {
         return label
     }()
     
+    private let tokenService: TokenAPI = TokenAPI(apiService: APIService())
+    
+    // MARK: - init
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     // MARK: - life cycle
     
     override func viewDidLoad() {
@@ -41,9 +58,9 @@ class BaseViewController: UIViewController {
         setupNavigationPopGesture()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        putRefreshToken()
     }
     
     func render() {
@@ -126,5 +143,24 @@ class BaseViewController: UIViewController {
     private func setupNavigationPopGesture() {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
+    }
+    
+    private func putRefreshToken() {
+        Task {
+            do {
+                let token = Token(accessToken: UserDefaultStorage.accessToken,
+                                  refreshToken: UserDefaultStorage.refreshToken)
+                let response = try await tokenService.patchRefreshToken(dto: token)
+                if let accessToken = response?.accessToken,
+                   let refreshToken = response?.refreshToken {
+                    UserDefaultHandler.setAccessToken(accessToken: accessToken)
+                    UserDefaultHandler.setRefreshToken(refreshToken: refreshToken)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
     }
 }

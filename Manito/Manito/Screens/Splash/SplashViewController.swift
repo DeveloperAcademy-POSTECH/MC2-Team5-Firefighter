@@ -9,11 +9,11 @@ import UIKit
 
 import Gifu
 
-final class SplashViewController: BaseViewController {
+final class SplashViewController: UIViewController {
 
     let isLogin = UserDefaultStorage.isLogin
     let nickname = UserDefaultStorage.nickname
-
+    
     // MARK: - property
 
     @IBOutlet weak var gifImageView: GIFImageView!
@@ -22,6 +22,7 @@ final class SplashViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configUI()
         setupGifImage()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             if self.isLogin {
@@ -33,8 +34,12 @@ final class SplashViewController: BaseViewController {
             }
         }
     }
-
+    
     // MARK: - func
+    
+    private func configUI() {
+        view.backgroundColor = .backgroundGrey
+    }
 
     private func presentLoginViewConroller() {
         let viewController = LoginViewController()
