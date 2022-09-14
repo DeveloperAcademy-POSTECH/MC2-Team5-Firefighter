@@ -77,7 +77,7 @@ final class OpenManittoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        animateCollectionView()
+        requestWithFriends(roomId: roomId.description)
     }
     
     override func render() {
@@ -96,8 +96,6 @@ final class OpenManittoViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        requestWithFriends(roomId: roomId.description)
-        requestRoomInfo(roomId: roomId.description)
     }
     
     // MARK: - func
@@ -159,9 +157,9 @@ final class OpenManittoViewController: BaseViewController {
                 let data = try await openManittoService.requestWithFriends(roomId: roomId)
                 if let list = data {
                     friendsList = list
-                    DispatchQueue.main.async {
                         self.manittoCollectionView.reloadData()
-                    }
+                        self.requestRoomInfo(roomId: roomId.description)
+                        self.animateCollectionView()
                 }
             } catch NetworkError.serverError {
                 print("server Error")
