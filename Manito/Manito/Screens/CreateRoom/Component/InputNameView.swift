@@ -15,18 +15,20 @@ class InputNameView: UIView {
     // MARK: - Property
     
     lazy var roomsNameTextField: UITextField = {
-        let texField = UITextField()
+        let textField = UITextField()
         let attributes = [
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
-        texField.backgroundColor = .darkGrey002
-        texField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText, attributes:attributes)
-        texField.textAlignment = .center
-        texField.makeBorderLayer(color: .white)
-        texField.font = .font(.regular, ofSize: 18)
-        texField.returnKeyType = .done
-        texField.delegate = self
-        return texField
+        textField.backgroundColor = .darkGrey002
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText, attributes:attributes)
+        textField.textAlignment = .center
+        textField.makeBorderLayer(color: .white)
+        textField.font = .font(.regular, ofSize: 18)
+        textField.returnKeyType = .done
+        textField.delegate = self
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        return textField
     }()
     
     private lazy var roomsTextLimit : UILabel = {
@@ -61,20 +63,33 @@ class InputNameView: UIView {
         self.addSubview(roomsTextLimit)
         roomsTextLimit.snp.makeConstraints {
             $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
-            $0.right.equalToSuperview()
+            $0.trailing.equalToSuperview()
         }
     }
     
     // MARK: - Funtions
     
     private func setCounter(count: Int) {
-        roomsTextLimit.text = "\(count)/\(maxLength)"
-        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
+        if count <= maxLength {
+            roomsTextLimit.text = "\(count)/\(maxLength)"
+        } else {
+            roomsTextLimit.text = "\(maxLength)/\(maxLength)"
+        }
     }
     
     private func checkMaxLength(textField: UITextField, maxLength: Int) {
-        if (textField.text?.count ?? 0 > maxLength) {
-            textField.deleteBackward()
+        if let text = textField.text {
+            if text.count > maxLength {
+                let endIndex = text.index(text.startIndex, offsetBy: maxLength)
+                let fixedText = text[text.startIndex..<endIndex]
+                textField.text = fixedText + " "
+                
+                let when = DispatchTime.now() + 0.01
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    self.roomsNameTextField.text = String(fixedText)
+                    self.setCounter(count: textField.text?.count ?? 0)
+                }
+            }
         }
     }
 }
@@ -82,6 +97,7 @@ class InputNameView: UIView {
 extension InputNameView: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         setCounter(count: textField.text?.count ?? 0)
+        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
         
         let hasText = roomsNameTextField.hasText
         changeNextButtonEnableStatus?(hasText)

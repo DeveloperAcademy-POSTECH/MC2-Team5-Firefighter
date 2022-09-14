@@ -49,8 +49,7 @@ final class CreateLetterViewController: BaseViewController {
     private let letterTextView = LetterTextView()
     private let letterPhotoView = LetterPhotoView()
     
-    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
-                                                    environment: .development)
+    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
     var manitteeId: String
     var roomId: String
     var mission: String
@@ -182,11 +181,7 @@ final class CreateLetterViewController: BaseViewController {
             guard let roomId = self?.roomId else { return }
 
             self?.dispatchLetter(roomId: roomId)
-            self?.dismiss(animated: true, completion: {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
-                    self?.createLetter?()
-                })
-            })
+            self?.dismiss(animated: true)
         }
         
         cancelButton.addAction(cancelAction, for: .touchUpInside)
@@ -222,20 +217,32 @@ final class CreateLetterViewController: BaseViewController {
                 if let content = letterTextView.letterTextView.text,
                    let image = letterPhotoView.importPhotosButton.imageView?.image,
                    image != ImageLiterals.btnCamera {
-                    guard let pngData = image.pngData() else { return }
+                    guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
                     
-                    try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
+                    let status = try await letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
+                    
+                    if status == 201 {
+                        self.createLetter?()
+                    }
                 } else if let content = letterTextView.letterTextView.text {
                     let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
                     
-                    try await letterSevice.dispatchLetter(roomId: roomId, letter: dto)
+                    let status = try await letterSevice.dispatchLetter(roomId: roomId, letter: dto)
+                    
+                    if status == 201 {
+                        self.createLetter?()
+                    }
                 } else if let image = letterPhotoView.importPhotosButton.imageView?.image,
                           image != ImageLiterals.btnCamera {
-                    guard let pngData = image.pngData() else { return }
+                    guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: manitteeId)
                     
-                    try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
+                    let status = try await letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
+                    
+                    if status == 201 {
+                        self.createLetter?()
+                    }
                 }
                 
             } catch NetworkError.serverError {

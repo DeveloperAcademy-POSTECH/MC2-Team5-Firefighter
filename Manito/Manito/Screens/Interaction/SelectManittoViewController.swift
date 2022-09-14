@@ -10,6 +10,7 @@ import UIKit
 import Gifu
 
 final class SelectManittoViewController: BaseViewController {
+    var roomInformation: ParticipatingRoom?
 
     private enum StageType {
         case joystick
@@ -32,6 +33,7 @@ final class SelectManittoViewController: BaseViewController {
             guard let navigationController = self?.presentingViewController as? UINavigationController else { return }
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
+            viewController.roomInformation = self?.roomInformation
             navigationController.popViewController(animated: true)
             navigationController.pushViewController(viewController, animated: false)
             self?.dismiss(animated: true)

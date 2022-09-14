@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class CreateRoomViewController: BaseViewController {
-    let roomService: RoomProtocol = RoomAPI(apiService: APIService(), environment: .development)
+    let roomService: RoomProtocol = RoomAPI(apiService: APIService())
     private var name = ""
     private var person = 0
     private var date = 0
@@ -105,7 +105,7 @@ class CreateRoomViewController: BaseViewController {
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(57)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
             $0.height.equalTo(60)
         }
         
@@ -142,7 +142,6 @@ class CreateRoomViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
-        view.backgroundColor = .backgroundGrey
         navigationController?.navigationBar.isHidden = true
     }
     

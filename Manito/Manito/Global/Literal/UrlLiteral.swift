@@ -8,6 +8,14 @@
 import Foundation
 
 enum UrlLiteral {
+    
+    // MARK: - server url
+    
+    static let developmentUrl: String = "http://43.200.81.247:8080/api/v1"
+    static let productionUrl: String = ""
+    
+    // MARK: - notion url
+    
     static let personalInfomationUrl: String = "https://torpid-spy-8e4.notion.site/767e80eea1734539aead3b814016b361"
     static let termsOfServiceUrl: String = "https://torpid-spy-8e4.notion.site/445bd6a8c8dc459d915158935dcc3298"
 }

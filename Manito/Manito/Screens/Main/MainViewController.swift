@@ -12,7 +12,7 @@ import SnapKit
 
 class MainViewController: BaseViewController {
     
-    private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
+    private let mainService: MainProtocol = MainAPI(apiService: APIService())
     private var rooms: [ParticipatingRoom]?
 
     private enum Size {
@@ -261,7 +261,8 @@ class MainViewController: BaseViewController {
     private func pushDetailView(status: RoomStatus, index: Int) {
         switch status {
         case .waiting:
-            self.navigationController?.pushViewController(DetailWaitViewController(index: index), animated: true)
+            let viewController = DetailWaitViewController(index: index)
+            self.navigationController?.pushViewController(viewController, animated: true)
         default:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
@@ -345,9 +346,14 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
             newRoom()
         } else {
             guard let state = rooms?[indexPath.item - 1].state,
-                  let roomStatus = RoomStatus.init(rawValue: state)
+                  let roomStatus = RoomStatus.init(rawValue: state),
+                  let id = rooms?[indexPath.item - 1].id
             else { return }
-            pushDetailView(status: roomStatus, index: indexPath.item - 1)
+            if roomStatus == .waiting {
+                pushDetailView(status: roomStatus, index: id)
+            } else {
+                pushDetailView(status: roomStatus, index: indexPath.item - 1)
+            }
         }
     }
 }

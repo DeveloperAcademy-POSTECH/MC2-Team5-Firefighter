@@ -16,10 +16,8 @@ class DetailIngViewController: BaseViewController {
         case POST
     }
     
-    lazy var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService(),
-                                                    environment: .development)
-    lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService(),
-                                                        environment: .development)
+    lazy var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+    lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
 
     var friendList: FriendList?
     var roomInformation: ParticipatingRoom? {
@@ -56,10 +54,9 @@ class DetailIngViewController: BaseViewController {
         return imageView
     }()
     
-    private let manitoOpenButton: UIButton = {
+    private let manitoOpenButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
-        button.hasShadow = true
         return button
     }()
     
@@ -75,6 +72,7 @@ class DetailIngViewController: BaseViewController {
             requestDoneRoomInfo()
         case .PROCESSING:
             requestRoomInfo()
+            setupOpenManittoButton()
         case .none: break
         }
     }
@@ -215,10 +213,18 @@ class DetailIngViewController: BaseViewController {
     }
     
     private func addActionOpenManittoViewController() {
+        guard let id = roomInformation?.id else { return }
         let action = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(OpenManittoViewController(), animated: true)
+            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: id), animated: true)
         }
         self.manitoOpenButton.addAction(action, for: .touchUpInside)
+    }
+    
+    private func setupOpenManittoButton() {
+        guard let endDateToString = roomInformation?.endDate else { return }
+        guard let endDate = endDateToString.stringToDateYYYY() else { return }
+
+        manitoOpenButton.isDisabled = !endDate.isOpenManitto
     }
     
     // MARK: - DetailStarting API
@@ -233,11 +239,19 @@ class DetailIngViewController: BaseViewController {
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
                           let missionContent = info.mission?.content,
-                          let minittee = info.manittee?.nickname
+                          let minittee = info.manittee?.nickname,
+                          let didView = info.didViewRoulette
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
                     manitteAnimationLabel.text = minittee
+                    if !didView {
+                        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                        guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+                        viewController.modalPresentationStyle = .fullScreen
+                        viewController.roomInformation = roomInformation
+                        present(viewController, animated: true)
+                    }
                 }
             } catch NetworkError.serverError {
                 print("server Error")

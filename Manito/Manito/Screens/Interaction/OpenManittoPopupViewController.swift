@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 final class OpenManittoPopupViewController: BaseViewController {
+    private let nickname = UserDefaults.standard.nickname ?? "당신"
 
     // MARK: - property
     
@@ -90,7 +91,7 @@ final class OpenManittoPopupViewController: BaseViewController {
     // MARK: - func
     
     private func setTypingAnimation() {
-        typingLabel.setTyping(text: "호야의 마니또는\n\(manittoText) 입니다.")
+        typingLabel.setTyping(text: "\(nickname)의 마니또는\n\(manittoText)입니다.")
         typingLabel.addLabelSpacing()
     }
 }

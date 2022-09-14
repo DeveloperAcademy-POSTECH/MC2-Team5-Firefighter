@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class DetailWaitViewController: BaseViewController {
-    let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService(), environment: .development)
+    let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     var roomIndex: Int
     var inviteCode: String = ""
     private var roomInfo: RoomDTO?
@@ -195,13 +195,10 @@ class DetailWaitViewController: BaseViewController {
     deinit {
         print("deInit")
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        requestWaitRoomInfo()
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestWaitRoomInfo()
         setupDelegation()
         setupNotificationCenter()
         setStartButton()
@@ -249,7 +246,7 @@ class DetailWaitViewController: BaseViewController {
     }
 
     override func configUI() {
-        view.backgroundColor = .backgroundGrey
+        super.configUI()
         setupSettingButton()
     }
     
