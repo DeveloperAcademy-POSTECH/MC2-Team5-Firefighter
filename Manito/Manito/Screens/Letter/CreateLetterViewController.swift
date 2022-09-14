@@ -11,6 +11,8 @@ import SnapKit
 
 final class CreateLetterViewController: BaseViewController {
     
+    var createLetter: (() -> ())?
+    
     // MARK: - property
     
     private let indicatorView: UIView = {
@@ -43,14 +45,27 @@ final class CreateLetterViewController: BaseViewController {
         return scrollView
     }()
     private let scrollContentView = UIView()
-    private let missionView = IndividualMissionView(mission: "1000원 이하의 선물 주고 인증샷 받기")
+    private lazy var missionView = IndividualMissionView(mission: mission)
     private let letterTextView = LetterTextView()
     private let letterPhotoView = LetterPhotoView()
     
-    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService(),
-                                                    environment: .development)
-    var manitteId: String?
-    var roomId: String?
+    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
+    var manitteeId: String
+    var roomId: String
+    var mission: String
+    
+    // MARK: - init
+    
+    init(manitteeId: String, roomId: String, mission: String) {
+        self.manitteeId = manitteeId
+        self.roomId = roomId
+        self.mission = mission
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - life cycle
     
@@ -166,7 +181,11 @@ final class CreateLetterViewController: BaseViewController {
             guard let roomId = self?.roomId else { return }
 
             self?.dispatchLetter(roomId: roomId)
-            self?.dismiss(animated: true, completion: nil)
+            self?.dismiss(animated: true, completion: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                    self?.createLetter?()
+                })
+            })
         }
         
         cancelButton.addAction(cancelAction, for: .touchUpInside)
@@ -202,29 +221,20 @@ final class CreateLetterViewController: BaseViewController {
                 if let content = letterTextView.letterTextView.text,
                    let image = letterPhotoView.importPhotosButton.imageView?.image,
                    image != ImageLiterals.btnCamera {
-                    guard let pngData = image.pngData() else { return }
-                    let dto = LetterDTO(manitteeId: manitteId, messageContent: content)
-                    let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
+                    guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
+                    let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
                     
-                    if let content = letterContent {
-                        dump(content)
-                    }
+                    try await letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
                 } else if let content = letterTextView.letterTextView.text {
-                    let dto = LetterDTO(manitteeId: manitteId, messageContent: content)
-                    let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, letter: dto)
+                    let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
                     
-                    if let content = letterContent {
-                        dump(content)
-                    }
+                    try await letterSevice.dispatchLetter(roomId: roomId, letter: dto)
                 } else if let image = letterPhotoView.importPhotosButton.imageView?.image,
                           image != ImageLiterals.btnCamera {
-                    guard let pngData = image.pngData() else { return }
-                    let dto = LetterDTO(manitteeId: manitteId)
-                    let letterContent = try await letterSevice.dispatchLetter(roomId: roomId, image: pngData, letter: dto)
+                    guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
+                    let dto = LetterDTO(manitteeId: manitteeId)
                     
-                    if let content = letterContent {
-                        dump(content)
-                    }
+                    try await letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
                 }
                 
             } catch NetworkError.serverError {

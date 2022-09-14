@@ -17,6 +17,7 @@ enum TextLiteral {
     static let confirm: String = "확인"
     static let choose: String = "선택"
     static let enterRoom: String = "방 참가하기"
+    static let searchRoom: String = "방 조회하기"
     static let during: String = "진행 기간"
     static let delete: String = "삭제"
     static let leave: String = "나가기"
@@ -64,8 +65,6 @@ enum TextLiteral {
     static let mainViewControllerGuideDescription: String = "공통 미션이란?\n매일 매일 업데이트되는 미션!\n두근두근 미션을 수행해보세요!"
     static let mainViewControllerNewRoomAlert: String = "새로운 마니또 시작"
 
-    
-    
     // MARK: - OpenManittoViewController
     static let openManittoViewController: String = "당신의 마니또는?"
     
@@ -83,6 +82,8 @@ enum TextLiteral {
     static let checkRoomViewControllerQuestionLabel: String = "이 방으로 입장할까요?"
     static let checkRoomViewControllerNoButtonLabel: String = "NO"
     static let checkRoomViewControllerYesBUttonLabel: String = "YES"
+    static let checkRoomViewControllerErrorAlertTitle: String = "해당하는 애니또 방이 없어요"
+    static let checkRoomViewControllerErrorAlertMessage: String = "이미 참여중인 방이거나,\n 초대 코드를 확인해 주세요"
     
     // MARK: - InputInvitedCodeView
     static let inputInvitedCodeViewRoomCodeText: String = "초대코드 입력"
@@ -102,7 +103,7 @@ enum TextLiteral {
     
     // MARK: - LetterPhotoView
     static let letterPhotoViewTitleLabel: String = "사진 추가"
-    static let letterPhotoViewTakePhoto: String = "사진 쵤영"
+    static let letterPhotoViewTakePhoto: String = "사진 촬영"
     static let letterPhotoViewChoosePhoto: String = "사진 보관함에서 선택"
     static let letterPhotoViewDeletePhoto: String = "사진 지우기"
     static let letterPhotoViewChoosePhotoToManitto: String = "마니또에게 보낼 사진 선택"
@@ -123,6 +124,7 @@ enum TextLiteral {
     static let detailIngViewControllerManitoOpenButton: String = "마니또 공개"
     static let detailIngViewControllerGuideTitle: String = "개별 미션이란?"
     static let detailIngViewControllerText: String = "개별 미션이란?\n나의 마니띠에게 전하는\n둘만의 미션을 확인할 수 있어요!"
+    static let detailIngViewControllerDoneMissionText: String = "종료된 마니또예요"
     
     // MARK: - CalendarView
     static let calendarViewAlertMaxTitle: String = "최대 선택 기간을 넘었어요"
@@ -161,11 +163,12 @@ enum TextLiteral {
     // MARK: - InputDateView
     static let inputDateViewTitle: String = "진행 기간을 설정해 주세요"
     
-
     // MARK: - UserDefault+Extension
     static let userNickname: String = "UserNickname"
 
     // MARK: - ChangeNickNameViewController
     static let changeNickNameViewControllerTitle: String = "닉네임 변경하기"
-
+    
+    // MARK: - InvitedCodeViewController
+    static let invitedCodeViewCOntroller: String = "글자를 탭하여 코드를 복사하세요"
 }

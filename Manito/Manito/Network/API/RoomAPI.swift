@@ -9,25 +9,29 @@ import Foundation
 
 struct RoomAPI: RoomProtocol {
     private let apiService: APIService
-    private let environment: APIEnvironment
     
-    init(apiService: APIService, environment: APIEnvironment) {
+    init(apiService: APIService) {
         self.apiService = apiService
-        self.environment = environment
     }
     
     func postCreateRoom(body: CreateRoomDTO) async throws -> String? {
-        let request = RoomEndPoint.createRoom(roomInfo: body).createRequest(environment: environment)
+        let request = RoomEndPoint
+            .dispatchCreateRoom(roomInfo: body)
+            .createRequest()
         return try await apiService.request(request)
     }
     
     func getVerification(body: String) async throws -> VerificationCode? {
-        let request = RoomEndPoint.verifyCode(code: body).createRequest(environment: environment)
+        let request = RoomEndPoint
+            .fetchVerifyCode(code: body)
+            .createRequest()
         return try await apiService.request(request)
     }
     
-    func postJoinRoom(roodId: String, body: Int) async throws -> String? {
-        let request = RoomEndPoint.joinRoom(roomId: roodId, colorIndex: body).createRequest(environment: environment)
+    func dispatchJoinRoom(roodId: String, dto: MemberDTO) async throws -> String? {
+        let request = RoomEndPoint
+            .dispatchJoinRoom(roomId: roodId, roomDto: dto)
+            .createRequest()
         return try await apiService.request(request)
     }
 }

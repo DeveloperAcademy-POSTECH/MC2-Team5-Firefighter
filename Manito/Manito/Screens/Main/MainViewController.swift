@@ -12,7 +12,7 @@ import SnapKit
 
 class MainViewController: BaseViewController {
     
-    private let mainService: MainProtocol = MainAPI(apiService: APIService(), environment: .development)
+    private let mainService: MainProtocol = MainAPI(apiService: APIService())
     private var rooms: [ParticipatingRoom]?
 
     private enum Size {
@@ -177,14 +177,6 @@ class MainViewController: BaseViewController {
         navigationItem.rightBarButtonItem = settingButtonView
     }
     
-    private func setupGifImage() {
-        DispatchQueue.main.async {
-            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
-            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
-            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
-        }
-    }
-    
     // MARK: - API
     
     private func requestCommonMission() {
@@ -216,6 +208,16 @@ class MainViewController: BaseViewController {
             } catch NetworkError.clientError(let message) {
                 print("clientError:\(String(describing: message))")
             }
+        }
+    }
+    
+    // MARK: - func
+    
+    private func setupGifImage() {
+        DispatchQueue.main.async {
+            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
+            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
+            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
         }
     }
 
@@ -259,17 +261,12 @@ class MainViewController: BaseViewController {
     private func pushDetailView(status: RoomStatus, index: Int) {
         switch status {
         case .waiting:
-            self.navigationController?.pushViewController(DetailWaitViewController(index: index), animated: true)
-        case .starting:
-            let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-            guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
-            viewController.roomIndex = index
+            let viewController = DetailWaitViewController(index: index)
             self.navigationController?.pushViewController(viewController, animated: true)
-        case .end:
+        default:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
-            viewController.isDone = true
-            viewController.roomIndex = index
+            viewController.roomInformation = rooms?[index]
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -349,10 +346,14 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
             newRoom()
         } else {
             guard let state = rooms?[indexPath.item - 1].state,
-                  let index = rooms?[indexPath.item - 1].id,
-                  let roomStatus = RoomStatus.init(rawValue: state)
+                  let roomStatus = RoomStatus.init(rawValue: state),
+                  let id = rooms?[indexPath.item - 1].id
             else { return }
-            pushDetailView(status: roomStatus, index: index)
+            if roomStatus == .waiting {
+                pushDetailView(status: roomStatus, index: id)
+            } else {
+                pushDetailView(status: roomStatus, index: indexPath.item - 1)
+            }
         }
     }
 }

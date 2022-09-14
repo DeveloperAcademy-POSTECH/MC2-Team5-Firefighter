@@ -12,7 +12,7 @@ extension UIColor {
     // MARK: - red
 
     static var mainRed: UIColor {
-        return UIColor(hex: "#E13B2D")
+        return UIColor(hex: "#CA2214")
     }
 
     static var shadowRed: UIColor {
@@ -83,6 +83,10 @@ extension UIColor {
 
     static var backgroundBlue: UIColor {
         return UIColor(hex: "#8BC4E7")
+    }
+    
+    static var codeBlue: UIColor {
+        return UIColor(hex: "#001AFF")
     }
     // MARK: - yellow
     

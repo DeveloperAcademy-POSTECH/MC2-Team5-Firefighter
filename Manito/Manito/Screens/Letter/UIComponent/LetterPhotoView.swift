@@ -158,8 +158,10 @@ final class LetterPhotoView: UIView {
 extension LetterPhotoView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            importPhotosButton.setImage(image, for: .normal)
-            applySendButtonEnabled?()
+            DispatchQueue.main.async {
+                self.importPhotosButton.setImage(image, for: .normal)
+                self.applySendButtonEnabled?()
+            }
         }
         
         viewController?.dismiss(animated: true, completion: nil)
@@ -177,9 +179,8 @@ extension LetterPhotoView: PHPickerViewControllerDelegate {
             itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
                 guard let self = self else { return }
                 
-                DispatchQueue.main.sync {
+                DispatchQueue.main.async {
                     guard let image = image as? UIImage else { return }
-
                     self.importPhotosButton.setImage(image, for: .normal)
                     self.applySendButtonEnabled?()
                 }

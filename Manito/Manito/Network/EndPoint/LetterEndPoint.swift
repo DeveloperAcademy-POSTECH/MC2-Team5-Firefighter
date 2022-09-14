@@ -33,17 +33,11 @@ enum LetterEndPoint: EndPointable {
     var requestBody: Data? {
         switch self {
         case .dispatchLetter(_, let image, let letter):
-            let id: String = "eec7ef46-fa5a-4ba3-94d5-4985beabd4c2"
-        
-            let parameters: [String: String?] = ["manitteeId": id,
+            let parameters: [String: String?] = ["manitteeId": letter.manitteeId,
                                                 "messageContent": letter.messageContent]
             let dataBody = createDataBody(withParameters: parameters,
                                           media: image ?? nil,
-                                          boundary: "123")
-            
-            let stringValue = String(decoding: dataBody, as: UTF8.self)
-            print(stringValue)
-            
+                                          boundary: APIEnvironment.boundary)
             return dataBody
         case .fetchSendLetter:
             return nil
@@ -68,18 +62,19 @@ enum LetterEndPoint: EndPointable {
         }
     }
     
-    func createRequest(environment: APIEnvironment) -> NetworkRequest {
+    func createRequest() -> NetworkRequest {
         var headers: [String: String] = [:]
         
         switch self {
         case .dispatchLetter:
-            headers["Content-Type"] = "multipart/form-data; boundary=123"
+            headers["Content-Type"] = "multipart/form-data; boundary=\(APIEnvironment.boundary)"
         default:
             headers["Content-Type"] = "application/json"
         }
         
-        headers["Authorization"] = "Bearer \(APIEnvironment.development.token)"
-        return NetworkRequest(url: getURL(baseURL: environment.baseUrl),
+        headers["Authorization"] = "Bearer \(APIEnvironment.token)"
+        
+        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
                               headers: headers,
                               reqBody: requestBody,
                               reqTimeout: requestTimeOut,
@@ -104,8 +99,8 @@ extension LetterEndPoint {
         if let media = media {
             let mediaKey = "image"
             body.append("--\(boundary + lineBreak)")
-            body.append("Content-Disposition: form-data; name=\"\(mediaKey)\"; filename=\"\(arc4random()).png\"\(lineBreak)")
-            body.append("Content-Type: image/png\(lineBreak + lineBreak)")
+            body.append("Content-Disposition: form-data; name=\"\(mediaKey)\"; filename=\"\(arc4random()).jpeg\"\(lineBreak)")
+            body.append("Content-Type: image/jpeg\(lineBreak + lineBreak)")
             body.append(media)
             body.append(lineBreak)
         }
@@ -113,10 +108,6 @@ extension LetterEndPoint {
         body.append("--\(boundary)--\(lineBreak)")
 
         return body
-    }
-    
-    private func generateBoundaryString() -> String {
-        return "Boundary-\(UUID().uuidString)"
     }
 }
 

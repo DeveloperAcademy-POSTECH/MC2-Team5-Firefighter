@@ -34,6 +34,8 @@ final class LetterTextView: UIView {
         textView.backgroundColor = .darkGrey004
         textView.makeBorderLayer(color: .white)
         textView.delegate = self
+        textView.autocorrectionType = .no
+        textView.autocapitalizationType = .none
         
         return textView
     }()
