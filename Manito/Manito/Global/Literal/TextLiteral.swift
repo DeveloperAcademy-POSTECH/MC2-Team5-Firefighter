@@ -62,7 +62,7 @@ enum TextLiteral {
     // MARK: - MainViewController
     static let mainViewControllerMenuTitle: String = "참여중인 애니또"
     static let mainViewControllerGuideTitle: String = "공통 미션이란?"
-    static let mainViewControllerGuideDescription: String = "공통 미션이란?\n매일 매일 업데이트되는 미션!\n두근두근 미션을 수행해보세요!"
+    static let mainViewControllerGuideDescription: String = "공통 미션이란?\n마니또에 참여한 모두에게 \n수행하는 미션이에요. "
     static let mainViewControllerNewRoomAlert: String = "새로운 마니또 시작"
 
     // MARK: - OpenManittoViewController
@@ -113,7 +113,7 @@ enum TextLiteral {
     // MARK: - LetterViewController
     static let letterViewControllerTitle = "쪽지함"
     static let letterViewControllerGuideTitle = "쪽지 쓰기는?"
-    static let letterViewControllerGuideText = "쪽지 쓰기는?\n보낸 쪽지함에서 쓰기가 가능해요!\n받은 쪽지함은 확인만 할 수 있어요."
+    static let letterViewControllerGuideText = "마니띠에게만 쓰기가 가능해요.\n마니또로부터는 확인만 할 수 있어요."
     static let letterViewControllerEmptyViewFrom = """
         쪽지함이 비었어요.
         곧 마니또가 쪽지를 보낼거에요!
@@ -131,7 +131,7 @@ enum TextLiteral {
     // MARK: - DetailIngViewController
     static let detailIngViewControllerManitoOpenButton: String = "마니또 공개"
     static let detailIngViewControllerGuideTitle: String = "개별 미션이란?"
-    static let detailIngViewControllerText: String = "개별 미션이란?\n나의 마니띠에게 전하는\n둘만의 미션을 확인할 수 있어요!"
+    static let detailIngViewControllerText: String = "개별 미션이란?\n나의 마니띠에게\n수행하는 미션이에요."
     static let detailIngViewControllerDoneMissionText: String = "종료된 마니또예요"
     
     // MARK: - CalendarView
