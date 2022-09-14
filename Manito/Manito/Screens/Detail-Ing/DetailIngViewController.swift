@@ -16,10 +16,8 @@ class DetailIngViewController: BaseViewController {
         case POST
     }
     
-    lazy var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService(),
-                                                    environment: .development)
-    lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService(),
-                                                        environment: .development)
+    lazy var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+    lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
 
     var friendList: FriendList?
     var roomInformation: ParticipatingRoom? {
