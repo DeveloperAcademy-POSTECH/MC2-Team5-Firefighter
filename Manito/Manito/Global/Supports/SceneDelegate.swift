@@ -32,3 +32,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidEnterBackground(_ scene: UIScene) { }
 }
+
+extension SceneDelegate {
+    func logout() {
+        window?.rootViewController = LoginViewController()
+    }
+}
