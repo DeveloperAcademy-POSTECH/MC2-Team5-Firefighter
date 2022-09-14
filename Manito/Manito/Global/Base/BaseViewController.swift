@@ -35,16 +35,15 @@ class BaseViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        putRefreshToken()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        putRefreshToken()
     }
     
     // MARK: - life cycle
@@ -127,7 +126,7 @@ class BaseViewController: UIViewController {
         guideLabel.applyColor(to: title, with: .subOrange)
     }
     
-    func putRefreshToken() {
+    func patchRefreshToken() {
         Task {
             do {
                 let token = Token(accessToken: UserDefaultStorage.accessToken,
@@ -138,10 +137,15 @@ class BaseViewController: UIViewController {
                     UserDefaultHandler.setAccessToken(accessToken: accessToken)
                     UserDefaultHandler.setRefreshToken(refreshToken: refreshToken)
                 }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
+            } catch {
+                guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
+                        as? SceneDelegate else { return }
+                
+                self.makeAlert(title: "토큰이 만료되었네요", message: "다시 로그인을 진행해주세요", okAction: { _ in
+                    UserDefaultHandler.clearAllData()
+                    sceneDelegate.logout()
+                })
+                
             }
         }
     }

@@ -114,6 +114,7 @@ final class LetterViewController: BaseViewController {
         self.roomId = roomId
         self.mission = mission
         super.init()
+        patchRefreshToken()
     }
     
     required init?(coder: NSCoder) {

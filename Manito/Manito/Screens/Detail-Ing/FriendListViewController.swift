@@ -19,6 +19,11 @@ class FriendListViewController: BaseViewController {
     
     @IBOutlet weak var friendListCollectionView: UICollectionView!
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        patchRefreshToken()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         requestWithFriends()
     }
