@@ -19,4 +19,22 @@ extension Date {
         formatter.dateFormat = "yyyy.MM.dd"
         return formatter.string(from: self)
     }
+    
+    var isToday: Bool {
+        let now = Date()
+        let distance = self.distance(to: now)
+        return distance > 0 && distance < 86400
+    }
+    
+    var isOverOpenTime: Bool {
+        let now = Date()
+        let nineHoursTimeInterval: TimeInterval = 32400
+        let dateAddNineHours = self + nineHoursTimeInterval
+        let distance = dateAddNineHours.distance(to: now)
+        return distance > 0 && distance < 54000
+    }
+    
+    var isOpenManitto: Bool {
+        return self.isToday && self.isOverOpenTime
+    }
 }

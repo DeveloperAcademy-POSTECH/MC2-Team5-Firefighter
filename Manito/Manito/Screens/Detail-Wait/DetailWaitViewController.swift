@@ -250,7 +250,7 @@ class DetailWaitViewController: BaseViewController {
     }
 
     override func configUI() {
-        view.backgroundColor = .backgroundGrey
+        super.configUI()
         setupSettingButton()
     }
     
