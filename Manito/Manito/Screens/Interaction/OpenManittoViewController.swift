@@ -77,7 +77,7 @@ final class OpenManittoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        animateCollectionView()
+        requestWithFriends(roomId: roomId.description)
     }
     
     override func render() {
@@ -92,12 +92,6 @@ final class OpenManittoViewController: BaseViewController {
             $0.top.equalTo(titleLabel.snp.bottom)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        requestWithFriends(roomId: roomId.description)
-        requestRoomInfo(roomId: roomId.description)
     }
     
     // MARK: - func
@@ -160,6 +154,8 @@ final class OpenManittoViewController: BaseViewController {
                 if let list = data {
                     friendsList = list
                     DispatchQueue.main.async {
+                        self.requestRoomInfo(roomId: roomId.description)
+                        self.animateCollectionView()
                         self.manittoCollectionView.reloadData()
                     }
                 }

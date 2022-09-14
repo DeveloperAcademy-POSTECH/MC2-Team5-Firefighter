@@ -197,11 +197,12 @@ class DetailWaitViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        requestWaitRoomInfo()
+//        requestWaitRoomInfo()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestWaitRoomInfo()
         setupDelegation()
         setupNotificationCenter()
         setStartButton()
