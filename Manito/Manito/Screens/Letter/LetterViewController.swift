@@ -332,7 +332,10 @@ extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LetterHeaderView.className, for: indexPath) as? LetterHeaderView else { assert(false, "do not have reusable view") }
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LetterHeaderView.className, for: indexPath) as? LetterHeaderView else {
+                assert(false, "do not have reusable view")
+                return UICollectionReusableView()
+            }
             
             headerView.segmentControlIndex = letterState.rawValue
             headerView.changeSegmentControlIndex = { [weak self] index in
@@ -343,6 +346,7 @@ extension LetterViewController: UICollectionViewDataSource {
             return headerView
         default:
             assert(false, "do not use footer")
+            return UICollectionReusableView()
         }
     }
 }

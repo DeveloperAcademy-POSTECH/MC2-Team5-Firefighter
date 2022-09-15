@@ -124,6 +124,7 @@ extension SettingDeveloperInfoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeveloperInfoViewCell.className, for: indexPath) as? DeveloperInfoViewCell else {
             assert(false, "Wrong Cell")
+            return UICollectionViewCell()
         }
         
         cell.developerImageView.image = developerData[indexPath.item]["image"] as? UIImage
@@ -136,11 +137,15 @@ extension SettingDeveloperInfoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SettingDeveloperInfoHeaderView.className, for: indexPath) as? SettingDeveloperInfoHeaderView else { assert(false, "do not have reusable view") }
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SettingDeveloperInfoHeaderView.className, for: indexPath) as? SettingDeveloperInfoHeaderView else {
+                assert(false, "do not have reusable view")
+                return UICollectionReusableView()
+            }
             
             return headerView
         default:
             assert(false, "do not use footer")
+            return UICollectionReusableView()
         }
     }
 }
