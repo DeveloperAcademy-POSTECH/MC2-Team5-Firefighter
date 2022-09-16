@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FriendListViewController: BaseViewController {
+final class FriendListViewController: BaseViewController {
     var friendArray: [Member] = [] {
         didSet {
             friendListCollectionView.reloadData()
@@ -18,6 +18,8 @@ class FriendListViewController: BaseViewController {
     var roomIndex: Int = 0
     
     @IBOutlet weak var friendListCollectionView: UICollectionView!
+    
+    // MARK: - init
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

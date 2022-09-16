@@ -38,9 +38,8 @@ class BaseViewController: UIViewController {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        print("프린트만 합니다.")
     }
-    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -56,6 +55,12 @@ class BaseViewController: UIViewController {
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
         setupNavigationPopGesture()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+        dch_checkDeallocation()
     }
     
     func render() {

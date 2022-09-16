@@ -78,6 +78,7 @@
 		B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */; };
 		B517C04C28D1FE5F0008BED0 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */; };
 		B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04D28D1FE660008BED0 /* TokenProtocol.swift */; };
+		B517C06328D4B0560008BED0 /* DeallocChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C06228D4B0560008BED0 /* DeallocChecker.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
@@ -224,6 +225,7 @@
 		B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEndPoint.swift; sourceTree = "<group>"; };
 		B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
 		B517C04D28D1FE660008BED0 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
+		B517C06228D4B0560008BED0 /* DeallocChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeallocChecker.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
@@ -714,6 +716,7 @@
 				B5F525282851A2A400614FF7 /* Logger.swift */,
 				B5FEE9DA28C8498A00DEA07E /* ImageCacheManager.swift */,
 				B5FEE9DC28C849B400DEA07E /* UIImageView+Cache.swift */,
+				B517C06228D4B0560008BED0 /* DeallocChecker.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1082,6 +1085,7 @@
 				39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
+				B517C06328D4B0560008BED0 /* DeallocChecker.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
 				B50B1AFD2856C3500080992C /* LetterTextView.swift in Sources */,
