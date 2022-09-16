@@ -21,7 +21,7 @@ struct RoomAPI: RoomProtocol {
         return try await apiService.requestCreateRoom(request)
     }
     
-    func getVerification(body: String) async throws -> VerificationCode? {
+    func dispatchVerification(body: String) async throws -> VerificationCode? {
         let request = RoomEndPoint
             .fetchVerifyCode(code: body)
             .createRequest()
