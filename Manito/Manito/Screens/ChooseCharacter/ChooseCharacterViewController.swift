@@ -185,7 +185,7 @@ class ChooseCharacterViewController: BaseViewController {
             } catch NetworkError.encodingError {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
+                print("client Error: \(String(describing: message))")
             }
         }
     }
@@ -194,15 +194,25 @@ class ChooseCharacterViewController: BaseViewController {
         Task {
             do {
                 guard let id = roomId else { return }
-                let _ = try await roomService.dispatchJoinRoom(roodId: id.description,
+                let status = try await roomService.dispatchJoinRoom(roodId: id.description,
                                                                dto: MemberDTO(colorIdx: colorIdx))
-                // FIXME: - api 튜플 형식으로 받고 status code로 alert 표시
+                if status == 201 {
+                    guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+                    guard let id = self.roomId else { return }
+                    let viewController = DetailWaitViewController(index: id)
+                    self.dismiss(animated: true) {
+                        navigationController.pushViewController(viewController, animated: true)
+                    }
+                }
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
                 print("client Error: \(String(describing: message))")
+                makeAlert(title: "이미 참여중인 방입니다", message: "애니또 리스트를 확인해 보세요", okAction: { [weak self] _ in
+                    self?.dismiss(animated: true)
+                })
             }
         }
     }
@@ -226,12 +236,6 @@ class ChooseCharacterViewController: BaseViewController {
                                                   member: MemberDTO(colorIdx: colorIdx)))
         case .enterRoom:
             requestJoinRoom()
-            guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-            guard let id = self.roomId else { return }
-            let viewController = DetailWaitViewController(index: id)
-            self.dismiss(animated: true) {
-                navigationController.pushViewController(viewController, animated: true)
-            }
         }
     }
 }

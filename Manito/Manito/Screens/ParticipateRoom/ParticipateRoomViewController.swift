@@ -130,11 +130,12 @@ class ParticipateRoomViewController: BaseViewController {
                 let data = try await checkRoomInfoService
                     .dispatchVerification(body: code)
                 if let info = data {
+                    guard let id = info.id else { return }
                     let viewController = CheckRoomViewController()
-                    
                     viewController.modalPresentationStyle = .overFullScreen
                     viewController.modalTransitionStyle = .crossDissolve
                     viewController.verification = info
+                    viewController.roomId = id
                     
                     present(viewController, animated: true)
                 } 
