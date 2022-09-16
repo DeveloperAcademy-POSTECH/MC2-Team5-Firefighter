@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class ParticipateRoomViewController: BaseViewController {
+    private let checkRoomInfoService: RoomProtocol = RoomAPI(apiService: APIService())
     
     // MARK: - Property
     private let titleLabel: UILabel = {
@@ -101,13 +102,7 @@ class ParticipateRoomViewController: BaseViewController {
     }
     
     @objc private func didTapNextButton() {
-        let viewController = CheckRoomViewController()
-        
-        viewController.modalPresentationStyle = .overFullScreen
-        viewController.modalTransitionStyle = .crossDissolve
-        viewController.inviteCode = inputInvitedCodeView.roomCodeTextField.text ?? ""
-        
-        present(viewController, animated: true, completion: nil)
+        dispatchInviteCode()
     }
     
     @objc private func didReceiveNextNotification(_ notification: Notification) {
@@ -123,6 +118,34 @@ class ParticipateRoomViewController: BaseViewController {
     private func toggleButton() {
         inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
             self?.nextButton.isDisabled = !isEnable
+        }
+    }
+    
+    // MARK: - API
+    
+    private func dispatchInviteCode() {
+        Task {
+            do {
+                guard let code = inputInvitedCodeView.roomCodeTextField.text else { return }
+                let data = try await checkRoomInfoService
+                    .dispatchVerification(body: code)
+                if let info = data {
+                    let viewController = CheckRoomViewController()
+                    
+                    viewController.modalPresentationStyle = .overFullScreen
+                    viewController.modalTransitionStyle = .crossDissolve
+                    viewController.verification = info
+                    
+                    present(viewController, animated: true)
+                } 
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage)
+                print("client Error: \(String(describing: message))")
+            }
         }
     }
 }
