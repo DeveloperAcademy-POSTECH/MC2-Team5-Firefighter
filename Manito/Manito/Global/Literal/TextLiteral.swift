@@ -83,7 +83,7 @@ enum TextLiteral {
     static let checkRoomViewControllerNoButtonLabel: String = "NO"
     static let checkRoomViewControllerYesBUttonLabel: String = "YES"
     static let checkRoomViewControllerErrorAlertTitle: String = "해당하는 애니또 방이 없어요"
-    static let checkRoomViewControllerErrorAlertMessage: String = "이미 참여중인 방이거나,\n 초대 코드를 확인해 주세요"
+    static let checkRoomViewControllerErrorAlertMessage: String = "초대 코드를 다시 확인해 주세요"
     
     // MARK: - InputInvitedCodeView
     static let inputInvitedCodeViewRoomCodeText: String = "초대코드 입력"
