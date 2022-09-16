@@ -207,7 +207,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                               
                               -----------------------------
                               
-                              - 문의하는 닉네임: \(String(describing: UserDefaults.standard.nickname))
+                              - 문의하는 닉네임: \(String(describing: UserDefaultStorage.nickname ?? ""))
                               - 문의 메시지 제목 한줄 요약:
                               - 문의 날짜: \(Date())
                               
