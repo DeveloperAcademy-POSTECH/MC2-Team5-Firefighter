@@ -489,13 +489,17 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func setStartButton() {
-        guard let startDate = startDateText.stringToDate else { return }
-        guard let todayDate = Date().dateToString.stringToDate else { return }
-        
-        let isToday = startDate.distance(to: todayDate).isZero
-        let isMinimumUserCount = userCount >= 5
-
-        canStartClosure?(isToday && isMinimumUserCount)
+        if memberType == .owner {
+            guard let startDate = startDateText.stringToDate else { return }
+            guard let todayDate = Date().dateToString.stringToDate else { return }
+            
+            let isToday = startDate.distance(to: todayDate).isZero
+            let isMinimumUserCount = userCount >= 5
+            
+            canStartClosure?(isToday && isMinimumUserCount)
+        } else {
+            canStartClosure?(false)
+        }
     }
     
     private func renderTableView() {
