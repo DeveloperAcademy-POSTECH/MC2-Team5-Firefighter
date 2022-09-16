@@ -81,13 +81,6 @@ class MainViewController: BaseViewController {
     private let maCharacterImageView = GIFImageView()
     private let niCharacterImageView = GIFImageView()
     private let ttoCharacterImageView = GIFImageView()
-    
-    // MARK: - init
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        patchRefreshToken()
-    }
 
     // MARK: - life cycle
     

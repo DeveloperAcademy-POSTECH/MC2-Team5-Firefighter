@@ -13,8 +13,8 @@ class BaseViewController: UIViewController {
     
     private lazy var backButton: UIButton = {
         let button = BackButton()
-        let buttonAction = UIAction { _ in
-            self.navigationController?.popViewController(animated: true)
+        let buttonAction = UIAction { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
         }
         button.addAction(buttonAction, for: .touchUpInside)
         return button
@@ -38,7 +38,8 @@ class BaseViewController: UIViewController {
     }
     
     deinit {
-        print("프린트만 합니다.")
+        print("success deallocation")
+        NotificationCenter.default.removeObserver(self)
     }
     
     required init?(coder: NSCoder) {
@@ -59,7 +60,6 @@ class BaseViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
         dch_checkDeallocation()
     }
     
@@ -129,30 +129,6 @@ class BaseViewController: UIViewController {
         guideLabel.addLabelSpacing()
         guideLabel.textAlignment = .center
         guideLabel.applyColor(to: title, with: .subOrange)
-    }
-    
-    func patchRefreshToken() {
-        Task {
-            do {
-                let token = Token(accessToken: UserDefaultStorage.accessToken,
-                                  refreshToken: UserDefaultStorage.refreshToken)
-                let response = try await tokenService.patchRefreshToken(dto: token)
-                if let accessToken = response?.accessToken,
-                   let refreshToken = response?.refreshToken {
-                    UserDefaultHandler.setAccessToken(accessToken: accessToken)
-                    UserDefaultHandler.setRefreshToken(refreshToken: refreshToken)
-                }
-            } catch {
-                guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
-                        as? SceneDelegate else { return }
-                
-                self.makeAlert(title: "토큰이 만료되었네요", message: "다시 로그인을 진행해주세요", okAction: { _ in
-                    UserDefaultHandler.clearAllData()
-                    sceneDelegate.logout()
-                })
-                
-            }
-        }
     }
     
     // MARK: - private func

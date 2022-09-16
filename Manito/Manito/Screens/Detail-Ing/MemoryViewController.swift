@@ -21,11 +21,6 @@ class MemoryViewController: BaseViewController {
     @IBOutlet weak var manitiIconView: UIImageView!
     @IBOutlet weak var manitiNickLabel: UILabel!
     @IBOutlet var memoriIconBottomView: UIView!
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        patchRefreshToken()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
