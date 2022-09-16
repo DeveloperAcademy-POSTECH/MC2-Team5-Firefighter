@@ -8,7 +8,7 @@
 import Foundation
 
 struct RoomAPI: RoomProtocol {
-    private let apiService: APIService
+    private let apiService: Requestable
     
     init(apiService: APIService) {
         self.apiService = apiService
@@ -28,7 +28,7 @@ struct RoomAPI: RoomProtocol {
         return try await apiService.request(request)
     }
     
-    func dispatchJoinRoom(roodId: String, dto: MemberDTO) async throws -> String? {
+    func dispatchJoinRoom(roodId: String, dto: MemberDTO) async throws -> Int {
         let request = RoomEndPoint
             .dispatchJoinRoom(roomId: roodId, roomDto: dto)
             .createRequest()
