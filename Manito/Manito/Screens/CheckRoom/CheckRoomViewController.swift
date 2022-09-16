@@ -80,7 +80,7 @@ class CheckRoomViewController: BaseViewController {
         roomInfoImageView.addSubview(roomInfoView)
         roomInfoView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(120)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
         
         roomInfoImageView.addSubview(questionLabel)
@@ -94,7 +94,6 @@ class CheckRoomViewController: BaseViewController {
             $0.top.equalTo(questionLabel.snp.bottom).offset(Size.leadingTrailingPadding)
             $0.width.equalTo(110)
             $0.height.equalTo(44)
-            $0.bottom.equalToSuperview().inset(24)
             $0.leading.equalToSuperview().inset(48)
         }
         
@@ -103,7 +102,6 @@ class CheckRoomViewController: BaseViewController {
             $0.top.equalTo(questionLabel.snp.bottom).offset(Size.leadingTrailingPadding)
             $0.width.equalTo(110)
             $0.height.equalTo(44)
-            $0.bottom.equalToSuperview().inset(24)
             $0.trailing.equalToSuperview().inset(48)
         }
     }
