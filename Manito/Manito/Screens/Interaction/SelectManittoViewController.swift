@@ -41,7 +41,7 @@ final class SelectManittoViewController: BaseViewController {
         return action
     }()
 
-    var manittiName: String?
+    var manitteeName: String?
     private var stageType: StageType = .joystick {
         didSet {
             hiddenImageView()
@@ -63,8 +63,8 @@ final class SelectManittoViewController: BaseViewController {
 
         informationLabel.font = .font(.regular, ofSize: 20)
         nameLabel.font = .font(.regular, ofSize: 30)
-        if let manittiName = manittiName {
-            nameLabel.text = manittiName
+        if let manittee = manitteeName {
+            nameLabel.text = manittee
         }
         confirmButton.title = TextLiteral.confirm
         confirmButton.addAction(okAction, for: .touchUpInside)
