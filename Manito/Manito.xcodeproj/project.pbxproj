@@ -501,7 +501,6 @@
 		B5F524CD28519AA000614FF7 /* Manito */ = {
 			isa = PBXGroup;
 			children = (
-				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
 				B5F525462855D00B00614FF7 /* Network */,
 				B5F524E328519AC300614FF7 /* Screens */,
 				B5F524E428519AC600614FF7 /* Global */,
@@ -652,6 +651,7 @@
 		B5F524F528519BB700614FF7 /* Supports */ = {
 			isa = PBXGroup;
 			children = (
+				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
 				B5F524DC28519AA100614FF7 /* Info.plist */,
 				B5F524CE28519AA000614FF7 /* AppDelegate.swift */,
 				B5F524D028519AA000614FF7 /* SceneDelegate.swift */,
@@ -1258,7 +1258,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = Manito/Manito.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Manito/Global/Supports/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1294,7 +1294,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = Manito/Manito.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Manito/Global/Supports/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
