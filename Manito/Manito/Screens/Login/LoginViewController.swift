@@ -81,16 +81,17 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     Task {
                         do {
                             let response = try await self.loginService.dispatchAppleLogin(dto: LoginDTO(identityToken: tokenToString))
+                            
                             if let data = response {
                                 UserDefaultHandler.setIsLogin(isLogin: true)
                                 UserDefaultHandler.setAccessToken(accessToken: data.accessToken ?? "")
                                 UserDefaultHandler.setRefreshToken(refreshToken: data.refreshToken ?? "")
-                                
-//                                guard data.nickname != nil else {
-//                                    UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
-//                                    self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
-//                                    return
-//                                }
+
+                                guard data.nickname != nil else {
+                                    UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
+                                    self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
+                                    return
+                                }
                                 
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")

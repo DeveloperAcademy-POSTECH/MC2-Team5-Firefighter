@@ -77,7 +77,7 @@ enum DetailWaitEndPoint: EndPointable {
     func createRequest() -> NetworkRequest {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
-        headers["authorization"] = "Bearer \(APIEnvironment.token)"
+        headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
         return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
                               headers: headers,
                               reqBody: requestBody,

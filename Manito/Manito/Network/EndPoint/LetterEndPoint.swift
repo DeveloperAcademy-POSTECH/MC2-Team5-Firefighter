@@ -72,7 +72,7 @@ enum LetterEndPoint: EndPointable {
             headers["Content-Type"] = "application/json"
         }
         
-        headers["Authorization"] = "Bearer \(APIEnvironment.token)"
+        headers["Authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
         
         return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
                               headers: headers,
