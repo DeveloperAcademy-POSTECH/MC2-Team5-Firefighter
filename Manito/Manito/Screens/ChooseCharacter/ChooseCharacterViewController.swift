@@ -112,7 +112,6 @@ class ChooseCharacterViewController: BaseViewController {
         self.statusMode = statusMode
         self.roomId = roomId
         super.init()
-        patchRefreshToken()
     }
     
     required init?(coder: NSCoder) {

@@ -37,17 +37,6 @@ class ParticipateRoomViewController: BaseViewController {
     
     private let inputInvitedCodeView = InputInvitedCodeView()
     
-    // MARK: - init
-    
-    override init() {
-        super.init()
-        patchRefreshToken()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {

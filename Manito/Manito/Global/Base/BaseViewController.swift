@@ -126,30 +126,6 @@ class BaseViewController: UIViewController {
         guideLabel.applyColor(to: title, with: .subOrange)
     }
     
-    func patchRefreshToken() {
-        Task {
-            do {
-                let token = Token(accessToken: UserDefaultStorage.accessToken,
-                                  refreshToken: UserDefaultStorage.refreshToken)
-                let response = try await tokenService.patchRefreshToken(dto: token)
-                if let accessToken = response?.accessToken,
-                   let refreshToken = response?.refreshToken {
-                    UserDefaultHandler.setAccessToken(accessToken: accessToken)
-                    UserDefaultHandler.setRefreshToken(refreshToken: refreshToken)
-                }
-            } catch {
-                guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
-                        as? SceneDelegate else { return }
-                
-                self.makeAlert(title: "토큰이 만료되었네요", message: "다시 로그인을 진행해주세요", okAction: { _ in
-                    UserDefaultHandler.clearAllData()
-                    sceneDelegate.logout()
-                })
-                
-            }
-        }
-    }
-    
     // MARK: - private func
     
     private func setupBackButton() {

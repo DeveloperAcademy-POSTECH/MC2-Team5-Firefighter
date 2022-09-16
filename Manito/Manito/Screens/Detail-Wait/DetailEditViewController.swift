@@ -129,7 +129,6 @@ class DetailEditViewController: BaseViewController {
     init(editMode: EditMode) {
         self.editMode = editMode
         super.init()
-        patchRefreshToken()
     }
     
     required init?(coder: NSCoder) {

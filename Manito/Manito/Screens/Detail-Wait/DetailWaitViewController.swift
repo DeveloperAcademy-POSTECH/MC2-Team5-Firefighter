@@ -184,7 +184,6 @@ class DetailWaitViewController: BaseViewController {
     init(index: Int) {
         roomIndex = index
         super.init()
-        patchRefreshToken()
     }
     
     required init?(coder: NSCoder) {
