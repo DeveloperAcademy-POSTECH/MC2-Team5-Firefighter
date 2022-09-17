@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 final class OpenManittoPopupViewController: BaseViewController {
-    private let nickname = UserDefaults.standard.nickname ?? "당신"
+    private let nickname = UserDefaultStorage.nickname ?? "당신"
 
     // MARK: - property
     
