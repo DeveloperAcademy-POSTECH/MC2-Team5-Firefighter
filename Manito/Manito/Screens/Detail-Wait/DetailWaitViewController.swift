@@ -37,12 +37,12 @@ class DetailWaitViewController: BaseViewController {
             setupTitleViewGesture()
         }
     }
-    var startDateText = "22.09.11" {
+    var startDateText = "" {
         didSet {
             titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
         }
     }
-    var endDateText = "22.09.15" {
+    var endDateText = "" {
         didSet {
             titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
         }
@@ -519,7 +519,7 @@ class DetailWaitViewController: BaseViewController {
     private func setupTitleViewGesture() {
         if memberType == .owner {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
-            view.addGestureRecognizer(tapGesture)
+            titleView.addGestureRecognizer(tapGesture)
         }
     }
 

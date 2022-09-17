@@ -8,7 +8,7 @@
 import Foundation
 
 enum APIEnvironment {
-    static let baseUrl: String = UrlLiteral.developmentUrl
+    static let baseUrl: String = UrlLiteral.productionUrl
     static let token: String = UserDefaultStorage.accessToken
     static let boundary: String = "com.TeamFirefighter.Manito"
 }

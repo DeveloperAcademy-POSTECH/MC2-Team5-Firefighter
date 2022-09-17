@@ -126,6 +126,7 @@ class DetailIngViewController: BaseViewController {
         addGestureManito()
         addActionOpenManittoViewController()
         
+        manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
         manitiIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
         
@@ -357,7 +358,7 @@ class DetailIngViewController: BaseViewController {
             UIView.animate(withDuration: 1.0, delay: 1.0) {
                 self.manitiIconView.alpha = 1
                 self.manitiRealIconView.alpha = 0
-                self.manitiLabel.text = "호야의 마니띠"
+                self.manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
                 self.manitteAnimationLabel.alpha = 0
                 self.manitiLabel.alpha = 1
             }

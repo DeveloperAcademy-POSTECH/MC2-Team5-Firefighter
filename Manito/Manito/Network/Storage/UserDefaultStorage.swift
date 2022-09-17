@@ -32,8 +32,8 @@ struct UserDefaultStorage {
         return UserData<String>.getValue(forKey: .refreshToken) ?? ""
     }
     
-    static var nickname: String {
-        return UserData<String>.getValue(forKey: .nickname) ?? ""
+    static var nickname: String? {
+        return UserData<String?>.getValue(forKey: .nickname) ?? nil
     }
 }
 
