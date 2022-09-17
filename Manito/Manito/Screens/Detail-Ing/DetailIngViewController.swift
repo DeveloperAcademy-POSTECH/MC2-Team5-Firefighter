@@ -247,19 +247,18 @@ class DetailIngViewController: BaseViewController {
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
                           let missionContent = info.mission?.content,
-                          let minittee = info.manittee?.nickname,
-                          let didView = info.didViewRoulette,
-                          let manitto = info.manitto?.nickname
+                          let manittee = info.manittee?.nickname,
+                          let didView = info.didViewRoulette
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
-                    manitteAnimationLabel.text = minittee
+                    manitteAnimationLabel.text = manittee
                     if !didView {
                         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                         guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                         viewController.modalPresentationStyle = .fullScreen
                         viewController.roomInformation = roomInformation
-                        viewController.manittiName = manitto
+                        viewController.manitteeName = manittee
                         present(viewController, animated: true)
                     }
                 }
