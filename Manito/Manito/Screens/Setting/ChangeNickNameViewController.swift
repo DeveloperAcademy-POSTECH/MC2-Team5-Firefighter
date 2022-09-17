@@ -13,7 +13,7 @@ class ChangeNickNameViewController: BaseViewController {
     
     let settingService: SettingProtocol = SettingAPI(apiService: APIService())
     
-    private var nickname: String = UserDefaults.standard.nickname ?? ""
+    private var nickname: String = UserDefaultStorage.nickname ?? ""
     private var maxLength = 5
     
     // MARK: - Property
@@ -96,7 +96,7 @@ class ChangeNickNameViewController: BaseViewController {
     @objc private func didTapDoneButton() {
         if let text = nameTextField.text, !text.isEmpty {
             nickname = text
-            UserDefaults.standard.nickname = nickname
+            UserDefaultHandler.setNickname(nickname: nickname)
             requestChangeNickname(nickname: NicknameDTO(nickname: nickname))
             navigationController?.popViewController(animated: true)
         }
