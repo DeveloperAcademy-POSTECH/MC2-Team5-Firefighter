@@ -283,7 +283,7 @@ class DetailWaitViewController: BaseViewController {
             } catch NetworkError.encodingError {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
+                print("client Error: \(String(describing: message))")
             }
         }
     }
@@ -291,14 +291,16 @@ class DetailWaitViewController: BaseViewController {
     func requestChangeRoomInfo(roomDto: RoomDTO) {
         Task {
             do {
-                print("roomDto = \(roomDto)")
-                let _ = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
+                let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
+                if status == 204 {
+                    showToast(message: "방 정보 수정 완료")
+                }
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
+                print("client Error: \(String(describing: message))")
             }
         }
     }
@@ -312,7 +314,7 @@ class DetailWaitViewController: BaseViewController {
             } catch NetworkError.encodingError {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
+                print("client Error: \(String(describing: message))")
             }
         }
     }
@@ -320,13 +322,16 @@ class DetailWaitViewController: BaseViewController {
     func requestDeleteRoom() {
         Task {
             do {
-                let _ = try await detailWaitService.deleteRoom(roomId: "\(roomIndex)")
+                let status = try await detailWaitService.deleteRoom(roomId: "\(roomIndex)")
+                if status == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
+                print("client Error: \(String(describing: message))")
             }
         }
     }
@@ -334,13 +339,16 @@ class DetailWaitViewController: BaseViewController {
     func requestDeleteLeaveRoom() {
         Task {
             do {
-                let _ = try await detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
+                let status = try await detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
+                if status == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
+                print("client Error: \(String(describing: message))")
             }
         }
     }
@@ -404,25 +412,19 @@ class DetailWaitViewController: BaseViewController {
         case .owner:
             let menu = UIMenu(options: [], children: [
                 UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
-                        self?.presentEditRoomView()
-                    }),
+                    self?.presentEditRoomView()
+                }),
                 UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-                        self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: { _ in
-                            self?.requestDeleteRoom()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                self?.navigationController?.popViewController(animated: true)
-                            }
-                        })
-                    })])
+                    self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: { _ in
+                        self?.requestDeleteRoom()
+                    })
+                })])
             return menu
         case .member:
             let menu = UIMenu(options: [], children: [
                 UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
                     self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction:  { _ in
                         self?.requestDeleteLeaveRoom()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            self?.navigationController?.popViewController(animated: true)
-                        }
                     })
                 })
             ])

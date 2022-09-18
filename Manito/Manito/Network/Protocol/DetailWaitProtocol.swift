@@ -10,8 +10,8 @@ import Foundation
 protocol DetailWaitProtocol {
     func getWithFriend(roomId: String) async throws -> FriendList?
     func getWaitingRoomInfo(roomId: String) async throws -> Room?
-    func startManitto(roomId: String) async throws -> String?
-    func editRoomInfo(roomId: String, roomInfo: RoomDTO) async throws -> String?
-    func deleteRoom(roomId: String) async throws -> String?
-    func deleteLeaveRoom(roomId: String) async throws -> String?
+    func startManitto(roomId: String) async throws -> Int
+    func editRoomInfo(roomId: String, roomInfo: RoomDTO) async throws -> Int
+    func deleteRoom(roomId: String) async throws -> Int
+    func deleteLeaveRoom(roomId: String) async throws -> Int
 }
