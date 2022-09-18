@@ -130,11 +130,6 @@ final class LetterViewController: BaseViewController {
         hideGuideViewWhenTappedAround()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        letterState = .sent
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
@@ -165,6 +160,7 @@ final class LetterViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
+        letterState = .sent
     }
     
     override func setupNavigationBar() {
