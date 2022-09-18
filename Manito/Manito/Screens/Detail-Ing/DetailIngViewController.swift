@@ -61,13 +61,6 @@ class DetailIngViewController: BaseViewController {
     }()
     
     private var roomType: RoomType?
-    
-    // MARK: - init
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        patchRefreshToken()
-    }
 
     // MARK: - life cycle
     

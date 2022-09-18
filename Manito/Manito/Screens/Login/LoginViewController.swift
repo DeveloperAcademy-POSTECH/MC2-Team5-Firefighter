@@ -77,23 +77,27 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     // The Apple ID credential is valid. Show Home UI Here
                     guard let token = appleIDCredential.identityToken else { return }
                     guard let tokenToString = String(data: token, encoding: .utf8) else { return }
+                    
                     Task {
                         do {
-                            let data = try await self.loginService.dispatchAppleLogin(dto: LoginDTO(identityToken: tokenToString))
-                            if let tokens = data {
+                            let response = try await self.loginService.dispatchAppleLogin(dto: LoginDTO(identityToken: tokenToString))
+                            
+                            if let data = response {
                                 UserDefaultHandler.setIsLogin(isLogin: true)
-                                UserDefaultHandler.setAccessToken(accessToken: tokens.accessToken ?? "")
-                                UserDefaultHandler.setRefreshToken(refreshToken: tokens.refreshToken ?? "")
-                                UserDefaultHandler.setNickname(nickname: tokens.nickname ?? "")
-                                if UserData.getValue(forKey: .nickname) == "" {
+                                UserDefaultHandler.setAccessToken(accessToken: data.accessToken ?? "")
+                                UserDefaultHandler.setRefreshToken(refreshToken: data.refreshToken ?? "")
+
+                                guard data.nickname != nil else {
+                                    UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
                                     self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
-                                } else {
-                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                    let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
-                                    viewController.modalPresentationStyle = .fullScreen
-                                    viewController.modalTransitionStyle = .crossDissolve
-                                    self.present(viewController, animated: true, completion: nil)
+                                    return
                                 }
+                                
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+                                viewController.modalPresentationStyle = .fullScreen
+                                viewController.modalTransitionStyle = .crossDissolve
+                                self.present(viewController, animated: true, completion: nil)
                             }
                         } catch NetworkError.serverError {
                             print("server Error")
