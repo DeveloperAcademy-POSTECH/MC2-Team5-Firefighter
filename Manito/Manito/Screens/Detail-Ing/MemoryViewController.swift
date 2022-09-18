@@ -16,6 +16,26 @@ final class MemoryViewController: BaseViewController {
     
     // MARK: - properties
     
+    private let shareButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.icShare, for: .normal)
+        return button
+    }()
+    private lazy var segmentControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: [TextLiteral.letterHeaderViewSegmentControlManitti, TextLiteral.letterHeaderViewSegmentControlManitto])
+        let font = UIFont.font(.regular, ofSize: 14)
+        let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
+        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
+        
+        control.setTitleTextAttributes(normalTextAttributes, for: .normal)
+        control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+        control.selectedSegmentTintColor = .white
+        control.backgroundColor = .darkGrey004
+        control.addTarget(self, action: #selector(changedIndexValue(_:)), for: .valueChanged)
+        
+        return control
+    }()
+    
     private var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
     private var memoryType: MemoryType = .manittee {
         willSet {
@@ -41,12 +61,23 @@ final class MemoryViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSegmentControl()
-        setupFont()
-        setupViewLayer()
    }
     
+    override func render() {
+        
+    }
+    
     // MARK: - func
+    
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        let shareButton = makeBarButtonItem(with: shareButton)
+        
+        navigationItem.rightBarButtonItem = shareButton
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .automatic
+        title = TextLiteral.memoryViewControllerTitleLabel
+    }
     
     private func setupSegmentControl() {
         let font = UIFont.font(.regular, ofSize: 14)
