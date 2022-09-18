@@ -12,6 +12,7 @@ import SnapKit
 final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     var didTappedReport:(() -> ())?
+    var didTappedImage: ((UIImage) -> ())?
     
     // MARK: - property
     
@@ -39,6 +40,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     private let reportButton: UIButton = {
@@ -101,6 +103,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     override func configUI() {
         clipsToBounds = true
         makeBorderLayer(color: .white.withAlphaComponent(0.5))
+        setupImageTapGesture()
     }
     
     // MARK: - func
@@ -127,5 +130,15 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
                 $0.height.equalTo(204)
             }
         }
+    }
+    
+    @objc func photoTab() {
+        guard let image = photoImageView.image else { return }
+        didTappedImage?(image)
+    }
+    
+    func setupImageTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(photoTab))
+        photoImageView.addGestureRecognizer(tapGesture)
     }
 }
