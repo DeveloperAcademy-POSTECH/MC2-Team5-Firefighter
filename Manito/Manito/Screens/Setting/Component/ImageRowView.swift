@@ -15,12 +15,12 @@ class ImageRowView: UIView {
     
     private let imgMaDuna: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgMaDuna
+        imageView.image = ImageLiterals.imgCharacterOrange
         return imageView
     }()
     private let imgMaHoya: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgMaHoya
+        imageView.image = ImageLiterals.imgCharacterPurple
         return imageView
     }()
     private let imgNi: UIImageView = {
@@ -30,12 +30,12 @@ class ImageRowView: UIView {
     }()
     private let imgMaChemi: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgMaChemi
+        imageView.image = ImageLiterals.imgCharacterLightGreen
         return imageView
     }()
     private let imgMaLivvy: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgMaLivvy
+        imageView.image = ImageLiterals.imgCharacterRed
         return imageView
     }()
     
