@@ -258,7 +258,6 @@ class DetailIngViewController: BaseViewController {
                           let didView = info.didViewRoulette,
                           let badgeCount = info.messages?.count
                     else { return }
-                    print(badgeCount)
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
                     manitteAnimationLabel.text = manittee
