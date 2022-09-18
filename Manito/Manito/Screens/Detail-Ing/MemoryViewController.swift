@@ -7,53 +7,108 @@
 
 import UIKit
 
-class MemoryViewController: BaseViewController {
-    @IBOutlet weak var memoryControl: UISegmentedControl!
-    @IBOutlet weak var memoryIconView: UIImageView!
-    @IBOutlet weak var memoryManitoLabel: UILabel!
-    @IBOutlet weak var fromManitiFirstView: UIView!
-    @IBOutlet weak var fromManitiSecondView: UIView!
-    @IBOutlet weak var fromManitiSecondLabel: UILabel!
-    @IBOutlet weak var fromManitiThirdView: UIView!
-    @IBOutlet weak var fromManitiForthView: UIView!
-    @IBOutlet weak var fromManitiForthLabel: UILabel!
-    @IBOutlet weak var manitiIconBackView: UIView!
-    @IBOutlet weak var manitiIconView: UIImageView!
-    @IBOutlet weak var manitiNickLabel: UILabel!
-    @IBOutlet var memoriIconBottomView: UIView!
+final class MemoryViewController: BaseViewController {
+    
+    private enum MemoryType: Int {
+        case manittee = 0
+        case manitto = 1
+    }
+    
+    // MARK: - properties
+    
+    private var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
+    private var memoryType: MemoryType = .manittee {
+        willSet {
+            setupData(with: newValue)
+        }
+    }
+    private var memory: Memory?
+    private var roomId: String
+    
+    // MARK: - init
+    
+    init(roomId: String) {
+        self.roomId = roomId
+        super.init()
+        requestMemory(roomId: roomId)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupSegmentControl()
         setupFont()
         setupViewLayer()
    }
+    
+    // MARK: - func
     
     private func setupSegmentControl() {
         let font = UIFont.font(.regular, ofSize: 14)
         let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
         let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
  
-        memoryControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
-        memoryControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
-        memoryControl.selectedSegmentTintColor = .white
-        memoryControl.backgroundColor = .darkGrey004
+//        memoryControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
+//        memoryControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+//        memoryControl.selectedSegmentTintColor = .white
+//        memoryControl.backgroundColor = .darkGrey004
+//        memoryControl.addTarget(self, action: #selector(changedIndexValue(_:)), for: .valueChanged)
     }
     
     private func setupFont() {
-        memoryManitoLabel.font = .font(.regular, ofSize: 15)
-        fromManitiSecondLabel.font = .font(.regular, ofSize: 14)
-        fromManitiForthLabel.font = .font(.regular, ofSize: 14)
-        manitiNickLabel.font = .font(.regular, ofSize: 30)
+//        memoryManitoLabel.font = .font(.regular, ofSize: 15)
+//        fromManitiSecondLabel.font = .font(.regular, ofSize: 14)
+//        fromManitiForthLabel.font = .font(.regular, ofSize: 14)
+//        manitiNickLabel.font = .font(.regular, ofSize: 30)
     }
     
     private func setupViewLayer() {
-        fromManitiFirstView.makeBorderLayer(color: .white)
-        fromManitiSecondView.makeBorderLayer(color: .white)
-        fromManitiThirdView.makeBorderLayer(color: .white)
-        fromManitiForthView.makeBorderLayer(color: .white)
-        manitiIconBackView.layer.cornerRadius = 50
-        manitiIconView.layer.cornerRadius = 50
+//        fromManitiFirstView.makeBorderLayer(color: .white)
+//        fromManitiSecondView.makeBorderLayer(color: .white)
+//        fromManitiThirdView.makeBorderLayer(color: .white)
+//        fromManitiForthView.makeBorderLayer(color: .white)
+//        manitiIconBackView.layer.cornerRadius = 50
+//        manitiIconView.layer.cornerRadius = 50
+    }
+    
+    // MARK: - network
+    
+    private func setupData(with state: MemoryType) {
+        switch state {
+        case .manittee:
+            dump(memory?.memoriesWithManittee)
+        case .manitto:
+            dump(memory?.memoriesWithManittee)
+        }
+    }
+    
+    private func requestMemory(roomId: String) {
+        Task {
+            do {
+                let data = try await detailDoneService.requestMemory(roomId: roomId)
+                if let memory = data {
+                    self.memory = memory
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func changedIndexValue(_ sender: UISegmentedControl) {
+//        memoryControl.selectedSegmentIndex = sender.selectedSegmentIndex
+//        memoryType = MemoryType(rawValue: sender.selectedSegmentIndex) ?? .manittee
     }
 }
