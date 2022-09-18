@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "imgMaCoby.png",
+      "filename" : "Coby01 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imgMaCoby@2x.png",
+      "filename" : "Coby01 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "imgMaCoby@3x.png",
+      "filename" : "Coby01 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
