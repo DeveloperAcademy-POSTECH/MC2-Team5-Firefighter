@@ -30,7 +30,7 @@ final class SplashViewController: UIViewController {
             } else if self.isLogin && self.nickname == "" {
                 self.presentNicknameSettingViewController()
             } else {
-                self.presentMainViewController()
+                self.presentLoginViewConroller()
             }
         }
     }
