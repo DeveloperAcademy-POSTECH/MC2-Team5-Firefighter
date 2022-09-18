@@ -136,6 +136,8 @@ class CreateRoomViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
+        
+        view.bringSubviewToFront(nextButton)
     }
     
     // MARK: - Configure
@@ -160,7 +162,7 @@ class CreateRoomViewController: BaseViewController {
         }
     }
     
-    @objc private func didTapNextButton() {
+    @objc func didTapNextButton() {
         switch notiIndex {
         case .inputName:
             guard let text = nameView.roomsNameTextField.text else { return }
@@ -168,6 +170,7 @@ class CreateRoomViewController: BaseViewController {
             checkView.name = text
             notiIndex = .inputPerson
             changedInputView()
+            nameView.roomsNameTextField.resignFirstResponder()
         case .inputPerson:
             person = Int(personView.personSlider.value)
             checkView.person = person
@@ -188,7 +191,7 @@ class CreateRoomViewController: BaseViewController {
     @objc private func keyboardWillShow(notification:NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             UIView.animate(withDuration: 0.2, animations: {
-                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 60)
+                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
             })
         }
     }
@@ -197,6 +200,12 @@ class CreateRoomViewController: BaseViewController {
         UIView.animate(withDuration: 0.2, animations: {
             self.nextButton.transform = .identity
         })
+    }
+    
+    override func endEditingView() {
+        if !nextButton.isTouchInside {
+            view.endEditing(true)
+        }
     }
     
     // MARK: - Functions

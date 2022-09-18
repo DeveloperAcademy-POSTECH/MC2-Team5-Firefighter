@@ -62,7 +62,7 @@ class ParticipateRoomViewController: BaseViewController {
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(57)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
             $0.height.equalTo(60)
         }
         
@@ -72,6 +72,8 @@ class ParticipateRoomViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
+        
+        view.bringSubviewToFront(nextButton)
     }
     
     // MARK: - Configure
@@ -86,6 +88,20 @@ class ParticipateRoomViewController: BaseViewController {
     }
     
     // MARK: - Selectors
+    @objc private func keyboardWillShow(notification:NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
+            })
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification:NSNotification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.nextButton.transform = .identity
+        })
+    }
+    
     @objc private func didTapCloseButton() {
         dismiss(animated: true, completion: nil)
     }
@@ -102,11 +118,19 @@ class ParticipateRoomViewController: BaseViewController {
     // MARK: - Funtions
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func toggleButton() {
         inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
             self?.nextButton.isDisabled = !isEnable
+        }
+    }
+    
+    override func endEditingView() {
+        if !nextButton.isTouchInside {
+            view.endEditing(true)
         }
     }
     
