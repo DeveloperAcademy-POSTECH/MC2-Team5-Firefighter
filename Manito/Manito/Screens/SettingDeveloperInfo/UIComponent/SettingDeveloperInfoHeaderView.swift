@@ -26,10 +26,6 @@ final class SettingDeveloperInfoHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("setting developer info header view deinit")
-    }
-    
     // MARK: - func
     
     private func render() {

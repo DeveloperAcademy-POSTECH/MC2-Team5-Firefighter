@@ -179,7 +179,7 @@ class DetailWaitViewController: BaseViewController {
         return button
     }()
 
-    // MARK: - life cycle
+    // MARK: - init
     
     init(index: Int) {
         roomIndex = index
@@ -189,10 +189,12 @@ class DetailWaitViewController: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     deinit {
-        print("deInit")
+        print("\(#file) is dead")
     }
+    
+    // MARK: - life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()

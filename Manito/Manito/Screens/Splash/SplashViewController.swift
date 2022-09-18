@@ -17,6 +17,12 @@ final class SplashViewController: UIViewController {
     // MARK: - property
 
     @IBOutlet weak var gifImageView: GIFImageView!
+    
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
 
     // MARK: - life cycle
 

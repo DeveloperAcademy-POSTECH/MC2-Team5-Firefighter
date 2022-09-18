@@ -12,10 +12,6 @@ class FriendCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var friendListImageView: UIImageView!
     @IBOutlet weak var friendListNameLabel: UILabel!
     
-    deinit {
-        print("friend collection view cell is dead")
-    }
-    
     func setupFont() {
         friendListNameLabel.font = .font(.regular, ofSize: 15)
     }

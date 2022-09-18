@@ -5,8 +5,8 @@
 //  Created by 이성호 on 2022/07/02.
 //
 
-import UIKit
 import MessageUI
+import UIKit
 
 import SnapKit
 
@@ -35,7 +35,14 @@ class SettingViewController: BaseViewController {
         return view
     }()
     
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
+    
     // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         configureModels()
         super.viewDidLoad()

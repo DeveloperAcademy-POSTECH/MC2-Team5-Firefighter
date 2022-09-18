@@ -48,6 +48,12 @@ final class SelectManittoViewController: BaseViewController {
             setupGifImage()
         }
     }
+    
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
 
     // MARK: - life cycle
 

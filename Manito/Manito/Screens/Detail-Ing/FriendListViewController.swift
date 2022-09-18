@@ -19,9 +19,13 @@ final class FriendListViewController: BaseViewController {
     
     @IBOutlet weak var friendListCollectionView: UICollectionView!
     
+    // MARK: - init
+    
     deinit {
-        print("friend list view controller is dead")
+        print("\(#file) is dead")
     }
+    
+    // MARK: - life cycle
     
     override func viewDidAppear(_ animated: Bool) {
         requestWithFriends()

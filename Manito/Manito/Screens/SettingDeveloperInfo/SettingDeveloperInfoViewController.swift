@@ -95,8 +95,10 @@ final class SettingDeveloperInfoViewController: BaseViewController {
         return collectionView
     }()
     
+    // MARK: - init
+    
     deinit {
-        print("real setting develop view controller is dead")
+        print("\(#file) is dead")
     }
 
     // MARK: - life cycle

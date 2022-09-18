@@ -49,6 +49,12 @@ final class OpenManittoPopupViewController: BaseViewController {
     }()
     var manittoText: String = "디너"
     
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
+    
     // MARK: - life cycle
     
     override func viewDidLoad() {

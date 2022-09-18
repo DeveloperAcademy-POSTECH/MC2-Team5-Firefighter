@@ -106,7 +106,7 @@ class ChooseCharacterViewController: BaseViewController {
         return button
     }()
     
-    // MARK: - life cycle
+    // MARK: - init
     
     init(statusMode: Status, roomId: Int?) {
         self.statusMode = statusMode
@@ -117,6 +117,12 @@ class ChooseCharacterViewController: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        print("\(#file) is dead")
+    }
+    
+    // MARK: - life cycle
     
     override func render() {
         view.addSubview(closeButton)

@@ -81,6 +81,12 @@ final class MainViewController: BaseViewController {
     private let maCharacterImageView = GIFImageView()
     private let niCharacterImageView = GIFImageView()
     private let ttoCharacterImageView = GIFImageView()
+    
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
 
     // MARK: - life cycle
     

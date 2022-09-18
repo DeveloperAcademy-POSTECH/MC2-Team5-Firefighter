@@ -43,10 +43,6 @@ class DeveloperInfoViewCell: BaseCollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("DeveloperInfoViewCell deinit")
-    }
-    
     // MARK: - func
 
     override func configUI() {

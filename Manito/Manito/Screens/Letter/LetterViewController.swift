@@ -121,7 +121,7 @@ final class LetterViewController: BaseViewController {
     }
     
     deinit {
-        print("letter view controller is dead")
+        print("\(#file) is dead")
     }
     
     // MARK: - life cycle

@@ -57,6 +57,12 @@ class CheckRoomViewController: BaseViewController {
         return button
     }()
     
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
+    
     // MARK: - life cycle
     
     override func viewWillAppear(_ animated: Bool) {

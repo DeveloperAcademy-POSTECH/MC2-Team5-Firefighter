@@ -37,6 +37,12 @@ class ParticipateRoomViewController: BaseViewController {
     
     private let inputInvitedCodeView = InputInvitedCodeView()
     
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {

@@ -62,8 +62,10 @@ class DetailIngViewController: BaseViewController {
     
     private var roomType: RoomType?
     
+    // MARK: - init
+    
     deinit {
-        print("detailing view controller is dead")
+        print("\(#file) is dead")
     }
 
     // MARK: - life cycle
