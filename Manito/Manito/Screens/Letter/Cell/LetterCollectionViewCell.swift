@@ -58,6 +58,10 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("letter collection view cell is dead")
+    }
+    
     override func prepareForReuse() {
         contentLabel.text = nil
         photoImageView.image = nil

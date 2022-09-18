@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class SettingDeveloperInfoViewController: BaseViewController {
+final class SettingDeveloperInfoViewController: BaseViewController {
     
     // 개발자 정보 데이터
     private let developerData: [[String: Any]] = [
@@ -94,6 +94,10 @@ class SettingDeveloperInfoViewController: BaseViewController {
             withReuseIdentifier: SettingDeveloperInfoHeaderView.className)
         return collectionView
     }()
+    
+    deinit {
+        print("real setting develop view controller is dead")
+    }
 
     // MARK: - life cycle
 

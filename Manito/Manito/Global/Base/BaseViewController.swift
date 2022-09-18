@@ -13,10 +13,6 @@ class BaseViewController: UIViewController {
     
     private lazy var backButton: UIButton = {
         let button = BackButton()
-        let buttonAction = UIAction { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
     lazy var guideButton = UIButton()
@@ -39,7 +35,6 @@ class BaseViewController: UIViewController {
     
     deinit {
         print("success deallocation")
-        NotificationCenter.default.removeObserver(self)
     }
     
     required init?(coder: NSCoder) {
@@ -55,12 +50,11 @@ class BaseViewController: UIViewController {
         setupBackButton()
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
-        setupNavigationPopGesture()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        dch_checkDeallocation()
+        NotificationCenter.default.removeObserver(self)
     }
     
     func render() {
@@ -138,10 +132,6 @@ class BaseViewController: UIViewController {
         let backButton = makeBarButtonItem(with: leftOffsetBackButton)
         
         navigationItem.leftBarButtonItem = backButton
-    }
-    
-    private func setupNavigationPopGesture() {
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        navigationItem.leftItemsSupplementBackButton = true
     }
 }

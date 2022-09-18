@@ -19,6 +19,10 @@ final class FriendListViewController: BaseViewController {
     
     @IBOutlet weak var friendListCollectionView: UICollectionView!
     
+    deinit {
+        print("friend list view controller is dead")
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         requestWithFriends()
     }

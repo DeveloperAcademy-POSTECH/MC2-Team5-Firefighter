@@ -67,6 +67,10 @@ final class CreateLetterViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("create letter view controller is dead")
+    }
+    
     // MARK: - life cycle
     
     override func viewDidLoad() {

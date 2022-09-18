@@ -61,6 +61,10 @@ class DetailIngViewController: BaseViewController {
     }()
     
     private var roomType: RoomType?
+    
+    deinit {
+        print("detailing view controller is dead")
+    }
 
     // MARK: - life cycle
     
