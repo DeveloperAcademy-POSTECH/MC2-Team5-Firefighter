@@ -57,17 +57,6 @@ class CreateNickNameViewController: BaseViewController {
         return button
     }()
     
-    // MARK: - init
-    
-    override init() {
-        super.init()
-        patchRefreshToken()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
