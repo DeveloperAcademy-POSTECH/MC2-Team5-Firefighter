@@ -8,9 +8,9 @@
 import Foundation
 
 struct DetailIngAPI: DetailStartingProtocol {
-    private let apiService: APIService
+    private let apiService: Requestable
     
-    init(apiService: APIService) {
+    init(apiService: Requestable) {
         self.apiService = apiService
     }
     

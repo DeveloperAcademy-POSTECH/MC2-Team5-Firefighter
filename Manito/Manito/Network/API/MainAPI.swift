@@ -8,9 +8,9 @@
 import Foundation
 
 struct MainAPI: MainProtocol {
-    private let apiService: APIService
+    private let apiService: Requestable
     
-    init(apiService: APIService) {
+    init(apiService: Requestable) {
         self.apiService = apiService
     }
 

@@ -10,7 +10,7 @@ import Foundation
 struct DetailWaitAPI: DetailWaitProtocol {
     private let apiService: Requestable
     
-    init(apiService: APIService) {
+    init(apiService: Requestable) {
         self.apiService = apiService
     }
 
