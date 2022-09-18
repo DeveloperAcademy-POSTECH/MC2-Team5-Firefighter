@@ -66,10 +66,12 @@ Aenitto-iOS
   |
   └── Aenitto
           |── Network
-          │   │── Manager
-          │   │── Model
-          │   │── APIService 
-          │   └── Foundation
+          │   │── Storage
+          │   │── Protocol
+          │   │── API
+          │   │── EndPoint
+          │   │── Service
+          │   └── Models
           │
           |── Global
           │   │── Utils
@@ -87,7 +89,11 @@ Aenitto-iOS
           │          │── GIF
           │          └── Storyboard
           └── Screens 
+             |── Splash
              |── Main
+             |── Letter
+             |── CreateRoom
+             |── Setting
              └── Detail-Wait
                    │── Component
                    │── VC
