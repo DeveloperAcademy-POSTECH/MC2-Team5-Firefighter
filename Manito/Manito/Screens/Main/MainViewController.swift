@@ -300,10 +300,14 @@ extension MainViewController: UICollectionViewDataSource {
         if indexPath.item == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreateRoomCollectionViewCell.className, for: indexPath) as? CreateRoomCollectionViewCell else {
                 assert(false, "Wrong Cell")
+                return UICollectionViewCell()
             }
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath) as? ManitoRoomCollectionViewCell else { assert(false, "Wrong Cell") }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ManitoRoomCollectionViewCell.className, for: indexPath) as? ManitoRoomCollectionViewCell else {
+                assert(false, "Wrong Cell")
+                return UICollectionViewCell()
+            }
             
             guard let roomData = rooms?[indexPath.item - 1] else { return cell }
             

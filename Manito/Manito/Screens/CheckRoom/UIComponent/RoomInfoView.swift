@@ -56,7 +56,7 @@ final class RoomInfoView: UIView {
         self.addSubview(peopleInfo)
         peopleInfo.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
+            $0.centerX.bottom.equalToSuperview()
         }
     }
 }

@@ -119,6 +119,7 @@ class DetailIngViewController: BaseViewController {
         addGestureManito()
         addActionOpenManittoViewController()
         
+        manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
         manitiIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
         
@@ -239,19 +240,18 @@ class DetailIngViewController: BaseViewController {
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
                           let missionContent = info.mission?.content,
-                          let minittee = info.manittee?.nickname,
-                          let didView = info.didViewRoulette,
-                          let manitto = info.manitto?.nickname
+                          let manittee = info.manittee?.nickname,
+                          let didView = info.didViewRoulette
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
-                    manitteAnimationLabel.text = minittee
+                    manitteAnimationLabel.text = manittee
                     if !didView {
                         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                         guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                         viewController.modalPresentationStyle = .fullScreen
                         viewController.roomInformation = roomInformation
-                        viewController.manittiName = manitto
+                        viewController.manitteeName = manittee
                         present(viewController, animated: true)
                     }
                 }
@@ -350,7 +350,7 @@ class DetailIngViewController: BaseViewController {
             UIView.animate(withDuration: 1.0, delay: 1.0) {
                 self.manitiIconView.alpha = 1
                 self.manitiRealIconView.alpha = 0
-                self.manitiLabel.text = "호야의 마니띠"
+                self.manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
                 self.manitteAnimationLabel.alpha = 0
                 self.manitiLabel.alpha = 1
             }

@@ -321,8 +321,7 @@ extension LetterViewController: UICollectionViewDataSource {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
         cell.setLetterData(with: letterList[indexPath.item], isHidden: letterState.isHidden)
         cell.didTappedReport = { [weak self] in
-            // FIXME: - nickname 변경 필요
-            self?.sendReportMail(userNickname: "호야",
+            self?.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "",
                                  content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
         }
         return cell
@@ -331,7 +330,10 @@ extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LetterHeaderView.className, for: indexPath) as? LetterHeaderView else { assert(false, "do not have reusable view") }
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LetterHeaderView.className, for: indexPath) as? LetterHeaderView else {
+                assert(false, "do not have reusable view")
+                return UICollectionReusableView()
+            }
             
             headerView.segmentControlIndex = letterState.rawValue
             headerView.changeSegmentControlIndex = { [weak self] index in
@@ -342,6 +344,7 @@ extension LetterViewController: UICollectionViewDataSource {
             return headerView
         default:
             assert(false, "do not use footer")
+            return UICollectionReusableView()
         }
     }
 }
