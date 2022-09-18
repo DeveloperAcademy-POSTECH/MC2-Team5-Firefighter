@@ -13,6 +13,10 @@ class BaseViewController: UIViewController {
     
     private lazy var backButton: UIButton = {
         let button = BackButton()
+        let buttonAction = UIAction { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
     lazy var guideButton = UIButton()
@@ -55,6 +59,11 @@ class BaseViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupInteractivePopGestureRecognizer()
     }
     
     func render() {
@@ -130,8 +139,18 @@ class BaseViewController: UIViewController {
     private func setupBackButton() {
         let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
         let backButton = makeBarButtonItem(with: leftOffsetBackButton)
-        
+
         navigationItem.leftBarButtonItem = backButton
-        navigationItem.leftItemsSupplementBackButton = true
+    }
+
+    private func setupInteractivePopGestureRecognizer() {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+}
+
+extension BaseViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let count = self.navigationController?.viewControllers.count else { return false }
+        return count > 1
     }
 }
