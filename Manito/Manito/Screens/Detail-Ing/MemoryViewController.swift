@@ -179,6 +179,11 @@ final class MemoryViewController: BaseViewController {
         }
     }
     
+    override func configUI() {
+        super.configUI()
+        setupAction()
+    }
+    
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let shareButton = makeBarButtonItem(with: shareButton)
@@ -187,6 +192,34 @@ final class MemoryViewController: BaseViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .automatic
         title = TextLiteral.memoryViewControllerTitleLabel
+    }
+    
+    // MARK: - func
+    
+    private func setupAction() {
+        let action = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            
+            if let storyShareURL = URL(string: "instagram-stories://share") {
+                if UIApplication.shared.canOpenURL(storyShareURL) {
+                    let renderer = UIGraphicsImageRenderer(size: self.shareBoundView.bounds.size)
+                    let renderImage = renderer.image { _ in
+                        self.shareBoundView.drawHierarchy(in: self.shareBoundView.bounds, afterScreenUpdates: true)
+                    }
+                    guard let imageData = renderImage.pngData() else {return}
+                    let pasteboardItems: [String: Any] = [
+                        "com.instagram.sharedSticker.stickerImage": imageData
+                    ]
+                    let pasteboardOptions = [UIPasteboard.OptionsKey.expirationDate: Date().addingTimeInterval(300)]
+                    
+                    UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
+                    UIApplication.shared.open(storyShareURL, options: [:], completionHandler: nil)
+                } else {
+                    self.makeAlert(title: "알림", message: "인스타그램이 필요합니다")
+                }
+            }
+        }
+        shareButton.addAction(action, for: .touchUpInside)
     }
     
     // MARK: - network
