@@ -52,7 +52,14 @@ class ChangeNickNameViewController: BaseViewController {
         return button
     }()
     
-    // MARK: - Life Cycle
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
+    
+    // MARK: - life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegation()

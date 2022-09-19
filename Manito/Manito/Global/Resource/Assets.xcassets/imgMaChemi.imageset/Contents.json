@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "imgMaChemi.png",
+      "filename" : "Chemi01 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imgMaChemi@2x.png",
+      "filename" : "Chemi01 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "imgMaChemi@3x.png",
+      "filename" : "Chemi01 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -10,18 +10,18 @@ import UIKit
 import Gifu
 import SnapKit
 
-class MainViewController: BaseViewController {
+final class MainViewController: BaseViewController {
     
     private let mainService: MainProtocol = MainAPI(apiService: APIService())
     private var rooms: [ParticipatingRoom]?
-
+    
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 17
         static let collectionVerticalSpacing: CGFloat = 12
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 20 * 2 - collectionHorizontalSpacing) / 2
         static let collectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20)
     }
-
+    
     private enum RoomStatus: String {
         case waiting = "PRE"
         case starting = "PROCESSING"
@@ -81,11 +81,19 @@ class MainViewController: BaseViewController {
     private let maCharacterImageView = GIFImageView()
     private let niCharacterImageView = GIFImageView()
     private let ttoCharacterImageView = GIFImageView()
+    
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
 
     // MARK: - life cycle
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        render()
+        configUI()
+        setupNavigationBar()
         setupGifImage()
         setupGuideArea()
         renderGuideArea()

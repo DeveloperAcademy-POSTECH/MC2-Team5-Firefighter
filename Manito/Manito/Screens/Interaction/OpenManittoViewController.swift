@@ -63,7 +63,7 @@ final class OpenManittoViewController: BaseViewController {
         }
     }
     
-    // MARK: - life cycle
+    // MARK: - init
     
     init(roomId: Int) {
         self.roomId = roomId
@@ -73,6 +73,12 @@ final class OpenManittoViewController: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        print("\(#file) is dead")
+    }
+    
+    // MARK: - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -120,6 +120,10 @@ final class LetterViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("\(#file) is dead")
+    }
+    
     // MARK: - life cycle
     
     override func viewDidLoad() {
@@ -211,8 +215,9 @@ final class LetterViewController: BaseViewController {
             
             let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission)
             let navigationController = UINavigationController(rootViewController: viewController)
-            viewController.createLetter = {
-                self.fetchSendLetter(roomId: self.roomId)
+            viewController.createLetter = { [weak self] in
+                guard let roomId = self?.roomId else { return }
+                self?.fetchSendLetter(roomId: roomId)
             }
             self.present(navigationController, animated: true, completion: nil)
         }
