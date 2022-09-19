@@ -249,6 +249,13 @@ extension MemoryViewController: UICollectionViewDataSource {
             cell.setData(imageUrl: memory?.memoriesWithManitto?.messages?[indexPath.item].imageUrl,
                          content: memory?.memoriesWithManitto?.messages?[indexPath.item].content)
         }
+        cell.didTappedImage = { [weak self] image in
+            let viewController = LetterImageViewController()
+            viewController.imageView.image = image
+            viewController.modalPresentationStyle = .fullScreen
+            viewController.modalTransitionStyle = .crossDissolve
+            self?.present(viewController, animated: true)
+        }
         return cell
     }
 }
