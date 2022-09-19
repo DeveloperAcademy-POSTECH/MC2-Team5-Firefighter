@@ -8,9 +8,9 @@
 import Foundation
 
 struct DetailWaitAPI: DetailWaitProtocol {
-    private let apiService: APIService
+    private let apiService: Requestable
     
-    init(apiService: APIService) {
+    init(apiService: Requestable) {
         self.apiService = apiService
     }
 
@@ -28,28 +28,28 @@ struct DetailWaitAPI: DetailWaitProtocol {
         return try await apiService.request(request)
     }
 
-    func startManitto(roomId: String) async throws -> String? {
+    func startManitto(roomId: String) async throws -> Int {
         let request = DetailWaitEndPoint
             .patchStartManitto(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
 
-    func editRoomInfo(roomId: String, roomInfo: RoomDTO) async throws -> String? {
+    func editRoomInfo(roomId: String, roomInfo: RoomDTO) async throws -> Int {
         let request = DetailWaitEndPoint
             .putRoomInfo(roomId: roomId, roomInfo: roomInfo)
             .createRequest()
         return try await apiService.request(request)
     }
 
-    func deleteRoom(roomId: String) async throws -> String? {
+    func deleteRoom(roomId: String) async throws -> Int {
         let request = DetailWaitEndPoint
             .deleteRoom(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
     
-    func deleteLeaveRoom(roomId: String) async throws -> String? {
+    func deleteLeaveRoom(roomId: String) async throws -> Int {
         let request = DetailWaitEndPoint
             .deleteLeaveRoom(roomId: roomId)
             .createRequest()
