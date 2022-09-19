@@ -92,8 +92,15 @@ class InvitedCodeViewController: BaseViewController {
         label.textColor = .backgroundGrey
         return label
     }()
+    
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
 
     // MARK: - configure
+    
     override func render() {
         view.addSubview(invitedImageView)
         invitedImageView.snp.makeConstraints {

@@ -22,6 +22,14 @@ class MemoryViewController: BaseViewController {
     @IBOutlet weak var manitiNickLabel: UILabel!
     @IBOutlet var memoriIconBottomView: UIView!
     
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
+    
+    // MARK: - life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
