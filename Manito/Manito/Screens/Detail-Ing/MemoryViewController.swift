@@ -7,11 +7,29 @@
 
 import UIKit
 
+import SnapKit
+
 final class MemoryViewController: BaseViewController {
     
     private enum MemoryType: Int {
         case manittee = 0
         case manitto = 1
+        
+        var announcingText: String {
+            switch self {
+            case .manittee:
+                return TextLiteral.memoryViewControllerManitteeText
+            case .manitto:
+                return TextLiteral.memoryViewControllerManittoText
+            }
+        }
+    }
+    
+    private enum Size {
+        static let lineSpacing: CGFloat = 10.0
+        static let margin: CGFloat = 16.0
+        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - (margin * 2 + lineSpacing)
+        static let cellHeight: CGFloat = cellWidth * 0.9
     }
     
     // MARK: - properties
@@ -31,10 +49,33 @@ final class MemoryViewController: BaseViewController {
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
         control.backgroundColor = .darkGrey004
+        control.selectedSegmentIndex = 0
         control.addTarget(self, action: #selector(changedIndexValue(_:)), for: .valueChanged)
         
         return control
     }()
+    private let announcementLabel: UILabel = {
+        let label = UILabel()
+        label.font = .font(.regular, ofSize: 15)
+        return label
+    }()
+    private let nicknameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .font(.regular, ofSize: 30)
+        return label
+    }()
+    private lazy var memoryCollectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
+        flowLayout.minimumLineSpacing = Size.lineSpacing
+        flowLayout.minimumInteritemSpacing = Size.lineSpacing
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: Size.margin, bottom: 0, right: Size.margin)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.dataSource = self
+        return collectionView
+    }()
+    private let manittoTopImageView = UIImageView(image: ImageLiterals.imgCharacters)
+    private let manittoBottomImageView = UIImageView(image: ImageLiterals.imgCharacters)
     
     private var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
     private var memoryType: MemoryType = .manittee {
@@ -59,15 +100,48 @@ final class MemoryViewController: BaseViewController {
     
     // MARK: - life cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-   }
-    
     override func render() {
+        view.addSubview(segmentControl)
+        segmentControl.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(36)
+            $0.width.equalTo(294)
+        }
         
+        view.addSubview(manittoTopImageView)
+        manittoTopImageView.snp.makeConstraints {
+            $0.top.equalTo(segmentControl.snp.bottom).offset(32)
+            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(40)
+        }
+        
+        view.addSubview(announcementLabel)
+        announcementLabel.snp.makeConstraints {
+            $0.top.equalTo(manittoTopImageView.snp.bottom).offset(30)
+            $0.centerX.equalToSuperview()
+        }
+        
+        view.addSubview(manittoBottomImageView)
+        manittoBottomImageView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(75)
+            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(40)
+        }
+        
+        view.addSubview(nicknameLabel)
+        nicknameLabel.snp.makeConstraints {
+            $0.bottom.equalTo(manittoBottomImageView.snp.top).offset(-25)
+            $0.centerX.equalToSuperview()
+        }
+        
+        view.addSubview(memoryCollectionView)
+        memoryCollectionView.snp.makeConstraints {
+            $0.top.equalTo(announcementLabel.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(nicknameLabel.snp.top).offset(-48)
+        }
     }
-    
-    // MARK: - func
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
@@ -79,42 +153,18 @@ final class MemoryViewController: BaseViewController {
         title = TextLiteral.memoryViewControllerTitleLabel
     }
     
-    private func setupSegmentControl() {
-        let font = UIFont.font(.regular, ofSize: 14)
-        let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
-        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
- 
-//        memoryControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
-//        memoryControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
-//        memoryControl.selectedSegmentTintColor = .white
-//        memoryControl.backgroundColor = .darkGrey004
-//        memoryControl.addTarget(self, action: #selector(changedIndexValue(_:)), for: .valueChanged)
-    }
+    // MARK: - func
     
-    private func setupFont() {
-//        memoryManitoLabel.font = .font(.regular, ofSize: 15)
-//        fromManitiSecondLabel.font = .font(.regular, ofSize: 14)
-//        fromManitiForthLabel.font = .font(.regular, ofSize: 14)
-//        manitiNickLabel.font = .font(.regular, ofSize: 30)
-    }
-    
-    private func setupViewLayer() {
-//        fromManitiFirstView.makeBorderLayer(color: .white)
-//        fromManitiSecondView.makeBorderLayer(color: .white)
-//        fromManitiThirdView.makeBorderLayer(color: .white)
-//        fromManitiForthView.makeBorderLayer(color: .white)
-//        manitiIconBackView.layer.cornerRadius = 50
-//        manitiIconView.layer.cornerRadius = 50
-    }
     
     // MARK: - network
     
     private func setupData(with state: MemoryType) {
+        announcementLabel.text = state.announcingText
         switch state {
         case .manittee:
-            dump(memory?.memoriesWithManittee)
+            nicknameLabel.text = memory?.memoriesWithManittee?.member?.nickname
         case .manitto:
-            dump(memory?.memoriesWithManittee)
+            nicknameLabel.text = memory?.memoriesWithManitto?.member?.nickname
         }
     }
     
@@ -124,6 +174,7 @@ final class MemoryViewController: BaseViewController {
                 let data = try await detailDoneService.requestMemory(roomId: roomId)
                 if let memory = data {
                     self.memory = memory
+                    self.setupData(with: .manittee)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -139,7 +190,24 @@ final class MemoryViewController: BaseViewController {
     
     @objc
     private func changedIndexValue(_ sender: UISegmentedControl) {
-//        memoryControl.selectedSegmentIndex = sender.selectedSegmentIndex
-//        memoryType = MemoryType(rawValue: sender.selectedSegmentIndex) ?? .manittee
+        segmentControl.selectedSegmentIndex = sender.selectedSegmentIndex
+        memoryType = MemoryType(rawValue: sender.selectedSegmentIndex) ?? .manittee
+    }
+}
+
+extension MemoryViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch memoryType {
+        case .manittee:
+            guard let count = memory?.memoriesWithManittee?.messages?.count else { return 0 }
+            return count
+        case .manitto:
+            guard let count = memory?.memoriesWithManitto?.messages?.count else { return 0 }
+            return count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
     }
 }

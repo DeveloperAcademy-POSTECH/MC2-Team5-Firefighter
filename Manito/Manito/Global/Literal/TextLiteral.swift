@@ -158,6 +158,8 @@ enum TextLiteral {
     
     // MARK: - MemoryViewController
     static let memoryViewControllerTitleLabel: String = "함께 했던 기록"
+    static let memoryViewControllerManittoText: String = "나를 챙겨줘서 고마워, 마니또"
+    static let memoryViewControllerManitteeText: String = "내가 챙겨줘서 좋았지? 마니띠"
     
     // MARK: - DetailEditViewController
     static let detailEditViewControllerStartSetting: String = "진행기간 설정"
