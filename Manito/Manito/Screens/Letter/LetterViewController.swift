@@ -136,12 +136,8 @@ final class LetterViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupLargeTitle()
         letterState = .sent
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     override func render() {
@@ -176,8 +172,6 @@ final class LetterViewController: BaseViewController {
         let guideButton = makeBarButtonItem(with: guideButton)
         
         navigationItem.rightBarButtonItem = guideButton
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .automatic
         title = TextLiteral.letterViewControllerTitle
     }
     
@@ -206,6 +200,11 @@ final class LetterViewController: BaseViewController {
     }
     
     // MARK: - func
+    
+    private func setupLargeTitle() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .automatic
+    }
     
     private func setupEmptyView() {
         emptyLabel.isHidden = !letterList.isEmpty

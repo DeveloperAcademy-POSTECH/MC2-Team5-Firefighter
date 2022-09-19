@@ -102,6 +102,11 @@ final class SettingDeveloperInfoViewController: BaseViewController {
     }
 
     // MARK: - life cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLargeTitle()
+    }
 
     override func render() {
         view.addSubview(listCollectionView)
@@ -113,10 +118,12 @@ final class SettingDeveloperInfoViewController: BaseViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        
+        title = TextLiteral.settingDeveloperInfoTitle
+    }
+    
+    private func setupLargeTitle() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
-        title = TextLiteral.settingDeveloperInfoTitle
     }
 }
 
