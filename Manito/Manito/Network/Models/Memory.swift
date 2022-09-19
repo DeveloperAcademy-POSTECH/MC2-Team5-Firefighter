@@ -12,6 +12,6 @@ struct Memory: Decodable {
 }
 
 struct MemoriesWithManitte: Decodable {
-    let member: User?
+    let member: Member?
     let messages: [Message]?
 }

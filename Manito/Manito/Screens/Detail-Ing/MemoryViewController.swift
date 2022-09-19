@@ -79,6 +79,13 @@ final class MemoryViewController: BaseViewController {
     }()
     private let manittoTopImageView = UIImageView(image: ImageLiterals.imgCharacters)
     private let manittoBottomImageView = UIImageView(image: ImageLiterals.imgCharacters)
+    private let characterImageView = UIImageView()
+    private let characterBackView: UIView = {
+        let view = UIView()
+        view.makeBorderLayer(color: .white)
+        view.layer.cornerRadius = 49.5
+        return view
+    }()
     
     private var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
     private var memoryType: MemoryType = .manittee {
@@ -145,6 +152,19 @@ final class MemoryViewController: BaseViewController {
             $0.bottom.equalTo(manittoBottomImageView.snp.top).offset(-25)
             $0.centerX.equalToSuperview()
         }
+        
+        view.addSubview(characterBackView)
+        characterBackView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(memoryCollectionView.snp.centerY)
+            $0.width.height.equalTo(99)
+        }
+        
+        characterBackView.addSubview(characterImageView)
+        characterImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.height.equalTo(90)
+        }
     }
     
     override func setupNavigationBar() {
@@ -157,18 +177,21 @@ final class MemoryViewController: BaseViewController {
         title = TextLiteral.memoryViewControllerTitleLabel
     }
     
-    // MARK: - func
-    
-    
     // MARK: - network
     
     private func setupData(with state: MemoryType) {
         announcementLabel.text = state.announcingText
         switch state {
         case .manittee:
+            guard let manitteeColorIdx = memory?.memoriesWithManittee?.member?.colorIdx else { return }
             nicknameLabel.text = memory?.memoriesWithManittee?.member?.nickname
+            characterBackView.backgroundColor = Character.allCases[manitteeColorIdx].color
+            characterImageView.image = Character.allCases[manitteeColorIdx].image
         case .manitto:
+            guard let manittoColorIdx = memory?.memoriesWithManitto?.member?.colorIdx else { return }
             nicknameLabel.text = memory?.memoriesWithManitto?.member?.nickname
+            characterBackView.backgroundColor = Character.allCases[manittoColorIdx].color
+            characterImageView.image = Character.allCases[manittoColorIdx].image
         }
     }
     

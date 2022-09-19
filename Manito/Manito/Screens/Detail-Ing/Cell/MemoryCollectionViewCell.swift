@@ -43,15 +43,13 @@ final class MemoryCollectionViewCell: BaseCollectionViewCell {
         
         addSubview(contentLabel)
         contentLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.edges.equalToSuperview().inset(10)
         }
     }
     
     override func configUI() {
         backgroundColor = .darkGrey002
-        layer.cornerRadius = 10
-        layer.borderColor = UIColor.white.cgColor
-        layer.borderWidth = 1
+        makeBorderLayer(color: .white)
         layer.masksToBounds = true
     }
     
