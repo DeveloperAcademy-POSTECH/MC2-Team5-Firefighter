@@ -28,8 +28,9 @@ final class MemoryViewController: BaseViewController {
     private enum Size {
         static let lineSpacing: CGFloat = 10.0
         static let margin: CGFloat = 16.0
-        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - (margin * 2 + lineSpacing)
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - (margin * 2 + lineSpacing)) / 2
         static let cellHeight: CGFloat = cellWidth * 0.9
+        static let collectionViewHeight: CGFloat = cellHeight * 2 + lineSpacing
     }
     
     // MARK: - properties
@@ -71,7 +72,9 @@ final class MemoryViewController: BaseViewController {
         flowLayout.minimumInteritemSpacing = Size.lineSpacing
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: Size.margin, bottom: 0, right: Size.margin)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.backgroundColor = .clear
         collectionView.dataSource = self
+        collectionView.register(MemoryCollectionViewCell.self, forCellWithReuseIdentifier: MemoryCollectionViewCell.className)
         return collectionView
     }()
     private let manittoTopImageView = UIImageView(image: ImageLiterals.imgCharacters)
@@ -81,6 +84,7 @@ final class MemoryViewController: BaseViewController {
     private var memoryType: MemoryType = .manittee {
         willSet {
             setupData(with: newValue)
+            self.memoryCollectionView.reloadData()
         }
     }
     private var memory: Memory?
@@ -122,6 +126,13 @@ final class MemoryViewController: BaseViewController {
             $0.centerX.equalToSuperview()
         }
         
+        view.addSubview(memoryCollectionView)
+        memoryCollectionView.snp.makeConstraints {
+            $0.top.equalTo(announcementLabel.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(Size.collectionViewHeight)
+        }
+        
         view.addSubview(manittoBottomImageView)
         manittoBottomImageView.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(75)
@@ -133,13 +144,6 @@ final class MemoryViewController: BaseViewController {
         nicknameLabel.snp.makeConstraints {
             $0.bottom.equalTo(manittoBottomImageView.snp.top).offset(-25)
             $0.centerX.equalToSuperview()
-        }
-        
-        view.addSubview(memoryCollectionView)
-        memoryCollectionView.snp.makeConstraints {
-            $0.top.equalTo(announcementLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(nicknameLabel.snp.top).offset(-48)
         }
     }
     
@@ -175,6 +179,7 @@ final class MemoryViewController: BaseViewController {
                 if let memory = data {
                     self.memory = memory
                     self.setupData(with: .manittee)
+                    self.memoryCollectionView.reloadData()
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -208,6 +213,15 @@ extension MemoryViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        let cell: MemoryCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        switch memoryType {
+        case .manittee:
+            cell.setData(imageUrl: memory?.memoriesWithManittee?.messages?[indexPath.item].imageUrl,
+                         content: memory?.memoriesWithManittee?.messages?[indexPath.item].content)
+        case .manitto:
+            cell.setData(imageUrl: memory?.memoriesWithManitto?.messages?[indexPath.item].imageUrl,
+                         content: memory?.memoriesWithManitto?.messages?[indexPath.item].content)
+        }
+        return cell
     }
 }
