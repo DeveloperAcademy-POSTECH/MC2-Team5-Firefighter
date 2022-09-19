@@ -26,6 +26,12 @@ final class LoginViewController: BaseViewController {
         button.addAction(action, for: .touchUpInside)
         return button
     }()
+    
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
 
     // MARK: - func
 

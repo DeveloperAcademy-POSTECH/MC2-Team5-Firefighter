@@ -108,6 +108,10 @@ final class MemoryViewController: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    deinit {
+        print("\(#file) is dead")
+    }
     
     // MARK: - life cycle
     

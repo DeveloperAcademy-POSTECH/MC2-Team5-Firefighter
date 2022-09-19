@@ -135,6 +135,12 @@ class DetailEditViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("\(#file) is dead")
+    }
+    
+    // MARK: - life cycle
+    
     override func configUI() {
         super.configUI()
         self.navigationController?.isNavigationBarHidden = true

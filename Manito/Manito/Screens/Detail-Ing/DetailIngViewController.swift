@@ -23,7 +23,7 @@ class DetailIngViewController: BaseViewController {
     var roomInformation: ParticipatingRoom? {
         willSet {
             guard let state = newValue?.state else { return }
-            roomType = .POST
+            roomType = RoomType.init(rawValue: state)
         }
     }
 
@@ -61,6 +61,12 @@ class DetailIngViewController: BaseViewController {
     }()
     
     private var roomType: RoomType?
+    
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
 
     // MARK: - life cycle
     

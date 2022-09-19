@@ -13,14 +13,14 @@ class ImageRowView: UIView {
     
     // MARK: - Property
     
-    private let imgMaDuna: UIImageView = {
+    private let imgCharacterOrange: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgMaDuna
+        imageView.image = ImageLiterals.imgCharacterOrange
         return imageView
     }()
-    private let imgMaHoya: UIImageView = {
+    private let imgCharacterPurple: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgMaHoya
+        imageView.image = ImageLiterals.imgCharacterPurple
         return imageView
     }()
     private let imgNi: UIImageView = {
@@ -28,14 +28,14 @@ class ImageRowView: UIView {
         imageView.image = ImageLiterals.imgNi
         return imageView
     }()
-    private let imgMaChemi: UIImageView = {
+    private let imgCharacterLightGreen: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgMaChemi
+        imageView.image = ImageLiterals.imgCharacterLightGreen
         return imageView
     }()
-    private let imgMaLivvy: UIImageView = {
+    private let imgCharacterRed: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgMaLivvy
+        imageView.image = ImageLiterals.imgCharacterRed
         return imageView
     }()
     
@@ -54,15 +54,15 @@ class ImageRowView: UIView {
     
     private func render() {
 
-        self.addSubview(imgMaDuna)
-        imgMaDuna.snp.makeConstraints {
+        self.addSubview(imgCharacterOrange)
+        imgCharacterOrange.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview().offset(-80)
             $0.height.width.equalTo(40)
         }
         
-        self.addSubview(imgMaHoya)
-        imgMaHoya.snp.makeConstraints {
+        self.addSubview(imgCharacterPurple)
+        imgCharacterPurple.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview().offset(-40)
             $0.height.width.equalTo(40)
@@ -75,15 +75,15 @@ class ImageRowView: UIView {
             $0.height.width.equalTo(40)
         }
         
-        self.addSubview(imgMaChemi)
-        imgMaChemi.snp.makeConstraints {
+        self.addSubview(imgCharacterLightGreen)
+        imgCharacterLightGreen.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview().offset(40)
             $0.height.width.equalTo(40)
         }
         
-        self.addSubview(imgMaLivvy)
-        imgMaLivvy.snp.makeConstraints {
+        self.addSubview(imgCharacterRed)
+        imgCharacterRed.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview().offset(80)
             $0.height.width.equalTo(40)

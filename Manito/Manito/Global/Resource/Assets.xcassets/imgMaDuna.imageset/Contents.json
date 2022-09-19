@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "imgMaDuna.png",
+      "filename" : "Duna01 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imgMaDuna@2x.png",
+      "filename" : "Duna01 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "imgMaDuna@3x.png",
+      "filename" : "Duna01 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
