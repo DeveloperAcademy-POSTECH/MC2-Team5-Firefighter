@@ -14,7 +14,6 @@ final class LetterImageViewController: BaseViewController {
     // MARK: - property
     
     private let scrollView = UIScrollView()
-    private let contentView = UIView()
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(ImageLiterals.btnXmark, for: .normal)

@@ -320,9 +320,9 @@ extension LetterViewController: UICollectionViewDataSource {
             self?.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "",
                                  content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
         }
-        cell.didTappedImage = { [weak self] value in
+        cell.didTappedImage = { [weak self] image in
             let viewController = LetterImageViewController()
-            viewController.imageView.image = value
+            viewController.imageView.image = image
             viewController.modalPresentationStyle = .fullScreen
             viewController.modalTransitionStyle = .crossDissolve
             self?.present(viewController, animated: true)

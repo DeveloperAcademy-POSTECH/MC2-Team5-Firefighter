@@ -132,13 +132,13 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    @objc func photoTab() {
+    @objc func didTapPhoto() {
         guard let image = photoImageView.image else { return }
         didTappedImage?(image)
     }
     
     func setupImageTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(photoTab))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPhoto))
         photoImageView.addGestureRecognizer(tapGesture)
     }
 }
