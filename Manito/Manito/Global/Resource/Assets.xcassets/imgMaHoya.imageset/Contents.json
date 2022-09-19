@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "imgMaHoya.png",
+      "filename" : "Hoya 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imgMaHoya@2x.png",
+      "filename" : "Hoya 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "imgMaHoya@3x.png",
+      "filename" : "Hoya 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

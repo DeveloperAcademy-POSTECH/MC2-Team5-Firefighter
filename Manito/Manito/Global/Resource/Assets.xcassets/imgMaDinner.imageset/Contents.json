@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "imgMaDinner.png",
+      "filename" : "Dinner01 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imgMaDinner@2x.png",
+      "filename" : "Dinner01 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "imgMaDinner@3x.png",
+      "filename" : "Dinner01 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

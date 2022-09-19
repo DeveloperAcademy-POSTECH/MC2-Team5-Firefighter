@@ -74,7 +74,13 @@ class CreateRoomViewController: BaseViewController {
         return view
     }()
     
-    // MARK: - Life Cycle
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
+    
+    // MARK: - life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
