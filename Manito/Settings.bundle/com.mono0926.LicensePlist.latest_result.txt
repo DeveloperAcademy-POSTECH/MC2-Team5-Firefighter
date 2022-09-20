@@ -1,0 +1,9 @@
+name: FSCalendar, nameSpecified: FSCalendar, owner: WenchaoD, version: 2.8.4, source: https://github.com/WenchaoD/FSCalendar
+
+name: Gifu, nameSpecified: Gifu, owner: kaishin, version: 3.3.1, source: https://github.com/kaishin/Gifu
+
+name: SnapKit, nameSpecified: SnapKit, owner: SnapKit, version: 5.6.0, source: https://github.com/SnapKit/SnapKit
+
+add-version-numbers: false
+
+LicensePlist Version: 3.23.3
