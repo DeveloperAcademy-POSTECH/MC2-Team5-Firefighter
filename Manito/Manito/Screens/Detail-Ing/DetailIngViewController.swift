@@ -60,6 +60,13 @@ class DetailIngViewController: BaseViewController {
         return button
     }()
     
+    private let badgeLabel: LetterCountBadgeView = {
+        let label = LetterCountBadgeView()
+        label.layer.cornerRadius = 15
+        label.isHidden = true
+        return label
+    }()
+    
     private var roomType: RoomType?
     
     // MARK: - init
@@ -109,6 +116,13 @@ class DetailIngViewController: BaseViewController {
             $0.top.equalTo(missionBackgroundView.snp.top)
             $0.trailing.equalTo(missionBackgroundView.snp.trailing)
             $0.width.height.equalTo(44)
+        }
+        
+        view.addSubview(badgeLabel)
+        badgeLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview().offset(35)
+            $0.centerY.equalTo(letterBoxButton).offset(-10)
+            $0.width.height.equalTo(30)
         }
     }
 
@@ -247,11 +261,19 @@ class DetailIngViewController: BaseViewController {
                           let endDate = info.room?.endDate,
                           let missionContent = info.mission?.content,
                           let manittee = info.manittee?.nickname,
-                          let didView = info.didViewRoulette
+                          let didView = info.didViewRoulette,
+                          let badgeCount = info.messages?.count
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
                     manitteAnimationLabel.text = manittee
+                    if badgeCount > 0 {
+                        badgeLabel.isHidden = false
+                        badgeLabel.countLabel.text = String(badgeCount)
+                    } else {
+                        badgeLabel.isHidden = true
+                    }
+                    
                     if !didView {
                         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                         guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
