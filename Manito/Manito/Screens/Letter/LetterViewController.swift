@@ -134,11 +134,6 @@ final class LetterViewController: BaseViewController {
         hideGuideViewWhenTappedAround()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        letterState = .sent
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
@@ -169,6 +164,7 @@ final class LetterViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
+        letterState = .sent
     }
     
     override func setupNavigationBar() {
@@ -328,6 +324,13 @@ extension LetterViewController: UICollectionViewDataSource {
         cell.didTappedReport = { [weak self] in
             self?.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "",
                                  content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
+        }
+        cell.didTappedImage = { [weak self] image in
+            let viewController = LetterImageViewController()
+            viewController.imageView.image = image
+            viewController.modalPresentationStyle = .fullScreen
+            viewController.modalTransitionStyle = .crossDissolve
+            self?.present(viewController, animated: true)
         }
         return cell
     }
