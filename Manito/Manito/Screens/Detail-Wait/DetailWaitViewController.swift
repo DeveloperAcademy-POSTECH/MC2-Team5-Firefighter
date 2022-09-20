@@ -201,7 +201,6 @@ class DetailWaitViewController: BaseViewController {
         requestWaitRoomInfo()
         setupDelegation()
         setupNotificationCenter()
-        setStartButton()
     }
 
     override func render() {
@@ -280,6 +279,7 @@ class DetailWaitViewController: BaseViewController {
                                             startDate: startDate,
                                             endDate: endDate)
                     isPastStartDate()
+                    setStartButton()
                 }
             } catch NetworkError.serverError {
                 print("server Error")
