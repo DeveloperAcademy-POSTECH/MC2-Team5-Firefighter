@@ -15,7 +15,7 @@ enum ImageLiterals {
     static var icManiTti: UIImage { .load(name: "btnManiTti") }
     static var icNewRoom: UIImage { .load(name: "btnNewRoom") }
     static var icBack: UIImage { .load(name: "ic_back")}
-    static var icShare: UIImage { .load(name: "ic_share")}
+    static var icInsta: UIImage { .load(name: "ic_insta")}
     static var icReport: UIImage { .load(name: "ic_report")}
     static var icMore: UIImage { .load(name: "ic_more")}
     static var icLetterInfo: UIImage { .load(name: "ic_letterInfo")}
@@ -38,6 +38,7 @@ enum ImageLiterals {
     static var imgDevBackground: UIImage { .load(name: "imgDevBackground") }
     static var imgStar: UIImage { .load(name: "imgStar") }
     static var imageSliderThumb: UIImage { .load(name: "btnSliderThumb") }
+    static var imgCharacters: UIImage { .load(name: "img_characters") }
     static var imgCodeBackground: UIImage { .load(name: "imgCodeBackground") }
     static var imgCommonMisson: UIImage { .load(name: "imgCommonMisson") }
     static var imgEnterRoom: UIImage { .load(name: "imgEnterRoom") }

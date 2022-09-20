@@ -156,6 +156,13 @@ enum TextLiteral {
     static let detailWaitViewControllerPastAlertMessage: String = "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요."
     static let detailWaitViewControllerPastOwnerAlertMessage: String = "진행기간을 재설정 해주세요"
     
+    // MARK: - MemoryViewController
+    static let memoryViewControllerTitleLabel: String = "함께 했던 기록"
+    static let memoryViewControllerManittoText: String = "나를 챙겨줘서 고마워, 마니또"
+    static let memoryViewControllerManitteeText: String = "내가 챙겨줘서 좋았지? 마니띠"
+    static let memoryViewControllerAlertTitle: String = "스토리 공유에 실패했어요"
+    static let memoryViewControllerAlertMessage: String = "스토리 공유를 하려면 인스타그램이 필요합니다"
+    
     // MARK: - DetailEditViewController
     static let detailEditViewControllerStartSetting: String = "진행기간 설정"
     static let detailEditViewControllerSetMember: String = "인원 설정"
