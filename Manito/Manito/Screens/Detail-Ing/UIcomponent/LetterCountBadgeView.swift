@@ -35,7 +35,7 @@ class LetterCountBadgeView: UIView {
     private func render() {
         addSubview(countLabel)
         countLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
     
