@@ -13,7 +13,8 @@ struct ParticipatingRooms: Decodable {
 
 struct ParticipatingRoom: Decodable {
     let id: Int?
-    let title, state: String?
+    let title: String?
+    var state: String?
     let participatingCount, capacity: Int?
     let startDate, endDate: String?
 }
