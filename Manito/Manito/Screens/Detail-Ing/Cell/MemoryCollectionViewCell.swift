@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 final class MemoryCollectionViewCell: BaseCollectionViewCell {
+    var didTappedImage: ((UIImage) -> ())?
     
     // MARK: - properties
     
@@ -17,6 +18,7 @@ final class MemoryCollectionViewCell: BaseCollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     private let contentLabel: UILabel = {
@@ -53,6 +55,7 @@ final class MemoryCollectionViewCell: BaseCollectionViewCell {
         backgroundColor = .darkGrey002
         makeBorderLayer(color: .white)
         layer.masksToBounds = true
+        setupImageTapGesture()
     }
     
     func setData(imageUrl: String? = nil, content: String? = nil) {
@@ -66,5 +69,15 @@ final class MemoryCollectionViewCell: BaseCollectionViewCell {
             contentLabel.addLabelSpacing()
             contentLabel.textAlignment = .center
         }
+    }
+    
+    private func setupImageTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPhoto))
+        photoImageView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func didTapPhoto() {
+        guard let image = photoImageView.image else { return }
+        didTappedImage?(image)
     }
 }
