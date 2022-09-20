@@ -182,9 +182,9 @@ class DetailIngViewController: BaseViewController {
             manitoOpenButton.layer.isHidden = false
         }
         manitiBackView.makeBorderLayer(color: .white)
-        manitiImageView.layer.cornerRadius = 50
+        manitiImageView.layer.cornerRadius = manitiImageView.bounds.size.width / 2
         listBackView.makeBorderLayer(color: .white)
-        listImageView.layer.cornerRadius = 50
+        listImageView.layer.cornerRadius = listImageView.bounds.size.width / 2
         letterBoxButton.makeBorderLayer(color: .white)
         manitoMemoryButton.makeBorderLayer(color: .white)
     }

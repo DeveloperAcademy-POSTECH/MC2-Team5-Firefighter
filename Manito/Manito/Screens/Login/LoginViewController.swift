@@ -94,11 +94,11 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                 UserDefaultHandler.setRefreshToken(refreshToken: data.refreshToken ?? "")
 
                                 guard data.nickname != nil else {
-                                    UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
                                     self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
                                     return
                                 }
                                 
+                                UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
                                 viewController.modalPresentationStyle = .fullScreen

@@ -1287,7 +1287,7 @@
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 앨범에 접근하려고 합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "‘애니또’가 사용자의 사진에 접근하려고 합니다. 쪽지에 사진을 업로드할 때 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1323,7 +1323,7 @@
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 앨범에 접근하려고 합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "‘애니또’가 사용자의 사진에 접근하려고 합니다. 쪽지에 사진을 업로드할 때 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
