@@ -164,10 +164,6 @@ class DetailWaitViewController: BaseViewController {
                 button.title = ButtonText.start.status
                 button.isDisabled = false
                 let action = UIAction { [weak self] _ in
-                    let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-                    guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
-                    viewController.modalPresentationStyle = .fullScreen
-                    self?.present(viewController, animated: true)
                     self?.requestStartManitto()
                 }
                 button.addAction(action, for: .touchUpInside)
@@ -311,7 +307,15 @@ class DetailWaitViewController: BaseViewController {
     func requestStartManitto() {
         Task {
             do {
-                let _ = try await detailWaitService.startManitto(roomId: "\(roomIndex)")
+                let data = try await detailWaitService.startManitto(roomId: "\(roomIndex)")
+                if let manittee = data {
+                    let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                    guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+                    guard let nickname = manittee.nickname else { return }
+                    viewController.modalPresentationStyle = .fullScreen
+                    viewController.manitteeName = nickname
+                    present(viewController, animated: true)
+                }
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
