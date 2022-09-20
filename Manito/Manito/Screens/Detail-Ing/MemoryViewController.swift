@@ -215,7 +215,8 @@ final class MemoryViewController: BaseViewController {
                     UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
                     UIApplication.shared.open(storyShareURL, options: [:], completionHandler: nil)
                 } else {
-                    self.makeAlert(title: "알림", message: "인스타그램이 필요합니다")
+                    self.makeAlert(title: TextLiteral.memoryViewControllerAlertTitle,
+                                   message: TextLiteral.memoryViewControllerAlertMessage)
                 }
             }
         }
