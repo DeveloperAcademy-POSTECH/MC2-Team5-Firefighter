@@ -23,7 +23,7 @@ class DetailIngViewController: BaseViewController {
     var roomInformation: ParticipatingRoom? {
         willSet {
             guard let state = newValue?.state else { return }
-            roomType = RoomType(rawValue: state)
+            roomType = RoomType.init(rawValue: state)
         }
     }
 
@@ -226,8 +226,8 @@ class DetailIngViewController: BaseViewController {
     
     private func addActionMemoryViewController() {
         let action = UIAction { [weak self] _ in
-            let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-            guard let viewController = storyboard.instantiateViewController(withIdentifier: MemoryViewController.className) as? MemoryViewController else { return }
+            guard let roomId = self?.roomInformation?.id else { return }
+            let viewController = MemoryViewController(roomId: roomId.description)
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
         manitoMemoryButton.addAction(action, for: .touchUpInside)
