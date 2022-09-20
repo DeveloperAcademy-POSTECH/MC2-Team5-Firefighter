@@ -102,16 +102,14 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hpq-VL-lVb">
-                                                <rect key="frame" x="21" y="125" width="119" height="17"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hpq-VL-lVb">
+                                                <rect key="frame" x="80" y="124" width="0.0" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8u6-m2-Pzx">
-                                                <rect key="frame" x="21" y="125" width="119" height="17"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8u6-m2-Pzx">
+                                                <rect key="frame" x="80" y="124" width="0.0" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -122,8 +120,12 @@
                                             <constraint firstAttribute="width" constant="160" id="0iw-KS-QkZ"/>
                                             <constraint firstAttribute="trailing" secondItem="g7j-rM-Ytc" secondAttribute="trailing" constant="30" id="4X4-ZE-lfJ"/>
                                             <constraint firstAttribute="height" constant="160" id="587-90-7lR"/>
+                                            <constraint firstItem="8u6-m2-Pzx" firstAttribute="centerX" secondItem="MnW-cb-NGs" secondAttribute="centerX" id="7TV-ls-Mhs"/>
+                                            <constraint firstItem="Hpq-VL-lVb" firstAttribute="centerX" secondItem="MnW-cb-NGs" secondAttribute="centerX" id="AWz-mZ-6Xn"/>
+                                            <constraint firstItem="8u6-m2-Pzx" firstAttribute="top" secondItem="g7j-rM-Ytc" secondAttribute="bottom" constant="7" id="R3G-Ne-MwS"/>
                                             <constraint firstItem="g7j-rM-Ytc" firstAttribute="leading" secondItem="MnW-cb-NGs" secondAttribute="leading" constant="31" id="WE1-9l-Leq"/>
                                             <constraint firstItem="g7j-rM-Ytc" firstAttribute="top" secondItem="MnW-cb-NGs" secondAttribute="top" constant="18" id="Wpf-d3-7b0"/>
+                                            <constraint firstItem="Hpq-VL-lVb" firstAttribute="top" secondItem="g7j-rM-Ytc" secondAttribute="bottom" constant="7" id="pQS-dW-4PJ"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds Boolesn YES" value="YES"/>
@@ -155,9 +157,8 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="함께하는 친구들" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZe-il-0Em">
-                                                <rect key="frame" x="21" y="125" width="119" height="18"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="함께하는 친구들" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZe-il-0Em">
+                                                <rect key="frame" x="32.666666666666657" y="125" width="95" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -168,8 +169,10 @@
                                             <constraint firstAttribute="trailing" secondItem="weP-4O-TyG" secondAttribute="trailing" constant="30" id="Lsy-J5-6wp"/>
                                             <constraint firstAttribute="width" constant="160" id="O5K-yj-iaI"/>
                                             <constraint firstItem="weP-4O-TyG" firstAttribute="top" secondItem="qAr-Z0-8Pd" secondAttribute="top" constant="19" id="REw-pB-Izx"/>
+                                            <constraint firstItem="XZe-il-0Em" firstAttribute="centerX" secondItem="qAr-Z0-8Pd" secondAttribute="centerX" id="SRl-Z1-sSC"/>
                                             <constraint firstAttribute="height" constant="160" id="WVd-7E-aWu"/>
                                             <constraint firstItem="weP-4O-TyG" firstAttribute="leading" secondItem="qAr-Z0-8Pd" secondAttribute="leading" constant="31" id="qhd-40-tZP"/>
+                                            <constraint firstItem="XZe-il-0Em" firstAttribute="top" secondItem="weP-4O-TyG" secondAttribute="bottom" constant="7" id="yKG-9K-A8r"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds Boolesn YES" value="YES"/>
