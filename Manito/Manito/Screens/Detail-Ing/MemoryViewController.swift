@@ -37,7 +37,7 @@ final class MemoryViewController: BaseViewController {
     
     private let shareButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icShare, for: .normal)
+        button.setImage(ImageLiterals.icInsta, for: .normal)
         return button
     }()
     private lazy var segmentControl: UISegmentedControl = {
