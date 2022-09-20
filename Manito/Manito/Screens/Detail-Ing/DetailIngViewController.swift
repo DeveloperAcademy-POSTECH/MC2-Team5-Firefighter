@@ -79,7 +79,7 @@ class DetailIngViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        setupLargeTitleToOriginal()
         switch roomType {
         case .POST:
             requestDoneRoomInfo()
@@ -142,15 +142,17 @@ class DetailIngViewController: BaseViewController {
         manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
         manitiIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
-        
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
     
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
         setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
+    }
+    
+    private func setupLargeTitleToOriginal() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
 
     private func setupFont() {
