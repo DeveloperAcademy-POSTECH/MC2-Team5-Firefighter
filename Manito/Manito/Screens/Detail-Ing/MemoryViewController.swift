@@ -37,7 +37,7 @@ final class MemoryViewController: BaseViewController {
     
     private let shareButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icShare, for: .normal)
+        button.setImage(ImageLiterals.icInsta, for: .normal)
         return button
     }()
     private lazy var segmentControl: UISegmentedControl = {
@@ -55,6 +55,7 @@ final class MemoryViewController: BaseViewController {
         
         return control
     }()
+    private let shareBoundView = UIView()
     private let announcementLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 15)
@@ -124,40 +125,47 @@ final class MemoryViewController: BaseViewController {
             $0.width.equalTo(294)
         }
         
-        view.addSubview(manittoTopImageView)
-        manittoTopImageView.snp.makeConstraints {
+        view.addSubview(shareBoundView)
+        shareBoundView.snp.makeConstraints {
             $0.top.equalTo(segmentControl.snp.bottom).offset(32)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(31)
+        }
+        
+        shareBoundView.addSubview(manittoTopImageView)
+        manittoTopImageView.snp.makeConstraints {
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.height.equalTo(40)
         }
         
-        view.addSubview(announcementLabel)
+        shareBoundView.addSubview(announcementLabel)
         announcementLabel.snp.makeConstraints {
             $0.top.equalTo(manittoTopImageView.snp.bottom).offset(30)
             $0.centerX.equalToSuperview()
         }
         
-        view.addSubview(memoryCollectionView)
+        shareBoundView.addSubview(memoryCollectionView)
         memoryCollectionView.snp.makeConstraints {
             $0.top.equalTo(announcementLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(Size.collectionViewHeight)
         }
         
-        view.addSubview(manittoBottomImageView)
+        shareBoundView.addSubview(manittoBottomImageView)
         manittoBottomImageView.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(75)
+            $0.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.height.equalTo(40)
         }
         
-        view.addSubview(nicknameLabel)
+        shareBoundView.addSubview(nicknameLabel)
         nicknameLabel.snp.makeConstraints {
-            $0.bottom.equalTo(manittoBottomImageView.snp.top).offset(-25)
+            $0.bottom.equalTo(manittoBottomImageView.snp.top).offset(-30)
             $0.centerX.equalToSuperview()
         }
         
-        view.addSubview(characterBackView)
+        shareBoundView.addSubview(characterBackView)
         characterBackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalTo(memoryCollectionView.snp.centerY)
@@ -171,6 +179,11 @@ final class MemoryViewController: BaseViewController {
         }
     }
     
+    override func configUI() {
+        super.configUI()
+        setupAction()
+    }
+    
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let shareButton = makeBarButtonItem(with: shareButton)
@@ -179,6 +192,35 @@ final class MemoryViewController: BaseViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .automatic
         title = TextLiteral.memoryViewControllerTitleLabel
+    }
+    
+    // MARK: - func
+    
+    private func setupAction() {
+        let action = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            
+            if let storyShareURL = URL(string: "instagram-stories://share") {
+                if UIApplication.shared.canOpenURL(storyShareURL) {
+                    let renderer = UIGraphicsImageRenderer(size: self.shareBoundView.bounds.size)
+                    let renderImage = renderer.image { _ in
+                        self.shareBoundView.drawHierarchy(in: self.shareBoundView.bounds, afterScreenUpdates: true)
+                    }
+                    guard let imageData = renderImage.pngData() else {return}
+                    let pasteboardItems: [String: Any] = [
+                        "com.instagram.sharedSticker.stickerImage": imageData
+                    ]
+                    let pasteboardOptions = [UIPasteboard.OptionsKey.expirationDate: Date().addingTimeInterval(300)]
+                    
+                    UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
+                    UIApplication.shared.open(storyShareURL, options: [:], completionHandler: nil)
+                } else {
+                    self.makeAlert(title: TextLiteral.memoryViewControllerAlertTitle,
+                                   message: TextLiteral.memoryViewControllerAlertMessage)
+                }
+            }
+        }
+        shareButton.addAction(action, for: .touchUpInside)
     }
     
     // MARK: - network

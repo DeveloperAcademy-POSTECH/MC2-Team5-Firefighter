@@ -95,6 +95,10 @@ class InputNameView: UIView {
 }
 
 extension InputNameView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        roomsNameTextField.resignFirstResponder()
+    }
+    
     func textFieldDidChangeSelection(_ textField: UITextField) {
         setCounter(count: textField.text?.count ?? 0)
         checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)

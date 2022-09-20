@@ -60,6 +60,13 @@ class DetailIngViewController: BaseViewController {
         return button
     }()
     
+    private let badgeLabel: LetterCountBadgeView = {
+        let label = LetterCountBadgeView()
+        label.layer.cornerRadius = 15
+        label.isHidden = true
+        return label
+    }()
+    
     private var roomType: RoomType?
     
     // MARK: - init
@@ -72,7 +79,7 @@ class DetailIngViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        setupLargeTitleToOriginal()
         switch roomType {
         case .POST:
             requestDoneRoomInfo()
@@ -110,6 +117,13 @@ class DetailIngViewController: BaseViewController {
             $0.trailing.equalTo(missionBackgroundView.snp.trailing)
             $0.width.height.equalTo(44)
         }
+        
+        view.addSubview(badgeLabel)
+        badgeLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview().offset(35)
+            $0.centerY.equalTo(letterBoxButton).offset(-10)
+            $0.width.height.equalTo(30)
+        }
     }
 
     override func configUI() {
@@ -128,15 +142,17 @@ class DetailIngViewController: BaseViewController {
         manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
         manitiIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
-        
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
     
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
         setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
+    }
+    
+    private func setupLargeTitleToOriginal() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
 
     private func setupFont() {
@@ -247,11 +263,19 @@ class DetailIngViewController: BaseViewController {
                           let endDate = info.room?.endDate,
                           let missionContent = info.mission?.content,
                           let manittee = info.manittee?.nickname,
-                          let didView = info.didViewRoulette
+                          let didView = info.didViewRoulette,
+                          let badgeCount = info.messages?.count
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
                     manitteAnimationLabel.text = manittee
+                    if badgeCount > 0 {
+                        badgeLabel.isHidden = false
+                        badgeLabel.countLabel.text = String(badgeCount)
+                    } else {
+                        badgeLabel.isHidden = true
+                    }
+                    
                     if !didView {
                         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                         guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }

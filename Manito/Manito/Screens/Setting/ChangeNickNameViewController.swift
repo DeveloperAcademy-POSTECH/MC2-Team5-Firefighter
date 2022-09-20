@@ -66,6 +66,11 @@ class ChangeNickNameViewController: BaseViewController {
         setupNotificationCenter()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLargeTitle()
+    }
+    
     override func render() {
         view.addSubview(nameTextField)
         nameTextField.snp.makeConstraints {
@@ -135,6 +140,11 @@ class ChangeNickNameViewController: BaseViewController {
 
     // MARK: - Funtions
     
+    private func setupLargeTitle() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .automatic
+    }
+    
     private func setupDelegation() {
         nameTextField.delegate = self
     }
@@ -177,7 +187,6 @@ class ChangeNickNameViewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         title = TextLiteral.changeNickNameViewControllerTitle
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
 }
 

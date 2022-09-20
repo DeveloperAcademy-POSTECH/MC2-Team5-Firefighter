@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 final class MemoryCollectionViewCell: BaseCollectionViewCell {
     var didTappedImage: ((UIImage) -> ())?
     
