@@ -276,9 +276,10 @@ class DetailWaitViewController: BaseViewController {
                     userArr = members.map { $0.nickname ?? "" }
                     memberType = isAdmin ? .owner : .member
                     self.roomInfo = RoomDTO(title: title,
-                                       capacity: capacity,
-                                       startDate: startDate,
-                                       endDate: endDate)
+                                            capacity: capacity,
+                                            startDate: startDate,
+                                            endDate: endDate)
+                    isPastStartDate()
                 }
             } catch NetworkError.serverError {
                 print("server Error")
