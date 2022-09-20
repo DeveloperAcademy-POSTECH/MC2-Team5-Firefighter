@@ -12,6 +12,7 @@ import SnapKit
 class DetailWaitViewController: BaseViewController {
     let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     var roomIndex: Int
+    var roomInformation: ParticipatingRoom?
     var inviteCode: String = ""
     private var roomInfo: RoomDTO?
     private var userArr: [String] = [] {
@@ -164,10 +165,7 @@ class DetailWaitViewController: BaseViewController {
                 button.title = ButtonText.start.status
                 button.isDisabled = false
                 let action = UIAction { [weak self] _ in
-                    let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-                    guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
-                    viewController.modalPresentationStyle = .fullScreen
-                    self?.present(viewController, animated: true)
+                    print("detailwait self?.roomInformation", self?.roomInformation)
                     self?.requestStartManitto()
                 }
                 button.addAction(action, for: .touchUpInside)
@@ -311,7 +309,16 @@ class DetailWaitViewController: BaseViewController {
     func requestStartManitto() {
         Task {
             do {
-                let _ = try await detailWaitService.startManitto(roomId: "\(roomIndex)")
+                let data = try await detailWaitService.startManitto(roomId: "\(roomIndex)")
+                if let manittee = data {
+                    let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                    guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+                    guard let nickname = manittee.nickname else { return }
+                    viewController.modalPresentationStyle = .fullScreen
+                    viewController.manitteeName = nickname
+                    viewController.roomInformation = roomInformation
+                    present(viewController, animated: true)
+                }
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {

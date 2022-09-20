@@ -264,6 +264,7 @@ class DetailIngViewController: BaseViewController {
                           let missionContent = info.mission?.content,
                           let manittee = info.manittee?.nickname,
                           let didView = info.didViewRoulette,
+                          let admin = info.admin,
                           let badgeCount = info.messages?.count
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
@@ -276,7 +277,7 @@ class DetailIngViewController: BaseViewController {
                         badgeLabel.isHidden = true
                     }
                     
-                    if !didView {
+                    if !didView && !admin {
                         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                         guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                         viewController.modalPresentationStyle = .fullScreen

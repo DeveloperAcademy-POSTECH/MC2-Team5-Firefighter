@@ -28,7 +28,7 @@ struct DetailWaitAPI: DetailWaitProtocol {
         return try await apiService.request(request)
     }
 
-    func startManitto(roomId: String) async throws -> Int {
+    func startManitto(roomId: String) async throws -> Manittee? {
         let request = DetailWaitEndPoint
             .patchStartManitto(roomId: roomId)
             .createRequest()

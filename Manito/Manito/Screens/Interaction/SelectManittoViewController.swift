@@ -10,6 +10,7 @@ import UIKit
 import Gifu
 
 final class SelectManittoViewController: BaseViewController {
+    var roomIndex: Int?
     var roomInformation: ParticipatingRoom?
 
     private enum StageType {
@@ -34,6 +35,7 @@ final class SelectManittoViewController: BaseViewController {
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
             viewController.roomInformation = self?.roomInformation
+            viewController.roomInformation?.state = "PROCESSING"
             navigationController.popViewController(animated: true)
             navigationController.pushViewController(viewController, animated: false)
             self?.dismiss(animated: true)

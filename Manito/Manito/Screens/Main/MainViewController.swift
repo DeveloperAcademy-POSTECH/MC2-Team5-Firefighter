@@ -266,15 +266,17 @@ final class MainViewController: BaseViewController {
         present(ParticipateRoomVC, animated: true, completion: nil)
     }
 
-    private func pushDetailView(status: RoomStatus, index: Int) {
+    private func pushDetailView(status: RoomStatus, roomIndex: Int, index: Int? = nil) {
         switch status {
         case .waiting:
+            guard let index = index else { return }
             let viewController = DetailWaitViewController(index: index)
+            viewController.roomInformation = rooms?[roomIndex]
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
             let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
-            viewController.roomInformation = rooms?[index]
+            viewController.roomInformation = rooms?[roomIndex]
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -362,9 +364,9 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
                   let id = rooms?[indexPath.item - 1].id
             else { return }
             if roomStatus == .waiting {
-                pushDetailView(status: roomStatus, index: id)
+                pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1, index: id)
             } else {
-                pushDetailView(status: roomStatus, index: indexPath.item - 1)
+                pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1)
             }
         }
     }
