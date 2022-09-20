@@ -162,7 +162,7 @@ class CreateRoomViewController: BaseViewController {
         }
     }
     
-    @objc func didTapNextButton() {
+    @objc private func didTapNextButton() {
         switch notiIndex {
         case .inputName:
             guard let text = nameView.roomsNameTextField.text else { return }
