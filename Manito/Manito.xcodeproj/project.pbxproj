@@ -52,6 +52,7 @@
 		39EEF65C28CB3CD600437654 /* LoginAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65B28CB3CD600437654 /* LoginAPI.swift */; };
 		39EEF65E28CB3CFE00437654 /* LoginEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65D28CB3CFE00437654 /* LoginEndPoint.swift */; };
 		39EEF66028CB3D6200437654 /* LoginDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65F28CB3D6200437654 /* LoginDTO.swift */; };
+		39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F1C12D28D756E600585B83 /* LetterImageViewController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
 		7E15F67E28B35B3D00441305 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E15F67D28B35B3D00441305 /* TextLiteral.swift */; };
@@ -78,6 +79,7 @@
 		B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */; };
 		B517C04C28D1FE5F0008BED0 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */; };
 		B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04D28D1FE660008BED0 /* TokenProtocol.swift */; };
+		B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
@@ -148,6 +150,7 @@
 		D739C36328C7B69D00161117 /* SettingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36228C7B69D00161117 /* SettingProtocol.swift */; };
 		D739C36528C7B75400161117 /* SettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36428C7B75400161117 /* SettingAPI.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
+		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* UrlLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* UrlLiteral.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
@@ -200,6 +203,7 @@
 		39EEF65B28CB3CD600437654 /* LoginAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPI.swift; sourceTree = "<group>"; };
 		39EEF65D28CB3CFE00437654 /* LoginEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginEndPoint.swift; sourceTree = "<group>"; };
 		39EEF65F28CB3D6200437654 /* LoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDTO.swift; sourceTree = "<group>"; };
+		39F1C12D28D756E600585B83 /* LetterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageViewController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		7E15F67D28B35B3D00441305 /* TextLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiteral.swift; sourceTree = "<group>"; };
@@ -223,6 +227,7 @@
 		B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEndPoint.swift; sourceTree = "<group>"; };
 		B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
 		B517C04D28D1FE660008BED0 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
+		B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
@@ -295,6 +300,7 @@
 		D739C36228C7B69D00161117 /* SettingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingProtocol.swift; sourceTree = "<group>"; };
 		D739C36428C7B75400161117 /* SettingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAPI.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
+		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* UrlLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlLiteral.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
@@ -318,6 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */,
+				B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -583,6 +590,7 @@
 		B5F524E928519B3F00614FF7 /* Detail-Ing */ = {
 			isa = PBXGroup;
 			children = (
+				D75E8C7D28D76FB1004A6C41 /* UIcomponent */,
 				333BF66428571C850039F77F /* Cell */,
 				B5F5250B2851A07000614FF7 /* DetailIngViewController.swift */,
 				33BDF5612856E03800564211 /* FriendListViewController.swift */,
@@ -599,6 +607,7 @@
 				B5F5250D2851A07700614FF7 /* LetterViewController.swift */,
 				B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */,
 				B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */,
+				39F1C12D28D756E600585B83 /* LetterImageViewController.swift */,
 			);
 			path = Letter;
 			sourceTree = "<group>";
@@ -872,6 +881,14 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		D75E8C7D28D76FB1004A6C41 /* UIcomponent */ = {
+			isa = PBXGroup;
+			children = (
+				D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */,
+			);
+			path = UIcomponent;
+			sourceTree = "<group>";
+		};
 		D75ECB6D28A5EDBC00A5B271 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -979,6 +996,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */,
 				CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */,
 				333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */,
 				39D95265285B097800183B09 /* CalendarView.swift in Sources */,
@@ -1007,6 +1025,7 @@
 				7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				39C957D828799DB900A04A2B /* NetworkError.swift in Sources */,
+				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
 				39CD581B28C4BE8800496E91 /* DetailStartingAPI.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
@@ -1055,6 +1074,7 @@
 				D777D2C928C7780E008655BD /* UrlLiteral.swift in Sources */,
 				391B3003286198C200421F1D /* Size.swift in Sources */,
 				39C95800287DAC2900A04A2B /* DetailDoneEndPoint.swift in Sources */,
+				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
 				7E77DB0428BF9A6700E95D4B /* RoomProtocol.swift in Sources */,
 				D739C36328C7B69D00161117 /* SettingProtocol.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,

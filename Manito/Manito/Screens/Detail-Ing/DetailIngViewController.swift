@@ -23,7 +23,7 @@ class DetailIngViewController: BaseViewController {
     var roomInformation: ParticipatingRoom? {
         willSet {
             guard let state = newValue?.state else { return }
-            roomType = RoomType(rawValue: state)
+            roomType = RoomType.init(rawValue: state)
         }
     }
 
@@ -58,6 +58,13 @@ class DetailIngViewController: BaseViewController {
         let button = MainButton()
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
         return button
+    }()
+    
+    private let badgeLabel: LetterCountBadgeView = {
+        let label = LetterCountBadgeView()
+        label.layer.cornerRadius = 15
+        label.isHidden = true
+        return label
     }()
     
     private var roomType: RoomType?
@@ -109,6 +116,13 @@ class DetailIngViewController: BaseViewController {
             $0.top.equalTo(missionBackgroundView.snp.top)
             $0.trailing.equalTo(missionBackgroundView.snp.trailing)
             $0.width.height.equalTo(44)
+        }
+        
+        view.addSubview(badgeLabel)
+        badgeLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview().offset(35)
+            $0.centerY.equalTo(letterBoxButton).offset(-10)
+            $0.width.height.equalTo(30)
         }
     }
 
@@ -214,8 +228,8 @@ class DetailIngViewController: BaseViewController {
     
     private func addActionMemoryViewController() {
         let action = UIAction { [weak self] _ in
-            let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-            guard let viewController = storyboard.instantiateViewController(withIdentifier: MemoryViewController.className) as? MemoryViewController else { return }
+            guard let roomId = self?.roomInformation?.id else { return }
+            let viewController = MemoryViewController(roomId: roomId.description)
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
         manitoMemoryButton.addAction(action, for: .touchUpInside)
@@ -249,11 +263,19 @@ class DetailIngViewController: BaseViewController {
                           let endDate = info.room?.endDate,
                           let missionContent = info.mission?.content,
                           let manittee = info.manittee?.nickname,
-                          let didView = info.didViewRoulette
+                          let didView = info.didViewRoulette,
+                          let badgeCount = info.messages?.count
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
                     manitteAnimationLabel.text = manittee
+                    if badgeCount > 0 {
+                        badgeLabel.isHidden = false
+                        badgeLabel.countLabel.text = String(badgeCount)
+                    } else {
+                        badgeLabel.isHidden = true
+                    }
+                    
                     if !didView {
                         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                         guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }

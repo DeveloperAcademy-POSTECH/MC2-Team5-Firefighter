@@ -95,6 +95,10 @@ final class InputInvitedCodeView: UIView {
 }
 
 extension InputInvitedCodeView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        roomCodeTextField.resignFirstResponder()
+    }
+    
     func textFieldDidChangeSelection(_ textField: UITextField) {
         setCounter(count: textField.text?.count ?? 0)
         checkMaxLength(textField: roomCodeTextField, maxLength: maxLength)
