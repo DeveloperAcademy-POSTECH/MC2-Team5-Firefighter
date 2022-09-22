@@ -77,7 +77,7 @@ class CreateNickNameViewController: BaseViewController {
             do {
                 let data = try await settingService.putChangeNickname(body: setting)
                 if let nickname = data {
-                    print(nickname)
+                    UserDefaultHandler.setNickname(nickname: nickname)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
