@@ -112,7 +112,7 @@ class DetailWaitViewController: BaseViewController {
     // MARK: - property
 
     private lazy var settingButton: UIButton = {
-        let button = SettingButton()
+        let button = MoreButton()
         button.menu = setExitButtonMenu()
         button.showsMenuAsPrimaryAction = true
         return button
