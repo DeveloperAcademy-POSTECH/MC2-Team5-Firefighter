@@ -205,7 +205,7 @@ class DetailIngViewController: BaseViewController {
     }
     
     private func addGestureManito() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapManito))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapManittee))
         manitiBackView.addGestureRecognizer(tapGesture)
     }
     
@@ -371,14 +371,14 @@ class DetailIngViewController: BaseViewController {
     }
     
     @objc
-    private func didTapManito() {
-        UIView.animate(withDuration: 2.0) {
+    private func didTapManittee() {
+        UIView.animate(withDuration: 1.0) {
             self.manitiLabel.alpha = 0
             self.manitiIconView.alpha = 0
             self.manitiRealIconView.alpha = 1
             self.manitteAnimationLabel.alpha = 1
         } completion: { _ in
-            UIView.animate(withDuration: 1.0, delay: 1.0) {
+            UIView.animate(withDuration: 1.0, delay: 0.5) {
                 self.manitiIconView.alpha = 1
                 self.manitiRealIconView.alpha = 0
                 self.manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
