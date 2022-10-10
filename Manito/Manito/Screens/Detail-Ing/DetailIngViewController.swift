@@ -26,6 +26,7 @@ class DetailIngViewController: BaseViewController {
             roomType = RoomType.init(rawValue: state)
         }
     }
+    var isTappedManittee: Bool = false
 
     // MARK: - property
 
@@ -372,18 +373,23 @@ class DetailIngViewController: BaseViewController {
     
     @objc
     private func didTappedManittee() {
-        UIView.animate(withDuration: 1.0) {
-            self.manitiLabel.alpha = 0
-            self.manitiIconView.alpha = 0
-            self.manitiRealIconView.alpha = 1
-            self.manitteAnimationLabel.alpha = 1
-        } completion: { _ in
-            UIView.animate(withDuration: 1.0, delay: 0.5) {
-                self.manitiIconView.alpha = 1
-                self.manitiRealIconView.alpha = 0
-                self.manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
-                self.manitteAnimationLabel.alpha = 0
-                self.manitiLabel.alpha = 1
+        if !isTappedManittee {
+            self.isTappedManittee = true
+            UIView.animate(withDuration: 1.0) {
+                self.manitiLabel.alpha = 0
+                self.manitiIconView.alpha = 0
+                self.manitiRealIconView.alpha = 1
+                self.manitteAnimationLabel.alpha = 1
+            } completion: { _ in
+                UIView.animate(withDuration: 1.0, delay: 0.5) {
+                    self.manitiIconView.alpha = 1
+                    self.manitiRealIconView.alpha = 0
+                    self.manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
+                    self.manitteAnimationLabel.alpha = 0
+                    self.manitiLabel.alpha = 1
+                } completion: { _ in
+                    self.isTappedManittee = false
+                }
             }
         }
     }
