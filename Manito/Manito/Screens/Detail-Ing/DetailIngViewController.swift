@@ -205,7 +205,7 @@ class DetailIngViewController: BaseViewController {
     }
     
     private func addGestureManito() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapManittee))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappedManittee))
         manitiBackView.addGestureRecognizer(tapGesture)
     }
     
@@ -371,7 +371,7 @@ class DetailIngViewController: BaseViewController {
     }
     
     @objc
-    private func didTapManittee() {
+    private func didTappedManittee() {
         UIView.animate(withDuration: 1.0) {
             self.manitiLabel.alpha = 0
             self.manitiIconView.alpha = 0
