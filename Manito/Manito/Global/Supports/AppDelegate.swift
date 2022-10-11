@@ -8,6 +8,9 @@
 import AuthenticationServices
 import UIKit
 
+import Firebase
+import UserNotifications
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -15,6 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         getCredentialState()
+        FirebaseApp.configure()
+          
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+          
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { _, _ in }
+        application.registerForRemoteNotifications()
         return true
     }
 
@@ -45,6 +56,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("applicationDidBecomeActive")
         getCredentialState()
     }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+      let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+      print("[Log] deviceToken :", deviceTokenString)
+        
+      Messaging.messaging().apnsToken = deviceToken
+    }
 }
 
 extension AppDelegate {
@@ -64,4 +82,24 @@ extension AppDelegate {
             }
         }
     }
+}
+
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+        
+        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+        
+        print("파이어베이스 토큰: \(fcmToken ?? "")")
+      }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.badge, .sound])
+      }
+      
+      func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+      }
 }
