@@ -82,11 +82,11 @@
 		B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04D28D1FE660008BED0 /* TokenProtocol.swift */; };
 		B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */; };
 		B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEB528D99F8600AF7E45 /* Settings.bundle */; };
+		B55BCEC628F5AFB200AF7E45 /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC528F5AFB200AF7E45 /* capsule.gif */; };
+		B55BCEC828F5AFD500AF7E45 /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC728F5AFD500AF7E45 /* joystick.gif */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
-		B5E1F2B4285ECCD1006D880B /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5E1F2B3285ECCD1006D880B /* joystick.gif */; };
-		B5E1F2B8285EE2B0006D880B /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5E1F2B7285EE2B0006D880B /* capsule.gif */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
 		B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */; };
 		B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */; };
@@ -232,11 +232,11 @@
 		B517C04D28D1FE660008BED0 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
 		B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		B55BCEB528D99F8600AF7E45 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		B55BCEC528F5AFB200AF7E45 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
+		B55BCEC728F5AFD500AF7E45 /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
-		B5E1F2B3285ECCD1006D880B /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
-		B5E1F2B7285EE2B0006D880B /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LetterViewController+MailCompose.swift"; sourceTree = "<group>"; };
@@ -453,8 +453,8 @@
 		B50B1B36285AC28B0080992C /* GIFs */ = {
 			isa = PBXGroup;
 			children = (
-				B5E1F2B7285EE2B0006D880B /* capsule.gif */,
-				B5E1F2B3285ECCD1006D880B /* joystick.gif */,
+				B55BCEC528F5AFB200AF7E45 /* capsule.gif */,
+				B55BCEC728F5AFD500AF7E45 /* joystick.gif */,
 				B50B1B3B285AD2B20080992C /* logo.gif */,
 				CB2F0FC828A5468C005F04C8 /* gifMa.gif */,
 				CB2F0FCA28A5468C005F04C8 /* gifNi.gif */,
@@ -987,12 +987,12 @@
 				B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */,
 				B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */,
 				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
+				B55BCEC828F5AFD500AF7E45 /* joystick.gif in Resources */,
 				B5F5250428519F7A00614FF7 /* DungGeunMo.otf in Resources */,
 				CB2F0FCC28A5468C005F04C8 /* gifTto.gif in Resources */,
+				B55BCEC628F5AFB200AF7E45 /* capsule.gif in Resources */,
 				B50B1B3E285B04580080992C /* Interaction.storyboard in Resources */,
-				B5E1F2B8285EE2B0006D880B /* capsule.gif in Resources */,
 				B5F524D628519AA000614FF7 /* Main.storyboard in Resources */,
-				B5E1F2B4285ECCD1006D880B /* joystick.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
