@@ -371,22 +371,23 @@ class DetailIngViewController: BaseViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    private func toggledManitteeAnimation(_ value: Bool) {
+        manitteeLabel.alpha = value ? 0 : 1
+        manitteeIconView.alpha = value ? 0 : 1
+        manitiRealIconView.alpha = value ? 1 : 0
+        manitteeAnimationLabel.alpha = value ? 1 : 0
+    }
+    
     @objc
     private func didTappedManittee() {
         if !isTappedManittee {
             self.isTappedManittee = true
             UIView.animate(withDuration: 1.0) {
-                self.manitteeLabel.alpha = 0
-                self.manitteeIconView.alpha = 0
-                self.manitiRealIconView.alpha = 1
-                self.manitteeAnimationLabel.alpha = 1
+                self.toggledManitteeAnimation(self.isTappedManittee)
             } completion: { _ in
                 UIView.animate(withDuration: 1.0, delay: 0.5) {
-                    self.manitteeIconView.alpha = 1
-                    self.manitiRealIconView.alpha = 0
+                    self.toggledManitteeAnimation(!self.isTappedManittee)
                     self.manitteeLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
-                    self.manitteeAnimationLabel.alpha = 0
-                    self.manitteeLabel.alpha = 1
                 } completion: { _ in
                     self.isTappedManittee = false
                 }
