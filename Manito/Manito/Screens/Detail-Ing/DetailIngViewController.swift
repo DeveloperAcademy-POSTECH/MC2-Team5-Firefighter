@@ -26,6 +26,7 @@ class DetailIngViewController: BaseViewController {
             roomType = RoomType.init(rawValue: state)
         }
     }
+    var isTappedManittee: Bool = false
 
     // MARK: - property
 
@@ -36,17 +37,17 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var missionTitleLabel: UILabel!
     @IBOutlet weak var missionContentsLabel: UILabel!
     @IBOutlet weak var informationTitleLabel: UILabel!
-    @IBOutlet weak var manitiBackView: UIView!
-    @IBOutlet weak var manitiImageView: UIView!
-    @IBOutlet weak var manitiIconView: UIImageView!
-    @IBOutlet weak var manitiLabel: UILabel!
+    @IBOutlet weak var manitteeBackView: UIView!
+    @IBOutlet weak var manitteeImageView: UIView!
+    @IBOutlet weak var manitteeIconView: UIImageView!
+    @IBOutlet weak var manitteeLabel: UILabel!
     @IBOutlet weak var listBackView: UIView!
     @IBOutlet weak var listImageView: UIView!
     @IBOutlet weak var listIconView: UIImageView!
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
     @IBOutlet weak var manitoMemoryButton: UIButton!
-    @IBOutlet weak var manitteAnimationLabel: UILabel!
+    @IBOutlet weak var manitteeAnimationLabel: UILabel!
 
     private lazy var manitiRealIconView: UIImageView = {
         let imageView = UIImageView(image: ImageLiterals.imgMa)
@@ -105,10 +106,10 @@ class DetailIngViewController: BaseViewController {
         
         view.addSubview(manitiRealIconView)
         manitiRealIconView.snp.makeConstraints {
-            $0.top.equalTo(manitiIconView.snp.top)
-            $0.trailing.equalTo(manitiIconView.snp.trailing)
-            $0.leading.equalTo(manitiIconView.snp.leading)
-            $0.bottom.equalTo(manitiIconView.snp.bottom)
+            $0.top.equalTo(manitteeIconView.snp.top)
+            $0.trailing.equalTo(manitteeIconView.snp.trailing)
+            $0.leading.equalTo(manitteeIconView.snp.leading)
+            $0.bottom.equalTo(manitteeIconView.snp.bottom)
         }
         
         view.addSubview(guideButton)
@@ -139,8 +140,8 @@ class DetailIngViewController: BaseViewController {
         addGestureManito()
         addActionOpenManittoViewController()
         
-        manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
-        manitiIconView.image = ImageLiterals.icManiTti
+        manitteeLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
+        manitteeIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
     }
     
@@ -162,8 +163,8 @@ class DetailIngViewController: BaseViewController {
         missionTitleLabel.font = .font(.regular, ofSize: 14)
         missionContentsLabel.font = .font(.regular, ofSize: 18)
         informationTitleLabel.font = .font(.regular, ofSize: 16)
-        manitiLabel.font = .font(.regular, ofSize: 15)
-        manitteAnimationLabel.font = .font(.regular, ofSize: 15)
+        manitteeLabel.font = .font(.regular, ofSize: 15)
+        manitteeAnimationLabel.font = .font(.regular, ofSize: 15)
         listLabel.font = .font(.regular, ofSize: 15)
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
         manitoMemoryButton.titleLabel?.font = .font(.regular, ofSize: 15)
@@ -181,8 +182,8 @@ class DetailIngViewController: BaseViewController {
             manitoMemoryButton.layer.isHidden = true
             manitoOpenButton.layer.isHidden = false
         }
-        manitiBackView.makeBorderLayer(color: .white)
-        manitiImageView.layer.cornerRadius = manitiImageView.bounds.size.width / 2
+        manitteeBackView.makeBorderLayer(color: .white)
+        manitteeImageView.layer.cornerRadius = manitteeImageView.bounds.size.width / 2
         listBackView.makeBorderLayer(color: .white)
         listImageView.layer.cornerRadius = listImageView.bounds.size.width / 2
         letterBoxButton.makeBorderLayer(color: .white)
@@ -200,13 +201,13 @@ class DetailIngViewController: BaseViewController {
     }
     
     private func setupManitteLabel() {
-        manitteAnimationLabel.text = ""
-        manitteAnimationLabel.alpha = 0
+        manitteeAnimationLabel.text = ""
+        manitteeAnimationLabel.alpha = 0
     }
     
     private func addGestureManito() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapManito))
-        manitiBackView.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappedManittee))
+        manitteeBackView.addGestureRecognizer(tapGesture)
     }
     
     private func addGestureMemberList() {
@@ -269,7 +270,7 @@ class DetailIngViewController: BaseViewController {
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
-                    manitteAnimationLabel.text = manittee
+                    manitteeAnimationLabel.text = manittee
                     if badgeCount > 0 {
                         badgeLabel.isHidden = false
                         badgeLabel.countLabel.text = String(badgeCount)
@@ -328,7 +329,7 @@ class DetailIngViewController: BaseViewController {
                           let minittee = info.manittee?.nickname
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
-                    manitteAnimationLabel.text = minittee
+                    manitteeAnimationLabel.text = minittee
                     missionContentsLabel.text = TextLiteral.detailIngViewControllerDoneMissionText
                 }
             } catch NetworkError.serverError {
@@ -370,20 +371,26 @@ class DetailIngViewController: BaseViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    private func toggledManitteeAnimation(_ value: Bool) {
+        manitteeLabel.alpha = value ? 0 : 1
+        manitteeIconView.alpha = value ? 0 : 1
+        manitiRealIconView.alpha = value ? 1 : 0
+        manitteeAnimationLabel.alpha = value ? 1 : 0
+    }
+    
     @objc
-    private func didTapManito() {
-        UIView.animate(withDuration: 2.0) {
-            self.manitiLabel.alpha = 0
-            self.manitiIconView.alpha = 0
-            self.manitiRealIconView.alpha = 1
-            self.manitteAnimationLabel.alpha = 1
-        } completion: { _ in
-            UIView.animate(withDuration: 1.0, delay: 1.0) {
-                self.manitiIconView.alpha = 1
-                self.manitiRealIconView.alpha = 0
-                self.manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
-                self.manitteAnimationLabel.alpha = 0
-                self.manitiLabel.alpha = 1
+    private func didTappedManittee() {
+        if !isTappedManittee {
+            self.isTappedManittee = true
+            UIView.animate(withDuration: 1.0) {
+                self.toggledManitteeAnimation(self.isTappedManittee)
+            } completion: { _ in
+                UIView.animate(withDuration: 1.0, delay: 0.5) {
+                    self.toggledManitteeAnimation(!self.isTappedManittee)
+                    self.manitteeLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
+                } completion: { _ in
+                    self.isTappedManittee = false
+                }
             }
         }
     }
