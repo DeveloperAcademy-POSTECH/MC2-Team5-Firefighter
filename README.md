@@ -21,15 +21,15 @@
 
 | Main Room | AENITTO Room(wait) | AENITTO Room(ing) |
 |:---:|:---:|:---:|
-|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476681-e2df2980-4626-4592-b649-07e733547015.png">|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476477-ad789c33-89bf-4278-b4e6-dc45fc0f0d0b.png">|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476452-79ef54ea-cb2a-4a03-be7d-bf9837d6e9c2.png">|
+|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476681-e2df2980-4626-4592-b649-07e733547015.png">|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476477-ad789c33-89bf-4278-b4e6-dc45fc0f0d0b.png">|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476452-79ef54ea-cb2a-4a03-be7d-bf9837d6e9c2.png">|
 
 | Create Room | Letter | Admission Code  | 
 |:---:|:---:|:---:|
-|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174486893-365dec82-e300-458e-b18c-bf8c3ae5ec84.gif">|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476794-daba877c-d7b1-4162-abee-c1709ab1e114.png">|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476831-df13040b-62de-47cc-adfe-4aa9d1570d7a.png">|
+|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174486893-365dec82-e300-458e-b18c-bf8c3ae5ec84.gif">|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476794-daba877c-d7b1-4162-abee-c1709ab1e114.png">|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476831-df13040b-62de-47cc-adfe-4aa9d1570d7a.png">|
 
 | Select Manitto | Open Manitto |
 |:---:|:---:|
-|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174487001-46c42879-e00c-469f-ac59-4077f3692d56.gif">|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476990-7d7e0183-ee05-4716-8f3e-82561b829786.gif">|
+|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174487001-46c42879-e00c-469f-ac59-4077f3692d56.gif">|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476990-7d7e0183-ee05-4716-8f3e-82561b829786.gif">|
 
 <br/>
 
