@@ -6,13 +6,12 @@
   
 ![banner](https://user-images.githubusercontent.com/55099365/174474703-d8462f7e-fd99-4244-8574-ecd20e82d718.png)
 
-
+[<img width="220" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/196023806-5eb7be0f-c7cf-4661-bb39-35a15146c33a.png">](https://apps.apple.com/us/app/%EC%95%A0%EB%8B%88%EB%98%90-aenitto/id1642486538?utm_source=appstore)
 
  _**기대되는 다음 날을 만들어줄게!**_ <br/>
  _**다음 날이 기대되는 소소한 즐거움, AENITTO.**_
 
-[👾 Presentation Keynote 👾]()
-  
+
 </div>
 
 <br/>
@@ -20,13 +19,17 @@
 
 ### 📱 Screenshots
 
-| Main Room | AENITTO Room(wait) | AENITTO Room(ing) | Create Room |
-|:---:|:---:|:---:|:---:|
-|<img width="220" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476681-e2df2980-4626-4592-b649-07e733547015.png">|<img width="220" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476477-ad789c33-89bf-4278-b4e6-dc45fc0f0d0b.png">|<img width="220" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476452-79ef54ea-cb2a-4a03-be7d-bf9837d6e9c2.png">|<img width="220" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174486893-365dec82-e300-458e-b18c-bf8c3ae5ec84.gif">|
+| Main Room | AENITTO Room(wait) | AENITTO Room(ing) |
+|:---:|:---:|:---:|
+|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476681-e2df2980-4626-4592-b649-07e733547015.png">|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476477-ad789c33-89bf-4278-b4e6-dc45fc0f0d0b.png">|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476452-79ef54ea-cb2a-4a03-be7d-bf9837d6e9c2.png">|
 
-| Letter | Admission Code  | Select Manitto | Open Manitto |
-|:---:|:---:|:---:|:---:|
-|<img width="220" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476794-daba877c-d7b1-4162-abee-c1709ab1e114.png">|<img width="220" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476831-df13040b-62de-47cc-adfe-4aa9d1570d7a.png">|<img width="220" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174487001-46c42879-e00c-469f-ac59-4077f3692d56.gif">|<img width="220" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476990-7d7e0183-ee05-4716-8f3e-82561b829786.gif">|
+| Create Room | Letter | Admission Code  | 
+|:---:|:---:|:---:|
+|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174486893-365dec82-e300-458e-b18c-bf8c3ae5ec84.gif">|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476794-daba877c-d7b1-4162-abee-c1709ab1e114.png">|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476831-df13040b-62de-47cc-adfe-4aa9d1570d7a.png">|
+
+| Select Manitto | Open Manitto |
+|:---:|:---:|
+|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174487001-46c42879-e00c-469f-ac59-4077f3692d56.gif">|<img width="300" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476990-7d7e0183-ee05-4716-8f3e-82561b829786.gif">|
 
 <br/>
 
@@ -65,40 +68,40 @@ hotfix/11-main-activty-bug
 Aenitto-iOS
   |
   └── Aenitto
-          |── Network
-          │   │── Storage
-          │   │── Protocol
-          │   │── API
-          │   │── EndPoint
-          │   │── Service
-          │   └── Models
+          |── 🗂 Network
+          │   │── 📁 Storage
+          │   │── 📁 Protocol
+          │   │── 📁 API
+          │   │── 📁 EndPoint
+          │   │── 📁 Service
+          │   └── 📁 Models
           │
-          |── Global
-          │   │── Utils
-          │   │── Literal
-          │   │── Base
-          │   │── Supports
-          │   │      │── SceneDelegate
-          │   │      │── AppDelegate
-          │   │      └── Info.plist
-          │   │── Extension
-          │   │── UIComponent
-          │   └── Resource
-          │          │── Assets.xcassets
-          │          │── Font
-          │          │── GIF
-          │          └── Storyboard
-          └── Screens 
-             |── Splash
-             |── Main
-             |── Letter
-             |── CreateRoom
-             |── Setting
-             └── Detail-Wait
-                   │── Component
-                   │── VC
-                   └── Cell
-
+          |── 🗂 Global
+          │   │── 📁 Utils
+          │   │── 📁 Literal
+          │   │── 📁 Base
+          │   │── 📁 Supports
+          │   │      │── 📄 SceneDelegate
+          │   │      │── 📄 AppDelegate
+          │   │      └── 🗒 Info.plist
+          │   │── 📁 Extension
+          │   │── 📁 UIComponent
+          │   └── 📁 Resource
+          │          │── 🖼 Assets.xcassets
+          │          │── 🖼 Font
+          │          │── 🖼 GIF
+          │          └── 🖼 Storyboard
+          └── 🗂 Screens 
+              |── 📁 Splash
+              |── 📁 Main
+              |── 📁 Letter
+              |── 📁 CreateRoom
+              |── 📁 Setting
+              |── 📁 Detail-Wait
+              |     │── 📁 Component
+              |     │── 📁 VC
+              |     └── 📁 Cell
+              ...
 ```
 
 <br/>
@@ -110,7 +113,7 @@ Aenitto-iOS
 
 <img width="850" alt="Duna" src="https://user-images.githubusercontent.com/55099365/174475902-db767f7a-a393-4aed-9bdd-c647818097df.png">
   
-| [Duna](https://github.com/YoonAh-dev) | [Dinner](https://github.com/CreoHwan) | [Livvy](https://github.com/sunchoi22) | [Chemi](https://github.com/MMMIIIN) | [Coby](https://github.com/coby5502) | [Hoya](https://github.com/dangsal) |
+| [신윤아(Duna)](https://github.com/YoonAh-dev) | [이정환(Dinner)](https://github.com/CreoHwan) | [최성희(Livvy)](https://github.com/sunchoi22) | [최민관(Chemi)](https://github.com/MMMIIIN) | [김도영(Coby)](https://github.com/coby5502) | [이성호(Hoya)](https://github.com/dangsal) |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |<img width="100" alt="Duna" src="https://user-images.githubusercontent.com/55099365/174475700-c62f6419-f434-43f2-ac36-fa702a21686d.png">|<img width="100" alt="Dinner" src="https://user-images.githubusercontent.com/55099365/174475784-264bd1fd-59bb-40b1-a6fa-381a16124ba5.png">|<img width="100" alt="Livvy" src="https://user-images.githubusercontent.com/55099365/174475788-fda196f1-1cc7-4542-8a2e-ac8c752950ec.png">|<img width="100" alt="Chemi" src="https://user-images.githubusercontent.com/55099365/174475820-3527ef86-778a-4abe-9d90-cb7fe321c0c1.png">|<img width="100" alt="Coby" src="https://user-images.githubusercontent.com/55099365/174475833-1d919a55-6bd0-4773-b333-7f13d874792f.png">|<img width="100" alt="Hoya" src="https://user-images.githubusercontent.com/55099365/174475850-560f994b-7702-4bd4-8035-8cf4ae51615e.png">|
 
