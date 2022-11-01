@@ -66,6 +66,11 @@ class ChangeNickNameViewController: BaseViewController {
         setupNotificationCenter()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        nameTextField.becomeFirstResponder()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupLargeTitle()

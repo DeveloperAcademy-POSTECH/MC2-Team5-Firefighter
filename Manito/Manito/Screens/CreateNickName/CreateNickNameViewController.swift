@@ -71,6 +71,11 @@ class CreateNickNameViewController: BaseViewController {
         setupNotificationCenter()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        titleLabel.becomeFirstResponder()
+    }
+    
     // MARK: - API
     func requestNickname(setting: NicknameDTO) {
         Task {
