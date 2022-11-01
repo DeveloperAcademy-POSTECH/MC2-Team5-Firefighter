@@ -171,7 +171,6 @@ class ChangeNickNameViewController: BaseViewController {
                 
                 DispatchQueue.main.async {
                     self.nameTextField.text = String(fixedText)
-                    self.setCounter(count: textField.text?.count ?? 0)
                 }
             }
         }

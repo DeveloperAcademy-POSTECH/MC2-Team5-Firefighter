@@ -86,7 +86,6 @@ final class InputInvitedCodeView: UIView {
                 
                 DispatchQueue.main.async {
                     self.roomCodeTextField.text = String(fixedText)
-                    self.setCounter(count: textField.text?.count ?? 0)
                 }
             }
         }

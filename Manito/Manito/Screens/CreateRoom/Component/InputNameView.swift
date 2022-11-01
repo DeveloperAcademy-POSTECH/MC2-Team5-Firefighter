@@ -86,7 +86,6 @@ class InputNameView: UIView {
                 
                 DispatchQueue.main.async {
                     self.roomsNameTextField.text = String(fixedText)
-                    self.setCounter(count: textField.text?.count ?? 0)
                 }
             }
         }
