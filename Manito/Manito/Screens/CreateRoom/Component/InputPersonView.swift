@@ -39,7 +39,7 @@ class InputPersonView: UIView {
     lazy var personSlider: UISlider = {
         let slider = UISlider()
         slider.value = 1
-        slider.minimumValue = 5
+        slider.minimumValue = 4
         slider.maximumValue = 15
         slider.tintColor = .mainRed
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)

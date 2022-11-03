@@ -106,7 +106,7 @@ class DetailEditViewController: BaseViewController {
     }()
     private lazy var memberSlider: UISlider = {
         let slider = UISlider()
-        slider.minimumValue = 5
+        slider.minimumValue = 4
         slider.maximumValue = 15
         slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001
