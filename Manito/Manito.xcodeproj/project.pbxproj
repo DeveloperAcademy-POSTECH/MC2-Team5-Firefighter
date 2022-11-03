@@ -54,7 +54,6 @@
 		39EEF66028CB3D6200437654 /* LoginDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65F28CB3D6200437654 /* LoginDTO.swift */; };
 		39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F1C12D28D756E600585B83 /* LetterImageViewController.swift */; };
 		39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FFE32728EEFFFE008442EE /* MoreButton.swift */; };
-		43DB5E1A2913403700BD09BA /* DetailingCodebaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB5E192913403700BD09BA /* DetailingCodebaseViewController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
 		7E15F67E28B35B3D00441305 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E15F67D28B35B3D00441305 /* TextLiteral.swift */; };
@@ -208,7 +207,6 @@
 		39EEF65F28CB3D6200437654 /* LoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDTO.swift; sourceTree = "<group>"; };
 		39F1C12D28D756E600585B83 /* LetterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageViewController.swift; sourceTree = "<group>"; };
 		39FFE32728EEFFFE008442EE /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
-		43DB5E192913403700BD09BA /* DetailingCodebaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailingCodebaseViewController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		7E15F67D28B35B3D00441305 /* TextLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiteral.swift; sourceTree = "<group>"; };
@@ -600,7 +598,6 @@
 				D75E8C7D28D76FB1004A6C41 /* UIcomponent */,
 				333BF66428571C850039F77F /* Cell */,
 				B5F5250B2851A07000614FF7 /* DetailIngViewController.swift */,
-				43DB5E192913403700BD09BA /* DetailingCodebaseViewController.swift */,
 				33BDF5612856E03800564211 /* FriendListViewController.swift */,
 				333BF669285864CE0039F77F /* MemoryViewController.swift */,
 			);
@@ -1020,7 +1017,6 @@
 				397A241028BA494100454E4F /* APIEnvironment.swift in Sources */,
 				CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */,
 				B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */,
-				43DB5E1A2913403700BD09BA /* DetailingCodebaseViewController.swift in Sources */,
 				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */,
 				CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */,
