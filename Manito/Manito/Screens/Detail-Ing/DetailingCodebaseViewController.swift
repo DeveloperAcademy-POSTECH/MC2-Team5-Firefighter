@@ -145,17 +145,8 @@ class DetailingCodebaseViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func configUI() {
         setUpText()
-        setupViewLayer()
-        
-        addGestureManito()
-        addGestureMemberList()
-        
-        addActionPushLetterViewController()
-        addActionMemoryViewController()
+
     }
 
     private func setUpText() {
@@ -170,6 +161,8 @@ class DetailingCodebaseViewController: BaseViewController {
     private func setupViewLayer() {
         missionBackgroundView.layer.borderColor = UIColor.white.cgColor
     }
+    
+    
     
     private func addGestureManito() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappedManittee))
