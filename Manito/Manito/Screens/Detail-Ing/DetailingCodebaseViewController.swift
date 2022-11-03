@@ -8,7 +8,9 @@
 import UIKit
 
 class DetailingCodebaseViewController: BaseViewController {
-
+    
+    var titleLabelText = "애니또 팀"
+    
     // MARK: - property
     
     private lazy var titleLabel: UILabel = {
