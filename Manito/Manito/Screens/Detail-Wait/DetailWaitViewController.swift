@@ -388,10 +388,10 @@ class DetailWaitViewController: BaseViewController {
             $0.width.equalTo(140)
             $0.height.equalTo(40)
         }
-        UIView.animate(withDuration: 1.5, animations: {
+        UIView.animate(withDuration: 0.7, animations: {
             toastLabel.alpha = 0.8
         }, completion: { isCompleted in
-                UIView.animate(withDuration: 1.5, animations: {
+            UIView.animate(withDuration: 0.7, delay: 1, animations: {
                     toastLabel.alpha = 0
                 }, completion: { isCompleted in
                         toastLabel.removeFromSuperview()
