@@ -392,11 +392,11 @@ class DetailWaitViewController: BaseViewController {
             toastLabel.alpha = 0.8
         }, completion: { isCompleted in
             UIView.animate(withDuration: 0.7, delay: 1, animations: {
-                    toastLabel.alpha = 0
-                }, completion: { isCompleted in
-                        toastLabel.removeFromSuperview()
-                    })
+                toastLabel.alpha = 0
+            }, completion: { isCompleted in
+                toastLabel.removeFromSuperview()
             })
+        })
     }
 
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
