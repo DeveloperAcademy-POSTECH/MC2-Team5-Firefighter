@@ -76,7 +76,15 @@ class DetailIngViewController: BaseViewController {
         return label
     }()
     
-    private var roomType: RoomType?
+    private var roomType: RoomType? {
+        didSet {
+            if roomType == .POST {
+                exitButton.isHidden = false
+            } else {
+                exitButton.isHidden = true
+            }
+        }
+    }
     
     // MARK: - init
     
