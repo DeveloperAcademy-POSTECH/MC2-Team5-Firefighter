@@ -407,7 +407,7 @@ class DetailIngViewController: BaseViewController {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
                 print("client Error: \(String(describing: message))")
-                makeAlert(title: "방장은 방을 나갈 수 없어요")
+                makeAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdmin)
             }
         }
     }
