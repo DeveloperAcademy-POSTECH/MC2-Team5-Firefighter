@@ -266,8 +266,10 @@ class DetailIngViewController: BaseViewController {
     
     private func setEllipsisMenu() -> UIMenu {
         let menu = UIMenu(options: [], children: [
-            UIAction(title: "방 나가기", handler: { [weak self] _ in
-                self?.requestExitRoom()
+            UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+                self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
+                    self?.requestExitRoom()
+                })
             })
         ])
         return menu
