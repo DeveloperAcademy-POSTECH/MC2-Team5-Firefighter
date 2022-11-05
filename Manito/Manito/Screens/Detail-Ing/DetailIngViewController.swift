@@ -49,6 +49,13 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var manitoMemoryButton: UIButton!
     @IBOutlet weak var manitteeAnimationLabel: UILabel!
 
+    private lazy var exitButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.icMore, for: .normal)
+        button.menu = setEllipsisMenu()
+        button.showsMenuAsPrimaryAction = true
+        return button
+    }()
     private lazy var manitiRealIconView: UIImageView = {
         let imageView = UIImageView(image: ImageLiterals.imgMa)
         imageView.alpha = 0
@@ -151,6 +158,11 @@ class DetailIngViewController: BaseViewController {
         setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
     }
     
+    override func setupNavigationBar() {
+        let rightItem = makeBarButtonItem(with: exitButton)
+        navigationItem.rightBarButtonItem = rightItem
+    }
+    
     private func setupLargeTitleToOriginal() {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -249,6 +261,14 @@ class DetailIngViewController: BaseViewController {
         guard let endDate = endDateToString.stringToDateYYYY() else { return }
 
         manitoOpenButton.isHidden = !endDate.isOpenManitto
+    }
+    
+    private func setEllipsisMenu() -> UIMenu {
+        let menu = UIMenu(options: [], children: [
+            UIAction(title: "방 나가기", handler: { _ in
+            })
+        ])
+        return menu
     }
     
     // MARK: - DetailStarting API
