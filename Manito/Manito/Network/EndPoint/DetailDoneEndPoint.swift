@@ -11,6 +11,7 @@ enum DetailDoneEndPoint: EndPointable {
     case requestWithFriend(roomId: String)
     case requestMemory(roomId: String)
     case requestDoneRoomInfo(roomId: String)
+    case requestExitRoom(roomId: String)
 
     var requestTimeOut: Float {
         return 20
@@ -24,6 +25,8 @@ enum DetailDoneEndPoint: EndPointable {
             return .get
         case .requestDoneRoomInfo:
             return .get
+        case .requestExitRoom:
+            return .delete
         }
     }
 
@@ -34,6 +37,8 @@ enum DetailDoneEndPoint: EndPointable {
         case .requestMemory:
             return nil
         case .requestDoneRoomInfo:
+            return nil
+        case .requestExitRoom:
             return nil
         }
     }
@@ -46,6 +51,8 @@ enum DetailDoneEndPoint: EndPointable {
             return "\(baseURL)/rooms/\(roomId)/memories"
         case .requestDoneRoomInfo(let roomId):
             return "\(baseURL)/rooms/\(roomId)"
+        case .requestExitRoom(let roomId):
+            return "\(baseURL)/rooms/\(roomId)/participants"
         }
     }
     

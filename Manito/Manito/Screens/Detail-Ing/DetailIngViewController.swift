@@ -27,6 +27,7 @@ class DetailIngViewController: BaseViewController {
         }
     }
     var isTappedManittee: Bool = false
+    var isAdminPost: Bool = false
 
     // MARK: - property
 
@@ -265,7 +266,8 @@ class DetailIngViewController: BaseViewController {
     
     private func setEllipsisMenu() -> UIMenu {
         let menu = UIMenu(options: [], children: [
-            UIAction(title: "방 나가기", handler: { _ in
+            UIAction(title: "방 나가기", handler: { [weak self] _ in
+                self?.requestExitRoom()
             })
         ])
         return menu
@@ -346,8 +348,10 @@ class DetailIngViewController: BaseViewController {
                     titleLabel.text = info.room?.title
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
-                          let minittee = info.manittee?.nickname
+                          let minittee = info.manittee?.nickname,
+                          let isAdmin = info.admin
                     else { return }
+                    isAdminPost = isAdmin
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     manitteeAnimationLabel.text = minittee
                     missionContentsLabel.text = TextLiteral.detailIngViewControllerDoneMissionText
@@ -375,6 +379,25 @@ class DetailIngViewController: BaseViewController {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
                 print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestExitRoom() {
+        Task {
+            do {
+                guard let roomId = roomInformation?.id?.description else { return }
+                let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId)
+                if statusCode == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+                makeAlert(title: "방장은 방을 나갈 수 없어요")
             }
         }
     }

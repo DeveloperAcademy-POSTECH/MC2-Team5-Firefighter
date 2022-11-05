@@ -11,4 +11,5 @@ protocol DetailDoneProtocol {
     func requestMemory(roomId: String) async throws -> Memory?
     func requestDoneRoomInfo(roomId: String) async throws -> Room?
     func requestWithFriends(roomId: String) async throws -> FriendList?
+    func requestExitRoom(roomId: String) async throws -> Int
 }
