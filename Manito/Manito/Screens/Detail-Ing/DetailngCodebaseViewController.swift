@@ -201,7 +201,7 @@ final class DetailingCodebaseViewController: BaseViewController {
 
         view.addSubview(informationTitleLabel)
         informationTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(259)
+            $0.top.equalTo(missionBackgroundView.snp.bottom).offset(44)
             $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
         }
         
