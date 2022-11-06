@@ -117,6 +117,10 @@ final class DetailingCodebaseViewController: BaseViewController {
     }()
     private lazy var letterBoxButton: UIButton = {
         let button = UIButton(type: .system)
+        let action = UIAction { _ in
+            print("쪽지함!!")
+        }
+        button.addAction(action, for: .touchUpInside)
         button.setTitle("쪽지함", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 15)
@@ -126,6 +130,10 @@ final class DetailingCodebaseViewController: BaseViewController {
     }()
     private lazy var manitoMemoryButton: UIButton = {
         let button = UIButton(type: .system)
+        let action = UIAction { _ in
+            print("함께 했던 기록!!")
+        }
+        button.addAction(action, for: .touchUpInside)
         button.setTitle("함께 했던 기록", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 15)
@@ -147,6 +155,10 @@ final class DetailingCodebaseViewController: BaseViewController {
     }()
     private let manitoOpenButton: MainButton = {
         let button = MainButton()
+        let action = UIAction { _ in
+            print("마니또 공개!!")
+        }
+        button.addAction(action, for: .touchUpInside)
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
         return button
     }()
@@ -312,10 +324,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         setUpText()
-        
-        addActionPushLetterViewController()
-        addActionMemoryViewController()
-        addActionOpenManittoViewController()
     }
     
     override func setupGuideArea() {
@@ -333,27 +341,6 @@ final class DetailingCodebaseViewController: BaseViewController {
         manitteeAnimationLabel.text = "호야"
     }
 
-    private func addActionPushLetterViewController() {
-        let action = UIAction { [weak self] _ in
-            print("쪽지함!!")
-        }
-        letterBoxButton.addAction(action, for: .touchUpInside)
-    }
-    
-    private func addActionMemoryViewController() {
-        let action = UIAction { [weak self] _ in
-            print("함께 했던 기록!!")
-        }
-        manitoMemoryButton.addAction(action, for: .touchUpInside)
-    }
-    
-    private func addActionOpenManittoViewController() {
-        let action = UIAction { [weak self] _ in
-            print("마니또 공개!!")
-        }
-        self.manitoOpenButton.addAction(action, for: .touchUpInside)
-    }
-    
     @objc
     private func didTappedManittee() {
         print("당신의 마니띠는 !!!")
