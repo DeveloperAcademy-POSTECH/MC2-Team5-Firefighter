@@ -46,15 +46,15 @@ class InputPersonView: UIView {
         slider.addTarget(self, action: #selector(didSlideSlider(_:)), for: .valueChanged)
         return slider
     }()
-    private var minLabel: UILabel = {
+    private lazy var minLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.minMember
+        label.text = "\(Int(personSlider.minimumValue))인"
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private var maxLabel: UILabel = {
+    private lazy var maxLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.maxMember
+        label.text = "\(Int(personSlider.maximumValue))인"
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
