@@ -98,6 +98,12 @@ extension UIColor {
         return UIColor(hex: "#C7A83C")
     }
     
+    // MARK: - pink
+    
+    static var subPink: UIColor {
+        return UIColor(hex: "#F18DB1")
+    }
+    
     // MARK: - badge
 
     static var badgeBeige: UIColor {
