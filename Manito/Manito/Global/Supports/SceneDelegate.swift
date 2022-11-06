@@ -15,7 +15,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         let storyboard = UIStoryboard(name: "Splash", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: SplashViewController.className) as? SplashViewController else { return }
         
         window.rootViewController = viewController
         self.window = window

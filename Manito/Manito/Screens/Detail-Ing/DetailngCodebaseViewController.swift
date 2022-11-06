@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import SnapKit
 
 class DetailingCodebaseViewController: BaseViewController {
@@ -373,6 +374,5 @@ class DetailingCodebaseViewController: BaseViewController {
     private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
         print("당신의 친구들은 !!!")
     }
-    
 }
 
