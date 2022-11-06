@@ -46,7 +46,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let missionTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "오늘의 개별 미션"
-        label.textColor = .darkGrey002
+        label.textColor = .grey002
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
