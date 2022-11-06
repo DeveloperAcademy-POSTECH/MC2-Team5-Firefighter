@@ -39,9 +39,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private var missionBackgroundView: UIView = {
         var view = UIView()
         view.backgroundColor = .darkGrey004
-        view.layer.borderWidth = 1
-        view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.systemYellow.cgColor
+        view.makeBorderLayer(color: .systemYellow)
         return view
     }()
     private let missionTitleLabel: UILabel = {
@@ -81,8 +79,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         return view
     }()
     private var manitteeIconView: UIImageView = {
-        var imageView = UIImageView()
-        imageView.image = ImageLiterals.icManiTti
+        var imageView = UIImageView(image: ImageLiterals.icManiTti)
         return imageView
     }()
     private lazy var manitteeLabel: UILabel = {
@@ -108,8 +105,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         return view
     }()
     private let listIconView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = ImageLiterals.icList
+        let imageView = UIImageView(image: ImageLiterals.icList)
         return imageView
     }()
     private let listLabel: UILabel = {
