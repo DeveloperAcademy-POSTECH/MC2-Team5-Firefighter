@@ -41,6 +41,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         view.backgroundColor = .darkGrey004
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 10
+        view.layer.borderColor = UIColor.systemYellow.cgColor
         return view
     }()
     private let missionTitleLabel: UILabel = {
@@ -306,7 +307,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         setUpText()
-        setupViewLayer()
         
         addGestureManito()
         addGestureMemberList()
@@ -330,11 +330,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         manitteeLabel.text = "디너의 마니띠"
         manitteeAnimationLabel.text = "호야"
     }
-    
-    private func setupViewLayer() {
-        missionBackgroundView.layer.borderColor = UIColor.systemYellow.cgColor
-    }
-    
+
     private func addGestureManito() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappedManittee))
         manitteeBackView.addGestureRecognizer(tapGesture)
