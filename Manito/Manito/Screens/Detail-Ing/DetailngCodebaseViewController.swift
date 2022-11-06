@@ -127,6 +127,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.titleLabel?.font = .font(.regular, ofSize: 15)
         button.backgroundColor = .darkGrey002
         button.makeBorderLayer(color: .white)
+        button.isHidden = true
         return button
     }()
     private lazy var manitteeAnimationLabel: UILabel = {
