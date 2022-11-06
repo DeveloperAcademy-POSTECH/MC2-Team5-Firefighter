@@ -75,6 +75,8 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let manitteeImageView: UIView = {
         let view = UIView()
         view.backgroundColor = .subOrange
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.grey005.cgColor
         view.layer.cornerRadius = 49.5
         return view
     }()
@@ -100,6 +102,8 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let listImageView: UIView = {
         let view = UIView()
         view.backgroundColor = .subPink
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.grey005.cgColor
         view.layer.cornerRadius = 49.5
         return view
     }()

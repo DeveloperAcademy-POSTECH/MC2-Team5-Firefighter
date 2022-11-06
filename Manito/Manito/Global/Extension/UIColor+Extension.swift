@@ -50,6 +50,10 @@ extension UIColor {
     static var grey004: UIColor {
         return UIColor(hex: "#717174")
     }
+    
+    static var grey005: UIColor {
+        return UIColor(hex: "#C1C1C1")
+    }
 
     // MARK: - darkGrey
 
