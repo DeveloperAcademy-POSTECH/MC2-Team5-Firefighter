@@ -323,7 +323,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
-        setUpText()
+        setupText()
     }
     
     override func setupGuideArea() {
@@ -332,7 +332,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
     }
 
-    private func setUpText() {
+    private func setupText() {
         titleLabel.text = "애니또 팀"
         periodLabel.text = "22.11.11 ~ 22.11.15"
         statusLabel.text = "진행중"
