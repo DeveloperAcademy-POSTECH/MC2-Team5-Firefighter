@@ -12,7 +12,7 @@ import SnapKit
 class InputPersonView: UIView {
     
     // MARK: - Property
-    private let peronsViewLabel: UILabel = {
+    private let personViewLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 참여 인원을 설정해 주세요"
         label.font = .font(.regular, ofSize: 18)
@@ -80,14 +80,14 @@ class InputPersonView: UIView {
     // MARK: - Config
     
     private func render() {
-        self.addSubview(peronsViewLabel)
-        peronsViewLabel.snp.makeConstraints {
+        self.addSubview(personViewLabel)
+        personViewLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
         
         self.addSubview(personBackView)
         personBackView.snp.makeConstraints {
-            $0.top.equalTo(peronsViewLabel.snp.bottom).offset(36)
+            $0.top.equalTo(personViewLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(140)
         }
