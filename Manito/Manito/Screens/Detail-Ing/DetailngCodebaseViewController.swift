@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class DetailingCodebaseViewController: BaseViewController {
+final class DetailingCodebaseViewController: BaseViewController {
 
     // MARK: - property
     
