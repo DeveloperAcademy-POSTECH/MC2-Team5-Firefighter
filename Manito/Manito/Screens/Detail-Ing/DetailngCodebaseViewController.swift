@@ -110,7 +110,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     }()
     private let listLabel: UILabel = {
         let label = UILabel()
-        label.text = "함께하는 친구들"
+        label.text = TextLiteral.togetherFriend
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
         return label
