@@ -64,8 +64,10 @@ final class DetailingCodebaseViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private let manitteeBackView: UIView = {
+    private lazy var manitteeBackView: UIView = {
         let view = UIView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappedManittee))
+        view.addGestureRecognizer(tapGesture)
         view.backgroundColor = .darkGrey002
         view.makeBorderLayer(color: .white)
         return view
@@ -87,8 +89,10 @@ final class DetailingCodebaseViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 15)
         return label
     }()
-    private let listBackView: UIView = {
+    private lazy var listBackView: UIView = {
         let view = UIView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pushFriendListViewController(_:)))
+        view.addGestureRecognizer(tapGesture)
         view.backgroundColor = .darkGrey002
         view.makeBorderLayer(color: .white)
         return view
@@ -309,9 +313,6 @@ final class DetailingCodebaseViewController: BaseViewController {
         super.configUI()
         setUpText()
         
-        addGestureManito()
-        addGestureMemberList()
-        
         addActionPushLetterViewController()
         addActionMemoryViewController()
         addActionOpenManittoViewController()
@@ -332,16 +333,6 @@ final class DetailingCodebaseViewController: BaseViewController {
         manitteeAnimationLabel.text = "호야"
     }
 
-    private func addGestureManito() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappedManittee))
-        manitteeBackView.addGestureRecognizer(tapGesture)
-    }
-    
-    private func addGestureMemberList() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pushFriendListViewController(_:)))
-        listBackView.addGestureRecognizer(tapGesture)
-    }
-    
     private func addActionPushLetterViewController() {
         let action = UIAction { [weak self] _ in
             print("쪽지함!!")
