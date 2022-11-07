@@ -304,7 +304,6 @@ final class DetailingCodebaseViewController: BaseViewController {
         manitoOpenButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(66)
         }
 
         view.addSubview(manitiRealIconView)
