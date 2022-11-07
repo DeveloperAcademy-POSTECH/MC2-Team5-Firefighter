@@ -51,6 +51,12 @@ final class DetailingCodebaseViewController: BaseViewController {
     }()
     private lazy var missionContentsLabel: UILabel = {
         var label = UILabel()
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakStrategy = .hangulWordPriority
+        let attributedText = NSAttributedString(string: "", attributes: [.paragraphStyle: paragraphStyle])
+        label.attributedText = attributedText
+        label.textAlignment = .center
+        label.numberOfLines = 0
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
@@ -213,8 +219,9 @@ final class DetailingCodebaseViewController: BaseViewController {
         
         missionBackgroundView.addSubview(missionContentsLabel)
         missionContentsLabel.snp.makeConstraints{
-            $0.top.equalTo(missionTitleLabel.snp.bottom).offset(20)
+            $0.centerY.equalTo(missionTitleLabel.snp.bottom).offset(30)
             $0.centerX.equalTo(missionBackgroundView.snp.centerX)
+            $0.width.equalTo(260)
         }
 
         view.addSubview(informationTitleLabel)
@@ -336,7 +343,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         titleLabel.text = "애니또 팀"
         periodLabel.text = "22.11.11 ~ 22.11.15"
         statusLabel.text = "진행중"
-        missionContentsLabel.text = "웃으면서 울기!"
+        missionContentsLabel.attributedText = NSAttributedString(string: "1000원 이하의 선물 주고 인증샷 받기")
         manitteeLabel.text = "디너의 마니띠"
         manitteeAnimationLabel.text = "호야"
     }
