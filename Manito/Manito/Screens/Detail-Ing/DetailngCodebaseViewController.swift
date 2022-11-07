@@ -84,10 +84,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         view.layer.cornerRadius = 49.5
         return view
     }()
-    private var manitteeIconView: UIImageView = {
-        var imageView = UIImageView(image: ImageLiterals.icManiTti)
-        return imageView
-    }()
+    private let manitteeIconView = UIImageView(image: ImageLiterals.icManiTti)
     private lazy var manitteeLabel: UILabel = {
         var label = UILabel()
         label.textColor = .white
@@ -110,10 +107,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         view.layer.cornerRadius = 49.5
         return view
     }()
-    private let listIconView: UIImageView = {
-        let imageView = UIImageView(image: ImageLiterals.icList)
-        return imageView
-    }()
+    private let listIconView = UIImageView(image: ImageLiterals.icList)
     private let listLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.togetherFriend
