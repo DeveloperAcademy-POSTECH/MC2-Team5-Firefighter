@@ -40,6 +40,7 @@ class CreateNickNameViewController: BaseViewController {
         textField.returnKeyType = .done
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
+        textField.becomeFirstResponder()
         return textField
     }()
     private lazy var roomsTextLimit : UILabel = {
@@ -69,11 +70,6 @@ class CreateNickNameViewController: BaseViewController {
         super.viewDidLoad()
         setupDelegation()
         setupNotificationCenter()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        titleLabel.becomeFirstResponder()
     }
     
     // MARK: - API

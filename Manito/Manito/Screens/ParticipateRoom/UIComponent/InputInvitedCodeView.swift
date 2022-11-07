@@ -31,6 +31,7 @@ final class InputInvitedCodeView: UIView {
         textField.delegate = self
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
+        textField.becomeFirstResponder()
         return textField
     }()
     

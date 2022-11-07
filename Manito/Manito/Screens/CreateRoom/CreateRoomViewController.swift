@@ -87,11 +87,6 @@ class CreateRoomViewController: BaseViewController {
         toggleButton()
         setupNotificationCenter()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        titleLabel.becomeFirstResponder()
-    }
         
     override func render() {
         view.addSubview(titleLabel)
