@@ -234,7 +234,8 @@ final class DetailingCodebaseViewController: BaseViewController {
         manitteeBackView.snp.makeConstraints {
             $0.top.equalTo(informationTitleLabel.snp.bottom).offset(31)
             $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
-            $0.width.height.equalTo(160)
+            $0.trailing.equalTo(view.snp.centerX).offset(-14)
+            $0.height.equalTo((UIScreen.main.bounds.width-28-40)/2)
         }
         
         manitteeBackView.addSubview(manitteeImageView)
@@ -260,8 +261,9 @@ final class DetailingCodebaseViewController: BaseViewController {
         view.addSubview(listBackView)
         listBackView.snp.makeConstraints {
             $0.top.equalTo(informationTitleLabel.snp.bottom).offset(31)
+            $0.leading.equalTo(view.snp.centerX).offset(14)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
-            $0.width.height.equalTo(160)
+            $0.height.equalTo((UIScreen.main.bounds.width-28-40)/2)
         }
         
         listBackView.addSubview(listImageView)
