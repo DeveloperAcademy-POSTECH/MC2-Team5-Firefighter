@@ -14,20 +14,20 @@ final class DetailingCodebaseViewController: BaseViewController {
 
     // MARK: - property
     
-    private lazy var titleLabel: UILabel = {
-        var label = UILabel()
+    private let titleLabel: UILabel = {
+        let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    private lazy var periodLabel: UILabel = {
-        var label = UILabel()
+    private let periodLabel: UILabel = {
+        let label = UILabel()
         label.textColor = .grey002
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private lazy var statusLabel: UILabel = {
-        var label = UILabel()
+    private let statusLabel: UILabel = {
+        let label = UILabel()
         label.backgroundColor = .mainRed
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 11
@@ -49,8 +49,8 @@ final class DetailingCodebaseViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    private lazy var missionContentsLabel: UILabel = {
-        var label = UILabel()
+    private let missionContentsLabel: UILabel = {
+        let label = UILabel()
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineBreakStrategy = .hangulWordPriority
         let attributedText = NSAttributedString(string: "", attributes: [.paragraphStyle: paragraphStyle])
@@ -85,8 +85,8 @@ final class DetailingCodebaseViewController: BaseViewController {
         return view
     }()
     private let manitteeIconView = UIImageView(image: ImageLiterals.icManiTti)
-    private lazy var manitteeLabel: UILabel = {
-        var label = UILabel()
+    private let manitteeLabel: UILabel = {
+        let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
         return label
@@ -115,7 +115,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 15)
         return label
     }()
-    private lazy var letterBoxButton: UIButton = {
+    private let letterBoxButton: UIButton = {
         let button = UIButton(type: .system)
         let action = UIAction { _ in
             print("쪽지함!!")
@@ -128,7 +128,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.makeBorderLayer(color: .white)
         return button
     }()
-    private lazy var manitoMemoryButton: UIButton = {
+    private let manitoMemoryButton: UIButton = {
         let button = UIButton(type: .system)
         let action = UIAction { _ in
             print("함께 했던 기록!!")
@@ -142,13 +142,13 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.isHidden = true
         return button
     }()
-    private lazy var manitteeAnimationLabel: UILabel = {
+    private let manitteeAnimationLabel: UILabel = {
         var label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
         return label
     }()
-    private lazy var manitiRealIconView: UIImageView = {
+    private let manitiRealIconView: UIImageView = {
         let imageView = UIImageView(image: ImageLiterals.imgMa)
         imageView.alpha = 0
         return imageView
