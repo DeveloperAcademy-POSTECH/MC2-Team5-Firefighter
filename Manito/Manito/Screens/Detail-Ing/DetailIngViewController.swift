@@ -27,7 +27,11 @@ class DetailIngViewController: BaseViewController {
         }
     }
     var isTappedManittee: Bool = false
-    var isAdminPost: Bool = false
+    var isAdminPost: Bool = false {
+        didSet {
+            exitButton.menu = setEllipsisMenu()
+        }
+    }
 
     // MARK: - property
 
@@ -50,10 +54,9 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var manitoMemoryButton: UIButton!
     @IBOutlet weak var manitteeAnimationLabel: UILabel!
 
-    private lazy var exitButton: UIButton = {
+    private let exitButton: UIButton = {
         let button = UIButton()
         button.setImage(ImageLiterals.icMore, for: .normal)
-        button.menu = setEllipsisMenu()
         button.showsMenuAsPrimaryAction = true
         return button
     }()
@@ -274,10 +277,18 @@ class DetailIngViewController: BaseViewController {
     
     private func setEllipsisMenu() -> UIMenu {
         let menu = UIMenu(options: [], children: [
-            UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
-                    self?.requestExitRoom()
-                })
+            UIAction(title: isAdminPost ? TextLiteral.detailWaitViewControllerDeleteRoom : TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+                if let isAdmin = self?.isAdminPost {
+                    if isAdmin {
+                        self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdminTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertAdmin, okAction: { _ in
+                            self?.requestDeleteRoom()
+                        })
+                    } else {
+                        self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
+                            self?.requestExitRoom()
+                        })
+                    }
+                }
             })
         ])
         return menu
@@ -408,6 +419,24 @@ class DetailIngViewController: BaseViewController {
             } catch NetworkError.clientError(let message) {
                 print("client Error: \(String(describing: message))")
                 makeAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdmin)
+            }
+        }
+    }
+    
+    private func requestDeleteRoom() {
+        Task {
+            do {
+                guard let roomId = roomInformation?.id?.description else { return }
+                let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId)
+                if statusCode == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
             }
         }
     }
