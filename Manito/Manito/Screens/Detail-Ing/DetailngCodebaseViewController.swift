@@ -241,9 +241,9 @@ final class DetailingCodebaseViewController: BaseViewController {
         
         manitteeBackView.addSubview(manitteeIconView)
         manitteeIconView.snp.makeConstraints {
-            $0.top.equalTo(manitteeBackView.snp.top).inset(16)
-            $0.centerX.equalTo(manitteeBackView)
-            $0.width.height.equalTo(99)
+            $0.centerX.equalTo(manitteeImageView)
+            $0.centerY.equalTo(manitteeImageView.snp.centerY)
+            $0.width.height.equalTo(90)
         }
         
         manitteeBackView.addSubview(manitteeLabel)
@@ -269,9 +269,9 @@ final class DetailingCodebaseViewController: BaseViewController {
 
         listBackView.addSubview(listIconView)
         listIconView.snp.makeConstraints {
-            $0.top.equalTo(listBackView.snp.top).inset(16)
-            $0.centerX.equalTo(listBackView)
-            $0.width.height.equalTo(99)
+            $0.centerX.equalTo(listImageView)
+            $0.centerY.equalTo(listImageView.snp.centerY)
+            $0.width.height.equalTo(80)
         }
         
         listBackView.addSubview(listLabel)
