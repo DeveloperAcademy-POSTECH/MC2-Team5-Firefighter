@@ -30,7 +30,7 @@ final class LetterImageViewController: BaseViewController {
     }()
     private var downloadButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.btnCamera, for: .normal)
+        button.setImage(ImageLiterals.icSave, for: .normal)
         return button
     }()
     
@@ -49,7 +49,7 @@ final class LetterImageViewController: BaseViewController {
         view.addSubview(downloadButton)
         downloadButton.snp.makeConstraints {
             $0.top.equalTo(closeButton.snp.top)
-            $0.trailing.equalTo(closeButton.snp.leading).offset(-30)
+            $0.trailing.equalTo(closeButton.snp.leading).offset(-20)
         }
     }
     
