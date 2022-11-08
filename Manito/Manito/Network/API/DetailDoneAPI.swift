@@ -41,4 +41,11 @@ struct DetailDoneAPI: DetailDoneProtocol {
             .createRequest()
         return try await apiService.request(request)
     }
+    
+    func requestDeleteRoom(roomId: String) async throws -> Int {
+        let request = DetailDoneEndPoint
+            .requestDeleteRoom(roomId: roomId)
+            .createRequest()
+        return try await apiService.request(request)
+    }
 }
