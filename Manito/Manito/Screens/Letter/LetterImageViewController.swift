@@ -28,17 +28,8 @@ final class LetterImageViewController: BaseViewController {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
-    private lazy var downloadButton: UIButton = {
+    private var downloadButton: UIButton = {
         let button = UIButton()
-        let action = UIAction { [weak self] _ in
-            guard let image = self?.imageView.image else {
-                self?.makeAlert(title: "오류 발생", message: "사진을 저장할 수 없습니다.")
-                return
-            }
-            
-            UIImageWriteToSavedPhotosAlbum(image, self, #selector(self?.saveImage), nil)
-        }
-        button.addAction(action, for: .touchUpInside)
         button.setImage(ImageLiterals.btnCamera, for: .normal)
         return button
     }()
@@ -66,6 +57,7 @@ final class LetterImageViewController: BaseViewController {
         setupScrollView()
         setupImageView()
         setImagePinchGesture()
+        setupButtonAction()
     }
     
     private func setupScrollView() {
@@ -89,6 +81,29 @@ final class LetterImageViewController: BaseViewController {
         view.addGestureRecognizer(pinch)
     }
     
+    private func setupButtonAction() {
+        let downloadAction = UIAction { [weak self] _ in
+            guard let image = self?.imageView.image else {
+                self?.makeAlert(title: "오류 발생", message: "사진을 저장할 수 없습니다.")
+                return
+            }
+            
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.creationRequestForAsset(from: image)
+            }, completionHandler: { (success, error) in
+                DispatchQueue.main.async {
+                    if success {
+                        self?.makeAlert(title: "저장 성공", message: "사진을 앨범에 저장했어요.")
+                    } else if let error = error {
+                        Logger.debugDescription(error)
+                        self?.makeAlert(title: "오류 발생", message: "사진을 저장할 수 없습니다.")
+                    }
+                }
+            })
+        }
+        downloadButton.addAction(downloadAction, for: .touchUpInside)
+    }
+    
     // MARK: - selector
     
     @objc
@@ -100,25 +115,6 @@ final class LetterImageViewController: BaseViewController {
     private func didPinchImage(_ pinch: UIPinchGestureRecognizer) {
         imageView.transform = imageView.transform.scaledBy(x: pinch.scale, y: pinch.scale)
         pinch.scale = 1
-    }
-                                           
-    @objc
-    private func saveImage(_ image: UIImage, didFinshSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            Logger.debugDescription(error)
-            self.makeAlert(title: "오류 발생", message: "저장에 실패했습니다.")
-        } else {
-            PHPhotoLibrary.shared().performChanges({
-                PHAssetChangeRequest.creationRequestForAsset(from: image)
-            }, completionHandler: { [weak self] (success, error) in
-                if success {
-                    self?.makeAlert(title: "저장 성공", message: "앨범에 사진을 저장했어요.")
-                } else if let error = error {
-                    Logger.debugDescription(error)
-                    self?.makeAlert(title: "오류 발생", message: "저장에 실패했습니다.")
-                }
-            })
-        }
     }
 }
 
