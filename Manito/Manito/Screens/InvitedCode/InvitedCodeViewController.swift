@@ -181,7 +181,7 @@ class InvitedCodeViewController: BaseViewController {
         UIView.animate(withDuration: 0.7, animations: {
             toastLabel.alpha = 0.8
         }, completion: { isCompleted in
-            UIView.animate(withDuration: 0.7, delay: 1, animations: {
+            UIView.animate(withDuration: 0.7, delay: 0.5, animations: {
                 toastLabel.alpha = 0
             }, completion: { isCompleted in
                 toastLabel.removeFromSuperview()
