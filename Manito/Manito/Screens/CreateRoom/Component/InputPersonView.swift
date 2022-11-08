@@ -30,9 +30,9 @@ class InputPersonView: UIView {
         imageView.backgroundColor = .darkGray
         return imageView
     }()
-    private var personLabel: UILabel = {
+    private lazy var personLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.x + " \(TextLiteral.minMember)"
+        label.text = TextLiteral.x + " \(Int(personSlider.value))인"
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
