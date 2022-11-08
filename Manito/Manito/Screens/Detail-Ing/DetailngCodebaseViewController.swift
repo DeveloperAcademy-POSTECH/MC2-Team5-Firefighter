@@ -215,7 +215,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         missionContentsLabel.snp.makeConstraints{
             $0.centerY.equalTo(missionTitleLabel.snp.bottom).offset(30)
             $0.centerX.equalTo(missionBackgroundView.snp.centerX)
-            $0.width.equalTo(260)
+            $0.leading.trailing.equalTo(missionBackgroundView).inset(12)
         }
 
         view.addSubview(informationTitleLabel)
