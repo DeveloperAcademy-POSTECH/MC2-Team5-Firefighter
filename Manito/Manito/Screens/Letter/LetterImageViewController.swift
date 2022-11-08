@@ -27,6 +27,14 @@ final class LetterImageViewController: BaseViewController {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
+    private let downloadButton: UIButton = {
+        let button = UIButton()
+        let action = UIAction { _ in
+            
+        }
+        button.setImage(ImageLiterals.btnCamera, for: .normal)
+        return button
+    }()
     
     // MARK: - life cycle
     
@@ -38,6 +46,12 @@ final class LetterImageViewController: BaseViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(23)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(17)
             $0.width.height.equalTo(44)
+        }
+        
+        view.addSubview(downloadButton)
+        downloadButton.snp.makeConstraints {
+            $0.top.equalTo(closeButton.snp.top)
+            $0.trailing.equalTo(closeButton.snp.leading).offset(-30)
         }
     }
     
