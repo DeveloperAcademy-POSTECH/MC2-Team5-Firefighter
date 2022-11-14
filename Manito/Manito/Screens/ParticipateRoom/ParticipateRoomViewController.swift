@@ -9,10 +9,12 @@ import UIKit
 
 import SnapKit
 
-class ParticipateRoomViewController: BaseViewController {
+final class ParticipateRoomViewController: BaseViewController {
+    
     private let checkRoomInfoService: RoomProtocol = RoomAPI(apiService: APIService())
     
-    // MARK: - Property
+    // MARK: - property
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.enterRoom
@@ -82,18 +84,57 @@ class ParticipateRoomViewController: BaseViewController {
         view.bringSubviewToFront(nextButton)
     }
     
-    // MARK: - Configure
-    override func configUI() {
-        super.configUI()
+    // MARK: - API
+    
+    private func dispatchInviteCode() {
+        Task {
+            do {
+                guard let code = inputInvitedCodeView.roomCodeTextField.text else { return }
+                let data = try await checkRoomInfoService
+                    .dispatchVerification(body: code)
+                if let info = data {
+                    guard let id = info.id else { return }
+                    let viewController = CheckRoomViewController()
+                    viewController.modalPresentationStyle = .overFullScreen
+                    viewController.modalTransitionStyle = .crossDissolve
+                    viewController.verification = info
+                    viewController.roomId = id
+                    
+                    present(viewController, animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage)
+                print("client Error: \(String(describing: message))")
+            }
+        }
     }
     
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationController?.navigationBar.isHidden = true
-        navigationController?.navigationBar.prefersLargeTitles = false
+    // MARK: - func
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    // MARK: - Selectors
+    private func toggleButton() {
+        inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
+            self?.nextButton.isDisabled = !isEnable
+        }
+    }
+    
+    override func endEditingView() {
+        if !nextButton.isTouchInside {
+            view.endEditing(true)
+        }
+    }
+    
+    // MARK: - selector
+    
     @objc private func keyboardWillShow(notification:NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             UIView.animate(withDuration: 0.2, animations: {
@@ -119,53 +160,5 @@ class ParticipateRoomViewController: BaseViewController {
     @objc private func didReceiveNextNotification(_ notification: Notification) {
         guard let id = notification.userInfo?["roomId"] as? Int else { return }
         self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom, roomId: id), animated: true)
-    }
-    
-    // MARK: - Funtions
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    private func toggleButton() {
-        inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
-            self?.nextButton.isDisabled = !isEnable
-        }
-    }
-    
-    override func endEditingView() {
-        if !nextButton.isTouchInside {
-            view.endEditing(true)
-        }
-    }
-    
-    // MARK: - API
-    
-    private func dispatchInviteCode() {
-        Task {
-            do {
-                guard let code = inputInvitedCodeView.roomCodeTextField.text else { return }
-                let data = try await checkRoomInfoService
-                    .dispatchVerification(body: code)
-                if let info = data {
-                    guard let id = info.id else { return }
-                    let viewController = CheckRoomViewController()
-                    viewController.modalPresentationStyle = .overFullScreen
-                    viewController.modalTransitionStyle = .crossDissolve
-                    viewController.verification = info
-                    viewController.roomId = id
-                    
-                    present(viewController, animated: true)
-                } 
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage)
-                print("client Error: \(String(describing: message))")
-            }
-        }
     }
 }

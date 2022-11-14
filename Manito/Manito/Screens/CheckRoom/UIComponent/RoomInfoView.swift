@@ -11,21 +11,21 @@ import SnapKit
 
 final class RoomInfoView: UIView {
     
-    // MARK: - Property
+    // MARK: - property
     
-    lazy var roomLabel: UILabel = {
+    let roomLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
     
-    lazy var dateLabel: UILabel = {
+    let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
     
-    lazy var peopleInfo = PeopleInfoView()
+    let peopleInfo = PeopleInfoView()
 
     // MARK: - init
     
@@ -40,8 +40,7 @@ final class RoomInfoView: UIView {
     
     // MARK: - func
     
-    private func render() {
-        
+    private func render() {        
         self.addSubview(roomLabel)
         roomLabel.snp.makeConstraints {
             $0.top.centerX.equalToSuperview()

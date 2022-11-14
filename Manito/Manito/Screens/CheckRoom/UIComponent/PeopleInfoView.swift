@@ -11,11 +11,11 @@ import SnapKit
 
 final class PeopleInfoView: UIView {
     
-    // MARK: - Property
+    // MARK: - property
     
     private let peopleImageView = UIImageView(image: ImageLiterals.imgNi)
     
-    lazy var peopleLabel: UILabel = {
+    let peopleLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
         return label

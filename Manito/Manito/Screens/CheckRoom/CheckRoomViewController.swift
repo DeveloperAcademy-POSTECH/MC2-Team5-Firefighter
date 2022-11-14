@@ -64,6 +64,11 @@ class CheckRoomViewController: BaseViewController {
     
     // MARK: - life cycle
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViewController()
+    }
+    
     override func render() {
         view.addSubview(roomInfoImageView)
         roomInfoImageView.snp.makeConstraints {
@@ -103,7 +108,6 @@ class CheckRoomViewController: BaseViewController {
     
     override func configUI() {
         view.backgroundColor = .black.withAlphaComponent(0.7)
-        setupViewController()
     }
     
     // MARK: - func
@@ -118,7 +122,8 @@ class CheckRoomViewController: BaseViewController {
         roomInfoView.peopleInfo.peopleLabel.text = "X \(capacity)인"
     }
     
-    // MARK: - Selectors
+    // MARK: - selector
+    
     @objc private func didTapNoButton() {
         dismiss(animated: true, completion: nil)
     }
