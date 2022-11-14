@@ -195,6 +195,8 @@ class ChooseCharacterViewController: BaseViewController {
         }
     }
     
+    // MARK: - func
+    
     private func requestJoinRoom() {
         Task {
             do {
@@ -222,7 +224,8 @@ class ChooseCharacterViewController: BaseViewController {
         }
     }
     
-    // MARK: - Selectors
+    // MARK: - selector
+    
     @objc private func didTapBackButton() {
         navigationController?.popViewController(animated: true)
     }
@@ -245,8 +248,7 @@ class ChooseCharacterViewController: BaseViewController {
     }
 }
 
-    // MARK: - UICollectionViewDataSource
-
+// MARK: - UICollectionViewDataSource
 extension ChooseCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Character.allCases.count
