@@ -512,9 +512,9 @@ class DetailWaitViewController: BaseViewController {
     private func didTapEnterButton() {
         guard let roomInfo = roomInfo else { return }
         let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
-                                                                     capacity: roomInfo.capacity,
-                                                                     startDate: roomInfo.startDate,
-                                                                     endDate: roomInfo.endDate), code: inviteCode)
+                                                             capacity: roomInfo.capacity,
+                                                             startDate: roomInfo.startDate,
+                                                             endDate: roomInfo.endDate), code: inviteCode)
         viewController.roomInfo = roomInfo
         viewController.modalPresentationStyle = .overCurrentContext
         viewController.modalTransitionStyle = .crossDissolve
@@ -525,7 +525,7 @@ class DetailWaitViewController: BaseViewController {
     private func didReceiveDateRange(_ notification: Notification) {
         guard let startDate = notification.userInfo?["startDate"] as? String else { return }
         guard let endDate = notification.userInfo?["endDate"] as? String else { return }
-    
+        
         self.startDateText = startDate
         self.endDateText = endDate
     }
@@ -533,7 +533,7 @@ class DetailWaitViewController: BaseViewController {
     @objc
     private func didReceiveMaxUser(_ notification: Notification) {
         guard let maxUser = notification.userInfo?["maxUser"] as? Float else { return }
-    
+        
         let intMaxUser = Int(maxUser)
         maxUserCount = intMaxUser
     }
@@ -546,7 +546,7 @@ class DetailWaitViewController: BaseViewController {
     @objc private func changeStartButton() {
         setStartButton()
     }
-
+    
     @objc private func requestDateRange(_ notification: Notification) {
         guard let startDate = notification.userInfo?["startDate"] as? String else { return }
         guard let endDate = notification.userInfo?["endDate"] as? String else { return }
