@@ -94,11 +94,11 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     private enum ButtonText: String {
         case waiting
         case start
-
+        
         var status: String {
             switch self {
             case .waiting:
@@ -512,9 +512,9 @@ class DetailWaitViewController: BaseViewController {
     private func didTapEnterButton() {
         guard let roomInfo = roomInfo else { return }
         let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
-                                                                         capacity: roomInfo.capacity,
-                                                                         startDate: roomInfo.startDate,
-                                                                         endDate: roomInfo.endDate), code: inviteCode)
+                                                                     capacity: roomInfo.capacity,
+                                                                     startDate: roomInfo.startDate,
+                                                                     endDate: roomInfo.endDate), code: inviteCode)
         viewController.roomInfo = roomInfo
         viewController.modalPresentationStyle = .overCurrentContext
         viewController.modalTransitionStyle = .crossDissolve
