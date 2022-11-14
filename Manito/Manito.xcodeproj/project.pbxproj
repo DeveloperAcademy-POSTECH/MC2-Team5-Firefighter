@@ -153,7 +153,6 @@
 		D739C36528C7B75400161117 /* SettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36428C7B75400161117 /* SettingAPI.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
 		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
-		D7607B28292244AB00D8F9B4 /* ToastPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7607B27292244AB00D8F9B4 /* ToastPopupView.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* UrlLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* UrlLiteral.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
@@ -306,7 +305,6 @@
 		D739C36428C7B75400161117 /* SettingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAPI.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
 		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
-		D7607B27292244AB00D8F9B4 /* ToastPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPopupView.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* UrlLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlLiteral.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
@@ -637,7 +635,6 @@
 				B5F5253028545E4C00614FF7 /* BackButton.swift */,
 				B5F5253A2854ABF200614FF7 /* MainButton.swift */,
 				39FFE32728EEFFFE008442EE /* MoreButton.swift */,
-				D7607B27292244AB00D8F9B4 /* ToastPopupView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1036,7 +1033,6 @@
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				39C957D828799DB900A04A2B /* NetworkError.swift in Sources */,
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
-				D7607B28292244AB00D8F9B4 /* ToastPopupView.swift in Sources */,
 				39CD581B28C4BE8800496E91 /* DetailStartingAPI.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
