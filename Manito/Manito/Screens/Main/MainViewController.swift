@@ -104,7 +104,10 @@ final class MainViewController: BaseViewController {
     // MARK: - life cycle
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         setupGifImage()
+        setupGuideArea()
+        renderGuideArea()
     }
     
     override func viewWillAppear(_ animated: Bool) {
