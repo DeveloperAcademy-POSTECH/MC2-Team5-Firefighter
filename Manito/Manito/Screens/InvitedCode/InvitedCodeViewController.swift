@@ -76,7 +76,9 @@ class InvitedCodeViewController: BaseViewController {
     private lazy var roomInviteCodeButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
-            self?.touchUpToShowToast()
+            if let code = self?.code {
+                self?.touchUpToShowToast(code: code)
+            }
         }
         button.setTitle(code, for: .normal)
         button.setTitleColor(.blue, for: .normal)
@@ -153,11 +155,5 @@ class InvitedCodeViewController: BaseViewController {
     
     override func configUI() {
         view.backgroundColor = .black.withAlphaComponent(0.8)
-    }
-    
-    // MARK: - functions
-    private func touchUpToShowToast() {
-        UIPasteboard.general.string = code
-        self.showToast(message: TextLiteral.detailWaitViewControllerCopyCode)
     }
 }
