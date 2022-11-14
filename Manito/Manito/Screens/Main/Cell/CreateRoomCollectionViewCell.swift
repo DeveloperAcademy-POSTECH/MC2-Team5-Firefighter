@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class CreateRoomCollectionViewCell: UICollectionViewCell{
+final class CreateRoomCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - property
     
@@ -32,26 +32,9 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
         return label
     }()
     
-    // MARK: - init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-        render()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - func
-
-    private func setupView(){
-        backgroundColor = .darkGrey002.withAlphaComponent(0.8)
-        makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
-    }
     
-    private func render() {
+    override func render() {
         addSubview(circleView)
         circleView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(22)
@@ -71,5 +54,10 @@ class CreateRoomCollectionViewCell: UICollectionViewCell{
             $0.bottom.equalToSuperview().inset(22)
             $0.centerX.equalToSuperview()
         }
+    }
+    
+    override func configUI(){
+        backgroundColor = .darkGrey002.withAlphaComponent(0.8)
+        makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
     }
 }

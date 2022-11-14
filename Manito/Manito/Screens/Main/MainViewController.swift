@@ -16,10 +16,13 @@ final class MainViewController: BaseViewController {
     private var rooms: [ParticipatingRoom]?
     
     private enum Size {
-        static let collectionHorizontalSpacing: CGFloat = 17
-        static let collectionVerticalSpacing: CGFloat = 12
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 20 * 2 - collectionHorizontalSpacing) / 2
-        static let collectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20)
+        static let collectionHorizontalSpacing: CGFloat = 20
+        static let collectionVerticalSpacing: CGFloat = 20
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 3) / 2
+        static let collectionInset = UIEdgeInsets(top: 0,
+                                                  left: collectionHorizontalSpacing,
+                                                  bottom: collectionVerticalSpacing,
+                                                  right: collectionHorizontalSpacing)
     }
     
     private enum RoomStatus: String {
@@ -42,14 +45,19 @@ final class MainViewController: BaseViewController {
     // MARK: - property
 
     private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
+    
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
         button.addTarget(self, action: #selector(didTapSettingButton), for: .touchUpInside)
         return button
     }()
+    
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
+    
     private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
+    
     private let commonMissionView = CommonMissonView()
+    
     private let menuTitle: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.mainViewControllerMenuTitle
@@ -57,6 +65,7 @@ final class MainViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
+    
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
@@ -66,6 +75,7 @@ final class MainViewController: BaseViewController {
         flowLayout.minimumInteritemSpacing = 16
         return flowLayout
     }()
+    
     private lazy var listCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
@@ -78,8 +88,11 @@ final class MainViewController: BaseViewController {
             forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
         return collectionView
     }()
+    
     private let maCharacterImageView = GIFImageView()
+    
     private let niCharacterImageView = GIFImageView()
+    
     private let ttoCharacterImageView = GIFImageView()
     
     // MARK: - init
@@ -91,12 +104,7 @@ final class MainViewController: BaseViewController {
     // MARK: - life cycle
     
     override func viewDidLoad() {
-        render()
-        configUI()
-        setupNavigationBar()
         setupGifImage()
-        setupGuideArea()
-        renderGuideArea()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -166,12 +174,6 @@ final class MainViewController: BaseViewController {
             $0.width.height.equalTo(44)
         }
     }
-    
-    override func setupGuideArea() {
-        super.setupGuideArea()
-        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
-    }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
@@ -183,6 +185,20 @@ final class MainViewController: BaseViewController {
         navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.leftBarButtonItem = appTitleView
         navigationItem.rightBarButtonItem = settingButtonView
+    }
+    
+    override func setupGuideArea() {
+        super.setupGuideArea()
+        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
+        setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
+    }
+    
+    private func setupGifImage() {
+        DispatchQueue.main.async {
+            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
+            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
+            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
+        }
     }
     
     // MARK: - API
@@ -220,14 +236,6 @@ final class MainViewController: BaseViewController {
     }
     
     // MARK: - func
-    
-    private func setupGifImage() {
-        DispatchQueue.main.async {
-            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
-            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
-            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
-        }
-    }
 
     private func newRoom() {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)

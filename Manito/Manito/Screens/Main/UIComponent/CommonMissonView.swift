@@ -21,7 +21,7 @@ final class CommonMissonView: UIView {
         return label
     }()
     
-    lazy var mission: UILabel = {
+    let mission: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
         label.textAlignment = .center
