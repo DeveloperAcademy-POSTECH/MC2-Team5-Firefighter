@@ -48,11 +48,11 @@ class DetailWaitViewController: BaseViewController {
             titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
         }
     }
-    
+
     enum UserStatus: CaseIterable {
         case owner
         case member
-        
+
         var alertText: AlertText {
             switch self {
             case .owner:
@@ -62,11 +62,11 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     enum AlertText {
         case delete
         case exit
-        
+
         var title: String {
             switch self {
             case .delete:
@@ -75,7 +75,7 @@ class DetailWaitViewController: BaseViewController {
                 return TextLiteral.datailWaitViewControllerExitTitle
             }
         }
-        
+
         var message: String {
             switch self {
             case .delete:
@@ -84,7 +84,7 @@ class DetailWaitViewController: BaseViewController {
                 return TextLiteral.datailWaitViewControllerExitMessage
             }
         }
-        
+
         var okTitle: String {
             switch self {
             case .delete:
@@ -94,11 +94,11 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     private enum ButtonText: String {
         case waiting
         case start
-        
+
         var status: String {
             switch self {
             case .waiting:
@@ -108,9 +108,9 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     // MARK: - property
-    
+
     private lazy var settingButton: UIButton = {
         let button = MoreButton()
         button.menu = setExitButtonMenu()
@@ -147,7 +147,6 @@ class DetailWaitViewController: BaseViewController {
             if let code = self?.inviteCode {
                 self?.touchUpToShowToast(code: code)
             }
-            
         }
         button.setTitle(TextLiteral.copyCode, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
@@ -179,31 +178,31 @@ class DetailWaitViewController: BaseViewController {
         }
         return button
     }()
-    
+
     // MARK: - init
-    
+
     init(index: Int) {
         roomIndex = index
         super.init()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     deinit {
         print("\(#file) is dead")
     }
-    
+
     // MARK: - life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         requestWaitRoomInfo()
         setupDelegation()
         setupNotificationCenter()
     }
-    
+
     override func render() {
         view.addSubview(titleView)
         titleView.snp.makeConstraints {
@@ -211,32 +210,32 @@ class DetailWaitViewController: BaseViewController {
             $0.top.equalToSuperview().offset(100)
             $0.height.equalTo(86)
         }
-        
+
         view.addSubview(togetherFriendLabel)
         togetherFriendLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
-        
+
         view.addSubview(imgNiView)
         imgNiView.snp.makeConstraints {
             $0.centerY.equalTo(togetherFriendLabel.snp.centerY)
             $0.leading.equalTo(togetherFriendLabel.snp.trailing).offset(7)
             $0.width.height.equalTo(30)
         }
-        
+
         view.addSubview(comeInLabel)
         comeInLabel.snp.makeConstraints {
             $0.leading.equalTo(imgNiView.snp.trailing)
             $0.centerY.equalTo(imgNiView.snp.centerY)
         }
-        
+
         view.addSubview(copyButton)
         copyButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.centerY.equalTo(togetherFriendLabel.snp.centerY)
         }
-        
+
         view.addSubview(startButton)
         startButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
@@ -244,14 +243,14 @@ class DetailWaitViewController: BaseViewController {
             $0.height.equalTo(60)
         }
     }
-    
+
     override func configUI() {
         super.configUI()
         setupSettingButton()
     }
-    
+
     // MARK: - API
-    
+
     func requestWaitRoomInfo() {
         Task {
             do {
@@ -291,7 +290,7 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     func requestChangeRoomInfo(roomDto: RoomDTO) {
         Task {
             do {
@@ -308,7 +307,7 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     func requestStartManitto() {
         Task {
             do {
@@ -331,7 +330,7 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     func requestDeleteRoom() {
         Task {
             do {
@@ -348,7 +347,7 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     func requestDeleteLeaveRoom() {
         Task {
             do {
@@ -365,15 +364,15 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     // MARK: - func
-    
+
     private func setupDelegation() {
         listTable.delegate = self
         listTable.dataSource = self
         listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
-    
+
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
         let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode)
         viewController.currentUserCount = userCount
@@ -382,7 +381,7 @@ class DetailWaitViewController: BaseViewController {
         viewController.endDateText = endString
         present(viewController, animated: true, completion: nil)
     }
-    
+
     // MARK: - private func
     
     private func setupSettingButton() {
@@ -391,7 +390,7 @@ class DetailWaitViewController: BaseViewController {
         
         navigationItem.rightBarButtonItem = settingButton
     }
-    
+
     private func setExitButtonMenu() -> UIMenu {
         switch memberType {
         case .owner:
@@ -416,7 +415,7 @@ class DetailWaitViewController: BaseViewController {
             return menu
         }
     }
-    
+
     private func presentEditRoomView() {
         guard let startDate = startDateText.stringToDate else { return }
         let isAlreadyPastDate = startDate.distance(to: Date()) > 86400
@@ -427,18 +426,18 @@ class DetailWaitViewController: BaseViewController {
             editInfoFromCurrentDate()
         }
     }
-    
+
     private func editInfoFromDefaultDate() {
         let fiveDaysInterval: TimeInterval = 86400 * 4
         let defaultStartDate = Date().dateToString
         let defaultEndDate = (Date() + fiveDaysInterval).dateToString
         self.presentModal(from: defaultStartDate, to: defaultEndDate, isDateEdit: false)
     }
-    
+
     private func editInfoFromCurrentDate() {
         self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
     }
-    
+
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateRange(_:)), name: .dateRangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeStartButton), name: .changeStartButtonNotification, object: nil)
@@ -447,7 +446,7 @@ class DetailWaitViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(requestRoomInfo(_:)), name: .requestRoomInfoNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didTapEnterButton), name: .createRoomInvitedCode, object: nil)
     }
-    
+
     private func isPastStartDate() {
         guard let startDate = startDateText.stringToDate else { return }
         let isPast = startDate.distance(to: Date()) > 86400
@@ -468,7 +467,7 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     private func setStartButton() {
         if memberType == .owner {
             guard let startDate = startDateText.stringToDate else { return }
@@ -482,7 +481,7 @@ class DetailWaitViewController: BaseViewController {
             canStartClosure?(false)
         }
     }
-    
+
     private func renderTableView() {
         DispatchQueue.main.async {
             self.listTable.reloadData()
@@ -500,14 +499,14 @@ class DetailWaitViewController: BaseViewController {
             }
         }
     }
-    
+
     private func setupTitleViewGesture() {
         if memberType == .owner {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
             titleView.addGestureRecognizer(tapGesture)
         }
     }
-    
+
     // MARK: - selector
     @objc
     private func didTapEnterButton() {
@@ -521,7 +520,7 @@ class DetailWaitViewController: BaseViewController {
         viewController.modalTransitionStyle = .crossDissolve
         present(viewController, animated: true)
     }
-    
+
     @objc
     private func didReceiveDateRange(_ notification: Notification) {
         guard let startDate = notification.userInfo?["startDate"] as? String else { return }
@@ -530,7 +529,7 @@ class DetailWaitViewController: BaseViewController {
         self.startDateText = startDate
         self.endDateText = endDate
     }
-    
+
     @objc
     private func didReceiveMaxUser(_ notification: Notification) {
         guard let maxUser = notification.userInfo?["maxUser"] as? Float else { return }
@@ -538,22 +537,22 @@ class DetailWaitViewController: BaseViewController {
         let intMaxUser = Int(maxUser)
         maxUserCount = intMaxUser
     }
-    
+
     @objc
     private func presentDetailEditViewController() {
         self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
     }
-    
+
     @objc private func changeStartButton() {
         setStartButton()
     }
-    
+
     @objc private func requestDateRange(_ notification: Notification) {
         guard let startDate = notification.userInfo?["startDate"] as? String else { return }
         guard let endDate = notification.userInfo?["endDate"] as? String else { return }
         requestChangeRoomInfo(roomDto: RoomDTO(title: titleView.roomTitleLabel.text ?? "", capacity: maxUserCount, startDate: startDate, endDate: endDate))
     }
-    
+
     @objc private func requestRoomInfo(_ notification: Notification) {
         guard let startDate = notification.userInfo?["startDate"] as? String else { return }
         guard let endDate = notification.userInfo?["endDate"] as? String else { return }
@@ -572,7 +571,7 @@ extension DetailWaitViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return userArr.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = listTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
         cell.textLabel?.text = userArr[indexPath.row]
