@@ -189,10 +189,11 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.makeBorderLayer(color: .white)
         return button
     }()
-    private let manitoMemoryButton: UIButton = {
+    private lazy var manitoMemoryButton: UIButton = {
         let button = UIButton(type: .system)
-        let action = UIAction { _ in
-            print("함께 했던 기록!!")
+        let action = UIAction { [weak self] _ in
+            let viewController = MemoryViewController(roomId: (self?.roomId!)!)
+            self?.navigationController?.pushViewController(viewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         button.setTitle("함께 했던 기록", for: .normal)
