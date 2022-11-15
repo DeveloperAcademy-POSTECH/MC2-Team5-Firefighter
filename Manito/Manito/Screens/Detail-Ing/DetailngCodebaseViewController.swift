@@ -39,7 +39,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     private var missionBackgroundView: UIView = {
         var view = UIView()
         view.backgroundColor = .darkGrey004
-        view.makeBorderLayer(color: .systemYellow)
         return view
     }()
     private let missionTitleLabel: UILabel = {
@@ -87,6 +86,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let manitteeIconView = UIImageView(image: ImageLiterals.icManiTti)
     private let manitteeLabel: UILabel = {
         let label = UILabel()
+        label.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
         return label
@@ -144,7 +144,9 @@ final class DetailingCodebaseViewController: BaseViewController {
     }()
     private let manitteeAnimationLabel: UILabel = {
         var label = UILabel()
+        label.text = ""
         label.textColor = .white
+        label.alpha = 0
         label.font = .font(.regular, ofSize: 15)
         return label
     }()
@@ -165,8 +167,14 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let badgeLabel: LetterCountBadgeView = {
         let label = LetterCountBadgeView()
         label.layer.cornerRadius = 15
-        label.isHidden = false
+        label.isHidden = true
         return label
+    }()
+    private let exitButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.icMore, for: .normal)
+        button.showsMenuAsPrimaryAction = true
+        return button
     }()
     
     // MARK: - life cycle
@@ -299,7 +307,7 @@ final class DetailingCodebaseViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
             $0.centerX.equalToSuperview()
         }
-
+        
         view.addSubview(manitiRealIconView)
         manitiRealIconView.snp.makeConstraints {
             $0.top.equalTo(manitteeIconView.snp.top)
@@ -307,14 +315,14 @@ final class DetailingCodebaseViewController: BaseViewController {
             $0.leading.equalTo(manitteeIconView.snp.leading)
             $0.bottom.equalTo(manitteeIconView.snp.bottom)
         }
-
+        
         view.addSubview(guideButton)
         guideButton.snp.makeConstraints {
             $0.top.equalTo(missionBackgroundView.snp.top)
             $0.trailing.equalTo(missionBackgroundView.snp.trailing)
             $0.width.height.equalTo(44)
         }
-
+        
         view.addSubview(badgeLabel)
         badgeLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview().offset(35)
@@ -325,7 +333,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
-        setupText()
     }
     
     override func setupGuideArea() {
@@ -333,14 +340,6 @@ final class DetailingCodebaseViewController: BaseViewController {
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
         setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
     }
-
-    private func setupText() {
-        titleLabel.text = "애니또 팀"
-        periodLabel.text = "22.11.11 ~ 22.11.15"
-        statusLabel.text = "진행중"
-        missionContentsLabel.attributedText = NSAttributedString(string: "1000원 이하의 선물 주고 인증샷 받기")
-        manitteeLabel.text = "디너의 마니띠"
-        manitteeAnimationLabel.text = "호야"
     }
 
     @objc
