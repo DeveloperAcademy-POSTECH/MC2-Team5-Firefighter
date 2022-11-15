@@ -28,8 +28,6 @@ enum TextLiteral {
     static let maxMessage: String = "최대 7일까지 선택가능해요"
     static let destructive: String = "변경 사항 폐기"
     static let per: String = "인"
-    static let minMember: String = "5인"
-    static let maxMember: String = "15인"
     static let x: String = "X"
     static let createRoom: String = "방 생성하기"
     static let next: String = "다음"
