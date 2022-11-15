@@ -175,10 +175,11 @@ final class DetailingCodebaseViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 15)
         return label
     }()
-    private let letterBoxButton: UIButton = {
+    private lazy var letterBoxButton: UIButton = {
         let button = UIButton(type: .system)
-        let action = UIAction { _ in
-            print("쪽지함!!")
+        let action = UIAction { [weak self] _ in
+            let letterViewController = LetterViewController(roomState: (self?.roomType!.rawValue)!, roomId: (self?.roomId!)!, mission: (self?.missionContentsLabel.text!)!)
+            self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         button.setTitle("쪽지함", for: .normal)
