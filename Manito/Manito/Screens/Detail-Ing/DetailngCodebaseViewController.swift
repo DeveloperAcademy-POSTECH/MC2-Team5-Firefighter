@@ -322,6 +322,12 @@ final class DetailingCodebaseViewController: BaseViewController {
             $0.centerX.equalTo(manitteeBackView)
         }
         
+        manitteeBackView.addSubview(manitteeAnimationLabel)
+        manitteeAnimationLabel.snp.makeConstraints {
+            $0.bottom.equalTo(manitteeBackView.snp.bottom).inset(15)
+            $0.centerX.equalTo(manitteeBackView)
+        }
+        
         view.addSubview(listBackView)
         listBackView.snp.makeConstraints {
             $0.top.equalTo(informationTitleLabel.snp.bottom).offset(31)
@@ -393,10 +399,6 @@ final class DetailingCodebaseViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
-        super.configUI()
-    }
-    
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
@@ -408,8 +410,23 @@ final class DetailingCodebaseViewController: BaseViewController {
         let rightItem = makeBarButtonItem(with: exitButton)
         navigationItem.rightBarButtonItem = rightItem
     }
+    
+    private func setupLargeTitleToOriginal() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
-
+    
+    }
+  
+    // MARK: - selector
+    
+    @objc
+    override func endEditingView() {
+        if !guideButton.isTouchInside {
+            guideBoxImageView.isHidden = true
+        }
+    }
+    
     @objc
     private func didTappedManittee() {
         if !isTappedManittee {
