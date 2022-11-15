@@ -122,6 +122,12 @@ enum TextLiteral {
         쪽지함이 비었어요.
         마니띠에게 쪽지를 보내볼까요?
         """
+
+    // MARK: - LetterImageViewController
+    static let letterImageViewControllerErrorTitle = "오류 발생"
+    static let letterImageViewControllerErrorMessage = "사진을 저장할 수 없습니다."
+    static let letterImageViewControllerSuccessTitle = "저장 성공"
+    static let letterImageViewControllerSuccessMessage = "사진을 앨범에 저장했어요."
     
     // MARK: - CreateLetterViewController
     static let createLetterViewControllerSendButton: String = "보내기"

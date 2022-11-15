@@ -48,8 +48,8 @@ final class LetterImageViewController: BaseViewController {
         
         view.addSubview(downloadButton)
         downloadButton.snp.makeConstraints {
-            $0.top.equalTo(closeButton.snp.top)
-            $0.trailing.equalTo(closeButton.snp.leading).offset(-20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
         }
     }
     
@@ -84,7 +84,8 @@ final class LetterImageViewController: BaseViewController {
     private func setupButtonAction() {
         let downloadAction = UIAction { [weak self] _ in
             guard let image = self?.imageView.image else {
-                self?.makeAlert(title: "오류 발생", message: "사진을 저장할 수 없습니다.")
+                self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
+                                message: TextLiteral.letterImageViewControllerErrorMessage)
                 return
             }
             
@@ -93,10 +94,12 @@ final class LetterImageViewController: BaseViewController {
             }, completionHandler: { (success, error) in
                 DispatchQueue.main.async {
                     if success {
-                        self?.makeAlert(title: "저장 성공", message: "사진을 앨범에 저장했어요.")
+                        self?.makeAlert(title: TextLiteral.letterImageViewControllerSuccessTitle,
+                                        message: TextLiteral.letterImageViewControllerSuccessMessage)
                     } else if let error = error {
                         Logger.debugDescription(error)
-                        self?.makeAlert(title: "오류 발생", message: "사진을 저장할 수 없습니다.")
+                        self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
+                                        message: TextLiteral.letterImageViewControllerErrorMessage)
                     }
                 }
             })
