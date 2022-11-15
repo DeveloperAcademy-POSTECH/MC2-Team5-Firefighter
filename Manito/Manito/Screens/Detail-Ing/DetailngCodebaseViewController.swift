@@ -241,6 +241,20 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     // MARK: - life cycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLargeTitleToOriginal()
+        
+        switch roomType {
+        case .POST:
+            requestDoneRoomInfo()
+        case .PROCESSING:
+            requestRoomInfo()
+            setupOpenManittoButton()
+        case .none: break
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGuideArea()
@@ -416,6 +430,10 @@ final class DetailingCodebaseViewController: BaseViewController {
         navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
     
+    private func setupOpenManittoButton() {
+        guard let endDateToString = roomInformation?.endDate else { return }
+        guard let endDate = endDateToString.stringToDateYYYY() else { return }
+        manitoOpenButton.isHidden = !endDate.isOpenManitto
     }
   
     // MARK: - selector
@@ -454,6 +472,117 @@ final class DetailingCodebaseViewController: BaseViewController {
     @objc
     private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
         print("당신의 친구들은 !!!")
+    // MARK: - DetailStarting API
+   
+    private func requestRoomInfo() {
+        Task {
+            do {
+                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId!)
+                if let info = data {
+                    guard let title = info.room?.title,
+                          let startDate = info.room?.startDate,
+                          let endDate = info.room?.endDate,
+                          let missionContent = info.mission?.content,
+                          let manittee = info.manittee?.nickname,
+                          let didView = info.didViewRoulette,
+                          let admin = info.admin,
+                          let badgeCount = info.messages?.count
+                    else { return }
+                    
+                    titleLabel.text = title
+                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                    missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
+                    manitteeAnimationLabel.text = manittee
+                    
+                    if badgeCount > 0 {
+                        badgeLabel.isHidden = false
+                        badgeLabel.countLabel.text = String(badgeCount)
+                    } else {
+                        badgeLabel.isHidden = true
+                    }
+                    
+                    if !didView && !admin {
+                        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                        guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+                        viewController.modalPresentationStyle = .fullScreen
+                        viewController.roomInformation = roomInformation
+                        viewController.manitteeName = manittee
+                        present(viewController, animated: true)
+                    }
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    // MARK: - DetailDone API
+    
+    private func requestDoneRoomInfo() {
+        Task {
+            do {
+                let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId!)
+                if let info = data {
+                    guard let title = info.room?.title,
+                          let startDate = info.room?.startDate,
+                          let endDate = info.room?.endDate,
+                          let manittee = info.manittee?.nickname,
+                          let isAdmin = info.admin
+                    else { return }
+                    
+                    titleLabel.text = title
+                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                    missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.detailIngViewControllerDoneMissionText)
+                    manitteeAnimationLabel.text = manittee
+                    isAdminPost = isAdmin
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestExitRoom() {
+        Task {
+            do {
+                let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId!)
+                if statusCode == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+                makeAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdmin)
+            }
+        }
+    }
+    
+    private func requestDeleteRoom() {
+        Task {
+            do {
+                let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId!)
+                if statusCode == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
     }
 }
 
