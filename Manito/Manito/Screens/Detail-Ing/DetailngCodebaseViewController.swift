@@ -36,14 +36,14 @@ final class DetailingCodebaseViewController: BaseViewController {
                 statusLabel.text = TextLiteral.done
                 statusLabel.backgroundColor = .grey002
                 manitoMemoryButton.layer.isHidden = false
-                manitoOpenButton.layer.isHidden = true
+                manitoOpenButtonShadowView.layer.isHidden = true
                 exitButton.isHidden = false
             } else {
                 missionBackgroundView.makeBorderLayer(color: .subOrange)
                 statusLabel.text = TextLiteral.doing
                 statusLabel.backgroundColor = .mainRed
                 manitoMemoryButton.layer.isHidden = true
-                manitoOpenButton.layer.isHidden = false
+                manitoOpenButtonShadowView.layer.isHidden = false
                 exitButton.isHidden = true
             }
         }
@@ -217,6 +217,18 @@ final class DetailingCodebaseViewController: BaseViewController {
         imageView.alpha = 0
         return imageView
     }()
+    private let manitoOpenButtonShadowView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mainRed
+        view.layer.masksToBounds = false
+        view.layer.cornerRadius = 30
+        view.layer.shadowColor = UIColor.shadowRed.cgColor
+        view.layer.shadowOpacity = 1.0
+        view.layer.shadowRadius = 1
+        view.layer.shadowOffset = CGSize(width: 0, height: 6)
+        view.layer.isHidden = true
+        return view
+    }()
     private lazy var manitoOpenButton: MainButton = {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
@@ -384,10 +396,17 @@ final class DetailingCodebaseViewController: BaseViewController {
             $0.height.equalTo(80)
         }
         
-        view.addSubview(manitoOpenButton)
-        manitoOpenButton.snp.makeConstraints {
+        view.addSubview(manitoOpenButtonShadowView)
+        manitoOpenButtonShadowView.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
             $0.centerX.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.size.width - 40)
+            $0.height.equalTo(60.0)
+        }
+        
+        manitoOpenButtonShadowView.addSubview(manitoOpenButton)
+        manitoOpenButton.snp.makeConstraints {
+            $0.top.leading.bottom.trailing.equalTo(manitoOpenButtonShadowView)
         }
         
         view.addSubview(manitiRealIconView)
@@ -433,7 +452,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private func setupOpenManittoButton() {
         guard let endDateToString = roomInformation?.endDate else { return }
         guard let endDate = endDateToString.stringToDateYYYY() else { return }
-        manitoOpenButton.isHidden = !endDate.isOpenManitto
+        manitoOpenButtonShadowView.isHidden = !endDate.isOpenManitto
     }
   
     // MARK: - selector
