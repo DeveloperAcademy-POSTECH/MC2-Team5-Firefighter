@@ -217,10 +217,10 @@ final class DetailingCodebaseViewController: BaseViewController {
         imageView.alpha = 0
         return imageView
     }()
-    private let manitoOpenButton: MainButton = {
+    private lazy var manitoOpenButton: MainButton = {
         let button = MainButton()
-        let action = UIAction { _ in
-            print("마니또 공개!!")
+        let action = UIAction { [weak self] _ in
+            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: Int((self?.roomId!)!)!), animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
