@@ -471,7 +471,13 @@ final class DetailingCodebaseViewController: BaseViewController {
     // FIXME: - 추후 PR 때, friendslistViewController codebase로 만들 예정
     @objc
     private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
-        print("당신의 친구들은 !!!")
+        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className) as? FriendListViewController else { return }
+        guard let roomId = roomInformation?.id else { return }
+        viewController.roomIndex = roomId
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     // MARK: - DetailStarting API
    
     private func requestRoomInfo() {
