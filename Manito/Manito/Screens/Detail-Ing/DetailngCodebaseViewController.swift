@@ -29,6 +29,25 @@ final class DetailingCodebaseViewController: BaseViewController {
     }
     
     private var roomId: String?
+    private var roomType: RoomType? {
+        didSet {
+            if roomType == .POST {
+                missionBackgroundView.makeBorderLayer(color: .darkGrey001)
+                statusLabel.text = TextLiteral.done
+                statusLabel.backgroundColor = .grey002
+                manitoMemoryButton.layer.isHidden = false
+                manitoOpenButton.layer.isHidden = true
+                exitButton.isHidden = false
+            } else {
+                missionBackgroundView.makeBorderLayer(color: .subOrange)
+                statusLabel.text = TextLiteral.doing
+                statusLabel.backgroundColor = .mainRed
+                manitoMemoryButton.layer.isHidden = true
+                manitoOpenButton.layer.isHidden = false
+                exitButton.isHidden = true
+            }
+        }
+    }
 
     // MARK: - property
     
