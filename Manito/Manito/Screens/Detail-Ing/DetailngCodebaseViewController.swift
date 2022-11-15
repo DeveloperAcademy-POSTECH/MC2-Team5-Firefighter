@@ -48,6 +48,9 @@ final class DetailingCodebaseViewController: BaseViewController {
             }
         }
     }
+    
+    private var isTappedManittee: Bool = false
+    
     private var isAdminPost: Bool = false {
         didSet {
             let menu = UIMenu(options: [], children: [
@@ -407,9 +410,28 @@ final class DetailingCodebaseViewController: BaseViewController {
 
     @objc
     private func didTappedManittee() {
-        print("당신의 마니띠는 !!!")
+        if !isTappedManittee {
+            self.isTappedManittee = true
+            UIView.animate(withDuration: 1.0) {
+                self.toggledManitteeAnimation(self.isTappedManittee)
+            } completion: { _ in
+                UIView.animate(withDuration: 1.0, delay: 0.5) {
+                    self.toggledManitteeAnimation(!self.isTappedManittee)
+                } completion: { _ in
+                    self.isTappedManittee = false
+                }
+            }
+        }
     }
     
+    private func toggledManitteeAnimation(_ value: Bool) {
+        manitteeLabel.alpha = value ? 0 : 1
+        manitteeIconView.alpha = value ? 0 : 1
+        manitiRealIconView.alpha = value ? 1 : 0
+        manitteeAnimationLabel.alpha = value ? 1 : 0
+    }
+    
+    // FIXME: - 추후 PR 때, friendslistViewController codebase로 만들 예정
     @objc
     private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
         print("당신의 친구들은 !!!")
