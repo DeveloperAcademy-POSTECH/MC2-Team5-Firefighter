@@ -143,7 +143,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         return button
     }()
     private let manitteeAnimationLabel: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.text = ""
         label.textColor = .white
         label.alpha = 0
