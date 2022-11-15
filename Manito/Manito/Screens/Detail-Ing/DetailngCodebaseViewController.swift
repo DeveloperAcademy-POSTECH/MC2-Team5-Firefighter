@@ -48,6 +48,26 @@ final class DetailingCodebaseViewController: BaseViewController {
             }
         }
     }
+    private var isAdminPost: Bool = false {
+        didSet {
+            let menu = UIMenu(options: [], children: [
+                UIAction(title: isAdminPost ? TextLiteral.detailWaitViewControllerDeleteRoom : TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+                    if let isAdmin = self?.isAdminPost {
+                        if isAdmin {
+                            self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdminTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertAdmin, okAction: { _ in
+                                self?.requestDeleteRoom()
+                            })
+                        } else {
+                            self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
+                                self?.requestExitRoom()
+                            })
+                        }
+                    }
+                })
+            ])
+            exitButton.menu = menu
+        }
+    }
 
     // MARK: - property
     
@@ -376,6 +396,12 @@ final class DetailingCodebaseViewController: BaseViewController {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
         setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
+    }
+    
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        let rightItem = makeBarButtonItem(with: exitButton)
+        navigationItem.rightBarButtonItem = rightItem
     }
     }
 
