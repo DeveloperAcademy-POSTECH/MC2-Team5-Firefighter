@@ -28,7 +28,7 @@ final class LetterImageViewController: BaseViewController {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
-    private var downloadButton: UIButton = {
+    private let downloadButton: UIButton = {
         let button = UIButton()
         button.setImage(ImageLiterals.icSave, for: .normal)
         return button
