@@ -27,7 +27,6 @@ final class DetailingCodebaseViewController: BaseViewController {
             roomId = newValue?.id?.description
         }
     }
-    
     private var roomId: String?
     private var roomType: RoomType? {
         didSet {
@@ -48,9 +47,7 @@ final class DetailingCodebaseViewController: BaseViewController {
             }
         }
     }
-    
     private var isTappedManittee: Bool = false
-    
     private var isAdminPost: Bool = false {
         didSet {
             let menu = UIMenu(options: [], children: [
@@ -511,7 +508,7 @@ final class DetailingCodebaseViewController: BaseViewController {
                           let admin = info.admin,
                           let badgeCount = info.messages?.count
                     else { return }
-                
+            
                     titleLabel.text = title
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
@@ -556,7 +553,7 @@ final class DetailingCodebaseViewController: BaseViewController {
                           let manittee = info.manittee?.nickname,
                           let admin = info.admin
                     else { return }
-                    
+                    print(info)
                     titleLabel.text = title
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.detailIngViewControllerDoneMissionText)
