@@ -239,6 +239,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let badgeLabel: LetterCountBadgeView = {
         let label = LetterCountBadgeView()
         label.layer.cornerRadius = 15
+        label.isHidden = true
         return label
     }()
     private let exitButton: UIButton = {
@@ -510,7 +511,7 @@ final class DetailingCodebaseViewController: BaseViewController {
                           let admin = info.admin,
                           let badgeCount = info.messages?.count
                     else { return }
-                    
+                
                     titleLabel.text = title
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
@@ -553,14 +554,14 @@ final class DetailingCodebaseViewController: BaseViewController {
                           let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
                           let manittee = info.manittee?.nickname,
-                          let isAdmin = info.admin
+                          let admin = info.admin
                     else { return }
                     
                     titleLabel.text = title
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.detailIngViewControllerDoneMissionText)
                     manitteeAnimationLabel.text = manittee
-                    isAdminPost = isAdmin
+                    isAdminPost = admin
                 }
             } catch NetworkError.serverError {
                 print("server Error")
