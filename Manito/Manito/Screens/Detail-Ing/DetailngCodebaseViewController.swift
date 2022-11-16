@@ -35,15 +35,15 @@ final class DetailingCodebaseViewController: BaseViewController {
                 missionBackgroundView.makeBorderLayer(color: .darkGrey001)
                 statusLabel.text = TextLiteral.done
                 statusLabel.backgroundColor = .grey002
-                manitoMemoryButton.layer.isHidden = false
-                manitoOpenButtonShadowView.layer.isHidden = true
+                manitoMemoryButton.isHidden = false
+                manitoOpenButtonShadowView.isHidden = true
                 exitButton.isHidden = false
             } else {
                 missionBackgroundView.makeBorderLayer(color: .subOrange)
                 statusLabel.text = TextLiteral.doing
                 statusLabel.backgroundColor = .mainRed
-                manitoMemoryButton.layer.isHidden = true
-                manitoOpenButtonShadowView.layer.isHidden = false
+                manitoMemoryButton.isHidden = true
+                manitoOpenButtonShadowView.isHidden = false
                 exitButton.isHidden = true
             }
         }
@@ -201,7 +201,6 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.titleLabel?.font = .font(.regular, ofSize: 15)
         button.backgroundColor = .darkGrey002
         button.makeBorderLayer(color: .white)
-        button.isHidden = true
         return button
     }()
     private let manitteeAnimationLabel: UILabel = {
@@ -226,7 +225,6 @@ final class DetailingCodebaseViewController: BaseViewController {
         view.layer.shadowOpacity = 1.0
         view.layer.shadowRadius = 1
         view.layer.shadowOffset = CGSize(width: 0, height: 6)
-        view.layer.isHidden = true
         return view
     }()
     private lazy var manitoOpenButton: MainButton = {
@@ -241,7 +239,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let badgeLabel: LetterCountBadgeView = {
         let label = LetterCountBadgeView()
         label.layer.cornerRadius = 15
-        label.isHidden = true
         return label
     }()
     private let exitButton: UIButton = {
