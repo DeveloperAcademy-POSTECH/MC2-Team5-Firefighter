@@ -205,7 +205,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     }()
     private let manitteeAnimationLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.textColor = .white
         label.alpha = 0
         label.font = .font(.regular, ofSize: 15)
