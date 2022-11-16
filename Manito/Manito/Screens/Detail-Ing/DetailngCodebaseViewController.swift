@@ -553,7 +553,7 @@ final class DetailingCodebaseViewController: BaseViewController {
                           let manittee = info.manittee?.nickname,
                           let admin = info.admin
                     else { return }
-                    print(info)
+            
                     titleLabel.text = title
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.detailIngViewControllerDoneMissionText)
