@@ -48,24 +48,27 @@ final class DetailingCodebaseViewController: BaseViewController {
         }
     }
     private var isTappedManittee: Bool = false
-    private var isAdminPost: Bool = false {
-        didSet {
-            let menu = UIMenu(options: [], children: [
-                UIAction(title: isAdminPost ? TextLiteral.detailWaitViewControllerDeleteRoom : TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                    if let isAdmin = self?.isAdminPost {
-                        if isAdmin {
-                            self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdminTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertAdmin, okAction: { _ in
-                                self?.requestDeleteRoom()
-                            })
-                        } else {
-                            self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
-                                self?.requestExitRoom()
-                            })
-                        }
-                    }
-                })
-            ])
-            exitButton.menu = menu
+    private var isAdminPost: Bool? {
+        willSet {
+            if newValue! {
+                let menu = UIMenu(options: [], children: [
+                    UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
+                        self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdminTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertAdmin, okAction: { _ in
+                                     self?.requestDeleteRoom()
+                                 })
+                             })
+                ])
+                exitButton.menu = menu
+            } else {
+                let menu = UIMenu(options: [], children: [
+                    UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+                        self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
+                                     self?.requestExitRoom()
+                                 })
+                             })
+                ])
+                exitButton.menu = menu
+            }
         }
     }
 
