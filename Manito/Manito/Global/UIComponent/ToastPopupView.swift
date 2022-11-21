@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-struct Toast {
+struct ToastView {
     static func showToast(message: String, controller: UIViewController) {
         let toastLabel = UILabel()
         toastLabel.backgroundColor = .grey001

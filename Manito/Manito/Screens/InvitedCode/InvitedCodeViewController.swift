@@ -77,7 +77,7 @@ class InvitedCodeViewController: BaseViewController {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
             if let code = self?.code {
-                Toast.showToast(code: code, message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
+                ToastView.showToast(code: code, message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
             }
         }
         button.setTitle(code, for: .normal)

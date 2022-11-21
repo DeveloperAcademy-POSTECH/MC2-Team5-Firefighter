@@ -145,7 +145,7 @@ class DetailWaitViewController: BaseViewController {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
             if let code = self?.inviteCode {
-                Toast.showToast(code: code ,message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
+                ToastView.showToast(code: code ,message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
             }
         }
         button.setTitle(TextLiteral.copyCode, for: .normal)
@@ -296,7 +296,7 @@ class DetailWaitViewController: BaseViewController {
             do {
                 let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
                 if status == 204 {
-                    Toast.showToast(message: "방 정보 수정 완료", controller: self)
+                    ToastView.showToast(message: "방 정보 수정 완료", controller: self)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
