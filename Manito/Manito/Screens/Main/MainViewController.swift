@@ -336,17 +336,17 @@ extension MainViewController: UICollectionViewDataSource {
             
             switch roomStatus {
             case .waiting:
-                cell.roomState.state.text = "대기중"
-                cell.roomState.state.textColor = .darkGrey001
-                cell.roomState.backgroundColor = .badgeBeige
+                cell.roomStateView.state.text = "대기중"
+                cell.roomStateView.state.textColor = .darkGrey001
+                cell.roomStateView.backgroundColor = .badgeBeige
             case .starting:
-                cell.roomState.state.text = "진행중"
-                cell.roomState.state.textColor = .white
-                cell.roomState.backgroundColor = .mainRed
+                cell.roomStateView.state.text = "진행중"
+                cell.roomStateView.state.textColor = .white
+                cell.roomStateView.backgroundColor = .mainRed
             case .end:
-                cell.roomState.state.text = "완료"
-                cell.roomState.state.textColor = .white
-                cell.roomState.backgroundColor = .grey002
+                cell.roomStateView.state.text = "완료"
+                cell.roomStateView.state.textColor = .white
+                cell.roomStateView.backgroundColor = .grey002
             }
             
             return cell
