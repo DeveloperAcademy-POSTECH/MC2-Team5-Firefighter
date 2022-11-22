@@ -199,6 +199,10 @@ final class LetterViewController: BaseViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        guideBoxImageView.isHidden = true
+    }
+    
     // MARK: - func
     
     private func setupLargeTitle() {

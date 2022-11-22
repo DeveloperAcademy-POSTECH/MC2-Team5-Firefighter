@@ -28,8 +28,6 @@ enum TextLiteral {
     static let maxMessage: String = "최대 7일까지 선택가능해요"
     static let destructive: String = "변경 사항 폐기"
     static let per: String = "인"
-    static let minMember: String = "5인"
-    static let maxMember: String = "15인"
     static let x: String = "X"
     static let createRoom: String = "방 생성하기"
     static let next: String = "다음"
@@ -133,6 +131,10 @@ enum TextLiteral {
     static let detailIngViewControllerGuideTitle: String = "개별 미션이란?"
     static let detailIngViewControllerText: String = "개별 미션이란?\n나의 마니띠에게\n수행하는 미션이에요."
     static let detailIngViewControllerDoneMissionText: String = "종료된 마니또예요"
+    static let detailIngViewControllerDoneExitAlertTitle: String = "정말 방을 나가시겠습니까?"
+    static let detailIngViewControllerDoneExitAlertAdminTitle: String = "정말 방을 삭제하시겠습니까?"
+    static let detailIngViewControllerDoneExitAlertMessage: String = "나간 방은 다시 들어올 수 없어요"
+    static let detailIngViewControllerDoneExitAlertAdmin: String = "방장이 방을 삭제하면\n 참여자들의 방도 삭제됩니다"
     
     // MARK: - CalendarView
     static let calendarViewAlertMaxTitle: String = "최대 선택 기간을 넘었어요"

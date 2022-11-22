@@ -50,6 +50,10 @@ extension UIColor {
     static var grey004: UIColor {
         return UIColor(hex: "#717174")
     }
+    
+    static var grey005: UIColor {
+        return UIColor(hex: "#C1C1C1")
+    }
 
     // MARK: - darkGrey
 
@@ -96,6 +100,12 @@ extension UIColor {
     
     static var shadowYellow: UIColor {
         return UIColor(hex: "#C7A83C")
+    }
+    
+    // MARK: - pink
+    
+    static var subPink: UIColor {
+        return UIColor(hex: "#F18DB1")
     }
     
     // MARK: - badge
