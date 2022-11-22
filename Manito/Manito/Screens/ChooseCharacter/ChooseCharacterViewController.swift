@@ -45,7 +45,6 @@ class ChooseCharacterViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.chooseCharacterViewControllerSubTitleLabel
@@ -53,7 +52,6 @@ class ChooseCharacterViewController: BaseViewController {
         label.textColor = .grey002
         return label
     }()
-    
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
@@ -61,7 +59,6 @@ class ChooseCharacterViewController: BaseViewController {
         button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         return button
     }()
-    
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
@@ -72,7 +69,6 @@ class ChooseCharacterViewController: BaseViewController {
         flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
         return flowLayout
     }()
-    
     private lazy var manittoCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
@@ -84,7 +80,6 @@ class ChooseCharacterViewController: BaseViewController {
                                 forCellWithReuseIdentifier: CharacterCollectionViewCell.className)
         return collectionView
     }()
-    
     private lazy var enterButton: MainButton = {
         let button = MainButton()
         button.addTarget(self, action: #selector(didTapEnterButton), for: .touchUpInside)
@@ -95,8 +90,7 @@ class ChooseCharacterViewController: BaseViewController {
             button.title = TextLiteral.enterRoom
         }
         return button
-    }()
-    
+    }()    
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
@@ -229,6 +223,7 @@ class ChooseCharacterViewController: BaseViewController {
     @objc private func didTapBackButton() {
         navigationController?.popViewController(animated: true)
     }
+    
     @objc private func didTapCloseButton() {
         dismiss(animated: true, completion: nil)
     }

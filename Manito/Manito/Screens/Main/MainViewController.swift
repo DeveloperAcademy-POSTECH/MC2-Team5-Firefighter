@@ -45,19 +45,14 @@ final class MainViewController: BaseViewController {
     // MARK: - property
 
     private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
-    
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
         button.addTarget(self, action: #selector(didTapSettingButton), for: .touchUpInside)
         return button
     }()
-    
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
-    
     private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
-    
     private let commonMissionView = CommonMissonView()
-    
     private let menuTitle: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.mainViewControllerMenuTitle
@@ -65,7 +60,6 @@ final class MainViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
@@ -75,7 +69,6 @@ final class MainViewController: BaseViewController {
         flowLayout.minimumInteritemSpacing = 16
         return flowLayout
     }()
-    
     private lazy var listCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
@@ -88,11 +81,8 @@ final class MainViewController: BaseViewController {
             forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
         return collectionView
     }()
-    
     private let maCharacterImageView = GIFImageView()
-    
     private let niCharacterImageView = GIFImageView()
-    
     private let ttoCharacterImageView = GIFImageView()
     
     // MARK: - init

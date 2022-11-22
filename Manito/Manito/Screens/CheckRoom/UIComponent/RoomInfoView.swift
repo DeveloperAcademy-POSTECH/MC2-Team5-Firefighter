@@ -18,13 +18,11 @@ final class RoomInfoView: UIView {
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    
     let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
         return label
-    }()
-    
+    }()    
     let peopleInfo = PeopleInfoView()
 
     // MARK: - init

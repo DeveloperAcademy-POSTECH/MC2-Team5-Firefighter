@@ -24,14 +24,12 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
         imageView.image = ImageLiterals.imgNi
         return imageView
     }()
-    
     let memberLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    
     let roomLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.manitoRoomCollectionViewCellRoomLabelTitle
@@ -41,7 +39,6 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    
     let dateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .grey001
@@ -49,8 +46,7 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         return label
-    }()
-    
+    }()    
     lazy var roomState = RoomStateView()
     
     // MARK: - func

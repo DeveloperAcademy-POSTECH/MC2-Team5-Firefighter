@@ -21,7 +21,6 @@ final class ParticipateRoomViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
@@ -29,15 +28,13 @@ final class ParticipateRoomViewController: BaseViewController {
         button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         return button
     }()
-    
     private lazy var nextButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.searchRoom
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         button.isDisabled = true
         return button
-    }()
-    
+    }()    
     private let inputInvitedCodeView = InputInvitedCodeView()
     
     // MARK: - init

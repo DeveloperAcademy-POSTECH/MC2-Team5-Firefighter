@@ -21,9 +21,7 @@ class CheckRoomViewController: BaseViewController {
         image.isUserInteractionEnabled = true
         return image
     }()
-    
     let roomInfoView = RoomInfoView()
-    
     private let questionLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.checkRoomViewControllerQuestionLabel
@@ -31,7 +29,6 @@ class CheckRoomViewController: BaseViewController {
         label.makeShadow(color: .black, opacity: 0.25, offset: CGSize(width: 0, height: 3), radius: 0)
         return label
     }()
-    
     private lazy var noButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(TextLiteral.checkRoomViewControllerNoButtonLabel, for: .normal)
@@ -43,7 +40,6 @@ class CheckRoomViewController: BaseViewController {
         button.addTarget(self, action: #selector(didTapNoButton), for: .touchUpInside)
         return button
     }()
-    
     private lazy var yesButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(TextLiteral.checkRoomViewControllerYesBUttonLabel, for: .normal)

@@ -13,8 +13,7 @@ final class CreateRoomCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - property
     
-    private let imageView = UIImageView(image: ImageLiterals.icNewRoom)
-    
+    private let imageView = UIImageView(image: ImageLiterals.icNewRoom)    
     private let circleView: UIView = {
         let circleView = UIView()
         circleView.backgroundColor = .yellow
@@ -23,7 +22,6 @@ final class CreateRoomCollectionViewCell: BaseCollectionViewCell {
         circleView.layer.borderColor = UIColor.grey003.cgColor
         return circleView
     }()
-    
     private let menuLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.createRoomCollectionViewCellMenuLabel

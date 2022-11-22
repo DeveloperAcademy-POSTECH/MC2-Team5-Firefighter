@@ -19,8 +19,7 @@ final class CommonMissonView: UIView {
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 15)
         return label
-    }()
-    
+    }()    
     let mission: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
