@@ -19,11 +19,7 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - property
     
-    private let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
-        return imageView
-    }()
+    private let imageView = UIImageView(image: ImageLiterals.imgNi)
     let memberLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
