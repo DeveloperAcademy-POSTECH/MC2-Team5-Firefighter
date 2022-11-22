@@ -23,7 +23,7 @@ final class RoomInfoView: UIView {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()    
-    let peopleInfo = PeopleInfoView()
+    let peopleInfoView = PeopleInfoView()
 
     // MARK: - init
     
@@ -50,8 +50,8 @@ final class RoomInfoView: UIView {
             $0.centerX.equalToSuperview()
         }
         
-        self.addSubview(peopleInfo)
-        peopleInfo.snp.makeConstraints {
+        self.addSubview(peopleInfoView)
+        peopleInfoView.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(10)
             $0.centerX.bottom.equalToSuperview()
         }

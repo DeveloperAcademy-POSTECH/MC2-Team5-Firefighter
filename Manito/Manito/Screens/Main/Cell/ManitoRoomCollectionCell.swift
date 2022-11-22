@@ -47,7 +47,7 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()    
-    lazy var roomState = RoomStateView()
+    lazy var roomStateView = RoomStateView()
     
     // MARK: - func
     
@@ -71,8 +71,8 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
             $0.leading.trailing.equalToSuperview().inset(17)
         }
         
-        addSubview(roomState)
-        roomState.snp.makeConstraints {
+        addSubview(roomStateView)
+        roomStateView.snp.makeConstraints {
             $0.top.equalTo(roomLabel.snp.bottom).offset(24)
             $0.leading.equalToSuperview().inset(12)
             $0.width.equalTo(60)
