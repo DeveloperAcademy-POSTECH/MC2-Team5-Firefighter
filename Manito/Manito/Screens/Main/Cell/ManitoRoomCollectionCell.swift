@@ -88,8 +88,6 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     
     override func configUI() {
         backgroundColor = .darkGrey002.withAlphaComponent(0.8)
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
-        layer.cornerRadius = 10
+        makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
     }
 }
