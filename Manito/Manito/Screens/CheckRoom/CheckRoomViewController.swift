@@ -115,7 +115,7 @@ class CheckRoomViewController: BaseViewController {
               let capacity = verification?.capacity else { return }
         roomInfoView.roomLabel.text = title
         roomInfoView.dateLabel.text = "\(startDate) ~ \(endDate)"
-        roomInfoView.peopleInfo.peopleLabel.text = "X \(capacity)인"
+        roomInfoView.peopleInfoView.peopleLabel.text = "X \(capacity)인"
     }
     
     // MARK: - selector
