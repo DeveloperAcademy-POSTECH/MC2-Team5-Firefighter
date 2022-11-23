@@ -22,12 +22,14 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     var roomInformation: ParticipatingRoom? {
         willSet {
-            guard let state = newValue?.state else { return }
+            guard let state = newValue?.state,
+                  let roomID = newValue?.id?.description
+            else { return }
             roomType = RoomType.init(rawValue: state)
-            roomId = newValue?.id?.description
+            roomId = roomID
         }
     }
-    private var roomId: String?
+    private var roomId: String = ""
     private var roomType: RoomType? {
         didSet {
             if roomType == .POST {
@@ -178,7 +180,11 @@ final class DetailingCodebaseViewController: BaseViewController {
     private lazy var letterBoxButton: UIButton = {
         let button = UIButton(type: .system)
         let action = UIAction { [weak self] _ in
-            let letterViewController = LetterViewController(roomState: (self?.roomType!.rawValue)!, roomId: (self?.roomId!)!, mission: (self?.missionContentsLabel.text!)!)
+            guard let roomType = self?.roomType,
+                  let roomId = self?.roomId,
+                  let mission = self?.missionContentsLabel.text
+            else {return}
+            let letterViewController = LetterViewController(roomState: roomType.rawValue, roomId: roomId, mission: mission)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
@@ -192,7 +198,8 @@ final class DetailingCodebaseViewController: BaseViewController {
     private lazy var manitoMemoryButton: UIButton = {
         let button = UIButton(type: .system)
         let action = UIAction { [weak self] _ in
-            let viewController = MemoryViewController(roomId: (self?.roomId!)!)
+            guard let roomId = self?.roomId else {return}
+            let viewController = MemoryViewController(roomId: roomId)
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
@@ -229,7 +236,10 @@ final class DetailingCodebaseViewController: BaseViewController {
     private lazy var manitoOpenButton: MainButton = {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: Int((self?.roomId!)!)!), animated: true)
+            guard let roomId = self?.roomId,
+                  let intRoomId = Int(roomId)
+            else {return}
+            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: intRoomId), animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
@@ -499,7 +509,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private func requestRoomInfo() {
         Task {
             do {
-                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId!)
+                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
                 if let info = data {
                     guard let title = info.room?.title,
                           let startDate = info.room?.startDate,
@@ -547,7 +557,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private func requestDoneRoomInfo() {
         Task {
             do {
-                let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId!)
+                let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId)
                 if let info = data {
                     guard let title = info.room?.title,
                           let startDate = info.room?.startDate,
@@ -575,7 +585,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private func requestExitRoom() {
         Task {
             do {
-                let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId!)
+                let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId)
                 if statusCode == 204 {
                     navigationController?.popViewController(animated: true)
                 }
@@ -593,7 +603,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private func requestDeleteRoom() {
         Task {
             do {
-                let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId!)
+                let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId)
                 if statusCode == 204 {
                     navigationController?.popViewController(animated: true)
                 }
