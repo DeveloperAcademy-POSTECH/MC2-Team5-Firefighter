@@ -51,6 +51,15 @@ struct User: Decodable {
 struct RoomInfo: Decodable {
     let id, capacity: Int?
     let title, startDate, endDate, state: String?
+    
+    var dateRange: String {
+        if let startDate,
+           let endDate {
+            return startDate + " ~ " + endDate
+        } else {
+            return ""
+        }
+    }
 }
 
 struct Mission: Codable {
