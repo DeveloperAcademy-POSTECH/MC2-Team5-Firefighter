@@ -286,6 +286,8 @@ class DetailWaitViewController: BaseViewController {
                 let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
                 if status == 204 {
                     showToast(message: "방 정보 수정 완료")
+                    requestWaitRoomInfo()
+                    changeStartButton()
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -392,6 +394,13 @@ class DetailWaitViewController: BaseViewController {
 
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
         let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode)
+        viewController.didTappedChangeButton = { [weak self] dto in
+            let roomDto = RoomDTO(title: self?.titleView.roomTitleLabel.text ?? "",
+                                  capacity: dto.capacity,
+                                  startDate: dto.startDate,
+                                  endDate: dto.endDate)
+            self?.requestChangeRoomInfo(roomDto: roomDto)
+        }
         viewController.currentUserCount = userCount
         viewController.sliderValue = maxUserCount
         viewController.startDateText = startString
@@ -461,11 +470,6 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateRange(_:)), name: .dateRangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(changeStartButton), name: .changeStartButtonNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMaxUser), name: .editMaxUserNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(requestDateRange(_:)), name: .requestDateRangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(requestRoomInfo(_:)), name: .requestRoomInfoNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didTapEnterButton), name: .createRoomInvitedCode, object: nil)
     }
 
@@ -542,23 +546,6 @@ class DetailWaitViewController: BaseViewController {
         viewController.modalTransitionStyle = .crossDissolve
         present(viewController, animated: true)
     }
-
-    @objc
-    private func didReceiveDateRange(_ notification: Notification) {
-        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
-        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
-
-        self.startDateText = startDate
-        self.endDateText = endDate
-    }
-
-    @objc
-    private func didReceiveMaxUser(_ notification: Notification) {
-        guard let maxUser = notification.userInfo?["maxUser"] as? Float else { return }
-
-        let intMaxUser = Int(maxUser)
-        maxUserCount = intMaxUser
-    }
     
     @objc
     private func presentDetailEditViewController() {
@@ -567,19 +554,6 @@ class DetailWaitViewController: BaseViewController {
     
     @objc private func changeStartButton() {
         setStartButton()
-    }
-    
-    @objc private func requestDateRange(_ notification: Notification) {
-        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
-        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
-        requestChangeRoomInfo(roomDto: RoomDTO(title: titleView.roomTitleLabel.text ?? "", capacity: maxUserCount, startDate: startDate, endDate: endDate))
-    }
-    
-    @objc private func requestRoomInfo(_ notification: Notification) {
-        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
-        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
-        guard let capacity = notification.userInfo?["maxUser"] as? Int else { return }
-        requestChangeRoomInfo(roomDto: RoomDTO(title: titleView.roomTitleLabel.text ?? "", capacity: capacity, startDate: startDate, endDate: endDate))
     }
 }
 

@@ -11,7 +11,7 @@ import SnapKit
 import FSCalendar
 
 class DetailEditViewController: BaseViewController {
-
+    var didTappedChangeButton: ((RoomDTO) -> ())?
     enum EditMode {
         case dateEditMode
         case infoEditMode
@@ -270,30 +270,21 @@ class DetailEditViewController: BaseViewController {
     }
 
     private func didTapChangeButton() {
+        let dto = RoomDTO(title: "",
+                          capacity: Int(memberSlider.value),
+                          startDate: "20\(calendarView.getTempStartDate())",
+                          endDate: "20\(calendarView.getTempEndDate())")
         switch editMode {
         case .dateEditMode:
-            changeRoomDateRange()
-        case .infoEditMode:
-            changeRoomInfo()
-        }
-    }
-
-    private func changeRoomDateRange() {
-        NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.getTempStartDate(), "endDate": calendarView.getTempEndDate()])
-        NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
-        NotificationCenter.default.post(name: .requestDateRangeNotification, object: nil, userInfo: ["startDate": "20\(calendarView.getTempStartDate())", "endDate": "20\(calendarView.getTempEndDate())"])
-        dismiss(animated: true)
-    }
-
-    private func changeRoomInfo() {
-        if currentUserCount <= sliderValue {
-            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.getTempStartDate(), "endDate": calendarView.getTempEndDate()])
-            NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
-            NotificationCenter.default.post(name: .editMaxUserNotification, object: nil, userInfo: ["maxUser": memberSlider.value])
-            NotificationCenter.default.post(name: .requestRoomInfoNotification, object: nil, userInfo: ["startDate": "20\(calendarView.getTempStartDate())", "endDate": "20\(calendarView.getTempEndDate())", "maxUser": Int(memberSlider.value)])
+            didTappedChangeButton?(dto)
             dismiss(animated: true)
-        } else {
-            makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle, message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
+        case .infoEditMode:
+            if currentUserCount <= sliderValue {
+                didTappedChangeButton?(dto)
+                dismiss(animated: true)
+            } else {
+                makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle, message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
+            }
         }
     }
 }
