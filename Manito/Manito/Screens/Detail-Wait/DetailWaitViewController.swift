@@ -38,16 +38,8 @@ class DetailWaitViewController: BaseViewController {
             setupTitleViewGesture()
         }
     }
-    var startDateText = "" {
-        didSet {
-            titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
-        }
-    }
-    var endDateText = "" {
-        didSet {
-            titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
-        }
-    }
+    var startDateText = ""
+    var endDateText = ""
 
     enum UserStatus: CaseIterable {
         case owner
@@ -117,11 +109,7 @@ class DetailWaitViewController: BaseViewController {
         button.showsMenuAsPrimaryAction = true
         return button
     }()
-    private lazy var titleView: DetailWaitTitleView = {
-        let view = DetailWaitTitleView()
-        view.dateRangeText = "\(startDateText) ~ \(endDateText)"
-        return view
-    }()
+    private let titleView = DetailWaitTitleView()
     private let togetherFriendLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.togetherFriend
@@ -263,7 +251,6 @@ class DetailWaitViewController: BaseViewController {
                           let state = roomInfo.room?.state,
                           let members = roomInfo.participants?.members,
                           let isAdmin = roomInfo.admin else { return }
-                    titleView.roomTitleLabel.text = title
                     inviteCode = code
                     startDateText = startDate
                     endDateText = endDate
@@ -278,6 +265,10 @@ class DetailWaitViewController: BaseViewController {
                                             endDate: endDate)
                     isPastStartDate()
                     setStartButton()
+                    DispatchQueue.main.async {
+                        self.titleView.roomTitleLabel.text = title
+                        self.titleView.durationDateLabel.text = roomInfo.room?.dateRange ?? ""
+                    }
                 }
             } catch NetworkError.serverError {
                 print("server Error")

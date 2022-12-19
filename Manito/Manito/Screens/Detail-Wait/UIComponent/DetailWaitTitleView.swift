@@ -10,12 +10,7 @@ import UIKit
 import SnapKit
 
 class DetailWaitTitleView: UIView {
-    var dateRangeText = "" {
-        didSet {
-            durationDateLabel.text = dateRangeText
-        }
-    }
-
+    
     private enum StartStatus: String {
         case waiting
         case starting
@@ -70,7 +65,7 @@ class DetailWaitTitleView: UIView {
         return durationText
     }()
 
-    private lazy var durationDateLabel: UILabel = {
+    let durationDateLabel: UILabel = {
         let dateText = UILabel()
         dateText.textColor = .white
         dateText.font = .font(.regular, ofSize: 18)
