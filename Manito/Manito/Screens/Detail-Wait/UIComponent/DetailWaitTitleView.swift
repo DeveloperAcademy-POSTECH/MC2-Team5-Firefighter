@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class DetailWaitTitleView: UIView {
+final class DetailWaitTitleView: UIView {
     
     private enum StartStatus: String {
         case waiting
@@ -32,7 +32,6 @@ class DetailWaitTitleView: UIView {
 
     let roomTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "명예소방관"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 34)
         return label

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import FSCalendar
 
-class DetailEditViewController: BaseViewController {
+final class DetailEditViewController: BaseViewController {
     var didTappedChangeButton: ((RoomDTO) -> ())?
     enum EditMode {
         case dateEditMode

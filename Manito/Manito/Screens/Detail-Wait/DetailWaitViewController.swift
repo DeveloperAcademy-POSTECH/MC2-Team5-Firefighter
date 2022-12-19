@@ -9,39 +9,39 @@ import UIKit
 
 import SnapKit
 
-class DetailWaitViewController: BaseViewController {
-    let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-    var roomIndex: Int
+final class DetailWaitViewController: BaseViewController {
+    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
+    private var roomIndex: Int
     var roomInformation: ParticipatingRoom?
-    var inviteCode: String = ""
+    private var inviteCode: String = ""
     private var roomInfo: RoomDTO?
     private var userArr: [String] = [] {
         didSet {
             renderTableView()
         }
     }
-    var canStartClosure: ((Bool) -> ())?
-    var maxUserCount: Int = 15 {
+    private var canStartClosure: ((Bool) -> ())?
+    private var maxUserCount: Int = 15 {
         didSet {
             comeInLabel.text = "\(userCount)/\(maxUserCount)"
         }
     }
-    lazy var userCount = 0 {
+    private lazy var userCount = 0 {
         didSet {
             comeInLabel.text = "\(userCount)/\(maxUserCount)"
             setStartButton()
         }
     }
-    var memberType = UserStatus.member {
+    private var memberType = UserStatus.member {
         didSet {
             settingButton.menu = setExitButtonMenu()
             setupTitleViewGesture()
         }
     }
-    var startDateText = ""
-    var endDateText = ""
+    private var startDateText = ""
+    private var endDateText = ""
 
-    enum UserStatus: CaseIterable {
+    private enum UserStatus: CaseIterable {
         case owner
         case member
 
@@ -55,7 +55,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
 
-    enum AlertText {
+    private enum AlertText {
         case delete
         case exit
 
@@ -153,7 +153,6 @@ class DetailWaitViewController: BaseViewController {
                 button.title = ButtonText.start.status
                 button.isDisabled = false
                 let action = UIAction { [weak self] _ in
-                    print("detailwait self?.roomInformation", self?.roomInformation)
                     self?.requestStartManitto()
                 }
                 button.addAction(action, for: .touchUpInside)
@@ -237,7 +236,7 @@ class DetailWaitViewController: BaseViewController {
     
     // MARK: - API
     
-    func requestWaitRoomInfo() {
+    private func requestWaitRoomInfo() {
         Task {
             do {
                 let data = try await detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
@@ -280,7 +279,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
     
-    func requestChangeRoomInfo(roomDto: RoomDTO) {
+    private func requestChangeRoomInfo(roomDto: RoomDTO) {
         Task {
             do {
                 let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
@@ -299,7 +298,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
     
-    func requestStartManitto() {
+    private func requestStartManitto() {
         Task {
             do {
                 let data = try await detailWaitService.startManitto(roomId: "\(roomIndex)")
@@ -322,7 +321,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
     
-    func requestDeleteRoom() {
+    private func requestDeleteRoom() {
         Task {
             do {
                 let status = try await detailWaitService.deleteRoom(roomId: "\(roomIndex)")
@@ -339,7 +338,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
     
-    func requestDeleteLeaveRoom() {
+    private func requestDeleteLeaveRoom() {
         Task {
             do {
                 let status = try await detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
@@ -534,8 +533,7 @@ class DetailWaitViewController: BaseViewController {
     }
 
     // MARK: - selector
-    @objc
-    private func didTapEnterButton() {
+    @objc private func didTapEnterButton() {
         guard let roomInfo = roomInfo else { return }
         let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
                                                              capacity: roomInfo.capacity,
@@ -547,8 +545,7 @@ class DetailWaitViewController: BaseViewController {
         present(viewController, animated: true)
     }
     
-    @objc
-    private func presentDetailEditViewController() {
+    @objc private func presentDetailEditViewController() {
         self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
     }
     
