@@ -92,21 +92,21 @@ final class DetailEditViewController: BaseViewController {
     }()
     private lazy var minMemberLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.minMember
+        label.text = "\(Int(memberSlider.minimumValue))인"
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
     private lazy var maxMemberLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.maxMember
+        label.text = "\(Int(memberSlider.maximumValue))인"
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
     private lazy var memberSlider: UISlider = {
         let slider = UISlider()
-        slider.minimumValue = 5
+        slider.minimumValue = 4
         slider.maximumValue = 15
         slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001

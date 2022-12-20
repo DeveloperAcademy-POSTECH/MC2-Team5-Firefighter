@@ -27,6 +27,11 @@ class DetailIngViewController: BaseViewController {
         }
     }
     var isTappedManittee: Bool = false
+    var isAdminPost: Bool = false {
+        didSet {
+            exitButton.menu = setEllipsisMenu()
+        }
+    }
 
     // MARK: - property
 
@@ -49,6 +54,12 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var manitoMemoryButton: UIButton!
     @IBOutlet weak var manitteeAnimationLabel: UILabel!
 
+    private let exitButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.icMore, for: .normal)
+        button.showsMenuAsPrimaryAction = true
+        return button
+    }()
     private lazy var manitiRealIconView: UIImageView = {
         let imageView = UIImageView(image: ImageLiterals.imgMa)
         imageView.alpha = 0
@@ -68,7 +79,15 @@ class DetailIngViewController: BaseViewController {
         return label
     }()
     
-    private var roomType: RoomType?
+    private var roomType: RoomType? {
+        didSet {
+            if roomType == .POST {
+                exitButton.isHidden = false
+            } else {
+                exitButton.isHidden = true
+            }
+        }
+    }
     
     // MARK: - init
     
@@ -149,6 +168,11 @@ class DetailIngViewController: BaseViewController {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
         setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
+    }
+    
+    override func setupNavigationBar() {
+        let rightItem = makeBarButtonItem(with: exitButton)
+        navigationItem.rightBarButtonItem = rightItem
     }
     
     private func setupLargeTitleToOriginal() {
@@ -251,6 +275,25 @@ class DetailIngViewController: BaseViewController {
         manitoOpenButton.isHidden = !endDate.isOpenManitto
     }
     
+    private func setEllipsisMenu() -> UIMenu {
+        let menu = UIMenu(options: [], children: [
+            UIAction(title: isAdminPost ? TextLiteral.detailWaitViewControllerDeleteRoom : TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+                if let isAdmin = self?.isAdminPost {
+                    if isAdmin {
+                        self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdminTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertAdmin, okAction: { _ in
+                            self?.requestDeleteRoom()
+                        })
+                    } else {
+                        self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
+                            self?.requestExitRoom()
+                        })
+                    }
+                }
+            })
+        ])
+        return menu
+    }
+    
     // MARK: - DetailStarting API
     
     private func requestRoomInfo() {
@@ -326,8 +369,10 @@ class DetailIngViewController: BaseViewController {
                     titleLabel.text = info.room?.title
                     guard let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
-                          let minittee = info.manittee?.nickname
+                          let minittee = info.manittee?.nickname,
+                          let isAdmin = info.admin
                     else { return }
+                    isAdminPost = isAdmin
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     manitteeAnimationLabel.text = minittee
                     missionContentsLabel.text = TextLiteral.detailIngViewControllerDoneMissionText
@@ -348,6 +393,43 @@ class DetailIngViewController: BaseViewController {
                 guard let roomId = roomInformation?.id?.description else { return }
                 let data = try await detailDoneService.requestMemory(roomId: roomId)
                 if let _ = data {
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestExitRoom() {
+        Task {
+            do {
+                guard let roomId = roomInformation?.id?.description else { return }
+                let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId)
+                if statusCode == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+                makeAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdmin)
+            }
+        }
+    }
+    
+    private func requestDeleteRoom() {
+        Task {
+            do {
+                guard let roomId = roomInformation?.id?.description else { return }
+                let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId)
+                if statusCode == 204 {
+                    navigationController?.popViewController(animated: true)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
