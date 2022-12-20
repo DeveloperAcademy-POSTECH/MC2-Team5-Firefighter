@@ -38,8 +38,6 @@ final class DetailWaitViewController: BaseViewController {
             setupTitleViewGesture()
         }
     }
-    private var startDateText = ""
-    private var endDateText = ""
 
     private enum UserStatus: CaseIterable {
         case owner
@@ -242,16 +240,12 @@ final class DetailWaitViewController: BaseViewController {
                 let data = try await detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
                     guard let title = roomInfo.room?.title,
-                          let startDate = roomInfo.room?.startDate,
-                          let endDate = roomInfo.room?.endDate,
                           let count = roomInfo.participants?.count,
                           let capacity = roomInfo.room?.capacity,
                           let state = roomInfo.room?.state,
                           let members = roomInfo.participants?.members,
                           let isAdmin = roomInfo.admin else { return }
                     self.room = data
-                    startDateText = startDate
-                    endDateText = endDate
                     userCount = count
                     maxUserCount = capacity
                     titleView.setStartState(state: state)
@@ -259,8 +253,8 @@ final class DetailWaitViewController: BaseViewController {
                     memberType = isAdmin ? .owner : .member
                     self.roomInfo = RoomDTO(title: title,
                                             capacity: capacity,
-                                            startDate: startDate,
-                                            endDate: endDate)
+                                            startDate: data?.room?.startDate ?? "",
+                                            endDate: data?.room?.endDate ?? "")
                     isPastStartDate()
                     setStartButton()
                     DispatchQueue.main.async {
@@ -441,7 +435,7 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     private func presentEditRoomView() {
-        guard let startDate = startDateText.stringToDate else { return }
+        guard let startDate = room?.room?.startDate?.stringToDate else { return }
         let isAlreadyPastDate = startDate.distance(to: Date()) > 86400
         
         if isAlreadyPastDate {
@@ -459,7 +453,9 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     private func editInfoFromCurrentDate() {
-        self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
+        guard let startDate = room?.room?.startDate,
+              let endDate = room?.room?.endDate else { return }
+        self.presentModal(from: startDate, to: endDate, isDateEdit: false)
     }
 
     private func touchUpToShowToast() {
@@ -473,7 +469,7 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     private func isPastStartDate() {
-        guard let startDate = startDateText.stringToDate else { return }
+        guard let startDate = room?.room?.startDate?.stringToDate else { return }
         let isPast = startDate.distance(to: Date()) > 86400
         let isToday = startDate.distance(to: Date()) < 86400
         let canStart = !isPast && isToday
@@ -495,7 +491,7 @@ final class DetailWaitViewController: BaseViewController {
 
     private func setStartButton() {
         if memberType == .owner {
-            guard let startDate = startDateText.stringToDate else { return }
+            guard let startDate = room?.room?.startDate?.stringToDate else { return }
             guard let todayDate = Date().dateToString.stringToDate else { return }
             
             let isToday = startDate.distance(to: todayDate).isZero
@@ -549,7 +545,9 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     @objc private func presentDetailEditViewController() {
-        self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
+        guard let startDate = room?.room?.startDate,
+              let endDate = room?.room?.endDate else { return }
+        self.presentModal(from: startDate, to: endDate, isDateEdit: false)
     }
     
     @objc private func changeStartButton() {
