@@ -118,7 +118,7 @@ final class DetailWaitViewController: BaseViewController {
     private lazy var copyButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
-            if let code = self?.inviteCode {
+            if let code = self?.room?.invitation?.code {
                 ToastView.showToast(code: code ,message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
             }
         }
@@ -417,12 +417,6 @@ final class DetailWaitViewController: BaseViewController {
         guard let startDate = room?.room?.startDate,
               let endDate = room?.room?.endDate else { return }
         self.presentModal(from: startDate, to: endDate, isDateEdit: false)
-    }
-
-    private func touchUpToShowToast() {
-        guard let code = room?.invitation?.code else { return }
-        UIPasteboard.general.string = code
-        self.showToast(message: TextLiteral.detailWaitViewControllerCopyCode)
     }
 
     private func setupNotificationCenter() {
