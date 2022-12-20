@@ -12,7 +12,7 @@ import SnapKit
 final class DetailWaitViewController: BaseViewController {
     private var room: Room?
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-    private var roomIndex: Int
+    private let roomIndex: Int
     var roomInformation: ParticipatingRoom?
     private var roomInfo: RoomDTO?
     private var userArr: [String] = [] {
