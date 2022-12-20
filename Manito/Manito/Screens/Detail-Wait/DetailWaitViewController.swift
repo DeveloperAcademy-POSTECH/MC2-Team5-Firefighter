@@ -10,10 +10,10 @@ import UIKit
 import SnapKit
 
 final class DetailWaitViewController: BaseViewController {
+    private var room: Room?
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     private var roomIndex: Int
     var roomInformation: ParticipatingRoom?
-    private var inviteCode: String = ""
     private var roomInfo: RoomDTO?
     private var userArr: [String] = [] {
         didSet {
@@ -242,7 +242,6 @@ final class DetailWaitViewController: BaseViewController {
                 let data = try await detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
                     guard let title = roomInfo.room?.title,
-                          let code = roomInfo.invitation?.code,
                           let startDate = roomInfo.room?.startDate,
                           let endDate = roomInfo.room?.endDate,
                           let count = roomInfo.participants?.count,
@@ -250,7 +249,7 @@ final class DetailWaitViewController: BaseViewController {
                           let state = roomInfo.room?.state,
                           let members = roomInfo.participants?.members,
                           let isAdmin = roomInfo.admin else { return }
-                    inviteCode = code
+                    self.room = data
                     startDateText = startDate
                     endDateText = endDate
                     userCount = count
@@ -464,7 +463,8 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     private func touchUpToShowToast() {
-        UIPasteboard.general.string = inviteCode
+        guard let code = room?.invitation?.code else { return }
+        UIPasteboard.general.string = code
         self.showToast(message: TextLiteral.detailWaitViewControllerCopyCode)
     }
 
@@ -534,11 +534,14 @@ final class DetailWaitViewController: BaseViewController {
 
     // MARK: - selector
     @objc private func didTapEnterButton() {
-        guard let roomInfo = roomInfo else { return }
+        guard let roomInfo = roomInfo,
+              let code = room?.invitation?.code
+        else { return }
         let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
                                                              capacity: roomInfo.capacity,
                                                              startDate: roomInfo.startDate,
-                                                             endDate: roomInfo.endDate), code: inviteCode)
+                                                             endDate: roomInfo.endDate),
+                                                       code: code)
         viewController.roomInfo = roomInfo
         viewController.modalPresentationStyle = .overCurrentContext
         viewController.modalTransitionStyle = .crossDissolve
