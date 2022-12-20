@@ -29,6 +29,15 @@ struct Room: Decodable {
     let mission: Mission?
     let admin: Bool?
     let messages: Message1?
+    
+    var userCount: String {
+        if let count = participants?.count,
+           let capacity = room?.capacity {
+            return "\(count)/\(capacity)"
+        } else {
+            return ""
+        }
+    }
 }
 
 struct Friend: Decodable {
