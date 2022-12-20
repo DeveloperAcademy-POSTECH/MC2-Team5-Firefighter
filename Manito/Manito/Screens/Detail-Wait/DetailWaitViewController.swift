@@ -21,17 +21,6 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
     private var canStartClosure: ((Bool) -> ())?
-    private var maxUserCount: Int = 15 {
-        didSet {
-            comeInLabel.text = "\(userCount)/\(maxUserCount)"
-        }
-    }
-    private lazy var userCount = 0 {
-        didSet {
-            comeInLabel.text = "\(userCount)/\(maxUserCount)"
-            setStartButton()
-        }
-    }
     private var memberType = UserStatus.member {
         didSet {
             settingButton.menu = setExitButtonMenu()
@@ -122,7 +111,6 @@ final class DetailWaitViewController: BaseViewController {
     }()
     private lazy var comeInLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(userCount)/\(maxUserCount)"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 14)
         return label
@@ -240,24 +228,21 @@ final class DetailWaitViewController: BaseViewController {
                 let data = try await detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
                     guard let title = roomInfo.room?.title,
-                          let count = roomInfo.participants?.count,
-                          let capacity = roomInfo.room?.capacity,
                           let state = roomInfo.room?.state,
                           let members = roomInfo.participants?.members,
                           let isAdmin = roomInfo.admin else { return }
                     self.room = data
-                    userCount = count
-                    maxUserCount = capacity
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
                     memberType = isAdmin ? .owner : .member
                     self.roomInfo = RoomDTO(title: title,
-                                            capacity: capacity,
+                                            capacity: data?.room?.capacity ?? 15,
                                             startDate: data?.room?.startDate ?? "",
                                             endDate: data?.room?.endDate ?? "")
                     isPastStartDate()
                     setStartButton()
                     DispatchQueue.main.async {
+                        self.comeInLabel.text = data?.userCount
                         self.titleView.roomTitleLabel.text = title
                         self.titleView.durationDateLabel.text = roomInfo.room?.dateRange ?? ""
                     }
@@ -393,8 +378,10 @@ final class DetailWaitViewController: BaseViewController {
                                   endDate: dto.endDate)
             self?.requestChangeRoomInfo(roomDto: roomDto)
         }
+        guard let userCount = room?.participants?.count,
+              let capacity = room?.room?.capacity else { return }
         viewController.currentUserCount = userCount
-        viewController.sliderValue = maxUserCount
+        viewController.sliderValue = capacity
         viewController.startDateText = startString
         viewController.endDateText = endString
         present(viewController, animated: true, completion: nil)
@@ -491,11 +478,12 @@ final class DetailWaitViewController: BaseViewController {
 
     private func setStartButton() {
         if memberType == .owner {
-            guard let startDate = room?.room?.startDate?.stringToDate else { return }
-            guard let todayDate = Date().dateToString.stringToDate else { return }
+            guard let startDate = room?.room?.startDate?.stringToDate,
+                  let todayDate = Date().dateToString.stringToDate,
+                  let userCount = room?.participants?.count else { return }
             
             let isToday = startDate.distance(to: todayDate).isZero
-            let isMinimumUserCount = userCount >= 5
+            let isMinimumUserCount = userCount >= 4
             
             canStartClosure?(isToday && isMinimumUserCount)
         } else {
