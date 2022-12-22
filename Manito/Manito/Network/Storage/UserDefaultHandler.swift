@@ -31,4 +31,8 @@ struct UserDefaultHandler {
     static func setNickname(nickname: String) {
         UserData.setValue(nickname, forKey: .nickname)
     }
+    
+    static func setFcmToken(fcmToken: String) {
+        UserData.setValue(fcmToken, forKey: .fcmToken)
+    }
 }
