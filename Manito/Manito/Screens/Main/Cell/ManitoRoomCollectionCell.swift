@@ -45,7 +45,7 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     }()    
     lazy var roomStateView = RoomStateView()
     
-    // MARK: - func
+    // MARK: - life cycle
     
     override func render() {
         addSubview(imageView)

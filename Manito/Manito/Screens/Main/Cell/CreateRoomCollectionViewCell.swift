@@ -30,7 +30,7 @@ final class CreateRoomCollectionViewCell: BaseCollectionViewCell {
         return label
     }()
     
-    // MARK: - func
+    // MARK: - life cycle
     
     override func render() {
         addSubview(circleView)

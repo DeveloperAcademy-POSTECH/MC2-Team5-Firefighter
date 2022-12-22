@@ -53,8 +53,6 @@ final class InputInvitedCodeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
-    
     private func render() {
         self.addSubview(roomCodeTextField)
         roomCodeTextField.snp.makeConstraints {
@@ -68,6 +66,8 @@ final class InputInvitedCodeView: UIView {
             $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
     }
+    
+    // MARK: - func
     
     private func setCounter(count: Int) {
         if count <= maxLength {

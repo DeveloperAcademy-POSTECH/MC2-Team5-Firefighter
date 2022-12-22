@@ -43,7 +43,7 @@ final class ParticipateRoomViewController: BaseViewController {
         print("\(#file) is dead")
     }
     
-    // MARK: - Life Cycle
+    // MARK: - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

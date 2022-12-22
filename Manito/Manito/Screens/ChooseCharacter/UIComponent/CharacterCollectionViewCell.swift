@@ -22,7 +22,7 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
         return imageView
     }()
     
-    // MARK: - func
+    // MARK: - life cycle
     
     override func render() {
         contentView.addSubview(characterImageView)
