@@ -91,6 +91,8 @@ extension AppDelegate: MessagingDelegate {
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
         
         print("파이어베이스 토큰: \(fcmToken ?? "")")
+        guard let token = fcmToken else { return }
+        UserDefaultHandler.setFcmToken(fcmToken: token)
       }
 }
 
