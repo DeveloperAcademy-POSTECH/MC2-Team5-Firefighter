@@ -38,6 +38,8 @@ final class MainViewController: BaseViewController {
             }
         }
     }
+    
+    private var refreshControl = UIRefreshControl()
 
     // MARK: - property
 
@@ -78,6 +80,7 @@ final class MainViewController: BaseViewController {
             forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
         return collectionView
     }()
+
     private let maCharacterImageView = GIFImageView()
     private let niCharacterImageView = GIFImageView()
     private let ttoCharacterImageView = GIFImageView()
@@ -97,6 +100,7 @@ final class MainViewController: BaseViewController {
         setupGifImage()
         setupGuideArea()
         renderGuideArea()
+        setupRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -185,6 +189,15 @@ final class MainViewController: BaseViewController {
         navigationItem.rightBarButtonItem = settingButtonView
     }
     
+    private func setupRefreshControl() {
+        let action = UIAction { [weak self] _ in
+            self?.requestManittoList()
+        }
+        refreshControl.addAction(action, for: .valueChanged)
+        refreshControl.tintColor = .grey001
+        listCollectionView.refreshControl = refreshControl
+    }
+    
     // MARK: - API
     
     private func requestCommonMission() {
@@ -210,6 +223,7 @@ final class MainViewController: BaseViewController {
                 if let manittoList = data {
                     rooms = manittoList.participatingRooms
                     listCollectionView.reloadData()
+                    refreshControl.endRefreshing()
                 }
             } catch NetworkError.serverError {
                 print("serverError")
