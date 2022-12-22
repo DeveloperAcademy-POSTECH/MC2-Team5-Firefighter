@@ -12,8 +12,8 @@ import SnapKit
 // FIXME: 스토리보드 삭제 후 클래스명 변경 요
 final class DetailingCodebaseViewController: BaseViewController {
     
-    lazy var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
-    lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
+    let detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+    let detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
     
     private enum RoomType: String {
         case PROCESSING
