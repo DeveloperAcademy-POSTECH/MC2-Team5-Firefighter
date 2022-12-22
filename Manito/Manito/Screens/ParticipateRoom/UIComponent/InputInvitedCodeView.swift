@@ -31,6 +31,7 @@ final class InputInvitedCodeView: UIView {
         textField.delegate = self
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
+        textField.becomeFirstResponder()
         return textField
     }()
     
@@ -84,10 +85,8 @@ final class InputInvitedCodeView: UIView {
                 let fixedText = text[text.startIndex..<endIndex]
                 textField.text = fixedText + " "
                 
-                let when = DispatchTime.now() + 0.01
-                DispatchQueue.main.asyncAfter(deadline: when) {
+                DispatchQueue.main.async {
                     self.roomCodeTextField.text = String(fixedText)
-                    self.setCounter(count: textField.text?.count ?? 0)
                 }
             }
         }

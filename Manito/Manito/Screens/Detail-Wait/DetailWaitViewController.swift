@@ -112,7 +112,7 @@ class DetailWaitViewController: BaseViewController {
     // MARK: - property
 
     private lazy var settingButton: UIButton = {
-        let button = SettingButton()
+        let button = MoreButton()
         button.menu = setExitButtonMenu()
         button.showsMenuAsPrimaryAction = true
         return button
@@ -144,7 +144,9 @@ class DetailWaitViewController: BaseViewController {
     private lazy var copyButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
-            self?.touchUpToShowToast()
+            if let code = self?.inviteCode {
+                ToastView.showToast(code: code ,message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
+            }
         }
         button.setTitle(TextLiteral.copyCode, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
@@ -294,7 +296,7 @@ class DetailWaitViewController: BaseViewController {
             do {
                 let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
                 if status == 204 {
-                    showToast(message: "방 정보 수정 완료")
+                    ToastView.showToast(message: "방 정보 수정 완료", controller: self)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -371,34 +373,6 @@ class DetailWaitViewController: BaseViewController {
         listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
-    private func showToast(message: String) {
-        let toastLabel = UILabel()
-        toastLabel.backgroundColor = .grey001
-        toastLabel.textColor = .black
-        toastLabel.font = .font(.regular, ofSize: 14)
-        toastLabel.textAlignment = .center
-        toastLabel.text = message
-        toastLabel.alpha = 0
-        toastLabel.layer.cornerRadius = 10
-        toastLabel.clipsToBounds = true
-        self.view.addSubview(toastLabel)
-        toastLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(150)
-            $0.width.equalTo(140)
-            $0.height.equalTo(40)
-        }
-        UIView.animate(withDuration: 1.5, animations: {
-            toastLabel.alpha = 0.8
-        }, completion: { isCompleted in
-                UIView.animate(withDuration: 1.5, animations: {
-                    toastLabel.alpha = 0
-                }, completion: { isCompleted in
-                        toastLabel.removeFromSuperview()
-                    })
-            })
-    }
-
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
         let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode)
         viewController.currentUserCount = userCount
@@ -462,11 +436,6 @@ class DetailWaitViewController: BaseViewController {
     
     private func editInfoFromCurrentDate() {
         self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
-    }
-
-    private func touchUpToShowToast() {
-        UIPasteboard.general.string = inviteCode
-        self.showToast(message: TextLiteral.detailWaitViewControllerCopyCode)
     }
 
     private func setupNotificationCenter() {
