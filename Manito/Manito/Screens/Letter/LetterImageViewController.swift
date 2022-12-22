@@ -42,14 +42,14 @@ final class LetterImageViewController: BaseViewController {
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(23)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(17)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
             $0.width.height.equalTo(44)
         }
         
         view.addSubview(downloadButton)
         downloadButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(23)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(17)
         }
     }
     
