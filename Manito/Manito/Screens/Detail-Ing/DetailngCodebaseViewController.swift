@@ -22,14 +22,12 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     var roomInformation: ParticipatingRoom? {
         willSet {
-            guard let state = newValue?.state,
-                  let roomID = newValue?.id?.description
-            else { return }
+            guard let state = newValue?.state else { return }
             roomType = RoomType.init(rawValue: state)
-            roomId = roomID
         }
     }
-    private var roomId: String = ""
+    
+    private var roomId: String
     private var roomType: RoomType? {
         didSet {
             if roomType == .POST {
@@ -257,6 +255,21 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.showsMenuAsPrimaryAction = true
         return button
     }()
+    
+    // MARK: - init
+    
+    init(roomId: String) {
+        self.roomId = roomId
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("\(#file) is dead")
+    }
     
     // MARK: - life cycle
     

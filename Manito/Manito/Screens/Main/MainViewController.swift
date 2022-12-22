@@ -274,7 +274,8 @@ final class MainViewController: BaseViewController {
             viewController.roomInformation = rooms?[roomIndex]
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
-            let viewController = DetailingCodebaseViewController()
+            guard let roomId = rooms?[roomIndex].id?.description else { return }
+            let viewController = DetailingCodebaseViewController(roomId: roomId)
             viewController.roomInformation = rooms?[roomIndex]
             self.navigationController?.pushViewController(viewController, animated: true)
         }
