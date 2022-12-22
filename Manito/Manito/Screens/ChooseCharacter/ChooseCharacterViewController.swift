@@ -56,7 +56,10 @@ class ChooseCharacterViewController: BaseViewController {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
-        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
@@ -82,21 +85,27 @@ class ChooseCharacterViewController: BaseViewController {
     }()
     private lazy var enterButton: MainButton = {
         let button = MainButton()
-        button.addTarget(self, action: #selector(didTapEnterButton), for: .touchUpInside)
         switch statusMode {
         case .createRoom:
             button.title = TextLiteral.createRoom
         case .enterRoom:
             button.title = TextLiteral.enterRoom
         }
+        let action = UIAction { [weak self] _ in
+            self?.didTapEnterButton()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()    
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
-        button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
+        let action = UIAction { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -218,17 +227,7 @@ class ChooseCharacterViewController: BaseViewController {
         }
     }
     
-    // MARK: - selector
-    
-    @objc private func didTapBackButton() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func didTapCloseButton() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc private func didTapEnterButton() {
+    private func didTapEnterButton() {
         switch statusMode {
         case .createRoom:
             guard let roomInfo = roomInfo else { return }

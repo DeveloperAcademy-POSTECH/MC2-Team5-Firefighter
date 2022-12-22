@@ -37,7 +37,10 @@ class CheckRoomViewController: BaseViewController {
         button.backgroundColor = .yellow
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-        button.addTarget(self, action: #selector(didTapNoButton), for: .touchUpInside)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     private lazy var yesButton: UIButton = {
@@ -48,7 +51,12 @@ class CheckRoomViewController: BaseViewController {
         button.backgroundColor = .yellow
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-        button.addTarget(self, action: #selector(didTapYesButton), for: .touchUpInside)
+        let action = UIAction { [weak self] _ in
+            guard let id = self?.roomId else { return }
+            self?.dismiss(animated: true, completion: nil)
+            NotificationCenter.default.post(name: .nextNotification, object: nil, userInfo: ["roomId": id])
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -116,17 +124,5 @@ class CheckRoomViewController: BaseViewController {
         roomInfoView.roomLabel.text = title
         roomInfoView.dateLabel.text = "\(startDate) ~ \(endDate)"
         roomInfoView.peopleInfoView.peopleLabel.text = "X \(capacity)인"
-    }
-    
-    // MARK: - selector
-    
-    @objc private func didTapNoButton() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc private func didTapYesButton() {
-        guard let id = roomId else { return }
-        dismiss(animated: true, completion: nil)
-        NotificationCenter.default.post(name: .nextNotification, object: nil, userInfo: ["roomId": id])
     }
 }

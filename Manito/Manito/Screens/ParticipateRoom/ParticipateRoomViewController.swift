@@ -25,14 +25,20 @@ final class ParticipateRoomViewController: BaseViewController {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
-        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     private lazy var nextButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.searchRoom
-        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         button.isDisabled = true
+        let action = UIAction { [weak self] _ in
+            self?.dispatchInviteCode()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()    
     private let inputInvitedCodeView = InputInvitedCodeView()
@@ -144,14 +150,6 @@ final class ParticipateRoomViewController: BaseViewController {
         UIView.animate(withDuration: 0.2, animations: {
             self.nextButton.transform = .identity
         })
-    }
-    
-    @objc private func didTapCloseButton() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc private func didTapNextButton() {
-        dispatchInviteCode()
     }
     
     @objc private func didReceiveNextNotification(_ notification: Notification) {

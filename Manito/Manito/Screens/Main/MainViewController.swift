@@ -47,7 +47,10 @@ final class MainViewController: BaseViewController {
     private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
-        button.addTarget(self, action: #selector(didTapSettingButton), for: .touchUpInside)
+        let action = UIAction { [weak self] _ in
+            self?.navigationController?.pushViewController(SettingViewController(), animated: true)
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
@@ -280,13 +283,6 @@ final class MainViewController: BaseViewController {
             viewController.roomInformation = rooms?[roomIndex]
             self.navigationController?.pushViewController(viewController, animated: true)
         }
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    private func didTapSettingButton() {
-        navigationController?.pushViewController(SettingViewController(), animated: true)
     }
     
     @objc
