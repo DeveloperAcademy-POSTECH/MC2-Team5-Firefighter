@@ -61,6 +61,7 @@
 		7E3058C62854B47F00489E6A /* InputNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C52854B47F00489E6A /* InputNameView.swift */; };
 		7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C72854B64D00489E6A /* InputPersonView.swift */; };
 		7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C92854B7A900489E6A /* InputDateView.swift */; };
+		7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7542B22923744300D725CB /* ToastPopupView.swift */; };
 		7E77DB0428BF9A6700E95D4B /* RoomProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */; };
 		7E77DB0628BF9C0600E95D4B /* VerificationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0528BF9C0600E95D4B /* VerificationCode.swift */; };
 		7E77DB0828BF9D2400E95D4B /* RoomAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */; };
@@ -215,6 +216,7 @@
 		7E3058C52854B47F00489E6A /* InputNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputNameView.swift; sourceTree = "<group>"; };
 		7E3058C72854B64D00489E6A /* InputPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPersonView.swift; sourceTree = "<group>"; };
 		7E3058C92854B7A900489E6A /* InputDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDateView.swift; sourceTree = "<group>"; };
+		7E7542B22923744300D725CB /* ToastPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPopupView.swift; sourceTree = "<group>"; };
 		7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomProtocol.swift; sourceTree = "<group>"; };
 		7E77DB0528BF9C0600E95D4B /* VerificationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCode.swift; sourceTree = "<group>"; };
 		7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAPI.swift; sourceTree = "<group>"; };
@@ -638,6 +640,7 @@
 				B5F5253028545E4C00614FF7 /* BackButton.swift */,
 				B5F5253A2854ABF200614FF7 /* MainButton.swift */,
 				39FFE32728EEFFFE008442EE /* MoreButton.swift */,
+				7E7542B22923744300D725CB /* ToastPopupView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1036,6 +1039,7 @@
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				39C957D828799DB900A04A2B /* NetworkError.swift in Sources */,
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
+				7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */,
 				39CD581B28C4BE8800496E91 /* DetailStartingAPI.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
