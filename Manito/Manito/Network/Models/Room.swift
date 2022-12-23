@@ -20,7 +20,7 @@ struct ParticipatingRoom: Decodable {
 }
 
 struct Room: Decodable {
-    let room: RoomInfo?
+    let roomInformation: RoomInfo?
     let participants: Participants?
     let manittee: Manittee?
     let manitto: Manitto?
@@ -32,11 +32,23 @@ struct Room: Decodable {
     
     var userCount: String {
         if let count = participants?.count,
-           let capacity = room?.capacity {
+           let capacity = roomInformation?.capacity {
             return "\(count)/\(capacity)"
         } else {
             return ""
         }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case roomInformation = "room"
+        case participants
+        case manittee
+        case manitto
+        case invitation
+        case didViewRoulette
+        case mission
+        case admin
+        case messages
     }
 }
 
