@@ -31,7 +31,10 @@ final class SplashViewController: UIViewController {
         configUI()
         setupGifImage()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            if self.isLogin {
+            let isSetFcmToken = UserDefaultStorage.isSetFcmToken
+            if !isSetFcmToken {
+                self.presentLoginViewConroller()
+            } else if self.isLogin {
                 self.presentMainViewController()
             } else if self.isLogin && self.nickname == "" {
                 self.presentNicknameSettingViewController()

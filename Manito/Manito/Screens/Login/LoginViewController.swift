@@ -99,6 +99,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                 }
                                 
                                 UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
+                                UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
                                 viewController.modalPresentationStyle = .fullScreen
