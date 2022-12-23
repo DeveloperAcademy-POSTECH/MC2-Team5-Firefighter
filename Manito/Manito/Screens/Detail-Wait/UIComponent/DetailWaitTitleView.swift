@@ -30,14 +30,14 @@ final class DetailWaitTitleView: UIView {
 
     // MARK: - property
 
-    let roomTitleLabel: UILabel = {
+    private let roomTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
 
-    let startStautsLabel: UILabel = {
+    private let startStautsLabel: UILabel = {
         let label = UILabel()
         label.text = StartStatus.waiting.status
         label.backgroundColor = .badgeBeige
@@ -64,7 +64,7 @@ final class DetailWaitTitleView: UIView {
         return durationText
     }()
 
-    let durationDateLabel: UILabel = {
+    private let durationDateLabel: UILabel = {
         let dateText = UILabel()
         dateText.textColor = .white
         dateText.font = .font(.regular, ofSize: 18)
@@ -129,5 +129,17 @@ final class DetailWaitTitleView: UIView {
         default:
             startStautsLabel.text = StartStatus.waiting.status
         }
+    }
+    
+    func setRoomTitleLabelText(text: String) {
+        roomTitleLabel.text = text
+    }
+    
+    func getRoomTitleLabelText() -> String {
+        return roomTitleLabel.text ?? ""
+    }
+    
+    func setdurationDateLabel(text: String) {
+        startStautsLabel.text = text
     }
 }

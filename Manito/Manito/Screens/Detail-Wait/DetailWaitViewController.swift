@@ -245,8 +245,10 @@ final class DetailWaitViewController: BaseViewController {
                     setStartButton()
                     DispatchQueue.main.async {
                         self.comeInLabel.text = data?.userCount
-                        self.titleView.roomTitleLabel.text = title
-                        self.titleView.durationDateLabel.text = roomInfo.roomInformation?.dateRange ?? ""
+                        self.titleView.setRoomTitleLabelText(text: title)
+                        self.titleView.setdurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
+//                        self.titleView.roomTitleLabel.text = title
+//                        self.titleView.durationDateLabel.text =
                     }
                 }
             } catch NetworkError.serverError {
@@ -346,7 +348,7 @@ final class DetailWaitViewController: BaseViewController {
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
         let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode)
         viewController.didTappedChangeButton = { [weak self] dto in
-            let roomDto = RoomDTO(title: self?.titleView.roomTitleLabel.text ?? "",
+            let roomDto = RoomDTO(title: self?.titleView.getRoomTitleLabelText() ?? "",
                                   capacity: dto.capacity,
                                   startDate: dto.startDate,
                                   endDate: dto.endDate)
