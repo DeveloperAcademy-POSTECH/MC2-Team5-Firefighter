@@ -14,6 +14,7 @@ enum DataKeys: String, CaseIterable {
     case refreshToken = "refreshToken"
     case nickname = "nickname"
     case fcmToken = "fcmToken"
+    case isSetFcmToken = "isSetFcmToken"
 }
 
 struct UserDefaultStorage {
@@ -39,6 +40,10 @@ struct UserDefaultStorage {
     
     static var fcmToken: String {
         return UserData<String>.getValue(forKey: .fcmToken) ?? ""
+    }
+    
+    static var isSetFcmToken: Bool {
+        return UserData<Bool>.getValue(forKey: .isSetFcmToken) ?? false
     }
 }
 

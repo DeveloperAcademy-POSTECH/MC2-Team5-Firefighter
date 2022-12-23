@@ -35,4 +35,8 @@ struct UserDefaultHandler {
     static func setFcmToken(fcmToken: String) {
         UserData.setValue(fcmToken, forKey: .fcmToken)
     }
+    
+    static func setIsSetFcmToken(isSetFcmToken: Bool) {
+        UserData.setValue(isSetFcmToken, forKey: .isSetFcmToken)
+    }
 }
