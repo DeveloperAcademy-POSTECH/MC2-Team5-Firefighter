@@ -11,7 +11,10 @@ import FSCalendar
 import SnapKit
 
 final class DetailEditViewController: BaseViewController {
-    var didTappedChangeButton: ((RoomDTO) -> ())?
+    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
+    var didTappedChangeButton: (() -> ())?
+    private let roomIndex: Int
+    private let roomTitle: String
     enum EditMode {
         case dateEditMode
         case infoEditMode
@@ -126,8 +129,10 @@ final class DetailEditViewController: BaseViewController {
 
     // MARK: - life cycle
     
-    init(editMode: EditMode) {
+    init(editMode: EditMode, roomIndex: Int, title: String) {
         self.editMode = editMode
+        self.roomIndex = roomIndex
+        self.roomTitle = title
         super.init()
     }
     
@@ -231,15 +236,26 @@ final class DetailEditViewController: BaseViewController {
             }
         }
     }
-
-    // MARK: - selector
-
-    @objc
-    private func changeMemberCount(sender: UISlider) {
-        sliderValue = Int(sender.value)
-        memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
-        memberCountLabel.font = .font(.regular, ofSize: 24)
-        memberCountLabel.textColor = .white
+    
+    // MARK: - API
+    
+    private func putChangeRoomInfo(roomDto: RoomDTO) {
+        Task {
+            do {
+                let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
+                if status == 204 {
+                    ToastView.showToast(message: "방 정보 수정 완료", controller: self)
+                    didTappedChangeButton?()
+                    dismiss(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
     }
 
     // MARK: - func
@@ -270,22 +286,29 @@ final class DetailEditViewController: BaseViewController {
     }
 
     private func didTapChangeButton() {
-        let dto = RoomDTO(title: "",
+        let dto = RoomDTO(title: roomTitle,
                           capacity: Int(memberSlider.value),
                           startDate: "20\(calendarView.getTempStartDate())",
                           endDate: "20\(calendarView.getTempEndDate())")
         switch editMode {
         case .dateEditMode:
-            didTappedChangeButton?(dto)
-            dismiss(animated: true)
+            putChangeRoomInfo(roomDto: dto)
         case .infoEditMode:
             if currentUserCount <= sliderValue {
-                didTappedChangeButton?(dto)
-                dismiss(animated: true)
+                putChangeRoomInfo(roomDto: dto)
             } else {
                 makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle, message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
             }
         }
+    }
+    
+    // MARK: - selector
+
+    @objc private func changeMemberCount(sender: UISlider) {
+        sliderValue = Int(sender.value)
+        memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
+        memberCountLabel.font = .font(.regular, ofSize: 24)
+        memberCountLabel.textColor = .white
     }
 }
 

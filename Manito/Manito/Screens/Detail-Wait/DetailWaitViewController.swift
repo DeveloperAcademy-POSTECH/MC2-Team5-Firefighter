@@ -246,27 +246,8 @@ final class DetailWaitViewController: BaseViewController {
                     DispatchQueue.main.async {
                         self.comeInLabel.text = data?.userCount
                         self.titleView.setRoomTitleLabelText(text: title)
-                        self.titleView.setdurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
+                        self.titleView.setDurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
                     }
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
-    
-    private func requestChangeRoomInfo(roomDto: RoomDTO) {
-        Task {
-            do {
-                let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
-                if status == 204 {
-                    ToastView.showToast(message: "방 정보 수정 완료", controller: self)
-                    requestWaitRoomInfo()
-                    changeStartButton()
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -344,13 +325,11 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
-        let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode)
-        viewController.didTappedChangeButton = { [weak self] dto in
-            let roomDto = RoomDTO(title: self?.titleView.getRoomTitleLabelText() ?? "",
-                                  capacity: dto.capacity,
-                                  startDate: dto.startDate,
-                                  endDate: dto.endDate)
-            self?.requestChangeRoomInfo(roomDto: roomDto)
+        let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode,
+                                                      roomIndex: roomIndex,
+                                                      title: titleView.getRoomTitleLabelText())
+        viewController.didTappedChangeButton = { [weak self] in
+            self?.requestWaitRoomInfo()
         }
         guard let userCount = room?.participants?.count,
               let capacity = room?.roomInformation?.capacity else { return }

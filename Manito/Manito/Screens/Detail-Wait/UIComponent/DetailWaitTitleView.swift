@@ -139,7 +139,7 @@ final class DetailWaitTitleView: UIView {
         return roomTitleLabel.text ?? ""
     }
     
-    func setdurationDateLabel(text: String) {
-        startStautsLabel.text = text
+    func setDurationDateLabel(text: String) {
+        durationDateLabel.text = text
     }
 }
