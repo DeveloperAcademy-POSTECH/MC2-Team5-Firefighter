@@ -5,6 +5,7 @@
 //  Created by Mingwan Choi on 2022/09/18.
 //
 
+import Photos
 import UIKit
 
 import SnapKit
@@ -27,6 +28,11 @@ final class LetterImageViewController: BaseViewController {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
+    private let downloadButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.icSave, for: .normal)
+        return button
+    }()
     
     // MARK: - life cycle
     
@@ -36,8 +42,14 @@ final class LetterImageViewController: BaseViewController {
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(23)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(17)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
             $0.width.height.equalTo(44)
+        }
+        
+        view.addSubview(downloadButton)
+        downloadButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(23)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(17)
         }
     }
     
@@ -45,6 +57,7 @@ final class LetterImageViewController: BaseViewController {
         setupScrollView()
         setupImageView()
         setImagePinchGesture()
+        setupButtonAction()
     }
     
     private func setupScrollView() {
@@ -68,13 +81,41 @@ final class LetterImageViewController: BaseViewController {
         view.addGestureRecognizer(pinch)
     }
     
+    private func setupButtonAction() {
+        let downloadAction = UIAction { [weak self] _ in
+            guard let image = self?.imageView.image else {
+                self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
+                                message: TextLiteral.letterImageViewControllerErrorMessage)
+                return
+            }
+            
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.creationRequestForAsset(from: image)
+            }, completionHandler: { (success, error) in
+                DispatchQueue.main.async {
+                    if success {
+                        self?.makeAlert(title: TextLiteral.letterImageViewControllerSuccessTitle,
+                                        message: TextLiteral.letterImageViewControllerSuccessMessage)
+                    } else if let error = error {
+                        Logger.debugDescription(error)
+                        self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
+                                        message: TextLiteral.letterImageViewControllerErrorMessage)
+                    }
+                }
+            })
+        }
+        downloadButton.addAction(downloadAction, for: .touchUpInside)
+    }
+    
     // MARK: - selector
     
-    @objc private func didTapCloseButton() {
+    @objc
+    private func didTapCloseButton() {
         self.dismiss(animated: true)
     }
     
-    @objc private func didPinchImage(_ pinch: UIPinchGestureRecognizer) {
+    @objc
+    private func didPinchImage(_ pinch: UIPinchGestureRecognizer) {
         imageView.transform = imageView.transform.scaledBy(x: pinch.scale, y: pinch.scale)
         pinch.scale = 1
     }
