@@ -247,8 +247,6 @@ final class DetailWaitViewController: BaseViewController {
                         self.comeInLabel.text = data?.userCount
                         self.titleView.setRoomTitleLabelText(text: title)
                         self.titleView.setdurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
-//                        self.titleView.roomTitleLabel.text = title
-//                        self.titleView.durationDateLabel.text =
                     }
                 }
             } catch NetworkError.serverError {
