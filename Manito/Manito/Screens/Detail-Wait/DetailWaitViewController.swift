@@ -324,7 +324,7 @@ final class DetailWaitViewController: BaseViewController {
         listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
-    private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
+    private func presentDetailEditViewController(startString: String, endString: String, isDateEdit: Bool) {
         let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode,
                                                       roomIndex: roomIndex,
                                                       title: titleView.getRoomTitleLabelText())
@@ -389,13 +389,13 @@ final class DetailWaitViewController: BaseViewController {
         let fiveDaysInterval: TimeInterval = 86400 * 4
         let defaultStartDate = Date().dateToString
         let defaultEndDate = (Date() + fiveDaysInterval).dateToString
-        self.presentModal(from: defaultStartDate, to: defaultEndDate, isDateEdit: false)
+        self.presentDetailEditViewController(startString: defaultStartDate, endString: defaultEndDate, isDateEdit: false)
     }
     
     private func editInfoFromCurrentDate() {
         guard let startDate = room?.roomInformation?.startDate,
               let endDate = room?.roomInformation?.endDate else { return }
-        self.presentModal(from: startDate, to: endDate, isDateEdit: false)
+        self.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: false)
     }
 
     private func setupNotificationCenter() {
@@ -414,7 +414,7 @@ final class DetailWaitViewController: BaseViewController {
                     let fiveDaysInterval: TimeInterval = 86400 * 4
                     let startDate = Date().dateToString
                     let endDate = (Date() + fiveDaysInterval).dateToString
-                    self?.presentModal(from: startDate, to: endDate, isDateEdit: true)
+                    self?.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: true)
                 }
                 makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage, okAction: action)
             case .member:
@@ -458,7 +458,7 @@ final class DetailWaitViewController: BaseViewController {
     
     private func setupTitleViewGesture() {
         if memberType == .owner {
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentEditViewController))
             titleView.addGestureRecognizer(tapGesture)
         }
     }
@@ -479,10 +479,10 @@ final class DetailWaitViewController: BaseViewController {
         present(viewController, animated: true)
     }
     
-    @objc private func presentDetailEditViewController() {
+    @objc private func presentEditViewController() {
         guard let startDate = room?.roomInformation?.startDate,
               let endDate = room?.roomInformation?.endDate else { return }
-        self.presentModal(from: startDate, to: endDate, isDateEdit: false)
+        self.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: false)
     }
     
     @objc private func changeStartButton() {
