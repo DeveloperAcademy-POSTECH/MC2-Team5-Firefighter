@@ -9,7 +9,8 @@ import UIKit
 
 import SnapKit
 
-class ManitoRoomCollectionViewCell: UICollectionViewCell{
+final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
+
     private enum RoomStatus: String {
         case PRE = "대기중"
         case PROCESSING = "진행중"
@@ -18,20 +19,14 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
     
     // MARK: - property
     
-    private let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
-        return imageView
-    }()
-    
-    lazy var memberLabel: UILabel = {
+    private let imageView = UIImageView(image: ImageLiterals.imgNi)
+    let memberLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    
-    lazy var roomLabel: UILabel = {
+    let roomLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.manitoRoomCollectionViewCellRoomLabelTitle
         label.textColor = .white
@@ -40,41 +35,19 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    
-    lazy var dateLabel: UILabel = {
+    let dateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         return label
-    }()
+    }()    
+    lazy var roomStateView = RoomStateView()
     
-    lazy var roomState = RoomStateView()
+    // MARK: - life cycle
     
-    // MARK: - init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-        render()
-        setupSkeletionView()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - func
-
-    func setupView(){
-        backgroundColor = .darkGrey002.withAlphaComponent(0.8)
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
-        layer.cornerRadius = 10
-    }
-    
-    func render() {
+    override func render() {
         addSubview(imageView)
         imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(9)
@@ -94,8 +67,8 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
             $0.leading.trailing.equalToSuperview().inset(17)
         }
         
-        addSubview(roomState)
-        roomState.snp.makeConstraints {
+        addSubview(roomStateView)
+        roomStateView.snp.makeConstraints {
             $0.top.equalTo(roomLabel.snp.bottom).offset(24)
             $0.leading.equalToSuperview().inset(12)
             $0.width.equalTo(60)
@@ -109,12 +82,8 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         }
     }
     
-    private func setupSkeletionView() {
-        self.isSkeletonable = true
-        imageView.isSkeletonable = true
-        memberLabel.isSkeletonable = true
-        roomLabel.isSkeletonable = true
-        roomState.isSkeletonable = true
-        dateLabel.isSkeletonable = true
+    override func configUI() {
+        backgroundColor = .darkGrey002.withAlphaComponent(0.8)
+        makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
     }
 }
