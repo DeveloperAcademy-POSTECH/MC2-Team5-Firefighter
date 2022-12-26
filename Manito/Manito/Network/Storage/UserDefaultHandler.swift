@@ -12,6 +12,10 @@ struct UserDefaultHandler {
         UserData<Any>.clearAll()
     }
     
+    static func clearAllDataExcludingFcmToken() {
+        UserData<Any>.clearAllExcludingFcmToken()
+    }
+    
     static func setIsLogin(isLogin: Bool) {
         UserData.setValue(isLogin, forKey: .isLogin)
     }

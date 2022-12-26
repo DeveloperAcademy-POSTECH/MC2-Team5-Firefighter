@@ -70,4 +70,12 @@ struct UserData<T> {
     static func clear(forKey key: DataKeys) {
         UserDefaults.standard.removeObject(forKey: key.rawValue)
     }
+    
+    static func clearAllExcludingFcmToken() {
+        DataKeys.allCases.forEach { key in
+            if key != .fcmToken {
+                UserDefaults.standard.removeObject(forKey: key.rawValue)
+            }
+        }
+    }
 }
