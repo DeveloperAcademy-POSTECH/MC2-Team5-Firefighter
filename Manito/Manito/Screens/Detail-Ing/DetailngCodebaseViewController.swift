@@ -20,33 +20,9 @@ final class DetailingCodebaseViewController: BaseViewController {
         case POST
     }
     
-    var roomInformation: ParticipatingRoom? {
-        willSet {
-            guard let state = newValue?.state else { return }
-            roomType = RoomType.init(rawValue: state)
-        }
-    }
-    
     private var roomId: String
-    private var roomType: RoomType? {
-        didSet {
-            if roomType == .POST {
-                missionBackgroundView.makeBorderLayer(color: .darkGrey001)
-                statusLabel.text = TextLiteral.done
-                statusLabel.backgroundColor = .grey002
-                manitoMemoryButton.isHidden = false
-                manitoOpenButtonShadowView.isHidden = true
-                exitButton.isHidden = false
-            } else {
-                missionBackgroundView.makeBorderLayer(color: .subOrange)
-                statusLabel.text = TextLiteral.doing
-                statusLabel.backgroundColor = .mainRed
-                manitoMemoryButton.isHidden = true
-                manitoOpenButtonShadowView.isHidden = false
-                exitButton.isHidden = true
-            }
-        }
-    }
+    var roomInformation: ParticipatingRoom?
+    private var roomType: RoomType?
     private var isTappedManittee: Bool = false
     private var isAdminPost: Bool? {
         willSet {
@@ -255,8 +231,9 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     // MARK: - init
     
-    init(roomId: String) {
+    init(roomId: String, roomType: String) {
         self.roomId = roomId
+        self.roomType = RoomType.init(rawValue: roomType)
         super.init()
     }
     
@@ -509,7 +486,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
         let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className) as? FriendListViewController else { return }
-        guard let roomId = roomInformation?.id else { return }
+        guard let roomId = Int(roomId) else { return }
         viewController.roomIndex = roomId
         self.navigationController?.pushViewController(viewController, animated: true)
     }
@@ -517,6 +494,14 @@ final class DetailingCodebaseViewController: BaseViewController {
     // MARK: - DetailStarting API
    
     private func requestRoomInfo() {
+        
+        missionBackgroundView.makeBorderLayer(color: .subOrange)
+        statusLabel.text = TextLiteral.doing
+        statusLabel.backgroundColor = .mainRed
+        manitoMemoryButton.isHidden = true
+        manitoOpenButtonShadowView.isHidden = false
+        exitButton.isHidden = true
+        
         Task {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
@@ -565,6 +550,14 @@ final class DetailingCodebaseViewController: BaseViewController {
     // MARK: - DetailDone API
     
     private func requestDoneRoomInfo() {
+        
+        missionBackgroundView.makeBorderLayer(color: .darkGrey001)
+        statusLabel.text = TextLiteral.done
+        statusLabel.backgroundColor = .grey002
+        manitoMemoryButton.isHidden = false
+        manitoOpenButtonShadowView.isHidden = true
+        exitButton.isHidden = false
+        
         Task {
             do {
                 let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId)
