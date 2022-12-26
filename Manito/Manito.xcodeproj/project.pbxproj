@@ -139,6 +139,7 @@
 		CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */; };
 		CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */; };
 		CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */; };
+		CB6637E82959CBC60050BD04 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = CB6637E72959CBC60050BD04 /* SkeletonView */; };
 		CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */; };
 		CB674C2128596A310063A6B7 /* CheckRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C2028596A310063A6B7 /* CheckRoomViewController.swift */; };
 		CB7B23A828C4ECA8004A4CF3 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7B23A728C4ECA8004A4CF3 /* Character.swift */; };
@@ -319,6 +320,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB6637E82959CBC60050BD04 /* SkeletonView in Frameworks */,
 				B50B1B0428596C900080992C /* SnapKit in Frameworks */,
 				B50B1B0728596CB10080992C /* FSCalendar in Frameworks */,
 				B50B1B33285AC0970080992C /* Gifu in Frameworks */,
@@ -937,6 +939,7 @@
 				B50B1B0328596C900080992C /* SnapKit */,
 				B50B1B0628596CB10080992C /* FSCalendar */,
 				B50B1B32285AC0970080992C /* Gifu */,
+				CB6637E72959CBC60050BD04 /* SkeletonView */,
 			);
 			productName = Manito;
 			productReference = B5F524CB28519AA000614FF7 /* Manito.app */;
@@ -970,6 +973,7 @@
 				B50B1B0228596C900080992C /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B50B1B0528596CB10080992C /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				B50B1B31285AC0970080992C /* XCRemoteSwiftPackageReference "Gifu" */,
+				CB6637E62959CBC60050BD04 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = B5F524CC28519AA000614FF7 /* Products */;
 			projectDirPath = "";
@@ -1406,6 +1410,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		CB6637E62959CBC60050BD04 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1423,6 +1435,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B50B1B31285AC0970080992C /* XCRemoteSwiftPackageReference "Gifu" */;
 			productName = Gifu;
+		};
+		CB6637E72959CBC60050BD04 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB6637E62959CBC60050BD04 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
