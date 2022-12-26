@@ -39,7 +39,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     private var missionBackgroundView: UIView = {
         var view = UIView()
         view.backgroundColor = .darkGrey004
-        view.makeBorderLayer(color: .systemYellow)
         return view
     }()
     private let missionTitleLabel: UILabel = {
@@ -87,6 +86,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let manitteeIconView = UIImageView(image: ImageLiterals.icManiTti)
     private let manitteeLabel: UILabel = {
         let label = UILabel()
+        label.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
         return label
@@ -115,10 +115,15 @@ final class DetailingCodebaseViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 15)
         return label
     }()
-    private let letterBoxButton: UIButton = {
+    private lazy var letterBoxButton: UIButton = {
         let button = UIButton(type: .system)
-        let action = UIAction { _ in
-            print("쪽지함!!")
+        let action = UIAction { [weak self] _ in
+            guard let roomType = self?.roomType,
+                  let roomId = self?.roomId,
+                  let mission = self?.missionContentsLabel.text
+            else {return}
+            let letterViewController = LetterViewController(roomState: roomType.rawValue, roomId: roomId, mission: mission)
+            self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         button.setTitle("쪽지함", for: .normal)
@@ -128,10 +133,12 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.makeBorderLayer(color: .white)
         return button
     }()
-    private let manitoMemoryButton: UIButton = {
+    private lazy var manitoMemoryButton: UIButton = {
         let button = UIButton(type: .system)
-        let action = UIAction { _ in
-            print("함께 했던 기록!!")
+        let action = UIAction { [weak self] _ in
+            guard let roomId = self?.roomId else {return}
+            let viewController = MemoryViewController(roomId: roomId)
+            self?.navigationController?.pushViewController(viewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         button.setTitle("함께 했던 기록", for: .normal)
@@ -139,12 +146,12 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.titleLabel?.font = .font(.regular, ofSize: 15)
         button.backgroundColor = .darkGrey002
         button.makeBorderLayer(color: .white)
-        button.isHidden = true
         return button
     }()
     private let manitteeAnimationLabel: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.textColor = .white
+        label.alpha = 0
         label.font = .font(.regular, ofSize: 15)
         return label
     }()
@@ -153,10 +160,21 @@ final class DetailingCodebaseViewController: BaseViewController {
         imageView.alpha = 0
         return imageView
     }()
-    private let manitoOpenButton: MainButton = {
+    private let manitoOpenButtonShadowView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mainRed
+        view.layer.masksToBounds = false
+        view.layer.cornerRadius = 30
+        view.makeShadow(color: .shadowRed, opacity: 1.0, offset: CGSize(width: 0, height: 6), radius: 1)
+        return view
+    }()
+    private lazy var manitoOpenButton: MainButton = {
         let button = MainButton()
-        let action = UIAction { _ in
-            print("마니또 공개!!")
+        let action = UIAction { [weak self] _ in
+            guard let roomId = self?.roomId,
+                  let intRoomId = Int(roomId)
+            else {return}
+            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: intRoomId), animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
@@ -165,9 +183,18 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let badgeLabel: LetterCountBadgeView = {
         let label = LetterCountBadgeView()
         label.layer.cornerRadius = 15
-        label.isHidden = false
+        label.isHidden = true
         return label
     }()
+    private let exitButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.icMore, for: .normal)
+        button.showsMenuAsPrimaryAction = true
+        return button
+    }()
+    
+    // MARK: - init
+    
     
     // MARK: - life cycle
     
