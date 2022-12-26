@@ -11,8 +11,6 @@ import SnapKit
 
 final class RoomStateView: UIView {
     
-    let roomState = TextLiteral.doing
-    
     // MARK: - property
     
     lazy var state: UILabel = {
@@ -34,7 +32,7 @@ final class RoomStateView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - life cycle
     
     private func render() {
         self.addSubview(state)
