@@ -16,9 +16,9 @@ jobs:
 
     steps:
     - name: Build Source Code
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
 
     - name: Firefighter Build Tests
       run: |
-        xcodebuild build -project ./Manito/Manito.xcodeproj.xcodeproj -scheme Manito -destination "platform=iOS Simulator,name=iPhone 13,OS=latest"
+        xcodebuild build -project ./Manito/Manito.xcodeproj -scheme Manito -destination "platform=iOS Simulator,name=iPhone 13,OS=latest"
         xcpretty --color --simple
