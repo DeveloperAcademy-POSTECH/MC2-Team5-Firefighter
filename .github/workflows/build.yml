@@ -15,7 +15,6 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Build Source Code
     - uses: actions/checkout@v2
 
     - name: Firefighter Build Tests
