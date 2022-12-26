@@ -316,7 +316,7 @@ class DetailWaitViewController: BaseViewController {
                     guard let nickname = manittee.nickname else { return }
                     viewController.modalPresentationStyle = .fullScreen
                     viewController.manitteeName = nickname
-                    viewController.roomInformation = roomInformation
+                    viewController.roomId = roomInformation?.id?.description
                     present(viewController, animated: true)
                 }
             } catch NetworkError.serverError {
