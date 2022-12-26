@@ -11,11 +11,10 @@ import SnapKit
 
 final class PeopleInfoView: UIView {
     
-    // MARK: - Property
+    // MARK: - property
     
-    private let peopleImageView = UIImageView(image: ImageLiterals.imgNi)
-    
-    lazy var peopleLabel: UILabel = {
+    private let peopleImageView = UIImageView(image: ImageLiterals.imgNi)    
+    let peopleLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
         return label
@@ -32,7 +31,7 @@ final class PeopleInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - life cycle
     
     private func render() {
         self.addSubview(peopleImageView)

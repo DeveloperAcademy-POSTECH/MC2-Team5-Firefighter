@@ -19,9 +19,8 @@ final class CommonMissonView: UIView {
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 15)
         return label
-    }()
-    
-    lazy var mission: UILabel = {
+    }()    
+    let mission: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
         label.textAlignment = .center
@@ -41,7 +40,7 @@ final class CommonMissonView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - life cycle
     
     private func render() {
         self.addSubview(title)

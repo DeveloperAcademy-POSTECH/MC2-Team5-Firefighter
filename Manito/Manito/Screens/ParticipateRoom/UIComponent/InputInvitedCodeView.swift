@@ -15,7 +15,7 @@ final class InputInvitedCodeView: UIView {
     
     var changeNextButtonEnableStatus: ((Bool) -> ())?
     
-    // MARK: - Property
+    // MARK: - property
     
     lazy var roomCodeTextField: UITextField = {
         let textField = UITextField()
@@ -33,8 +33,7 @@ final class InputInvitedCodeView: UIView {
         textField.autocapitalizationType = .none
         textField.becomeFirstResponder()
         return textField
-    }()
-    
+    }()    
     private lazy var roomsTextLimit : UILabel = {
         let label = UILabel()
         label.text = "\(String(describing: roomCodeTextField.text?.count ?? 0))/\(maxLength)"

@@ -45,7 +45,6 @@ class ChooseCharacterViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.chooseCharacterViewControllerSubTitleLabel
@@ -53,15 +52,16 @@ class ChooseCharacterViewController: BaseViewController {
         label.textColor = .grey002
         return label
     }()
-    
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
-        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
-    
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
@@ -72,7 +72,6 @@ class ChooseCharacterViewController: BaseViewController {
         flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
         return flowLayout
     }()
-    
     private lazy var manittoCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
@@ -84,25 +83,29 @@ class ChooseCharacterViewController: BaseViewController {
                                 forCellWithReuseIdentifier: CharacterCollectionViewCell.className)
         return collectionView
     }()
-    
     private lazy var enterButton: MainButton = {
         let button = MainButton()
-        button.addTarget(self, action: #selector(didTapEnterButton), for: .touchUpInside)
         switch statusMode {
         case .createRoom:
             button.title = TextLiteral.createRoom
         case .enterRoom:
             button.title = TextLiteral.enterRoom
         }
+        let action = UIAction { [weak self] _ in
+            self?.didTapEnterButton()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
-    }()
-    
+    }()    
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
-        button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
+        let action = UIAction { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -195,6 +198,8 @@ class ChooseCharacterViewController: BaseViewController {
         }
     }
     
+    // MARK: - func
+    
     private func requestJoinRoom() {
         Task {
             do {
@@ -222,15 +227,7 @@ class ChooseCharacterViewController: BaseViewController {
         }
     }
     
-    // MARK: - Selectors
-    @objc private func didTapBackButton() {
-        navigationController?.popViewController(animated: true)
-    }
-    @objc private func didTapCloseButton() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc private func didTapEnterButton() {
+    private func didTapEnterButton() {
         switch statusMode {
         case .createRoom:
             guard let roomInfo = roomInfo else { return }
@@ -245,8 +242,7 @@ class ChooseCharacterViewController: BaseViewController {
     }
 }
 
-    // MARK: - UICollectionViewDataSource
-
+// MARK: - UICollectionViewDataSource
 extension ChooseCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Character.allCases.count
