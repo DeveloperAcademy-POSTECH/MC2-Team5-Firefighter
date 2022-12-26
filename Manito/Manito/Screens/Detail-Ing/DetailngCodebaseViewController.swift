@@ -256,7 +256,6 @@ final class DetailingCodebaseViewController: BaseViewController {
             requestDoneRoomInfo()
         case .PROCESSING:
             requestRoomInfo()
-            setupOpenManittoButton()
         case .none: break
         }
     }
@@ -442,12 +441,6 @@ final class DetailingCodebaseViewController: BaseViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
-    
-    private func setupOpenManittoButton() {
-        guard let endDateToString = roomInformation?.endDate else { return }
-        guard let endDate = endDateToString.stringToDateYYYY() else { return }
-        manitoOpenButtonShadowView.isHidden = !endDate.isOpenManitto
-    }
   
     // MARK: - selector
     
@@ -520,6 +513,9 @@ final class DetailingCodebaseViewController: BaseViewController {
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
                     manitteeAnimationLabel.text = manittee
+                    
+                    guard let endDateCheck = endDate.stringToDateYYYY() else { return }
+                    manitoOpenButtonShadowView.isHidden = !(endDateCheck.isOpenManitto)
                     
                     if badgeCount > 0 {
                         badgeLabel.isHidden = false
