@@ -11,6 +11,19 @@ import SnapKit
 
 // FIXME: 스토리보드 삭제 후 클래스명 변경 요
 final class DetailingCodebaseViewController: BaseViewController {
+    
+    private let detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+    private let detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
+    
+    private enum RoomType: String {
+        case PROCESSING
+        case POST
+    }
+    
+    private var roomId: String
+    private var roomType: RoomType?
+    private var isTappedManittee: Bool = false
+    private var isAdminPost: Bool?
 
     // MARK: - property
     
@@ -195,8 +208,34 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     // MARK: - init
     
+    init(roomId: String, roomType: String) {
+        self.roomId = roomId
+        self.roomType = RoomType.init(rawValue: roomType)
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("\(#file) is dead")
+    }
     
     // MARK: - life cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLargeTitleToOriginal()
+        
+        switch roomType {
+        case .POST:
+            requestDoneRoomInfo()
+        case .PROCESSING:
+            requestRoomInfo()
+        case .none: break
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -279,6 +318,12 @@ final class DetailingCodebaseViewController: BaseViewController {
             $0.centerX.equalTo(manitteeBackView)
         }
         
+        manitteeBackView.addSubview(manitteeAnimationLabel)
+        manitteeAnimationLabel.snp.makeConstraints {
+            $0.bottom.equalTo(manitteeBackView.snp.bottom).inset(15)
+            $0.centerX.equalTo(manitteeBackView)
+        }
+        
         view.addSubview(listBackView)
         listBackView.snp.makeConstraints {
             $0.top.equalTo(informationTitleLabel.snp.bottom).offset(31)
@@ -321,12 +366,19 @@ final class DetailingCodebaseViewController: BaseViewController {
             $0.height.equalTo(80)
         }
         
-        view.addSubview(manitoOpenButton)
-        manitoOpenButton.snp.makeConstraints {
+        view.addSubview(manitoOpenButtonShadowView)
+        manitoOpenButtonShadowView.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
             $0.centerX.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.size.width - 40)
+            $0.height.equalTo(60.0)
         }
-
+        
+        manitoOpenButtonShadowView.addSubview(manitoOpenButton)
+        manitoOpenButton.snp.makeConstraints {
+            $0.top.leading.bottom.trailing.equalTo(manitoOpenButtonShadowView)
+        }
+        
         view.addSubview(manitiRealIconView)
         manitiRealIconView.snp.makeConstraints {
             $0.top.equalTo(manitteeIconView.snp.top)
@@ -350,34 +402,63 @@ final class DetailingCodebaseViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
-        super.configUI()
-        setupText()
-    }
-    
     override func setupGuideArea() {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
         setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
     }
-
-    private func setupText() {
-        titleLabel.text = "애니또 팀"
-        periodLabel.text = "22.11.11 ~ 22.11.15"
-        statusLabel.text = "진행중"
-        missionContentsLabel.attributedText = NSAttributedString(string: "1000원 이하의 선물 주고 인증샷 받기")
-        manitteeLabel.text = "디너의 마니띠"
-        manitteeAnimationLabel.text = "호야"
+    
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        let rightItem = makeBarButtonItem(with: exitButton)
+        navigationItem.rightBarButtonItem = rightItem
     }
-
+    
+    private func setupLargeTitleToOriginal() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
+    }
+  
+    // MARK: - selector
+    
     @objc
-    private func didTappedManittee() {
-        print("당신의 마니띠는 !!!")
+    override func endEditingView() {
+        if !guideButton.isTouchInside {
+            guideBoxImageView.isHidden = true
+        }
     }
     
     @objc
+    private func didTappedManittee() {
+        if !isTappedManittee {
+            self.isTappedManittee = true
+            UIView.animate(withDuration: 1.0) {
+                self.toggledManitteeAnimation(self.isTappedManittee)
+            } completion: { _ in
+                UIView.animate(withDuration: 1.0, delay: 0.5) {
+                    self.toggledManitteeAnimation(!self.isTappedManittee)
+                } completion: { _ in
+                    self.isTappedManittee = false
+                }
+            }
+        }
+    }
+    
+    private func toggledManitteeAnimation(_ value: Bool) {
+        manitteeLabel.alpha = value ? 0 : 1
+        manitteeIconView.alpha = value ? 0 : 1
+        manitiRealIconView.alpha = value ? 1 : 0
+        manitteeAnimationLabel.alpha = value ? 1 : 0
+    }
+    
+    // FIXME: - 추후 PR 때, friendslistViewController codebase로 만들 예정
+    @objc
     private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
-        print("당신의 친구들은 !!!")
+        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className) as? FriendListViewController else { return }
+        guard let roomId = Int(roomId) else { return }
+        viewController.roomIndex = roomId
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
