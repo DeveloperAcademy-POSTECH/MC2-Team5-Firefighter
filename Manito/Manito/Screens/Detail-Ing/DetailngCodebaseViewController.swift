@@ -460,5 +460,158 @@ final class DetailingCodebaseViewController: BaseViewController {
         viewController.roomIndex = roomId
         self.navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    // MARK: - DetailStarting API
+   
+    private func requestRoomInfo() {
+        
+        missionBackgroundView.makeBorderLayer(color: .subOrange)
+        statusLabel.text = TextLiteral.doing
+        statusLabel.backgroundColor = .mainRed
+        manitoMemoryButton.isHidden = true
+        manitoOpenButtonShadowView.isHidden = false
+        exitButton.isHidden = true
+        
+        Task {
+            do {
+                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
+                if let info = data {
+                    guard let title = info.room?.title,
+                          let startDate = info.room?.startDate,
+                          let endDate = info.room?.endDate,
+                          let missionContent = info.mission?.content,
+                          let manittee = info.manittee?.nickname,
+                          let didView = info.didViewRoulette,
+                          let admin = info.admin,
+                          let badgeCount = info.messages?.count
+                    else { return }
+            
+                    titleLabel.text = title
+                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                    missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
+                    manitteeAnimationLabel.text = manittee
+                    
+                    guard let endDateCheck = endDate.stringToDateYYYY() else { return }
+                    manitoOpenButtonShadowView.isHidden = !(endDateCheck.isOpenManitto)
+                    
+                    if badgeCount > 0 {
+                        badgeLabel.isHidden = false
+                        badgeLabel.countLabel.text = String(badgeCount)
+                    } else {
+                        badgeLabel.isHidden = true
+                    }
+                    
+                    if !didView && !admin {
+                        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+                        guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+                        viewController.modalPresentationStyle = .fullScreen
+                        viewController.roomId = roomId
+                        viewController.manitteeName = manittee
+                        present(viewController, animated: true)
+                    }
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    // MARK: - DetailDone API
+    
+    private func requestDoneRoomInfo() {
+        
+        missionBackgroundView.makeBorderLayer(color: .darkGrey001)
+        statusLabel.text = TextLiteral.done
+        statusLabel.backgroundColor = .grey002
+        manitoMemoryButton.isHidden = false
+        manitoOpenButtonShadowView.isHidden = true
+        exitButton.isHidden = false
+        
+        Task {
+            do {
+                let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId)
+                if let info = data {
+                    guard let title = info.room?.title,
+                          let startDate = info.room?.startDate,
+                          let endDate = info.room?.endDate,
+                          let manittee = info.manittee?.nickname,
+                          let admin = info.admin
+                    else { return }
+            
+                    titleLabel.text = title
+                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                    missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.detailIngViewControllerDoneMissionText)
+                    manitteeAnimationLabel.text = manittee
+                    isAdminPost = admin
+                    
+                    if isAdminPost! {
+                        let menu = UIMenu(options: [], children: [
+                            UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
+                                self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdminTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertAdmin, okAction: { _ in
+                                             self?.requestDeleteRoom()
+                                         })
+                                     })
+                        ])
+                        exitButton.menu = menu
+                    } else {
+                        let menu = UIMenu(options: [], children: [
+                            UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+                                self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
+                                             self?.requestExitRoom()
+                                         })
+                                     })
+                        ])
+                        exitButton.menu = menu
+                    }
+                    
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestExitRoom() {
+        Task {
+            do {
+                let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId)
+                if statusCode == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+                makeAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdmin)
+            }
+        }
+    }
+    
+    private func requestDeleteRoom() {
+        Task {
+            do {
+                let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId)
+                if statusCode == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
 }
 
