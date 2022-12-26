@@ -8,6 +8,7 @@
 import UIKit
 
 import Gifu
+import SkeletonView
 import SnapKit
 
 final class MainViewController: BaseViewController {
@@ -38,6 +39,8 @@ final class MainViewController: BaseViewController {
             }
         }
     }
+    
+    private let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
 
     // MARK: - property
 
@@ -49,7 +52,7 @@ final class MainViewController: BaseViewController {
     }()
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
     private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
-    private let commonMissionView = CommonMissonView()
+    private let commonMissionView = CommonMissionView()
     private let menuTitle: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.mainViewControllerMenuTitle
@@ -76,6 +79,7 @@ final class MainViewController: BaseViewController {
             forCellWithReuseIdentifier: ManitoRoomCollectionViewCell.className)
         collectionView.register(cell: CreateRoomCollectionViewCell.self,
             forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
+        collectionView.isSkeletonable = true
         return collectionView
     }()
     private let maCharacterImageView = GIFImageView()
@@ -101,8 +105,13 @@ final class MainViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        requestCommonMission()
-        requestManittoList()
+        
+        Task {
+            listCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey002, .lightGray]), animation: skeletonAnimation, transition: .none)
+            requestCommonMission()
+            requestManittoList()
+        }
+
     }
 
     override func render() {
@@ -210,6 +219,9 @@ final class MainViewController: BaseViewController {
                 if let manittoList = data {
                     rooms = manittoList.participatingRooms
                     listCollectionView.reloadData()
+                    
+//                    self.listCollectionView.stopSkeletonAnimation()
+//                    self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -293,6 +305,17 @@ final class MainViewController: BaseViewController {
         if !guideButton.isTouchInside {
             guideBoxImageView.isHidden = true
         }
+    }
+}
+
+// MARK: - SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource
+extension MainViewController: SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        ManitoRoomCollectionViewCell.className
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        8
     }
 }
 

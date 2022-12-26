@@ -58,6 +58,7 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
         super.init(frame: frame)
         setupView()
         render()
+        setupSkeletionView()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -106,5 +107,14 @@ class ManitoRoomCollectionViewCell: UICollectionViewCell{
             $0.bottom.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
         }
+    }
+    
+    private func setupSkeletionView() {
+        self.isSkeletonable = true
+        imageView.isSkeletonable = true
+        memberLabel.isSkeletonable = true
+        roomLabel.isSkeletonable = true
+        roomState.isSkeletonable = true
+        dateLabel.isSkeletonable = true
     }
 }

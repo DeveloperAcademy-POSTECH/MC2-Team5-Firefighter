@@ -1,5 +1,5 @@
 //
-//  CommonMissonView.swift
+//  CommonMissionView.swift
 //  Manito
 //
 //  Created by COBY_PRO on 2022/06/12.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class CommonMissonView: UIView {
+final class CommonMissionView: UIView {
     
     // MARK: - property
     
