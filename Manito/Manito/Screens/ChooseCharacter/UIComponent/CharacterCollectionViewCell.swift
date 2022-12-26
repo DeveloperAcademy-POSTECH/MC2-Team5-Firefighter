@@ -22,15 +22,7 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
         return imageView
     }()
     
-    // MARK: - init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - life cycle
     
     override func render() {
         contentView.addSubview(characterImageView)
@@ -42,7 +34,6 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
     
     override func configUI() {
         makeBorderLayer(color: .white)
-//        backgroundColor = characterBackground?.withAlphaComponent(0.5)
         layer.cornerRadius = self.frame.size.width / 2
     }
     
