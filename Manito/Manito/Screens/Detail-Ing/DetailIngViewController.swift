@@ -325,7 +325,7 @@ class DetailIngViewController: BaseViewController {
                         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                         guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                         viewController.modalPresentationStyle = .fullScreen
-                        viewController.roomInformation = roomInformation
+                        viewController.roomId = roomInformation?.id?.description
                         viewController.manitteeName = manittee
                         present(viewController, animated: true)
                     }
