@@ -225,11 +225,10 @@ final class DetailingCodebaseViewController: BaseViewController {
         view.backgroundColor = .mainRed
         view.layer.masksToBounds = false
         view.layer.cornerRadius = 30
-        view.makeShadow(color: .shadowRed, opacity: 1.0, offset: CGSize(width: 0, height: 6), radius: 1)
-//        view.layer.shadowColor = UIColor.shadowRed.cgColor
-//        view.layer.shadowOpacity = 1.0
-//        view.layer.shadowRadius = 1
-//        view.layer.shadowOffset = CGSize(width: 0, height: 6)
+        view.layer.shadowColor = UIColor.shadowRed.cgColor
+        view.layer.shadowOpacity = 1.0
+        view.layer.shadowRadius = 1
+        view.layer.shadowOffset = CGSize(width: 0, height: 6)
         return view
     }()
     private lazy var manitoOpenButton: MainButton = {
