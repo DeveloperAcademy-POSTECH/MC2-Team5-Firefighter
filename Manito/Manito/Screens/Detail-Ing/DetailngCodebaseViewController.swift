@@ -20,7 +20,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         case POST
     }
     
-    private var roomId: String
+    private let roomId: String
     private var roomType: RoomType?
     private var isTappedManittee: Bool = false
     private var isAdminPost: Bool?
