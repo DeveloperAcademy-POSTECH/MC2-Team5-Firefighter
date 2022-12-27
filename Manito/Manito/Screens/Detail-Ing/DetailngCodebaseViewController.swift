@@ -39,19 +39,21 @@ final class DetailingCodebaseViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private let statusLabel: UILabel = {
+    private lazy var statusLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .mainRed
+        label.backgroundColor = (roomType == .PROCESSING) ? UIColor.mainRed : UIColor.grey002
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 11
         label.textColor = .white
         label.font = .font(.regular, ofSize: 13)
         label.textAlignment = .center
+        label.text = (roomType == .PROCESSING) ? TextLiteral.doing : TextLiteral.done
         return label
     }()
-    private var missionBackgroundView: UIView = {
+    private lazy var missionBackgroundView: UIView = {
         var view = UIView()
         view.backgroundColor = .darkGrey004
+        view.makeBorderLayer(color: (roomType == .PROCESSING) ? UIColor.subOrange : UIColor.darkGrey001)
         return view
     }()
     private let missionTitleLabel: UILabel = {
@@ -464,9 +466,6 @@ final class DetailingCodebaseViewController: BaseViewController {
    
     private func requestRoomInfo() {
         
-        missionBackgroundView.makeBorderLayer(color: .subOrange)
-        statusLabel.text = TextLiteral.doing
-        statusLabel.backgroundColor = .mainRed
         manittoMemoryButton.isHidden = true
         manittoOpenButtonShadowView.isHidden = false
         exitButton.isHidden = true
@@ -523,9 +522,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     private func requestDoneRoomInfo() {
         
-        missionBackgroundView.makeBorderLayer(color: .darkGrey001)
-        statusLabel.text = TextLiteral.done
-        statusLabel.backgroundColor = .grey002
         manittoMemoryButton.isHidden = false
         manittoOpenButtonShadowView.isHidden = true
         exitButton.isHidden = false
