@@ -146,7 +146,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.makeBorderLayer(color: .white)
         return button
     }()
-    private lazy var manitoMemoryButton: UIButton = {
+    private lazy var manittoMemoryButton: UIButton = {
         let button = UIButton(type: .system)
         let action = UIAction { [weak self] _ in
             guard let roomId = self?.roomId else {return}
@@ -173,7 +173,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         imageView.alpha = 0
         return imageView
     }()
-    private let manitoOpenButtonShadowView: UIView = {
+    private let manittoOpenButtonShadowView: UIView = {
         let view = UIView()
         view.backgroundColor = .mainRed
         view.layer.masksToBounds = false
@@ -181,7 +181,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         view.makeShadow(color: .shadowRed, opacity: 1.0, offset: CGSize(width: 0, height: 6), radius: 1)
         return view
     }()
-    private lazy var manitoOpenButton: MainButton = {
+    private lazy var manittoOpenButton: MainButton = {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
             guard let roomId = self?.roomId,
@@ -358,24 +358,24 @@ final class DetailingCodebaseViewController: BaseViewController {
             $0.height.equalTo(80)
         }
         
-        view.addSubview(manitoMemoryButton)
-        manitoMemoryButton.snp.makeConstraints {
+        view.addSubview(manittoMemoryButton)
+        manittoMemoryButton.snp.makeConstraints {
             $0.top.equalTo(letterBoxButton.snp.bottom).offset(18)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
             $0.height.equalTo(80)
         }
         
-        view.addSubview(manitoOpenButtonShadowView)
-        manitoOpenButtonShadowView.snp.makeConstraints {
+        view.addSubview(manittoOpenButtonShadowView)
+        manittoOpenButtonShadowView.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(UIScreen.main.bounds.size.width - 40)
             $0.height.equalTo(60.0)
         }
         
-        manitoOpenButtonShadowView.addSubview(manitoOpenButton)
-        manitoOpenButton.snp.makeConstraints {
-            $0.top.leading.bottom.trailing.equalTo(manitoOpenButtonShadowView)
+        manittoOpenButtonShadowView.addSubview(manittoOpenButton)
+        manittoOpenButton.snp.makeConstraints {
+            $0.top.leading.bottom.trailing.equalTo(manittoOpenButtonShadowView)
         }
         
         view.addSubview(manitiRealIconView)
@@ -467,8 +467,8 @@ final class DetailingCodebaseViewController: BaseViewController {
         missionBackgroundView.makeBorderLayer(color: .subOrange)
         statusLabel.text = TextLiteral.doing
         statusLabel.backgroundColor = .mainRed
-        manitoMemoryButton.isHidden = true
-        manitoOpenButtonShadowView.isHidden = false
+        manittoMemoryButton.isHidden = true
+        manittoOpenButtonShadowView.isHidden = false
         exitButton.isHidden = true
         
         Task {
@@ -491,7 +491,7 @@ final class DetailingCodebaseViewController: BaseViewController {
                     manitteeAnimationLabel.text = manittee
                     
                     guard let endDateCheck = endDate.stringToDateYYYY() else { return }
-                    manitoOpenButtonShadowView.isHidden = !(endDateCheck.isOpenManitto)
+                    manittoOpenButtonShadowView.isHidden = !(endDateCheck.isOpenManitto)
                     
                     if badgeCount > 0 {
                         badgeLabel.isHidden = false
@@ -526,8 +526,8 @@ final class DetailingCodebaseViewController: BaseViewController {
         missionBackgroundView.makeBorderLayer(color: .darkGrey001)
         statusLabel.text = TextLiteral.done
         statusLabel.backgroundColor = .grey002
-        manitoMemoryButton.isHidden = false
-        manitoOpenButtonShadowView.isHidden = true
+        manittoMemoryButton.isHidden = false
+        manittoOpenButtonShadowView.isHidden = true
         exitButton.isHidden = false
         
         Task {
