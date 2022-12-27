@@ -21,7 +21,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     }
     
     private let roomId: String
-    private var roomType: RoomType?
+    private var roomType: RoomType
     private var isTappedManittee: Bool = false
     private var isAdminPost: Bool?
 
@@ -210,7 +210,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     init(roomId: String, roomType: String) {
         self.roomId = roomId
-        self.roomType = RoomType.init(rawValue: roomType)
+        self.roomType = RoomType.init(rawValue: roomType) ?? (RoomType(rawValue: "PROCESSING"))!
         super.init()
     }
     
@@ -233,7 +233,6 @@ final class DetailingCodebaseViewController: BaseViewController {
             requestDoneRoomInfo()
         case .PROCESSING:
             requestRoomInfo()
-        case .none: break
         }
     }
     
