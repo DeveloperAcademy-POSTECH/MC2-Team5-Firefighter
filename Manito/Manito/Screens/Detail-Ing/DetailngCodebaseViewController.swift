@@ -367,15 +367,15 @@ final class DetailingCodebaseViewController: BaseViewController {
         
         view.addSubview(manittoOpenButtonShadowView)
         manittoOpenButtonShadowView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(UIScreen.main.bounds.size.width - 40)
-            $0.height.equalTo(60.0)
+            $0.height.equalTo(60)
         }
         
         manittoOpenButtonShadowView.addSubview(manittoOpenButton)
         manittoOpenButton.snp.makeConstraints {
-            $0.top.leading.bottom.trailing.equalTo(manittoOpenButtonShadowView)
+            $0.edges.equalToSuperview()
         }
         
         view.addSubview(manitiRealIconView)
