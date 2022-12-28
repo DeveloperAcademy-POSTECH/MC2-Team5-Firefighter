@@ -187,10 +187,8 @@ final class DetailingCodebaseViewController: BaseViewController {
     private lazy var manittoOpenButton: MainButton = {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
-            guard let roomId = self?.roomId,
-                  let intRoomId = Int(roomId)
-            else {return}
-            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: intRoomId), animated: true)
+            guard let roomId = self?.roomId else { return }
+            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: roomId), animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
