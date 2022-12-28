@@ -213,7 +213,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     init(roomId: String, roomType: String) {
         self.roomId = roomId
-        self.roomType = RoomType.init(rawValue: roomType) ?? (RoomType(rawValue: "PROCESSING"))!
+        self.roomType = RoomType.init(rawValue: roomType) ?? .PROCESSING
         super.init()
     }
     
