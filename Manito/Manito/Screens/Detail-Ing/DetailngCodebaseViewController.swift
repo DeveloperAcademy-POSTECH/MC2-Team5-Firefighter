@@ -468,7 +468,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     // MARK: - DetailStarting API
    
     private func requestRoomInfo() {
-        
         Task {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
@@ -520,7 +519,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     // MARK: - DetailDone API
     
     private func requestDoneRoomInfo() {
-        
         Task {
             do {
                 let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId)
