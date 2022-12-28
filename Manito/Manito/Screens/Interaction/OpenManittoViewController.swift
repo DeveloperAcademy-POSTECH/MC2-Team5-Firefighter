@@ -12,7 +12,7 @@ import SnapKit
 final class OpenManittoViewController: BaseViewController {
     private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService())
     
-    private var roomId: Int
+    private var roomId: String
     private var manittoIndex = 0
     private var friendsList: FriendList = FriendList(count: 0, members: [])
     private var manitto: String = ""
@@ -65,7 +65,7 @@ final class OpenManittoViewController: BaseViewController {
     
     // MARK: - init
     
-    init(roomId: Int) {
+    init(roomId: String) {
         self.roomId = roomId
         super.init()
     }
@@ -82,7 +82,7 @@ final class OpenManittoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestWithFriends(roomId: roomId.description)
+        requestWithFriends(roomId: roomId)
     }
     
     override func render() {
@@ -159,7 +159,7 @@ final class OpenManittoViewController: BaseViewController {
                 if let list = data {
                     friendsList = list
                     DispatchQueue.main.async {
-                        self.requestRoomInfo(roomId: roomId.description)
+                        self.requestRoomInfo(roomId: roomId)
                         self.animateCollectionView()
                         self.manittoCollectionView.reloadData()
                     }
