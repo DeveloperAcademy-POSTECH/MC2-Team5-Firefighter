@@ -23,7 +23,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let roomId: String
     private var roomType: RoomType
     private var isTappedManittee: Bool = false
-    private var isAdminPost: Bool?
 
     // MARK: - property
     
@@ -422,6 +421,51 @@ final class DetailingCodebaseViewController: BaseViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
+    
+    private func checkEndDate(date: String) {
+        guard let endDate = date.stringToDateYYYY() else { return }
+        manittoOpenButtonShadowView.isHidden = !(endDate.isOpenManitto)
+    }
+    
+    private func checkBadgeCount(count: Int) {
+        if count > 0 {
+            badgeLabel.isHidden = false
+            badgeLabel.countLabel.text = String(count)
+        } else {
+            badgeLabel.isHidden = true
+        }
+    }
+    
+    private func checkManittee(manitteeName: String ) {
+            let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+            guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+            viewController.modalPresentationStyle = .fullScreen
+            viewController.roomId = roomId
+            viewController.manitteeName = manitteeName
+            present(viewController, animated: true)
+    }
+    
+    private func checkAdmin(admin: Bool) {
+        if admin {
+            let menu = UIMenu(options: [], children: [
+                UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
+                    self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdminTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertAdmin, okAction: { _ in
+                                 self?.requestDeleteRoom()
+                             })
+                         })
+            ])
+            exitButton.menu = menu
+        } else {
+            let menu = UIMenu(options: [], children: [
+                UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+                    self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
+                                 self?.requestExitRoom()
+                             })
+                         })
+            ])
+            exitButton.menu = menu
+        }
+    }
   
     // MARK: - selector
     
@@ -482,29 +526,17 @@ final class DetailingCodebaseViewController: BaseViewController {
                           let badgeCount = info.messages?.count
                     else { return }
             
+                    if !didView && !admin {
+                        checkManittee(manitteeName: manittee)
+                    }
+                    
                     titleLabel.text = title
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
                     manitteeAnimationLabel.text = manittee
                     
-                    guard let endDateCheck = endDate.stringToDateYYYY() else { return }
-                    manittoOpenButtonShadowView.isHidden = !(endDateCheck.isOpenManitto)
-                    
-                    if badgeCount > 0 {
-                        badgeLabel.isHidden = false
-                        badgeLabel.countLabel.text = String(badgeCount)
-                    } else {
-                        badgeLabel.isHidden = true
-                    }
-                    
-                    if !didView && !admin {
-                        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-                        guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
-                        viewController.modalPresentationStyle = .fullScreen
-                        viewController.roomId = roomId
-                        viewController.manitteeName = manittee
-                        present(viewController, animated: true)
-                    }
+                    checkEndDate(date: endDate)
+                    checkBadgeCount(count: badgeCount)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -534,28 +566,8 @@ final class DetailingCodebaseViewController: BaseViewController {
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.detailIngViewControllerDoneMissionText)
                     manitteeAnimationLabel.text = manittee
-                    isAdminPost = admin
                     
-                    if isAdminPost! {
-                        let menu = UIMenu(options: [], children: [
-                            UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-                                self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdminTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertAdmin, okAction: { _ in
-                                             self?.requestDeleteRoom()
-                                         })
-                                     })
-                        ])
-                        exitButton.menu = menu
-                    } else {
-                        let menu = UIMenu(options: [], children: [
-                            UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                                self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
-                                             self?.requestExitRoom()
-                                         })
-                                     })
-                        ])
-                        exitButton.menu = menu
-                    }
-                    
+                    checkAdmin(admin: admin)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
