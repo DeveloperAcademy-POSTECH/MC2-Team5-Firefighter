@@ -161,6 +161,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.titleLabel?.font = .font(.regular, ofSize: 15)
         button.backgroundColor = .darkGrey002
         button.makeBorderLayer(color: .white)
+        button.isHidden = (roomType == .PROCESSING) ? true : false
         return button
     }()
     private let manitteeAnimationLabel: UILabel = {
@@ -181,6 +182,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         view.layer.masksToBounds = false
         view.layer.cornerRadius = 30
         view.makeShadow(color: .shadowRed, opacity: 1.0, offset: CGSize(width: 0, height: 6), radius: 1)
+        view.isHidden = true
         return view
     }()
     private lazy var manittoOpenButton: MainButton = {
@@ -201,10 +203,11 @@ final class DetailingCodebaseViewController: BaseViewController {
         label.isHidden = true
         return label
     }()
-    private let exitButton: UIButton = {
+    private lazy var exitButton: UIButton = {
         let button = UIButton()
         button.setImage(ImageLiterals.icMore, for: .normal)
         button.showsMenuAsPrimaryAction = true
+        button.isHidden = (roomType == .PROCESSING) ? true : false
         return button
     }()
     
@@ -466,10 +469,6 @@ final class DetailingCodebaseViewController: BaseViewController {
    
     private func requestRoomInfo() {
         
-        manittoMemoryButton.isHidden = true
-        manittoOpenButtonShadowView.isHidden = false
-        exitButton.isHidden = true
-        
         Task {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
@@ -521,10 +520,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     // MARK: - DetailDone API
     
     private func requestDoneRoomInfo() {
-        
-        manittoMemoryButton.isHidden = false
-        manittoOpenButtonShadowView.isHidden = true
-        exitButton.isHidden = false
         
         Task {
             do {
