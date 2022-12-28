@@ -184,7 +184,6 @@ final class DetailingCodebaseViewController: BaseViewController {
         view.isHidden = true
         return view
     }()
-    // FIXME: - 마니또 공개 API 확실히 하기
     private lazy var manittoOpenButton: MainButton = {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
