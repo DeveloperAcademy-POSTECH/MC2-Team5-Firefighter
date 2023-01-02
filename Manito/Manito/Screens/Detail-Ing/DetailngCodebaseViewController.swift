@@ -21,7 +21,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     }
     
     private let roomId: String
-    private var roomType: RoomType
+    private var roomType: RoomType = .PROCESSING
     private var isTappedManittee: Bool = false
 
     // MARK: - property
@@ -38,26 +38,23 @@ final class DetailingCodebaseViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private lazy var statusLabel: UILabel = {
+    private let statusLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = (roomType == .PROCESSING) ? UIColor.mainRed : UIColor.grey002
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 11
         label.textColor = .white
         label.font = .font(.regular, ofSize: 13)
         label.textAlignment = .center
-        label.text = (roomType == .PROCESSING) ? TextLiteral.doing : TextLiteral.done
         return label
     }()
-    private lazy var missionBackgroundView: UIView = {
+    private let missionBackgroundView: UIView = {
         var view = UIView()
         view.backgroundColor = .darkGrey004
-        view.makeBorderLayer(color: (roomType == .PROCESSING) ? UIColor.subOrange : UIColor.darkGrey001)
         return view
     }()
     private let missionTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "오늘의 개별 미션"
+        label.text = TextLiteral.individualMissionViewTitleLabel
         label.textColor = .grey002
         label.font = .font(.regular, ofSize: 14)
         return label
@@ -76,7 +73,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     }()
     private let informationTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "진행 정보"
+        label.text = TextLiteral.detailIngViewControllerDetailInformatioin
         label.textColor = .white
         label.font = .font(.regular, ofSize: 16)
         return label
@@ -140,7 +137,7 @@ final class DetailingCodebaseViewController: BaseViewController {
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
-        button.setTitle("쪽지함", for: .normal)
+        button.setTitle(TextLiteral.letterViewControllerTitle, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 15)
         button.backgroundColor = .darkGrey002
@@ -155,12 +152,11 @@ final class DetailingCodebaseViewController: BaseViewController {
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
-        button.setTitle("함께 했던 기록", for: .normal)
+        button.setTitle(TextLiteral.memoryViewControllerTitleLabel, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 15)
         button.backgroundColor = .darkGrey002
         button.makeBorderLayer(color: .white)
-        button.isHidden = (roomType == .PROCESSING) ? true : false
         return button
     }()
     private let manitteeAnimationLabel: UILabel = {
@@ -201,19 +197,17 @@ final class DetailingCodebaseViewController: BaseViewController {
         label.isHidden = true
         return label
     }()
-    private lazy var exitButton: UIButton = {
+    private let exitButton: UIButton = {
         let button = UIButton()
         button.setImage(ImageLiterals.icMore, for: .normal)
         button.showsMenuAsPrimaryAction = true
-        button.isHidden = (roomType == .PROCESSING) ? true : false
         return button
     }()
     
     // MARK: - init
     
-    init(roomId: String, roomType: String) {
+    init(roomId: String) {
         self.roomId = roomId
-        self.roomType = RoomType.init(rawValue: roomType) ?? .PROCESSING
         super.init()
     }
     
@@ -231,12 +225,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         super.viewWillAppear(animated)
         setupLargeTitleToOriginal()
         
-        switch roomType {
-        case .PROCESSING:
-            requestRoomInfo()
-        case .POST:
-            requestDoneRoomInfo()
-        }
+        requestRoomInfo()
     }
     
     override func viewDidLoad() {
@@ -421,6 +410,23 @@ final class DetailingCodebaseViewController: BaseViewController {
         navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
     
+    private func setupProcessingUI() {
+        missionBackgroundView.makeBorderLayer(color: .subOrange)
+        statusLabel.text = TextLiteral.doing
+        statusLabel.backgroundColor = .mainRed
+        manittoMemoryButton.isHidden = true
+        exitButton.isHidden = true
+    }
+    
+    private func setupPostUI() {
+        missionBackgroundView.makeBorderLayer(color: .darkGrey001)
+        statusLabel.text = TextLiteral.done
+        statusLabel.backgroundColor = .grey002
+        manittoMemoryButton.isHidden = false
+        exitButton.isHidden = false
+        missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.detailIngViewControllerDoneMissionText)
+    }
+
     private func checkEndDate(date: String) {
         guard let endDate = date.stringToDateYYYY() else { return }
         manittoOpenButtonShadowView.isHidden = !(endDate.isOpenManitto)
@@ -515,59 +521,43 @@ final class DetailingCodebaseViewController: BaseViewController {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
                 if let info = data {
-                    guard let title = info.room?.title,
+                    guard let state = data?.room?.state,
+                          let title = info.room?.title,
                           let startDate = info.room?.startDate,
                           let endDate = info.room?.endDate,
-                          let missionContent = info.mission?.content,
                           let manittee = info.manittee?.nickname,
-                          let didView = info.didViewRoulette,
                           let admin = info.admin,
                           let badgeCount = info.messages?.count
                     else { return }
-            
-                    if !didView && !admin {
-                        checkManittee(manitteeName: manittee)
+                    
+                    roomType = RoomType.init(rawValue: state) ?? .PROCESSING
+                    
+                    titleLabel.text = title
+                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                    manitteeAnimationLabel.text = manittee
+                    
+                    checkBadgeCount(count: badgeCount)
+                    
+                    if roomType == .PROCESSING {
+                        setupProcessingUI()
+                        
+                        guard let missionContent = info.mission?.content,
+                              let didView = info.didViewRoulette
+                        else { return }
+                        missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
+                        
+                        if !didView && !admin {
+                            checkManittee(manitteeName: manittee)
+                        }
+                        
+                        checkEndDate(date: endDate)
+                    } else {
+                        setupPostUI()
+                        checkAdmin(admin: admin)
                     }
                     
-                    titleLabel.text = title
-                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
-                    missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
-                    manitteeAnimationLabel.text = manittee
-                    
-                    checkEndDate(date: endDate)
-                    checkBadgeCount(count: badgeCount)
                 }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
-    
-    // MARK: - DetailDone API
-    
-    private func requestDoneRoomInfo() {
-        Task {
-            do {
-                let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId)
-                if let info = data {
-                    guard let title = info.room?.title,
-                          let startDate = info.room?.startDate,
-                          let endDate = info.room?.endDate,
-                          let manittee = info.manittee?.nickname,
-                          let admin = info.admin
-                    else { return }
-            
-                    titleLabel.text = title
-                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
-                    missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.detailIngViewControllerDoneMissionText)
-                    manitteeAnimationLabel.text = manittee
-                    
-                    checkAdmin(admin: admin)
-                }
+                
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
