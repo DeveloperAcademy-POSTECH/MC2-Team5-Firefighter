@@ -86,7 +86,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     
                     Task {
                         do {
-                            let response = try await self.loginService.dispatchAppleLogin(dto: LoginDTO(identityToken: tokenToString))
+                            let response = try await self.loginService.dispatchAppleLogin(dto: LoginDTO(identityToken: tokenToString, fcmToken: UserDefaultStorage.fcmToken))
                             
                             if let data = response {
                                 UserDefaultHandler.setIsLogin(isLogin: true)
@@ -99,6 +99,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                 }
                                 
                                 UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
+                                UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
                                 viewController.modalPresentationStyle = .fullScreen

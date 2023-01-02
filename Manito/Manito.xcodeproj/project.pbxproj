@@ -53,6 +53,8 @@
 		39EEF65E28CB3CFE00437654 /* LoginEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65D28CB3CFE00437654 /* LoginEndPoint.swift */; };
 		39EEF66028CB3D6200437654 /* LoginDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65F28CB3D6200437654 /* LoginDTO.swift */; };
 		39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F1C12D28D756E600585B83 /* LetterImageViewController.swift */; };
+		39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 39FFE33328F457AF008442EE /* FirebaseMessaging */; };
+		39FFE33628F45E44008442EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39FFE33528F45E44008442EE /* GoogleService-Info.plist */; };
 		39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FFE32728EEFFFE008442EE /* MoreButton.swift */; };
 		435B17682913E71400212663 /* DetailngCodebaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B17672913E71400212663 /* DetailngCodebaseViewController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
@@ -208,6 +210,7 @@
 		39EEF65D28CB3CFE00437654 /* LoginEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginEndPoint.swift; sourceTree = "<group>"; };
 		39EEF65F28CB3D6200437654 /* LoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDTO.swift; sourceTree = "<group>"; };
 		39F1C12D28D756E600585B83 /* LetterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageViewController.swift; sourceTree = "<group>"; };
+		39FFE33528F45E44008442EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		39FFE32728EEFFFE008442EE /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
 		435B17672913E71400212663 /* DetailngCodebaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailngCodebaseViewController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
@@ -319,6 +322,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */,
 				B50B1B0428596C900080992C /* SnapKit in Frameworks */,
 				B50B1B0728596CB10080992C /* FSCalendar in Frameworks */,
 				B50B1B33285AC0970080992C /* Gifu in Frameworks */,
@@ -498,6 +502,7 @@
 		B5F524C228519AA000614FF7 = {
 			isa = PBXGroup;
 			children = (
+				39FFE33528F45E44008442EE /* GoogleService-Info.plist */,
 				B55BCEB528D99F8600AF7E45 /* Settings.bundle */,
 				B5F524CD28519AA000614FF7 /* Manito */,
 				B5F524CC28519AA000614FF7 /* Products */,
@@ -937,6 +942,7 @@
 				B50B1B0328596C900080992C /* SnapKit */,
 				B50B1B0628596CB10080992C /* FSCalendar */,
 				B50B1B32285AC0970080992C /* Gifu */,
+				39FFE33328F457AF008442EE /* FirebaseMessaging */,
 			);
 			productName = Manito;
 			productReference = B5F524CB28519AA000614FF7 /* Manito.app */;
@@ -970,6 +976,7 @@
 				B50B1B0228596C900080992C /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B50B1B0528596CB10080992C /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				B50B1B31285AC0970080992C /* XCRemoteSwiftPackageReference "Gifu" */,
+				39FFE33228F457AF008442EE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = B5F524CC28519AA000614FF7 /* Products */;
 			projectDirPath = "";
@@ -987,6 +994,7 @@
 			files = (
 				CB2F0FCB28A5468C005F04C8 /* gifMa.gif in Resources */,
 				CB2F0FCD28A5468C005F04C8 /* gifNi.gif in Resources */,
+				39FFE33628F45E44008442EE /* GoogleService-Info.plist in Resources */,
 				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
 				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
 				B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */,
@@ -1382,6 +1390,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		39FFE33228F457AF008442EE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		B50B1B0228596C900080992C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -1409,6 +1425,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		39FFE33328F457AF008442EE /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39FFE33228F457AF008442EE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		B50B1B0328596C900080992C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B50B1B0228596C900080992C /* XCRemoteSwiftPackageReference "SnapKit" */;
