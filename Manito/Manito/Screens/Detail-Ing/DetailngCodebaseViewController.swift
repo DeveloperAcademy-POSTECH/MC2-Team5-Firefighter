@@ -232,10 +232,10 @@ final class DetailingCodebaseViewController: BaseViewController {
         setupLargeTitleToOriginal()
         
         switch roomType {
-        case .POST:
-            requestDoneRoomInfo()
         case .PROCESSING:
             requestRoomInfo()
+        case .POST:
+            requestDoneRoomInfo()
         }
     }
     
