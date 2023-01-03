@@ -325,7 +325,7 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     private func presentDetailEditViewController(startString: String, endString: String, isDateEdit: Bool) {
-        let viewController = DetailEditViewController(editMode: isDateEdit ? .date : .info,
+        let viewController = DetailEditViewController(editMode: isDateEdit ? .date : .information,
                                                       roomIndex: roomIndex,
                                                       title: titleView.getRoomTitleLabelText())
         viewController.didTappedChangeButton = { [weak self] in

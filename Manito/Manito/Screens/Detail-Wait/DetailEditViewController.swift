@@ -17,7 +17,7 @@ final class DetailEditViewController: BaseViewController {
     private let roomTitle: String
     enum EditMode {
         case date
-        case info
+        case information
     }
     var editMode: EditMode
     var currentUserCount = 0
@@ -202,7 +202,7 @@ final class DetailEditViewController: BaseViewController {
             $0.trailing.equalToSuperview().inset(25)
         }
 
-        if editMode == .info {
+        if editMode == .information {
             view.addSubview(setMemberLabel)
             setMemberLabel.snp.makeConstraints {
                 $0.top.equalTo(calendarView.snp.bottom).offset(60)
@@ -293,7 +293,7 @@ final class DetailEditViewController: BaseViewController {
         switch editMode {
         case .date:
             putChangeRoomInfo(roomDto: dto)
-        case .info:
+        case .information:
             if currentUserCount <= sliderValue {
                 putChangeRoomInfo(roomDto: dto)
             } else {
