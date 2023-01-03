@@ -325,9 +325,10 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     private func presentDetailEditViewController(startString: String, endString: String, isDateEdit: Bool) {
+        guard let title = titleView.roomTitleLabel.text else { return }
         let viewController = DetailEditViewController(editMode: isDateEdit ? .date : .information,
                                                       roomIndex: roomIndex,
-                                                      title: titleView.getRoomTitleLabelText())
+                                                      title: title)
         viewController.didTappedChangeButton = { [weak self] in
             self?.requestWaitRoomInfo()
         }

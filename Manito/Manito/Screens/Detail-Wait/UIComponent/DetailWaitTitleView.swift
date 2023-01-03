@@ -30,7 +30,7 @@ final class DetailWaitTitleView: UIView {
 
     // MARK: - property
 
-    private let roomTitleLabel: UILabel = {
+    private(set) var roomTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 34)
@@ -133,10 +133,6 @@ final class DetailWaitTitleView: UIView {
     
     func setRoomTitleLabelText(text: String) {
         roomTitleLabel.text = text
-    }
-    
-    func getRoomTitleLabelText() -> String {
-        return roomTitleLabel.text ?? ""
     }
     
     func setDurationDateLabel(text: String) {
