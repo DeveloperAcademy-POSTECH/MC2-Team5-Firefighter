@@ -534,30 +534,27 @@ final class DetailingCodebaseViewController: BaseViewController {
                     
                     roomType = RoomType.init(rawValue: state) ?? .PROCESSING
                     
-                    titleLabel.text = title
-                    periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
-                    manitteeAnimationLabel.text = manittee
-                    
-                    setupBadge(count: badgeCount)
-                    
-                    if roomType == .PROCESSING {
-                        setupProcessingUI()
+                    DispatchQueue.main.async {
+                        self.titleLabel.text = title
+                        self.periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
+                        self.manitteeAnimationLabel.text = manittee
+                        self.setupBadge(count: badgeCount)
                         
-                        guard let missionContent = info.mission?.content,
-                              let didView = info.didViewRoulette
-                        else { return }
-                        missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
-                        
-                        if !didView && !admin {
-                            openManittee(manitteeName: manittee)
+                        if self.roomType == .PROCESSING {
+                            self.setupProcessingUI()
+                            guard let missionContent = info.mission?.content,
+                                  let didView = info.didViewRoulette
+                            else { return }
+                            self.missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
+                            if !didView && !admin {
+                                self.openManittee(manitteeName: manittee)
+                            }
+                            self.setupManittoOpenButton(date: endDate)
+                        } else {
+                            self.setupPostUI()
+                            self.setupExitButton(admin: admin)
                         }
-                        
-                        setupManittoOpenButton(date: endDate)
-                    } else {
-                        setupPostUI()
-                        setupExitButton(admin: admin)
                     }
-                    
                 }
                 
             } catch NetworkError.serverError {
