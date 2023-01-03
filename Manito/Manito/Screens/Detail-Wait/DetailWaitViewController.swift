@@ -20,7 +20,7 @@ final class DetailWaitViewController: BaseViewController {
             renderTableView()
         }
     }
-    private var canStartManitto: ((Bool) -> ())?
+    private var detectStartableStatus: ((Bool) -> ())?
     private var memberType = UserStatus.member {
         didSet {
             settingButton.menu = setExitButtonMenu()
@@ -136,7 +136,7 @@ final class DetailWaitViewController: BaseViewController {
     }()
     private lazy var startButton: UIButton = {
         let button = MainButton()
-        canStartManitto = { value in
+        detectStartableStatus = { value in
             if value {
                 button.title = ButtonText.start.status
                 button.isDisabled = false
@@ -433,9 +433,9 @@ final class DetailWaitViewController: BaseViewController {
             let isToday = startDate.distance(to: todayDate).isZero
             let isMinimumUserCount = userCount >= 4
             
-            canStartManitto?(isToday && isMinimumUserCount)
+            detectStartableStatus?(isToday && isMinimumUserCount)
         } else {
-            canStartManitto?(false)
+            detectStartableStatus?(false)
         }
     }
     
