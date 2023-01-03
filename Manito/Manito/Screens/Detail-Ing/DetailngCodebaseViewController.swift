@@ -405,6 +405,8 @@ final class DetailingCodebaseViewController: BaseViewController {
         navigationItem.rightBarButtonItem = rightItem
     }
     
+    // MARK: - func
+    
     private func setupLargeTitleToOriginal() {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -427,12 +429,12 @@ final class DetailingCodebaseViewController: BaseViewController {
         missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.detailIngViewControllerDoneMissionText)
     }
 
-    private func checkEndDate(date: String) {
+    private func setupManittoOpenButton(date: String) {
         guard let endDate = date.stringToDateYYYY() else { return }
         manittoOpenButtonShadowView.isHidden = !(endDate.isOpenManitto)
     }
     
-    private func checkBadgeCount(count: Int) {
+    private func setupBadge(count: Int) {
         if count > 0 {
             badgeLabel.isHidden = false
             badgeLabel.countLabel.text = String(count)
@@ -441,7 +443,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         }
     }
     
-    private func checkManittee(manitteeName: String ) {
+    private func openManittee(manitteeName: String ) {
             let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
             viewController.modalPresentationStyle = .fullScreen
@@ -450,23 +452,23 @@ final class DetailingCodebaseViewController: BaseViewController {
             present(viewController, animated: true)
     }
     
-    private func checkAdmin(admin: Bool) {
+    private func setupExitButton(admin: Bool) {
         if admin {
             let menu = UIMenu(options: [], children: [
                 UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
                     self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdminTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertAdmin, okAction: { _ in
-                                 self?.requestDeleteRoom()
-                             })
-                         })
+                        self?.requestDeleteRoom()
+                    })
+                })
             ])
             exitButton.menu = menu
         } else {
             let menu = UIMenu(options: [], children: [
                 UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
                     self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
-                                 self?.requestExitRoom()
-                             })
-                         })
+                        self?.requestExitRoom()
+                    })
+                })
             ])
             exitButton.menu = menu
         }
@@ -536,7 +538,7 @@ final class DetailingCodebaseViewController: BaseViewController {
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     manitteeAnimationLabel.text = manittee
                     
-                    checkBadgeCount(count: badgeCount)
+                    setupBadge(count: badgeCount)
                     
                     if roomType == .PROCESSING {
                         setupProcessingUI()
@@ -547,13 +549,13 @@ final class DetailingCodebaseViewController: BaseViewController {
                         missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
                         
                         if !didView && !admin {
-                            checkManittee(manitteeName: manittee)
+                            openManittee(manitteeName: manittee)
                         }
                         
-                        checkEndDate(date: endDate)
+                        setupManittoOpenButton(date: endDate)
                     } else {
                         setupPostUI()
-                        checkAdmin(admin: admin)
+                        setupExitButton(admin: admin)
                     }
                     
                 }
