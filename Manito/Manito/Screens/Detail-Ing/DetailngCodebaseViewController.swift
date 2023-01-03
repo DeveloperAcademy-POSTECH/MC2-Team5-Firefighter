@@ -405,6 +405,8 @@ final class DetailingCodebaseViewController: BaseViewController {
         navigationItem.rightBarButtonItem = rightItem
     }
     
+    // MARK: - func
+    
     private func setupLargeTitleToOriginal() {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -432,7 +434,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         manittoOpenButtonShadowView.isHidden = !(endDate.isOpenManitto)
     }
     
-    private func checkBadgeCount(count: Int) {
+    private func setupBadge(count: Int) {
         if count > 0 {
             badgeLabel.isHidden = false
             badgeLabel.countLabel.text = String(count)
@@ -441,7 +443,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         }
     }
     
-    private func checkManittee(manitteeName: String ) {
+    private func setupManittoOpenButton(manitteeName: String ) {
             let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
             guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
             viewController.modalPresentationStyle = .fullScreen
@@ -536,7 +538,7 @@ final class DetailingCodebaseViewController: BaseViewController {
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     manitteeAnimationLabel.text = manittee
                     
-                    checkBadgeCount(count: badgeCount)
+                    setupBadge(count: badgeCount)
                     
                     if roomType == .PROCESSING {
                         setupProcessingUI()
@@ -547,7 +549,7 @@ final class DetailingCodebaseViewController: BaseViewController {
                         missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
                         
                         if !didView && !admin {
-                            checkManittee(manitteeName: manittee)
+                            setupManittoOpenButton(manitteeName: manittee)
                         }
                         
                         checkEndDate(date: endDate)
