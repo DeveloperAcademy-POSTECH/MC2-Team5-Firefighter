@@ -221,17 +221,16 @@ final class DetailingCodebaseViewController: BaseViewController {
     
     // MARK: - life cycle
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupLargeTitleToOriginal()
-        
-        requestRoomInfo()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGuideArea()
         renderGuideArea()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLargeTitleToOriginal()
+        requestRoomInfo()
     }
     
     override func render() {
