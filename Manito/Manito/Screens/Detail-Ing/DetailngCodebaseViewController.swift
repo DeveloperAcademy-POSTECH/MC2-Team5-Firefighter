@@ -132,7 +132,7 @@ final class DetailingCodebaseViewController: BaseViewController {
             guard let roomType = self?.roomType,
                   let roomId = self?.roomId,
                   let mission = self?.missionContentsLabel.text
-            else {return}
+            else { return }
             let letterViewController = LetterViewController(roomState: roomType.rawValue, roomId: roomId, mission: mission)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
@@ -147,7 +147,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private lazy var manittoMemoryButton: UIButton = {
         let button = UIButton(type: .system)
         let action = UIAction { [weak self] _ in
-            guard let roomId = self?.roomId else {return}
+            guard let roomId = self?.roomId else { return }
             let viewController = MemoryViewController(roomId: roomId)
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
