@@ -203,6 +203,10 @@ final class MainViewController: BaseViewController {
     private func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
             self?.requestManittoList()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.refreshControl.endRefreshing()
+            }
         }
         refreshControl.addAction(action, for: .valueChanged)
         refreshControl.tintColor = .grey001
@@ -234,7 +238,6 @@ final class MainViewController: BaseViewController {
                 if let manittoList = data {
                     rooms = manittoList.participatingRooms
                     listCollectionView.reloadData()
-                    refreshControl.endRefreshing()
                 }
             } catch NetworkError.serverError {
                 print("serverError")
