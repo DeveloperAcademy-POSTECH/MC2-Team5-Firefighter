@@ -13,6 +13,8 @@ enum DataKeys: String, CaseIterable {
     case accessToken = "accessToken"
     case refreshToken = "refreshToken"
     case nickname = "nickname"
+    case fcmToken = "fcmToken"
+    case isSetFcmToken = "isSetFcmToken"
 }
 
 struct UserDefaultStorage {
@@ -34,6 +36,14 @@ struct UserDefaultStorage {
     
     static var nickname: String? {
         return UserData<String?>.getValue(forKey: .nickname) ?? nil
+    }
+    
+    static var fcmToken: String {
+        return UserData<String>.getValue(forKey: .fcmToken) ?? ""
+    }
+    
+    static var isSetFcmToken: Bool {
+        return UserData<Bool>.getValue(forKey: .isSetFcmToken) ?? false
     }
 }
 
@@ -59,5 +69,13 @@ struct UserData<T> {
     
     static func clear(forKey key: DataKeys) {
         UserDefaults.standard.removeObject(forKey: key.rawValue)
+    }
+    
+    static func clearAllExcludingFcmToken() {
+        DataKeys.allCases.forEach { key in
+            if key != .fcmToken {
+                UserDefaults.standard.removeObject(forKey: key.rawValue)
+            }
+        }
     }
 }
