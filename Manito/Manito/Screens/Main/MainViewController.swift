@@ -86,7 +86,6 @@ final class MainViewController: BaseViewController {
             forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
         return collectionView
     }()
-
     private let maCharacterImageView = GIFImageView()
     private let niCharacterImageView = GIFImageView()
     private let ttoCharacterImageView = GIFImageView()
