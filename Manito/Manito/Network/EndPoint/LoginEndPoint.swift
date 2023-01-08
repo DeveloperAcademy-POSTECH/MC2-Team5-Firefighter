@@ -31,7 +31,7 @@ enum LoginEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .dispatchAppleLogin:
-            return "\(baseURL)/login"
+            return "https://dev.aenitto.shop/api/v2/login"
         }
     }
 
