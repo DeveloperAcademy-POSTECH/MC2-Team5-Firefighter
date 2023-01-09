@@ -39,17 +39,11 @@ extension SceneDelegate {
     }
     
     func changeRootViewWithMessageView(roomId: Int) {
-        let viewController = UINavigationController(rootViewController: MainViewController())
-        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-        guard let detailIngviewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
-        let roomInfo = ParticipatingRoom(id: roomId,
-                                         title: nil,
-                                         participatingCount: nil,
-                                         capacity: nil,
-                                         startDate: nil,
-                                         endDate: nil)
-        detailIngviewController.roomInformation = roomInfo
-        viewController.pushViewController(detailIngviewController, animated: true)
-        window?.rootViewController = viewController
+        let rootViewController = UINavigationController(rootViewController: MainViewController())
+        let detailIngViewController = DetailingCodebaseViewController(roomId: roomId.description)
+        let letterViewController = detailIngViewController.letterViewController()
+        rootViewController.pushViewController(detailIngViewController, animated: true)
+        rootViewController.pushViewController(letterViewController, animated: true)
+        window?.rootViewController = rootViewController
     }
 }
