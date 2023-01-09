@@ -9,13 +9,8 @@ import UIKit
 
 import SnapKit
 
-class DetailWaitTitleView: UIView {
-    var dateRangeText = "" {
-        didSet {
-            durationDateLabel.text = dateRangeText
-        }
-    }
-
+final class DetailWaitTitleView: UIView {
+    
     private enum StartStatus: String {
         case waiting
         case starting
@@ -35,15 +30,14 @@ class DetailWaitTitleView: UIView {
 
     // MARK: - property
 
-    let roomTitleLabel: UILabel = {
+    private(set) var roomTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "명예소방관"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
 
-    let startStautsLabel: UILabel = {
+    private let startStautsLabel: UILabel = {
         let label = UILabel()
         label.text = StartStatus.waiting.status
         label.backgroundColor = .badgeBeige
@@ -70,7 +64,7 @@ class DetailWaitTitleView: UIView {
         return durationText
     }()
 
-    private lazy var durationDateLabel: UILabel = {
+    private let durationDateLabel: UILabel = {
         let dateText = UILabel()
         dateText.textColor = .white
         dateText.font = .font(.regular, ofSize: 18)
@@ -135,5 +129,13 @@ class DetailWaitTitleView: UIView {
         default:
             startStautsLabel.text = StartStatus.waiting.status
         }
+    }
+    
+    func setRoomTitleLabelText(text: String) {
+        roomTitleLabel.text = text
+    }
+    
+    func setDurationDateLabel(text: String) {
+        durationDateLabel.text = text
     }
 }
