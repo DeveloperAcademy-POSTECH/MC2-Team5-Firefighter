@@ -133,7 +133,10 @@ final class DetailingCodebaseViewController: BaseViewController {
                   let roomId = self?.roomId,
                   let mission = self?.missionContentsLabel.text
             else { return }
-            let letterViewController = LetterViewController(roomState: roomType.rawValue, roomId: roomId, mission: mission)
+            let letterViewController = LetterViewController(roomState: roomType.rawValue,
+                                                            roomId: roomId,
+                                                            mission: mission,
+                                                            letterState: .sent)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
@@ -471,6 +474,15 @@ final class DetailingCodebaseViewController: BaseViewController {
             ])
             exitButton.menu = menu
         }
+    }
+    
+    func letterViewController() -> UIViewController {
+        guard let mission = missionContentsLabel.text else { return UIViewController() }
+        let letterViewController = LetterViewController(roomState: roomType.rawValue,
+                                                        roomId: roomId,
+                                                        mission: mission,
+                                                        letterState: .received)
+        return letterViewController
     }
   
     // MARK: - selector
