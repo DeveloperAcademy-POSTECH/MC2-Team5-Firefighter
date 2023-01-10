@@ -77,7 +77,7 @@ final class LetterViewController: BaseViewController {
     var letterState: LetterState {
         didSet {
             reloadCollectionView(with: self.letterState)
-            setEmptyLabel()
+            setupEmptyLabel()
         }
     }
     
@@ -165,7 +165,7 @@ final class LetterViewController: BaseViewController {
     override func configUI() {
         super.configUI()
         reloadCollectionView(with: self.letterState)
-        setEmptyLabel()
+        setupEmptyLabel()
     }
     
     override func setupNavigationBar() {
@@ -273,7 +273,7 @@ final class LetterViewController: BaseViewController {
         view.addGestureRecognizer(viewTap)
     }
     
-    private func setEmptyLabel() {
+    private func setupEmptyLabel() {
         emptyLabel.text = letterState.labelText
         emptyLabel.isHidden = true
     }
