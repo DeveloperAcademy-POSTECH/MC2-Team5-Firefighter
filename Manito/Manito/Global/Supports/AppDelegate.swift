@@ -107,7 +107,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = response.notification.request.content.userInfo
         if let roomId = userInfo["roomId"] as? String {
             guard let roomId = Int(roomId) else { return }
-            sceneDelegate.changeRootViewWithMessageView(roomId: roomId)
+            sceneDelegate.changeRootViewWithLetterView(roomId: roomId)
         }
         
         completionHandler()
