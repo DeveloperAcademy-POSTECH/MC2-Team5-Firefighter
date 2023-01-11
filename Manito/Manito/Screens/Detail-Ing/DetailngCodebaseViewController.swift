@@ -533,10 +533,10 @@ final class DetailingCodebaseViewController: BaseViewController {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
                 if let info = data {
-                    guard let state = data?.room?.state,
-                          let title = info.room?.title,
-                          let startDate = info.room?.startDate,
-                          let endDate = info.room?.endDate,
+                    guard let state = data?.roomInformation?.state,
+                          let title = info.roomInformation?.title,
+                          let startDate = info.roomInformation?.startDate,
+                          let endDate = info.roomInformation?.endDate,
                           let manittee = info.manittee?.nickname,
                           let admin = info.admin,
                           let badgeCount = info.messages?.count
@@ -566,7 +566,6 @@ final class DetailingCodebaseViewController: BaseViewController {
                         }
                     }
                 }
-                
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
