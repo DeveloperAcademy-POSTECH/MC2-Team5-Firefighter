@@ -74,7 +74,7 @@ final class LetterViewController: BaseViewController {
     }()
     private lazy var sendLetterView = SendLetterView()
     
-    var letterState: LetterState {
+    private var letterState: LetterState {
         didSet {
             reloadCollectionView(with: self.letterState)
             setupEmptyLabel()
