@@ -41,7 +41,7 @@ extension SceneDelegate {
     func changeRootViewWithMessageView(roomId: Int) {
         let rootViewController = UINavigationController(rootViewController: MainViewController())
         let detailIngViewController = DetailingCodebaseViewController(roomId: roomId.description)
-        let letterViewController = detailIngViewController.letterViewController()
+        let letterViewController = detailIngViewController.letterViewController
         rootViewController.pushViewController(detailIngViewController, animated: true)
         rootViewController.pushViewController(letterViewController, animated: true)
         window?.rootViewController = rootViewController
