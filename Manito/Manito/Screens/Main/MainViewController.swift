@@ -285,6 +285,14 @@ final class MainViewController: BaseViewController {
         }
     }
     
+    func pushDetailViewController(roomId: Int) {
+        let viewController = DetailingCodebaseViewController(roomId: roomId.description)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.navigationController?.pushViewController(viewController, animated: true)
+            viewController.pushLetterViewControllerReceivedType()
+        }
+    }
+    
     @objc
     override func endEditingView() {
         if !guideButton.isTouchInside {

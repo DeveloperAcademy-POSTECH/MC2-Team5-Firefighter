@@ -39,11 +39,9 @@ extension SceneDelegate {
     }
     
     func changeRootViewWithLetterView(roomId: Int) {
-        let rootViewController = UINavigationController(rootViewController: MainViewController())
-        let detailIngViewController = DetailingCodebaseViewController(roomId: roomId.description)
-        let letterViewController = detailIngViewController.letterViewController
-        rootViewController.pushViewController(detailIngViewController, animated: true)
-        rootViewController.pushViewController(letterViewController, animated: true)
+        let mainViewController = MainViewController()
+        let rootViewController = UINavigationController(rootViewController: mainViewController)
         window?.rootViewController = rootViewController
+        mainViewController.pushDetailViewController(roomId: roomId)
     }
 }

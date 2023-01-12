@@ -483,6 +483,10 @@ final class DetailingCodebaseViewController: BaseViewController {
             exitButton.menu = menu
         }
     }
+    
+    func pushLetterViewControllerReceivedType() {
+        self.navigationController?.pushViewController(letterViewController, animated: true)
+    }
   
     // MARK: - selector
     
