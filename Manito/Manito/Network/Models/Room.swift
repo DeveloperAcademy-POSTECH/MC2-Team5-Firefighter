@@ -20,7 +20,7 @@ struct ParticipatingRoom: Decodable {
 }
 
 struct Room: Decodable {
-    let room: RoomInfo?
+    let roomInformation: RoomInfo?
     let participants: Participants?
     let manittee: Manittee?
     let manitto: Manitto?
@@ -29,6 +29,27 @@ struct Room: Decodable {
     let mission: Mission?
     let admin: Bool?
     let messages: Message1?
+    
+    var userCount: String {
+        if let count = participants?.count,
+           let capacity = roomInformation?.capacity {
+            return "\(count)/\(capacity)"
+        } else {
+            return ""
+        }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case roomInformation = "room"
+        case participants
+        case manittee
+        case manitto
+        case invitation
+        case didViewRoulette
+        case mission
+        case admin
+        case messages
+    }
 }
 
 struct Friend: Decodable {
@@ -51,6 +72,15 @@ struct User: Decodable {
 struct RoomInfo: Decodable {
     let id, capacity: Int?
     let title, startDate, endDate, state: String?
+    
+    var dateRange: String {
+        if let startDate,
+           let endDate {
+            return startDate + " ~ " + endDate
+        } else {
+            return ""
+        }
+    }
 }
 
 struct Mission: Codable {

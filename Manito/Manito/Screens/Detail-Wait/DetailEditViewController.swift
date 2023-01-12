@@ -7,14 +7,17 @@
 
 import UIKit
 
-import SnapKit
 import FSCalendar
+import SnapKit
 
-class DetailEditViewController: BaseViewController {
-
+final class DetailEditViewController: BaseViewController {
+    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
+    var didTappedChangeButton: (() -> ())?
+    private let roomIndex: Int
+    private let roomTitle: String
     enum EditMode {
-        case dateEditMode
-        case infoEditMode
+        case date
+        case information
     }
     var editMode: EditMode
     var currentUserCount = 0
@@ -126,8 +129,10 @@ class DetailEditViewController: BaseViewController {
 
     // MARK: - life cycle
     
-    init(editMode: EditMode) {
+    init(editMode: EditMode, roomIndex: Int, title: String) {
         self.editMode = editMode
+        self.roomIndex = roomIndex
+        self.roomTitle = title
         super.init()
     }
     
@@ -197,7 +202,7 @@ class DetailEditViewController: BaseViewController {
             $0.trailing.equalToSuperview().inset(25)
         }
 
-        if editMode == .infoEditMode {
+        if editMode == .information {
             view.addSubview(setMemberLabel)
             setMemberLabel.snp.makeConstraints {
                 $0.top.equalTo(calendarView.snp.bottom).offset(60)
@@ -231,15 +236,26 @@ class DetailEditViewController: BaseViewController {
             }
         }
     }
-
-    // MARK: - selector
-
-    @objc
-    private func changeMemberCount(sender: UISlider) {
-        sliderValue = Int(sender.value)
-        memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
-        memberCountLabel.font = .font(.regular, ofSize: 24)
-        memberCountLabel.textColor = .white
+    
+    // MARK: - API
+    
+    private func putChangeRoomInfo(roomDto: RoomDTO) {
+        Task {
+            do {
+                let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
+                if status == 204 {
+                    ToastView.showToast(message: "방 정보 수정 완료", controller: self)
+                    didTappedChangeButton?()
+                    dismiss(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
     }
 
     // MARK: - func
@@ -270,31 +286,29 @@ class DetailEditViewController: BaseViewController {
     }
 
     private func didTapChangeButton() {
+        let dto = RoomDTO(title: roomTitle,
+                          capacity: Int(memberSlider.value),
+                          startDate: "20\(calendarView.getTempStartDate())",
+                          endDate: "20\(calendarView.getTempEndDate())")
         switch editMode {
-        case .dateEditMode:
-            changeRoomDateRange()
-        case .infoEditMode:
-            changeRoomInfo()
+        case .date:
+            putChangeRoomInfo(roomDto: dto)
+        case .information:
+            if currentUserCount <= sliderValue {
+                putChangeRoomInfo(roomDto: dto)
+            } else {
+                makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle, message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
+            }
         }
     }
+    
+    // MARK: - selector
 
-    private func changeRoomDateRange() {
-        NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.getTempStartDate(), "endDate": calendarView.getTempEndDate()])
-        NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
-        NotificationCenter.default.post(name: .requestDateRangeNotification, object: nil, userInfo: ["startDate": "20\(calendarView.getTempStartDate())", "endDate": "20\(calendarView.getTempEndDate())"])
-        dismiss(animated: true)
-    }
-
-    private func changeRoomInfo() {
-        if currentUserCount <= sliderValue {
-            NotificationCenter.default.post(name: .dateRangeNotification, object: nil, userInfo: ["startDate": calendarView.getTempStartDate(), "endDate": calendarView.getTempEndDate()])
-            NotificationCenter.default.post(name: .changeStartButtonNotification, object: nil)
-            NotificationCenter.default.post(name: .editMaxUserNotification, object: nil, userInfo: ["maxUser": memberSlider.value])
-            NotificationCenter.default.post(name: .requestRoomInfoNotification, object: nil, userInfo: ["startDate": "20\(calendarView.getTempStartDate())", "endDate": "20\(calendarView.getTempEndDate())", "maxUser": Int(memberSlider.value)])
-            dismiss(animated: true)
-        } else {
-            makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle, message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
-        }
+    @objc private func changeMemberCount(sender: UISlider) {
+        sliderValue = Int(sender.value)
+        memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
+        memberCountLabel.font = .font(.regular, ofSize: 24)
+        memberCountLabel.textColor = .white
     }
 }
 

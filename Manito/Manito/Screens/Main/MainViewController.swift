@@ -44,6 +44,8 @@ final class MainViewController: BaseViewController {
     }
     
     private let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
+    
+    private let refreshControl = UIRefreshControl()
 
     // MARK: - property
 
@@ -105,6 +107,7 @@ final class MainViewController: BaseViewController {
         setupGifImage()
         setupGuideArea()
         renderGuideArea()
+        setupRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -113,7 +116,7 @@ final class MainViewController: BaseViewController {
         Task {
             listCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey002, .lightGray]), animation: skeletonAnimation, transition: .none)
             requestCommonMission()
-            requestManittoList()
+            requestManittoRoomList()
         }
 
     }
@@ -206,6 +209,19 @@ final class MainViewController: BaseViewController {
         }
     }
     
+    private func setupRefreshControl() {
+        let action = UIAction { [weak self] _ in
+            self?.requestManittoRoomList()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.refreshControl.endRefreshing()
+            }
+        }
+        refreshControl.addAction(action, for: .valueChanged)
+        refreshControl.tintColor = .grey001
+        listCollectionView.refreshControl = refreshControl
+    }
+    
     // MARK: - API
     
     private func requestCommonMission() {
@@ -223,7 +239,7 @@ final class MainViewController: BaseViewController {
         }
     }
     
-    private func requestManittoList() {
+    private func requestManittoRoomList() {
         Task {
             do {
                 let data = try await mainService.fetchManittoList()

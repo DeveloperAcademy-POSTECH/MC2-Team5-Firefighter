@@ -302,9 +302,9 @@ class DetailIngViewController: BaseViewController {
                 guard let roomId = roomInformation?.id?.description else { return }
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
                 if let info = data {
-                    titleLabel.text = info.room?.title
-                    guard let startDate = info.room?.startDate,
-                          let endDate = info.room?.endDate,
+                    titleLabel.text = info.roomInformation?.title
+                    guard let startDate = info.roomInformation?.startDate,
+                          let endDate = info.roomInformation?.endDate,
                           let missionContent = info.mission?.content,
                           let manittee = info.manittee?.nickname,
                           let didView = info.didViewRoulette,
@@ -366,9 +366,9 @@ class DetailIngViewController: BaseViewController {
                 guard let roomId = roomInformation?.id?.description else { return }
                 let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId)
                 if let info = data {
-                    titleLabel.text = info.room?.title
-                    guard let startDate = info.room?.startDate,
-                          let endDate = info.room?.endDate,
+                    titleLabel.text = info.roomInformation?.title
+                    guard let startDate = info.roomInformation?.startDate,
+                          let endDate = info.roomInformation?.endDate,
                           let minittee = info.manittee?.nickname,
                           let isAdmin = info.admin
                     else { return }
