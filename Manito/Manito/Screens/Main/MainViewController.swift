@@ -42,7 +42,7 @@ final class MainViewController: BaseViewController {
         }
     }
     
-    private var refreshControl = UIRefreshControl()
+    private let refreshControl = UIRefreshControl()
 
     // MARK: - property
 
@@ -109,7 +109,7 @@ final class MainViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         requestCommonMission()
-        requestManittoList()
+        requestManittoRoomList()
     }
 
     override func render() {
@@ -202,7 +202,7 @@ final class MainViewController: BaseViewController {
     
     private func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
-            self?.requestManittoList()
+            self?.requestManittoRoomList()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.refreshControl.endRefreshing()
@@ -230,7 +230,7 @@ final class MainViewController: BaseViewController {
         }
     }
     
-    private func requestManittoList() {
+    private func requestManittoRoomList() {
         Task {
             do {
                 let data = try await mainService.fetchManittoList()
