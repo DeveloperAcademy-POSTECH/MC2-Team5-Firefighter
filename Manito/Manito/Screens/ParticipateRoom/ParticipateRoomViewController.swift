@@ -118,6 +118,10 @@ final class ParticipateRoomViewController: BaseViewController {
     
     // MARK: - func
     
+    override func setupNavigationBar() {
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
