@@ -41,6 +41,8 @@ final class MainViewController: BaseViewController {
             }
         }
     }
+    
+    private let refreshControl = UIRefreshControl()
 
     // MARK: - property
 
@@ -101,12 +103,13 @@ final class MainViewController: BaseViewController {
         setupGifImage()
         setupGuideArea()
         renderGuideArea()
+        setupRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         requestCommonMission()
-        requestManittoList()
+        requestManittoRoomList()
     }
 
     override func render() {
@@ -197,6 +200,19 @@ final class MainViewController: BaseViewController {
         }
     }
     
+    private func setupRefreshControl() {
+        let action = UIAction { [weak self] _ in
+            self?.requestManittoRoomList()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.refreshControl.endRefreshing()
+            }
+        }
+        refreshControl.addAction(action, for: .valueChanged)
+        refreshControl.tintColor = .grey001
+        listCollectionView.refreshControl = refreshControl
+    }
+    
     // MARK: - API
     
     private func requestCommonMission() {
@@ -214,7 +230,7 @@ final class MainViewController: BaseViewController {
         }
     }
     
-    private func requestManittoList() {
+    private func requestManittoRoomList() {
         Task {
             do {
                 let data = try await mainService.fetchManittoList()
