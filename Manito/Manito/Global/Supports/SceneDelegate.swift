@@ -44,4 +44,9 @@ extension SceneDelegate {
         window?.rootViewController = rootViewController
         mainViewController.pushDetailViewController(roomId: roomId)
     }
+    
+    func showRoomIdErrorAlert() {
+        let mainViewController = MainViewController()
+        mainViewController.showRoomIdErrorAlert()
+    }
 }
