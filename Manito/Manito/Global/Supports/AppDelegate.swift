@@ -101,7 +101,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([.badge, .sound])
       }
       
-      func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
+                as? SceneDelegate else { return }
+        let userInfo = response.notification.request.content.userInfo
+        if let roomId = userInfo["roomId"] as? String {
+            guard let roomId = Int(roomId) else { return }
+            sceneDelegate.changeRootViewWithLetterView(roomId: roomId)
+        } else {
+            sceneDelegate.showRoomIdErrorAlert()
+        }
+        
         completionHandler()
-      }
+    }
 }

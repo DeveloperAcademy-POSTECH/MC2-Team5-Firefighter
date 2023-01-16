@@ -301,6 +301,18 @@ final class MainViewController: BaseViewController {
         }
     }
     
+    func pushDetailViewController(roomId: Int) {
+        let viewController = DetailingCodebaseViewController(roomId: roomId.description)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.navigationController?.pushViewController(viewController, animated: true)
+            viewController.pushLetterViewControllerReceivedType()
+        }
+    }
+    
+    func showRoomIdErrorAlert() {
+        makeRequestAlert(title: "해당 마니또 방의 정보를 불러오지 못했습니다.", message: "해당 마니또 방으로 이동할 수 없습니다.", okAction: nil)
+    }
+    
     @objc
     override func endEditingView() {
         if !guideButton.isTouchInside {

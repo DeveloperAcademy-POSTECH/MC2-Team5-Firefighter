@@ -11,7 +11,7 @@ import SnapKit
 
 final class LetterViewController: BaseViewController {
     
-    private enum LetterState: Int {
+    enum LetterState: Int {
         case sent = 0
         case received = 1
         
@@ -74,11 +74,10 @@ final class LetterViewController: BaseViewController {
     }()
     private lazy var sendLetterView = SendLetterView()
     
-    private var letterState: LetterState = .sent {
+    private var letterState: LetterState {
         didSet {
             reloadCollectionView(with: self.letterState)
-            emptyLabel.text = letterState.labelText
-            emptyLabel.isHidden = true
+            setupEmptyLabel()
         }
     }
     
@@ -109,10 +108,11 @@ final class LetterViewController: BaseViewController {
     
     // MARK: - init
     
-    init(roomState: String, roomId: String, mission: String) {
+    init(roomState: String, roomId: String, mission: String, letterState: LetterState) {
         self.roomState = roomState
         self.roomId = roomId
         self.mission = mission
+        self.letterState = letterState
         super.init()
     }
     
@@ -164,7 +164,8 @@ final class LetterViewController: BaseViewController {
     
     override func configUI() {
         super.configUI()
-        letterState = .sent
+        reloadCollectionView(with: self.letterState)
+        setupEmptyLabel()
     }
     
     override func setupNavigationBar() {
@@ -270,6 +271,11 @@ final class LetterViewController: BaseViewController {
         viewTap.cancelsTouchesInView = false
         navigationController?.view.addGestureRecognizer(navigationTap)
         view.addGestureRecognizer(viewTap)
+    }
+    
+    private func setupEmptyLabel() {
+        emptyLabel.text = letterState.labelText
+        emptyLabel.isHidden = true
     }
     
     // MARK: - selector
