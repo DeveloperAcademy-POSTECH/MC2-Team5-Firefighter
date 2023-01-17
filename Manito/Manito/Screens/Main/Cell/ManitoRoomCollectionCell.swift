@@ -19,13 +19,6 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - property
     
-    private let greyBackgroundView: UIView = {
-        let uiView = UIView()
-        uiView.backgroundColor = .darkGrey002.withAlphaComponent(0.8)
-        uiView.clipsToBounds = true
-        uiView.makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
-        return uiView
-    }()
     private let imageView = UIImageView(image: ImageLiterals.imgNi)
     let memberLabel: UILabel = {
         let label = UILabel()
@@ -55,11 +48,6 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     // MARK: - life cycle
     
     override func render() {
-        addSubview(greyBackgroundView)
-        greyBackgroundView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-
         addSubview(imageView)
         imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(9)
@@ -95,8 +83,10 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configUI() {
-//        self.isSkeletonable = true
-        greyBackgroundView.isSkeletonable = false
+        backgroundColor = .darkGrey002.withAlphaComponent(0.8)
+        makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
+        
+        self.isSkeletonable = true
         imageView.isSkeletonable = true
         memberLabel.isSkeletonable = true
         roomLabel.isSkeletonable = true

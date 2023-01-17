@@ -109,11 +109,11 @@ final class MainViewController: BaseViewController {
         setupGuideArea()
         renderGuideArea()
         setupRefreshControl()
+        setupSkeletonView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupSkeletonView()
         
         Task {
             requestCommonMission()
@@ -218,15 +218,12 @@ final class MainViewController: BaseViewController {
     }
     
     private func setupSkeletonView() {
-        commonMissionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey003, .darkGrey002]), animation: skeletonAnimation, transition: .none)
         listCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey003, .darkGrey002]), animation: skeletonAnimation, transition: .none)
     }
     
     private func stopSkeletonView() {
-        self.commonMissionView.stopSkeletonAnimation()
-        self.commonMissionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
-        self.listCollectionView.stopSkeletonAnimation()
-        self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
+//        self.listCollectionView.stopSkeletonAnimation()
+//        self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
     }
     
     // MARK: - API

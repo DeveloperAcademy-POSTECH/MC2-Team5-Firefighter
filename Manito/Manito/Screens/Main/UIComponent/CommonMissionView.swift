@@ -35,7 +35,6 @@ final class CommonMissionView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         render()
-        configUI()
     }
     
     required init?(coder: NSCoder) {
@@ -61,9 +60,5 @@ final class CommonMissionView: UIView {
             $0.top.equalTo(title.snp.bottom).offset(40)
             $0.leading.trailing.equalToSuperview()
         }
-    }
-    
-    private func configUI() {
-        self.isSkeletonable = true
     }
 }
