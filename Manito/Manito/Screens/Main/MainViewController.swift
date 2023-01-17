@@ -24,7 +24,7 @@ final class MainViewController: BaseViewController {
                                                   left: collectionHorizontalSpacing,
                                                   bottom: collectionVerticalSpacing,
                                                   right: collectionHorizontalSpacing)
-        static let commonMissionViewWidth: CGFloat = UIScreen.main.bounds.size.width - 48
+        static let commonMissionViewWidth: CGFloat = UIScreen.main.bounds.size.width - 40
         static let commonMissionViewHeight: CGFloat = commonMissionViewWidth * 0.6
     }
     
@@ -154,7 +154,7 @@ final class MainViewController: BaseViewController {
         view.addSubview(commonMissionView)
         commonMissionView.snp.makeConstraints {
             $0.top.equalTo(imgStar.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(Size.commonMissionViewHeight)
         }
 
@@ -172,8 +172,8 @@ final class MainViewController: BaseViewController {
         
         view.addSubview(guideButton)
         guideButton.snp.makeConstraints {
-            $0.top.equalTo(commonMissionView.snp.top).offset(27)
-            $0.trailing.equalTo(commonMissionView.snp.trailing)
+            $0.top.equalTo(commonMissionView.snp.top).offset(30)
+            $0.trailing.equalTo(commonMissionView.snp.trailing).inset(30)
             $0.width.height.equalTo(44)
         }
     }
@@ -224,6 +224,7 @@ final class MainViewController: BaseViewController {
     
     private func stopSkeletonView() {
         self.commonMissionView.stopSkeletonAnimation()
+        self.commonMissionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
         self.listCollectionView.stopSkeletonAnimation()
         self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
     }

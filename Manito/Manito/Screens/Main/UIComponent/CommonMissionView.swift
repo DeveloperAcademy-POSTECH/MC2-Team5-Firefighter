@@ -47,20 +47,19 @@ final class CommonMissionView: UIView {
     private func render() {
         self.addSubview(commonMissionImageView)
         commonMissionImageView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.61)
+            $0.edges.equalToSuperview()
         }
         
         self.addSubview(title)
         title.snp.makeConstraints {
-            $0.top.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(56)
+            $0.centerX.equalToSuperview()
         }
         
         self.addSubview(mission)
         mission.snp.makeConstraints {
-            $0.top.equalTo(self.title.snp.bottom).offset(23)
-            $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(56)
+            $0.top.equalTo(title.snp.bottom).offset(40)
+            $0.leading.trailing.equalToSuperview()
         }
     }
     
