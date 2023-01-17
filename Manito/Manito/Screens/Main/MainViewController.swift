@@ -45,7 +45,7 @@ final class MainViewController: BaseViewController {
         }
     }
     
-    private let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .topLeftBottomRight)
+    private let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
     
     private let refreshControl = UIRefreshControl()
 

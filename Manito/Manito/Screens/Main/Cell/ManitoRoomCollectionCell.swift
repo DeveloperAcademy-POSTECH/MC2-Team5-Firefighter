@@ -48,26 +48,26 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     // MARK: - life cycle
     
     override func render() {
-        addSubview(imageView)
+        contentView.addSubview(imageView)
         imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(9)
             $0.width.height.equalTo(30)
         }
         
-        addSubview(memberLabel)
+        contentView.addSubview(memberLabel)
         memberLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(14)
             $0.leading.equalTo(imageView.snp.trailing).offset(4)
         }
         
-        addSubview(roomLabel)
+        contentView.addSubview(roomLabel)
         roomLabel.snp.makeConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(17)
         }
         
-        addSubview(roomStateView)
+        contentView.addSubview(roomStateView)
         roomStateView.snp.makeConstraints {
             $0.top.equalTo(roomLabel.snp.bottom).offset(24)
             $0.leading.equalToSuperview().inset(12)
@@ -75,7 +75,7 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
             $0.height.equalTo(24)
         }
         
-        addSubview(dateLabel)
+        contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
@@ -92,7 +92,10 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
         roomLabel.isSkeletonable = true
         dateLabel.isSkeletonable = true
         roomStateView.isSkeletonable = true
-        
+
+        self.memberLabel.numberOfLines = 2
+        self.roomLabel.numberOfLines = 2
+        self.dateLabel.numberOfLines = 2
         self.skeletonCornerRadius = 10
     }
 }
