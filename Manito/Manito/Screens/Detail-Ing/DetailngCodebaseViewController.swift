@@ -23,6 +23,14 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let roomId: String
     private var roomType: RoomType = .PROCESSING
     private var isTappedManittee: Bool = false
+    var letterViewController: UIViewController {
+        guard let mission = missionContentsLabel.text else { return UIViewController() }
+        let viewController = LetterViewController(roomState: roomType.rawValue,
+                                                  roomId: roomId,
+                                                  mission: mission,
+                                                  letterState: .received)
+        return viewController
+    }
 
     // MARK: - property
     
@@ -133,7 +141,10 @@ final class DetailingCodebaseViewController: BaseViewController {
                   let roomId = self?.roomId,
                   let mission = self?.missionContentsLabel.text
             else { return }
-            let letterViewController = LetterViewController(roomState: roomType.rawValue, roomId: roomId, mission: mission)
+            let letterViewController = LetterViewController(roomState: roomType.rawValue,
+                                                            roomId: roomId,
+                                                            mission: mission,
+                                                            letterState: .sent)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
@@ -471,6 +482,10 @@ final class DetailingCodebaseViewController: BaseViewController {
             ])
             exitButton.menu = menu
         }
+    }
+    
+    func pushLetterViewControllerReceivedType() {
+        self.navigationController?.pushViewController(letterViewController, animated: true)
     }
   
     // MARK: - selector

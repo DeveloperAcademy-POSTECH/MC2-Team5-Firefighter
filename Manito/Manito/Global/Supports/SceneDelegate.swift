@@ -37,4 +37,16 @@ extension SceneDelegate {
     func logout() {
         window?.rootViewController = LoginViewController()
     }
+    
+    func changeRootViewWithLetterView(roomId: Int) {
+        let mainViewController = MainViewController()
+        let rootViewController = UINavigationController(rootViewController: mainViewController)
+        window?.rootViewController = rootViewController
+        mainViewController.pushDetailViewController(roomId: roomId)
+    }
+    
+    func showRoomIdErrorAlert() {
+        let mainViewController = MainViewController()
+        mainViewController.showRoomIdErrorAlert()
+    }
 }
