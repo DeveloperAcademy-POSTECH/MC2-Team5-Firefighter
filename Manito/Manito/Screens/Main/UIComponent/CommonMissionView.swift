@@ -13,6 +13,7 @@ final class CommonMissionView: UIView {
     
     // MARK: - property
     
+    private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
     private let title: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.commonMissionViewTitle
@@ -34,6 +35,7 @@ final class CommonMissionView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         render()
+        configUI()
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +45,12 @@ final class CommonMissionView: UIView {
     // MARK: - life cycle
     
     private func render() {
+        self.addSubview(commonMissionImageView)
+        commonMissionImageView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.61)
+        }
+        
         self.addSubview(title)
         title.snp.makeConstraints {
             $0.top.centerX.equalToSuperview()
@@ -54,5 +62,9 @@ final class CommonMissionView: UIView {
             $0.bottom.leading.trailing.equalToSuperview()
             $0.height.equalTo(56)
         }
+    }
+    
+    private func configUI() {
+        self.isSkeletonable = true
     }
 }

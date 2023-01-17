@@ -24,6 +24,8 @@ final class MainViewController: BaseViewController {
                                                   left: collectionHorizontalSpacing,
                                                   bottom: collectionVerticalSpacing,
                                                   right: collectionHorizontalSpacing)
+        static let commonMissionViewWidth: CGFloat = UIScreen.main.bounds.size.width - 48
+        static let commonMissionViewHeight: CGFloat = commonMissionViewWidth * 0.6
     }
     
     private enum RoomStatus: String {
@@ -43,7 +45,7 @@ final class MainViewController: BaseViewController {
         }
     }
     
-    private let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
+    private let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .topLeftBottomRight)
     
     private let refreshControl = UIRefreshControl()
 
@@ -59,7 +61,6 @@ final class MainViewController: BaseViewController {
         return button
     }()
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
-    private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
     private let commonMissionView = CommonMissionView()
     private let menuTitle: UILabel = {
         let label = UILabel()
@@ -112,9 +113,9 @@ final class MainViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupSkeletonView()
         
         Task {
-            listCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey002, .lightGray]), animation: skeletonAnimation, transition: .none)
             requestCommonMission()
             requestManittoRoomList()
         }
@@ -150,22 +151,16 @@ final class MainViewController: BaseViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
         }
 
-        view.addSubview(commonMissionImageView)
-        commonMissionImageView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.61)
-            $0.top.equalTo(imgStar.snp.bottom)
-        }
-
-        commonMissionImageView.addSubview(commonMissionView)
+        view.addSubview(commonMissionView)
         commonMissionView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(imgStar.snp.bottom)
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(Size.commonMissionViewHeight)
         }
 
         view.addSubview(menuTitle)
         menuTitle.snp.makeConstraints {
-            $0.top.equalTo(commonMissionImageView.snp.bottom).offset(50)
+            $0.top.equalTo(commonMissionView.snp.bottom).offset(50)
             $0.leading.equalToSuperview().offset(16)
         }
 
@@ -177,7 +172,7 @@ final class MainViewController: BaseViewController {
         
         view.addSubview(guideButton)
         guideButton.snp.makeConstraints {
-            $0.top.equalTo(commonMissionImageView.snp.top).offset(27)
+            $0.top.equalTo(commonMissionView.snp.top).offset(27)
             $0.trailing.equalTo(commonMissionView.snp.trailing)
             $0.width.height.equalTo(44)
         }
@@ -222,6 +217,17 @@ final class MainViewController: BaseViewController {
         listCollectionView.refreshControl = refreshControl
     }
     
+    private func setupSkeletonView() {
+        commonMissionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey003, .darkGrey002]), animation: skeletonAnimation, transition: .none)
+        listCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey003, .darkGrey002]), animation: skeletonAnimation, transition: .none)
+    }
+    
+    private func stopSkeletonView() {
+        self.commonMissionView.stopSkeletonAnimation()
+        self.listCollectionView.stopSkeletonAnimation()
+        self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
+    }
+    
     // MARK: - API
     
     private func requestCommonMission() {
@@ -248,8 +254,7 @@ final class MainViewController: BaseViewController {
                     rooms = manittoList.participatingRooms
                     listCollectionView.reloadData()
                     
-//                    self.listCollectionView.stopSkeletonAnimation()
-//                    self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
+                    self.stopSkeletonView()
                 }
             } catch NetworkError.serverError {
                 print("serverError")
