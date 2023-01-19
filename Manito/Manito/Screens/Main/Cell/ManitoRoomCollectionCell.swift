@@ -88,14 +88,13 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
         
         self.isSkeletonable = true
         imageView.isSkeletonable = true
-        memberLabel.isSkeletonable = true
         roomLabel.isSkeletonable = true
-        dateLabel.isSkeletonable = true
         roomStateView.isSkeletonable = true
+        
+        roomLabel.numberOfLines = 2
 
-        self.memberLabel.numberOfLines = 2
-        self.roomLabel.numberOfLines = 2
-        self.dateLabel.numberOfLines = 2
-        self.skeletonCornerRadius = 10
+        imageView.skeletonCornerRadius = 15
+        roomLabel.linesCornerRadius = 4
+        roomStateView.skeletonCornerRadius = 4
     }
 }

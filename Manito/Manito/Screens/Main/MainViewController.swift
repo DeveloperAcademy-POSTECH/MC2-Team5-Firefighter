@@ -222,8 +222,8 @@ final class MainViewController: BaseViewController {
     }
     
     private func stopSkeletonView() {
-        self.listCollectionView.stopSkeletonAnimation()
-        self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
+//        self.listCollectionView.stopSkeletonAnimation()
+//        self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
     }
     
     // MARK: - API
