@@ -76,7 +76,9 @@ class InvitedCodeViewController: BaseViewController {
     private lazy var roomInviteCodeButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
-            self?.touchUpToShowToast()
+            if let code = self?.code {
+                ToastView.showToast(code: code, message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
+            }
         }
         button.setTitle(code, for: .normal)
         button.setTitleColor(.blue, for: .normal)
@@ -153,39 +155,5 @@ class InvitedCodeViewController: BaseViewController {
     
     override func configUI() {
         view.backgroundColor = .black.withAlphaComponent(0.8)
-    }
-    
-    // MARK: - functions
-    private func touchUpToShowToast() {
-        UIPasteboard.general.string = code
-        showToast(message: TextLiteral.detailWaitViewControllerCopyCode)
-    }
-    
-    private func showToast(message: String) {
-        let toastLabel = UILabel()
-        toastLabel.backgroundColor = .grey001
-        toastLabel.textColor = .black
-        toastLabel.font = .font(.regular, ofSize: 14)
-        toastLabel.textAlignment = .center
-        toastLabel.text = message
-        toastLabel.alpha = 0
-        toastLabel.layer.cornerRadius = 10
-        toastLabel.clipsToBounds = true
-        self.view.addSubview(toastLabel)
-        toastLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(150)
-            $0.width.equalTo(140)
-            $0.height.equalTo(40)
-        }
-        UIView.animate(withDuration: 1.5, animations: {
-            toastLabel.alpha = 0.8
-        }, completion: { isCompleted in
-                UIView.animate(withDuration: 1.5, animations: {
-                    toastLabel.alpha = 0
-                }, completion: { isCompleted in
-                        toastLabel.removeFromSuperview()
-                    })
-            })
     }
 }

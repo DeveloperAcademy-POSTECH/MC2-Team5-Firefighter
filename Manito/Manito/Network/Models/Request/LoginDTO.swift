@@ -9,4 +9,5 @@ import Foundation
 
 struct LoginDTO: Encodable {
     let identityToken: String
+    let fcmToken : String
 }

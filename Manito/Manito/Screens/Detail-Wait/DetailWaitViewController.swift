@@ -9,47 +9,26 @@ import UIKit
 
 import SnapKit
 
-class DetailWaitViewController: BaseViewController {
-    let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-    var roomIndex: Int
+final class DetailWaitViewController: BaseViewController {
+    private var room: Room?
+    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
+    private let roomIndex: Int
     var roomInformation: ParticipatingRoom?
-    var inviteCode: String = ""
     private var roomInfo: RoomDTO?
     private var userArr: [String] = [] {
         didSet {
             renderTableView()
         }
     }
-    var canStartClosure: ((Bool) -> ())?
-    var maxUserCount: Int = 15 {
-        didSet {
-            comeInLabel.text = "\(userCount)/\(maxUserCount)"
-        }
-    }
-    lazy var userCount = 0 {
-        didSet {
-            comeInLabel.text = "\(userCount)/\(maxUserCount)"
-            setStartButton()
-        }
-    }
-    var memberType = UserStatus.member {
+    private var detectStartableStatus: ((Bool) -> ())?
+    private var memberType = UserStatus.member {
         didSet {
             settingButton.menu = setExitButtonMenu()
             setupTitleViewGesture()
         }
     }
-    var startDateText = "" {
-        didSet {
-            titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
-        }
-    }
-    var endDateText = "" {
-        didSet {
-            titleView.dateRangeText = "\(startDateText) ~ \(endDateText)"
-        }
-    }
 
-    enum UserStatus: CaseIterable {
+    private enum UserStatus: CaseIterable {
         case owner
         case member
 
@@ -63,7 +42,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
 
-    enum AlertText {
+    private enum AlertText {
         case delete
         case exit
 
@@ -112,16 +91,12 @@ class DetailWaitViewController: BaseViewController {
     // MARK: - property
 
     private lazy var settingButton: UIButton = {
-        let button = SettingButton()
+        let button = MoreButton()
         button.menu = setExitButtonMenu()
         button.showsMenuAsPrimaryAction = true
         return button
     }()
-    private lazy var titleView: DetailWaitTitleView = {
-        let view = DetailWaitTitleView()
-        view.dateRangeText = "\(startDateText) ~ \(endDateText)"
-        return view
-    }()
+    private let titleView = DetailWaitTitleView()
     private let togetherFriendLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.togetherFriend
@@ -136,7 +111,6 @@ class DetailWaitViewController: BaseViewController {
     }()
     private lazy var comeInLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(userCount)/\(maxUserCount)"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 14)
         return label
@@ -144,7 +118,9 @@ class DetailWaitViewController: BaseViewController {
     private lazy var copyButton: UIButton = {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
-            self?.touchUpToShowToast()
+            if let code = self?.room?.invitation?.code {
+                ToastView.showToast(code: code ,message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
+            }
         }
         button.setTitle(TextLiteral.copyCode, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
@@ -160,12 +136,11 @@ class DetailWaitViewController: BaseViewController {
     }()
     private lazy var startButton: UIButton = {
         let button = MainButton()
-        canStartClosure = { value in
+        detectStartableStatus = { value in
             if value {
                 button.title = ButtonText.start.status
                 button.isDisabled = false
                 let action = UIAction { [weak self] _ in
-                    print("detailwait self?.roomInformation", self?.roomInformation)
                     self?.requestStartManitto()
                 }
                 button.addAction(action, for: .touchUpInside)
@@ -249,35 +224,30 @@ class DetailWaitViewController: BaseViewController {
     
     // MARK: - API
     
-    func requestWaitRoomInfo() {
+    private func requestWaitRoomInfo() {
         Task {
             do {
                 let data = try await detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
-                    guard let title = roomInfo.room?.title,
-                          let code = roomInfo.invitation?.code,
-                          let startDate = roomInfo.room?.startDate,
-                          let endDate = roomInfo.room?.endDate,
-                          let count = roomInfo.participants?.count,
-                          let capacity = roomInfo.room?.capacity,
-                          let state = roomInfo.room?.state,
+                    guard let title = roomInfo.roomInformation?.title,
+                          let state = roomInfo.roomInformation?.state,
                           let members = roomInfo.participants?.members,
                           let isAdmin = roomInfo.admin else { return }
-                    titleView.roomTitleLabel.text = title
-                    inviteCode = code
-                    startDateText = startDate
-                    endDateText = endDate
-                    userCount = count
-                    maxUserCount = capacity
+                    self.room = data
                     titleView.setStartState(state: state)
                     userArr = members.map { $0.nickname ?? "" }
                     memberType = isAdmin ? .owner : .member
                     self.roomInfo = RoomDTO(title: title,
-                                            capacity: capacity,
-                                            startDate: startDate,
-                                            endDate: endDate)
+                                            capacity: data?.roomInformation?.capacity ?? 15,
+                                            startDate: data?.roomInformation?.startDate ?? "",
+                                            endDate: data?.roomInformation?.endDate ?? "")
                     isPastStartDate()
                     setStartButton()
+                    DispatchQueue.main.async {
+                        self.comeInLabel.text = data?.userCount
+                        self.titleView.setRoomTitleLabelText(text: title)
+                        self.titleView.setDurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
+                    }
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -289,24 +259,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
     
-    func requestChangeRoomInfo(roomDto: RoomDTO) {
-        Task {
-            do {
-                let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
-                if status == 204 {
-                    showToast(message: "방 정보 수정 완료")
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
-    
-    func requestStartManitto() {
+    private func requestStartManitto() {
         Task {
             do {
                 let data = try await detailWaitService.startManitto(roomId: "\(roomIndex)")
@@ -316,7 +269,7 @@ class DetailWaitViewController: BaseViewController {
                     guard let nickname = manittee.nickname else { return }
                     viewController.modalPresentationStyle = .fullScreen
                     viewController.manitteeName = nickname
-                    viewController.roomInformation = roomInformation
+                    viewController.roomId = roomInformation?.id?.description
                     present(viewController, animated: true)
                 }
             } catch NetworkError.serverError {
@@ -329,7 +282,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
     
-    func requestDeleteRoom() {
+    private func requestDeleteRoom() {
         Task {
             do {
                 let status = try await detailWaitService.deleteRoom(roomId: "\(roomIndex)")
@@ -346,7 +299,7 @@ class DetailWaitViewController: BaseViewController {
         }
     }
     
-    func requestDeleteLeaveRoom() {
+    private func requestDeleteLeaveRoom() {
         Task {
             do {
                 let status = try await detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
@@ -371,38 +324,18 @@ class DetailWaitViewController: BaseViewController {
         listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
-    private func showToast(message: String) {
-        let toastLabel = UILabel()
-        toastLabel.backgroundColor = .grey001
-        toastLabel.textColor = .black
-        toastLabel.font = .font(.regular, ofSize: 14)
-        toastLabel.textAlignment = .center
-        toastLabel.text = message
-        toastLabel.alpha = 0
-        toastLabel.layer.cornerRadius = 10
-        toastLabel.clipsToBounds = true
-        self.view.addSubview(toastLabel)
-        toastLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(150)
-            $0.width.equalTo(140)
-            $0.height.equalTo(40)
+    private func presentDetailEditViewController(startString: String, endString: String, isDateEdit: Bool) {
+        guard let title = titleView.roomTitleLabel.text else { return }
+        let viewController = DetailEditViewController(editMode: isDateEdit ? .date : .information,
+                                                      roomIndex: roomIndex,
+                                                      title: title)
+        viewController.didTappedChangeButton = { [weak self] in
+            self?.requestWaitRoomInfo()
         }
-        UIView.animate(withDuration: 1.5, animations: {
-            toastLabel.alpha = 0.8
-        }, completion: { isCompleted in
-                UIView.animate(withDuration: 1.5, animations: {
-                    toastLabel.alpha = 0
-                }, completion: { isCompleted in
-                        toastLabel.removeFromSuperview()
-                    })
-            })
-    }
-
-    private func presentModal(from startString: String, to endString: String, isDateEdit: Bool) {
-        let viewController = DetailEditViewController(editMode: isDateEdit ? .dateEditMode : .infoEditMode)
+        guard let userCount = room?.participants?.count,
+              let capacity = room?.roomInformation?.capacity else { return }
         viewController.currentUserCount = userCount
-        viewController.sliderValue = maxUserCount
+        viewController.sliderValue = capacity
         viewController.startDateText = startString
         viewController.endDateText = endString
         present(viewController, animated: true, completion: nil)
@@ -443,7 +376,7 @@ class DetailWaitViewController: BaseViewController {
     }
 
     private func presentEditRoomView() {
-        guard let startDate = startDateText.stringToDate else { return }
+        guard let startDate = room?.roomInformation?.startDate?.stringToDate else { return }
         let isAlreadyPastDate = startDate.distance(to: Date()) > 86400
         
         if isAlreadyPastDate {
@@ -457,29 +390,21 @@ class DetailWaitViewController: BaseViewController {
         let fiveDaysInterval: TimeInterval = 86400 * 4
         let defaultStartDate = Date().dateToString
         let defaultEndDate = (Date() + fiveDaysInterval).dateToString
-        self.presentModal(from: defaultStartDate, to: defaultEndDate, isDateEdit: false)
+        self.presentDetailEditViewController(startString: defaultStartDate, endString: defaultEndDate, isDateEdit: false)
     }
     
     private func editInfoFromCurrentDate() {
-        self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
-    }
-
-    private func touchUpToShowToast() {
-        UIPasteboard.general.string = inviteCode
-        self.showToast(message: TextLiteral.detailWaitViewControllerCopyCode)
+        guard let startDate = room?.roomInformation?.startDate,
+              let endDate = room?.roomInformation?.endDate else { return }
+        self.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: false)
     }
 
     private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDateRange(_:)), name: .dateRangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(changeStartButton), name: .changeStartButtonNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMaxUser), name: .editMaxUserNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(requestDateRange(_:)), name: .requestDateRangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(requestRoomInfo(_:)), name: .requestRoomInfoNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didTapEnterButton), name: .createRoomInvitedCode, object: nil)
     }
 
     private func isPastStartDate() {
-        guard let startDate = startDateText.stringToDate else { return }
+        guard let startDate = room?.roomInformation?.startDate?.stringToDate else { return }
         let isPast = startDate.distance(to: Date()) > 86400
         let isToday = startDate.distance(to: Date()) < 86400
         let canStart = !isPast && isToday
@@ -490,7 +415,7 @@ class DetailWaitViewController: BaseViewController {
                     let fiveDaysInterval: TimeInterval = 86400 * 4
                     let startDate = Date().dateToString
                     let endDate = (Date() + fiveDaysInterval).dateToString
-                    self?.presentModal(from: startDate, to: endDate, isDateEdit: true)
+                    self?.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: true)
                 }
                 makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage, okAction: action)
             case .member:
@@ -501,15 +426,16 @@ class DetailWaitViewController: BaseViewController {
 
     private func setStartButton() {
         if memberType == .owner {
-            guard let startDate = startDateText.stringToDate else { return }
-            guard let todayDate = Date().dateToString.stringToDate else { return }
+            guard let startDate = room?.roomInformation?.startDate?.stringToDate,
+                  let todayDate = Date().dateToString.stringToDate,
+                  let userCount = room?.participants?.count else { return }
             
             let isToday = startDate.distance(to: todayDate).isZero
-            let isMinimumUserCount = userCount >= 5
+            let isMinimumUserCount = userCount >= 4
             
-            canStartClosure?(isToday && isMinimumUserCount)
+            detectStartableStatus?(isToday && isMinimumUserCount)
         } else {
-            canStartClosure?(false)
+            detectStartableStatus?(false)
         }
     }
     
@@ -533,62 +459,35 @@ class DetailWaitViewController: BaseViewController {
     
     private func setupTitleViewGesture() {
         if memberType == .owner {
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentDetailEditViewController))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentEditViewController))
             titleView.addGestureRecognizer(tapGesture)
         }
     }
 
     // MARK: - selector
-    @objc
-    private func didTapEnterButton() {
-        guard let roomInfo = roomInfo else { return }
+    @objc private func didTapEnterButton() {
+        guard let roomInfo = roomInfo,
+              let code = room?.invitation?.code
+        else { return }
         let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
                                                              capacity: roomInfo.capacity,
                                                              startDate: roomInfo.startDate,
-                                                             endDate: roomInfo.endDate), code: inviteCode)
+                                                             endDate: roomInfo.endDate),
+                                                       code: code)
         viewController.roomInfo = roomInfo
         viewController.modalPresentationStyle = .overCurrentContext
         viewController.modalTransitionStyle = .crossDissolve
         present(viewController, animated: true)
     }
-
-    @objc
-    private func didReceiveDateRange(_ notification: Notification) {
-        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
-        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
-
-        self.startDateText = startDate
-        self.endDateText = endDate
-    }
-
-    @objc
-    private func didReceiveMaxUser(_ notification: Notification) {
-        guard let maxUser = notification.userInfo?["maxUser"] as? Float else { return }
-
-        let intMaxUser = Int(maxUser)
-        maxUserCount = intMaxUser
-    }
     
-    @objc
-    private func presentDetailEditViewController() {
-        self.presentModal(from: self.startDateText, to: self.endDateText, isDateEdit: false)
+    @objc private func presentEditViewController() {
+        guard let startDate = room?.roomInformation?.startDate,
+              let endDate = room?.roomInformation?.endDate else { return }
+        self.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: false)
     }
     
     @objc private func changeStartButton() {
         setStartButton()
-    }
-    
-    @objc private func requestDateRange(_ notification: Notification) {
-        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
-        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
-        requestChangeRoomInfo(roomDto: RoomDTO(title: titleView.roomTitleLabel.text ?? "", capacity: maxUserCount, startDate: startDate, endDate: endDate))
-    }
-    
-    @objc private func requestRoomInfo(_ notification: Notification) {
-        guard let startDate = notification.userInfo?["startDate"] as? String else { return }
-        guard let endDate = notification.userInfo?["endDate"] as? String else { return }
-        guard let capacity = notification.userInfo?["maxUser"] as? Int else { return }
-        requestChangeRoomInfo(roomDto: RoomDTO(title: titleView.roomTitleLabel.text ?? "", capacity: capacity, startDate: startDate, endDate: endDate))
     }
 }
 

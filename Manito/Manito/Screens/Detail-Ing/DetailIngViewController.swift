@@ -26,6 +26,12 @@ class DetailIngViewController: BaseViewController {
             roomType = RoomType.init(rawValue: state)
         }
     }
+    var isTappedManittee: Bool = false
+    var isAdminPost: Bool = false {
+        didSet {
+            exitButton.menu = setEllipsisMenu()
+        }
+    }
 
     // MARK: - property
 
@@ -36,18 +42,24 @@ class DetailIngViewController: BaseViewController {
     @IBOutlet weak var missionTitleLabel: UILabel!
     @IBOutlet weak var missionContentsLabel: UILabel!
     @IBOutlet weak var informationTitleLabel: UILabel!
-    @IBOutlet weak var manitiBackView: UIView!
-    @IBOutlet weak var manitiImageView: UIView!
-    @IBOutlet weak var manitiIconView: UIImageView!
-    @IBOutlet weak var manitiLabel: UILabel!
+    @IBOutlet weak var manitteeBackView: UIView!
+    @IBOutlet weak var manitteeImageView: UIView!
+    @IBOutlet weak var manitteeIconView: UIImageView!
+    @IBOutlet weak var manitteeLabel: UILabel!
     @IBOutlet weak var listBackView: UIView!
     @IBOutlet weak var listImageView: UIView!
     @IBOutlet weak var listIconView: UIImageView!
     @IBOutlet weak var listLabel: UILabel!
     @IBOutlet weak var letterBoxButton: UIButton!
     @IBOutlet weak var manitoMemoryButton: UIButton!
-    @IBOutlet weak var manitteAnimationLabel: UILabel!
+    @IBOutlet weak var manitteeAnimationLabel: UILabel!
 
+    private let exitButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.icMore, for: .normal)
+        button.showsMenuAsPrimaryAction = true
+        return button
+    }()
     private lazy var manitiRealIconView: UIImageView = {
         let imageView = UIImageView(image: ImageLiterals.imgMa)
         imageView.alpha = 0
@@ -67,7 +79,15 @@ class DetailIngViewController: BaseViewController {
         return label
     }()
     
-    private var roomType: RoomType?
+    private var roomType: RoomType? {
+        didSet {
+            if roomType == .POST {
+                exitButton.isHidden = false
+            } else {
+                exitButton.isHidden = true
+            }
+        }
+    }
     
     // MARK: - init
     
@@ -105,10 +125,10 @@ class DetailIngViewController: BaseViewController {
         
         view.addSubview(manitiRealIconView)
         manitiRealIconView.snp.makeConstraints {
-            $0.top.equalTo(manitiIconView.snp.top)
-            $0.trailing.equalTo(manitiIconView.snp.trailing)
-            $0.leading.equalTo(manitiIconView.snp.leading)
-            $0.bottom.equalTo(manitiIconView.snp.bottom)
+            $0.top.equalTo(manitteeIconView.snp.top)
+            $0.trailing.equalTo(manitteeIconView.snp.trailing)
+            $0.leading.equalTo(manitteeIconView.snp.leading)
+            $0.bottom.equalTo(manitteeIconView.snp.bottom)
         }
         
         view.addSubview(guideButton)
@@ -139,8 +159,8 @@ class DetailIngViewController: BaseViewController {
         addGestureManito()
         addActionOpenManittoViewController()
         
-        manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
-        manitiIconView.image = ImageLiterals.icManiTti
+        manitteeLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
+        manitteeIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
     }
     
@@ -148,6 +168,11 @@ class DetailIngViewController: BaseViewController {
         super.setupGuideArea()
         guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
         setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
+    }
+    
+    override func setupNavigationBar() {
+        let rightItem = makeBarButtonItem(with: exitButton)
+        navigationItem.rightBarButtonItem = rightItem
     }
     
     private func setupLargeTitleToOriginal() {
@@ -162,8 +187,8 @@ class DetailIngViewController: BaseViewController {
         missionTitleLabel.font = .font(.regular, ofSize: 14)
         missionContentsLabel.font = .font(.regular, ofSize: 18)
         informationTitleLabel.font = .font(.regular, ofSize: 16)
-        manitiLabel.font = .font(.regular, ofSize: 15)
-        manitteAnimationLabel.font = .font(.regular, ofSize: 15)
+        manitteeLabel.font = .font(.regular, ofSize: 15)
+        manitteeAnimationLabel.font = .font(.regular, ofSize: 15)
         listLabel.font = .font(.regular, ofSize: 15)
         letterBoxButton.titleLabel?.font = .font(.regular, ofSize: 15)
         manitoMemoryButton.titleLabel?.font = .font(.regular, ofSize: 15)
@@ -181,8 +206,8 @@ class DetailIngViewController: BaseViewController {
             manitoMemoryButton.layer.isHidden = true
             manitoOpenButton.layer.isHidden = false
         }
-        manitiBackView.makeBorderLayer(color: .white)
-        manitiImageView.layer.cornerRadius = manitiImageView.bounds.size.width / 2
+        manitteeBackView.makeBorderLayer(color: .white)
+        manitteeImageView.layer.cornerRadius = manitteeImageView.bounds.size.width / 2
         listBackView.makeBorderLayer(color: .white)
         listImageView.layer.cornerRadius = listImageView.bounds.size.width / 2
         letterBoxButton.makeBorderLayer(color: .white)
@@ -200,13 +225,13 @@ class DetailIngViewController: BaseViewController {
     }
     
     private func setupManitteLabel() {
-        manitteAnimationLabel.text = ""
-        manitteAnimationLabel.alpha = 0
+        manitteeAnimationLabel.text = ""
+        manitteeAnimationLabel.alpha = 0
     }
     
     private func addGestureManito() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapManito))
-        manitiBackView.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappedManittee))
+        manitteeBackView.addGestureRecognizer(tapGesture)
     }
     
     private func addGestureMemberList() {
@@ -220,7 +245,10 @@ class DetailIngViewController: BaseViewController {
                   let roomId = self?.roomInformation?.id,
                   let mission = self?.missionContentsLabel.text
             else { return }
-            let letterViewController = LetterViewController(roomState: roomType.rawValue, roomId: roomId.description, mission: mission)
+            let letterViewController = LetterViewController(roomState: roomType.rawValue,
+                                                            roomId: roomId.description,
+                                                            mission: mission,
+                                                            letterState: .sent)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         letterBoxButton.addAction(action, for: .touchUpInside)
@@ -236,7 +264,7 @@ class DetailIngViewController: BaseViewController {
     }
     
     private func addActionOpenManittoViewController() {
-        guard let id = roomInformation?.id else { return }
+        guard let id = roomInformation?.id?.description else { return }
         let action = UIAction { [weak self] _ in
             self?.navigationController?.pushViewController(OpenManittoViewController(roomId: id), animated: true)
         }
@@ -250,6 +278,25 @@ class DetailIngViewController: BaseViewController {
         manitoOpenButton.isHidden = !endDate.isOpenManitto
     }
     
+    private func setEllipsisMenu() -> UIMenu {
+        let menu = UIMenu(options: [], children: [
+            UIAction(title: isAdminPost ? TextLiteral.detailWaitViewControllerDeleteRoom : TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+                if let isAdmin = self?.isAdminPost {
+                    if isAdmin {
+                        self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdminTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertAdmin, okAction: { _ in
+                            self?.requestDeleteRoom()
+                        })
+                    } else {
+                        self?.makeRequestAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertTitle, message: TextLiteral.detailIngViewControllerDoneExitAlertMessage, okAction: { _ in
+                            self?.requestExitRoom()
+                        })
+                    }
+                }
+            })
+        ])
+        return menu
+    }
+    
     // MARK: - DetailStarting API
     
     private func requestRoomInfo() {
@@ -258,9 +305,9 @@ class DetailIngViewController: BaseViewController {
                 guard let roomId = roomInformation?.id?.description else { return }
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
                 if let info = data {
-                    titleLabel.text = info.room?.title
-                    guard let startDate = info.room?.startDate,
-                          let endDate = info.room?.endDate,
+                    titleLabel.text = info.roomInformation?.title
+                    guard let startDate = info.roomInformation?.startDate,
+                          let endDate = info.roomInformation?.endDate,
                           let missionContent = info.mission?.content,
                           let manittee = info.manittee?.nickname,
                           let didView = info.didViewRoulette,
@@ -269,7 +316,7 @@ class DetailIngViewController: BaseViewController {
                     else { return }
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
-                    manitteAnimationLabel.text = manittee
+                    manitteeAnimationLabel.text = manittee
                     if badgeCount > 0 {
                         badgeLabel.isHidden = false
                         badgeLabel.countLabel.text = String(badgeCount)
@@ -281,7 +328,7 @@ class DetailIngViewController: BaseViewController {
                         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
                         guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                         viewController.modalPresentationStyle = .fullScreen
-                        viewController.roomInformation = roomInformation
+                        viewController.roomId = roomInformation?.id?.description
                         viewController.manitteeName = manittee
                         present(viewController, animated: true)
                     }
@@ -322,13 +369,15 @@ class DetailIngViewController: BaseViewController {
                 guard let roomId = roomInformation?.id?.description else { return }
                 let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId)
                 if let info = data {
-                    titleLabel.text = info.room?.title
-                    guard let startDate = info.room?.startDate,
-                          let endDate = info.room?.endDate,
-                          let minittee = info.manittee?.nickname
+                    titleLabel.text = info.roomInformation?.title
+                    guard let startDate = info.roomInformation?.startDate,
+                          let endDate = info.roomInformation?.endDate,
+                          let minittee = info.manittee?.nickname,
+                          let isAdmin = info.admin
                     else { return }
+                    isAdminPost = isAdmin
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
-                    manitteAnimationLabel.text = minittee
+                    manitteeAnimationLabel.text = minittee
                     missionContentsLabel.text = TextLiteral.detailIngViewControllerDoneMissionText
                 }
             } catch NetworkError.serverError {
@@ -358,6 +407,43 @@ class DetailIngViewController: BaseViewController {
         }
     }
     
+    private func requestExitRoom() {
+        Task {
+            do {
+                guard let roomId = roomInformation?.id?.description else { return }
+                let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId)
+                if statusCode == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+                makeAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdmin)
+            }
+        }
+    }
+    
+    private func requestDeleteRoom() {
+        Task {
+            do {
+                guard let roomId = roomInformation?.id?.description else { return }
+                let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId)
+                if statusCode == 204 {
+                    navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
     // MARK: - selector
     
     @objc
@@ -370,20 +456,26 @@ class DetailIngViewController: BaseViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    private func toggledManitteeAnimation(_ value: Bool) {
+        manitteeLabel.alpha = value ? 0 : 1
+        manitteeIconView.alpha = value ? 0 : 1
+        manitiRealIconView.alpha = value ? 1 : 0
+        manitteeAnimationLabel.alpha = value ? 1 : 0
+    }
+    
     @objc
-    private func didTapManito() {
-        UIView.animate(withDuration: 2.0) {
-            self.manitiLabel.alpha = 0
-            self.manitiIconView.alpha = 0
-            self.manitiRealIconView.alpha = 1
-            self.manitteAnimationLabel.alpha = 1
-        } completion: { _ in
-            UIView.animate(withDuration: 1.0, delay: 1.0) {
-                self.manitiIconView.alpha = 1
-                self.manitiRealIconView.alpha = 0
-                self.manitiLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
-                self.manitteAnimationLabel.alpha = 0
-                self.manitiLabel.alpha = 1
+    private func didTappedManittee() {
+        if !isTappedManittee {
+            self.isTappedManittee = true
+            UIView.animate(withDuration: 1.0) {
+                self.toggledManitteeAnimation(self.isTappedManittee)
+            } completion: { _ in
+                UIView.animate(withDuration: 1.0, delay: 0.5) {
+                    self.toggledManitteeAnimation(!self.isTappedManittee)
+                    self.manitteeLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
+                } completion: { _ in
+                    self.isTappedManittee = false
+                }
             }
         }
     }

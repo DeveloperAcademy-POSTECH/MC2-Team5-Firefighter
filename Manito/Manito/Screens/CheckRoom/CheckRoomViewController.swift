@@ -21,9 +21,7 @@ class CheckRoomViewController: BaseViewController {
         image.isUserInteractionEnabled = true
         return image
     }()
-    
     let roomInfoView = RoomInfoView()
-    
     private let questionLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.checkRoomViewControllerQuestionLabel
@@ -31,7 +29,6 @@ class CheckRoomViewController: BaseViewController {
         label.makeShadow(color: .black, opacity: 0.25, offset: CGSize(width: 0, height: 3), radius: 0)
         return label
     }()
-    
     private lazy var noButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(TextLiteral.checkRoomViewControllerNoButtonLabel, for: .normal)
@@ -40,10 +37,12 @@ class CheckRoomViewController: BaseViewController {
         button.backgroundColor = .yellow
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-        button.addTarget(self, action: #selector(didTapNoButton), for: .touchUpInside)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
-    
     private lazy var yesButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(TextLiteral.checkRoomViewControllerYesBUttonLabel, for: .normal)
@@ -52,7 +51,12 @@ class CheckRoomViewController: BaseViewController {
         button.backgroundColor = .yellow
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-        button.addTarget(self, action: #selector(didTapYesButton), for: .touchUpInside)
+        let action = UIAction { [weak self] _ in
+            guard let id = self?.roomId else { return }
+            self?.dismiss(animated: true, completion: nil)
+            NotificationCenter.default.post(name: .nextNotification, object: nil, userInfo: ["roomId": id])
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -63,6 +67,11 @@ class CheckRoomViewController: BaseViewController {
     }
     
     // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViewController()
+    }
     
     override func render() {
         view.addSubview(roomInfoImageView)
@@ -103,7 +112,6 @@ class CheckRoomViewController: BaseViewController {
     
     override func configUI() {
         view.backgroundColor = .black.withAlphaComponent(0.7)
-        setupViewController()
     }
     
     // MARK: - func
@@ -115,17 +123,6 @@ class CheckRoomViewController: BaseViewController {
               let capacity = verification?.capacity else { return }
         roomInfoView.roomLabel.text = title
         roomInfoView.dateLabel.text = "\(startDate) ~ \(endDate)"
-        roomInfoView.peopleInfo.peopleLabel.text = "X \(capacity)인"
-    }
-    
-    // MARK: - Selectors
-    @objc private func didTapNoButton() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc private func didTapYesButton() {
-        guard let id = roomId else { return }
-        dismiss(animated: true, completion: nil)
-        NotificationCenter.default.post(name: .nextNotification, object: nil, userInfo: ["roomId": id])
+        roomInfoView.peopleInfoView.peopleLabel.text = "X \(capacity)인"
     }
 }

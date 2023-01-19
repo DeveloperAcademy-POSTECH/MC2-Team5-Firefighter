@@ -11,21 +11,19 @@ import SnapKit
 
 final class RoomInfoView: UIView {
     
-    // MARK: - Property
+    // MARK: - property
     
-    lazy var roomLabel: UILabel = {
+    let roomLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    
-    lazy var dateLabel: UILabel = {
+    let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
         return label
-    }()
-    
-    lazy var peopleInfo = PeopleInfoView()
+    }()    
+    let peopleInfoView = PeopleInfoView()
 
     // MARK: - init
     
@@ -38,10 +36,9 @@ final class RoomInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - life cycle
     
-    private func render() {
-        
+    private func render() {        
         self.addSubview(roomLabel)
         roomLabel.snp.makeConstraints {
             $0.top.centerX.equalToSuperview()
@@ -53,8 +50,8 @@ final class RoomInfoView: UIView {
             $0.centerX.equalToSuperview()
         }
         
-        self.addSubview(peopleInfo)
-        peopleInfo.snp.makeConstraints {
+        self.addSubview(peopleInfoView)
+        peopleInfoView.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(10)
             $0.centerX.bottom.equalToSuperview()
         }

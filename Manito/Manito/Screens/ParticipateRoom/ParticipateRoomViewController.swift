@@ -9,33 +9,38 @@ import UIKit
 
 import SnapKit
 
-class ParticipateRoomViewController: BaseViewController {
+final class ParticipateRoomViewController: BaseViewController {
+    
     private let checkRoomInfoService: RoomProtocol = RoomAPI(apiService: APIService())
     
-    // MARK: - Property
+    // MARK: - property
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.enterRoom
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
-        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
-    
     private lazy var nextButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.searchRoom
-        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         button.isDisabled = true
+        let action = UIAction { [weak self] _ in
+            self?.dispatchInviteCode()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
-    }()
-    
+    }()    
     private let inputInvitedCodeView = InputInvitedCodeView()
     
     // MARK: - init
@@ -44,7 +49,7 @@ class ParticipateRoomViewController: BaseViewController {
         print("\(#file) is dead")
     }
     
-    // MARK: - Life Cycle
+    // MARK: - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,46 +87,41 @@ class ParticipateRoomViewController: BaseViewController {
         view.bringSubviewToFront(nextButton)
     }
     
-    // MARK: - Configure
-    override func configUI() {
-        super.configUI()
-    }
+    // MARK: - API
     
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationController?.navigationBar.isHidden = true
-        navigationController?.navigationBar.prefersLargeTitles = false
-    }
-    
-    // MARK: - Selectors
-    @objc private func keyboardWillShow(notification:NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
+    private func dispatchInviteCode() {
+        Task {
+            do {
+                guard let code = inputInvitedCodeView.roomCodeTextField.text else { return }
+                let data = try await checkRoomInfoService
+                    .dispatchVerification(body: code)
+                if let info = data {
+                    guard let id = info.id else { return }
+                    let viewController = CheckRoomViewController()
+                    viewController.modalPresentationStyle = .overFullScreen
+                    viewController.modalTransitionStyle = .crossDissolve
+                    viewController.verification = info
+                    viewController.roomId = id
+                    
+                    present(viewController, animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage)
+                print("client Error: \(String(describing: message))")
+            }
         }
     }
     
-    @objc private func keyboardWillHide(notification:NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.nextButton.transform = .identity
-        })
+    // MARK: - func
+    
+    override func setupNavigationBar() {
+        navigationController?.navigationBar.isHidden = true
     }
     
-    @objc private func didTapCloseButton() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc private func didTapNextButton() {
-        dispatchInviteCode()
-    }
-    
-    @objc private func didReceiveNextNotification(_ notification: Notification) {
-        guard let id = notification.userInfo?["roomId"] as? Int else { return }
-        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom, roomId: id), animated: true)
-    }
-    
-    // MARK: - Funtions
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -140,32 +140,24 @@ class ParticipateRoomViewController: BaseViewController {
         }
     }
     
-    // MARK: - API
+    // MARK: - selector
     
-    private func dispatchInviteCode() {
-        Task {
-            do {
-                guard let code = inputInvitedCodeView.roomCodeTextField.text else { return }
-                let data = try await checkRoomInfoService
-                    .dispatchVerification(body: code)
-                if let info = data {
-                    guard let id = info.id else { return }
-                    let viewController = CheckRoomViewController()
-                    viewController.modalPresentationStyle = .overFullScreen
-                    viewController.modalTransitionStyle = .crossDissolve
-                    viewController.verification = info
-                    viewController.roomId = id
-                    
-                    present(viewController, animated: true)
-                } 
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage)
-                print("client Error: \(String(describing: message))")
-            }
+    @objc private func keyboardWillShow(notification:NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
+            })
         }
+    }
+    
+    @objc private func keyboardWillHide(notification:NSNotification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.nextButton.transform = .identity
+        })
+    }
+    
+    @objc private func didReceiveNextNotification(_ notification: Notification) {
+        guard let id = notification.userInfo?["roomId"] as? Int else { return }
+        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom, roomId: id), animated: true)
     }
 }

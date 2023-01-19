@@ -12,7 +12,7 @@ import SnapKit
 class InputPersonView: UIView {
     
     // MARK: - Property
-    private let peronsViewLabel: UILabel = {
+    private let personViewLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 참여 인원을 설정해 주세요"
         label.font = .font(.regular, ofSize: 18)
@@ -30,31 +30,31 @@ class InputPersonView: UIView {
         imageView.backgroundColor = .darkGray
         return imageView
     }()
-    private var personLabel: UILabel = {
+    private lazy var personLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.x + " \(TextLiteral.minMember)"
+        label.text = TextLiteral.x + " \(Int(personSlider.value))인"
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
     lazy var personSlider: UISlider = {
         let slider = UISlider()
         slider.value = 1
-        slider.minimumValue = 5
+        slider.minimumValue = 4
         slider.maximumValue = 15
         slider.tintColor = .mainRed
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         slider.addTarget(self, action: #selector(didSlideSlider(_:)), for: .valueChanged)
         return slider
     }()
-    private var minLabel: UILabel = {
+    private lazy var minLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.minMember
+        label.text = "\(Int(personSlider.minimumValue))인"
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private var maxLabel: UILabel = {
+    private lazy var maxLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.maxMember
+        label.text = "\(Int(personSlider.maximumValue))인"
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
@@ -80,14 +80,14 @@ class InputPersonView: UIView {
     // MARK: - Config
     
     private func render() {
-        self.addSubview(peronsViewLabel)
-        peronsViewLabel.snp.makeConstraints {
+        self.addSubview(personViewLabel)
+        personViewLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
         
         self.addSubview(personBackView)
         personBackView.snp.makeConstraints {
-            $0.top.equalTo(peronsViewLabel.snp.bottom).offset(36)
+            $0.top.equalTo(personViewLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(140)
         }

@@ -16,10 +16,13 @@ final class MainViewController: BaseViewController {
     private var rooms: [ParticipatingRoom]?
     
     private enum Size {
-        static let collectionHorizontalSpacing: CGFloat = 17
-        static let collectionVerticalSpacing: CGFloat = 12
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 20 * 2 - collectionHorizontalSpacing) / 2
-        static let collectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20)
+        static let collectionHorizontalSpacing: CGFloat = 20
+        static let collectionVerticalSpacing: CGFloat = 20
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 3) / 2
+        static let collectionInset = UIEdgeInsets(top: 0,
+                                                  left: collectionHorizontalSpacing,
+                                                  bottom: collectionVerticalSpacing,
+                                                  right: collectionHorizontalSpacing)
     }
     
     private enum RoomStatus: String {
@@ -38,13 +41,18 @@ final class MainViewController: BaseViewController {
             }
         }
     }
+    
+    private let refreshControl = UIRefreshControl()
 
     // MARK: - property
 
     private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
-        button.addTarget(self, action: #selector(didTapSettingButton), for: .touchUpInside)
+        let action = UIAction { [weak self] _ in
+            self?.navigationController?.pushViewController(SettingViewController(), animated: true)
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
@@ -91,18 +99,17 @@ final class MainViewController: BaseViewController {
     // MARK: - life cycle
     
     override func viewDidLoad() {
-        render()
-        configUI()
-        setupNavigationBar()
+        super.viewDidLoad()
         setupGifImage()
         setupGuideArea()
         renderGuideArea()
+        setupRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         requestCommonMission()
-        requestManittoList()
+        requestManittoRoomList()
     }
 
     override func render() {
@@ -166,12 +173,6 @@ final class MainViewController: BaseViewController {
             $0.width.height.equalTo(44)
         }
     }
-    
-    override func setupGuideArea() {
-        super.setupGuideArea()
-        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
-    }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
@@ -183,6 +184,33 @@ final class MainViewController: BaseViewController {
         navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.leftBarButtonItem = appTitleView
         navigationItem.rightBarButtonItem = settingButtonView
+    }
+    
+    override func setupGuideArea() {
+        super.setupGuideArea()
+        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
+        setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
+    }
+    
+    private func setupGifImage() {
+        DispatchQueue.main.async {
+            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
+            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
+            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
+        }
+    }
+    
+    private func setupRefreshControl() {
+        let action = UIAction { [weak self] _ in
+            self?.requestManittoRoomList()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.refreshControl.endRefreshing()
+            }
+        }
+        refreshControl.addAction(action, for: .valueChanged)
+        refreshControl.tintColor = .grey001
+        listCollectionView.refreshControl = refreshControl
     }
     
     // MARK: - API
@@ -202,7 +230,7 @@ final class MainViewController: BaseViewController {
         }
     }
     
-    private func requestManittoList() {
+    private func requestManittoRoomList() {
         Task {
             do {
                 let data = try await mainService.fetchManittoList()
@@ -220,14 +248,6 @@ final class MainViewController: BaseViewController {
     }
     
     // MARK: - func
-    
-    private func setupGifImage() {
-        DispatchQueue.main.async {
-            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
-            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
-            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
-        }
-    }
 
     private func newRoom() {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
@@ -274,18 +294,23 @@ final class MainViewController: BaseViewController {
             viewController.roomInformation = rooms?[roomIndex]
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
-            let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-            guard let viewController = storyboard.instantiateViewController(withIdentifier: DetailIngViewController.className) as? DetailIngViewController else { return }
-            viewController.roomInformation = rooms?[roomIndex]
+            guard let roomId = rooms?[roomIndex].id?.description
+            else { return }
+            let viewController = DetailingCodebaseViewController(roomId: roomId)
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
-    // MARK: - selector
+    func pushDetailViewController(roomId: Int) {
+        let viewController = DetailingCodebaseViewController(roomId: roomId.description)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.navigationController?.pushViewController(viewController, animated: true)
+            viewController.pushLetterViewControllerReceivedType()
+        }
+    }
     
-    @objc
-    private func didTapSettingButton() {
-        navigationController?.pushViewController(SettingViewController(), animated: true)
+    func showRoomIdErrorAlert() {
+        makeRequestAlert(title: "해당 마니또 방의 정보를 불러오지 못했습니다.", message: "해당 마니또 방으로 이동할 수 없습니다.", okAction: nil)
     }
     
     @objc
@@ -335,17 +360,17 @@ extension MainViewController: UICollectionViewDataSource {
             
             switch roomStatus {
             case .waiting:
-                cell.roomState.state.text = "대기중"
-                cell.roomState.state.textColor = .darkGrey001
-                cell.roomState.backgroundColor = .badgeBeige
+                cell.roomStateView.state.text = "대기중"
+                cell.roomStateView.state.textColor = .darkGrey001
+                cell.roomStateView.backgroundColor = .badgeBeige
             case .starting:
-                cell.roomState.state.text = "진행중"
-                cell.roomState.state.textColor = .white
-                cell.roomState.backgroundColor = .mainRed
+                cell.roomStateView.state.text = "진행중"
+                cell.roomStateView.state.textColor = .white
+                cell.roomStateView.backgroundColor = .mainRed
             case .end:
-                cell.roomState.state.text = "완료"
-                cell.roomState.state.textColor = .white
-                cell.roomState.backgroundColor = .grey002
+                cell.roomStateView.state.text = "완료"
+                cell.roomStateView.state.textColor = .white
+                cell.roomStateView.backgroundColor = .grey002
             }
             
             return cell

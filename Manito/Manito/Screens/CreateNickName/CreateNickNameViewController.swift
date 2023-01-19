@@ -40,6 +40,7 @@ class CreateNickNameViewController: BaseViewController {
         textField.returnKeyType = .done
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
+        textField.becomeFirstResponder()
         return textField
     }()
     private lazy var roomsTextLimit : UILabel = {
@@ -77,7 +78,7 @@ class CreateNickNameViewController: BaseViewController {
             do {
                 let data = try await settingService.putChangeNickname(body: setting)
                 if let nickname = data {
-                    print(nickname)
+                    UserDefaultHandler.setNickname(nickname: nickname)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -181,10 +182,8 @@ class CreateNickNameViewController: BaseViewController {
                 let fixedText = text[text.startIndex..<endIndex]
                 textField.text = fixedText + " "
                 
-                let when = DispatchTime.now() + 0.01
-                DispatchQueue.main.asyncAfter(deadline: when) {
+                DispatchQueue.main.async {
                     self.roomsNameTextField.text = String(fixedText)
-                    self.setCounter(count: textField.text?.count ?? 0)
                 }
             }
         }
