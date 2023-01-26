@@ -114,12 +114,8 @@ final class MainViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        Task {
-            requestCommonMission()
-            requestManittoRoomList()
-        }
-
+        requestCommonMission()
+        requestManittoRoomList()
     }
 
     override func render() {
