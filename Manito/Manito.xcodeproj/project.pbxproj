@@ -502,7 +502,6 @@
 		B5F524C228519AA000614FF7 = {
 			isa = PBXGroup;
 			children = (
-				39FFE33528F45E44008442EE /* GoogleService-Info.plist */,
 				B55BCEB528D99F8600AF7E45 /* Settings.bundle */,
 				B5F524CD28519AA000614FF7 /* Manito */,
 				B5F524CC28519AA000614FF7 /* Products */,
@@ -676,6 +675,7 @@
 			children = (
 				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
 				B5F524DC28519AA100614FF7 /* Info.plist */,
+				39FFE33528F45E44008442EE /* GoogleService-Info.plist */,
 				B5F524CE28519AA000614FF7 /* AppDelegate.swift */,
 				B5F524D028519AA000614FF7 /* SceneDelegate.swift */,
 			);
