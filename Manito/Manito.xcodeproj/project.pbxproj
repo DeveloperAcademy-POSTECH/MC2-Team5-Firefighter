@@ -390,7 +390,7 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		39C957D328799A8200A04A2B /* Service */ = {
+		39C957D328799A8200A04A2B /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
 				39C957D528799AB900A04A2B /* HTTPMethod.swift */,
@@ -401,7 +401,7 @@
 				39C957F5287D9ED000A04A2B /* NetworkRequest.swift */,
 				B5F31C5528BFA87700F61D0F /* Requestable.swift */,
 			);
-			path = Service;
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		39C957EA287AE45900A04A2B /* EndPoint */ = {
@@ -768,7 +768,7 @@
 				397A241528BA519200454E4F /* Protocol */,
 				397A241128BA513E00454E4F /* API */,
 				39C957EA287AE45900A04A2B /* EndPoint */,
-				39C957D328799A8200A04A2B /* Service */,
+				39C957D328799A8200A04A2B /* Foundation */,
 				B5F525472855D01200614FF7 /* Models */,
 			);
 			path = Network;
