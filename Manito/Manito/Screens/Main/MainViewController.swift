@@ -150,7 +150,7 @@ final class MainViewController: BaseViewController {
             $0.leading.equalToSuperview().inset(13)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
         }
-
+        // FIXME: 좌우패딩 20값을 주는데 Size라는 변수명이 겹침
         view.addSubview(commonMissionView)
         commonMissionView.snp.makeConstraints {
             $0.top.equalTo(imgStar.snp.bottom)
@@ -339,11 +339,11 @@ final class MainViewController: BaseViewController {
 // MARK: - SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource
 extension MainViewController: SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource {
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        ManitoRoomCollectionViewCell.className
+        return ManitoRoomCollectionViewCell.className
     }
     
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        8
+        return 8
     }
 }
 

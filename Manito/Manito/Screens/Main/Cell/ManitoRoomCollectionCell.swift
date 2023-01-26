@@ -7,6 +7,7 @@
 
 import UIKit
 
+import SkeletonView
 import SnapKit
 
 final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
@@ -86,10 +87,9 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
         backgroundColor = .darkGrey002.withAlphaComponent(0.8)
         makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
         
-        self.isSkeletonable = true
-        imageView.isSkeletonable = true
-        roomLabel.isSkeletonable = true
-        roomStateView.isSkeletonable = true
+        [self, imageView, roomLabel, roomStateView].forEach {
+            $0.isSkeletonable = true
+        }
         
         roomLabel.numberOfLines = 2
 
