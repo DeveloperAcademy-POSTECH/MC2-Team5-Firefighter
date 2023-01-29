@@ -89,6 +89,17 @@ struct RoomInfo: Decodable {
             return false
         }
     }
+    
+    var isStart: Bool {
+        if let date = startDate?.stringToDate {
+            let isPast = date.distance(to: Date()) > 86400
+            let isToday = date.distance(to: Date()) < 86400
+            let canStart = !isPast && isToday
+            return canStart
+        } else {
+            return false
+        }
+    }
 }
 
 struct Mission: Codable {

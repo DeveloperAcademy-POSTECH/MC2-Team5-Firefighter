@@ -402,11 +402,8 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     private func isPastStartDate() {
-        guard let startDate = room?.roomInformation?.startDate?.stringToDate else { return }
-        let isPast = startDate.distance(to: Date()) > 86400
-        let isToday = startDate.distance(to: Date()) < 86400
-        let canStart = !isPast && isToday
-        if !canStart {
+        guard let isStart = room?.roomInformation?.isStart else { return }
+        if !isStart {
             switch memberType {
             case .owner:
                 let action: ((UIAlertAction) -> ()) = { [weak self] _ in
