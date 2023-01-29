@@ -376,10 +376,8 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     private func presentEditRoomView() {
-        guard let startDate = room?.roomInformation?.startDate?.stringToDate else { return }
-        let isAlreadyPastDate = startDate.distance(to: Date()) > 86400
-        
-        if isAlreadyPastDate {
+        guard let roomInformation = room?.roomInformation else { return }
+        if roomInformation.isAlreadyPastDate {
             editInfoFromDefaultDate()
         } else {
             editInfoFromCurrentDate()
