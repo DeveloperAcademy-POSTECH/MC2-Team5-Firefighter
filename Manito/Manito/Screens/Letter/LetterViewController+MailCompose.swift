@@ -43,10 +43,7 @@ extension LetterViewController: MFMailComposeViewControllerDelegate {
     
     private func showSendMailErrorAlert() {
         let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default) {
-            (action) in
-            print("확인")
-        }
+        let confirmAction = UIAlertAction(title: "확인", style: .default)
         sendMailErrorAlert.addAction(confirmAction)
         self.present(sendMailErrorAlert, animated: true, completion: nil)
     }
