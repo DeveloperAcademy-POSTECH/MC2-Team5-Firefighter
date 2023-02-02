@@ -12,17 +12,16 @@ import SnapKit
 
 final class LetterImageViewController: BaseViewController {
     
-    // MARK: - property
+    // MARK: - ui component
     
-    private let scrollView = UIScrollView()
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(ImageLiterals.btnXmark, for: .normal)
         button.tintColor = .grey001
-        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.didTapCloseButton), for: .touchUpInside)
         return button
     }()
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = true
@@ -33,6 +32,22 @@ final class LetterImageViewController: BaseViewController {
         button.setImage(ImageLiterals.icSave, for: .normal)
         return button
     }()
+    private let scrollView = UIScrollView()
+
+    // MARK: - init
+
+    init(image: UIImage) {
+        self.imageView.image = image
+        super.init()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        print("\(#file) is dead")
+    }
     
     // MARK: - life cycle
     
