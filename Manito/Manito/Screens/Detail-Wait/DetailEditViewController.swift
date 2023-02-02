@@ -146,8 +146,8 @@ final class DetailEditViewController: BaseViewController {
     
     // MARK: - life cycle
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         self.navigationController?.isNavigationBarHidden = true
         self.presentationController?.delegate = self
         isModalInPresentation = true

@@ -50,7 +50,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        configUI()
+        configureUI()
         setupBackButton()
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
@@ -70,7 +70,7 @@ class BaseViewController: UIViewController {
         // Override Layout
     }
     
-    func configUI() {
+    func configureUI() {
         view.backgroundColor = .backgroundGrey
     }
     

@@ -179,8 +179,8 @@ final class MemoryViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         setupAction()
     }
     

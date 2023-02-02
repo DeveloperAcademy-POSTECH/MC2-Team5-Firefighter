@@ -164,8 +164,8 @@ final class LetterViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         self.reloadCollectionView(with: self.letterState)
         self.setupEmptyLabel()
     }

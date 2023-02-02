@@ -110,7 +110,7 @@ class CheckRoomViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
+    override func configureUI() {
         view.backgroundColor = .black.withAlphaComponent(0.7)
     }
     

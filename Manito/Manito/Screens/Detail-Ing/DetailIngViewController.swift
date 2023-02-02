@@ -146,8 +146,8 @@ class DetailIngViewController: BaseViewController {
         }
     }
 
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         setupFont()
         setupViewLayer()
         setupStatusLabel()

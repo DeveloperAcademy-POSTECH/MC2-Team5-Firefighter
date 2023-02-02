@@ -217,8 +217,8 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
 
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         setupSettingButton()
     }
     

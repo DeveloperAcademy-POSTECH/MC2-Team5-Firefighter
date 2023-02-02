@@ -73,8 +73,8 @@ class SettingViewController: BaseViewController {
     
     // MARK: - Configure
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
     }
     
     override func setupNavigationBar() {

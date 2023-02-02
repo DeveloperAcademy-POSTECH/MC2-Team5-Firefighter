@@ -53,7 +53,7 @@ final class LetterImageViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
+    override func configureUI() {
         setupScrollView()
         setupImageView()
         setImagePinchGesture()

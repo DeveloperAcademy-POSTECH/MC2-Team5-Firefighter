@@ -122,8 +122,8 @@ final class CreateLetterViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         
         navigationController?.presentationController?.delegate = self
         isModalInPresentation = true

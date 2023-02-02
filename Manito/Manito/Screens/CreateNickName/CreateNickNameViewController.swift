@@ -191,8 +191,8 @@ class CreateNickNameViewController: BaseViewController {
     
     // MARK: - Configure
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
     }
 }
 
