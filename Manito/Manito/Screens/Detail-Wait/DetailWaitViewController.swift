@@ -422,10 +422,9 @@ final class DetailWaitViewController: BaseViewController {
     private func setStartButton() {
         if memberType == .owner {
             guard let startDate = room?.roomInformation?.startDate?.stringToDate,
-                  let todayDate = Date().dateToString.stringToDate,
                   let userCount = room?.participants?.count else { return }
             
-            let isToday = startDate.distance(to: todayDate).isZero
+            let isToday = startDate.isToday
             let isMinimumUserCount = userCount >= 4
             
             detectStartableStatus?(isToday && isMinimumUserCount)
