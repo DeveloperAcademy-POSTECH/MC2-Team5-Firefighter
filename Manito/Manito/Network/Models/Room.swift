@@ -39,6 +39,16 @@ struct Room: Decodable {
         }
     }
     
+    var canStart: Bool {
+        if let count = participants?.count,
+           let date = roomInformation?.startDate?.stringToDate {
+            let isMinimumUserCount = count >= 4
+            return isMinimumUserCount && date.isToday
+        } else {
+            return false
+        }
+    }
+    
     enum CodingKeys: String, CodingKey {
         case roomInformation = "room"
         case participants
