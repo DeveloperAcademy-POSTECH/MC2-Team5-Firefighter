@@ -34,27 +34,23 @@ final class LetterViewController: BaseViewController {
         }
     }
     
-    private enum Size {
+    private enum InternalSize {
+        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2
         static let headerHeight: CGFloat = 66.0
-        static let collectionHorizontalSpacing: CGFloat = 20.0
-        static let collectionVerticalSpacing: CGFloat = 18.0
-        static let cellTopSpacing: CGFloat = 16.0
-        static let cellBottomSpacing: CGFloat = 35.0
-        static let cellHorizontalSpacing: CGFloat = 16.0
-        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2
         static let imageHeight: CGFloat = 204.0
-        static let collectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
-                                                  left: collectionHorizontalSpacing,
-                                                  bottom: collectionVerticalSpacing,
-                                                  right: collectionHorizontalSpacing)
+        static let cellInset: UIEdgeInsets = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 35.0, right: 16.0)
+        static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 18.0,
+                                                                left: Size.leadingTrailingPadding,
+                                                                bottom: 18.0,
+                                                                right: Size.leadingTrailingPadding)
     }
     
-    // MARK: - property
+    // MARK: - ui component
     
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
-        flowLayout.sectionInset = Size.collectionInset
+        flowLayout.sectionInset = InternalSize.collectionInset
         flowLayout.minimumLineSpacing = 33
         flowLayout.sectionHeadersPinToVisibleBounds = true
         return flowLayout
@@ -73,6 +69,8 @@ final class LetterViewController: BaseViewController {
         return collectionView
     }()
     private lazy var sendLetterView = SendLetterView()
+
+    // MARK: - property
     
     private var letterState: LetterState {
         didSet {
@@ -138,6 +136,12 @@ final class LetterViewController: BaseViewController {
         super.viewWillAppear(animated)
         setupLargeTitle()
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        guideBoxImageView.isHidden = true
+    }
+
+    // MARK: - override
     
     override func render() {
         view.addSubview(listCollectionView)
@@ -187,7 +191,7 @@ final class LetterViewController: BaseViewController {
             view.addSubview(guideBoxImageView)
             guideBoxImageView.snp.makeConstraints {
                 $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(35)
-                $0.trailing.equalTo(view.snp.trailing).inset(Size.collectionHorizontalSpacing + 8)
+                $0.trailing.equalTo(view.snp.trailing).inset(Size.leadingTrailingPadding + 8)
                 $0.width.equalTo(270)
                 $0.height.equalTo(90)
             }
@@ -199,11 +203,7 @@ final class LetterViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(15)
         }
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        guideBoxImageView.isHidden = true
-    }
-    
+
     // MARK: - func
     
     private func setupLargeTitle() {
@@ -252,7 +252,7 @@ final class LetterViewController: BaseViewController {
     }
     
     private func calculateContentHeight(text: String) -> CGFloat {
-        let width = UIScreen.main.bounds.size.width - Size.collectionHorizontalSpacing * 2 - Size.cellHorizontalSpacing * 2
+        let width = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2 - InternalSize.cellInset.left * 2
         let label = UILabel(frame: CGRect(origin: .zero,
                                           size: CGSize(width: width,
                                                        height: .greatestFiniteMagnitude)))
@@ -373,21 +373,21 @@ extension LetterViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension LetterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var heights = [Size.cellTopSpacing, Size.cellBottomSpacing]
+        var heights = [InternalSize.cellInset.top, InternalSize.cellInset.bottom]
         
         if let content = letterList[indexPath.item].content {
             heights += [calculateContentHeight(text: content)]
         }
 
         if letterList[indexPath.item].imageUrl != nil {
-            heights += [Size.imageHeight]
+            heights += [InternalSize.imageHeight]
         }
         
-        return CGSize(width: Size.cellWidth, height: heights.reduce(0, +))
+        return CGSize(width: InternalSize.cellWidth, height: heights.reduce(0, +))
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.size.width, height: Size.headerHeight)
+        return CGSize(width: UIScreen.main.bounds.size.width, height: InternalSize.headerHeight)
     }
 }
 
