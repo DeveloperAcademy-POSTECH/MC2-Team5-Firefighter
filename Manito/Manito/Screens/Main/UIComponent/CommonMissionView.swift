@@ -1,5 +1,5 @@
 //
-//  CommonMissonView.swift
+//  CommonMissionView.swift
 //  Manito
 //
 //  Created by COBY_PRO on 2022/06/12.
@@ -9,10 +9,11 @@ import UIKit
 
 import SnapKit
 
-final class CommonMissonView: UIView {
+final class CommonMissionView: UIView {
     
     // MARK: - property
     
+    private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
     private let title: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.commonMissionViewTitle
@@ -43,16 +44,21 @@ final class CommonMissonView: UIView {
     // MARK: - life cycle
     
     private func render() {
+        self.addSubview(commonMissionImageView)
+        commonMissionImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         self.addSubview(title)
         title.snp.makeConstraints {
-            $0.top.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(56)
+            $0.centerX.equalToSuperview()
         }
         
         self.addSubview(mission)
         mission.snp.makeConstraints {
-            $0.top.equalTo(self.title.snp.bottom).offset(23)
-            $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(56)
+            $0.top.equalTo(title.snp.bottom).offset(40)
+            $0.leading.trailing.equalToSuperview()
         }
     }
 }
