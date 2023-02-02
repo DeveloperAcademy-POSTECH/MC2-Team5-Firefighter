@@ -392,7 +392,7 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		39C957D328799A8200A04A2B /* Service */ = {
+		39C957D328799A8200A04A2B /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
 				39C957D528799AB900A04A2B /* HTTPMethod.swift */,
@@ -403,7 +403,7 @@
 				39C957F5287D9ED000A04A2B /* NetworkRequest.swift */,
 				B5F31C5528BFA87700F61D0F /* Requestable.swift */,
 			);
-			path = Service;
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		39C957EA287AE45900A04A2B /* EndPoint */ = {
@@ -504,7 +504,6 @@
 		B5F524C228519AA000614FF7 = {
 			isa = PBXGroup;
 			children = (
-				39FFE33528F45E44008442EE /* GoogleService-Info.plist */,
 				B55BCEB528D99F8600AF7E45 /* Settings.bundle */,
 				B5F524CD28519AA000614FF7 /* Manito */,
 				B5F524CC28519AA000614FF7 /* Products */,
@@ -678,6 +677,7 @@
 			children = (
 				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
 				B5F524DC28519AA100614FF7 /* Info.plist */,
+				39FFE33528F45E44008442EE /* GoogleService-Info.plist */,
 				B5F524CE28519AA000614FF7 /* AppDelegate.swift */,
 				B5F524D028519AA000614FF7 /* SceneDelegate.swift */,
 			);
@@ -770,7 +770,7 @@
 				397A241528BA519200454E4F /* Protocol */,
 				397A241128BA513E00454E4F /* API */,
 				39C957EA287AE45900A04A2B /* EndPoint */,
-				39C957D328799A8200A04A2B /* Service */,
+				39C957D328799A8200A04A2B /* Foundation */,
 				B5F525472855D01200614FF7 /* Models */,
 			);
 			path = Network;
