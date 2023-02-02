@@ -80,7 +80,7 @@ final class CreateLetterViewController: BaseViewController {
         setupButtonAction()
     }
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(indicatorView)
         indicatorView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(9)

@@ -49,7 +49,7 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        render()
+        setupLayout()
         configUI()
         setupBackButton()
         hidekeyboardWhenTappedAround()
@@ -66,7 +66,7 @@ class BaseViewController: UIViewController {
         setupInteractivePopGestureRecognizer()
     }
     
-    func render() {
+    func setupLayout() {
         // Override Layout
     }
     

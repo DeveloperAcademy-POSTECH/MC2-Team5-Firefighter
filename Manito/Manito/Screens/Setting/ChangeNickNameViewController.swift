@@ -71,7 +71,7 @@ class ChangeNickNameViewController: BaseViewController {
         setupLargeTitle()
     }
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(nameTextField)
         nameTextField.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)

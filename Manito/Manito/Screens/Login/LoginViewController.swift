@@ -35,7 +35,7 @@ final class LoginViewController: BaseViewController {
 
     // MARK: - func
 
-    override func render() {
+    override func setupLayout() {
         view.addSubview(logoImageView)
         logoImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()

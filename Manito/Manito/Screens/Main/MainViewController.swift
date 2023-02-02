@@ -118,7 +118,7 @@ final class MainViewController: BaseViewController {
         requestManittoRoomList()
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubview(maCharacterImageView)
         maCharacterImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(70)

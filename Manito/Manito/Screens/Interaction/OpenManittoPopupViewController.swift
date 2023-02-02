@@ -62,7 +62,7 @@ final class OpenManittoPopupViewController: BaseViewController {
         setTypingAnimation()
     }
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(popupView)
         popupView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(UIScreen.main.bounds.size.height * 0.15)

@@ -54,7 +54,7 @@ class SettingViewController: BaseViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(imageRow)
         imageRow.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)

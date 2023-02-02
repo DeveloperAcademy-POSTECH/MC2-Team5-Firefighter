@@ -140,7 +140,7 @@ final class LetterViewController: BaseViewController {
 
     // MARK: - override
     
-    override func render() {
+    override func setupLayout() {
         self.view.addSubview(self.listCollectionView)
         self.listCollectionView.snp.makeConstraints {
             $0.edges.equalTo(self.view.safeAreaLayoutGuide)

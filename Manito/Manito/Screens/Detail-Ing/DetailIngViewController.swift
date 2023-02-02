@@ -116,7 +116,7 @@ class DetailIngViewController: BaseViewController {
         renderGuideArea()
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubview(manitoOpenButton)
         manitoOpenButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(7)

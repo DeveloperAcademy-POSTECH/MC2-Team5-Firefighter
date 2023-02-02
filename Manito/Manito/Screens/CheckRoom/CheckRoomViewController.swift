@@ -73,7 +73,7 @@ class CheckRoomViewController: BaseViewController {
         setupViewController()
     }
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(roomInfoImageView)
         roomInfoImageView.snp.makeConstraints {
             $0.center.equalToSuperview()

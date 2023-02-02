@@ -88,7 +88,7 @@ class CreateRoomViewController: BaseViewController {
         setupNotificationCenter()
     }
         
-    override func render() {
+    override func setupLayout() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)

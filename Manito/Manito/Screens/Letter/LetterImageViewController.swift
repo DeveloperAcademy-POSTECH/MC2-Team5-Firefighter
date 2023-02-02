@@ -36,7 +36,7 @@ final class LetterImageViewController: BaseViewController {
     
     // MARK: - life cycle
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
         view.addSubview(closeButton)

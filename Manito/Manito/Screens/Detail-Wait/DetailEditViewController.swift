@@ -154,7 +154,7 @@ final class DetailEditViewController: BaseViewController {
         setupChangedButton()
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubview(cancelButton)
         cancelButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)

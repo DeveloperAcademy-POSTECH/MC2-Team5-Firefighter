@@ -116,7 +116,7 @@ final class MemoryViewController: BaseViewController {
     
     // MARK: - life cycle
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(segmentControl)
         segmentControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
