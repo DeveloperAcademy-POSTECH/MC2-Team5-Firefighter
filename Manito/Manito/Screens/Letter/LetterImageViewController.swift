@@ -21,6 +21,18 @@ final class LetterImageViewController: BaseViewController {
         button.addTarget(self, action: #selector(self.didTapCloseButton), for: .touchUpInside)
         return button
     }()
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.frame = view.bounds
+        scrollView.delegate = self
+        scrollView.zoomScale = 1.0
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 3.0
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -32,7 +44,6 @@ final class LetterImageViewController: BaseViewController {
         button.setImage(ImageLiterals.icSave, for: .normal)
         return button
     }()
-    private let scrollView = UIScrollView()
 
     // MARK: - init
 
@@ -49,41 +60,30 @@ final class LetterImageViewController: BaseViewController {
         print("\(#file) is dead")
     }
     
-    // MARK: - life cycle
+    // MARK: - override
     
     override func setupLayout() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(imageView)
-        view.addSubview(closeButton)
-        closeButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(23)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
+        self.view.addSubview(self.scrollView)
+        self.scrollView.addSubview(self.imageView)
+
+        self.view.addSubview(self.closeButton)
+        self.closeButton.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(23)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).inset(17)
             $0.width.height.equalTo(44)
         }
         
-        view.addSubview(downloadButton)
-        downloadButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(23)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(17)
+        self.view.addSubview(self.downloadButton)
+        self.downloadButton.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(23)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(17)
         }
     }
     
     override func configureUI() {
-        setupScrollView()
-        setupImageView()
-        setImagePinchGesture()
-        setupButtonAction()
-    }
-    
-    private func setupScrollView() {
-        scrollView.frame = view.bounds
-        scrollView.delegate = self
-        scrollView.zoomScale = 1.0
-        scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 3.0
-        scrollView.contentInsetAdjustmentBehavior = .never
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
+        self.setupImageView()
+        self.setImagePinchGesture()
+        self.setupButtonAction()
     }
     
     private func setupImageView() {
