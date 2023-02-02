@@ -87,13 +87,13 @@ final class LetterImageViewController: BaseViewController {
     }
     
     private func setupImageView() {
-        imageView.frame = scrollView.bounds
-        imageView.contentMode = .scaleAspectFit
+        self.imageView.frame = self.scrollView.bounds
+        self.imageView.contentMode = .scaleAspectFit
     }
     
     private func setImagePinchGesture() {
-        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(didPinchImage(_:)))
-        view.addGestureRecognizer(pinch)
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.didPinchImage(_:)))
+        self.view.addGestureRecognizer(pinch)
     }
     
     private func setupButtonAction() {
@@ -106,7 +106,7 @@ final class LetterImageViewController: BaseViewController {
             
             PHPhotoLibrary.shared().performChanges({
                 PHAssetChangeRequest.creationRequestForAsset(from: image)
-            }, completionHandler: { (success, error) in
+            }) { (success, error) in
                 DispatchQueue.main.async {
                     if success {
                         self?.makeAlert(title: TextLiteral.letterImageViewControllerSuccessTitle,
@@ -117,9 +117,9 @@ final class LetterImageViewController: BaseViewController {
                                         message: TextLiteral.letterImageViewControllerErrorMessage)
                     }
                 }
-            })
+            }
         }
-        downloadButton.addAction(downloadAction, for: .touchUpInside)
+        self.downloadButton.addAction(downloadAction, for: .touchUpInside)
     }
     
     // MARK: - selector
@@ -131,7 +131,7 @@ final class LetterImageViewController: BaseViewController {
     
     @objc
     private func didPinchImage(_ pinch: UIPinchGestureRecognizer) {
-        imageView.transform = imageView.transform.scaledBy(x: pinch.scale, y: pinch.scale)
+        self.imageView.transform = self.imageView.transform.scaledBy(x: pinch.scale, y: pinch.scale)
         pinch.scale = 1
     }
 }
@@ -143,8 +143,8 @@ extension LetterImageViewController: UIScrollViewDelegate {
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         if scrollView.zoomScale > 1 {
-            guard let image = imageView.image else { return }
-            guard let zoomView = viewForZooming(in: scrollView) else { return }
+            guard let image = self.imageView.image else { return }
+            guard let zoomView = self.viewForZooming(in: scrollView) else { return }
             
             let widthRatio = zoomView.frame.width / image.size.width
             let heightRatio = zoomView.frame.height / image.size.height
