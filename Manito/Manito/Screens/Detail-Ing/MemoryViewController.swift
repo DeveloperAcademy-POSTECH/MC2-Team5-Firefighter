@@ -116,7 +116,7 @@ final class MemoryViewController: BaseViewController {
     
     // MARK: - life cycle
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(segmentControl)
         segmentControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
@@ -179,8 +179,8 @@ final class MemoryViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         setupAction()
     }
     
@@ -292,8 +292,7 @@ extension MemoryViewController: UICollectionViewDataSource {
                          content: memory?.memoriesWithManitto?.messages?[indexPath.item].content)
         }
         cell.didTappedImage = { [weak self] image in
-            let viewController = LetterImageViewController()
-            viewController.imageView.image = image
+            let viewController = LetterImageViewController(image: image)
             viewController.modalPresentationStyle = .fullScreen
             viewController.modalTransitionStyle = .crossDissolve
             self?.present(viewController, animated: true)

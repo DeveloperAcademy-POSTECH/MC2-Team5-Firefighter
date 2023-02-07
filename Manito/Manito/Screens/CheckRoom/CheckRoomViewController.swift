@@ -73,7 +73,7 @@ class CheckRoomViewController: BaseViewController {
         setupViewController()
     }
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(roomInfoImageView)
         roomInfoImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -110,7 +110,7 @@ class CheckRoomViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
+    override func configureUI() {
         view.backgroundColor = .black.withAlphaComponent(0.7)
     }
     

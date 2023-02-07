@@ -103,7 +103,7 @@ class InvitedCodeViewController: BaseViewController {
 
     // MARK: - configure
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(invitedImageView)
         invitedImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(142)
@@ -153,7 +153,7 @@ class InvitedCodeViewController: BaseViewController {
         }
     }
     
-    override func configUI() {
+    override func configureUI() {
         view.backgroundColor = .black.withAlphaComponent(0.8)
     }
 }

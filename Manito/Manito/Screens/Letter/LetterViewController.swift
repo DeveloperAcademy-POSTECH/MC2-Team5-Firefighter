@@ -34,33 +34,29 @@ final class LetterViewController: BaseViewController {
         }
     }
     
-    private enum Size {
+    private enum InternalSize {
+        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2
         static let headerHeight: CGFloat = 66.0
-        static let collectionHorizontalSpacing: CGFloat = 20.0
-        static let collectionVerticalSpacing: CGFloat = 18.0
-        static let cellTopSpacing: CGFloat = 16.0
-        static let cellBottomSpacing: CGFloat = 35.0
-        static let cellHorizontalSpacing: CGFloat = 16.0
-        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 2
         static let imageHeight: CGFloat = 204.0
-        static let collectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
-                                                  left: collectionHorizontalSpacing,
-                                                  bottom: collectionVerticalSpacing,
-                                                  right: collectionHorizontalSpacing)
+        static let cellInset: UIEdgeInsets = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 35.0, right: 16.0)
+        static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 18.0,
+                                                                left: Size.leadingTrailingPadding,
+                                                                bottom: 18.0,
+                                                                right: Size.leadingTrailingPadding)
     }
     
-    // MARK: - property
+    // MARK: - ui component
     
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
-        flowLayout.sectionInset = Size.collectionInset
+        flowLayout.sectionInset = InternalSize.collectionInset
         flowLayout.minimumLineSpacing = 33
         flowLayout.sectionHeadersPinToVisibleBounds = true
         return flowLayout
     }()
     private lazy var listCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -72,28 +68,6 @@ final class LetterViewController: BaseViewController {
                                 withReuseIdentifier: LetterHeaderView.className)
         return collectionView
     }()
-    private lazy var sendLetterView = SendLetterView()
-    
-    private var letterState: LetterState {
-        didSet {
-            reloadCollectionView(with: self.letterState)
-            setupEmptyLabel()
-        }
-    }
-    
-    private var letterList: [Message] = [] {
-        didSet {
-            listCollectionView.reloadData()
-            setupEmptyView()
-        }
-    }
-    
-    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
-    private var manitteeId: String?
-    private var roomId: String
-    private var roomState: String
-    private var mission: String
-    
     private let emptyLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
@@ -101,10 +75,31 @@ final class LetterViewController: BaseViewController {
         label.text = TextLiteral.letterViewControllerEmptyViewTo
         label.isHidden = true
         label.textColor = .grey003
-        label.addLabelSpacing(lineSpacing: 16)
         label.textAlignment = .center
+        label.addLabelSpacing(lineSpacing: 16)
         return label
     }()
+    private lazy var sendLetterView: SendLetterView = SendLetterView()
+
+    // MARK: - property
+    
+    private var letterState: LetterState {
+        didSet {
+            self.reloadCollectionView(with: self.letterState)
+            self.setupEmptyLabel()
+        }
+    }
+    private var letterList: [Message] = [] {
+        didSet {
+            self.listCollectionView.reloadData()
+            self.setupEmptyView()
+        }
+    }
+    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
+    private var manitteeId: String?
+    private var roomId: String
+    private var roomState: String
+    private var mission: String
     
     // MARK: - init
     
@@ -128,91 +123,94 @@ final class LetterViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupButtonAction()
-        setupGuideArea()
-        renderGuideArea()
-        hideGuideViewWhenTappedAround()
+        self.setupButtonAction()
+        self.setupGuideArea()
+        self.renderGuideArea()
+        self.hideGuideViewWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupLargeTitle()
+        self.setupLargeTitle()
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        self.guideBoxImageView.isHidden = true
+    }
+
+    // MARK: - override
     
-    override func render() {
-        view.addSubview(listCollectionView)
-        listCollectionView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+    override func setupLayout() {
+        self.view.addSubview(self.listCollectionView)
+        self.listCollectionView.snp.makeConstraints {
+            $0.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
         
-        view.addSubview(guideButton)
-        guideButton.snp.makeConstraints {
+        self.view.addSubview(self.guideButton)
+        self.guideButton.snp.makeConstraints {
             $0.width.height.equalTo(44)
         }
-        
-        if roomState != "POST" {
-            view.addSubview(sendLetterView)
-            sendLetterView.snp.makeConstraints {
-                $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-            }
-        }
-        view.addSubview(emptyLabel)
-        emptyLabel.snp.makeConstraints {
+
+        self.view.addSubview(self.emptyLabel)
+        self.emptyLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
+        }
+
+        if self.roomState != "POST" {
+            self.view.addSubview(self.sendLetterView)
+            self.sendLetterView.snp.makeConstraints {
+                $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            }
         }
     }
     
-    override func configUI() {
-        super.configUI()
-        reloadCollectionView(with: self.letterState)
-        setupEmptyLabel()
+    override func configureUI() {
+        super.configureUI()
+        self.reloadCollectionView(with: self.letterState)
+        self.setupEmptyLabel()
     }
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        let guideButton = makeBarButtonItem(with: guideButton)
-        
-        navigationItem.rightBarButtonItem = guideButton
-        title = TextLiteral.letterViewControllerTitle
+
+        let guideButton = self.makeBarButtonItem(with: self.guideButton)
+        self.navigationItem.rightBarButtonItem = guideButton
+        self.title = TextLiteral.letterViewControllerTitle
     }
     
     override func setupGuideArea() {
         super.setupGuideArea()
-        guideButton.setImage(ImageLiterals.icLetterInfo, for: .normal)
-        setupGuideText(title: TextLiteral.letterViewControllerGuideTitle, text: TextLiteral.letterViewControllerGuideText)
+        self.guideButton.setImage(ImageLiterals.icLetterInfo, for: .normal)
+        self.setupGuideText(title: TextLiteral.letterViewControllerGuideTitle, text: TextLiteral.letterViewControllerGuideText)
     }
     
     override func renderGuideArea() {
-        if let view = navigationController?.view {
-            view.addSubview(guideBoxImageView)
-            guideBoxImageView.snp.makeConstraints {
-                $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(35)
-                $0.trailing.equalTo(view.snp.trailing).inset(Size.collectionHorizontalSpacing + 8)
+        if let navigationView = self.navigationController?.view {
+            navigationView.addSubview(self.guideBoxImageView)
+            self.guideBoxImageView.snp.makeConstraints {
+                $0.top.equalTo(navigationView.safeAreaLayoutGuide.snp.top).inset(35)
+                $0.trailing.equalTo(navigationView.snp.trailing).inset(Size.leadingTrailingPadding + 8)
                 $0.width.equalTo(270)
                 $0.height.equalTo(90)
             }
         }
         
-        guideBoxImageView.addSubview(guideLabel)
-        guideLabel.snp.makeConstraints {
+        self.guideBoxImageView.addSubview(self.guideLabel)
+        self.guideLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
         }
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        guideBoxImageView.isHidden = true
-    }
-    
+
     // MARK: - func
     
     private func setupLargeTitle() {
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .automatic
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .automatic
     }
     
     private func setupEmptyView() {
-        emptyLabel.isHidden = !letterList.isEmpty
+        self.emptyLabel.isHidden = !self.letterList.isEmpty
     }
     
     private func setupButtonAction() {
@@ -229,30 +227,30 @@ final class LetterViewController: BaseViewController {
             }
             self.present(navigationController, animated: true, completion: nil)
         }
-        sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
-                                                  for: .touchUpInside)
+        self.sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
+                                                       for: .touchUpInside)
     }
     
     private func reloadCollectionView(with state: LetterState) {
         let isReceivedState = (state == .received)
         let bottomInset: CGFloat = (isReceivedState ? 0 : 73)
-        let topPoint = listCollectionView.adjustedContentInset.top + 1
+        let topPoint = self.listCollectionView.adjustedContentInset.top + 1
         
-        sendLetterView.isHidden = isReceivedState
-        listCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
-        listCollectionView.setContentOffset(CGPoint(x: 0, y: -topPoint), animated: false)
-        listCollectionView.collectionViewLayout.invalidateLayout()
+        self.sendLetterView.isHidden = isReceivedState
+        self.listCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+        self.listCollectionView.setContentOffset(CGPoint(x: 0, y: -topPoint), animated: false)
+        self.listCollectionView.collectionViewLayout.invalidateLayout()
         
         switch state {
         case .sent:
-            fetchSendLetter(roomId: roomId)
+            self.fetchSendLetter(roomId: self.roomId)
         case .received:
-            fetchReceviedLetter(roomId: roomId)
+            self.fetchReceviedLetter(roomId: self.roomId)
         }
     }
     
     private func calculateContentHeight(text: String) -> CGFloat {
-        let width = UIScreen.main.bounds.size.width - Size.collectionHorizontalSpacing * 2 - Size.cellHorizontalSpacing * 2
+        let width = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2 - InternalSize.cellInset.left * 2
         let label = UILabel(frame: CGRect(origin: .zero,
                                           size: CGSize(width: width,
                                                        height: .greatestFiniteMagnitude)))
@@ -265,25 +263,25 @@ final class LetterViewController: BaseViewController {
     }
     
     private func hideGuideViewWhenTappedAround() {
-        let navigationTap = UITapGestureRecognizer(target: self, action: #selector(dismissGuideView))
-        let viewTap = UITapGestureRecognizer(target: self, action: #selector(dismissGuideView))
+        let navigationTap = UITapGestureRecognizer(target: self, action: #selector(self.dismissGuideView))
+        let viewTap = UITapGestureRecognizer(target: self, action: #selector(self.dismissGuideView))
         navigationTap.cancelsTouchesInView = false
         viewTap.cancelsTouchesInView = false
-        navigationController?.view.addGestureRecognizer(navigationTap)
-        view.addGestureRecognizer(viewTap)
+        self.navigationController?.view.addGestureRecognizer(navigationTap)
+        self.view.addGestureRecognizer(viewTap)
     }
     
     private func setupEmptyLabel() {
-        emptyLabel.text = letterState.labelText
-        emptyLabel.isHidden = true
+        self.emptyLabel.text = self.letterState.labelText
+        self.emptyLabel.isHidden = true
     }
     
     // MARK: - selector
     
     @objc
     private func dismissGuideView() {
-        if !guideButton.isTouchInside {
-            guideBoxImageView.isHidden = true
+        if !self.guideButton.isTouchInside {
+            self.guideBoxImageView.isHidden = true
         }
     }
     
@@ -292,12 +290,12 @@ final class LetterViewController: BaseViewController {
     private func fetchSendLetter(roomId: String) {
         Task {
             do {
-                let letterContent = try await letterSevice.fetchSendLetter(roomId: roomId)
+                let letterContent = try await self.letterSevice.fetchSendLetter(roomId: roomId)
                 
                 if let content = letterContent {
                     dump(content)
-                    manitteeId = content.manittee?.id
-                    letterList = content.messages
+                    self.manitteeId = content.manittee?.id
+                    self.letterList = content.messages
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -310,11 +308,11 @@ final class LetterViewController: BaseViewController {
     private func fetchReceviedLetter(roomId: String) {
         Task {
             do {
-                let letterContent = try await letterSevice.fetchReceiveLetter(roomId: roomId)
+                let letterContent = try await self.letterSevice.fetchReceiveLetter(roomId: roomId)
                 
                 if let content = letterContent {
                     dump(content)
-                    letterList = content.messages
+                    self.letterList = content.messages
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -328,19 +326,18 @@ final class LetterViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return letterList.count
+        return self.letterList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setLetterData(with: letterList[indexPath.item], isHidden: letterState.isHidden)
+        cell.setLetterData(with: self.letterList[indexPath.item], isHidden: self.letterState.isHidden)
         cell.didTappedReport = { [weak self] in
             self?.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "",
                                  content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
         }
         cell.didTappedImage = { [weak self] image in
-            let viewController = LetterImageViewController()
-            viewController.imageView.image = image
+            let viewController = LetterImageViewController(image: image)
             viewController.modalPresentationStyle = .fullScreen
             viewController.modalTransitionStyle = .crossDissolve
             self?.present(viewController, animated: true)
@@ -351,12 +348,14 @@ extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LetterHeaderView.className, for: indexPath) as? LetterHeaderView else {
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                                   withReuseIdentifier: LetterHeaderView.className,
+                                                                                   for: indexPath) as? LetterHeaderView else {
                 assert(false, "do not have reusable view")
                 return UICollectionReusableView()
             }
             
-            headerView.segmentControlIndex = letterState.rawValue
+            headerView.segmentControlIndex = self.letterState.rawValue
             headerView.changeSegmentControlIndex = { [weak self] index in
                 guard let letterStatus = LetterState.init(rawValue: index) else { return }
                 self?.letterState = letterStatus
@@ -373,27 +372,27 @@ extension LetterViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension LetterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var heights = [Size.cellTopSpacing, Size.cellBottomSpacing]
+        var heights = [InternalSize.cellInset.top, InternalSize.cellInset.bottom]
         
-        if let content = letterList[indexPath.item].content {
-            heights += [calculateContentHeight(text: content)]
+        if let content = self.letterList[indexPath.item].content {
+            heights += [self.calculateContentHeight(text: content)]
         }
 
-        if letterList[indexPath.item].imageUrl != nil {
-            heights += [Size.imageHeight]
+        if self.letterList[indexPath.item].imageUrl != nil {
+            heights += [InternalSize.imageHeight]
         }
         
-        return CGSize(width: Size.cellWidth, height: heights.reduce(0, +))
+        return CGSize(width: InternalSize.cellWidth, height: heights.reduce(0, +))
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.size.width, height: Size.headerHeight)
+        return CGSize(width: UIScreen.main.bounds.size.width, height: InternalSize.headerHeight)
     }
 }
 
 // MARK: - UICollectionViewDelegate
 extension LetterViewController: UICollectionViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        guideBoxImageView.isHidden = true
+        self.guideBoxImageView.isHidden = true
     }
 }

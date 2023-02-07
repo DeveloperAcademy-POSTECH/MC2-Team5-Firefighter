@@ -146,15 +146,15 @@ final class DetailEditViewController: BaseViewController {
     
     // MARK: - life cycle
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         self.navigationController?.isNavigationBarHidden = true
         self.presentationController?.delegate = self
         isModalInPresentation = true
         setupChangedButton()
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubview(cancelButton)
         cancelButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)

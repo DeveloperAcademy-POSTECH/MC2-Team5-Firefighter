@@ -49,8 +49,8 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        render()
-        configUI()
+        setupLayout()
+        configureUI()
         setupBackButton()
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
@@ -66,11 +66,11 @@ class BaseViewController: UIViewController {
         setupInteractivePopGestureRecognizer()
     }
     
-    func render() {
+    func setupLayout() {
         // Override Layout
     }
     
-    func configUI() {
+    func configureUI() {
         view.backgroundColor = .backgroundGrey
     }
     
