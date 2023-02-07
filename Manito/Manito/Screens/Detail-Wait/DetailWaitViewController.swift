@@ -32,44 +32,16 @@ final class DetailWaitViewController: BaseViewController {
         case owner
         case member
 
-        var alertText: AlertText {
+        var alertText: (title: String, message: String, okTitle: String) {
             switch self {
             case .owner:
-                return .delete
+                return (title: TextLiteral.datailWaitViewControllerDeleteTitle,
+                        message: TextLiteral.datailWaitViewControllerDeleteMessage,
+                        okTitle: TextLiteral.delete)
             case .member:
-                return .exit
-            }
-        }
-    }
-
-    private enum AlertText {
-        case delete
-        case exit
-
-        var title: String {
-            switch self {
-            case .delete:
-                return TextLiteral.datailWaitViewControllerDeleteTitle
-            case .exit:
-                return TextLiteral.datailWaitViewControllerExitTitle
-            }
-        }
-
-        var message: String {
-            switch self {
-            case .delete:
-                return TextLiteral.datailWaitViewControllerDeleteMessage
-            case .exit:
-                return TextLiteral.datailWaitViewControllerExitMessage
-            }
-        }
-
-        var okTitle: String {
-            switch self {
-            case .delete:
-                return TextLiteral.delete
-            case .exit:
-                return TextLiteral.leave
+                return (title: TextLiteral.datailWaitViewControllerExitTitle,
+                        message: TextLiteral.datailWaitViewControllerExitMessage,
+                        okTitle: TextLiteral.leave)
             }
         }
     }
