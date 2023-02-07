@@ -53,9 +53,9 @@
 		39EEF65E28CB3CFE00437654 /* LoginEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65D28CB3CFE00437654 /* LoginEndPoint.swift */; };
 		39EEF66028CB3D6200437654 /* LoginDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65F28CB3D6200437654 /* LoginDTO.swift */; };
 		39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F1C12D28D756E600585B83 /* LetterImageViewController.swift */; };
+		39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FFE32728EEFFFE008442EE /* MoreButton.swift */; };
 		39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 39FFE33328F457AF008442EE /* FirebaseMessaging */; };
 		39FFE33628F45E44008442EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39FFE33528F45E44008442EE /* GoogleService-Info.plist */; };
-		39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FFE32728EEFFFE008442EE /* MoreButton.swift */; };
 		435B17682913E71400212663 /* DetailngCodebaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B17672913E71400212663 /* DetailngCodebaseViewController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
@@ -141,12 +141,13 @@
 		CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */; };
 		CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */; };
 		CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */; };
+		CB6637E82959CBC60050BD04 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = CB6637E72959CBC60050BD04 /* SkeletonView */; };
 		CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */; };
 		CB674C2128596A310063A6B7 /* CheckRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C2028596A310063A6B7 /* CheckRoomViewController.swift */; };
 		CB7B23A828C4ECA8004A4CF3 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7B23A728C4ECA8004A4CF3 /* Character.swift */; };
 		CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */; };
 		CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */; };
-		CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissonView.swift */; };
+		CB9592B52855D52700847751 /* CommonMissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissionView.swift */; };
 		CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */; };
 		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
@@ -210,8 +211,8 @@
 		39EEF65D28CB3CFE00437654 /* LoginEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginEndPoint.swift; sourceTree = "<group>"; };
 		39EEF65F28CB3D6200437654 /* LoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDTO.swift; sourceTree = "<group>"; };
 		39F1C12D28D756E600585B83 /* LetterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageViewController.swift; sourceTree = "<group>"; };
-		39FFE33528F45E44008442EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		39FFE32728EEFFFE008442EE /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
+		39FFE33528F45E44008442EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		435B17672913E71400212663 /* DetailngCodebaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailngCodebaseViewController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
@@ -301,7 +302,7 @@
 		CB7B23A728C4ECA8004A4CF3 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoHeaderView.swift; sourceTree = "<group>"; };
 		CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomCollectionCell.swift; sourceTree = "<group>"; };
-		CB9592B42855D52700847751 /* CommonMissonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissonView.swift; sourceTree = "<group>"; };
+		CB9592B42855D52700847751 /* CommonMissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissionView.swift; sourceTree = "<group>"; };
 		CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterViewController.swift; sourceTree = "<group>"; };
 		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
@@ -322,6 +323,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB6637E82959CBC60050BD04 /* SkeletonView in Frameworks */,
 				39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */,
 				B50B1B0428596C900080992C /* SnapKit in Frameworks */,
 				B50B1B0728596CB10080992C /* FSCalendar in Frameworks */,
@@ -390,7 +392,7 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		39C957D328799A8200A04A2B /* Service */ = {
+		39C957D328799A8200A04A2B /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
 				39C957D528799AB900A04A2B /* HTTPMethod.swift */,
@@ -401,7 +403,7 @@
 				39C957F5287D9ED000A04A2B /* NetworkRequest.swift */,
 				B5F31C5528BFA87700F61D0F /* Requestable.swift */,
 			);
-			path = Service;
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		39C957EA287AE45900A04A2B /* EndPoint */ = {
@@ -502,7 +504,6 @@
 		B5F524C228519AA000614FF7 = {
 			isa = PBXGroup;
 			children = (
-				39FFE33528F45E44008442EE /* GoogleService-Info.plist */,
 				B55BCEB528D99F8600AF7E45 /* Settings.bundle */,
 				B5F524CD28519AA000614FF7 /* Manito */,
 				B5F524CC28519AA000614FF7 /* Products */,
@@ -676,6 +677,7 @@
 			children = (
 				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
 				B5F524DC28519AA100614FF7 /* Info.plist */,
+				39FFE33528F45E44008442EE /* GoogleService-Info.plist */,
 				B5F524CE28519AA000614FF7 /* AppDelegate.swift */,
 				B5F524D028519AA000614FF7 /* SceneDelegate.swift */,
 			);
@@ -768,7 +770,7 @@
 				397A241528BA519200454E4F /* Protocol */,
 				397A241128BA513E00454E4F /* API */,
 				39C957EA287AE45900A04A2B /* EndPoint */,
-				39C957D328799A8200A04A2B /* Service */,
+				39C957D328799A8200A04A2B /* Foundation */,
 				B5F525472855D01200614FF7 /* Models */,
 			);
 			path = Network;
@@ -846,7 +848,7 @@
 		CB9592B32855D51100847751 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
-				CB9592B42855D52700847751 /* CommonMissonView.swift */,
+				CB9592B42855D52700847751 /* CommonMissionView.swift */,
 				CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */,
 			);
 			path = UIComponent;
@@ -942,6 +944,7 @@
 				B50B1B0328596C900080992C /* SnapKit */,
 				B50B1B0628596CB10080992C /* FSCalendar */,
 				B50B1B32285AC0970080992C /* Gifu */,
+				CB6637E72959CBC60050BD04 /* SkeletonView */,
 				39FFE33328F457AF008442EE /* FirebaseMessaging */,
 			);
 			productName = Manito;
@@ -976,6 +979,7 @@
 				B50B1B0228596C900080992C /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B50B1B0528596CB10080992C /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				B50B1B31285AC0970080992C /* XCRemoteSwiftPackageReference "Gifu" */,
+				CB6637E62959CBC60050BD04 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				39FFE33228F457AF008442EE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = B5F524CC28519AA000614FF7 /* Products */;
@@ -1113,7 +1117,7 @@
 				B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */,
 				B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */,
 				39CD581D28C4C03C00496E91 /* DetailDoneProtocol.swift in Sources */,
-				CB9592B52855D52700847751 /* CommonMissonView.swift in Sources */,
+				CB9592B52855D52700847751 /* CommonMissionView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				39C95802287DACC300A04A2B /* RoomEndPoint.swift in Sources */,
 				CB4C77E628C0D4EB007A1AD2 /* MainAPI.swift in Sources */,
@@ -1319,7 +1323,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1356,7 +1360,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1422,6 +1426,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		CB6637E62959CBC60050BD04 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1444,6 +1456,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B50B1B31285AC0970080992C /* XCRemoteSwiftPackageReference "Gifu" */;
 			productName = Gifu;
+		};
+		CB6637E72959CBC60050BD04 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB6637E62959CBC60050BD04 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

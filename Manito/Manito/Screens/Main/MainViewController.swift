@@ -8,6 +8,7 @@
 import UIKit
 
 import Gifu
+import SkeletonView
 import SnapKit
 
 final class MainViewController: BaseViewController {
@@ -23,6 +24,8 @@ final class MainViewController: BaseViewController {
                                                   left: collectionHorizontalSpacing,
                                                   bottom: collectionVerticalSpacing,
                                                   right: collectionHorizontalSpacing)
+        static let commonMissionViewWidth: CGFloat = UIScreen.main.bounds.size.width - 40
+        static let commonMissionViewHeight: CGFloat = commonMissionViewWidth * 0.6
     }
     
     private enum RoomStatus: String {
@@ -42,6 +45,8 @@ final class MainViewController: BaseViewController {
         }
     }
     
+    private let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
+    
     private let refreshControl = UIRefreshControl()
 
     // MARK: - property
@@ -56,8 +61,7 @@ final class MainViewController: BaseViewController {
         return button
     }()
     private let imgStar = UIImageView(image: ImageLiterals.imgStar)
-    private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
-    private let commonMissionView = CommonMissonView()
+    private let commonMissionView = CommonMissionView()
     private let menuTitle: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.mainViewControllerMenuTitle
@@ -84,6 +88,7 @@ final class MainViewController: BaseViewController {
             forCellWithReuseIdentifier: ManitoRoomCollectionViewCell.className)
         collectionView.register(cell: CreateRoomCollectionViewCell.self,
             forCellWithReuseIdentifier: CreateRoomCollectionViewCell.className)
+        collectionView.isSkeletonable = true
         return collectionView
     }()
     private let maCharacterImageView = GIFImageView()
@@ -104,6 +109,7 @@ final class MainViewController: BaseViewController {
         setupGuideArea()
         renderGuideArea()
         setupRefreshControl()
+        setupSkeletonView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -140,23 +146,17 @@ final class MainViewController: BaseViewController {
             $0.leading.equalToSuperview().inset(13)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
         }
-
-        view.addSubview(commonMissionImageView)
-        commonMissionImageView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(commonMissionImageView.snp.width).multipliedBy(0.61)
-            $0.top.equalTo(imgStar.snp.bottom)
-        }
-
-        commonMissionImageView.addSubview(commonMissionView)
+        // FIXME: 좌우패딩 20값을 주는데 Size라는 변수명이 겹침
+        view.addSubview(commonMissionView)
         commonMissionView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(imgStar.snp.bottom)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(Size.commonMissionViewHeight)
         }
 
         view.addSubview(menuTitle)
         menuTitle.snp.makeConstraints {
-            $0.top.equalTo(commonMissionImageView.snp.bottom).offset(50)
+            $0.top.equalTo(commonMissionView.snp.bottom).offset(50)
             $0.leading.equalToSuperview().offset(16)
         }
 
@@ -168,8 +168,8 @@ final class MainViewController: BaseViewController {
         
         view.addSubview(guideButton)
         guideButton.snp.makeConstraints {
-            $0.top.equalTo(commonMissionImageView.snp.top).offset(27)
-            $0.trailing.equalTo(commonMissionView.snp.trailing)
+            $0.top.equalTo(commonMissionView.snp.top).offset(30)
+            $0.trailing.equalTo(commonMissionView.snp.trailing).inset(30)
             $0.width.height.equalTo(44)
         }
     }
@@ -213,6 +213,15 @@ final class MainViewController: BaseViewController {
         listCollectionView.refreshControl = refreshControl
     }
     
+    private func setupSkeletonView() {
+        listCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey003, .darkGrey002]), animation: skeletonAnimation, transition: .none)
+    }
+    
+    private func stopSkeletonView() {
+        self.listCollectionView.stopSkeletonAnimation()
+        self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
+    }
+    
     // MARK: - API
     
     private func requestCommonMission() {
@@ -238,6 +247,8 @@ final class MainViewController: BaseViewController {
                 if let manittoList = data {
                     rooms = manittoList.participatingRooms
                     listCollectionView.reloadData()
+                    
+                    self.stopSkeletonView()
                 }
             } catch NetworkError.serverError {
                 print("serverError")
@@ -318,6 +329,17 @@ final class MainViewController: BaseViewController {
         if !guideButton.isTouchInside {
             guideBoxImageView.isHidden = true
         }
+    }
+}
+
+// MARK: - SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource
+extension MainViewController: SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return ManitoRoomCollectionViewCell.className
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 8
     }
 }
 
