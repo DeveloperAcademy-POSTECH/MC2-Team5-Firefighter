@@ -64,7 +64,6 @@ final class DetailWaitViewController: BaseViewController {
 
     private lazy var settingButton: UIButton = {
         let button = MoreButton()
-        button.menu = setExitButtonMenu()
         button.showsMenuAsPrimaryAction = true
         return button
     }()
@@ -323,28 +322,22 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     private func setExitButtonMenu() -> UIMenu {
-        switch memberType {
-        case .owner:
-            let menu = UIMenu(options: [], children: [
-                UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
-                    self?.presentEditRoomView()
-                }),
-                UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-                    self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: { _ in
-                        self?.requestDeleteRoom()
-                    })
-                })])
-            return menu
-        case .member:
-            let menu = UIMenu(options: [], children: [
-                UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                    self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction:  { _ in
-                        self?.requestDeleteLeaveRoom()
-                    })
-                })
-            ])
-            return menu
-        }
+        let children: [UIAction] = memberType == .owner
+        ? [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
+            self?.presentEditRoomView()
+        }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
+               self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: { _ in
+                   self?.requestDeleteRoom()
+               })
+           })
+        ]
+        : [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+            self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction:  { _ in
+                self?.requestDeleteLeaveRoom()
+            })
+        })]
+        let menu = UIMenu(children: children)
+        return menu
     }
 
     private func presentEditRoomView() {
