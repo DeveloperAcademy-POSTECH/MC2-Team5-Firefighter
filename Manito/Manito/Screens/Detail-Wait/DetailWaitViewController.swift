@@ -202,19 +202,16 @@ final class DetailWaitViewController: BaseViewController {
                 if let roomInfo = data {
                     guard let title = roomInfo.roomInformation?.title,
                           let state = roomInfo.roomInformation?.state,
-                          let members = roomInfo.participants?.members,
+                          let participants = roomInfo.participants,
                           let isAdmin = roomInfo.admin else { return }
-                    self.room = data
-                    titleView.setStartState(state: state)
-                    userArr = members.map { $0.nickname ?? "" }
+                    self.room = roomInfo
+                    userArr = participants.membersNickname
                     memberType = isAdmin ? .owner : .member
-                    self.roomInfo = RoomDTO(title: title,
-                                            capacity: data?.roomInformation?.capacity ?? 15,
-                                            startDate: data?.roomInformation?.startDate ?? "",
-                                            endDate: data?.roomInformation?.endDate ?? "")
-                    isPastStartDate()
+                    self.roomInfo = roomInfo.roomDTO
                     setStartButton()
                     DispatchQueue.main.async {
+                        self.isPastStartDate()
+                        self.titleView.setStartState(state: state)
                         self.comeInLabel.text = data?.userCount
                         self.titleView.setRoomTitleLabelText(text: title)
                         self.titleView.setDurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")

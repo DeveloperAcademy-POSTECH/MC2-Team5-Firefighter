@@ -49,6 +49,18 @@ struct Room: Decodable {
         }
     }
     
+    var roomDTO: RoomDTO {
+        if let roomInformation {
+            let dto = RoomDTO(title: roomInformation.title ?? "",
+                              capacity: roomInformation.capacity ?? 0,
+                              startDate: roomInformation.startDate ?? "",
+                              endDate: roomInformation.endDate ?? "")
+            return dto
+        } else {
+            return RoomDTO(title: "", capacity: 0, startDate: "", endDate: "")
+        }
+    }
+    
     enum CodingKeys: String, CodingKey {
         case roomInformation = "room"
         case participants
@@ -71,6 +83,14 @@ struct Friend: Decodable {
 struct Participants: Decodable {
     let count: Int?
     let members: [User]?
+    
+    var membersNickname: [String] {
+        if let nicknames = members {
+            return nicknames.map { $0.nickname ?? "" }
+        } else {
+            return []
+        }
+    }
 }
 
 // MARK: - Member
