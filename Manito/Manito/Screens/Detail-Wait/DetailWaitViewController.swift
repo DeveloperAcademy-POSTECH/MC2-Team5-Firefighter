@@ -232,13 +232,8 @@ final class DetailWaitViewController: BaseViewController {
             do {
                 let data = try await detailWaitService.startManitto(roomId: "\(roomIndex)")
                 if let manittee = data {
-                    let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-                    guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                     guard let nickname = manittee.nickname else { return }
-                    viewController.modalPresentationStyle = .fullScreen
-                    viewController.manitteeName = nickname
-                    viewController.roomId = roomInformation?.id?.description
-                    present(viewController, animated: true)
+                    presentSelectManittoViewController(nickname: nickname)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -340,17 +335,17 @@ final class DetailWaitViewController: BaseViewController {
     private func presentEditRoomView() {
         guard let roomInformation = room?.roomInformation else { return }
         if roomInformation.isAlreadyPastDate {
-            editInfoFromDefaultDate()
+            editInfoFromDefaultDate(isDateEdit: false)
         } else {
             editInfoFromCurrentDate()
         }
     }
     
-    private func editInfoFromDefaultDate() {
+    private func editInfoFromDefaultDate(isDateEdit: Bool) {
         let fiveDaysInterval: TimeInterval = 86400 * 4
         let defaultStartDate = Date().dateToString
         let defaultEndDate = (Date() + fiveDaysInterval).dateToString
-        self.presentDetailEditViewController(startString: defaultStartDate, endString: defaultEndDate, isDateEdit: false)
+        self.presentDetailEditViewController(startString: defaultStartDate, endString: defaultEndDate, isDateEdit: isDateEdit)
     }
     
     private func editInfoFromCurrentDate() {
@@ -369,10 +364,7 @@ final class DetailWaitViewController: BaseViewController {
             switch memberType {
             case .owner:
                 let action: ((UIAlertAction) -> ()) = { [weak self] _ in
-                    let fiveDaysInterval: TimeInterval = 86400 * 4
-                    let startDate = Date().dateToString
-                    let endDate = (Date() + fiveDaysInterval).dateToString
-                    self?.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: true)
+                    self?.editInfoFromDefaultDate(isDateEdit: true)
                 }
                 makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage, okAction: action)
             case .member:
@@ -413,6 +405,15 @@ final class DetailWaitViewController: BaseViewController {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentEditViewController))
             titleView.addGestureRecognizer(tapGesture)
         }
+    }
+    
+    private func presentSelectManittoViewController(nickname: String) {
+        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.manitteeName = nickname
+        viewController.roomId = roomInformation?.id?.description
+        present(viewController, animated: true)
     }
 
     // MARK: - selector
