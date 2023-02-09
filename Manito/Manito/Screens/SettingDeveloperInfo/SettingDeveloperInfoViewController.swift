@@ -108,7 +108,7 @@ final class SettingDeveloperInfoViewController: BaseViewController {
         setupLargeTitle()
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)

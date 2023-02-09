@@ -12,17 +12,28 @@ import SnapKit
 
 final class LetterImageViewController: BaseViewController {
     
-    // MARK: - property
+    // MARK: - ui component
     
-    private let scrollView = UIScrollView()
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(ImageLiterals.btnXmark, for: .normal)
         button.tintColor = .grey001
-        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.didTapCloseButton), for: .touchUpInside)
         return button
     }()
-    let imageView: UIImageView = {
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.frame = view.bounds
+        scrollView.delegate = self
+        scrollView.zoomScale = 1.0
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 3.0
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = true
@@ -33,52 +44,56 @@ final class LetterImageViewController: BaseViewController {
         button.setImage(ImageLiterals.icSave, for: .normal)
         return button
     }()
+
+    // MARK: - init
+
+    init(image: UIImage) {
+        self.imageView.image = image
+        super.init()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        print("\(#file) is dead")
+    }
     
-    // MARK: - life cycle
+    // MARK: - override
     
-    override func render() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(imageView)
-        view.addSubview(closeButton)
-        closeButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(23)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
+    override func setupLayout() {
+        self.view.addSubview(self.scrollView)
+        self.scrollView.addSubview(self.imageView)
+
+        self.view.addSubview(self.closeButton)
+        self.closeButton.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(23)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).inset(17)
             $0.width.height.equalTo(44)
         }
         
-        view.addSubview(downloadButton)
-        downloadButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(23)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(17)
+        self.view.addSubview(self.downloadButton)
+        self.downloadButton.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(23)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(17)
         }
     }
     
-    override func configUI() {
-        setupScrollView()
-        setupImageView()
-        setImagePinchGesture()
-        setupButtonAction()
-    }
-    
-    private func setupScrollView() {
-        scrollView.frame = view.bounds
-        scrollView.delegate = self
-        scrollView.zoomScale = 1.0
-        scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 3.0
-        scrollView.contentInsetAdjustmentBehavior = .never
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
+    override func configureUI() {
+        self.setupImageView()
+        self.setImagePinchGesture()
+        self.setupButtonAction()
     }
     
     private func setupImageView() {
-        imageView.frame = scrollView.bounds
-        imageView.contentMode = .scaleAspectFit
+        self.imageView.frame = self.scrollView.bounds
+        self.imageView.contentMode = .scaleAspectFit
     }
     
     private func setImagePinchGesture() {
-        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(didPinchImage(_:)))
-        view.addGestureRecognizer(pinch)
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.didPinchImage(_:)))
+        self.view.addGestureRecognizer(pinch)
     }
     
     private func setupButtonAction() {
@@ -91,7 +106,7 @@ final class LetterImageViewController: BaseViewController {
             
             PHPhotoLibrary.shared().performChanges({
                 PHAssetChangeRequest.creationRequestForAsset(from: image)
-            }, completionHandler: { (success, error) in
+            }) { (success, error) in
                 DispatchQueue.main.async {
                     if success {
                         self?.makeAlert(title: TextLiteral.letterImageViewControllerSuccessTitle,
@@ -102,9 +117,9 @@ final class LetterImageViewController: BaseViewController {
                                         message: TextLiteral.letterImageViewControllerErrorMessage)
                     }
                 }
-            })
+            }
         }
-        downloadButton.addAction(downloadAction, for: .touchUpInside)
+        self.downloadButton.addAction(downloadAction, for: .touchUpInside)
     }
     
     // MARK: - selector
@@ -116,7 +131,7 @@ final class LetterImageViewController: BaseViewController {
     
     @objc
     private func didPinchImage(_ pinch: UIPinchGestureRecognizer) {
-        imageView.transform = imageView.transform.scaledBy(x: pinch.scale, y: pinch.scale)
+        self.imageView.transform = self.imageView.transform.scaledBy(x: pinch.scale, y: pinch.scale)
         pinch.scale = 1
     }
 }
@@ -128,8 +143,8 @@ extension LetterImageViewController: UIScrollViewDelegate {
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         if scrollView.zoomScale > 1 {
-            guard let image = imageView.image else { return }
-            guard let zoomView = viewForZooming(in: scrollView) else { return }
+            guard let image = self.imageView.image else { return }
+            guard let zoomView = self.viewForZooming(in: scrollView) else { return }
             
             let widthRatio = zoomView.frame.width / image.size.width
             let heightRatio = zoomView.frame.height / image.size.height

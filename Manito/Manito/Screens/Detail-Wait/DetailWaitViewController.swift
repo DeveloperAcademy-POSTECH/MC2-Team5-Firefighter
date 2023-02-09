@@ -147,7 +147,7 @@ final class DetailWaitViewController: BaseViewController {
         setupNotificationCenter()
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubview(titleView)
         titleView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
@@ -188,8 +188,8 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
 
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         setupSettingButton()
     }
     

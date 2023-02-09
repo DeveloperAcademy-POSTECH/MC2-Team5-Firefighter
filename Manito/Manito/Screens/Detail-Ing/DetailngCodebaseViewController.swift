@@ -244,7 +244,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         requestRoomInfo()
     }
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(19)

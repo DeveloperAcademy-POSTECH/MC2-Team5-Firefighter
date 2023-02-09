@@ -36,8 +36,8 @@ final class FriendListViewController: BaseViewController {
         setupDelegation()
     }
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         friendListCollectionView.backgroundColor = .clear
     }
     
