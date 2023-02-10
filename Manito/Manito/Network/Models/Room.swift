@@ -39,6 +39,28 @@ struct Room: Decodable {
         }
     }
     
+    var canStart: Bool {
+        if let count = participants?.count,
+           let date = roomInformation?.startDate?.stringToDate {
+            let isMinimumUserCount = count >= 4
+            return isMinimumUserCount && date.isToday
+        } else {
+            return false
+        }
+    }
+    
+    var roomDTO: RoomDTO {
+        if let roomInformation {
+            let dto = RoomDTO(title: roomInformation.title ?? "",
+                              capacity: roomInformation.capacity ?? 0,
+                              startDate: roomInformation.startDate ?? "",
+                              endDate: roomInformation.endDate ?? "")
+            return dto
+        } else {
+            return RoomDTO(title: "", capacity: 0, startDate: "", endDate: "")
+        }
+    }
+    
     enum CodingKeys: String, CodingKey {
         case roomInformation = "room"
         case participants
@@ -61,6 +83,14 @@ struct Friend: Decodable {
 struct Participants: Decodable {
     let count: Int?
     let members: [User]?
+    
+    var membersNickname: [String] {
+        if let nicknames = members {
+            return nicknames.map { $0.nickname ?? "" }
+        } else {
+            return []
+        }
+    }
 }
 
 // MARK: - Member
@@ -79,6 +109,24 @@ struct RoomInfo: Decodable {
             return startDate + " ~ " + endDate
         } else {
             return ""
+        }
+    }
+    
+    var isAlreadyPastDate: Bool {
+        if let date = startDate?.stringToDate {
+            return date.distance(to: Date()) > 86400
+        } else {
+            return false
+        }
+    }
+    
+    var isStart: Bool {
+        if let date = startDate?.stringToDate {
+            let isStartDate = date.distance(to: Date()) < 86400
+            let isPast = date.distance(to: Date()) > 86400
+            return !isPast && isStartDate
+        } else {
+            return false
         }
     }
 }
