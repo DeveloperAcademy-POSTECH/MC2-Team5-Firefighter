@@ -82,7 +82,7 @@ class CalendarView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        setupLayout()
         setupDelegation()
         setupDateRange()
     }
@@ -93,7 +93,7 @@ class CalendarView: UIView {
     
     // MARK: - func
 
-    private func render() {
+    private func setupLayout() {
         self.addSubview(calendar)
         calendar.snp.makeConstraints {
             $0.edges.equalToSuperview()

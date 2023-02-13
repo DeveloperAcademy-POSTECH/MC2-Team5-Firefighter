@@ -75,7 +75,7 @@ final class DetailWaitTitleView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        setupLayout()
     }
 
     required init?(coder: NSCoder) {
@@ -84,7 +84,7 @@ final class DetailWaitTitleView: UIView {
     
     // MARK: - func
 
-    private func render() {
+    private func setupLayout() {
         self.addSubview(roomTitleLabel)
         roomTitleLabel.snp.makeConstraints {
             $0.leading.top.equalToSuperview()
