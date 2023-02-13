@@ -227,8 +227,7 @@ final class LetterViewController: BaseViewController {
             }
             self.present(navigationController, animated: true, completion: nil)
         }
-        self.sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
-                                                       for: .touchUpInside)
+        self.sendLetterView.addAction(presentSendButtonAction)
     }
     
     private func reloadCollectionView(with state: LetterState) {
