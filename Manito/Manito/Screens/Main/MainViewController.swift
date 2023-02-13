@@ -79,7 +79,7 @@ final class MainViewController: BaseViewController {
         return flowLayout
     }()
     private lazy var listCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -177,8 +177,8 @@ final class MainViewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
-        let appTitleView = makeBarButtonItem(with: self.appTitleView)
-        let settingButtonView = makeBarButtonItem(with: self.settingButton)
+        let appTitleView = self.makeBarButtonItem(with: self.appTitleView)
+        let settingButtonView = self.makeBarButtonItem(with: self.settingButton)
 
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.largeTitleDisplayMode = .automatic
@@ -321,7 +321,7 @@ final class MainViewController: BaseViewController {
     }
     
     func showRoomIdErrorAlert() {
-        makeRequestAlert(title: "해당 마니또 방의 정보를 불러오지 못했습니다.", message: "해당 마니또 방으로 이동할 수 없습니다.", okAction: nil)
+        self.makeRequestAlert(title: "해당 마니또 방의 정보를 불러오지 못했습니다.", message: "해당 마니또 방으로 이동할 수 없습니다.", okAction: nil)
     }
     
     @objc
@@ -411,9 +411,9 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
                   let id = self.rooms?[indexPath.item - 1].id
             else { return }
             if roomStatus == .waiting {
-                pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1, index: id)
+                self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1, index: id)
             } else {
-                pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1)
+                self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1)
             }
         }
     }
