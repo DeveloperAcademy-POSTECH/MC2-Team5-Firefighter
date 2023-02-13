@@ -32,30 +32,30 @@ final class CreateRoomCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - life cycle
     
-    override func render() {
-        addSubview(circleView)
-        circleView.snp.makeConstraints {
+    override func setupLayout() {
+        self.addSubview(self.circleView)
+        self.circleView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(22)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(88)
         }
         
-        circleView.addSubview(imageView)
-        imageView.snp.makeConstraints {
+        self.circleView.addSubview(self.imageView)
+        self.imageView.snp.makeConstraints {
             $0.width.height.equalTo(72)
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().inset(13)
         }
         
-        addSubview(menuLabel)
-        menuLabel.snp.makeConstraints {
+        self.addSubview(self.menuLabel)
+        self.menuLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(22)
             $0.centerX.equalToSuperview()
         }
     }
     
-    override func configUI(){
-        backgroundColor = .darkGrey002.withAlphaComponent(0.8)
-        makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
+    override func configureUI(){
+        self.backgroundColor = .darkGrey002.withAlphaComponent(0.8)
+        self.makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
     }
 }

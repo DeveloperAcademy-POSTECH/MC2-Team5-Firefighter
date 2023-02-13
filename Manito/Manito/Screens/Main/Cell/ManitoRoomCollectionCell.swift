@@ -48,53 +48,53 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - life cycle
     
-    override func render() {
-        contentView.addSubview(imageView)
-        imageView.snp.makeConstraints {
+    override func setupLayout() {
+        contentView.addSubview(self.imageView)
+        self.imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(9)
             $0.width.height.equalTo(30)
         }
         
-        contentView.addSubview(memberLabel)
-        memberLabel.snp.makeConstraints {
+        contentView.addSubview(self.memberLabel)
+        self.memberLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(14)
-            $0.leading.equalTo(imageView.snp.trailing).offset(4)
+            $0.leading.equalTo(self.imageView.snp.trailing).offset(4)
         }
         
-        contentView.addSubview(roomLabel)
-        roomLabel.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(20)
+        contentView.addSubview(self.roomLabel)
+        self.roomLabel.snp.makeConstraints {
+            $0.top.equalTo(self.imageView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(17)
         }
         
-        contentView.addSubview(roomStateView)
-        roomStateView.snp.makeConstraints {
-            $0.top.equalTo(roomLabel.snp.bottom).offset(24)
+        contentView.addSubview(self.roomStateView)
+        self.roomStateView.snp.makeConstraints {
+            $0.top.equalTo(self.roomLabel.snp.bottom).offset(24)
             $0.leading.equalToSuperview().inset(12)
             $0.width.equalTo(60)
             $0.height.equalTo(24)
         }
         
-        contentView.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints {
+        contentView.addSubview(self.dateLabel)
+        self.dateLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
         }
     }
     
-    override func configUI() {
-        backgroundColor = .darkGrey002.withAlphaComponent(0.8)
-        makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
+    override func configureUI() {
+        self.backgroundColor = .darkGrey002.withAlphaComponent(0.8)
+        self.makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
         
-        [self, imageView, roomLabel, roomStateView].forEach {
+        [self, self.imageView, self.roomLabel, self.roomStateView].forEach {
             $0.isSkeletonable = true
         }
         
-        roomLabel.numberOfLines = 2
+        self.roomLabel.numberOfLines = 2
 
-        imageView.skeletonCornerRadius = 15
-        roomLabel.linesCornerRadius = 4
-        roomStateView.skeletonCornerRadius = 4
+        self.imageView.skeletonCornerRadius = 15
+        self.roomLabel.linesCornerRadius = 4
+        self.roomStateView.skeletonCornerRadius = 4
     }
 }

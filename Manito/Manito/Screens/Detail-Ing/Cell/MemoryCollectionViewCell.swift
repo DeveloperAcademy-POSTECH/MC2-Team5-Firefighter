@@ -39,7 +39,7 @@ final class MemoryCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - func
     
-    override func render() {
+    override func setupLayout() {
         addSubview(photoImageView)
         photoImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -51,7 +51,7 @@ final class MemoryCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    override func configUI() {
+    override func configureUI() {
         backgroundColor = .darkGrey002
         makeBorderLayer(color: .white)
         layer.masksToBounds = true

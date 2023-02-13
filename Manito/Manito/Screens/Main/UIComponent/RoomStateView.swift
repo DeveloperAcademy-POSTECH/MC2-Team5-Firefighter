@@ -24,8 +24,8 @@ final class RoomStateView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        self.setupLayout()
+        self.configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -34,14 +34,14 @@ final class RoomStateView: UIView {
     
     // MARK: - life cycle
     
-    private func render() {
-        self.addSubview(state)
-        state.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(self.state)
+        self.state.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
     }
     
-    private func configUI() {
-        layer.cornerRadius = 12
+    private func configureUI() {
+        self.layer.cornerRadius = 12
     }
 }

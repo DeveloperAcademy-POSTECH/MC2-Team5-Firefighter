@@ -34,7 +34,7 @@ final class CommonMissionView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -43,21 +43,21 @@ final class CommonMissionView: UIView {
     
     // MARK: - life cycle
     
-    private func render() {
-        self.addSubview(commonMissionImageView)
-        commonMissionImageView.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(self.commonMissionImageView)
+        self.commonMissionImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
-        self.addSubview(title)
-        title.snp.makeConstraints {
+        self.addSubview(self.title)
+        self.title.snp.makeConstraints {
             $0.top.equalToSuperview().inset(56)
             $0.centerX.equalToSuperview()
         }
         
-        self.addSubview(mission)
-        mission.snp.makeConstraints {
-            $0.top.equalTo(title.snp.bottom).offset(40)
+        self.addSubview(self.mission)
+        self.mission.snp.makeConstraints {
+            $0.top.equalTo(self.title.snp.bottom).offset(40)
             $0.leading.trailing.equalToSuperview()
         }
     }
