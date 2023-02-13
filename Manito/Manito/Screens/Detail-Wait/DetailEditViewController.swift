@@ -115,15 +115,15 @@ final class DetailEditViewController: BaseViewController {
         case information
     }
     var editMode: EditMode
-    var currentUserCount = 0
-    var sliderValue = 10
-    var startDateText = "" {
+    var currentUserCount: Int = 0
+    var sliderValue: Int = 10
+    var startDateText: String = "" {
         didSet {
             calendarView.startDateText = startDateText
             calendarView.setupDateRange()
         }
     }
-    var endDateText = "" {
+    var endDateText: String = "" {
         didSet {
             calendarView.endDateText = endDateText
             calendarView.setupDateRange()

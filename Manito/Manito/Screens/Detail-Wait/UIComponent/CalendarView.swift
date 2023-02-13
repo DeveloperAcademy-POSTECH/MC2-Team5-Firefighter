@@ -68,15 +68,15 @@ class CalendarView: UIView {
     
     // MARK: - property
     
-    private var selectStartDate = Date()
+    private var selectStartDate: Date = Date()
     private let oneDayInterval: TimeInterval = 86400
     private let sevenDaysInterval: TimeInterval = 604800
     var changeButtonState: ((Bool) -> ())?
-    var startDateText = ""
-    var endDateText = ""
-    private var tempStartDateText = ""
-    private var tempEndDateText = ""
-    var isFirstTap = false
+    var startDateText: String = ""
+    var endDateText: String = ""
+    private var tempStartDateText: String = ""
+    private var tempEndDateText: String = ""
+    var isFirstTap: Bool = false
 
     // MARK: - init
 
