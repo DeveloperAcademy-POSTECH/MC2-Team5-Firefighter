@@ -23,8 +23,8 @@ final class BottomOfSendLetterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.setupLayout()
+        self.configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -38,14 +38,14 @@ final class BottomOfSendLetterView: UIView {
             $0.height.equalTo(73)
         }
         
-        self.addSubview(sendLetterButton)
-        sendLetterButton.snp.makeConstraints {
+        self.addSubview(self.sendLetterButton)
+        self.sendLetterButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(13)
             $0.centerX.equalToSuperview()
         }
     }
     
     private func configureUI() {
-        backgroundColor = .backgroundGrey
+        self.backgroundColor = .backgroundGrey
     }
 }
