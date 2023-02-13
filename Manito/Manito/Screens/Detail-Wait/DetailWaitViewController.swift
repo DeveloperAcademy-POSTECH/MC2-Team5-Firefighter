@@ -10,23 +10,6 @@ import UIKit
 import SnapKit
 
 final class DetailWaitViewController: BaseViewController {
-    private var room: Room?
-    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-    private let roomIndex: Int
-    var roomInformation: ParticipatingRoom?
-    private var roomInfo: RoomDTO?
-    private var userArr: [String] = [] {
-        didSet {
-            renderTableView()
-        }
-    }
-    private var detectStartableStatus: ((Bool) -> ())?
-    private var memberType = UserStatus.member {
-        didSet {
-            settingButton.menu = setExitButtonMenu()
-            setupTitleViewGesture()
-        }
-    }
 
     private enum UserStatus: CaseIterable {
         case owner
@@ -60,7 +43,7 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
 
-    // MARK: - property
+    // MARK: - ui component
 
     private lazy var settingButton: UIButton = {
         let button = MoreButton()
@@ -80,7 +63,7 @@ final class DetailWaitViewController: BaseViewController {
         imageView.image = ImageLiterals.imgNi
         return imageView
     }()
-    private lazy var comeInLabel: UILabel = {
+    private let comeInLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 14)
@@ -90,7 +73,9 @@ final class DetailWaitViewController: BaseViewController {
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
             if let code = self?.room?.invitation?.code {
-                ToastView.showToast(code: code ,message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
+                ToastView.showToast(code: code ,
+                                    message: TextLiteral.detailWaitViewControllerCopyCode,
+                                    controller: self ?? UIViewController())
             }
         }
         button.setTitle(TextLiteral.copyCode, for: .normal)
@@ -99,11 +84,11 @@ final class DetailWaitViewController: BaseViewController {
         button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
-    private let listTable: UITableView = {
-        let table = UITableView()
-        table.layer.cornerRadius = 10
-        table.isScrollEnabled = false
-        return table
+    private let listTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.layer.cornerRadius = 10
+        tableView.isScrollEnabled = false
+        return tableView
     }()
     private lazy var startButton: UIButton = {
         let button = MainButton()
@@ -122,11 +107,31 @@ final class DetailWaitViewController: BaseViewController {
         }
         return button
     }()
+    
+    // MARK: - property
+    
+    private var room: Room?
+    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
+    private let roomIndex: Int
+    var roomInformation: ParticipatingRoom?
+    private var roomInfo: RoomDTO?
+    private var userArr: [String] = [] {
+        didSet {
+            renderTableView()
+        }
+    }
+    private var detectStartableStatus: ((Bool) -> ())?
+    private var memberType = UserStatus.member {
+        didSet {
+            settingButton.menu = setExitButtonMenu()
+            setupTitleViewGesture()
+        }
+    }
 
     // MARK: - init
     
     init(index: Int) {
-        roomIndex = index
+        self.roomIndex = index
         super.init()
     }
     
@@ -282,9 +287,9 @@ final class DetailWaitViewController: BaseViewController {
     // MARK: - func
 
     private func setupDelegation() {
-        listTable.delegate = self
-        listTable.dataSource = self
-        listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        listTableView.delegate = self
+        listTableView.dataSource = self
+        listTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
     private func presentDetailEditViewController(startString: String, endString: String, isDateEdit: Bool) {
@@ -384,14 +389,14 @@ final class DetailWaitViewController: BaseViewController {
     
     private func renderTableView() {
         DispatchQueue.main.async {
-            self.listTable.reloadData()
-            self.view.addSubview(self.listTable)
+            self.listTableView.reloadData()
+            self.view.addSubview(self.listTableView)
             var tableHeight = self.userArr.count * 44
             if tableHeight > 400 {
                 tableHeight = 400
-                self.listTable.isScrollEnabled = true
+                self.listTableView.isScrollEnabled = true
             }
-            self.listTable.snp.makeConstraints {
+            self.listTableView.snp.makeConstraints {
                 $0.top.equalTo(self.togetherFriendLabel.snp.bottom).offset(30)
                 $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
                 $0.centerX.equalToSuperview()
@@ -455,7 +460,7 @@ extension DetailWaitViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = listTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
+        let cell = listTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
         cell.textLabel?.text = userArr[indexPath.row]
         cell.textLabel?.font = .font(.regular, ofSize: 17)
         cell.backgroundColor = .darkGrey003

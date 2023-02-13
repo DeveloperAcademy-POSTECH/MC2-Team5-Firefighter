@@ -48,7 +48,7 @@ final class DetailEditViewController: BaseViewController {
         button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
-    private let topIndicator: UIView = {
+    private let topIndicatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .white.withAlphaComponent(0.8)
         view.layer.cornerRadius = 1.5
@@ -169,8 +169,8 @@ final class DetailEditViewController: BaseViewController {
             $0.width.height.equalTo(44)
         }
 
-        view.addSubview(topIndicator)
-        topIndicator.snp.makeConstraints {
+        view.addSubview(topIndicatorView)
+        topIndicatorView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(8)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(40)
