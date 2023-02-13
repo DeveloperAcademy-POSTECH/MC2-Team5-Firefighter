@@ -237,29 +237,6 @@ final class DetailEditViewController: BaseViewController {
             }
         }
     }
-    
-    // MARK: - API
-    
-    private func putChangeRoomInfo(roomDto: RoomDTO) {
-        Task {
-            do {
-                let status = try await self.detailWaitService.editRoomInfo(roomId: "\(roomIndex)",
-                                                                           roomInfo: roomDto)
-                if status == 204 {
-                    ToastView.showToast(message: "방 정보 수정 완료",
-                                        controller: self)
-                    self.didTappedChangeButton?()
-                    self.dismiss(animated: true)
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
 
     // MARK: - func
 
@@ -315,6 +292,29 @@ final class DetailEditViewController: BaseViewController {
         self.memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
         self.memberCountLabel.font = .font(.regular, ofSize: 24)
         self.memberCountLabel.textColor = .white
+    }
+    
+    // MARK: - network
+    
+    private func putChangeRoomInfo(roomDto: RoomDTO) {
+        Task {
+            do {
+                let status = try await self.detailWaitService.editRoomInfo(roomId: "\(roomIndex)",
+                                                                           roomInfo: roomDto)
+                if status == 204 {
+                    ToastView.showToast(message: "방 정보 수정 완료",
+                                        controller: self)
+                    self.didTappedChangeButton?()
+                    self.dismiss(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
     }
 }
 

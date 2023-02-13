@@ -199,92 +199,6 @@ final class DetailWaitViewController: BaseViewController {
         super.configureUI()
         self.setupSettingButton()
     }
-    
-    // MARK: - API
-    
-    private func requestWaitRoomInfo() {
-        Task {
-            do {
-                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
-                if let roomInfo = data {
-                    guard let title = roomInfo.roomInformation?.title,
-                          let state = roomInfo.roomInformation?.state,
-                          let participants = roomInfo.participants,
-                          let isAdmin = roomInfo.admin else { return }
-                    self.room = roomInfo
-                    self.userArr = participants.membersNickname
-                    self.memberType = isAdmin ? .owner : .member
-                    self.roomInfo = roomInfo.roomDTO
-                    self.setStartButton()
-                    DispatchQueue.main.async {
-                        self.isPastStartDate()
-                        self.titleView.setStartState(state: state)
-                        self.comeInLabel.text = data?.userCount
-                        self.titleView.setRoomTitleLabelText(text: title)
-                        self.titleView.setDurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
-                    }
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
-    
-    private func requestStartManitto() {
-        Task {
-            do {
-                let data = try await self.detailWaitService.startManitto(roomId: "\(roomIndex)")
-                if let manittee = data {
-                    guard let nickname = manittee.nickname else { return }
-                    self.presentSelectManittoViewController(nickname: nickname)
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
-    
-    private func requestDeleteRoom() {
-        Task {
-            do {
-                let status = try await self.detailWaitService.deleteRoom(roomId: "\(roomIndex)")
-                if status == 204 {
-                    self.navigationController?.popViewController(animated: true)
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
-    
-    private func requestDeleteLeaveRoom() {
-        Task {
-            do {
-                let status = try await self.detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
-                if status == 204 {
-                    self.navigationController?.popViewController(animated: true)
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
 
     // MARK: - func
 
@@ -310,8 +224,6 @@ final class DetailWaitViewController: BaseViewController {
         viewController.endDateText = endString
         self.present(viewController, animated: true, completion: nil)
     }
-
-    // MARK: - private func
 
     private func setupSettingButton() {
         let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: settingButton,
@@ -440,6 +352,7 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     // MARK: - selector
+    
     @objc private func didTapEnterButton() {
         guard let roomInfo = self.roomInfo,
               let code = self.room?.invitation?.code
@@ -465,6 +378,92 @@ final class DetailWaitViewController: BaseViewController {
     
     @objc private func changeStartButton() {
         self.setStartButton()
+    }
+    
+    // MARK: - network
+    
+    private func requestWaitRoomInfo() {
+        Task {
+            do {
+                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
+                if let roomInfo = data {
+                    guard let title = roomInfo.roomInformation?.title,
+                          let state = roomInfo.roomInformation?.state,
+                          let participants = roomInfo.participants,
+                          let isAdmin = roomInfo.admin else { return }
+                    self.room = roomInfo
+                    self.userArr = participants.membersNickname
+                    self.memberType = isAdmin ? .owner : .member
+                    self.roomInfo = roomInfo.roomDTO
+                    self.setStartButton()
+                    DispatchQueue.main.async {
+                        self.isPastStartDate()
+                        self.titleView.setStartState(state: state)
+                        self.comeInLabel.text = data?.userCount
+                        self.titleView.setRoomTitleLabelText(text: title)
+                        self.titleView.setDurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
+                    }
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestStartManitto() {
+        Task {
+            do {
+                let data = try await self.detailWaitService.startManitto(roomId: "\(roomIndex)")
+                if let manittee = data {
+                    guard let nickname = manittee.nickname else { return }
+                    self.presentSelectManittoViewController(nickname: nickname)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestDeleteRoom() {
+        Task {
+            do {
+                let status = try await self.detailWaitService.deleteRoom(roomId: "\(roomIndex)")
+                if status == 204 {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestDeleteLeaveRoom() {
+        Task {
+            do {
+                let status = try await self.detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
+                if status == 204 {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
     }
 }
 
