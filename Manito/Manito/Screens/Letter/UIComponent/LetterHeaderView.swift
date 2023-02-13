@@ -25,7 +25,7 @@ final class LetterHeaderView: UICollectionReusableView {
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
         control.backgroundColor = .darkGrey004
-        control.addTarget(self, action: #selector(segmentedControlIndexValueChanged(_:)), for: .valueChanged)
+        control.addTarget(self, action: #selector(self.segmentedControlIndexValueChanged(_:)), for: .valueChanged)
         
         return control
     }()
@@ -34,7 +34,7 @@ final class LetterHeaderView: UICollectionReusableView {
 
     var segmentedControlIndex: Int = 0 {
         didSet {
-            segmentedControl.selectedSegmentIndex = segmentedControlIndex
+            self.segmentedControl.selectedSegmentIndex = self.segmentedControlIndex
         }
     }
     
@@ -42,8 +42,8 @@ final class LetterHeaderView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.setupLayout()
+        self.configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -53,8 +53,8 @@ final class LetterHeaderView: UICollectionReusableView {
     // MARK: - func
     
     private func setupLayout() {
-        self.addSubview(segmentedControl)
-        segmentedControl.snp.makeConstraints {
+        self.addSubview(self.segmentedControl)
+        self.segmentedControl.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(13)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.height.equalTo(40)
@@ -62,14 +62,14 @@ final class LetterHeaderView: UICollectionReusableView {
     }
     
     private func configureUI() {
-        backgroundColor = .backgroundGrey
+        self.backgroundColor = .backgroundGrey
     }
     
     // MARK: - selector
     
     @objc
     private func segmentedControlIndexValueChanged(_ sender: UISegmentedControl) {
-        segmentedControlIndex = sender.selectedSegmentIndex
-        selectedSegmentIndexDidChange?(segmentedControlIndex)
+        self.segmentedControlIndex = sender.selectedSegmentIndex
+        self.selectedSegmentIndexDidChange?(self.segmentedControlIndex)
     }
 }
