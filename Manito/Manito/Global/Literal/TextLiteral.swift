@@ -90,7 +90,7 @@ enum TextLiteral {
     static let letterHeaderViewSegmentControlManitti: String = "마니띠에게"
     static let letterHeaderViewSegmentControlManitto: String = "마니또로부터"
     
-    // MARK: - SendLetterView
+    // MARK: - BottomSendLetterView
     static let sendLetterViewSendLetterButton: String = "쪽지 쓰기"
     
     // MARK: - IndividualMissionView

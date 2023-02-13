@@ -124,7 +124,7 @@
 		B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253028545E4C00614FF7 /* BackButton.swift */; };
 		B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253428547F1900614FF7 /* LetterHeaderView.swift */; };
 		B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */; };
-		B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525382854871E00614FF7 /* SendLetterView.swift */; };
+		B5F525392854871E00614FF7 /* BottomOfSendLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525382854871E00614FF7 /* BottomOfSendLetterView.swift */; };
 		B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253A2854ABF200614FF7 /* MainButton.swift */; };
 		B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */; };
 		B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525412855C97900614FF7 /* UILabel+Extension.swift */; };
@@ -280,7 +280,7 @@
 		B5F5253028545E4C00614FF7 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		B5F5253428547F1900614FF7 /* LetterHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterHeaderView.swift; sourceTree = "<group>"; };
 		B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCollectionViewCell.swift; sourceTree = "<group>"; };
-		B5F525382854871E00614FF7 /* SendLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterView.swift; sourceTree = "<group>"; };
+		B5F525382854871E00614FF7 /* BottomOfSendLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomOfSendLetterView.swift; sourceTree = "<group>"; };
 		B5F5253A2854ABF200614FF7 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		B5F525412855C97900614FF7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
@@ -755,7 +755,7 @@
 			isa = PBXGroup;
 			children = (
 				B5F5253428547F1900614FF7 /* LetterHeaderView.swift */,
-				B5F525382854871E00614FF7 /* SendLetterView.swift */,
+				B5F525382854871E00614FF7 /* BottomOfSendLetterView.swift */,
 				B50B1AFA2856B5180080992C /* IndividualMissionView.swift */,
 				B50B1AFC2856C3500080992C /* LetterTextView.swift */,
 				B50B1AFE2856D3820080992C /* LetterPhotoView.swift */,
@@ -1067,7 +1067,7 @@
 				B50B1B44285B146A0080992C /* ManittoCollectionViewCell.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				39C957D628799AB900A04A2B /* HTTPMethod.swift in Sources */,
-				B5F525392854871E00614FF7 /* SendLetterView.swift in Sources */,
+				B5F525392854871E00614FF7 /* BottomOfSendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
 				7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */,
 				B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */,

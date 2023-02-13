@@ -79,7 +79,7 @@ final class LetterViewController: BaseViewController {
         label.addLabelSpacing(lineSpacing: 16)
         return label
     }()
-    private lazy var sendLetterView: SendLetterView = SendLetterView()
+    private lazy var sendLetterView: BottomOfSendLetterView = BottomOfSendLetterView()
 
     // MARK: - property
     
