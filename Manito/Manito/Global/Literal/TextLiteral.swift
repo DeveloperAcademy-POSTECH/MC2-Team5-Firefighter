@@ -96,7 +96,7 @@ enum TextLiteral {
     // MARK: - IndividualMissionView
     static let individualMissionViewTitleLabel: String = "오늘의 개별 미션"
     
-    // MARK: - LetterTextView
+    // MARK: - CreateLetterTextView
     static let letterTextViewTitleLabel: String = "쪽지 작성"
     
     // MARK: - LetterPhotoView

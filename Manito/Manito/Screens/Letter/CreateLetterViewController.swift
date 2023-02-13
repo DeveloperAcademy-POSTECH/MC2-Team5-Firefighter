@@ -45,7 +45,7 @@ final class CreateLetterViewController: BaseViewController {
         return scrollView
     }()
     private let scrollContentView = UIView()
-    private let letterTextView = LetterTextView()
+    private let letterTextView = CreateLetterTextView()
     private let letterPhotoView = LetterPhotoView()
     private lazy var missionView = IndividualMissionView(mission: self.mission)
 
