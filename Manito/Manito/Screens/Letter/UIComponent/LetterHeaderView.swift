@@ -16,23 +16,24 @@ final class LetterHeaderView: UICollectionReusableView {
     // MARK: - ui component
     
     private lazy var segmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: [TextLiteral.letterHeaderViewSegmentControlManitti, TextLiteral.letterHeaderViewSegmentControlManitto])
         let font = UIFont.font(.regular, ofSize: 14)
-        let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
-        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
-        
+        let control = UISegmentedControl(items: [TextLiteral.letterHeaderViewSegmentControlManitti,
+                                                 TextLiteral.letterHeaderViewSegmentControlManitto])
+        let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                    NSAttributedString.Key.font: font]
+        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
+                                      NSAttributedString.Key.font: font]
         control.setTitleTextAttributes(normalTextAttributes, for: .normal)
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
         control.backgroundColor = .darkGrey004
         control.addTarget(self, action: #selector(self.segmentedControlIndexValueChanged(_:)), for: .valueChanged)
-        
         return control
     }()
 
     // MARK: - property
 
-    var segmentedControlIndex: Int = 0 {
+    private var segmentedControlIndex: Int = 0 {
         didSet {
             self.segmentedControl.selectedSegmentIndex = self.segmentedControlIndex
         }
@@ -64,12 +65,16 @@ final class LetterHeaderView: UICollectionReusableView {
     private func configureUI() {
         self.backgroundColor = .backgroundGrey
     }
+
+    func setSegmentedControlIndex(_ index: Int) {
+        self.segmentedControlIndex = index
+    }
     
     // MARK: - selector
     
     @objc
-    private func segmentedControlIndexValueChanged(_ sender: UISegmentedControl) {
-        self.segmentedControlIndex = sender.selectedSegmentIndex
+    private func segmentedControlIndexValueChanged(_ segmentedControl: UISegmentedControl) {
+        self.segmentedControlIndex = segmentedControl.selectedSegmentIndex
         self.selectedSegmentIndexDidChange?(self.segmentedControlIndex)
     }
 }
