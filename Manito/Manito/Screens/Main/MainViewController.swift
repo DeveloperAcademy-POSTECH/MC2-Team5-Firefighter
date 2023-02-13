@@ -13,9 +13,6 @@ import SnapKit
 
 final class MainViewController: BaseViewController {
     
-    private let mainService: MainProtocol = MainAPI(apiService: APIService())
-    private var rooms: [ParticipatingRoom]?
-    
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 20
         static let collectionVerticalSpacing: CGFloat = 20
@@ -28,29 +25,10 @@ final class MainViewController: BaseViewController {
         static let commonMissionViewHeight: CGFloat = commonMissionViewWidth * 0.6
     }
     
-    private enum RoomStatus: String {
-        case waiting = "PRE"
-        case starting = "PROCESSING"
-        case end = "POST"
-        
-        var roomStatus: String {
-            switch self {
-            case .waiting:
-                return TextLiteral.waiting
-            case .starting:
-                return TextLiteral.doing
-            case .end:
-                return TextLiteral.done
-            }
-        }
-    }
+    // MARK: - ui component
     
     private let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
-    
     private let refreshControl = UIRefreshControl()
-
-    // MARK: - property
-
     private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
@@ -95,6 +73,27 @@ final class MainViewController: BaseViewController {
     private let niCharacterImageView = GIFImageView()
     private let ttoCharacterImageView = GIFImageView()
     
+    // MARK: - property
+    
+    private let mainService: MainProtocol = MainAPI(apiService: APIService())
+    private var rooms: [ParticipatingRoom]?
+    private enum RoomStatus: String {
+        case waiting = "PRE"
+        case starting = "PROCESSING"
+        case end = "POST"
+        
+        var roomStatus: String {
+            switch self {
+            case .waiting:
+                return TextLiteral.waiting
+            case .starting:
+                return TextLiteral.doing
+            case .end:
+                return TextLiteral.done
+            }
+        }
+    }
+    
     // MARK: - init
     
     deinit {
@@ -106,8 +105,6 @@ final class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupGifImage()
-        self.setupGuideArea()
-        self.renderGuideArea()
         self.setupRefreshControl()
         self.setupSkeletonView()
     }
@@ -117,6 +114,8 @@ final class MainViewController: BaseViewController {
         self.requestCommonMission()
         self.requestManittoRoomList()
     }
+    
+    // MARK: - override
 
     override func setupLayout() {
         self.view.addSubview(self.maCharacterImageView)
@@ -192,6 +191,8 @@ final class MainViewController: BaseViewController {
         self.setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
     }
     
+    // MARK: - func
+    
     private func setupGifImage() {
         DispatchQueue.main.async {
             self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
@@ -221,46 +222,8 @@ final class MainViewController: BaseViewController {
         self.listCollectionView.stopSkeletonAnimation()
         self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
     }
-    
-    // MARK: - API
-    
-    private func requestCommonMission() {
-        Task {
-            do {
-                let data = try await self.mainService.fetchCommonMission()
-                if let commonMission = data?.mission {
-                    self.commonMissionView.mission.text = commonMission
-                }
-            } catch NetworkError.serverError {
-                print("serverError")
-            } catch NetworkError.clientError(let message) {
-                print("clientError:\(String(describing: message))")
-            }
-        }
-    }
-    
-    private func requestManittoRoomList() {
-        Task {
-            do {
-                let data = try await self.mainService.fetchManittoList()
-                
-                if let manittoList = data {
-                    self.rooms = manittoList.participatingRooms
-                    self.listCollectionView.reloadData()
-                    
-                    self.stopSkeletonView()
-                }
-            } catch NetworkError.serverError {
-                print("serverError")
-            } catch NetworkError.clientError(let message) {
-                print("clientError:\(String(describing: message))")
-            }
-        }
-    }
-    
-    // MARK: - func
 
-    private func newRoom() {
+    private func createNewRoom() {
         let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
 
         let createRoom = UIAlertAction(title: TextLiteral.createRoom, style: .default, handler: { [weak self] _ in
@@ -324,10 +287,51 @@ final class MainViewController: BaseViewController {
         self.makeRequestAlert(title: "해당 마니또 방의 정보를 불러오지 못했습니다.", message: "해당 마니또 방으로 이동할 수 없습니다.", okAction: nil)
     }
     
+    // MARK: - selector
+    
     @objc
     override func endEditingView() {
         if !self.guideButton.isTouchInside {
             self.guideBoxImageView.isHidden = true
+        }
+    }
+    
+    // MARK: - network
+    
+    private func requestCommonMission() {
+        Task {
+            do {
+                let data = try await self.mainService.fetchCommonMission()
+                if let commonMission = data?.mission {
+                    self.commonMissionView.mission.text = commonMission
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestManittoRoomList() {
+        Task {
+            do {
+                let data = try await self.mainService.fetchManittoList()
+                
+                if let manittoList = data {
+                    self.rooms = manittoList.participatingRooms
+                    self.listCollectionView.reloadData()
+                    self.stopSkeletonView()
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
         }
     }
 }
@@ -404,7 +408,7 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == 0 {
-            self.newRoom()
+            self.createNewRoom()
         } else {
             guard let state = self.rooms?[indexPath.item - 1].state,
                   let roomStatus = RoomStatus.init(rawValue: state),
