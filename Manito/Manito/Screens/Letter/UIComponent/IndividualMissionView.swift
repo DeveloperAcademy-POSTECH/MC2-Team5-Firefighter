@@ -33,9 +33,9 @@ final class IndividualMissionView: UIView {
     
     init(mission: String) {
         super.init(frame: .zero)
-        setupMission(with: mission)
-        setupLayout()
-        configureUI()
+        self.setupMission(with: mission)
+        self.setupLayout()
+        self.configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -45,24 +45,24 @@ final class IndividualMissionView: UIView {
     // MARK: - func
     
     private func setupLayout() {
-        addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
+        self.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(15)
         }
         
-        addSubview(missionLabel)
-        missionLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(12)
+        self.addSubview(self.missionLabel)
+        self.missionLabel.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(12)
             $0.bottom.equalToSuperview().inset(21)
         }
     }
     
     private func configureUI() {
-        backgroundColor = .darkGrey004
-        makeBorderLayer(color: .subOrange)
+        self.backgroundColor = .darkGrey004
+        self.makeBorderLayer(color: .subOrange)
     }
 
     private func setupMission(with mission: String) {
