@@ -20,23 +20,20 @@ final class IndividualMissionView: UIView {
         label.textColor = .grey002
         return label
     }()
-    private lazy var missionLabel: UILabel = {
+    private let missionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
-        label.text = missionText
         label.font = .font(.regular, ofSize: 20)
         label.textAlignment = .center
         label.contentMode = .center
         return label
     }()
     
-    private var missionText: String
-
     // MARK: - init
     
     init(mission: String) {
-        missionText = mission
         super.init(frame: .zero)
+        setupMission(with: mission)
         setupLayout()
         configureUI()
     }
@@ -66,5 +63,9 @@ final class IndividualMissionView: UIView {
     private func configureUI() {
         backgroundColor = .darkGrey004
         makeBorderLayer(color: .subOrange)
+    }
+
+    private func setupMission(with mission: String) {
+        self.missionLabel.text = mission
     }
 }
