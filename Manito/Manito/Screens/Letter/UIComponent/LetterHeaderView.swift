@@ -15,7 +15,7 @@ final class LetterHeaderView: UICollectionReusableView {
     
     // MARK: - ui component
     
-    private lazy var segmentedControl: UISegmentedControl = {
+    private let segmentedControl: UISegmentedControl = {
         let font = UIFont.font(.regular, ofSize: 14)
         let control = UISegmentedControl(items: [TextLiteral.letterHeaderViewSegmentControlManitti,
                                                  TextLiteral.letterHeaderViewSegmentControlManitto])
@@ -27,7 +27,6 @@ final class LetterHeaderView: UICollectionReusableView {
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
         control.backgroundColor = .darkGrey004
-        control.addTarget(self, action: #selector(self.segmentedControlIndexValueChanged(_:)), for: .valueChanged)
         return control
     }()
 
@@ -45,6 +44,7 @@ final class LetterHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         self.setupLayout()
         self.configureUI()
+        self.setupAction()
     }
     
     required init?(coder: NSCoder) {
@@ -66,15 +66,20 @@ final class LetterHeaderView: UICollectionReusableView {
         self.backgroundColor = .backgroundGrey
     }
 
-    func setSegmentedControlIndex(_ index: Int) {
-        self.segmentedControlIndex = index
+    private func setupAction() {
+        let valueChangedAction = UIAction { [weak self] action in
+            guard let sender = action.sender as? UISegmentedControl else { return }
+            self?.segmentedControlIndexValueChanged(sender)
+        }
+        self.segmentedControl.addAction(valueChangedAction, for: .valueChanged)
     }
-    
-    // MARK: - selector
-    
-    @objc
+
     private func segmentedControlIndexValueChanged(_ segmentedControl: UISegmentedControl) {
         self.segmentedControlIndex = segmentedControl.selectedSegmentIndex
         self.selectedSegmentIndexDidChange?(self.segmentedControlIndex)
+    }
+
+    func setSegmentedControlIndex(_ index: Int) {
+        self.segmentedControlIndex = index
     }
 }
