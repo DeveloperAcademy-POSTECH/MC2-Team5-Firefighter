@@ -11,7 +11,7 @@ import SnapKit
 
 final class CommonMissionView: UIView {
     
-    // MARK: - property
+    // MARK: - ui component
     
     private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
     private let title: UILabel = {
@@ -41,7 +41,7 @@ final class CommonMissionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - life cycle
+    // MARK: - func
     
     private func setupLayout() {
         self.addSubview(self.commonMissionImageView)

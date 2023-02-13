@@ -11,14 +11,8 @@ import SkeletonView
 import SnapKit
 
 final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
-
-    private enum RoomStatus: String {
-        case PRE = "대기중"
-        case PROCESSING = "진행중"
-        case POST = "완료"
-    }
     
-    // MARK: - property
+    // MARK: - ui component
     
     private let imageView = UIImageView(image: ImageLiterals.imgNi)
     let memberLabel: UILabel = {
@@ -46,7 +40,15 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     }()    
     lazy var roomStateView = RoomStateView()
     
-    // MARK: - life cycle
+    // MARK: - property
+
+    private enum RoomStatus: String {
+        case PRE = "대기중"
+        case PROCESSING = "진행중"
+        case POST = "완료"
+    }
+    
+    // MARK: - override
     
     override func setupLayout() {
         contentView.addSubview(self.imageView)

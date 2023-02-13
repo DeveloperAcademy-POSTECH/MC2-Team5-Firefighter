@@ -11,7 +11,7 @@ import SnapKit
 
 final class CreateRoomCollectionViewCell: BaseCollectionViewCell {
     
-    // MARK: - property
+    // MARK: - ui component
     
     private let imageView = UIImageView(image: ImageLiterals.icNewRoom)    
     private let circleView: UIView = {
@@ -30,7 +30,7 @@ final class CreateRoomCollectionViewCell: BaseCollectionViewCell {
         return label
     }()
     
-    // MARK: - life cycle
+    // MARK: - override
     
     override func setupLayout() {
         self.addSubview(self.circleView)

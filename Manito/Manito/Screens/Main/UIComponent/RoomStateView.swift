@@ -11,7 +11,7 @@ import SnapKit
 
 final class RoomStateView: UIView {
     
-    // MARK: - property
+    // MARK: - ui component
     
     lazy var state: UILabel = {
         let label = UILabel()
@@ -32,7 +32,7 @@ final class RoomStateView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - life cycle
+    // MARK: - func
     
     private func setupLayout() {
         self.addSubview(self.state)
