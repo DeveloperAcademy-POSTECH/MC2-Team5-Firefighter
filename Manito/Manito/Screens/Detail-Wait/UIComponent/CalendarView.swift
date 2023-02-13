@@ -10,7 +10,7 @@ import UIKit
 import FSCalendar
 import SnapKit
 
-class CalendarView: UIView {
+final class CalendarView: UIView {
     
     private enum CalendarMoveType {
         case previous
