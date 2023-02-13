@@ -13,7 +13,7 @@ import SnapKit
 
 final class MainViewController: BaseViewController {
     
-    private enum Size {
+    private enum InternalSize {
         static let collectionHorizontalSpacing: CGFloat = 20
         static let collectionVerticalSpacing: CGFloat = 20
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 3) / 2
@@ -50,8 +50,8 @@ final class MainViewController: BaseViewController {
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
-        flowLayout.sectionInset = Size.collectionInset
-        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
+        flowLayout.sectionInset = InternalSize.collectionInset
+        flowLayout.itemSize = CGSize(width: InternalSize.cellWidth, height: InternalSize.cellWidth)
         flowLayout.minimumLineSpacing = 16
         flowLayout.minimumInteritemSpacing = 16
         return flowLayout
@@ -145,12 +145,12 @@ final class MainViewController: BaseViewController {
             $0.leading.equalToSuperview().inset(13)
             $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(30)
         }
-        // FIXME: 좌우패딩 20값을 주는데 Size라는 변수명이 겹침
+        
         self.view.addSubview(self.commonMissionView)
         self.commonMissionView.snp.makeConstraints {
             $0.top.equalTo(self.imgStar.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(Size.commonMissionViewHeight)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.height.equalTo(InternalSize.commonMissionViewHeight)
         }
 
         self.view.addSubview(self.menuTitle)
