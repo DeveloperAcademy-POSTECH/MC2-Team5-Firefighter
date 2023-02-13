@@ -75,7 +75,7 @@ final class DetailWaitTitleView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
+        self.setupLayout()
     }
 
     required init?(coder: NSCoder) {
@@ -85,34 +85,34 @@ final class DetailWaitTitleView: UIView {
     // MARK: - func
 
     private func setupLayout() {
-        self.addSubview(roomTitleLabel)
-        roomTitleLabel.snp.makeConstraints {
+        self.addSubview(self.roomTitleLabel)
+        self.roomTitleLabel.snp.makeConstraints {
             $0.leading.top.equalToSuperview()
         }
 
-        self.addSubview(startStautsLabel)
-        startStautsLabel.snp.makeConstraints {
-            $0.centerY.equalTo(roomTitleLabel.snp.centerY)
-            $0.leading.equalTo(roomTitleLabel.snp.trailing).offset(10)
+        self.addSubview(self.startStautsLabel)
+        self.startStautsLabel.snp.makeConstraints {
+            $0.centerY.equalTo(self.roomTitleLabel.snp.centerY)
+            $0.leading.equalTo(self.roomTitleLabel.snp.trailing).offset(10)
             $0.width.equalTo(66)
             $0.height.equalTo(23)
         }
 
-        self.addSubview(durationView)
-        durationView.snp.makeConstraints {
-            $0.top.equalTo(roomTitleLabel.snp.bottom).offset(30)
+        self.addSubview(self.durationView)
+        self.durationView.snp.makeConstraints {
+            $0.top.equalTo(self.roomTitleLabel.snp.bottom).offset(30)
             $0.trailing.leading.equalToSuperview()
             $0.height.equalTo(36)
         }
 
-        durationView.addSubview(durationLabel)
-        durationLabel.snp.makeConstraints {
+        self.durationView.addSubview(self.durationLabel)
+        self.durationLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
 
-        durationView.addSubview(durationDateLabel)
-        durationDateLabel.snp.makeConstraints {
+        self.durationView.addSubview(self.durationDateLabel)
+        self.durationDateLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(40)
             $0.centerY.equalToSuperview()
         }
@@ -121,21 +121,21 @@ final class DetailWaitTitleView: UIView {
     func setStartState(state: String) {
         switch state {
         case "PRE":
-            startStautsLabel.text = StartStatus.waiting.status
+            self.startStautsLabel.text = StartStatus.waiting.status
         case "PROCESSING":
-            startStautsLabel.text = StartStatus.starting.status
+            self.startStautsLabel.text = StartStatus.starting.status
         case "POST":
-            startStautsLabel.text = StartStatus.complete.status
+            self.startStautsLabel.text = StartStatus.complete.status
         default:
-            startStautsLabel.text = StartStatus.waiting.status
+            self.startStautsLabel.text = StartStatus.waiting.status
         }
     }
     
     func setRoomTitleLabelText(text: String) {
-        roomTitleLabel.text = text
+        self.roomTitleLabel.text = text
     }
     
     func setDurationDateLabel(text: String) {
-        durationDateLabel.text = text
+        self.durationDateLabel.text = text
     }
 }

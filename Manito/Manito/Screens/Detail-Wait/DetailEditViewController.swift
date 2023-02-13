@@ -72,14 +72,14 @@ final class DetailEditViewController: BaseViewController {
     }()
     private lazy var minMemberLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Int(memberSlider.minimumValue))인"
+        label.text = "\(Int(self.memberSlider.minimumValue))인"
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
     private lazy var maxMemberLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Int(memberSlider.maximumValue))인"
+        label.text = "\(Int(self.memberSlider.maximumValue))인"
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
@@ -90,15 +90,15 @@ final class DetailEditViewController: BaseViewController {
         slider.maximumValue = 15
         slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001
-        slider.value = Float(sliderValue)
+        slider.value = Float(self.sliderValue)
         slider.isContinuous = true
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
-        slider.addTarget(self, action: #selector(changeMemberCount(sender:)), for: .valueChanged)
+        slider.addTarget(self, action: #selector(self.changeMemberCount(sender:)), for: .valueChanged)
         return slider
     }()
     private lazy var memberCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(sliderValue)" + TextLiteral.per
+        label.text = "\(self.sliderValue)" + TextLiteral.per
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
         return label
@@ -119,14 +119,14 @@ final class DetailEditViewController: BaseViewController {
     var sliderValue: Int = 10
     var startDateText: String = "" {
         didSet {
-            calendarView.startDateText = startDateText
-            calendarView.setupDateRange()
+            self.calendarView.startDateText = startDateText
+            self.calendarView.setupDateRange()
         }
     }
     var endDateText: String = "" {
         didSet {
-            calendarView.endDateText = endDateText
-            calendarView.setupDateRange()
+            self.calendarView.endDateText = endDateText
+            self.calendarView.setupDateRange()
         }
     }
 
@@ -151,89 +151,89 @@ final class DetailEditViewController: BaseViewController {
         super.configureUI()
         self.navigationController?.isNavigationBarHidden = true
         self.presentationController?.delegate = self
-        isModalInPresentation = true
-        setupChangedButton()
+        self.isModalInPresentation = true
+        self.setupChangedButton()
     }
 
     override func setupLayout() {
-        view.addSubview(cancelButton)
-        cancelButton.snp.makeConstraints {
+        self.view.addSubview(self.cancelButton)
+        self.cancelButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
             $0.leading.equalToSuperview().inset(29)
             $0.width.height.equalTo(44)
         }
 
-        view.addSubview(changeButton)
-        changeButton.snp.makeConstraints {
+        self.view.addSubview(self.changeButton)
+        self.changeButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
             $0.trailing.equalToSuperview().inset(29)
             $0.width.height.equalTo(44)
         }
 
-        view.addSubview(topIndicatorView)
-        topIndicatorView.snp.makeConstraints {
+        self.view.addSubview(self.topIndicatorView)
+        self.topIndicatorView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(8)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(40)
             $0.height.equalTo(3)
         }
 
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
+        self.view.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.centerY.equalTo(cancelButton.snp.centerY)
+            $0.centerY.equalTo(self.cancelButton.snp.centerY)
         }
 
-        view.addSubview(startSettingLabel)
-        startSettingLabel.snp.makeConstraints {
-            $0.top.equalTo(cancelButton.snp.bottom).offset(51)
+        self.view.addSubview(self.startSettingLabel)
+        self.startSettingLabel.snp.makeConstraints {
+            $0.top.equalTo(self.cancelButton.snp.bottom).offset(51)
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
 
-        view.addSubview(calendarView)
-        calendarView.snp.makeConstraints {
-            $0.top.equalTo(startSettingLabel.snp.bottom).offset(30)
+        self.view.addSubview(self.calendarView)
+        self.calendarView.snp.makeConstraints {
+            $0.top.equalTo(self.startSettingLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.height.equalTo(400)
         }
 
-        view.addSubview(tipLabel)
-        tipLabel.snp.makeConstraints {
-            $0.top.equalTo(calendarView.snp.bottom).offset(8)
+        self.view.addSubview(tipLabel)
+        self.tipLabel.snp.makeConstraints {
+            $0.top.equalTo(self.calendarView.snp.bottom).offset(8)
             $0.trailing.equalToSuperview().inset(25)
         }
 
-        if editMode == .information {
-            view.addSubview(setMemberLabel)
-            setMemberLabel.snp.makeConstraints {
-                $0.top.equalTo(calendarView.snp.bottom).offset(60)
+        if self.editMode == .information {
+            self.view.addSubview(self.setMemberLabel)
+            self.setMemberLabel.snp.makeConstraints {
+                $0.top.equalTo(self.calendarView.snp.bottom).offset(60)
                 $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
             }
 
-            view.addSubview(minMemberLabel)
-            minMemberLabel.snp.makeConstraints {
-                $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
+            self.view.addSubview(self.minMemberLabel)
+            self.minMemberLabel.snp.makeConstraints {
+                $0.top.equalTo(self.setMemberLabel.snp.bottom).offset(30)
                 $0.leading.equalToSuperview().inset(24)
             }
 
-            view.addSubview(memberSlider)
-            memberSlider.snp.makeConstraints {
-                $0.leading.equalTo(minMemberLabel.snp.trailing).offset(5)
+            self.view.addSubview(self.memberSlider)
+            self.memberSlider.snp.makeConstraints {
+                $0.leading.equalTo(self.minMemberLabel.snp.trailing).offset(5)
                 $0.height.equalTo(45)
-                $0.centerY.equalTo(minMemberLabel.snp.centerY)
+                $0.centerY.equalTo(self.minMemberLabel.snp.centerY)
             }
 
-            view.addSubview(maxMemberLabel)
-            maxMemberLabel.snp.makeConstraints {
-                $0.top.equalTo(setMemberLabel.snp.bottom).offset(30)
-                $0.leading.equalTo(memberSlider.snp.trailing).offset(5)
+            self.view.addSubview(self.maxMemberLabel)
+            self.maxMemberLabel.snp.makeConstraints {
+                $0.top.equalTo(self.setMemberLabel.snp.bottom).offset(30)
+                $0.leading.equalTo(self.memberSlider.snp.trailing).offset(5)
                 $0.trailing.equalToSuperview().inset(24)
             }
 
-            view.addSubview(memberCountLabel)
-            memberCountLabel.snp.makeConstraints {
+            self.view.addSubview(self.memberCountLabel)
+            self.memberCountLabel.snp.makeConstraints {
                 $0.centerX.equalToSuperview()
-                $0.centerY.equalTo(setMemberLabel.snp.centerY)
+                $0.centerY.equalTo(self.setMemberLabel.snp.centerY)
             }
         }
     }
@@ -243,12 +243,13 @@ final class DetailEditViewController: BaseViewController {
     private func putChangeRoomInfo(roomDto: RoomDTO) {
         Task {
             do {
-                let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
+                let status = try await self.detailWaitService.editRoomInfo(roomId: "\(roomIndex)",
+                                                                           roomInfo: roomDto)
                 if status == 204 {
                     ToastView.showToast(message: "방 정보 수정 완료",
                                         controller: self)
-                    didTappedChangeButton?()
-                    dismiss(animated: true)
+                    self.didTappedChangeButton?()
+                    self.dismiss(animated: true)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -263,11 +264,11 @@ final class DetailEditViewController: BaseViewController {
     // MARK: - func
 
     private func presentationControllerDidAttemptToDismissAlert() {
-        guard calendarView.isFirstTap else {
-            dismiss(animated: true)
+        guard self.calendarView.isFirstTap else {
+            self.dismiss(animated: true)
             return
         }
-        showDiscardChangAlert()
+        self.showDiscardChangAlert()
     }
 
     private func showDiscardChangAlert() {
@@ -282,7 +283,7 @@ final class DetailEditViewController: BaseViewController {
     }
 
     private func setupChangedButton() {
-        calendarView.changeButtonState = { [weak self] value in
+        self.calendarView.changeButtonState = { [weak self] value in
             self?.changeButton.isEnabled = value
             self?.changeButton.setTitleColor(.subBlue, for: .normal)
             self?.changeButton.setTitleColor(.grey002, for: .disabled)
@@ -291,17 +292,17 @@ final class DetailEditViewController: BaseViewController {
 
     private func didTapChangeButton() {
         let dto = RoomDTO(title: roomTitle,
-                          capacity: Int(memberSlider.value),
-                          startDate: "20\(calendarView.getTempStartDate())",
-                          endDate: "20\(calendarView.getTempEndDate())")
-        switch editMode {
+                          capacity: Int(self.memberSlider.value),
+                          startDate: "20\(self.calendarView.getTempStartDate())",
+                          endDate: "20\(self.calendarView.getTempEndDate())")
+        switch self.editMode {
         case .date:
-            putChangeRoomInfo(roomDto: dto)
+            self.putChangeRoomInfo(roomDto: dto)
         case .information:
-            if currentUserCount <= sliderValue {
-                putChangeRoomInfo(roomDto: dto)
+            if self.currentUserCount <= self.sliderValue {
+                self.putChangeRoomInfo(roomDto: dto)
             } else {
-                makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle,
+                self.makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle,
                           message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
             }
         }
@@ -310,15 +311,15 @@ final class DetailEditViewController: BaseViewController {
     // MARK: - selector
 
     @objc private func changeMemberCount(sender: UISlider) {
-        sliderValue = Int(sender.value)
-        memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
-        memberCountLabel.font = .font(.regular, ofSize: 24)
-        memberCountLabel.textColor = .white
+        self.sliderValue = Int(sender.value)
+        self.memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
+        self.memberCountLabel.font = .font(.regular, ofSize: 24)
+        self.memberCountLabel.textColor = .white
     }
 }
 
 extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
-        presentationControllerDidAttemptToDismissAlert()
+        self.presentationControllerDidAttemptToDismissAlert()
     }
 }

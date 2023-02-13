@@ -82,9 +82,9 @@ final class CalendarView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        setupDelegation()
-        setupDateRange()
+        self.setupLayout()
+        self.setupDelegation()
+        self.setupDateRange()
     }
 
     required init?(coder: NSCoder) {
@@ -94,148 +94,148 @@ final class CalendarView: UIView {
     // MARK: - func
 
     private func setupLayout() {
-        self.addSubview(calendar)
-        calendar.snp.makeConstraints {
+        self.addSubview(self.calendar)
+        self.calendar.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
 
-        self.addSubview(previousButton)
-        previousButton.snp.makeConstraints {
+        self.addSubview(self.previousButton)
+        self.previousButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(5)
             $0.leading.equalToSuperview().inset(70)
         }
 
-        self.addSubview(nextButton)
-        nextButton.snp.makeConstraints {
+        self.addSubview(self.nextButton)
+        self.nextButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(5)
             $0.trailing.equalToSuperview().inset(72)
         }
     }
     
     func setupButtonState() {
-        let hasDate = tempStartDateText != "" && tempEndDateText != ""
-        changeButtonState?(hasDate)
+        let hasDate = self.tempStartDateText != "" && self.tempEndDateText != ""
+        self.changeButtonState?(hasDate)
     }
 
     private func setupDelegation() {
-        calendar.delegate = self
-        calendar.dataSource = self
+        self.calendar.delegate = self
+        self.calendar.dataSource = self
     }
 
     private func changeMonth(with type: CalendarMoveType) {
         let todayCalendar = Calendar.current
-        let currentPage = calendar.currentPage
+        let currentPage = self.calendar.currentPage
         var dateComponents = DateComponents()
         dateComponents.month = type.month
         guard let changedCurrentPage = todayCalendar.date(byAdding: dateComponents, to: currentPage) else { return }
-        calendar.setCurrentPage(changedCurrentPage, animated: true)
+        self.calendar.setCurrentPage(changedCurrentPage, animated: true)
     }
 
     func setupDateRange() {
-        guard let startDate = startDateText.stringToDate else { return }
-        guard let endDate = endDateText.stringToDate else { return }
-        setupCalendarRange(startDate: startDate, endDate: endDate)
+        guard let startDate = self.startDateText.stringToDate else { return }
+        guard let endDate = self.endDateText.stringToDate else { return }
+        self.setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 
     private func setupCalendarRange(startDate: Date, endDate: Date) {
-        calendar.select(startDate)
-        calendar.select(endDate)
-        setDateRange()
+        self.calendar.select(startDate)
+        self.calendar.select(endDate)
+        self.setDateRange()
     }
 
     func setDateRange() {
-        guard countDateRange() <= 7 else { return }
+        guard self.countDateRange() <= 7 else { return }
 
-        let isFirstClickPastDate = calendar.selectedDates[0] < calendar.selectedDates[1]
+        let isFirstClickPastDate = self.calendar.selectedDates[0] < self.calendar.selectedDates[1]
         if isFirstClickPastDate {
-            setSelecteDate(startIndex: 0,
-                           endIndex: 1)
+            self.setSelecteDate(startIndex: 0,
+                                endIndex: 1)
         } else {
-            setSelecteDate(startIndex: 1,
-                           endIndex: 0)
+            self.setSelecteDate(startIndex: 1,
+                                endIndex: 0)
         }
     }
 
     func setSelecteDate(startIndex: Int, endIndex: Int) {
-        var startDate = calendar.selectedDates[startIndex]
-        while startDate < calendar.selectedDates[endIndex] {
+        var startDate = self.calendar.selectedDates[startIndex]
+        while startDate < self.calendar.selectedDates[endIndex] {
             guard let addDate = Calendar.current.date(byAdding: .day,
                                                       value: 1,
                                                       to: startDate) else { return }
-            calendar.select(addDate)
-            startDate += oneDayInterval
+            self.calendar.select(addDate)
+            startDate += self.oneDayInterval
         }
-        tempStartDateText = calendar.selectedDates[startIndex].dateToString
-        tempEndDateText = calendar.selectedDates[endIndex].dateToString
+        self.tempStartDateText = self.calendar.selectedDates[startIndex].dateToString
+        self.tempEndDateText = self.calendar.selectedDates[endIndex].dateToString
     }
 
     func countDateRange() -> Int {
-        let isFirstClickPastDate = calendar.selectedDates[0] < calendar.selectedDates[1]
+        let isFirstClickPastDate = self.calendar.selectedDates[0] < self.calendar.selectedDates[1]
         let selectdDate = isFirstClickPastDate
-        ? calendar.selectedDates[1].timeIntervalSince(calendar.selectedDates[0])
-        : calendar.selectedDates[0].timeIntervalSince(calendar.selectedDates[1])
+        ? self.calendar.selectedDates[1].timeIntervalSince(self.calendar.selectedDates[0])
+        : self.calendar.selectedDates[0].timeIntervalSince(self.calendar.selectedDates[1])
         let dateRangeCount = selectdDate / 86400
 
         return Int(dateRangeCount) + 1
     }
     
     func getTempStartDate() -> String {
-        return tempStartDateText
+        return self.tempStartDateText
     }
     
     func getTempEndDate() -> String {
-        return tempEndDateText
+        return self.tempEndDateText
     }
 }
 
 extension CalendarView: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        isFirstTap = true
+        self.isFirstTap = true
         let isCreatedRoomOnlySelectedStartDate = calendar.selectedDates.count == 1
         let isSelectedDateRange = calendar.selectedDates.count == 2
         let isReclickedStartDate = calendar.selectedDates.count > 2
         if isCreatedRoomOnlySelectedStartDate {
-            selectStartDate = date
-            calendar.select(selectStartDate)
+            self.selectStartDate = date
+            calendar.select(self.selectStartDate)
             calendar.reloadData()
         } else if isSelectedDateRange {
-            tempEndDateText = date.dateToString
-            if countDateRange() > 7 {
+            self.tempEndDateText = date.dateToString
+            if self.countDateRange() > 7 {
                 calendar.deselect(date)
                 viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle,
                                           message: TextLiteral.maxMessage)
             } else {
-                setDateRange()
+                self.setDateRange()
                 calendar.reloadData()
             }
         } else if isReclickedStartDate {
-            tempStartDateText = date.dateToString
-            tempEndDateText = ""
+            self.tempStartDateText = date.dateToString
+            self.tempEndDateText = ""
             (calendar.selectedDates).forEach {
                 calendar.deselect($0)
             }
-            selectStartDate = date
-            calendar.select(selectStartDate)
+            self.selectStartDate = date
+            calendar.select(self.selectStartDate)
             calendar.reloadData()
         }
         
-        setupButtonState()
+        self.setupButtonState()
     }
 
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        tempEndDateText = ""
-        isFirstTap = true
+        self.tempEndDateText = ""
+        self.isFirstTap = true
         (calendar.selectedDates).forEach {
             calendar.deselect($0)
         }
-        selectStartDate = date
+        self.selectStartDate = date
         calendar.select(date)
         calendar.reloadData()
-        setupButtonState()
+        self.setupButtonState()
     }
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        if date < Date() - oneDayInterval {
+        if date < Date() - self.oneDayInterval {
             viewController?.makeAlert(title: TextLiteral.calendarViewAlertPastTitle,
                                       message: TextLiteral.calendarViewAlertPastMessage)
             return false
@@ -245,8 +245,8 @@ extension CalendarView: FSCalendarDelegate {
     }
 
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
-        let isBeforeToday = date < Date() - oneDayInterval
-        let isAWeekBeforeAfter = date < selectStartDate + sevenDaysInterval && date > selectStartDate - sevenDaysInterval
+        let isBeforeToday = date < Date() - self.oneDayInterval
+        let isAWeekBeforeAfter = date < self.selectStartDate + self.sevenDaysInterval && date > self.selectStartDate - self.sevenDaysInterval
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey004.withAlphaComponent(0.4)
