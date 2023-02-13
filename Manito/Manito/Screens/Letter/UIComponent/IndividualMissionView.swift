@@ -11,7 +11,7 @@ import SnapKit
 
 final class IndividualMissionView: UIView {
     
-    // MARK: - property
+    // MARK: - ui component
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -37,8 +37,8 @@ final class IndividualMissionView: UIView {
     init(mission: String) {
         missionText = mission
         super.init(frame: .zero)
-        render()
-        configUI()
+        setupLayout()
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -47,7 +47,7 @@ final class IndividualMissionView: UIView {
     
     // MARK: - func
     
-    private func render() {
+    private func setupLayout() {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
@@ -63,7 +63,7 @@ final class IndividualMissionView: UIView {
         }
     }
     
-    private func configUI() {
+    private func configureUI() {
         backgroundColor = .darkGrey004
         makeBorderLayer(color: .subOrange)
     }
