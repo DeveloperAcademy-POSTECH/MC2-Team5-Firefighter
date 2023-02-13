@@ -245,7 +245,8 @@ final class DetailEditViewController: BaseViewController {
             do {
                 let status = try await detailWaitService.editRoomInfo(roomId: "\(roomIndex)", roomInfo: roomDto)
                 if status == 204 {
-                    ToastView.showToast(message: "방 정보 수정 완료", controller: self)
+                    ToastView.showToast(message: "방 정보 수정 완료",
+                                        controller: self)
                     didTappedChangeButton?()
                     dismiss(animated: true)
                 }
@@ -275,7 +276,9 @@ final class DetailEditViewController: BaseViewController {
         let actions: [((UIAlertAction) -> Void)?] = [{ [weak self] _ in
             self?.dismiss(animated: true)
         }, nil]
-        makeActionSheet(actionTitles: actionTitles, actionStyle: actionStyle, actions: actions)
+        makeActionSheet(actionTitles: actionTitles,
+                        actionStyle: actionStyle,
+                        actions: actions)
     }
 
     private func setupChangedButton() {
@@ -298,7 +301,8 @@ final class DetailEditViewController: BaseViewController {
             if currentUserCount <= sliderValue {
                 putChangeRoomInfo(roomDto: dto)
             } else {
-                makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle, message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
+                makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle,
+                          message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
             }
         }
     }

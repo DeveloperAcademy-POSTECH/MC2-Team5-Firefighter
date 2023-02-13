@@ -148,16 +148,20 @@ class CalendarView: UIView {
 
         let isFirstClickPastDate = calendar.selectedDates[0] < calendar.selectedDates[1]
         if isFirstClickPastDate {
-            setSelecteDate(startIndex: 0, endIndex: 1)
+            setSelecteDate(startIndex: 0,
+                           endIndex: 1)
         } else {
-            setSelecteDate(startIndex: 1, endIndex: 0)
+            setSelecteDate(startIndex: 1,
+                           endIndex: 0)
         }
     }
 
     func setSelecteDate(startIndex: Int, endIndex: Int) {
         var startDate = calendar.selectedDates[startIndex]
         while startDate < calendar.selectedDates[endIndex] {
-            guard let addDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate) else { return }
+            guard let addDate = Calendar.current.date(byAdding: .day,
+                                                      value: 1,
+                                                      to: startDate) else { return }
             calendar.select(addDate)
             startDate += oneDayInterval
         }
@@ -167,7 +171,9 @@ class CalendarView: UIView {
 
     func countDateRange() -> Int {
         let isFirstClickPastDate = calendar.selectedDates[0] < calendar.selectedDates[1]
-        let selectdDate = isFirstClickPastDate ? calendar.selectedDates[1].timeIntervalSince(calendar.selectedDates[0]) : calendar.selectedDates[0].timeIntervalSince(calendar.selectedDates[1])
+        let selectdDate = isFirstClickPastDate
+        ? calendar.selectedDates[1].timeIntervalSince(calendar.selectedDates[0])
+        : calendar.selectedDates[0].timeIntervalSince(calendar.selectedDates[1])
         let dateRangeCount = selectdDate / 86400
 
         return Int(dateRangeCount) + 1
@@ -196,7 +202,8 @@ extension CalendarView: FSCalendarDelegate {
             tempEndDateText = date.dateToString
             if countDateRange() > 7 {
                 calendar.deselect(date)
-                viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle, message: TextLiteral.maxMessage)
+                viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle,
+                                          message: TextLiteral.maxMessage)
             } else {
                 setDateRange()
                 calendar.reloadData()
@@ -229,7 +236,8 @@ extension CalendarView: FSCalendarDelegate {
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         if date < Date() - oneDayInterval {
-            viewController?.makeAlert(title: TextLiteral.calendarViewAlertPastTitle, message: TextLiteral.calendarViewAlertPastMessage)
+            viewController?.makeAlert(title: TextLiteral.calendarViewAlertPastTitle,
+                                      message: TextLiteral.calendarViewAlertPastMessage)
             return false
         } else {
             return true

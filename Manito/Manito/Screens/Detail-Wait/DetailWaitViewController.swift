@@ -15,7 +15,9 @@ final class DetailWaitViewController: BaseViewController {
         case owner
         case member
 
-        var alertText: (title: String, message: String, okTitle: String) {
+        var alertText: (title: String,
+                        message: String,
+                        okTitle: String) {
             switch self {
             case .owner:
                 return (title: TextLiteral.datailWaitViewControllerDeleteTitle,
@@ -312,7 +314,8 @@ final class DetailWaitViewController: BaseViewController {
     // MARK: - private func
 
     private func setupSettingButton() {
-        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: settingButton, offsetX: -10)
+        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: settingButton,
+                                                                       offsetX: -10)
         let settingButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
 
         navigationItem.rightBarButtonItem = settingButton
@@ -323,13 +326,21 @@ final class DetailWaitViewController: BaseViewController {
         ? [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
             self?.presentEditRoomView()
         }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-               self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: { _ in
+               self?.makeRequestAlert(title: UserStatus.owner.alertText.title,
+                                      message: UserStatus.owner.alertText.message,
+                                      okTitle: UserStatus.owner.alertText.okTitle,
+                                      okAction: { _ in
                    self?.requestDeleteRoom()
+                   
                })
-           })
+            
+        })
         ]
         : [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-            self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction:  { _ in
+            self?.makeRequestAlert(title: UserStatus.member.alertText.title,
+                                   message: UserStatus.member.alertText.message,
+                                   okTitle: UserStatus.member.alertText.okTitle,
+                                   okAction: { _ in
                 self?.requestDeleteLeaveRoom()
             })
         })]
@@ -350,13 +361,17 @@ final class DetailWaitViewController: BaseViewController {
         let fiveDaysInterval: TimeInterval = 86400 * 4
         let defaultStartDate = Date().dateToString
         let defaultEndDate = (Date() + fiveDaysInterval).dateToString
-        self.presentDetailEditViewController(startString: defaultStartDate, endString: defaultEndDate, isDateEdit: isDateEdit)
+        self.presentDetailEditViewController(startString: defaultStartDate,
+                                             endString: defaultEndDate,
+                                             isDateEdit: isDateEdit)
     }
     
     private func editInfoFromCurrentDate() {
         guard let startDate = room?.roomInformation?.startDate,
               let endDate = room?.roomInformation?.endDate else { return }
-        self.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: false)
+        self.presentDetailEditViewController(startString: startDate,
+                                             endString: endDate,
+                                             isDateEdit: false)
     }
 
     private func setupNotificationCenter() {
@@ -371,9 +386,12 @@ final class DetailWaitViewController: BaseViewController {
                 let action: ((UIAlertAction) -> ()) = { [weak self] _ in
                     self?.editInfoFromDefaultDate(isDateEdit: true)
                 }
-                makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage, okAction: action)
+                makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                          message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
+                          okAction: action)
             case .member:
-                makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastAlertMessage)
+                makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                          message: TextLiteral.detailWaitViewControllerPastAlertMessage)
             }
         }
     }
@@ -440,7 +458,9 @@ final class DetailWaitViewController: BaseViewController {
     @objc private func presentEditViewController() {
         guard let startDate = room?.roomInformation?.startDate,
               let endDate = room?.roomInformation?.endDate else { return }
-        self.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: false)
+        self.presentDetailEditViewController(startString: startDate,
+                                             endString: endDate,
+                                             isDateEdit: false)
     }
     
     @objc private func changeStartButton() {
