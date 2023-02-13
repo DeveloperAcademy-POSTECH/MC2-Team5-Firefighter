@@ -129,8 +129,8 @@ final class DetailEditViewController: BaseViewController {
             self.calendarView.setupDateRange()
         }
     }
-
-    // MARK: - life cycle
+    
+    // MARK: - init
     
     init(editMode: EditMode, roomIndex: Int, title: String) {
         self.editMode = editMode
@@ -146,6 +146,8 @@ final class DetailEditViewController: BaseViewController {
     deinit {
         print("\(#file) is dead")
     }
+    
+    // MARK: - override
     
     override func configureUI() {
         super.configureUI()

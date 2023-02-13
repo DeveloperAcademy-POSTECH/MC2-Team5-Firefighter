@@ -153,6 +153,8 @@ final class DetailWaitViewController: BaseViewController {
         self.setupDelegation()
         self.setupNotificationCenter()
     }
+    
+    // MARK: - override
 
     override func setupLayout() {
         self.view.addSubview(self.titleView)
