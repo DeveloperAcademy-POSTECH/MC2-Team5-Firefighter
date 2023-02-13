@@ -28,7 +28,7 @@ final class DetailWaitTitleView: UIView {
         }
     }
 
-    // MARK: - property
+    // MARK: - ui component
 
     private(set) var roomTitleLabel: UILabel = {
         let label = UILabel()
@@ -81,6 +81,8 @@ final class DetailWaitTitleView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - func
 
     private func render() {
         self.addSubview(roomTitleLabel)
@@ -115,8 +117,6 @@ final class DetailWaitTitleView: UIView {
             $0.centerY.equalToSuperview()
         }
     }
-    
-    // MARK: - func
     
     func setStartState(state: String) {
         switch state {

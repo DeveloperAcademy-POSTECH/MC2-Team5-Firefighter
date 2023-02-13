@@ -11,31 +11,8 @@ import FSCalendar
 import SnapKit
 
 final class DetailEditViewController: BaseViewController {
-    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-    var didTappedChangeButton: (() -> ())?
-    private let roomIndex: Int
-    private let roomTitle: String
-    enum EditMode {
-        case date
-        case information
-    }
-    var editMode: EditMode
-    var currentUserCount = 0
-    var sliderValue = 10
-    var startDateText = "" {
-        didSet {
-            calendarView.startDateText = startDateText
-            calendarView.setupDateRange()
-        }
-    }
-    var endDateText = "" {
-        didSet {
-            calendarView.endDateText = endDateText
-            calendarView.setupDateRange()
-        }
-    }
 
-    // MARK: - property
+    // MARK: - ui component
 
     private lazy var cancelButton: UIButton = {
         let button = UIButton(type: .system)
@@ -126,6 +103,32 @@ final class DetailEditViewController: BaseViewController {
         label.textColor = .white
         return label
     }()
+    
+    // MARK: - property
+    
+    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
+    var didTappedChangeButton: (() -> ())?
+    private let roomIndex: Int
+    private let roomTitle: String
+    enum EditMode {
+        case date
+        case information
+    }
+    var editMode: EditMode
+    var currentUserCount = 0
+    var sliderValue = 10
+    var startDateText = "" {
+        didSet {
+            calendarView.startDateText = startDateText
+            calendarView.setupDateRange()
+        }
+    }
+    var endDateText = "" {
+        didSet {
+            calendarView.endDateText = endDateText
+            calendarView.setupDateRange()
+        }
+    }
 
     // MARK: - life cycle
     
@@ -143,8 +146,6 @@ final class DetailEditViewController: BaseViewController {
     deinit {
         print("\(#file) is dead")
     }
-    
-    // MARK: - life cycle
     
     override func configureUI() {
         super.configureUI()

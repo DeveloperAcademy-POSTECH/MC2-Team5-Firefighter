@@ -11,15 +11,6 @@ import FSCalendar
 import SnapKit
 
 class CalendarView: UIView {
-    private var selectStartDate = Date()
-    private let oneDayInterval: TimeInterval = 86400
-    private let sevenDaysInterval: TimeInterval = 604800
-    var changeButtonState: ((Bool) -> ())?
-    var startDateText = ""
-    var endDateText = ""
-    private var tempStartDateText = ""
-    private var tempEndDateText = ""
-    var isFirstTap = false
     
     private enum CalendarMoveType {
         case previous
@@ -35,7 +26,7 @@ class CalendarView: UIView {
         }
     }
 
-    // MARK: - property
+    // MARK: - ui component
 
     private lazy var previousButton: UIButton = {
         let button = UIButton()
@@ -74,6 +65,18 @@ class CalendarView: UIView {
         calendar.appearance.todayColor = .clear
         return calendar
     }()
+    
+    // MARK: - property
+    
+    private var selectStartDate = Date()
+    private let oneDayInterval: TimeInterval = 86400
+    private let sevenDaysInterval: TimeInterval = 604800
+    var changeButtonState: ((Bool) -> ())?
+    var startDateText = ""
+    var endDateText = ""
+    private var tempStartDateText = ""
+    private var tempEndDateText = ""
+    var isFirstTap = false
 
     // MARK: - init
 
@@ -87,6 +90,8 @@ class CalendarView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - func
 
     private func render() {
         self.addSubview(calendar)
@@ -111,8 +116,6 @@ class CalendarView: UIView {
         let hasDate = tempStartDateText != "" && tempEndDateText != ""
         changeButtonState?(hasDate)
     }
-
-    // MARK: - func
 
     private func setupDelegation() {
         calendar.delegate = self
