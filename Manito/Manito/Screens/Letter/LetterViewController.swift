@@ -355,8 +355,8 @@ extension LetterViewController: UICollectionViewDataSource {
                 return UICollectionReusableView()
             }
             
-            headerView.segmentControlIndex = self.letterState.rawValue
-            headerView.changeSegmentControlIndex = { [weak self] index in
+            headerView.segmentedControlIndex = self.letterState.rawValue
+            headerView.selectedSegmentIndexDidChange = { [weak self] index in
                 guard let letterStatus = LetterState.init(rawValue: index) else { return }
                 self?.letterState = letterStatus
             }

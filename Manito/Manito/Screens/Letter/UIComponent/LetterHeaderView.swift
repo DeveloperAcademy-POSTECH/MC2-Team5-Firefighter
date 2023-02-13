@@ -11,11 +11,11 @@ import SnapKit
 
 final class LetterHeaderView: UICollectionReusableView {
     
-    var changeSegmentControlIndex: ((Int) -> ())?
+    var selectedSegmentIndexDidChange: ((_ changedIndex: Int) -> ())?
     
-    // MARK: - property
+    // MARK: - ui component
     
-    private lazy var segmentControl: UISegmentedControl = {
+    private lazy var segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: [TextLiteral.letterHeaderViewSegmentControlManitti, TextLiteral.letterHeaderViewSegmentControlManitto])
         let font = UIFont.font(.regular, ofSize: 14)
         let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
@@ -25,14 +25,16 @@ final class LetterHeaderView: UICollectionReusableView {
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
         control.backgroundColor = .darkGrey004
-        control.addTarget(self, action: #selector(changedIndexValue(_:)), for: .valueChanged)
+        control.addTarget(self, action: #selector(segmentedControlIndexValueChanged(_:)), for: .valueChanged)
         
         return control
     }()
-    
-    var segmentControlIndex: Int = 0 {
+
+    // MARK: - property
+
+    var segmentedControlIndex: Int = 0 {
         didSet {
-            segmentControl.selectedSegmentIndex = segmentControlIndex
+            segmentedControl.selectedSegmentIndex = segmentedControlIndex
         }
     }
     
@@ -40,8 +42,8 @@ final class LetterHeaderView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        setupLayout()
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -50,24 +52,24 @@ final class LetterHeaderView: UICollectionReusableView {
     
     // MARK: - func
     
-    private func render() {
-        self.addSubview(segmentControl)
-        segmentControl.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(segmentedControl)
+        segmentedControl.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(13)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.height.equalTo(40)
         }
     }
     
-    private func configUI() {
+    private func configureUI() {
         backgroundColor = .backgroundGrey
     }
     
     // MARK: - selector
     
     @objc
-    private func changedIndexValue(_ sender: UISegmentedControl) {
-        segmentControlIndex = sender.selectedSegmentIndex
-        changeSegmentControlIndex?(segmentControlIndex)
+    private func segmentedControlIndexValueChanged(_ sender: UISegmentedControl) {
+        segmentedControlIndex = sender.selectedSegmentIndex
+        selectedSegmentIndexDidChange?(segmentedControlIndex)
     }
 }
