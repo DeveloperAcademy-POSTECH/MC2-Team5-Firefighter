@@ -1,5 +1,5 @@
 //
-//  LetterPhotoView.swift
+//  CreateLetterPhotoView.swift
 //  Manito
 //
 //  Created by SHIN YOON AH on 2022/06/13.
@@ -10,16 +10,16 @@ import UIKit
 
 import SnapKit
 
-final class LetterPhotoView: UIView {
+final class CreateLetterPhotoView: UIView {
     
-    var applySendButtonEnabled: (() -> ())?
+    var setSendButtonEnabled: (() -> ())?
     
     private enum PhotoType {
         case camera
         case library
     }
     
-    // MARK: - property
+    // MARK: - ui component
     
     let importPhotosButton: UIButton = {
         let button = UIButton()
@@ -44,11 +44,11 @@ final class LetterPhotoView: UIView {
         return controller
     }()
     private lazy var phPickerController: PHPickerViewController = {
-        let controller = PHPickerViewController(configuration: photoConfiguration)
+        let controller = PHPickerViewController(configuration: phPickerConfiguration)
         controller.delegate = self
         return controller
     }()
-    private var photoConfiguration: PHPickerConfiguration = {
+    private let phPickerConfiguration: PHPickerConfiguration = {
         var configuration = PHPickerConfiguration()
         configuration.filter = .any(of: [.images, .livePhotos])
         return configuration
@@ -58,8 +58,8 @@ final class LetterPhotoView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        setupButtonAction()
+        self.setupLayout()
+        self.setupButtonAction()
     }
     
     required init?(coder: NSCoder) {
@@ -68,15 +68,15 @@ final class LetterPhotoView: UIView {
 
     // MARK: - func
     
-    private func render() {
-        addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
         }
         
-        addSubview(importPhotosButton)
-        importPhotosButton.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(17)
+        self.addSubview(self.importPhotosButton)
+        self.importPhotosButton.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(17)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(209)
         }
@@ -86,20 +86,19 @@ final class LetterPhotoView: UIView {
         let photoAction = UIAction { [weak self] _ in
             self?.presentActionSheet()
         }
-        
-        importPhotosButton.addAction(photoAction, for: .touchUpInside)
+        self.importPhotosButton.addAction(photoAction, for: .touchUpInside)
     }
     
     private func presentActionSheet() {
-        let hasImage = importPhotosButton.imageView?.image != ImageLiterals.btnCamera
+        let hasImage = self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
         let actionTitles = hasImage ? [TextLiteral.letterPhotoViewTakePhoto, TextLiteral.letterPhotoViewChoosePhoto, TextLiteral.letterPhotoViewDeletePhoto, TextLiteral.cancel] : [TextLiteral.letterPhotoViewTakePhoto, TextLiteral.letterPhotoViewChoosePhoto, TextLiteral.cancel]
         let actionStyle: [UIAlertAction.Style] = hasImage ? [.default, .default, .default, .cancel] : [.default, .default, .cancel]
-        let actions = getAlertAction(with: hasImage)
+        let actions = self.getAlertAction(with: hasImage)
         
-        viewController?.makeActionSheet(message: TextLiteral.letterPhotoViewChoosePhotoToManitto,
-                                       actionTitles: actionTitles,
-                                       actionStyle: actionStyle,
-                                       actions: actions)
+        self.viewController?.makeActionSheet(message: TextLiteral.letterPhotoViewChoosePhotoToManitto,
+                                             actionTitles: actionTitles,
+                                             actionStyle: actionStyle,
+                                             actions: actions)
     }
     
     private func getAlertAction(with state: Bool) -> [((UIAlertAction) -> ())?] {
@@ -120,9 +119,9 @@ final class LetterPhotoView: UIView {
     private func applyPHPickerWithAuthorization(with state: PhotoType) {
         switch (PHPhotoLibrary.authorizationStatus(), state) {
         case (.denied, .library):
-            didMoveToSetting()
+            self.didMoveToSetting()
         case (.authorized, .library):
-            viewController?.present(phPickerController, animated: true, completion: nil)
+            self.viewController?.present(phPickerController, animated: true, completion: nil)
         case (.notDetermined, .library):
             PHPhotoLibrary.requestAuthorization({ [weak self] photoStatus in
                 guard let self = self else { return }
@@ -145,31 +144,32 @@ final class LetterPhotoView: UIView {
             guard let settingURL = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(settingURL)
         }
+
         if let appName = Bundle.main.infoDictionary!["CFBundleName"] as? String {
-            viewController?.makeRequestAlert(title: TextLiteral.letterPhotoViewSetting,
-                                            message: "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
-                                            okAction: settingAction,
-                                            completion: nil)
+            self.viewController?.makeRequestAlert(title: TextLiteral.letterPhotoViewSetting,
+                                                  message: "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
+                                                  okAction: settingAction,
+                                                  completion: nil)
         }
     }
 }
 
-// MARK: - UIImagePickerControllerDelegate
-extension LetterPhotoView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+// MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
+extension CreateLetterPhotoView: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             DispatchQueue.main.async {
                 self.importPhotosButton.setImage(image, for: .normal)
-                self.applySendButtonEnabled?()
+                self.setSendButtonEnabled?()
             }
         }
         
-        viewController?.dismiss(animated: true, completion: nil)
+        self.viewController?.dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - PHPickerViewControllerDelegate
-extension LetterPhotoView: PHPickerViewControllerDelegate {
+extension CreateLetterPhotoView: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
         
@@ -182,7 +182,7 @@ extension LetterPhotoView: PHPickerViewControllerDelegate {
                 DispatchQueue.main.async {
                     guard let image = image as? UIImage else { return }
                     self.importPhotosButton.setImage(image, for: .normal)
-                    self.applySendButtonEnabled?()
+                    self.setSendButtonEnabled?()
                 }
                 
                 if let error = error {

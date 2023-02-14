@@ -72,7 +72,7 @@
 		B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */; };
 		B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFA2856B5180080992C /* IndividualMissionView.swift */; };
 		B50B1AFD2856C3500080992C /* CreateLetterTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFC2856C3500080992C /* CreateLetterTextView.swift */; };
-		B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFE2856D3820080992C /* LetterPhotoView.swift */; };
+		B50B1AFF2856D3820080992C /* CreateLetterPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFE2856D3820080992C /* CreateLetterPhotoView.swift */; };
 		B50B1B0428596C900080992C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B50B1B0328596C900080992C /* SnapKit */; };
 		B50B1B0728596CB10080992C /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = B50B1B0628596CB10080992C /* FSCalendar */; };
 		B50B1B2A285AB7650080992C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B29285AB7650080992C /* SplashViewController.swift */; };
@@ -229,7 +229,7 @@
 		B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterViewController.swift; sourceTree = "<group>"; };
 		B50B1AFA2856B5180080992C /* IndividualMissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualMissionView.swift; sourceTree = "<group>"; };
 		B50B1AFC2856C3500080992C /* CreateLetterTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterTextView.swift; sourceTree = "<group>"; };
-		B50B1AFE2856D3820080992C /* LetterPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterPhotoView.swift; sourceTree = "<group>"; };
+		B50B1AFE2856D3820080992C /* CreateLetterPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterPhotoView.swift; sourceTree = "<group>"; };
 		B50B1B29285AB7650080992C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B50B1B3B285AD2B20080992C /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = logo.gif; sourceTree = "<group>"; };
 		B50B1B3D285B04580080992C /* Interaction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Interaction.storyboard; sourceTree = "<group>"; };
@@ -758,7 +758,7 @@
 				B5F525382854871E00614FF7 /* BottomOfSendLetterView.swift */,
 				B50B1AFA2856B5180080992C /* IndividualMissionView.swift */,
 				B50B1AFC2856C3500080992C /* CreateLetterTextView.swift */,
-				B50B1AFE2856D3820080992C /* LetterPhotoView.swift */,
+				B50B1AFE2856D3820080992C /* CreateLetterPhotoView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1029,7 +1029,7 @@
 				39C957ED287AE4D100A04A2B /* MainEndPoint.swift in Sources */,
 				39C957EF287AEBB400A04A2B /* Endpointable.swift in Sources */,
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
-				B50B1AFF2856D3820080992C /* LetterPhotoView.swift in Sources */,
+				B50B1AFF2856D3820080992C /* CreateLetterPhotoView.swift in Sources */,
 				397A241A28BA532A00454E4F /* FriendList.swift in Sources */,
 				B5F31C5628BFA87700F61D0F /* Requestable.swift in Sources */,
 				397A241028BA494100454E4F /* APIEnvironment.swift in Sources */,

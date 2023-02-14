@@ -46,7 +46,7 @@ final class CreateLetterViewController: BaseViewController {
     }()
     private let scrollContentView = UIView()
     private let letterTextView = CreateLetterTextView()
-    private let letterPhotoView = LetterPhotoView()
+    private let letterPhotoView = CreateLetterPhotoView()
     private lazy var missionView = IndividualMissionView(mission: self.mission)
 
     // MARK: - property
@@ -164,7 +164,7 @@ final class CreateLetterViewController: BaseViewController {
             self?.isSendEnabled.hasText = hasText
         }
 
-        self.letterPhotoView.applySendButtonEnabled = { [weak self] in
+        self.letterPhotoView.setSendButtonEnabled = { [weak self] in
 //            self?.isSendEnabled.hasImage = hasImage
         }
     }

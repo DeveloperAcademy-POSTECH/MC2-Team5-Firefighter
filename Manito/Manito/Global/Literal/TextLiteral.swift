@@ -99,7 +99,7 @@ enum TextLiteral {
     // MARK: - CreateLetterTextView
     static let letterTextViewTitleLabel: String = "쪽지 작성"
     
-    // MARK: - LetterPhotoView
+    // MARK: - CreateLetterPhotoView
     static let letterPhotoViewTitleLabel: String = "사진 추가"
     static let letterPhotoViewTakePhoto: String = "사진 촬영"
     static let letterPhotoViewChoosePhoto: String = "사진 보관함에서 선택"
