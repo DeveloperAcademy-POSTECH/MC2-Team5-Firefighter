@@ -85,7 +85,6 @@ final class DetailEditViewController: BaseViewController {
         slider.value = Float(self.sliderValue)
         slider.isContinuous = true
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
-        slider.addTarget(self, action: #selector(self.changeMemberCount(sender:)), for: .valueChanged)
         return slider
     }()
     private lazy var memberCountLabel: UILabel = {
@@ -149,6 +148,7 @@ final class DetailEditViewController: BaseViewController {
         self.setupCalendarChangedButton()
         self.setupCancleButton()
         self.setupChangeChangeButton()
+        self.setupMemberSlider()
     }
 
     override func setupLayout() {
@@ -248,6 +248,14 @@ final class DetailEditViewController: BaseViewController {
             self?.didTapChangeButton()
         }
         self.changeButton.addAction(action, for: .touchUpInside)
+    }
+    
+    private func setupMemberSlider() {
+        let valueChangeAction = UIAction { [weak self] action in
+            guard let sender = action.sender as? UISlider else { return }
+            self?.changeMemberCount(sender: sender)
+        }
+        self.memberSlider.addAction(valueChangeAction, for: .valueChanged)
     }
 
     private func presentationControllerDidAttemptToDismissAlert() {
