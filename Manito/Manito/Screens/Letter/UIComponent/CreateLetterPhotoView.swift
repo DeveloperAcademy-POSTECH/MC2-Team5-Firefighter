@@ -16,7 +16,7 @@ final class CreateLetterPhotoView: UIView {
     
     var setSendButtonEnabled: ((_ hasImage: Bool) -> ())?
     
-    private enum PhotoType {
+    private enum SourceType {
         case camera
         case library
     }
@@ -44,16 +44,6 @@ final class CreateLetterPhotoView: UIView {
         let controller = UIImagePickerController()
         controller.delegate = self
         return controller
-    }()
-    private lazy var phPickerController: PHPickerViewController = {
-        let controller = PHPickerViewController(configuration: phPickerConfiguration)
-        controller.delegate = self
-        return controller
-    }()
-    private let phPickerConfiguration: PHPickerConfiguration = {
-        var configuration = PHPickerConfiguration()
-        configuration.filter = .any(of: [.images, .livePhotos])
-        return configuration
     }()
 
     // MARK: - property
@@ -112,10 +102,10 @@ final class CreateLetterPhotoView: UIView {
 
     private func alertActions() -> [alertAction?] {
         let takePhotoAction: alertAction = { [weak self] _ in
-            self?.applyPHPickerWithAuthorization(with: .camera)
+            self?.openPickerAccordingTo(.camera)
         }
         let photoLibraryAction: alertAction = { [weak self] _ in
-            self?.applyPHPickerWithAuthorization(with: .library)
+            self?.openPickerAccordingTo(.library)
         }
         let removePhotoAction: alertAction = { [weak self] _ in
             self?.importPhotosButton.setImage(ImageLiterals.btnCamera, for: .normal)
@@ -136,26 +126,40 @@ final class CreateLetterPhotoView: UIView {
                                              actions: actions)
     }
     
-    private func applyPHPickerWithAuthorization(with state: PhotoType) {
-        switch (PHPhotoLibrary.authorizationStatus(), state) {
-        case (.denied, .library):
-            self.openSettings()
-        case (.authorized, .library):
-            self.viewController?.present(phPickerController, animated: true, completion: nil)
-        case (.notDetermined, .library):
-            PHPhotoLibrary.requestAuthorization({ [weak self] photoStatus in
-                guard let self = self else { return }
-                if photoStatus == .authorized {
-                    DispatchQueue.main.async {
-                        self.viewController?.present(self.phPickerController, animated: true, completion: nil)
-                    }
-                }
-            })
-        case (_, .camera):
+    private func openPickerAccordingTo(_ sourceType: SourceType) {
+        switch sourceType {
+        case .library:
+            let authorizationStatus = PHPhotoLibrary.authorizationStatus(for: .addOnly)
+            self.pHPickerController(willShowAccordingToAuthorizationStatus: authorizationStatus)
+        case .camera:
             self.imagePickerController.sourceType = .camera
             self.viewController?.present(self.imagePickerController, animated: true, completion: nil)
+        }
+    }
+
+    private func pHPickerController(willShowAccordingToAuthorizationStatus authorizationStatus: PHAuthorizationStatus) {
+        switch authorizationStatus {
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization(for: .addOnly) { [weak self] authorizationStatus in
+                if authorizationStatus == .authorized {
+                    self?.phPickerControllerDidShow()
+                }
+            }
+        case .authorized:
+            self.phPickerControllerDidShow()
         default:
-            break
+            self.openSettings()
+        }
+    }
+
+    private func phPickerControllerDidShow() {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .any(of: [.images, .livePhotos])
+        let phPickerController = PHPickerViewController(configuration: configuration)
+        phPickerController.delegate = self
+
+        DispatchQueue.main.async {
+            self.viewController?.present(phPickerController, animated: true, completion: nil)
         }
     }
     
