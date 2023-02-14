@@ -73,17 +73,9 @@ final class DetailWaitViewController: BaseViewController {
     }()
     private lazy var copyButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { [weak self] _ in
-            if let code = self?.room?.invitation?.code {
-                ToastView.showToast(code: code ,
-                                    message: TextLiteral.detailWaitViewControllerCopyCode,
-                                    controller: self ?? UIViewController())
-            }
-        }
         button.setTitle(TextLiteral.copyCode, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
     private let listTableView: UITableView = {
@@ -152,6 +144,7 @@ final class DetailWaitViewController: BaseViewController {
         self.requestWaitRoomInfo()
         self.setupDelegation()
         self.setupNotificationCenter()
+        self.setupCopyButton()
     }
     
     // MARK: - override
@@ -208,6 +201,17 @@ final class DetailWaitViewController: BaseViewController {
         self.listTableView.delegate = self
         self.listTableView.dataSource = self
         self.listTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    private func setupCopyButton() {
+        let action = UIAction { [weak self] _ in
+            if let code = self?.room?.invitation?.code {
+                ToastView.showToast(code: code,
+                                    message: TextLiteral.detailWaitViewControllerCopyCode,
+                                    controller: self ?? UIViewController())
+            }
+        }
+        copyButton.addAction(action, for: .touchUpInside)
     }
 
     private func presentDetailEditViewController(startString: String, endString: String, isDateEdit: Bool) {

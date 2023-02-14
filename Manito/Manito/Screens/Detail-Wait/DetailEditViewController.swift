@@ -14,15 +14,11 @@ final class DetailEditViewController: BaseViewController {
 
     // MARK: - ui component
 
-    private lazy var cancelButton: UIButton = {
+    private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { [weak self] _ in
-            self?.dismiss(animated: true)
-        }
         button.setTitle(TextLiteral.cancel, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
     private let topIndicatorView: UIView = {
@@ -31,15 +27,11 @@ final class DetailEditViewController: BaseViewController {
         view.layer.cornerRadius = 1.5
         return view
     }()
-    private lazy var changeButton: UIButton = {
+    private let changeButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { [weak self] _ in
-            self?.didTapChangeButton()
-        }
         button.setTitle(TextLiteral.change, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
     private let titleLabel: UILabel = {
@@ -154,7 +146,9 @@ final class DetailEditViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.presentationController?.delegate = self
         self.isModalInPresentation = true
-        self.setupChangedButton()
+        self.setupCalendarChangedButton()
+        self.setupCancleButton()
+        self.setupChangeChangeButton()
     }
 
     override func setupLayout() {
@@ -241,6 +235,20 @@ final class DetailEditViewController: BaseViewController {
     }
 
     // MARK: - func
+    
+    private func setupCancleButton() {
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        self.cancelButton.addAction(action, for: .touchUpInside)
+    }
+    
+    private func setupChangeChangeButton() {
+        let action = UIAction { [weak self] _ in
+            self?.didTapChangeButton()
+        }
+        self.changeButton.addAction(action, for: .touchUpInside)
+    }
 
     private func presentationControllerDidAttemptToDismissAlert() {
         guard self.calendarView.isFirstTap else {
@@ -261,7 +269,7 @@ final class DetailEditViewController: BaseViewController {
                         actions: actions)
     }
 
-    private func setupChangedButton() {
+    private func setupCalendarChangedButton() {
         self.calendarView.changeButtonState = { [weak self] value in
             self?.changeButton.isEnabled = value
             self?.changeButton.setTitleColor(.subBlue, for: .normal)

@@ -28,22 +28,14 @@ final class CalendarView: UIView {
 
     // MARK: - ui component
 
-    private lazy var previousButton: UIButton = {
+    private let previousButton: UIButton = {
         let button = UIButton()
-        let action = UIAction { [weak self] _ in
-            self?.changeMonth(with: CalendarMoveType.previous)
-        }
         button.setImage(ImageLiterals.icBack, for: .normal)
-        button.addAction(action, for: .touchUpInside)
         return button
     }()
-    private lazy var nextButton: UIButton = {
+    private let nextButton: UIButton = {
         let button = UIButton()
-        let action = UIAction { [weak self] _ in
-            self?.changeMonth(with: CalendarMoveType.next)
-        }
         button.setImage(ImageLiterals.icRight, for: .normal)
-        button.addAction(action, for: .touchUpInside)
         return button
     }()
     private var calendar: FSCalendar = {
@@ -85,6 +77,8 @@ final class CalendarView: UIView {
         self.setupLayout()
         self.setupDelegation()
         self.setupDateRange()
+        self.setupPreviousButton()
+        self.setupNextButton()
     }
 
     required init?(coder: NSCoder) {
@@ -110,6 +104,19 @@ final class CalendarView: UIView {
             $0.top.equalToSuperview().inset(5)
             $0.trailing.equalToSuperview().inset(72)
         }
+    }
+    
+    private func setupPreviousButton() {
+        let action = UIAction { [weak self] _ in
+            self?.changeMonth(with: CalendarMoveType.previous)
+        }
+        self.previousButton.addAction(action, for: .touchUpInside)
+    }
+    private func setupNextButton() {
+        let action = UIAction { [weak self] _ in
+            self?.changeMonth(with: CalendarMoveType.next)
+        }
+        self.nextButton.addAction(action, for: .touchUpInside)
     }
     
     func setupButtonState() {
