@@ -287,7 +287,7 @@ final class DetailEditViewController: BaseViewController {
     }
 
     private func didTapChangeButton() {
-        let dto = RoomDTO(title: roomTitle,
+        let dto = RoomDTO(title: self.roomTitle,
                           capacity: Int(self.memberSlider.value),
                           startDate: "20\(self.calendarView.getTempStartDate())",
                           endDate: "20\(self.calendarView.getTempEndDate())")

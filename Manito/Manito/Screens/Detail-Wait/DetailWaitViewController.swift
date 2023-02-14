@@ -304,11 +304,11 @@ final class DetailWaitViewController: BaseViewController {
                 let action: ((UIAlertAction) -> ()) = { [weak self] _ in
                     self?.editInfoFromDefaultDate(isDateEdit: true)
                 }
-                makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                           message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
                           okAction: action)
             case .member:
-                makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                           message: TextLiteral.detailWaitViewControllerPastAlertMessage)
             }
         }
@@ -354,7 +354,7 @@ final class DetailWaitViewController: BaseViewController {
         viewController.modalPresentationStyle = .fullScreen
         viewController.manitteeName = nickname
         viewController.roomId = self.roomInformation?.id?.description
-        present(viewController, animated: true)
+        self.present(viewController, animated: true)
     }
 
     // MARK: - selector
