@@ -11,7 +11,7 @@ import SnapKit
 
 final class CreateLetterTextView: UIView {
     
-    var applySendButtonEnabled: (() -> ())?
+    var setSendButtonEnabled: ((_ hasText: Bool) -> ())?
 
     // MARK: - ui component
     
@@ -45,14 +45,11 @@ final class CreateLetterTextView: UIView {
 
     // MARK: - property
 
-    var hasText: Bool {
-        return self.letterTextView.hasText
-    }
     var text: String? {
         guard self.letterTextView.text != "" && self.letterTextView.text != nil else { return nil }
         return self.letterTextView.text
     }
-    private let maxCount: Int = 100
+    private let maximumCount: Int = 100
 
 
     
@@ -61,7 +58,7 @@ final class CreateLetterTextView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
-        self.setCounter(count: 0)
+        self.setCounter(0, maximumCount: self.maximumCount)
     }
     
     required init?(coder: NSCoder) {
@@ -91,12 +88,12 @@ final class CreateLetterTextView: UIView {
         }
     }
     
-    private func setCounter(count: Int) {
-        self.countLabel.text = "\(count)/\(self.maxCount)"
+    private func setCounter(_ count: Int, maximumCount: Int) {
+        self.countLabel.text = "\(count)/\(maximumCount)"
     }
     
-    private func checkMaxLength(textView: UITextView, maxLength: Int) {
-        if (textView.text?.count ?? 0 > maxLength) {
+    private func textViewReachedMaximumCount(_ textView: UITextView, maximumCount: Int) {
+        if (textView.text?.count ?? 0 > maximumCount) {
             textView.deleteBackward()
         }
     }
@@ -105,8 +102,8 @@ final class CreateLetterTextView: UIView {
 // MARK: - UITextViewDelegate
 extension CreateLetterTextView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        self.setCounter(count: textView.text?.count ?? 0)
-        self.checkMaxLength(textView: self.letterTextView, maxLength: self.maxCount)
-        self.applySendButtonEnabled?()
+        self.setCounter(textView.text?.count ?? 0, maximumCount: self.maximumCount)
+        self.textViewReachedMaximumCount(self.letterTextView, maximumCount: self.maximumCount)
+        self.setSendButtonEnabled?(textView.hasText)
     }
 }

@@ -52,6 +52,11 @@ final class CreateLetterViewController: BaseViewController {
     // MARK: - property
     
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
+    private var isSendEnabled: (hasText: Bool, hasImage: Bool) = (false, false) {
+        willSet {
+            self.sendButton.isEnabled = newValue.hasText || newValue.hasImage
+        }
+    }
     var manitteeId: String
     var roomId: String
     var mission: String
@@ -155,20 +160,13 @@ final class CreateLetterViewController: BaseViewController {
     // MARK: - func
     
     private func checkSendButtonEnabled() {
-        self.letterTextView.applySendButtonEnabled = { [weak self] in
-            self?.changeButtonEnabledState()
+        self.letterTextView.setSendButtonEnabled = { [weak self] hasText in
+            self?.isSendEnabled.hasText = hasText
         }
+
         self.letterPhotoView.applySendButtonEnabled = { [weak self] in
-            self?.changeButtonEnabledState()
+//            self?.isSendEnabled.hasImage = hasImage
         }
-    }
-    
-    private func changeButtonEnabledState() {
-        let hasText = self.letterTextView.hasText
-        let hasImage = self.letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
-        let canEnabled = hasText || hasImage
-        
-        self.sendButton.isEnabled = canEnabled
     }
     
     private func setupNavigationItem() {
@@ -197,7 +195,7 @@ final class CreateLetterViewController: BaseViewController {
     }
     
     private func presentationControllerDidAttemptToDismissAction() {
-        let hasText = self.letterTextView.hasText
+        let hasText = self.isSendEnabled.hasText
         let hasImage = self.letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
         guard hasText || hasImage else {
             self.dismiss(animated: true, completion: nil)
