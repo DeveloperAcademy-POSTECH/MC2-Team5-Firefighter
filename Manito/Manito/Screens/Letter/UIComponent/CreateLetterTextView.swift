@@ -21,7 +21,7 @@ final class CreateLetterTextView: UIView {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    lazy var letterTextView: UITextView = {
+    private lazy var letterTextView: UITextView = {
         let textView = UITextView()
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6.0
@@ -42,7 +42,19 @@ final class CreateLetterTextView: UIView {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
+
+    // MARK: - property
+
+    var hasText: Bool {
+        return self.letterTextView.hasText
+    }
+    var text: String? {
+        guard self.letterTextView.text != "" && self.letterTextView.text != nil else { return nil }
+        return self.letterTextView.text
+    }
     private let maxCount: Int = 100
+
+
     
     // MARK: - init
     

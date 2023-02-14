@@ -164,7 +164,7 @@ final class CreateLetterViewController: BaseViewController {
     }
     
     private func changeButtonEnabledState() {
-        let hasText = self.letterTextView.letterTextView.hasText
+        let hasText = self.letterTextView.hasText
         let hasImage = self.letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
         let canEnabled = hasText || hasImage
         
@@ -197,7 +197,7 @@ final class CreateLetterViewController: BaseViewController {
     }
     
     private func presentationControllerDidAttemptToDismissAction() {
-        let hasText = self.letterTextView.letterTextView.hasText
+        let hasText = self.letterTextView.hasText
         let hasImage = self.letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
         guard hasText || hasImage else {
             self.dismiss(animated: true, completion: nil)
@@ -222,22 +222,22 @@ final class CreateLetterViewController: BaseViewController {
     private func dispatchLetter(roomId: String) {
         Task {
             do {
-                if let content = self.letterTextView.letterTextView.text,
+                if let content = self.letterTextView.text,
                    let image = self.letterPhotoView.importPhotosButton.imageView?.image,
                    image != ImageLiterals.btnCamera {
                     guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
                     
                     let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
-                    
+
                     if status == 201 {
                         self.createLetter?()
                     }
-                } else if let content = self.letterTextView.letterTextView.text {
+                } else if let content = self.letterTextView.text {
                     let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
                     
                     let status = try await self.letterSevice.dispatchLetter(roomId: roomId, letter: dto)
-                    
+
                     if status == 201 {
                         self.createLetter?()
                     }
@@ -245,7 +245,7 @@ final class CreateLetterViewController: BaseViewController {
                           image != ImageLiterals.btnCamera {
                     guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: self.manitteeId)
-                    
+
                     let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
                     
                     if status == 201 {
