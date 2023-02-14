@@ -164,8 +164,8 @@ final class CreateLetterViewController: BaseViewController {
             self?.isSendEnabled.hasText = hasText
         }
 
-        self.letterPhotoView.setSendButtonEnabled = { [weak self] in
-//            self?.isSendEnabled.hasImage = hasImage
+        self.letterPhotoView.setSendButtonEnabled = { [weak self] hasImage in
+            self?.isSendEnabled.hasImage = hasImage
         }
     }
     
@@ -196,7 +196,7 @@ final class CreateLetterViewController: BaseViewController {
     
     private func presentationControllerDidAttemptToDismissAction() {
         let hasText = self.isSendEnabled.hasText
-        let hasImage = self.letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
+        let hasImage = self.isSendEnabled.hasImage
         guard hasText || hasImage else {
             self.dismiss(animated: true, completion: nil)
             return
@@ -221,7 +221,7 @@ final class CreateLetterViewController: BaseViewController {
         Task {
             do {
                 if let content = self.letterTextView.text,
-                   let image = self.letterPhotoView.importPhotosButton.imageView?.image,
+                   let image = self.letterPhotoView.image,
                    image != ImageLiterals.btnCamera {
                     guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
@@ -239,7 +239,7 @@ final class CreateLetterViewController: BaseViewController {
                     if status == 201 {
                         self.createLetter?()
                     }
-                } else if let image = self.letterPhotoView.importPhotosButton.imageView?.image,
+                } else if let image = self.letterPhotoView.image,
                           image != ImageLiterals.btnCamera {
                     guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: self.manitteeId)
