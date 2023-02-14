@@ -111,7 +111,7 @@ final class DetailWaitViewController: BaseViewController {
     private var roomInfo: RoomDTO?
     private var userArr: [String] = [] {
         didSet {
-            self.renderTableView()
+            self.setupLayoutTableView()
         }
     }
     private var detectStartableStatus: ((Bool) -> ())?
@@ -323,7 +323,7 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
     
-    private func renderTableView() {
+    private func setupLayoutTableView() {
         DispatchQueue.main.async {
             self.listTableView.reloadData()
             self.view.addSubview(self.listTableView)
