@@ -408,7 +408,7 @@ final class DetailWaitViewController: BaseViewController {
                     DispatchQueue.main.async {
                         self.isPastStartDate()
                         self.titleView.setStartState(state: state)
-                        self.comeInLabel.text = data?.userCount
+                        self.comeInLabel.text = roomInfo.userCount
                         self.titleView.setRoomTitleLabelText(text: title)
                         self.titleView.setDurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
                     }
