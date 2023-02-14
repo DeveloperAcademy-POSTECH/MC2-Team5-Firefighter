@@ -125,7 +125,7 @@ final class CreateLetterPhotoView: UIView {
         return self.hasImage ? [takePhotoAction, photoLibraryAction, removePhotoAction, nil]
                              : [takePhotoAction, photoLibraryAction, nil]
     }
-    
+
     private func presentActionSheet(message: String = TextLiteral.letterPhotoViewChoosePhotoToManitto,
                                     actionTitles: [String],
                                     actionStyle: [UIAlertAction.Style],
@@ -139,7 +139,7 @@ final class CreateLetterPhotoView: UIView {
     private func applyPHPickerWithAuthorization(with state: PhotoType) {
         switch (PHPhotoLibrary.authorizationStatus(), state) {
         case (.denied, .library):
-            self.didMoveToSetting()
+            self.openSettings()
         case (.authorized, .library):
             self.viewController?.present(phPickerController, animated: true, completion: nil)
         case (.notDetermined, .library):
@@ -159,18 +159,20 @@ final class CreateLetterPhotoView: UIView {
         }
     }
     
-    private func didMoveToSetting() {
-        let settingAction: ((UIAlertAction) -> ()) = { _ in
-            guard let settingURL = URL(string: UIApplication.openSettingsURLString) else { return }
+    private func openSettings() {
+        let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "애니또"
+        let settingAction: alertAction = { [weak self] _ in
+            guard let settingURL = URL(string: UIApplication.openSettingsURLString) else {
+                self?.viewController?.makeAlert(title: "오류", message: "설정 화면을 연결할 수 없습니다.")
+                return
+            }
             UIApplication.shared.open(settingURL)
         }
 
-        if let appName = Bundle.main.infoDictionary!["CFBundleName"] as? String {
-            self.viewController?.makeRequestAlert(title: TextLiteral.letterPhotoViewSetting,
-                                                  message: "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
-                                                  okAction: settingAction,
-                                                  completion: nil)
-        }
+        self.viewController?.makeRequestAlert(title: TextLiteral.letterPhotoViewSetting,
+                                              message: "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
+                                              okAction: settingAction,
+                                              completion: nil)
     }
 }
 
