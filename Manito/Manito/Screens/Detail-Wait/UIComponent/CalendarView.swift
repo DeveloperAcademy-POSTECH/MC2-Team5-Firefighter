@@ -209,7 +209,7 @@ extension CalendarView: FSCalendarDelegate {
             self.tempEndDateText = date.dateToString
             if self.countDateRange() > 7 {
                 calendar.deselect(date)
-                viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle,
+                self.viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle,
                                           message: TextLiteral.maxMessage)
             } else {
                 self.setDateRange()
@@ -243,7 +243,7 @@ extension CalendarView: FSCalendarDelegate {
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         if date < Date() - self.oneDayInterval {
-            viewController?.makeAlert(title: TextLiteral.calendarViewAlertPastTitle,
+            self.viewController?.makeAlert(title: TextLiteral.calendarViewAlertPastTitle,
                                       message: TextLiteral.calendarViewAlertPastMessage)
             return false
         } else {
