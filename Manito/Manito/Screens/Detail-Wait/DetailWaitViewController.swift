@@ -359,7 +359,8 @@ final class DetailWaitViewController: BaseViewController {
 
     // MARK: - selector
     
-    @objc private func didTapEnterButton() {
+    @objc
+    private func didTapEnterButton() {
         guard let roomInfo = self.roomInfo,
               let code = self.room?.invitation?.code
         else { return }
@@ -374,7 +375,8 @@ final class DetailWaitViewController: BaseViewController {
         self.present(viewController, animated: true)
     }
     
-    @objc private func presentEditViewController() {
+    @objc
+    private func presentEditViewController() {
         guard let startDate = self.room?.roomInformation?.startDate,
               let endDate = self.room?.roomInformation?.endDate else { return }
         self.presentDetailEditViewController(startString: startDate,
@@ -382,7 +384,8 @@ final class DetailWaitViewController: BaseViewController {
                                              isDateEdit: false)
     }
     
-    @objc private func changeStartButton() {
+    @objc
+    private func changeStartButton() {
         self.setStartButton()
     }
     
