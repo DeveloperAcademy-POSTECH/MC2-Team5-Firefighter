@@ -11,6 +11,11 @@ import FSCalendar
 import SnapKit
 
 final class DetailEditViewController: BaseViewController {
+    
+    enum EditMode {
+        case date
+        case information
+    }
 
     // MARK: - ui component
 
@@ -101,10 +106,6 @@ final class DetailEditViewController: BaseViewController {
     var didTappedChangeButton: (() -> ())?
     private let roomIndex: Int
     private let roomTitle: String
-    enum EditMode {
-        case date
-        case information
-    }
     var editMode: EditMode
     var currentUserCount: Int = 0
     var sliderValue: Int = 10
