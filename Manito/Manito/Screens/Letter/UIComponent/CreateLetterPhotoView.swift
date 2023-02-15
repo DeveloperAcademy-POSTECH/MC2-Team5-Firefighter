@@ -171,24 +171,25 @@ final class CreateLetterPhotoView: UIView {
     }
     
     private func openSettings() {
-        let appName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "애니또"
         let settingAction: alertAction = { [weak self] _ in
             guard let settingURL = URL(string: UIApplication.openSettingsURLString) else {
-                self?.viewController?.makeAlert(title: "오류", message: "설정 화면을 연결할 수 없습니다.")
+                self?.viewController?.makeAlert(title: TextLiteral.letterPhotoViewErrorTitle,
+                                                message: TextLiteral.letterPhotoViewSettingFail)
                 return
             }
             UIApplication.shared.open(settingURL)
         }
 
         self.viewController?.makeRequestAlert(title: TextLiteral.letterPhotoViewSetting,
-                                              message: "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
+                                              message: TextLiteral.letterPhotoViewSettingAuthorization,
                                               okAction: settingAction,
                                               completion: nil)
     }
 
     private func checkImagePickerControllerAccessRight() {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-            self.viewController?.makeAlert(title: "오류", message: "해당 기기에서 카메라를 사용할 수 없습니다.")
+            self.viewController?.makeAlert(title: TextLiteral.letterPhotoViewErrorTitle,
+                                           message: TextLiteral.letterPhotoViewDeviceFail)
             return
         }
 

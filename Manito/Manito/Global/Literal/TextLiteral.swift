@@ -8,6 +8,9 @@
 import Foundation
 
 enum TextLiteral {
+
+    // MARK: - App Name
+    static let appName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "애니또"
     
     // MARK: - AnyWhere
     static let done: String = "완료"
@@ -107,6 +110,10 @@ enum TextLiteral {
     static let letterPhotoViewChoosePhotoToManitto: String = "마니또에게 보낼 사진 선택"
     static let letterPhotoViewSetting: String = "설정"
     static let letterPhotoViewFail: String = "사진을 불러올 수 없습니다."
+    static let letterPhotoViewErrorTitle: String = "오류"
+    static let letterPhotoViewSettingFail = "설정 화면을 연결할 수 없습니다."
+    static let letterPhotoViewDeviceFail = "해당 기기에서 카메라를 사용할 수 없습니다."
+    static let letterPhotoViewSettingAuthorization = "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?"
     
     // MARK: - LetterViewController
     static let letterViewControllerTitle = "쪽지함"
