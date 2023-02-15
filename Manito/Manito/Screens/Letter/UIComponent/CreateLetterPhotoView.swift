@@ -174,6 +174,11 @@ final class CreateLetterPhotoView: UIView {
     }
 
     private func checkImagePickerControllerAccessRight() {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            self.viewController?.makeAlert(title: "오류", message: "해당 기기에서 카메라를 사용할 수 없습니다.")
+            return
+        }
+
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             DispatchQueue.main.async {
                 granted ? self?.imagePickerControllerDidShow() : self?.openSettings()
@@ -182,7 +187,6 @@ final class CreateLetterPhotoView: UIView {
     }
 
     private func imagePickerControllerDidShow() {
-        guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = .camera
