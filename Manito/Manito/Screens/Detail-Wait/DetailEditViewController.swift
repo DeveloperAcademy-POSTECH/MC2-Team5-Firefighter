@@ -304,9 +304,6 @@ final class DetailEditViewController: BaseViewController {
         }
     }
     
-    // MARK: - selector
-
-    @objc
     private func changeMemberCount(sender: UISlider) {
         self.sliderValue = Int(sender.value)
         self.memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per

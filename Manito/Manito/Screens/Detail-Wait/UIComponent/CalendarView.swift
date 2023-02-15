@@ -108,7 +108,7 @@ final class CalendarView: UIView {
     
     private func setupPreviousButton() {
         let action = UIAction { [weak self] _ in
-            self?.changeMonth(with: CalendarMoveType.previous)
+            self?.changeMonth(with: .previous)
         }
         self.previousButton.addAction(action, for: .touchUpInside)
     }
