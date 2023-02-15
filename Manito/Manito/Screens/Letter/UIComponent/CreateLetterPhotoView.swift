@@ -14,8 +14,6 @@ final class CreateLetterPhotoView: UIView {
 
     typealias alertAction = ((UIAlertAction) -> ())
     
-    var setSendButtonEnabled: ((_ hasImage: Bool) -> ())?
-    
     private enum SourceType {
         case camera
         case library
@@ -42,6 +40,8 @@ final class CreateLetterPhotoView: UIView {
     }()
 
     // MARK: - property
+
+    var setSendButtonEnabled: ((_ hasImage: Bool) -> ())?
 
     private var hasImage: Bool {
         return self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera

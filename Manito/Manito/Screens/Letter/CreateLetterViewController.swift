@@ -11,8 +11,6 @@ import SnapKit
 
 final class CreateLetterViewController: BaseViewController {
     
-    var createLetter: (() -> ())?
-    
     // MARK: - ui component
     
     private let indicatorView: UIView = {
@@ -50,6 +48,8 @@ final class CreateLetterViewController: BaseViewController {
     private lazy var missionView: IndividualMissionView = IndividualMissionView(mission: self.mission)
 
     // MARK: - property
+
+    var createLetter: (() -> ())?
     
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
     private var isSendEnabled: (hasText: Bool, hasImage: Bool) = (false, false) {
