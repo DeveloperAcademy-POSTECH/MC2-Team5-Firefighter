@@ -191,10 +191,9 @@ extension CreateLetterPhotoView: UIImagePickerControllerDelegate & UINavigationC
             DispatchQueue.main.async {
                 self.importPhotosButton.setImage(image, for: .normal)
                 self.setSendButtonEnabled?(self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+                picker.dismiss(animated: true)
             }
         }
-        
-        self.viewController?.dismiss(animated: true, completion: nil)
     }
 }
 
