@@ -158,7 +158,7 @@ final class CreateLetterPhotoView: UIView {
     }
     
     private func openSettings() {
-        let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "애니또"
+        let appName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "애니또"
         let settingAction: alertAction = { [weak self] _ in
             guard let settingURL = URL(string: UIApplication.openSettingsURLString) else {
                 self?.viewController?.makeAlert(title: "오류", message: "설정 화면을 연결할 수 없습니다.")
