@@ -5,6 +5,7 @@
 //  Created by SHIN YOON AH on 2022/06/13.
 //
 
+import AVFoundation
 import PhotosUI
 import UIKit
 
