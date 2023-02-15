@@ -146,9 +146,9 @@ final class DetailEditViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.presentationController?.delegate = self
         self.isModalInPresentation = true
-        self.setupCalendarChangedButton()
+        self.setupCalendarChangeButton()
         self.setupCancleButton()
-        self.setupChangeChangeButton()
+        self.setupChangeButton()
         self.setupMemberSlider()
     }
 
@@ -244,7 +244,7 @@ final class DetailEditViewController: BaseViewController {
         self.cancelButton.addAction(action, for: .touchUpInside)
     }
     
-    private func setupChangeChangeButton() {
+    private func setupChangeButton() {
         let action = UIAction { [weak self] _ in
             self?.didTapChangeButton()
         }
@@ -278,7 +278,7 @@ final class DetailEditViewController: BaseViewController {
                         actions: actions)
     }
 
-    private func setupCalendarChangedButton() {
+    private func setupCalendarChangeButton() {
         self.calendarView.changeButtonState = { [weak self] value in
             self?.changeButton.isEnabled = value
             self?.changeButton.setTitleColor(.subBlue, for: .normal)
