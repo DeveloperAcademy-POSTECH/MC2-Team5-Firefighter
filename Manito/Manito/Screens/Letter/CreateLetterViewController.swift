@@ -44,10 +44,10 @@ final class CreateLetterViewController: BaseViewController {
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
-    private let scrollContentView = UIView()
-    private let letterTextView = CreateLetterTextView()
-    private let letterPhotoView = CreateLetterPhotoView()
-    private lazy var missionView = IndividualMissionView(mission: self.mission)
+    private let scrollContentView: UIView = UIView()
+    private let letterTextView: CreateLetterTextView = CreateLetterTextView()
+    private let letterPhotoView: CreateLetterPhotoView = CreateLetterPhotoView()
+    private lazy var missionView: IndividualMissionView = IndividualMissionView(mission: self.mission)
 
     // MARK: - property
     
