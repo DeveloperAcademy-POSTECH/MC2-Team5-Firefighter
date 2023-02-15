@@ -40,11 +40,6 @@ final class CreateLetterPhotoView: UIView {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private lazy var imagePickerController: UIImagePickerController = {
-        let controller = UIImagePickerController()
-        controller.delegate = self
-        return controller
-    }()
 
     // MARK: - property
 
@@ -130,14 +125,13 @@ final class CreateLetterPhotoView: UIView {
         switch sourceType {
         case .library:
             let authorizationStatus = PHPhotoLibrary.authorizationStatus(for: .addOnly)
-            self.pHPickerController(willShowAccordingToAuthorizationStatus: authorizationStatus)
+            self.checkPHPickerControllerAuthorizationStatus(authorizationStatus)
         case .camera:
-            self.imagePickerController.sourceType = .camera
-            self.viewController?.present(self.imagePickerController, animated: true, completion: nil)
+            self.checkImagePickerControllerAccessRight()
         }
     }
 
-    private func pHPickerController(willShowAccordingToAuthorizationStatus authorizationStatus: PHAuthorizationStatus) {
+    private func checkPHPickerControllerAuthorizationStatus(_ authorizationStatus: PHAuthorizationStatus) {
         switch authorizationStatus {
         case .notDetermined:
             PHPhotoLibrary.requestAuthorization(for: .addOnly) { [weak self] authorizationStatus in
@@ -159,7 +153,7 @@ final class CreateLetterPhotoView: UIView {
         phPickerController.delegate = self
 
         DispatchQueue.main.async {
-            self.viewController?.present(phPickerController, animated: true, completion: nil)
+            self.viewController?.present(phPickerController, animated: true)
         }
     }
     
@@ -177,6 +171,25 @@ final class CreateLetterPhotoView: UIView {
                                               message: "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
                                               okAction: settingAction,
                                               completion: nil)
+    }
+
+    private func checkImagePickerControllerAccessRight() {
+        AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+            DispatchQueue.main.async {
+                granted ? self?.imagePickerControllerDidShow() : self?.openSettings()
+            }
+        }
+    }
+
+    private func imagePickerControllerDidShow() {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .camera
+
+        DispatchQueue.main.async {
+            self.viewController?.present(imagePickerController, animated: true)
+        }
     }
 }
 
