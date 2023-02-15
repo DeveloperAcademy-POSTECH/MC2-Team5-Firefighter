@@ -192,9 +192,9 @@ final class CreateLetterPhotoView: UIView {
             return
         }
 
-        AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+        AVCaptureDevice.requestAccess(for: .video) { [weak self] hasGranted in
             DispatchQueue.main.async {
-                granted ? self?.imagePickerControllerDidShow() : self?.openSettings()
+                hasGranted ? self?.imagePickerControllerDidShow() : self?.openSettings()
             }
         }
     }
