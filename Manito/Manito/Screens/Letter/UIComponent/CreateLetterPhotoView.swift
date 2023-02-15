@@ -88,7 +88,13 @@ final class CreateLetterPhotoView: UIView {
     }
 
     private func actionTitles() -> [String] {
-        return self.hasImage ? [TextLiteral.letterPhotoViewTakePhoto, TextLiteral.letterPhotoViewChoosePhoto, TextLiteral.letterPhotoViewDeletePhoto, TextLiteral.cancel] : [TextLiteral.letterPhotoViewTakePhoto, TextLiteral.letterPhotoViewChoosePhoto, TextLiteral.cancel]
+        return self.hasImage ? [TextLiteral.letterPhotoViewTakePhoto,
+                                TextLiteral.letterPhotoViewChoosePhoto,
+                                TextLiteral.letterPhotoViewDeletePhoto,
+                                TextLiteral.cancel]
+                             : [TextLiteral.letterPhotoViewTakePhoto,
+                                TextLiteral.letterPhotoViewChoosePhoto,
+                                TextLiteral.cancel]
     }
 
     private func actionStyle() -> [UIAlertAction.Style] {
