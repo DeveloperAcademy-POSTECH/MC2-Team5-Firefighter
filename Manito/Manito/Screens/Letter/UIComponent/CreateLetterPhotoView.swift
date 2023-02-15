@@ -16,10 +16,22 @@ final class CreateLetterPhotoView: UIView {
     
     var setSendButtonEnabled: ((_ hasImage: Bool) -> ())?
     
+    private enum PHLibraryError: Error {
+        case loadError
+
+        var errorDescription: String {
+            switch self {
+            case .loadError:
+                return TextLiteral.letterPhotoViewFail
+            }
+        }
+    }
+
     private enum SourceType {
         case camera
         case library
     }
+
     
     // MARK: - ui component
     
@@ -204,35 +216,45 @@ extension CreateLetterPhotoView: UIImagePickerControllerDelegate & UINavigationC
             DispatchQueue.main.async {
                 self.importPhotosButton.setImage(image, for: .normal)
                 self.setSendButtonEnabled?(self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+                picker.dismiss(animated: true)
             }
         }
-        
-        self.viewController?.dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - PHPickerViewControllerDelegate
 extension CreateLetterPhotoView: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: nil)
-        
-        let itemProvider = results.first?.itemProvider
-        if let itemProvider = itemProvider,
-           itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                guard let self = self else { return }
-                
-                DispatchQueue.main.async {
-                    guard let image = image as? UIImage else { return }
-                    self.importPhotosButton.setImage(image, for: .normal)
-                    self.setSendButtonEnabled?(self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+        if let itemProvider = results.first?.itemProvider {
+            self.loadUIImage(for: itemProvider) { [weak self] result in
+                switch result {
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        self?.importPhotosButton.setImage(image, for: .normal)
+                        self?.setSendButtonEnabled?(self?.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+                        picker.dismiss(animated: true)
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self?.viewController?.makeAlert(title: "", message: error.errorDescription, okAction: { _ in
+                            picker.dismiss(animated: true)
+                        })
+                    }
                 }
-                
-                if let error = error {
-                    self.viewController?.makeAlert(title: "", message: TextLiteral.letterPhotoViewFail)
-                    
-                    Logger.debugDescription(error)
-                }
+            }
+        }
+    }
+
+    private func loadUIImage(for itemProvider: NSItemProvider, completionHandler: @escaping ((Result<UIImage, PHLibraryError>) -> ())) {
+        guard itemProvider.canLoadObject(ofClass: UIImage.self) else { completionHandler(.failure(.loadError)); return }
+
+        itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+            if error != nil {
+                completionHandler(.failure(.loadError))
+            }
+
+            if let image = image as? UIImage {
+                completionHandler(.success(image))
             }
         }
     }
