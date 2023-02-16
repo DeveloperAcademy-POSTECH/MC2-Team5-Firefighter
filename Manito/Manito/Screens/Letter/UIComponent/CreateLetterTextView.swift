@@ -11,8 +11,6 @@ import SnapKit
 
 final class CreateLetterTextView: UIView {
     
-    var setSendButtonEnabled: ((_ hasText: Bool) -> ())?
-
     // MARK: - ui component
     
     private let titleLabel: UILabel = {
@@ -44,6 +42,8 @@ final class CreateLetterTextView: UIView {
     }()
 
     // MARK: - property
+
+    var setSendButtonEnabled: ((_ hasText: Bool) -> ())?
 
     var text: String? {
         guard self.letterTextView.text != "" && self.letterTextView.text != nil else { return nil }

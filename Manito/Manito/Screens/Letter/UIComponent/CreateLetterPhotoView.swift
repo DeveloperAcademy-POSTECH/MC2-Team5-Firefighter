@@ -15,8 +15,6 @@ final class CreateLetterPhotoView: UIView {
 
     typealias alertAction = ((UIAlertAction) -> ())
     
-    var setSendButtonEnabled: ((_ hasImage: Bool) -> ())?
-    
     private enum PHLibraryError: Error {
         case loadError
 
@@ -55,6 +53,8 @@ final class CreateLetterPhotoView: UIView {
     }()
 
     // MARK: - property
+
+    var setSendButtonEnabled: ((_ hasImage: Bool) -> ())?
 
     private var hasImage: Bool {
         return self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
@@ -101,7 +101,13 @@ final class CreateLetterPhotoView: UIView {
     }
 
     private func actionTitles() -> [String] {
-        return self.hasImage ? [TextLiteral.letterPhotoViewTakePhoto, TextLiteral.letterPhotoViewChoosePhoto, TextLiteral.letterPhotoViewDeletePhoto, TextLiteral.cancel] : [TextLiteral.letterPhotoViewTakePhoto, TextLiteral.letterPhotoViewChoosePhoto, TextLiteral.cancel]
+        return self.hasImage ? [TextLiteral.letterPhotoViewTakePhoto,
+                                TextLiteral.letterPhotoViewChoosePhoto,
+                                TextLiteral.letterPhotoViewDeletePhoto,
+                                TextLiteral.cancel]
+                             : [TextLiteral.letterPhotoViewTakePhoto,
+                                TextLiteral.letterPhotoViewChoosePhoto,
+                                TextLiteral.cancel]
     }
 
     private func actionStyle() -> [UIAlertAction.Style] {

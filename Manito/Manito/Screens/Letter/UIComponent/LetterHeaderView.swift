@@ -11,8 +11,6 @@ import SnapKit
 
 final class LetterHeaderView: UICollectionReusableView {
     
-    var selectedSegmentIndexDidChange: ((_ changedIndex: Int) -> ())?
-    
     // MARK: - ui component
     
     private let segmentedControl: UISegmentedControl = {
@@ -32,11 +30,14 @@ final class LetterHeaderView: UICollectionReusableView {
 
     // MARK: - property
 
+    var selectedSegmentIndexDidChange: ((_ changedIndex: Int) -> ())?
+    
     private var segmentedControlIndex: Int = 0 {
         didSet {
             self.segmentedControl.selectedSegmentIndex = self.segmentedControlIndex
         }
     }
+
     
     // MARK: - init
     
