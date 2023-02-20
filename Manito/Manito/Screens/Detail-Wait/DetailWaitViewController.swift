@@ -47,7 +47,7 @@ final class DetailWaitViewController: BaseViewController {
 
     // MARK: - ui component
 
-    private lazy var moreButton: UIButton = {
+    private let moreButton: UIButton = {
         let button = MoreButton()
         button.showsMenuAsPrimaryAction = true
         return button
@@ -71,7 +71,7 @@ final class DetailWaitViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    private lazy var copyButton: UIButton = {
+    private let copyButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(TextLiteral.copyCode, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)

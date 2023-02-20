@@ -60,7 +60,7 @@ final class DetailEditViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    private lazy var setMemberLabel: UILabel = {
+    private let setMemberLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.detailEditViewControllerSetMember
         label.font = .font(.regular, ofSize: 18)
