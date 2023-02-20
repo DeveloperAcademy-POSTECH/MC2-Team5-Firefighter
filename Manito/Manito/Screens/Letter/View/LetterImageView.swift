@@ -89,15 +89,6 @@ final class LetterImageView: UIView {
         }
     }
 
-    private func setupImagePinchGesture() {
-        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.didPinchImage(_:)))
-        self.addGestureRecognizer(pinch)
-    }
-
-    func configureDelegate(_ delegate: LetterImageViewDelegate) {
-        self.delegate = delegate
-    }
-
     private func setupAction() {
         let downloadAction = UIAction { [weak self] _ in
             let downloadImage = self?.imageView.image
@@ -109,6 +100,19 @@ final class LetterImageView: UIView {
             self?.delegate?.closeButtonTapped()
         }
         self.closeButton.addAction(closeAction, for: .touchUpInside)
+    }
+
+    private func setupImagePinchGesture() {
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.didPinchImage(_:)))
+        self.addGestureRecognizer(pinch)
+    }
+
+    func configureImage(_ image: UIImage) {
+        self.imageView.image = image
+    }
+
+    func configureDelegate(_ delegate: LetterImageViewDelegate) {
+        self.delegate = delegate
     }
 
     // MARK: - selector

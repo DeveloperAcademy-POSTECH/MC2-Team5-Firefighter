@@ -12,11 +12,16 @@ final class LetterImageViewController: BaseViewController {
 
     // MARK: - ui component
 
+    private let letterImageView: LetterImageView = LetterImageView()
+
+    // MARK: - property
+
+    private let imageUrl: String
 
     // MARK: - init
 
-    init(image: UIImage) {
-        self.imageView.image = image
+    init(imageUrl: String) {
+        self.imageUrl = imageUrl
         super.init()
     }
 
@@ -24,11 +29,14 @@ final class LetterImageViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        print("\(#file) is dead")
+    // MARK: - life cycle
+
+    override func loadView() {
+        self.view = letterImageView
     }
 }
 
+// MARK: - LetterImageViewDelegate
 extension LetterImageViewController: LetterImageViewDelegate {
     func downloadImageAsset(_ imageAsset: UIImage?) {
         // MARK: - Error에 대한 처리 필요..
