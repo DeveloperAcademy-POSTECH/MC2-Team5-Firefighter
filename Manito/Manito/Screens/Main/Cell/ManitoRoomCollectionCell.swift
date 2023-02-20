@@ -49,26 +49,26 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     // MARK: - override
     
     override func setupLayout() {
-        contentView.addSubview(self.imageView)
+        self.contentView.addSubview(self.imageView)
         self.imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(9)
             $0.width.height.equalTo(30)
         }
         
-        contentView.addSubview(self.memberLabel)
+        self.contentView.addSubview(self.memberLabel)
         self.memberLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(14)
             $0.leading.equalTo(self.imageView.snp.trailing).offset(4)
         }
         
-        contentView.addSubview(self.roomLabel)
+        self.contentView.addSubview(self.roomLabel)
         self.roomLabel.snp.makeConstraints {
             $0.top.equalTo(self.imageView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(17)
         }
         
-        contentView.addSubview(self.roomStateView)
+        self.contentView.addSubview(self.roomStateView)
         self.roomStateView.snp.makeConstraints {
             $0.top.equalTo(self.roomLabel.snp.bottom).offset(24)
             $0.leading.equalToSuperview().inset(12)
@@ -76,7 +76,7 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
             $0.height.equalTo(24)
         }
         
-        contentView.addSubview(self.dateLabel)
+        self.contentView.addSubview(self.dateLabel)
         self.dateLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
