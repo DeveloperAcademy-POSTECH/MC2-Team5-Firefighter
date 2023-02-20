@@ -82,6 +82,7 @@ final class DetailWaitViewController: BaseViewController {
         let tableView = UITableView()
         tableView.layer.cornerRadius = 10
         tableView.isScrollEnabled = false
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
     private lazy var startButton: UIButton = {
@@ -200,7 +201,6 @@ final class DetailWaitViewController: BaseViewController {
     private func setupDelegation() {
         self.listTableView.delegate = self
         self.listTableView.dataSource = self
-        self.listTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     private func setupCopyButton() {
