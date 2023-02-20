@@ -362,8 +362,7 @@ final class DetailWaitViewController: BaseViewController {
     @objc
     private func didTapEnterButton() {
         guard let roomInfo = self.roomInfo,
-              let code = self.room?.invitation?.code
-        else { return }
+              let code = self.room?.invitation?.code else { return }
         let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
                                                              capacity: roomInfo.capacity,
                                                              startDate: roomInfo.startDate,
