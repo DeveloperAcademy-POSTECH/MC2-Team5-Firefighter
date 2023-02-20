@@ -25,11 +25,28 @@ final class MainViewController: BaseViewController {
         static let commonMissionViewHeight: CGFloat = commonMissionViewWidth * 0.6
     }
     
+    private enum RoomStatus: String {
+        case waiting = "PRE"
+        case starting = "PROCESSING"
+        case end = "POST"
+        
+        var roomStatus: String {
+            switch self {
+            case .waiting:
+                return TextLiteral.waiting
+            case .starting:
+                return TextLiteral.doing
+            case .end:
+                return TextLiteral.done
+            }
+        }
+    }
+    
     // MARK: - ui component
     
-    private let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
-    private let refreshControl = UIRefreshControl()
-    private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
+    private let skeletonAnimation: SkeletonLayerAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
+    private let refreshControl: UIRefreshControl = UIRefreshControl()
+    private let appTitleView: UIImageView = UIImageView(image: ImageLiterals.imgLogo)
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
         let action = UIAction { [weak self] _ in
@@ -38,8 +55,8 @@ final class MainViewController: BaseViewController {
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-    private let imgStar = UIImageView(image: ImageLiterals.imgStar)
-    private let commonMissionView = CommonMissionView()
+    private let imgStar: UIImageView = UIImageView(image: ImageLiterals.imgStar)
+    private let commonMissionView: CommonMissionView = CommonMissionView()
     private let menuTitle: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.mainViewControllerMenuTitle
@@ -69,30 +86,14 @@ final class MainViewController: BaseViewController {
         collectionView.isSkeletonable = true
         return collectionView
     }()
-    private let maCharacterImageView = GIFImageView()
-    private let niCharacterImageView = GIFImageView()
-    private let ttoCharacterImageView = GIFImageView()
+    private let maCharacterImageView: GIFImageView = GIFImageView()
+    private let niCharacterImageView: GIFImageView = GIFImageView()
+    private let ttoCharacterImageView: GIFImageView = GIFImageView()
     
     // MARK: - property
     
     private let mainService: MainProtocol = MainAPI(apiService: APIService())
     private var rooms: [ParticipatingRoom]?
-    private enum RoomStatus: String {
-        case waiting = "PRE"
-        case starting = "PROCESSING"
-        case end = "POST"
-        
-        var roomStatus: String {
-            switch self {
-            case .waiting:
-                return TextLiteral.waiting
-            case .starting:
-                return TextLiteral.doing
-            case .end:
-                return TextLiteral.done
-            }
-        }
-    }
     
     // MARK: - init
     
@@ -215,7 +216,11 @@ final class MainViewController: BaseViewController {
     }
     
     private func setupSkeletonView() {
-        self.listCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey003, .darkGrey002]), animation: skeletonAnimation, transition: .none)
+        self.listCollectionView.showAnimatedGradientSkeleton(
+            usingGradient: .init(colors: [.grey003, .darkGrey002]),
+            animation: skeletonAnimation,
+            transition: .none
+        )
     }
     
     private func stopSkeletonView() {
@@ -224,7 +229,7 @@ final class MainViewController: BaseViewController {
     }
 
     private func createNewRoom() {
-        let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+        let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: .actionSheet)
 
         let createRoom = UIAlertAction(title: TextLiteral.createRoom, style: .default, handler: { [weak self] _ in
             let createVC = CreateRoomViewController()
@@ -237,27 +242,28 @@ final class MainViewController: BaseViewController {
         let enterRoom = UIAlertAction(title: TextLiteral.enterRoom, style: .default, handler: { [weak self] _ in
             let viewController = ParticipateRoomViewController()
             let navigationController = UINavigationController(rootViewController: viewController)
-            
             navigationController.modalPresentationStyle = .overFullScreen
-            
-            self?.present(navigationController, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
         })
         let cancel = UIAlertAction(title: TextLiteral.cancel, style: .cancel, handler: nil)
 
         alert.addAction(createRoom)
         alert.addAction(enterRoom)
         alert.addAction(cancel)
-        self.present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true)
     }
 
     private func presentParticipateRoomViewController() {
         let storyboard = UIStoryboard(name: "ParticipateRoom", bundle: nil)
-        let ParticipateRoomVC = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
+        let ParticipateRoomViewController = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
 
-        ParticipateRoomVC.modalPresentationStyle = .fullScreen
-        ParticipateRoomVC.modalTransitionStyle = .crossDissolve
-
-        self.present(ParticipateRoomVC, animated: true, completion: nil)
+        ParticipateRoomViewController.modalPresentationStyle = .fullScreen
+        ParticipateRoomViewController.modalTransitionStyle = .crossDissolve
+        DispatchQueue.main.async {
+            self.present(ParticipateRoomViewController, animated: true)
+        }
     }
 
     private func pushDetailView(status: RoomStatus, roomIndex: Int, index: Int? = nil) {
@@ -284,7 +290,7 @@ final class MainViewController: BaseViewController {
     }
     
     func showRoomIdErrorAlert() {
-        self.makeRequestAlert(title: "해당 마니또 방의 정보를 불러오지 못했습니다.", message: "해당 마니또 방으로 이동할 수 없습니다.", okAction: nil)
+        self.makeAlert(title: "해당 마니또 방의 정보를 불러오지 못했습니다.", message: "해당 마니또 방으로 이동할 수 없습니다.")
     }
     
     // MARK: - selector
@@ -336,8 +342,8 @@ final class MainViewController: BaseViewController {
     }
 }
 
-// MARK: - SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource
-extension MainViewController: SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource {
+// MARK: - SkeletonCollectionViewDataSource
+extension MainViewController: SkeletonCollectionViewDataSource {
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return ManitoRoomCollectionViewCell.className
     }
