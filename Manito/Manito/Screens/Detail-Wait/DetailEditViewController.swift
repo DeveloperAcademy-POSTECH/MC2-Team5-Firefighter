@@ -52,7 +52,7 @@ final class DetailEditViewController: BaseViewController {
         label.textColor = .white
         return label
     }()
-    private lazy var calendarView = CalendarView()
+    private let calendarView: CalendarView = CalendarView()
     private let tipLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.maxMessage

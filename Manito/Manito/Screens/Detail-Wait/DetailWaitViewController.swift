@@ -52,7 +52,7 @@ final class DetailWaitViewController: BaseViewController {
         button.showsMenuAsPrimaryAction = true
         return button
     }()
-    private let titleView = DetailWaitTitleView()
+    private let titleView: DetailWaitTitleView = DetailWaitTitleView()
     private let togetherFriendLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.togetherFriend
