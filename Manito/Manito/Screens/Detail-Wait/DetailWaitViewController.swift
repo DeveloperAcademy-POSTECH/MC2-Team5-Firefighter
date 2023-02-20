@@ -65,7 +65,7 @@ final class DetailWaitViewController: BaseViewController {
         imageView.image = ImageLiterals.imgNi
         return imageView
     }()
-    private let comeInLabel: UILabel = {
+    private let userCountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 14)
@@ -170,8 +170,8 @@ final class DetailWaitViewController: BaseViewController {
             $0.width.height.equalTo(30)
         }
 
-        self.view.addSubview(self.comeInLabel)
-        self.comeInLabel.snp.makeConstraints {
+        self.view.addSubview(self.userCountLabel)
+        self.userCountLabel.snp.makeConstraints {
             $0.leading.equalTo(self.imgNiView.snp.trailing)
             $0.centerY.equalTo(self.imgNiView.snp.centerY)
         }
@@ -408,7 +408,7 @@ final class DetailWaitViewController: BaseViewController {
                     DispatchQueue.main.async {
                         self.isPastStartDate()
                         self.titleView.setStartState(state: state)
-                        self.comeInLabel.text = roomInfo.userCount
+                        self.userCountLabel.text = roomInfo.userCount
                         self.titleView.setRoomTitleLabelText(text: title)
                         self.titleView.setDurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
                     }
