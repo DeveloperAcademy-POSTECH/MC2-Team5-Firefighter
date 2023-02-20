@@ -216,11 +216,9 @@ final class MainViewController: BaseViewController {
     }
     
     private func setupSkeletonView() {
-        self.listCollectionView.showAnimatedGradientSkeleton(
-            usingGradient: .init(colors: [.grey003, .darkGrey002]),
-            animation: skeletonAnimation,
-            transition: .none
-        )
+        self.listCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey003, .darkGrey002]),
+                                                             animation: skeletonAnimation,
+                                                             transition: .none)
     }
     
     private func stopSkeletonView() {
@@ -229,9 +227,13 @@ final class MainViewController: BaseViewController {
     }
 
     private func createNewRoom() {
-        let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: TextLiteral.mainViewControllerNewRoomAlert,
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
 
-        let createRoom = UIAlertAction(title: TextLiteral.createRoom, style: .default, handler: { [weak self] _ in
+        let createRoom = UIAlertAction(title: TextLiteral.createRoom,
+                                       style: .default,
+                                       handler: { [weak self] _ in
             let createVC = CreateRoomViewController()
             let navigationController = UINavigationController(rootViewController: createVC)
             navigationController.modalPresentationStyle = .overFullScreen
@@ -239,7 +241,9 @@ final class MainViewController: BaseViewController {
                 self?.present(navigationController,animated: true)
             }
         })
-        let enterRoom = UIAlertAction(title: TextLiteral.enterRoom, style: .default, handler: { [weak self] _ in
+        let enterRoom = UIAlertAction(title: TextLiteral.enterRoom,
+                                      style: .default,
+                                      handler: { [weak self] _ in
             let viewController = ParticipateRoomViewController()
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen
@@ -247,7 +251,7 @@ final class MainViewController: BaseViewController {
                 self?.present(navigationController, animated: true)
             }
         })
-        let cancel = UIAlertAction(title: TextLiteral.cancel, style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: TextLiteral.cancel, style: .cancel)
 
         alert.addAction(createRoom)
         alert.addAction(enterRoom)
@@ -290,7 +294,8 @@ final class MainViewController: BaseViewController {
     }
     
     func showRoomIdErrorAlert() {
-        self.makeAlert(title: "해당 마니또 방의 정보를 불러오지 못했습니다.", message: "해당 마니또 방으로 이동할 수 없습니다.")
+        self.makeAlert(title: TextLiteral.mainViewControllerShowIdErrorAlertTitle,
+                       message: TextLiteral.mainViewControllerShowIdErrorAlertMessage)
     }
     
     // MARK: - selector
