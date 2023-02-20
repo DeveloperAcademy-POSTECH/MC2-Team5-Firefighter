@@ -10,6 +10,11 @@ import UIKit
 
 import SnapKit
 
+protocol LetterImageViewDelegate: AnyObject {
+    func downloadImageAsset(_ imageAsset: UIImage?)
+    func closeButtonTapped()
+}
+
 final class LetterImageView: UIView {
 
     // MARK: - ui component
@@ -45,6 +50,10 @@ final class LetterImageView: UIView {
         button.setImage(ImageLiterals.icSave, for: .normal)
         return button
     }()
+
+    // MARK: - property
+
+    private weak var delegate: LetterImageViewDelegate?
 
     // MARK: - init
 
@@ -85,30 +94,17 @@ final class LetterImageView: UIView {
         self.addGestureRecognizer(pinch)
     }
 
+    func configureDelegate(_ delegate: LetterImageViewDelegate) {
+        self.delegate = delegate
+    }
+
     private func setupAction() {
         let downloadAction = UIAction { [weak self] _ in
-            guard let image = self?.imageView.image else {
-                self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
-                                message: TextLiteral.letterImageViewControllerErrorMessage)
-                return
-            }
-
-            PHPhotoLibrary.shared().performChanges({
-                PHAssetChangeRequest.creationRequestForAsset(from: image)
-            }) { (success, error) in
-                DispatchQueue.main.async {
-                    if success {
-                        self?.makeAlert(title: TextLiteral.letterImageViewControllerSuccessTitle,
-                                        message: TextLiteral.letterImageViewControllerSuccessMessage)
-                    } else if let error = error {
-                        Logger.debugDescription(error)
-                        self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
-                                        message: TextLiteral.letterImageViewControllerErrorMessage)
-                    }
-                }
-            }
+            let downloadImage = self?.imageView.image
+            self?.delegate?.downloadImageAsset(downloadImage)
         }
         self.downloadButton.addAction(downloadAction, for: .touchUpInside)
+        
         button.addTarget(self, action: #selector(self.didTapCloseButton), for: .touchUpInside)
     }
 
