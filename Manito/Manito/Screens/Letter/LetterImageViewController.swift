@@ -32,7 +32,23 @@ final class LetterImageViewController: BaseViewController {
     // MARK: - life cycle
 
     override func loadView() {
-        self.view = letterImageView
+        self.view = self.letterImageView
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureImage()
+        self.configureDelegation()
+    }
+
+    // MARK: - func
+
+    private func configureImage() {
+        self.letterImageView.configureImage(self.imageUrl)
+    }
+
+    private func configureDelegation() {
+        self.letterImageView.configureDelegate(self)
     }
 }
 

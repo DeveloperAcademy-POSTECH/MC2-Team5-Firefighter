@@ -107,8 +107,8 @@ final class LetterImageView: UIView {
         self.addGestureRecognizer(pinch)
     }
 
-    func configureImage(_ image: UIImage) {
-        self.imageView.image = image
+    func configureImage(_ imageUrl: String) {
+        self.imageView.loadImageUrl(imageUrl)
     }
 
     func configureDelegate(_ delegate: LetterImageViewDelegate) {
