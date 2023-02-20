@@ -81,7 +81,7 @@ final class OpenManittoPopupViewController: BaseViewController {
         typingLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(popupView.frame.height * 0.36)
             $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.leading.trailing.equalToSuperview().inset(24)
         }
         
         popupView.addSubview(openMentLabel)
