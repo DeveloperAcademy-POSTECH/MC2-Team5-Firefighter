@@ -141,15 +141,19 @@ final class DetailEditViewController: BaseViewController {
     
     // MARK: - override
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupCalendarChangeButton()
+        self.setupCancleButton()
+        self.setupChangeButton()
+        self.setupMemberSlider()
+    }
+    
     override func configureUI() {
         super.configureUI()
         self.navigationController?.isNavigationBarHidden = true
         self.presentationController?.delegate = self
         self.isModalInPresentation = true
-        self.setupCalendarChangeButton()
-        self.setupCancleButton()
-        self.setupChangeButton()
-        self.setupMemberSlider()
     }
 
     override func setupLayout() {
