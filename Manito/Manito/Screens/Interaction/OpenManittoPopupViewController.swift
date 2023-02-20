@@ -19,6 +19,7 @@ final class OpenManittoPopupViewController: BaseViewController {
         let label = UILabel()
         label.numberOfLines = 2
         label.font = .font(.regular, ofSize: 30)
+        label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
         return label
     }()
