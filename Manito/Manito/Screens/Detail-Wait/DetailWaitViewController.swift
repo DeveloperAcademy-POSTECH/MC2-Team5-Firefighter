@@ -47,7 +47,7 @@ final class DetailWaitViewController: BaseViewController {
 
     // MARK: - ui component
 
-    private lazy var settingButton: UIButton = {
+    private lazy var moreButton: UIButton = {
         let button = MoreButton()
         button.showsMenuAsPrimaryAction = true
         return button
@@ -117,7 +117,7 @@ final class DetailWaitViewController: BaseViewController {
     private var detectStartableStatus: ((Bool) -> ())?
     private var memberType = UserStatus.member {
         didSet {
-            self.settingButton.menu = self.setExitButtonMenu()
+            self.moreButton.menu = self.setExitButtonMenu()
             self.setupTitleViewGesture()
         }
     }
@@ -232,7 +232,7 @@ final class DetailWaitViewController: BaseViewController {
     }
 
     private func setupSettingButton() {
-        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: settingButton,
+        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: moreButton,
                                                                        offsetX: -10)
         let settingButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
 
