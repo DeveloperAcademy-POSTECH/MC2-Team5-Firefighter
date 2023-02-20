@@ -314,7 +314,7 @@ final class MainViewController: BaseViewController {
             do {
                 let data = try await self.mainService.fetchCommonMission()
                 if let commonMission = data?.mission {
-                    self.commonMissionView.mission.text = commonMission
+                    self.commonMissionView.missionLabel.text = commonMission
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -397,16 +397,16 @@ extension MainViewController: UICollectionViewDataSource {
             
             switch roomStatus {
             case .waiting:
-                cell.roomStateView.state.text = "대기중"
-                cell.roomStateView.state.textColor = .darkGrey001
+                cell.roomStateView.stateLabel.text = "대기중"
+                cell.roomStateView.stateLabel.textColor = .darkGrey001
                 cell.roomStateView.backgroundColor = .badgeBeige
             case .starting:
-                cell.roomStateView.state.text = "진행중"
-                cell.roomStateView.state.textColor = .white
+                cell.roomStateView.stateLabel.text = "진행중"
+                cell.roomStateView.stateLabel.textColor = .white
                 cell.roomStateView.backgroundColor = .mainRed
             case .end:
-                cell.roomStateView.state.text = "완료"
-                cell.roomStateView.state.textColor = .white
+                cell.roomStateView.stateLabel.text = "완료"
+                cell.roomStateView.stateLabel.textColor = .white
                 cell.roomStateView.backgroundColor = .grey002
             }
             

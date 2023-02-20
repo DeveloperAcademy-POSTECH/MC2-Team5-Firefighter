@@ -13,15 +13,15 @@ final class CommonMissionView: UIView {
     
     // MARK: - ui component
     
-    private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
-    private let title: UILabel = {
+    private let commonMissionImageView: UIImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.commonMissionViewTitle
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 15)
         return label
     }()    
-    let mission: UILabel = {
+    let missionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
         label.textAlignment = .center
@@ -49,15 +49,15 @@ final class CommonMissionView: UIView {
             $0.edges.equalToSuperview()
         }
         
-        self.addSubview(self.title)
-        self.title.snp.makeConstraints {
+        self.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(56)
             $0.centerX.equalToSuperview()
         }
         
-        self.addSubview(self.mission)
-        self.mission.snp.makeConstraints {
-            $0.top.equalTo(self.title.snp.bottom).offset(40)
+        self.addSubview(self.missionLabel)
+        self.missionLabel.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(40)
             $0.leading.trailing.equalToSuperview()
         }
     }

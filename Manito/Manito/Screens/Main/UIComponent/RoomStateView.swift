@@ -13,7 +13,7 @@ final class RoomStateView: UIView {
     
     // MARK: - ui component
     
-    lazy var state: UILabel = {
+    lazy var stateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 12)
@@ -35,8 +35,8 @@ final class RoomStateView: UIView {
     // MARK: - func
     
     private func setupLayout() {
-        self.addSubview(self.state)
-        self.state.snp.makeConstraints {
+        self.addSubview(self.stateLabel)
+        self.stateLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
     }

@@ -12,9 +12,15 @@ import SnapKit
 
 final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
     
+    private enum RoomStatus: String {
+        case PRE = "대기중"
+        case PROCESSING = "진행중"
+        case POST = "완료"
+    }
+    
     // MARK: - ui component
     
-    private let imageView = UIImageView(image: ImageLiterals.imgNi)
+    private let imageView: UIImageView = UIImageView(image: ImageLiterals.imgNi)
     let memberLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -38,15 +44,7 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()    
-    lazy var roomStateView = RoomStateView()
-    
-    // MARK: - property
-
-    private enum RoomStatus: String {
-        case PRE = "대기중"
-        case PROCESSING = "진행중"
-        case POST = "완료"
-    }
+    lazy var roomStateView: RoomStateView = RoomStateView()
     
     // MARK: - override
     
