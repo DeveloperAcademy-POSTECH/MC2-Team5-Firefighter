@@ -55,6 +55,6 @@ extension LetterImageViewController: LetterImageViewDelegate {
     }
 
     func closeButtonTapped() {
-        <#code#>
+        self.dismiss(animated: true)
     }
 }

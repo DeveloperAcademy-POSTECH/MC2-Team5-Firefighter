@@ -104,16 +104,14 @@ final class LetterImageView: UIView {
             self?.delegate?.downloadImageAsset(downloadImage)
         }
         self.downloadButton.addAction(downloadAction, for: .touchUpInside)
-        
-        button.addTarget(self, action: #selector(self.didTapCloseButton), for: .touchUpInside)
+
+        let closeAction = UIAction { [weak self] _ in
+            self?.delegate?.closeButtonTapped()
+        }
+        self.closeButton.addAction(closeAction, for: .touchUpInside)
     }
 
     // MARK: - selector
-
-    @objc
-    private func didTapCloseButton() {
-        self.dismiss(animated: true)
-    }
 
     @objc
     private func didPinchImage(_ pinch: UIPinchGestureRecognizer) {
