@@ -12,7 +12,7 @@ final class LetterImageViewController: BaseViewController {
 
     // MARK: - ui component
 
-    private let letterImageView: LetterImageView = LetterImageView()
+    private lazy var letterImageView: LetterImageView = LetterImageView()
 
     // MARK: - property
 
@@ -37,13 +37,18 @@ final class LetterImageViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureImage()
         self.configureDelegation()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.configureImageView()
     }
 
     // MARK: - func
 
-    private func configureImage() {
+    private func configureImageView() {
+        self.letterImageView.configureImageFrame()
         self.letterImageView.configureImage(self.imageUrl)
     }
 

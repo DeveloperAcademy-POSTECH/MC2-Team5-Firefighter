@@ -19,15 +19,8 @@ final class LetterImageView: UIView {
 
     // MARK: - ui component
 
-    private let closeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(ImageLiterals.btnXmark, for: .normal)
-        button.tintColor = .grey001
-        return button
-    }()
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.frame = self.bounds
         scrollView.delegate = self
         scrollView.zoomScale = 1.0
         scrollView.minimumZoomScale = 1.0
@@ -37,11 +30,16 @@ final class LetterImageView: UIView {
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
-    private lazy var imageView: UIImageView = {
+    private let closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(ImageLiterals.btnXmark, for: .normal)
+        button.tintColor = .grey001
+        return button
+    }()
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = true
-        imageView.frame = self.scrollView.bounds
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -105,6 +103,11 @@ final class LetterImageView: UIView {
     private func setupImagePinchGesture() {
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.didPinchImage(_:)))
         self.addGestureRecognizer(pinch)
+    }
+
+    func configureImageFrame() {
+        self.scrollView.frame = self.bounds
+        self.imageView.frame = self.scrollView.bounds
     }
 
     func configureImage(_ imageUrl: String) {
