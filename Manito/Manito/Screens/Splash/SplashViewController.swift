@@ -10,13 +10,15 @@ import UIKit
 import Gifu
 
 final class SplashViewController: UIViewController {
-
-    let isLogin: Bool = UserDefaultStorage.isLogin
-    let nickname: String? = UserDefaultStorage.nickname
+    
+    // MARK: - ui component
+    
+    @IBOutlet weak var gifImageView: GIFImageView!
     
     // MARK: - property
-
-    @IBOutlet weak var gifImageView: GIFImageView!
+    
+    let isLogin: Bool = UserDefaultStorage.isLogin
+    let nickname: String? = UserDefaultStorage.nickname
     
     // MARK: - init
     
@@ -24,7 +26,7 @@ final class SplashViewController: UIViewController {
         print("\(#file) is dead")
     }
 
-    // MARK: - life cycle
+    // MARK: - override
 
     override func viewDidLoad() {
         super.viewDidLoad()

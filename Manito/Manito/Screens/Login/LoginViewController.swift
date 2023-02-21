@@ -11,9 +11,8 @@ import UIKit
 import SnapKit
 
 final class LoginViewController: BaseViewController {
-    let loginService: LoginAPI = LoginAPI(apiService: APIService())
 
-    // MARK: - property
+    // MARK: - ui component
 
     private let logoImageView: UIImageView = UIImageView(image: ImageLiterals.imgAppIcon)
     private let logoTextImageView: UIImageView = UIImageView(image: ImageLiterals.imgTextLogo)
@@ -27,13 +26,17 @@ final class LoginViewController: BaseViewController {
         return button
     }()
     
+    // MARK: - property
+    
+    let loginService: LoginAPI = LoginAPI(apiService: APIService())
+    
     // MARK: - init
     
     deinit {
         print("\(#file) is dead")
     }
 
-    // MARK: - func
+    // MARK: - override
 
     override func setupLayout() {
         view.addSubview(logoImageView)
@@ -58,6 +61,8 @@ final class LoginViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(35)
         }
     }
+    
+    // MARK: - func
 
     private func appleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
