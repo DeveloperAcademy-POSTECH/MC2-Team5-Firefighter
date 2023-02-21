@@ -336,7 +336,8 @@ extension LetterViewController: UICollectionViewDataSource {
                                  content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
         }
         cell.didTappedImage = { [weak self] _ in
-            let viewController = LetterImageViewController(imageUrl: (self?.letterList[indexPath.item].imageUrl)!)
+            guard let imageUrl = self?.letterList[indexPath.item].imageUrl else { return }
+            let viewController = LetterImageViewController(imageUrl: imageUrl)
             viewController.modalPresentationStyle = .fullScreen
             viewController.modalTransitionStyle = .crossDissolve
             self?.present(viewController, animated: true)

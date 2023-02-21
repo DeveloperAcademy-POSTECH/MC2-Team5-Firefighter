@@ -283,20 +283,26 @@ extension MemoryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: MemoryCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        var imageUrl: String
+
         switch memoryType {
         case .manittee:
+            imageUrl = memory?.memoriesWithManittee?.messages?[indexPath.item].imageUrl ?? ""
             cell.setData(imageUrl: memory?.memoriesWithManittee?.messages?[indexPath.item].imageUrl,
                          content: memory?.memoriesWithManittee?.messages?[indexPath.item].content)
         case .manitto:
+            imageUrl = memory?.memoriesWithManitto?.messages?[indexPath.item].imageUrl ?? ""
             cell.setData(imageUrl: memory?.memoriesWithManitto?.messages?[indexPath.item].imageUrl,
                          content: memory?.memoriesWithManitto?.messages?[indexPath.item].content)
         }
+
         cell.didTappedImage = { [weak self] image in
-            let viewController = LetterImageViewController(imageUrl: (self?.memory?.memoriesWithManittee?.messages?[indexPath.item].imageUrl)!)
+            let viewController = LetterImageViewController(imageUrl: imageUrl)
             viewController.modalPresentationStyle = .fullScreen
             viewController.modalTransitionStyle = .crossDissolve
             self?.present(viewController, animated: true)
         }
+
         return cell
     }
 }
