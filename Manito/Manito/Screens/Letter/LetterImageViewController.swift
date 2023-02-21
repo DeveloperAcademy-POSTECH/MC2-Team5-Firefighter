@@ -59,6 +59,10 @@ final class LetterImageViewController: BaseViewController {
 
 // MARK: - LetterImageViewDelegate
 extension LetterImageViewController: LetterImageViewDelegate {
+    func closeButtonTapped() {
+        self.dismiss(animated: true)
+    }
+    
     func downloadImageAsset(_ imageAsset: UIImage?) {
         // MARK: - Error에 대한 처리 필요..
         guard let imageAsset = imageAsset else {
@@ -81,9 +85,5 @@ extension LetterImageViewController: LetterImageViewDelegate {
                 }
             }
         }
-    }
-
-    func closeButtonTapped() {
-        self.dismiss(animated: true)
     }
 }
