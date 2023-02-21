@@ -73,12 +73,12 @@ final class SplashViewController: UIViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
-        self.present(viewController, animated: true, completion: nil)
+        self.present(viewController, animated: true)
     }
 
     private func setupGifImage() {
         DispatchQueue.main.async {
-            self.gifImageView.animate(withGIFNamed: ImageLiterals.gifLogo, animationBlock: nil)
+            self.gifImageView.animate(withGIFNamed: ImageLiterals.gifLogo)
         }
     }
 }

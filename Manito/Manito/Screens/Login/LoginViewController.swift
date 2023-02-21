@@ -116,7 +116,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                 let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
                                 viewController.modalPresentationStyle = .fullScreen
                                 viewController.modalTransitionStyle = .crossDissolve
-                                self.present(viewController, animated: true, completion: nil)
+                                self.present(viewController, animated: true)
                             }
                         } catch NetworkError.serverError {
                             print("server Error")
