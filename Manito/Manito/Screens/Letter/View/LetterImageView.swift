@@ -154,9 +154,9 @@ extension LetterImageView: UIScrollViewDelegate {
                           (newWidth - zoomView.frame.width) : (scrollView.frame.width - scrollView.contentSize.width))
         let verticalInset = 0.5 * (newHeight * scrollView.zoomScale > zoomView.frame.height ? (newHeight - zoomView.frame.height) : (scrollView.frame.height - scrollView.contentSize.height))
 
-        return UIEdgeInsets(top: horizontalInset.rounded(),
-                            left: verticalInset.rounded(),
-                            bottom: horizontalInset.rounded(),
-                            right: verticalInset.rounded())
+        return UIEdgeInsets(top: verticalInset.rounded(),
+                            left: horizontalInset.rounded(),
+                            bottom: verticalInset.rounded(),
+                            right: horizontalInset.rounded())
     }
 }
