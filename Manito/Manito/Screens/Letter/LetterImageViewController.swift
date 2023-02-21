@@ -64,24 +64,30 @@ extension LetterImageViewController: LetterImageViewDelegate {
     }
     
     func downloadImageAsset(_ imageAsset: UIImage?) {
-        // MARK: - Error에 대한 처리 필요..
-        guard let imageAsset = imageAsset else {
-            self.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
-                           message: TextLiteral.letterImageViewControllerErrorMessage)
-            return
+        self.uploadImage(for: imageAsset) { [weak self] result in
+            switch result {
+            case .success(let description):
+                self?.makeAlert(title: description.title,
+                                message: description.message)
+            case .failure(let error):
+                self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
+                                message: error.errorDescription)
+            }
         }
+    }
+
+    private func uploadImage(for image: UIImage?, completionHandler: @escaping ((Result<(title: String, message: String), LetterImageError>) -> ())) {
+        guard let image = image else { completionHandler(.failure(.invalidImage)); return }
 
         PHPhotoLibrary.shared().performChanges({
-            PHAssetChangeRequest.creationRequestForAsset(from: imageAsset)
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
         }) { (success, error) in
             DispatchQueue.main.async {
                 if success {
-                    self.makeAlert(title: TextLiteral.letterImageViewControllerSuccessTitle,
-                                   message: TextLiteral.letterImageViewControllerSuccessMessage)
-                } else if let error = error {
-                    Logger.debugDescription(error)
-                    self.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
-                                   message: TextLiteral.letterImageViewControllerErrorMessage)
+                    completionHandler(.success((title: TextLiteral.letterImageViewControllerSuccessTitle,
+                                                message: TextLiteral.letterImageViewControllerSuccessMessage)))
+                } else {
+                    completionHandler(.failure(.invalidPhotoLibrary))
                 }
             }
         }
