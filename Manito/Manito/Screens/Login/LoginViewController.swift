@@ -16,13 +16,9 @@ final class LoginViewController: BaseViewController {
 
     private let logoImageView: UIImageView = UIImageView(image: ImageLiterals.imgAppIcon)
     private let logoTextImageView: UIImageView = UIImageView(image: ImageLiterals.imgTextLogo)
-    private lazy var appleLoginButton: ASAuthorizationAppleIDButton = {
+    private let appleLoginButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
-        let action = UIAction { [weak self] _ in
-            self?.appleSignIn()
-        }
         button.cornerRadius = 25
-        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -37,6 +33,11 @@ final class LoginViewController: BaseViewController {
     }
 
     // MARK: - override
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLoginButton()
+    }
 
     override func setupLayout() {
         view.addSubview(logoImageView)
@@ -63,6 +64,13 @@ final class LoginViewController: BaseViewController {
     }
     
     // MARK: - func
+    
+    private func setupLoginButton() {
+        let action = UIAction { [weak self] _ in
+            self?.appleSignIn()
+        }
+        appleLoginButton.addAction(action, for: .touchUpInside)
+    }
 
     private func appleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
