@@ -5,6 +5,7 @@
 //  Created by SHIN YOON AH on 2022/06/13.
 //
 
+import AVFoundation
 import PhotosUI
 import UIKit
 
@@ -14,10 +15,22 @@ final class CreateLetterPhotoView: UIView {
 
     typealias alertAction = ((UIAlertAction) -> ())
     
+    private enum PHLibraryError: Error {
+        case loadError
+
+        var errorDescription: String {
+            switch self {
+            case .loadError:
+                return TextLiteral.letterPhotoViewFail
+            }
+        }
+    }
+
     private enum SourceType {
         case camera
         case library
     }
+
     
     // MARK: - ui component
     
@@ -133,7 +146,7 @@ final class CreateLetterPhotoView: UIView {
             let authorizationStatus = PHPhotoLibrary.authorizationStatus(for: .addOnly)
             self.checkPHPickerControllerAuthorizationStatus(authorizationStatus)
         case .camera:
-            self.imagePickerControllerDidShow()
+            self.checkImagePickerControllerAccessRight()
         }
     }
 
@@ -159,24 +172,38 @@ final class CreateLetterPhotoView: UIView {
         phPickerController.delegate = self
 
         DispatchQueue.main.async {
-            self.viewController?.present(phPickerController, animated: true, completion: nil)
+            self.viewController?.present(phPickerController, animated: true)
         }
     }
     
     private func openSettings() {
-        let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "애니또"
         let settingAction: alertAction = { [weak self] _ in
             guard let settingURL = URL(string: UIApplication.openSettingsURLString) else {
-                self?.viewController?.makeAlert(title: "오류", message: "설정 화면을 연결할 수 없습니다.")
+                self?.viewController?.makeAlert(title: TextLiteral.letterPhotoViewErrorTitle,
+                                                message: TextLiteral.letterPhotoViewSettingFail)
                 return
             }
             UIApplication.shared.open(settingURL)
         }
 
         self.viewController?.makeRequestAlert(title: TextLiteral.letterPhotoViewSetting,
-                                              message: "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
+                                              message: TextLiteral.letterPhotoViewSettingAuthorization,
                                               okAction: settingAction,
                                               completion: nil)
+    }
+
+    private func checkImagePickerControllerAccessRight() {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            self.viewController?.makeAlert(title: TextLiteral.letterPhotoViewErrorTitle,
+                                           message: TextLiteral.letterPhotoViewDeviceFail)
+            return
+        }
+
+        AVCaptureDevice.requestAccess(for: .video) { [weak self] hasGranted in
+            DispatchQueue.main.async {
+                hasGranted ? self?.imagePickerControllerDidShow() : self?.openSettings()
+            }
+        }
     }
 
     private func imagePickerControllerDidShow() {
@@ -206,25 +233,36 @@ extension CreateLetterPhotoView: UIImagePickerControllerDelegate & UINavigationC
 // MARK: - PHPickerViewControllerDelegate
 extension CreateLetterPhotoView: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: nil)
-        
-        let itemProvider = results.first?.itemProvider
-        if let itemProvider = itemProvider,
-           itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                guard let self = self else { return }
-                
-                DispatchQueue.main.async {
-                    guard let image = image as? UIImage else { return }
-                    self.importPhotosButton.setImage(image, for: .normal)
-                    self.setSendButtonEnabled?(self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+        if let itemProvider = results.first?.itemProvider {
+            self.loadUIImage(for: itemProvider) { [weak self] result in
+                switch result {
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        self?.importPhotosButton.setImage(image, for: .normal)
+                        self?.setSendButtonEnabled?(self?.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+                        picker.dismiss(animated: true)
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self?.viewController?.makeAlert(title: "", message: error.errorDescription, okAction: { _ in
+                            picker.dismiss(animated: true)
+                        })
+                    }
                 }
-                
-                if let error = error {
-                    self.viewController?.makeAlert(title: "", message: TextLiteral.letterPhotoViewFail)
-                    
-                    Logger.debugDescription(error)
-                }
+            }
+        }
+    }
+
+    private func loadUIImage(for itemProvider: NSItemProvider, completionHandler: @escaping ((Result<UIImage, PHLibraryError>) -> ())) {
+        guard itemProvider.canLoadObject(ofClass: UIImage.self) else { completionHandler(.failure(.loadError)); return }
+
+        itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+            if error != nil {
+                completionHandler(.failure(.loadError))
+            }
+
+            if let image = image as? UIImage {
+                completionHandler(.success(image))
             }
         }
     }
