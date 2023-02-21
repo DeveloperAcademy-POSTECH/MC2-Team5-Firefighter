@@ -5,7 +5,6 @@
 //  Created by SHIN YOON AH on 2023/02/20.
 //
 
-import Photos
 import UIKit
 
 import SnapKit
