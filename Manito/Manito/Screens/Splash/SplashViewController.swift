@@ -30,7 +30,7 @@ final class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configUI()
+        self.configureUI()
         self.setupGifImage()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             let isSetFcmToken = UserDefaultStorage.isSetFcmToken
@@ -48,7 +48,7 @@ final class SplashViewController: UIViewController {
     
     // MARK: - func
     
-    private func configUI() {
+    private func configureUI() {
         self.view.backgroundColor = .backgroundGrey
     }
 
