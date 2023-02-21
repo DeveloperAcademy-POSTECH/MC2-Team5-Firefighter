@@ -134,24 +134,29 @@ extension LetterImageView: UIScrollViewDelegate {
      }
 
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        if scrollView.zoomScale > 1 {
-            guard let image = self.imageView.image else { return }
-            guard let zoomView = self.viewForZooming(in: scrollView) else { return }
+        let zoomScale = scrollView.zoomScale
+        let contentInset = self.scrollViewDidChangeContentInsets(scrollView, with: zoomScale)
+        scrollView.contentInset = contentInset
+    }
 
-            let widthRatio = zoomView.frame.width / image.size.width
-            let heightRatio = zoomView.frame.height / image.size.height
-            let ratio = widthRatio < heightRatio ? widthRatio : heightRatio
+    private func scrollViewDidChangeContentInsets(_ scrollView: UIScrollView, with zoomScale: CGFloat) -> UIEdgeInsets {
+        guard zoomScale > 1 else { return .zero }
+        guard let image = self.imageView.image else { return .zero }
+        guard let zoomView = self.viewForZooming(in: scrollView) else { return .zero }
 
-            let newWidth = image.size.width * ratio
-            let newHeight = image.size.height * ratio
+        let widthRatio = zoomView.frame.width / image.size.width
+        let heightRatio = zoomView.frame.height / image.size.height
+        let ratio = widthRatio < heightRatio ? widthRatio : heightRatio
+        let newWidth = image.size.width * ratio
+        let newHeight = image.size.height * ratio
 
-            let left = 0.5 * (newWidth * scrollView.zoomScale > zoomView.frame.width ?
-                              (newWidth - zoomView.frame.width) : (scrollView.frame.width - scrollView.contentSize.width))
-            let top = 0.5 * (newHeight * scrollView.zoomScale > zoomView.frame.height ? (newHeight - zoomView.frame.height) : (scrollView.frame.height - scrollView.contentSize.height))
+        let horizontalInset = 0.5 * (newWidth * scrollView.zoomScale > zoomView.frame.width ?
+                          (newWidth - zoomView.frame.width) : (scrollView.frame.width - scrollView.contentSize.width))
+        let verticalInset = 0.5 * (newHeight * scrollView.zoomScale > zoomView.frame.height ? (newHeight - zoomView.frame.height) : (scrollView.frame.height - scrollView.contentSize.height))
 
-            scrollView.contentInset = UIEdgeInsets(top: top.rounded(), left: left.rounded(), bottom: top.rounded(), right: left.rounded())
-        } else {
-            scrollView.contentInset = .zero
-        }
+        return UIEdgeInsets(top: horizontalInset.rounded(),
+                            left: verticalInset.rounded(),
+                            bottom: horizontalInset.rounded(),
+                            right: verticalInset.rounded())
     }
 }
