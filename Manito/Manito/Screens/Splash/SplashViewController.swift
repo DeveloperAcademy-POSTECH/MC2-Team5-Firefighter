@@ -11,8 +11,8 @@ import Gifu
 
 final class SplashViewController: UIViewController {
 
-    let isLogin = UserDefaultStorage.isLogin
-    let nickname = UserDefaultStorage.nickname
+    let isLogin: Bool = UserDefaultStorage.isLogin
+    let nickname: String? = UserDefaultStorage.nickname
     
     // MARK: - property
 

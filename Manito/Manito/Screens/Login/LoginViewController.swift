@@ -15,8 +15,8 @@ final class LoginViewController: BaseViewController {
 
     // MARK: - property
 
-    private let logoImageView = UIImageView(image: ImageLiterals.imgAppIcon)
-    private let logoTextImageView = UIImageView(image: ImageLiterals.imgTextLogo)
+    private let logoImageView: UIImageView = UIImageView(image: ImageLiterals.imgAppIcon)
+    private let logoTextImageView: UIImageView = UIImageView(image: ImageLiterals.imgTextLogo)
     private lazy var appleLoginButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
         let action = UIAction { [weak self] _ in
