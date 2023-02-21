@@ -24,7 +24,7 @@ final class LoginViewController: BaseViewController {
     
     // MARK: - property
     
-    let loginService: LoginAPI = LoginAPI(apiService: APIService())
+    private let loginService: LoginAPI = LoginAPI(apiService: APIService())
     
     // MARK: - init
     
@@ -36,30 +36,29 @@ final class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLoginButton()
+        self.setupLoginButton()
     }
 
     override func setupLayout() {
-        view.addSubview(logoImageView)
-        logoImageView.snp.makeConstraints {
+        self.view.addSubview(self.logoImageView)
+        self.logoImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(-92)
             $0.width.height.equalTo(130)
         }
 
-        view.addSubview(logoTextImageView)
-        logoTextImageView.snp.makeConstraints {
+        self.view.addSubview(self.logoTextImageView)
+        self.logoTextImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(logoImageView.snp.bottom).offset(7)
+            $0.top.equalTo(self.logoImageView.snp.bottom).offset(7)
         }
 
-        appleLoginButton.layer.cornerRadius = 25
-        view.addSubview(appleLoginButton)
-        appleLoginButton.snp.makeConstraints {
+        self.view.addSubview(self.appleLoginButton)
+        self.appleLoginButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(65)
             $0.height.equalTo(50)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(35)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
         }
     }
     
@@ -69,7 +68,7 @@ final class LoginViewController: BaseViewController {
         let action = UIAction { [weak self] _ in
             self?.appleSignIn()
         }
-        appleLoginButton.addAction(action, for: .touchUpInside)
+        self.appleLoginButton.addAction(action, for: .touchUpInside)
     }
 
     private func appleSignIn() {
@@ -150,6 +149,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
 
 extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return view.window!
+        return self.view.window!
     }
 }

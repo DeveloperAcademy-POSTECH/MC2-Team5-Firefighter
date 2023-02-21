@@ -17,8 +17,8 @@ final class SplashViewController: UIViewController {
     
     // MARK: - property
     
-    let isLogin: Bool = UserDefaultStorage.isLogin
-    let nickname: String? = UserDefaultStorage.nickname
+    private let isLogin: Bool = UserDefaultStorage.isLogin
+    private let nickname: String? = UserDefaultStorage.nickname
     
     // MARK: - init
     
@@ -30,8 +30,8 @@ final class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
-        setupGifImage()
+        self.configUI()
+        self.setupGifImage()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             let isSetFcmToken = UserDefaultStorage.isSetFcmToken
             if !isSetFcmToken {
@@ -49,7 +49,7 @@ final class SplashViewController: UIViewController {
     // MARK: - func
     
     private func configUI() {
-        view.backgroundColor = .backgroundGrey
+        self.view.backgroundColor = .backgroundGrey
     }
 
     private func presentLoginViewConroller() {
@@ -58,14 +58,14 @@ final class SplashViewController: UIViewController {
         navigtionViewController.setNavigationBarHidden(true, animated: true)
         navigtionViewController.modalPresentationStyle = .fullScreen
         navigtionViewController.modalTransitionStyle = .crossDissolve
-        present(navigtionViewController, animated: true)
+        self.present(navigtionViewController, animated: true)
     }
 
     private func presentNicknameSettingViewController() {
         let viewController = CreateNickNameViewController()
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
-        present(viewController, animated: true)
+        self.present(viewController, animated: true)
     }
 
     private func presentMainViewController() {
@@ -73,7 +73,7 @@ final class SplashViewController: UIViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
-        present(viewController, animated: true, completion: nil)
+        self.present(viewController, animated: true, completion: nil)
     }
 
     private func setupGifImage() {
