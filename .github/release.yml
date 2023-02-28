@@ -1,0 +1,33 @@
+# .github/release.yml
+
+name-template: '애니또 v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+categories:
+  - title: '🆕 새로운 기능이 추가되었어요!'
+    label: '✨ Feature'
+  - title: '🐞 자잘한 버그를 수정했습니다.'
+    label: '🐞 Bugfix'
+  - title: '🫶🏻 앱 사용성 개선에 힘썼습니다.'
+    label: '🫶🏻 Improvement'
+  - title: '🛠️ 더 나은 코드를 위해 노력하고 있습니다.'
+    labels:
+      - '🔨 Refactor'
+      - '⚙️ Setting'
+  - title: 'ETC'
+    labels:
+      - "*"
+change-template: '* $TITLE (#$NUMBER) by @$AUTHOR'
+change-title-escapes: '\<*_&#@`'
+version-resolver:
+  major:
+    labels:
+      - 'Major'
+  minor:
+    labels:
+      - 'Minor'
+  patch:
+    labels:
+      - 'Patch'
+  default: patch
+template: |
+  $CHANGES
