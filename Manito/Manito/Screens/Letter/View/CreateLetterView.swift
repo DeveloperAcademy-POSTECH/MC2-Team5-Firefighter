@@ -9,6 +9,11 @@ import UIKit
 
 import SnapKit
 
+protocol CreateLetterViewDelegate: AnyObject {
+    func presentationControllerDidDismiss()
+    func showActionSheet()
+}
+
 final class CreateLetterView: UIView {
 
     // MARK: - ui component
@@ -48,6 +53,8 @@ final class CreateLetterView: UIView {
     private lazy var missionView: IndividualMissionView = IndividualMissionView(mission: self.mission)
 
     // MARK: - property
+
+    private weak var delegate: CreateLetterViewDelegate?
 
     private var isSendEnabled: (hasText: Bool, hasImage: Bool) = (false, false) {
         willSet {
@@ -111,9 +118,20 @@ final class CreateLetterView: UIView {
         }
     }
 
-//    private func configureDelegate(_ delegate: ) {
-//
-//    }
+    private func setupButtonAction() {
+        let cancelAction = UIAction { [weak self] _ in
+            self?.presentationControllerDidAttemptToDismissAction()
+        }
+        let sendAction = UIAction { [weak self] _ in
+            guard let roomId = self?.roomId else { return }
+
+            self?.dispatchLetter(roomId: roomId)
+            self?.dismiss(animated: true)
+        }
+
+        self.cancelButton.addAction(cancelAction, for: .touchUpInside)
+        self.sendButton.addAction(sendAction, for: .touchUpInside)
+    }
 
     private func checkSendButtonEnabled() {
         self.letterTextView.setSendButtonEnabled = { [weak self] hasText in
@@ -123,6 +141,10 @@ final class CreateLetterView: UIView {
         self.letterPhotoView.setSendButtonEnabled = { [weak self] hasImage in
             self?.isSendEnabled.hasImage = hasImage
         }
+    }
+
+    func configureDelegate(_ delegate: CreateLetterViewDelegate) {
+        self.delegate = delegate
     }
 
     func configureNavigationBar(_ navigationController: UINavigationController?) {
@@ -153,21 +175,6 @@ final class CreateLetterView: UIView {
         navigationItem.rightBarButtonItem = sendButton
     }
 
-    private func setupButtonAction() {
-        let cancelAction = UIAction { [weak self] _ in
-            self?.presentationControllerDidAttemptToDismissAction()
-        }
-        let sendAction = UIAction { [weak self] _ in
-            guard let roomId = self?.roomId else { return }
-
-            self?.dispatchLetter(roomId: roomId)
-            self?.dismiss(animated: true)
-        }
-
-        self.cancelButton.addAction(cancelAction, for: .touchUpInside)
-        self.sendButton.addAction(sendAction, for: .touchUpInside)
-    }
-
     private func presentationControllerDidAttemptToDismissAction() {
         let hasText = self.isSendEnabled.hasText
         let hasImage = self.isSendEnabled.hasImage
@@ -176,17 +183,7 @@ final class CreateLetterView: UIView {
             return
         }
 
-        self.presentActionSheet()
-    }
-
-    private func presentActionSheet() {
-        let dismissAction: ((UIAlertAction) -> ()) = { [weak self] _ in
-            self?.resignFirstResponder()
-            self?.dismiss(animated: true, completion: nil)
-        }
-        self.makeActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
-                             actionStyle: [.destructive, .cancel],
-                             actions: [dismissAction, nil])
+        self.delegate?.showActionSheet()
     }
 }
 

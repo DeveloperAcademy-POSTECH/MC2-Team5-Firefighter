@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 final class CreateLetterViewController: BaseViewController {
+
+    typealias AlertAction = ((UIAlertAction) -> ())
     
     // MARK: - property
 
@@ -97,5 +99,21 @@ final class CreateLetterViewController: BaseViewController {
                 print("clientError:\(String(describing: message))")
             }
         }
+    }
+}
+
+extension CreateLetterViewController: CreateLetterViewDelegate {
+    func presentationControllerDidDismiss() {
+        self.dismiss(animated: true)
+    }
+
+    func showActionSheet() {
+        let dismissAction: AlertAction = { [weak self] _ in
+            self?.resignFirstResponder()
+            self?.dismiss(animated: true)
+        }
+        self.makeActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
+                             actionStyle: [.destructive, .cancel],
+                             actions: [dismissAction, nil])
     }
 }
