@@ -18,8 +18,6 @@ categories:
       - "*"
 change-template: '* $TITLE (#$NUMBER) by @$AUTHOR'
 change-title-escapes: '\<*_&#@`'
-exclude-labels:
-  - 'Main'
 version-resolver:
   major:
     labels:
