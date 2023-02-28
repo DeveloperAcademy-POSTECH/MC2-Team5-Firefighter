@@ -188,6 +188,8 @@ final class CreateLetterPhotoView: UIView {
 
         self.viewController?.makeRequestAlert(title: TextLiteral.letterPhotoViewSetting,
                                               message: TextLiteral.letterPhotoViewSettingAuthorization,
+                                              okTitle: "설정",
+                                              okStyle: .default,
                                               okAction: settingAction,
                                               completion: nil)
     }
