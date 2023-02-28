@@ -77,7 +77,7 @@ extension LetterImageViewController: LetterImageViewDelegate {
     }
 
     private func uploadImage(for image: UIImage?, completionHandler: @escaping ((Result<(title: String, message: String), LetterImageError>) -> ())) {
-        guard let image = image else { completionHandler(.failure(.invalidImage)); return }
+        guard let image else { completionHandler(.failure(.invalidImage)); return }
 
         PHPhotoLibrary.shared().performChanges({
             PHAssetChangeRequest.creationRequestForAsset(from: image)
