@@ -11,8 +11,6 @@ import SnapKit
 
 final class CreateLetterViewController: BaseViewController {
     
-    var createLetter: (() -> ())?
-    
     // MARK: - ui component
     
     private let indicatorView: UIView = {
@@ -44,14 +42,21 @@ final class CreateLetterViewController: BaseViewController {
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
-    private let scrollContentView = UIView()
-    private let letterTextView = LetterTextView()
-    private let letterPhotoView = LetterPhotoView()
-    private lazy var missionView = IndividualMissionView(mission: self.mission)
+    private let scrollContentView: UIView = UIView()
+    private let letterTextView: CreateLetterTextView = CreateLetterTextView()
+    private let letterPhotoView: CreateLetterPhotoView = CreateLetterPhotoView()
+    private lazy var missionView: IndividualMissionView = IndividualMissionView(mission: self.mission)
 
     // MARK: - property
+
+    var createLetter: (() -> ())?
     
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
+    private var isSendEnabled: (hasText: Bool, hasImage: Bool) = (false, false) {
+        willSet {
+            self.sendButton.isEnabled = newValue.hasText || newValue.hasImage
+        }
+    }
     var manitteeId: String
     var roomId: String
     var mission: String
@@ -155,20 +160,13 @@ final class CreateLetterViewController: BaseViewController {
     // MARK: - func
     
     private func checkSendButtonEnabled() {
-        self.letterTextView.applySendButtonEnabled = { [weak self] in
-            self?.changeButtonEnabledState()
+        self.letterTextView.setSendButtonEnabled = { [weak self] hasText in
+            self?.isSendEnabled.hasText = hasText
         }
-        self.letterPhotoView.applySendButtonEnabled = { [weak self] in
-            self?.changeButtonEnabledState()
+
+        self.letterPhotoView.setSendButtonEnabled = { [weak self] hasImage in
+            self?.isSendEnabled.hasImage = hasImage
         }
-    }
-    
-    private func changeButtonEnabledState() {
-        let hasText = self.letterTextView.letterTextView.hasText
-        let hasImage = self.letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
-        let canEnabled = hasText || hasImage
-        
-        self.sendButton.isEnabled = canEnabled
     }
     
     private func setupNavigationItem() {
@@ -197,8 +195,8 @@ final class CreateLetterViewController: BaseViewController {
     }
     
     private func presentationControllerDidAttemptToDismissAction() {
-        let hasText = self.letterTextView.letterTextView.hasText
-        let hasImage = self.letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
+        let hasText = self.isSendEnabled.hasText
+        let hasImage = self.isSendEnabled.hasImage
         guard hasText || hasImage else {
             self.dismiss(animated: true, completion: nil)
             return
@@ -222,30 +220,30 @@ final class CreateLetterViewController: BaseViewController {
     private func dispatchLetter(roomId: String) {
         Task {
             do {
-                if let content = self.letterTextView.letterTextView.text,
-                   let image = self.letterPhotoView.importPhotosButton.imageView?.image,
+                if let content = self.letterTextView.text,
+                   let image = self.letterPhotoView.image,
                    image != ImageLiterals.btnCamera {
                     guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
                     
                     let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
-                    
+
                     if status == 201 {
                         self.createLetter?()
                     }
-                } else if let content = self.letterTextView.letterTextView.text {
+                } else if let content = self.letterTextView.text {
                     let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
                     
                     let status = try await self.letterSevice.dispatchLetter(roomId: roomId, letter: dto)
-                    
+
                     if status == 201 {
                         self.createLetter?()
                     }
-                } else if let image = self.letterPhotoView.importPhotosButton.imageView?.image,
+                } else if let image = self.letterPhotoView.image,
                           image != ImageLiterals.btnCamera {
                     guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: self.manitteeId)
-                    
+
                     let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
                     
                     if status == 201 {

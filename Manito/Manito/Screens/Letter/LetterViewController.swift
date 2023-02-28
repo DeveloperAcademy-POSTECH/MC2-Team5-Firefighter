@@ -79,7 +79,7 @@ final class LetterViewController: BaseViewController {
         label.addLabelSpacing(lineSpacing: 16)
         return label
     }()
-    private lazy var sendLetterView: SendLetterView = SendLetterView()
+    private lazy var sendLetterView: BottomOfSendLetterView = BottomOfSendLetterView()
 
     // MARK: - property
     
@@ -227,8 +227,7 @@ final class LetterViewController: BaseViewController {
             }
             self.present(navigationController, animated: true, completion: nil)
         }
-        self.sendLetterView.sendLetterButton.addAction(presentSendButtonAction,
-                                                       for: .touchUpInside)
+        self.sendLetterView.addAction(presentSendButtonAction)
     }
     
     private func reloadCollectionView(with state: LetterState) {
@@ -355,8 +354,8 @@ extension LetterViewController: UICollectionViewDataSource {
                 return UICollectionReusableView()
             }
             
-            headerView.segmentControlIndex = self.letterState.rawValue
-            headerView.changeSegmentControlIndex = { [weak self] index in
+            headerView.setSegmentedControlIndex(self.letterState.rawValue)
+            headerView.selectedSegmentIndexDidChange = { [weak self] index in
                 guard let letterStatus = LetterState.init(rawValue: index) else { return }
                 self?.letterState = letterStatus
             }

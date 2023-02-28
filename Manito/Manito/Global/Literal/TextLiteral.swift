@@ -90,16 +90,16 @@ enum TextLiteral {
     static let letterHeaderViewSegmentControlManitti: String = "마니띠에게"
     static let letterHeaderViewSegmentControlManitto: String = "마니또로부터"
     
-    // MARK: - SendLetterView
+    // MARK: - BottomSendLetterView
     static let sendLetterViewSendLetterButton: String = "쪽지 쓰기"
     
     // MARK: - IndividualMissionView
     static let individualMissionViewTitleLabel: String = "오늘의 개별 미션"
     
-    // MARK: - LetterTextView
+    // MARK: - CreateLetterTextView
     static let letterTextViewTitleLabel: String = "쪽지 작성"
     
-    // MARK: - LetterPhotoView
+    // MARK: - CreateLetterPhotoView
     static let letterPhotoViewTitleLabel: String = "사진 추가"
     static let letterPhotoViewTakePhoto: String = "사진 촬영"
     static let letterPhotoViewChoosePhoto: String = "사진 보관함에서 선택"
