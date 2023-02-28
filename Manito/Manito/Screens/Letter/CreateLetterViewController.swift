@@ -12,11 +12,14 @@ import SnapKit
 final class CreateLetterViewController: BaseViewController {
 
     typealias AlertAction = ((UIAlertAction) -> ())
+
+    // MARK: - ui component
+
+    private let createLetterView: CreateLetterView = CreateLetterView()
     
     // MARK: - property
 
     var createLetter: (() -> ())?
-    
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
     var manitteeId: String
     var roomId: String
@@ -37,67 +40,80 @@ final class CreateLetterViewController: BaseViewController {
     }
 
     // MARK: - life cycle
+
+    override func loadView() {
+        self.view = self.createLetterView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureDelegation()
+        self.configureNavigationController()
+    }
+
+    // MARK: - override
+
+    override func configureUI() {
+        self.createLetterView.configureMission(self.mission)
+        self.createLetterView.configureViewController(self)
     }
 
     // MARK: - func
 
     private func configureDelegation() {
-        
+        self.createLetterView.configureDelegation(self)
     }
 
     private func configureNavigationController() {
-        // view.configureNavigationBar 연결
-
+        guard let navigationController = self.navigationController else { return }
+        self.createLetterView.configureNavigationController(navigationController)
+        self.createLetterView.configureNavigationBar(navigationController)
+        self.createLetterView.configureNavigationItem(navigationController)
     }
-
-
     
     // MARK: - network
     
-    private func dispatchLetter(roomId: String) {
-        Task {
-            do {
-                if let content = self.letterTextView.text,
-                   let image = self.letterPhotoView.image,
-                   image != ImageLiterals.btnCamera {
-                    guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
-                    let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
-                    
-                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
-
-                    if status == 201 {
-                        self.createLetter?()
-                    }
-                } else if let content = self.letterTextView.text {
-                    let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
-                    
-                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, letter: dto)
-
-                    if status == 201 {
-                        self.createLetter?()
-                    }
-                } else if let image = self.letterPhotoView.image,
-                          image != ImageLiterals.btnCamera {
-                    guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
-                    let dto = LetterDTO(manitteeId: self.manitteeId)
-
-                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
-                    
-                    if status == 201 {
-                        self.createLetter?()
-                    }
-                }
-                
-            } catch NetworkError.serverError {
-                print("serverError")
-            } catch NetworkError.clientError(let message) {
-                print("clientError:\(String(describing: message))")
-            }
-        }
-    }
+//    private func dispatchLetter(roomId: String) {
+//        Task {
+//            do {
+//                if let content = self.letterTextView.text,
+//                   let image = self.letterPhotoView.image,
+//                   image != ImageLiterals.btnCamera {
+//                    guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
+//                    let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
+//
+//                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
+//
+//                    if status == 201 {
+//                        self.createLetter?()
+//                    }
+//                } else if let content = self.letterTextView.text {
+//                    let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
+//
+//                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, letter: dto)
+//
+//                    if status == 201 {
+//                        self.createLetter?()
+//                    }
+//                } else if let image = self.letterPhotoView.image,
+//                          image != ImageLiterals.btnCamera {
+//                    guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
+//                    let dto = LetterDTO(manitteeId: self.manitteeId)
+//
+//                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
+//
+//                    if status == 201 {
+//                        self.createLetter?()
+//                    }
+//                }
+//
+//            } catch NetworkError.serverError {
+//                print("serverError")
+//            } catch NetworkError.clientError(let message) {
+//                print("clientError:\(String(describing: message))")
+//            }
+//        }
+//    }
 }
 
 // MARK: - CreateLetterViewDelegate
@@ -117,7 +133,7 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
     }
 
     func sendLetterToManittee() {
-        self.dispatchLetter(roomId: roomId)
+//        self.dispatchLetter(roomId: roomId)
         self.dismiss(animated: true)
     }
 }

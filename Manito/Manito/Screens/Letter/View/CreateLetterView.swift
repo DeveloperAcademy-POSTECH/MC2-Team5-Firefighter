@@ -133,6 +133,7 @@ final class CreateLetterView: UIView {
         self.sendButton.addAction(sendAction, for: .touchUpInside)
     }
 
+    // TODO: - checkSendButtonEnabled를 더 좋은 방식으로 변경하고 싶음..
     private func checkSendButtonEnabled() {
         self.letterTextView.setSendButtonEnabled = { [weak self] hasText in
             self?.isSendEnabled.hasText = hasText
@@ -159,21 +160,21 @@ final class CreateLetterView: UIView {
         self.missionView.setupMission(with: mission)
     }
 
-    func configureDelegation(_ delegate: CreateLetterViewDelegate) {
-        self.delegate = delegate
-    }
-
     func configureViewController(_ viewController: UIViewController?) {
         viewController?.isModalInPresentation = true
         viewController?.title = TextLiteral.createLetterViewControllerTitle
     }
 
-    func configureNavigationController(_ navigationController: UINavigationController?) {
-        navigationController?.presentationController?.delegate = self
+    func configureDelegation(_ delegate: CreateLetterViewDelegate) {
+        self.delegate = delegate
     }
 
-    func configureNavigationBar(_ navigationController: UINavigationController?) {
-        guard let navigationBar = navigationController?.navigationBar else { return }
+    func configureNavigationController(_ navigationController: UINavigationController) {
+        navigationController.presentationController?.delegate = self
+    }
+
+    func configureNavigationBar(_ navigationController: UINavigationController) {
+        let navigationBar = navigationController.navigationBar
         let appearance = UINavigationBarAppearance()
         let font = UIFont.font(.regular, ofSize: 16)
 
@@ -189,8 +190,8 @@ final class CreateLetterView: UIView {
         navigationBar.scrollEdgeAppearance = appearance
     }
 
-    func configureNavigationItem(_ navigationController: UINavigationController?) {
-        guard let navigationItem = navigationController?.navigationItem else { return }
+    func configureNavigationItem(_ navigationController: UINavigationController) {
+        let navigationItem = navigationController.navigationItem
         let cancelButton = UIBarButtonItem(customView: self.cancelButton)
         let sendButton = UIBarButtonItem(customView: self.sendButton)
 
