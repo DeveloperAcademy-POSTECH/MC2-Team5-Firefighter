@@ -51,7 +51,7 @@ final class CreateLetterView: UIView {
     private let scrollContentView: UIView = UIView()
     private let letterTextView: CreateLetterTextView = CreateLetterTextView()
     private let letterPhotoView: CreateLetterPhotoView = CreateLetterPhotoView()
-    private lazy var missionView: IndividualMissionView = IndividualMissionView(mission: self.mission)
+    private let missionView: IndividualMissionView = IndividualMissionView()
 
     // MARK: - property
 
@@ -153,6 +153,10 @@ final class CreateLetterView: UIView {
         }
 
         self.delegate?.showActionSheet()
+    }
+
+    func configureMission(_ mission: String) {
+        self.missionView.setupMission(with: mission)
     }
 
     func configureDelegation(_ delegate: CreateLetterViewDelegate) {
