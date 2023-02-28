@@ -261,12 +261,12 @@ final class MainViewController: BaseViewController {
 
     private func presentParticipateRoomViewController() {
         let storyboard = UIStoryboard(name: "ParticipateRoom", bundle: nil)
-        let ParticipateRoomViewController = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
+        let participateRoomViewController = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
 
-        ParticipateRoomViewController.modalPresentationStyle = .fullScreen
-        ParticipateRoomViewController.modalTransitionStyle = .crossDissolve
+        participateRoomViewController.modalPresentationStyle = .fullScreen
+        participateRoomViewController.modalTransitionStyle = .crossDissolve
         DispatchQueue.main.async {
-            self.present(ParticipateRoomViewController, animated: true)
+            self.present(participateRoomViewController, animated: true)
         }
     }
 
