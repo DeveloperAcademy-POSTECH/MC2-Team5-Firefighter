@@ -30,7 +30,7 @@ final class CreateLetterView: UIView {
     private let sendButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 44)))
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.setTitle("보내기", for: .normal)
+        button.setTitle(TextLiteral.createLetterViewControllerSendButton, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .highlighted)
         button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .disabled)
@@ -60,8 +60,6 @@ final class CreateLetterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
-        self.setupAction()
-        self.setupImagePinchGesture()
     }
 
     @available(*, unavailable)
@@ -71,34 +69,8 @@ final class CreateLetterView: UIView {
 
     // MARK: - func
 
-    override func configureUI() {
-        super.configureUI()
-
-        self.navigationController?.presentationController?.delegate = self
-        self.isModalInPresentation = true
-    }
-
-    override func setupNavigationBar() {
-        guard let navigationBar = self.navigationController?.navigationBar else { return }
-        let appearance = UINavigationBarAppearance()
-        let font = UIFont.font(.regular, ofSize: 16)
-
-        appearance.titleTextAttributes = [.font: font]
-        appearance.shadowColor = .clear
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .clear
-        appearance.backgroundImage = nil
-        appearance.shadowImage = nil
-
-        navigationBar.standardAppearance = appearance
-        navigationBar.compactAppearance = appearance
-        navigationBar.scrollEdgeAppearance = appearance
-
-        self.title = TextLiteral.createLetterViewControllerTitle
-    }
-
     private func setupLayout() {
-        self.view.addSubview(self.indicatorView)
+        self.addSubview(self.indicatorView)
         self.indicatorView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(9)
             $0.centerX.equalToSuperview()
@@ -106,9 +78,9 @@ final class CreateLetterView: UIView {
             $0.width.equalTo(40)
         }
 
-        self.view.addSubview(self.scrollView)
+        self.addSubview(self.scrollView)
         self.scrollView.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide)
+            $0.top.equalTo(self.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }
 
@@ -139,6 +111,10 @@ final class CreateLetterView: UIView {
         }
     }
 
+//    private func configureDelegate(_ delegate: ) {
+//
+//    }
+
     private func checkSendButtonEnabled() {
         self.letterTextView.setSendButtonEnabled = { [weak self] hasText in
             self?.isSendEnabled.hasText = hasText
@@ -149,14 +125,32 @@ final class CreateLetterView: UIView {
         }
     }
 
-    private func setupNavigationItem() {
-        let cancelButton = self.makeBarButtonItem(with: cancelButton)
-        let sendButton = self.makeBarButtonItem(with: sendButton)
+    func configureNavigationBar(_ navigationController: UINavigationController?) {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        let appearance = UINavigationBarAppearance()
+        let font = UIFont.font(.regular, ofSize: 16)
+
+        appearance.titleTextAttributes = [.font: font]
+        appearance.shadowColor = .clear
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .clear
+        appearance.backgroundImage = nil
+        appearance.shadowImage = nil
+
+        navigationBar.standardAppearance = appearance
+        navigationBar.compactAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
+    }
+
+    func configureNavigationItem(_ navigationController: UINavigationController?) {
+        guard let navigationItem = navigationController?.navigationItem else { return }
+        let cancelButton = UIBarButtonItem(customView: self.cancelButton)
+        let sendButton = UIBarButtonItem(customView: self.sendButton)
 
         sendButton.isEnabled = false
 
-        self.navigationItem.leftBarButtonItem = cancelButton
-        self.navigationItem.rightBarButtonItem = sendButton
+        navigationItem.leftBarButtonItem = cancelButton
+        navigationItem.rightBarButtonItem = sendButton
     }
 
     private func setupButtonAction() {

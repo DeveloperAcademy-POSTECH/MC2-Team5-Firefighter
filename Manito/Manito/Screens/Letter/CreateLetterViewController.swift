@@ -39,6 +39,21 @@ final class CreateLetterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+
+    // MARK: - func
+
+    private func configureDelegate() {
+        
+    }
+
+    private func configureNavigationController() {
+        // view.configureNavigationBar 연결
+        self.navigationController?.presentationController?.delegate = self
+        self.isModalInPresentation = true
+        self.title = TextLiteral.createLetterViewControllerTitle
+    }
+
+
     
     // MARK: - network
     
