@@ -13,7 +13,7 @@ final class CreateLetterViewController: BaseViewController {
     
     var createLetter: (() -> ())?
     
-    // MARK: - property
+    // MARK: - ui component
     
     private let indicatorView: UIView = {
         let view = UIView()
@@ -45,9 +45,11 @@ final class CreateLetterViewController: BaseViewController {
         return scrollView
     }()
     private let scrollContentView = UIView()
-    private lazy var missionView = IndividualMissionView(mission: mission)
     private let letterTextView = LetterTextView()
     private let letterPhotoView = LetterPhotoView()
+    private lazy var missionView = IndividualMissionView(mission: self.mission)
+
+    // MARK: - property
     
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
     var manitteeId: String
@@ -75,62 +77,64 @@ final class CreateLetterViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkSendButtonEnabled()
-        setupNavigationItem()
-        setupButtonAction()
+        self.checkSendButtonEnabled()
+        self.setupNavigationItem()
+        self.setupButtonAction()
     }
+
+    // MARK: - override
     
-    override func render() {
-        view.addSubview(indicatorView)
-        indicatorView.snp.makeConstraints {
+    override func setupLayout() {
+        self.view.addSubview(self.indicatorView)
+        self.indicatorView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(9)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(3)
             $0.width.equalTo(40)
         }
         
-        view.addSubview(scrollView)
-        scrollView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+        self.view.addSubview(self.scrollView)
+        self.scrollView.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
-        scrollView.addSubview(scrollContentView)
-        scrollContentView.snp.makeConstraints {
+        self.scrollView.addSubview(self.scrollContentView)
+        self.scrollContentView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.width.equalTo(scrollView.snp.width)
+            $0.width.equalTo(self.scrollView.snp.width)
         }
         
-        scrollContentView.addSubview(missionView)
-        missionView.snp.makeConstraints {
+        self.scrollContentView.addSubview(self.missionView)
+        self.missionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(25)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.height.equalTo(100)
         }
         
-        scrollContentView.addSubview(letterTextView)
-        letterTextView.snp.makeConstraints {
-            $0.top.equalTo(missionView.snp.bottom).offset(32)
+        self.scrollContentView.addSubview(self.letterTextView)
+        self.letterTextView.snp.makeConstraints {
+            $0.top.equalTo(self.missionView.snp.bottom).offset(32)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
-        scrollContentView.addSubview(letterPhotoView)
-        letterPhotoView.snp.makeConstraints {
-            $0.top.equalTo(letterTextView.snp.bottom).offset(22)
+        self.scrollContentView.addSubview(self.letterPhotoView)
+        self.letterPhotoView.snp.makeConstraints {
+            $0.top.equalTo(self.letterTextView.snp.bottom).offset(22)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(105)
         }
     }
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
         
-        navigationController?.presentationController?.delegate = self
-        isModalInPresentation = true
+        self.navigationController?.presentationController?.delegate = self
+        self.isModalInPresentation = true
     }
     
     override func setupNavigationBar() {
-        guard let navigationBar = navigationController?.navigationBar else { return }
+        guard let navigationBar = self.navigationController?.navigationBar else { return }
         let appearance = UINavigationBarAppearance()
         let font = UIFont.font(.regular, ofSize: 16)
         
@@ -145,36 +149,36 @@ final class CreateLetterViewController: BaseViewController {
         navigationBar.compactAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
         
-        title = TextLiteral.createLetterViewControllerTitle
+        self.title = TextLiteral.createLetterViewControllerTitle
     }
     
     // MARK: - func
     
     private func checkSendButtonEnabled() {
-        letterTextView.applySendButtonEnabled = { [weak self] in
+        self.letterTextView.applySendButtonEnabled = { [weak self] in
             self?.changeButtonEnabledState()
         }
-        letterPhotoView.applySendButtonEnabled = { [weak self] in
+        self.letterPhotoView.applySendButtonEnabled = { [weak self] in
             self?.changeButtonEnabledState()
         }
     }
     
     private func changeButtonEnabledState() {
-        let hasText = letterTextView.letterTextView.hasText
-        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
+        let hasText = self.letterTextView.letterTextView.hasText
+        let hasImage = self.letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
         let canEnabled = hasText || hasImage
         
-        sendButton.isEnabled = canEnabled
+        self.sendButton.isEnabled = canEnabled
     }
     
     private func setupNavigationItem() {
-        let cancelButton = makeBarButtonItem(with: cancelButton)
-        let sendButton = makeBarButtonItem(with: sendButton)
+        let cancelButton = self.makeBarButtonItem(with: cancelButton)
+        let sendButton = self.makeBarButtonItem(with: sendButton)
         
         sendButton.isEnabled = false
         
-        navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItem = sendButton
+        self.navigationItem.leftBarButtonItem = cancelButton
+        self.navigationItem.rightBarButtonItem = sendButton
     }
     
     private func setupButtonAction() {
@@ -188,19 +192,19 @@ final class CreateLetterViewController: BaseViewController {
             self?.dismiss(animated: true)
         }
         
-        cancelButton.addAction(cancelAction, for: .touchUpInside)
-        sendButton.addAction(sendAction, for: .touchUpInside)
+        self.cancelButton.addAction(cancelAction, for: .touchUpInside)
+        self.sendButton.addAction(sendAction, for: .touchUpInside)
     }
     
     private func presentationControllerDidAttemptToDismissAction() {
-        let hasText = letterTextView.letterTextView.hasText
-        let hasImage = letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
+        let hasText = self.letterTextView.letterTextView.hasText
+        let hasImage = self.letterPhotoView.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
         guard hasText || hasImage else {
-            dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             return
         }
         
-        presentActionSheet()
+        self.presentActionSheet()
     }
     
     private func presentActionSheet() {
@@ -208,9 +212,9 @@ final class CreateLetterViewController: BaseViewController {
             self?.resignFirstResponder()
             self?.dismiss(animated: true, completion: nil)
         }
-        makeActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
-                        actionStyle: [.destructive, .cancel],
-                        actions: [dismissAction, nil])
+        self.makeActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
+                             actionStyle: [.destructive, .cancel],
+                             actions: [dismissAction, nil])
     }
     
     // MARK: - network
@@ -218,31 +222,31 @@ final class CreateLetterViewController: BaseViewController {
     private func dispatchLetter(roomId: String) {
         Task {
             do {
-                if let content = letterTextView.letterTextView.text,
-                   let image = letterPhotoView.importPhotosButton.imageView?.image,
+                if let content = self.letterTextView.letterTextView.text,
+                   let image = self.letterPhotoView.importPhotosButton.imageView?.image,
                    image != ImageLiterals.btnCamera {
                     guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
-                    let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
+                    let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
                     
-                    let status = try await letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
-                    
-                    if status == 201 {
-                        self.createLetter?()
-                    }
-                } else if let content = letterTextView.letterTextView.text {
-                    let dto = LetterDTO(manitteeId: manitteeId, messageContent: content)
-                    
-                    let status = try await letterSevice.dispatchLetter(roomId: roomId, letter: dto)
+                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
                     
                     if status == 201 {
                         self.createLetter?()
                     }
-                } else if let image = letterPhotoView.importPhotosButton.imageView?.image,
+                } else if let content = self.letterTextView.letterTextView.text {
+                    let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
+                    
+                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, letter: dto)
+                    
+                    if status == 201 {
+                        self.createLetter?()
+                    }
+                } else if let image = self.letterPhotoView.importPhotosButton.imageView?.image,
                           image != ImageLiterals.btnCamera {
                     guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
-                    let dto = LetterDTO(manitteeId: manitteeId)
+                    let dto = LetterDTO(manitteeId: self.manitteeId)
                     
-                    let status = try await letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
+                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
                     
                     if status == 201 {
                         self.createLetter?()
@@ -261,6 +265,6 @@ final class CreateLetterViewController: BaseViewController {
 // MARK: - UIAdaptivePresentationControllerDelegate
 extension CreateLetterViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
-        presentationControllerDidAttemptToDismissAction()
+        self.presentationControllerDidAttemptToDismissAction()
     }
 }

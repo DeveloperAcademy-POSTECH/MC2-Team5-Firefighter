@@ -90,7 +90,7 @@ class CreateNickNameViewController: BaseViewController {
         }
     }
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
@@ -191,8 +191,8 @@ class CreateNickNameViewController: BaseViewController {
     
     // MARK: - Configure
     
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
     }
 }
 

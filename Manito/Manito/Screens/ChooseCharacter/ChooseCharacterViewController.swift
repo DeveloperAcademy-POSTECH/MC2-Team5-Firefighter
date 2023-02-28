@@ -127,7 +127,7 @@ class ChooseCharacterViewController: BaseViewController {
     
     // MARK: - life cycle
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)

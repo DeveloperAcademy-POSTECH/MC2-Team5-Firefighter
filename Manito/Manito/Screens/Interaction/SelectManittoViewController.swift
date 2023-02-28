@@ -64,8 +64,8 @@ final class SelectManittoViewController: BaseViewController {
         setupGifImage()
     }
 
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
 
         informationLabel.font = .font(.regular, ofSize: 20)
         nameLabel.font = .font(.regular, ofSize: 30)

@@ -85,7 +85,7 @@ final class OpenManittoViewController: BaseViewController {
         requestWithFriends(roomId: roomId)
     }
     
-    override func render() {
+    override func setupLayout() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(57)

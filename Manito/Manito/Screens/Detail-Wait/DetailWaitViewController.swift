@@ -10,66 +10,23 @@ import UIKit
 import SnapKit
 
 final class DetailWaitViewController: BaseViewController {
-    private var room: Room?
-    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-    private let roomIndex: Int
-    var roomInformation: ParticipatingRoom?
-    private var roomInfo: RoomDTO?
-    private var userArr: [String] = [] {
-        didSet {
-            renderTableView()
-        }
-    }
-    private var detectStartableStatus: ((Bool) -> ())?
-    private var memberType = UserStatus.member {
-        didSet {
-            settingButton.menu = setExitButtonMenu()
-            setupTitleViewGesture()
-        }
-    }
 
     private enum UserStatus: CaseIterable {
         case owner
         case member
 
-        var alertText: AlertText {
+        var alertText: (title: String,
+                        message: String,
+                        okTitle: String) {
             switch self {
             case .owner:
-                return .delete
+                return (title: TextLiteral.datailWaitViewControllerDeleteTitle,
+                        message: TextLiteral.datailWaitViewControllerDeleteMessage,
+                        okTitle: TextLiteral.delete)
             case .member:
-                return .exit
-            }
-        }
-    }
-
-    private enum AlertText {
-        case delete
-        case exit
-
-        var title: String {
-            switch self {
-            case .delete:
-                return TextLiteral.datailWaitViewControllerDeleteTitle
-            case .exit:
-                return TextLiteral.datailWaitViewControllerExitTitle
-            }
-        }
-
-        var message: String {
-            switch self {
-            case .delete:
-                return TextLiteral.datailWaitViewControllerDeleteMessage
-            case .exit:
-                return TextLiteral.datailWaitViewControllerExitMessage
-            }
-        }
-
-        var okTitle: String {
-            switch self {
-            case .delete:
-                return TextLiteral.delete
-            case .exit:
-                return TextLiteral.leave
+                return (title: TextLiteral.datailWaitViewControllerExitTitle,
+                        message: TextLiteral.datailWaitViewControllerExitMessage,
+                        okTitle: TextLiteral.leave)
             }
         }
     }
@@ -88,15 +45,14 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
 
-    // MARK: - property
+    // MARK: - ui component
 
-    private lazy var settingButton: UIButton = {
+    private let moreButton: UIButton = {
         let button = MoreButton()
-        button.menu = setExitButtonMenu()
         button.showsMenuAsPrimaryAction = true
         return button
     }()
-    private let titleView = DetailWaitTitleView()
+    private let titleView: DetailWaitTitleView = DetailWaitTitleView()
     private let togetherFriendLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.togetherFriend
@@ -109,34 +65,29 @@ final class DetailWaitViewController: BaseViewController {
         imageView.image = ImageLiterals.imgNi
         return imageView
     }()
-    private lazy var comeInLabel: UILabel = {
+    private let userCountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    private lazy var copyButton: UIButton = {
+    private let copyButton: UIButton = {
         let button = UIButton(type: .system)
-        let buttonAction = UIAction { [weak self] _ in
-            if let code = self?.room?.invitation?.code {
-                ToastView.showToast(code: code ,message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
-            }
-        }
         button.setTitle(TextLiteral.copyCode, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
-    private let listTable: UITableView = {
-        let table = UITableView()
-        table.layer.cornerRadius = 10
-        table.isScrollEnabled = false
-        return table
+    private let listTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.layer.cornerRadius = 10
+        tableView.isScrollEnabled = false
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        return tableView
     }()
     private lazy var startButton: UIButton = {
         let button = MainButton()
-        detectStartableStatus = { value in
+        self.detectStartableStatus = { value in
             if value {
                 button.title = ButtonText.start.status
                 button.isDisabled = false
@@ -151,11 +102,31 @@ final class DetailWaitViewController: BaseViewController {
         }
         return button
     }()
+    
+    // MARK: - property
+    
+    private var room: Room?
+    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
+    private let roomIndex: Int
+    var roomInformation: ParticipatingRoom?
+    private var roomInfo: RoomDTO?
+    private var userArr: [String] = [] {
+        didSet {
+            self.setupLayoutTableView()
+        }
+    }
+    private var detectStartableStatus: ((Bool) -> ())?
+    private var memberType = UserStatus.member {
+        didSet {
+            self.moreButton.menu = self.setExitButtonMenu()
+            self.setupTitleViewGesture()
+        }
+    }
 
     // MARK: - init
     
     init(index: Int) {
-        roomIndex = index
+        self.roomIndex = index
         super.init()
     }
     
@@ -171,80 +142,272 @@ final class DetailWaitViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestWaitRoomInfo()
-        setupDelegation()
-        setupNotificationCenter()
+        self.requestWaitRoomInfo()
+        self.setupDelegation()
+        self.setupNotificationCenter()
+        self.setupCopyButton()
     }
+    
+    // MARK: - override
 
-    override func render() {
-        view.addSubview(titleView)
-        titleView.snp.makeConstraints {
+    override func setupLayout() {
+        self.view.addSubview(self.titleView)
+        self.titleView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalToSuperview().offset(100)
             $0.height.equalTo(86)
         }
 
-        view.addSubview(togetherFriendLabel)
-        togetherFriendLabel.snp.makeConstraints {
+        self.view.addSubview(self.togetherFriendLabel)
+        self.togetherFriendLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
 
-        view.addSubview(imgNiView)
-        imgNiView.snp.makeConstraints {
-            $0.centerY.equalTo(togetherFriendLabel.snp.centerY)
-            $0.leading.equalTo(togetherFriendLabel.snp.trailing).offset(7)
+        self.view.addSubview(self.imgNiView)
+        self.imgNiView.snp.makeConstraints {
+            $0.centerY.equalTo(self.togetherFriendLabel.snp.centerY)
+            $0.leading.equalTo(self.togetherFriendLabel.snp.trailing).offset(7)
             $0.width.height.equalTo(30)
         }
 
-        view.addSubview(comeInLabel)
-        comeInLabel.snp.makeConstraints {
-            $0.leading.equalTo(imgNiView.snp.trailing)
-            $0.centerY.equalTo(imgNiView.snp.centerY)
+        self.view.addSubview(self.userCountLabel)
+        self.userCountLabel.snp.makeConstraints {
+            $0.leading.equalTo(self.imgNiView.snp.trailing)
+            $0.centerY.equalTo(self.imgNiView.snp.centerY)
         }
 
-        view.addSubview(copyButton)
-        copyButton.snp.makeConstraints {
+        self.view.addSubview(self.copyButton)
+        self.copyButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.centerY.equalTo(togetherFriendLabel.snp.centerY)
+            $0.centerY.equalTo(self.togetherFriendLabel.snp.centerY)
         }
 
-        view.addSubview(startButton)
-        startButton.snp.makeConstraints {
+        self.view.addSubview(self.startButton)
+        self.startButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(65)
             $0.height.equalTo(60)
         }
     }
 
-    override func configUI() {
-        super.configUI()
-        setupSettingButton()
+    override func configureUI() {
+        super.configureUI()
+        self.setupSettingButton()
+    }
+
+    // MARK: - func
+
+    private func setupDelegation() {
+        self.listTableView.delegate = self
+        self.listTableView.dataSource = self
     }
     
-    // MARK: - API
+    private func setupCopyButton() {
+        let action = UIAction { [weak self] _ in
+            if let code = self?.room?.invitation?.code {
+                ToastView.showToast(code: code,
+                                    message: TextLiteral.detailWaitViewControllerCopyCode,
+                                    controller: self ?? UIViewController())
+            }
+        }
+        copyButton.addAction(action, for: .touchUpInside)
+    }
+
+    private func presentDetailEditViewController(startString: String, endString: String, isDateEdit: Bool) {
+        guard let title = self.titleView.roomTitleLabel.text else { return }
+        let viewController = DetailEditViewController(editMode: isDateEdit ? .date : .information,
+                                                      roomIndex: roomIndex,
+                                                      title: title)
+        viewController.didTappedChangeButton = { [weak self] in
+            self?.requestWaitRoomInfo()
+        }
+        guard let userCount = room?.participants?.count,
+              let capacity = room?.roomInformation?.capacity else { return }
+        viewController.currentUserCount = userCount
+        viewController.sliderValue = capacity
+        viewController.startDateText = startString
+        viewController.endDateText = endString
+        self.present(viewController, animated: true, completion: nil)
+    }
+
+    private func setupSettingButton() {
+        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: moreButton,
+                                                                       offsetX: -10)
+        let settingButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
+
+        self.navigationItem.rightBarButtonItem = settingButton
+    }
+
+    private func setExitButtonMenu() -> UIMenu {
+        let children: [UIAction] = memberType == .owner
+        ? [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
+            self?.presentEditRoomView()
+        }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
+               self?.makeRequestAlert(title: UserStatus.owner.alertText.title,
+                                      message: UserStatus.owner.alertText.message,
+                                      okTitle: UserStatus.owner.alertText.okTitle,
+                                      okAction: { _ in
+                   self?.requestDeleteRoom()
+                   
+               })
+            
+        })
+        ]
+        : [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+            self?.makeRequestAlert(title: UserStatus.member.alertText.title,
+                                   message: UserStatus.member.alertText.message,
+                                   okTitle: UserStatus.member.alertText.okTitle,
+                                   okAction: { _ in
+                self?.requestDeleteLeaveRoom()
+            })
+        })]
+        let menu = UIMenu(children: children)
+        return menu
+    }
+
+    private func presentEditRoomView() {
+        guard let roomInformation = self.room?.roomInformation else { return }
+        if roomInformation.isAlreadyPastDate {
+            self.editInfoFromDefaultDate(isDateEdit: false)
+        } else {
+            self.editInfoFromCurrentDate()
+        }
+    }
+    
+    private func editInfoFromDefaultDate(isDateEdit: Bool) {
+        let fiveDaysInterval: TimeInterval = 86400 * 4
+        let defaultStartDate = Date().dateToString
+        let defaultEndDate = (Date() + fiveDaysInterval).dateToString
+        self.presentDetailEditViewController(startString: defaultStartDate,
+                                             endString: defaultEndDate,
+                                             isDateEdit: isDateEdit)
+    }
+    
+    private func editInfoFromCurrentDate() {
+        guard let startDate = self.room?.roomInformation?.startDate,
+              let endDate = self.room?.roomInformation?.endDate else { return }
+        self.presentDetailEditViewController(startString: startDate,
+                                             endString: endDate,
+                                             isDateEdit: false)
+    }
+
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
+    }
+
+    private func isPastStartDate() {
+        guard let isStart = self.room?.roomInformation?.isStart else { return }
+        if !isStart {
+            switch memberType {
+            case .owner:
+                let action: ((UIAlertAction) -> ()) = { [weak self] _ in
+                    self?.editInfoFromDefaultDate(isDateEdit: true)
+                }
+                self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                          message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
+                          okAction: action)
+            case .member:
+                self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                          message: TextLiteral.detailWaitViewControllerPastAlertMessage)
+            }
+        }
+    }
+
+    private func setStartButton() {
+        if memberType == .owner {
+            guard let canStart = self.room?.canStart else { return }
+            self.detectStartableStatus?(canStart)
+        } else {
+            self.detectStartableStatus?(false)
+        }
+    }
+    
+    private func setupLayoutTableView() {
+        DispatchQueue.main.async {
+            self.listTableView.reloadData()
+            self.view.addSubview(self.listTableView)
+            var tableHeight = self.userArr.count * 44
+            if tableHeight > 400 {
+                tableHeight = 400
+                self.listTableView.isScrollEnabled = true
+            }
+            self.listTableView.snp.makeConstraints {
+                $0.top.equalTo(self.togetherFriendLabel.snp.bottom).offset(30)
+                $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+                $0.centerX.equalToSuperview()
+                $0.height.equalTo(tableHeight)
+            }
+        }
+    }
+    
+    private func setupTitleViewGesture() {
+        if self.memberType == .owner {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.presentEditViewController))
+            self.titleView.addGestureRecognizer(tapGesture)
+        }
+    }
+    
+    private func presentSelectManittoViewController(nickname: String) {
+        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.manitteeName = nickname
+        viewController.roomId = self.roomInformation?.id?.description
+        self.present(viewController, animated: true)
+    }
+
+    // MARK: - selector
+    
+    @objc
+    private func didTapEnterButton() {
+        guard let roomInfo = self.roomInfo,
+              let code = self.room?.invitation?.code else { return }
+        let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
+                                                             capacity: roomInfo.capacity,
+                                                             startDate: roomInfo.startDate,
+                                                             endDate: roomInfo.endDate),
+                                                       code: code)
+        viewController.roomInfo = roomInfo
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        self.present(viewController, animated: true)
+    }
+    
+    @objc
+    private func presentEditViewController() {
+        guard let startDate = self.room?.roomInformation?.startDate,
+              let endDate = self.room?.roomInformation?.endDate else { return }
+        self.presentDetailEditViewController(startString: startDate,
+                                             endString: endDate,
+                                             isDateEdit: false)
+    }
+    
+    @objc
+    private func changeStartButton() {
+        self.setStartButton()
+    }
+    
+    // MARK: - network
     
     private func requestWaitRoomInfo() {
         Task {
             do {
-                let data = try await detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
+                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
                     guard let title = roomInfo.roomInformation?.title,
                           let state = roomInfo.roomInformation?.state,
-                          let members = roomInfo.participants?.members,
+                          let participants = roomInfo.participants,
                           let isAdmin = roomInfo.admin else { return }
-                    self.room = data
-                    titleView.setStartState(state: state)
-                    userArr = members.map { $0.nickname ?? "" }
-                    memberType = isAdmin ? .owner : .member
-                    self.roomInfo = RoomDTO(title: title,
-                                            capacity: data?.roomInformation?.capacity ?? 15,
-                                            startDate: data?.roomInformation?.startDate ?? "",
-                                            endDate: data?.roomInformation?.endDate ?? "")
-                    isPastStartDate()
-                    setStartButton()
+                    self.room = roomInfo
+                    self.userArr = participants.membersNickname
+                    self.memberType = isAdmin ? .owner : .member
+                    self.roomInfo = roomInfo.roomDTO
+                    self.setStartButton()
                     DispatchQueue.main.async {
-                        self.comeInLabel.text = data?.userCount
+                        self.isPastStartDate()
+                        self.titleView.setStartState(state: state)
+                        self.userCountLabel.text = roomInfo.userCount
                         self.titleView.setRoomTitleLabelText(text: title)
                         self.titleView.setDurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
                     }
@@ -262,15 +425,10 @@ final class DetailWaitViewController: BaseViewController {
     private func requestStartManitto() {
         Task {
             do {
-                let data = try await detailWaitService.startManitto(roomId: "\(roomIndex)")
+                let data = try await self.detailWaitService.startManitto(roomId: "\(roomIndex)")
                 if let manittee = data {
-                    let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-                    guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
                     guard let nickname = manittee.nickname else { return }
-                    viewController.modalPresentationStyle = .fullScreen
-                    viewController.manitteeName = nickname
-                    viewController.roomId = roomInformation?.id?.description
-                    present(viewController, animated: true)
+                    self.presentSelectManittoViewController(nickname: nickname)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -285,9 +443,9 @@ final class DetailWaitViewController: BaseViewController {
     private func requestDeleteRoom() {
         Task {
             do {
-                let status = try await detailWaitService.deleteRoom(roomId: "\(roomIndex)")
+                let status = try await self.detailWaitService.deleteRoom(roomId: "\(roomIndex)")
                 if status == 204 {
-                    navigationController?.popViewController(animated: true)
+                    self.navigationController?.popViewController(animated: true)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -302,9 +460,9 @@ final class DetailWaitViewController: BaseViewController {
     private func requestDeleteLeaveRoom() {
         Task {
             do {
-                let status = try await detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
+                let status = try await self.detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
                 if status == 204 {
-                    navigationController?.popViewController(animated: true)
+                    self.navigationController?.popViewController(animated: true)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -314,180 +472,6 @@ final class DetailWaitViewController: BaseViewController {
                 print("client Error: \(String(describing: message))")
             }
         }
-    }
-
-    // MARK: - func
-
-    private func setupDelegation() {
-        listTable.delegate = self
-        listTable.dataSource = self
-        listTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    }
-
-    private func presentDetailEditViewController(startString: String, endString: String, isDateEdit: Bool) {
-        guard let title = titleView.roomTitleLabel.text else { return }
-        let viewController = DetailEditViewController(editMode: isDateEdit ? .date : .information,
-                                                      roomIndex: roomIndex,
-                                                      title: title)
-        viewController.didTappedChangeButton = { [weak self] in
-            self?.requestWaitRoomInfo()
-        }
-        guard let userCount = room?.participants?.count,
-              let capacity = room?.roomInformation?.capacity else { return }
-        viewController.currentUserCount = userCount
-        viewController.sliderValue = capacity
-        viewController.startDateText = startString
-        viewController.endDateText = endString
-        present(viewController, animated: true, completion: nil)
-    }
-
-    // MARK: - private func
-
-    private func setupSettingButton() {
-        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: settingButton, offsetX: -10)
-        let settingButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
-
-        navigationItem.rightBarButtonItem = settingButton
-    }
-
-    private func setExitButtonMenu() -> UIMenu {
-        switch memberType {
-        case .owner:
-            let menu = UIMenu(options: [], children: [
-                UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
-                    self?.presentEditRoomView()
-                }),
-                UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-                    self?.makeRequestAlert(title: UserStatus.owner.alertText.title, message: UserStatus.owner.alertText.message, okTitle: UserStatus.owner.alertText.okTitle, okAction: { _ in
-                        self?.requestDeleteRoom()
-                    })
-                })])
-            return menu
-        case .member:
-            let menu = UIMenu(options: [], children: [
-                UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                    self?.makeRequestAlert(title: UserStatus.member.alertText.title, message: UserStatus.member.alertText.message, okTitle: UserStatus.member.alertText.okTitle, okAction:  { _ in
-                        self?.requestDeleteLeaveRoom()
-                    })
-                })
-            ])
-            return menu
-        }
-    }
-
-    private func presentEditRoomView() {
-        guard let startDate = room?.roomInformation?.startDate?.stringToDate else { return }
-        let isAlreadyPastDate = startDate.distance(to: Date()) > 86400
-        
-        if isAlreadyPastDate {
-            editInfoFromDefaultDate()
-        } else {
-            editInfoFromCurrentDate()
-        }
-    }
-    
-    private func editInfoFromDefaultDate() {
-        let fiveDaysInterval: TimeInterval = 86400 * 4
-        let defaultStartDate = Date().dateToString
-        let defaultEndDate = (Date() + fiveDaysInterval).dateToString
-        self.presentDetailEditViewController(startString: defaultStartDate, endString: defaultEndDate, isDateEdit: false)
-    }
-    
-    private func editInfoFromCurrentDate() {
-        guard let startDate = room?.roomInformation?.startDate,
-              let endDate = room?.roomInformation?.endDate else { return }
-        self.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: false)
-    }
-
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didTapEnterButton), name: .createRoomInvitedCode, object: nil)
-    }
-
-    private func isPastStartDate() {
-        guard let startDate = room?.roomInformation?.startDate?.stringToDate else { return }
-        let isPast = startDate.distance(to: Date()) > 86400
-        let isToday = startDate.distance(to: Date()) < 86400
-        let canStart = !isPast && isToday
-        if !canStart {
-            switch memberType {
-            case .owner:
-                let action: ((UIAlertAction) -> ()) = { [weak self] _ in
-                    let fiveDaysInterval: TimeInterval = 86400 * 4
-                    let startDate = Date().dateToString
-                    let endDate = (Date() + fiveDaysInterval).dateToString
-                    self?.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: true)
-                }
-                makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage, okAction: action)
-            case .member:
-                makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle, message: TextLiteral.detailWaitViewControllerPastAlertMessage)
-            }
-        }
-    }
-
-    private func setStartButton() {
-        if memberType == .owner {
-            guard let startDate = room?.roomInformation?.startDate?.stringToDate,
-                  let todayDate = Date().dateToString.stringToDate,
-                  let userCount = room?.participants?.count else { return }
-            
-            let isToday = startDate.distance(to: todayDate).isZero
-            let isMinimumUserCount = userCount >= 4
-            
-            detectStartableStatus?(isToday && isMinimumUserCount)
-        } else {
-            detectStartableStatus?(false)
-        }
-    }
-    
-    private func renderTableView() {
-        DispatchQueue.main.async {
-            self.listTable.reloadData()
-            self.view.addSubview(self.listTable)
-            var tableHeight = self.userArr.count * 44
-            if tableHeight > 400 {
-                tableHeight = 400
-                self.listTable.isScrollEnabled = true
-            }
-            self.listTable.snp.makeConstraints {
-                $0.top.equalTo(self.togetherFriendLabel.snp.bottom).offset(30)
-                $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-                $0.centerX.equalToSuperview()
-                $0.height.equalTo(tableHeight)
-            }
-        }
-    }
-    
-    private func setupTitleViewGesture() {
-        if memberType == .owner {
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentEditViewController))
-            titleView.addGestureRecognizer(tapGesture)
-        }
-    }
-
-    // MARK: - selector
-    @objc private func didTapEnterButton() {
-        guard let roomInfo = roomInfo,
-              let code = room?.invitation?.code
-        else { return }
-        let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
-                                                             capacity: roomInfo.capacity,
-                                                             startDate: roomInfo.startDate,
-                                                             endDate: roomInfo.endDate),
-                                                       code: code)
-        viewController.roomInfo = roomInfo
-        viewController.modalPresentationStyle = .overCurrentContext
-        viewController.modalTransitionStyle = .crossDissolve
-        present(viewController, animated: true)
-    }
-    
-    @objc private func presentEditViewController() {
-        guard let startDate = room?.roomInformation?.startDate,
-              let endDate = room?.roomInformation?.endDate else { return }
-        self.presentDetailEditViewController(startString: startDate, endString: endDate, isDateEdit: false)
-    }
-    
-    @objc private func changeStartButton() {
-        setStartButton()
     }
 }
 
@@ -499,12 +483,12 @@ extension DetailWaitViewController: UITableViewDelegate {
 
 extension DetailWaitViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userArr.count
+        return self.userArr.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = listTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
-        cell.textLabel?.text = userArr[indexPath.row]
+        let cell = self.listTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
+        cell.textLabel?.text = self.userArr[indexPath.row]
         cell.textLabel?.font = .font(.regular, ofSize: 17)
         cell.backgroundColor = .darkGrey003
         cell.selectionStyle = .none
