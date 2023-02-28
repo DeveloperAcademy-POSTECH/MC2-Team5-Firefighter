@@ -29,7 +29,7 @@ final class ManittoCollectionViewCell: BaseCollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func render() {
+    override func setupLayout() {
         contentView.addSubview(characterImageView)
         characterImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -37,7 +37,7 @@ final class ManittoCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    override func configUI() {
+    override func configureUI() {
         makeBorderLayer(color: .white)
         layer.cornerRadius = self.frame.size.width / 2
     }
