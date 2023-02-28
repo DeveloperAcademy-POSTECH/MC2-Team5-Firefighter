@@ -44,15 +44,13 @@ final class CreateLetterViewController: BaseViewController {
 
     // MARK: - func
 
-    private func configureDelegate() {
+    private func configureDelegation() {
         
     }
 
     private func configureNavigationController() {
         // view.configureNavigationBar 연결
-        self.navigationController?.presentationController?.delegate = self
-        self.isModalInPresentation = true
-        self.title = TextLiteral.createLetterViewControllerTitle
+
     }
 
 
@@ -102,6 +100,7 @@ final class CreateLetterViewController: BaseViewController {
     }
 }
 
+// MARK: - CreateLetterViewDelegate
 extension CreateLetterViewController: CreateLetterViewDelegate {
     func presentationControllerDidDismiss() {
         self.dismiss(animated: true)
@@ -115,5 +114,10 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
         self.makeActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
                              actionStyle: [.destructive, .cancel],
                              actions: [dismissAction, nil])
+    }
+
+    func sendLetterToManittee() {
+        self.dispatchLetter(roomId: roomId)
+        self.dismiss(animated: true)
     }
 }

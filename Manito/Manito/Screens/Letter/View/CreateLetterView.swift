@@ -12,6 +12,7 @@ import SnapKit
 protocol CreateLetterViewDelegate: AnyObject {
     func presentationControllerDidDismiss()
     func showActionSheet()
+    func sendLetterToManittee()
 }
 
 final class CreateLetterView: UIView {
@@ -67,6 +68,8 @@ final class CreateLetterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
+        self.setupButtonAction()
+        self.checkSendButtonEnabled()
     }
 
     @available(*, unavailable)
@@ -120,16 +123,13 @@ final class CreateLetterView: UIView {
 
     private func setupButtonAction() {
         let cancelAction = UIAction { [weak self] _ in
-            self?.presentationControllerDidAttemptToDismissAction()
+            self?.presentationControllerDidAttemptToDismiss()
         }
-        let sendAction = UIAction { [weak self] _ in
-            guard let roomId = self?.roomId else { return }
-
-            self?.dispatchLetter(roomId: roomId)
-            self?.dismiss(animated: true)
-        }
-
         self.cancelButton.addAction(cancelAction, for: .touchUpInside)
+
+        let sendAction = UIAction { [weak self] _ in
+            self?.delegate?.sendLetterToManittee()
+        }
         self.sendButton.addAction(sendAction, for: .touchUpInside)
     }
 
@@ -143,8 +143,29 @@ final class CreateLetterView: UIView {
         }
     }
 
-    func configureDelegate(_ delegate: CreateLetterViewDelegate) {
+    // TODO: - presentationController를 더 좋은 방식으로 변경하고 싶음..
+    private func presentationControllerDidAttemptToDismiss() {
+        let hasText = self.isSendEnabled.hasText
+        let hasImage = self.isSendEnabled.hasImage
+        guard hasText || hasImage else {
+            self.delegate?.presentationControllerDidDismiss()
+            return
+        }
+
+        self.delegate?.showActionSheet()
+    }
+
+    func configureDelegation(_ delegate: CreateLetterViewDelegate) {
         self.delegate = delegate
+    }
+
+    func configureViewController(_ viewController: UIViewController?) {
+        viewController?.isModalInPresentation = true
+        viewController?.title = TextLiteral.createLetterViewControllerTitle
+    }
+
+    func configureNavigationController(_ navigationController: UINavigationController?) {
+        navigationController?.presentationController?.delegate = self
     }
 
     func configureNavigationBar(_ navigationController: UINavigationController?) {
@@ -174,22 +195,11 @@ final class CreateLetterView: UIView {
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = sendButton
     }
-
-    private func presentationControllerDidAttemptToDismissAction() {
-        let hasText = self.isSendEnabled.hasText
-        let hasImage = self.isSendEnabled.hasImage
-        guard hasText || hasImage else {
-            self.dismiss(animated: true, completion: nil)
-            return
-        }
-
-        self.delegate?.showActionSheet()
-    }
 }
 
 // MARK: - UIAdaptivePresentationControllerDelegate
 extension CreateLetterView: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
-        self.presentationControllerDidAttemptToDismissAction()
+        self.presentationControllerDidAttemptToDismiss()
     }
 }
