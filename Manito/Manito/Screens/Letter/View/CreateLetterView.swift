@@ -49,15 +49,15 @@ final class CreateLetterView: UIView {
         return scrollView
     }()
     private let scrollContentView: UIView = UIView()
+    private let missionView: IndividualMissionView = IndividualMissionView()
     private let letterTextView: CreateLetterTextView = CreateLetterTextView()
     private let letterPhotoView: CreateLetterPhotoView = CreateLetterPhotoView()
-    private let missionView: IndividualMissionView = IndividualMissionView()
 
     // MARK: - property
 
     private weak var delegate: CreateLetterViewDelegate?
 
-    private var isSendEnabled: (hasText: Bool, hasImage: Bool) = (false, false) {
+    private var sendButtonObserver: (hasText: Bool, hasImage: Bool) = (false, false) {
         willSet {
             self.sendButton.isEnabled = newValue.hasText || newValue.hasImage
         }
@@ -69,7 +69,7 @@ final class CreateLetterView: UIView {
         super.init(frame: frame)
         self.setupLayout()
         self.setupButtonAction()
-        self.checkSendButtonEnabled()
+        self.observeSendButtonEnabledState()
     }
 
     @available(*, unavailable)
@@ -133,21 +133,20 @@ final class CreateLetterView: UIView {
         self.sendButton.addAction(sendAction, for: .touchUpInside)
     }
 
-    // TODO: - checkSendButtonEnabled를 더 좋은 방식으로 변경하고 싶음..
-    private func checkSendButtonEnabled() {
-        self.letterTextView.setSendButtonEnabled = { [weak self] hasText in
-            self?.isSendEnabled.hasText = hasText
+    private func observeSendButtonEnabledState() {
+        self.letterTextView.sendHasTextValue = { [weak self] hasText in
+            self?.sendButtonObserver.hasText = hasText
         }
 
-        self.letterPhotoView.setSendButtonEnabled = { [weak self] hasImage in
-            self?.isSendEnabled.hasImage = hasImage
+        self.letterPhotoView.sendHasImageValue = { [weak self] hasImage in
+            self?.sendButtonObserver.hasImage = hasImage
         }
     }
 
     // TODO: - presentationController를 더 좋은 방식으로 변경하고 싶음..
     private func presentationControllerDidAttemptToDismiss() {
-        let hasText = self.isSendEnabled.hasText
-        let hasImage = self.isSendEnabled.hasImage
+        let hasText = self.sendButtonObserver.hasText
+        let hasImage = self.sendButtonObserver.hasImage
         guard hasText || hasImage else {
             self.delegate?.presentationControllerDidDismiss()
             return
@@ -191,14 +190,14 @@ final class CreateLetterView: UIView {
     }
 
     func configureNavigationItem(_ navigationController: UINavigationController) {
-        let navigationItem = navigationController.navigationItem
+        let navigationItem = navigationController.topViewController?.navigationItem
         let cancelButton = UIBarButtonItem(customView: self.cancelButton)
         let sendButton = UIBarButtonItem(customView: self.sendButton)
 
         sendButton.isEnabled = false
 
-        navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItem = sendButton
+        navigationItem?.leftBarButtonItem = cancelButton
+        navigationItem?.rightBarButtonItem = sendButton
     }
 }
 

@@ -43,7 +43,7 @@ final class CreateLetterTextView: UIView {
 
     // MARK: - property
 
-    var setSendButtonEnabled: ((_ hasText: Bool) -> ())?
+    var sendHasTextValue: ((_ hasText: Bool) -> ())?
 
     var text: String? {
         guard self.letterTextView.text != "" && self.letterTextView.text != nil else { return nil }
@@ -104,6 +104,6 @@ extension CreateLetterTextView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         self.setCounter(textView.text?.count ?? 0, maximumCount: self.maximumCount)
         self.textViewReachedMaximumCount(self.letterTextView, maximumCount: self.maximumCount)
-        self.setSendButtonEnabled?(textView.hasText)
+        self.sendHasTextValue?(textView.hasText)
     }
 }

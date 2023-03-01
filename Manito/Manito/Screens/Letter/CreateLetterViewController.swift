@@ -54,6 +54,7 @@ final class CreateLetterViewController: BaseViewController {
     // MARK: - override
 
     override func configureUI() {
+        super.configureUI()
         self.createLetterView.configureMission(self.mission)
         self.createLetterView.configureViewController(self)
     }

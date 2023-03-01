@@ -54,7 +54,7 @@ final class CreateLetterPhotoView: UIView {
 
     // MARK: - property
 
-    var setSendButtonEnabled: ((_ hasImage: Bool) -> ())?
+    var sendHasImageValue: ((_ hasImage: Bool) -> ())?
 
     private var hasImage: Bool {
         return self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
@@ -123,7 +123,7 @@ final class CreateLetterPhotoView: UIView {
         }
         let removePhotoAction: alertAction = { [weak self] _ in
             self?.importPhotosButton.setImage(ImageLiterals.btnCamera, for: .normal)
-            self?.setSendButtonEnabled?(self?.hasImage ?? false)
+            self?.sendHasImageValue?(self?.hasImage ?? false)
         }
 
         return self.hasImage ? [takePhotoAction, photoLibraryAction, removePhotoAction, nil]
@@ -223,7 +223,7 @@ extension CreateLetterPhotoView: UIImagePickerControllerDelegate & UINavigationC
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             DispatchQueue.main.async {
                 self.importPhotosButton.setImage(image, for: .normal)
-                self.setSendButtonEnabled?(self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+                self.sendHasImageValue?(self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
                 picker.dismiss(animated: true)
             }
         }
@@ -239,7 +239,7 @@ extension CreateLetterPhotoView: PHPickerViewControllerDelegate {
                 case .success(let image):
                     DispatchQueue.main.async {
                         self?.importPhotosButton.setImage(image, for: .normal)
-                        self?.setSendButtonEnabled?(self?.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+                        self?.sendHasImageValue?(self?.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
                         picker.dismiss(animated: true)
                     }
                 case .failure(let error):
