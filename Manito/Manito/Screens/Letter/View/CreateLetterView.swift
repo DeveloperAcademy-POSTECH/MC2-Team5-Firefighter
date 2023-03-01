@@ -143,16 +143,13 @@ final class CreateLetterView: UIView {
         }
     }
 
-    // TODO: - presentationController를 더 좋은 방식으로 변경하고 싶음..
     private func presentationControllerDidAttemptToDismiss() {
-        let hasText = self.sendButtonObserver.hasText
-        let hasImage = self.sendButtonObserver.hasImage
-        guard hasText || hasImage else {
+        switch self.sendButtonObserver {
+        case let (hasText, hasImage) where hasText || hasImage:
+            self.delegate?.showActionSheet()
+        default:
             self.delegate?.presentationControllerDidDismiss()
-            return
         }
-
-        self.delegate?.showActionSheet()
     }
 
     func configureMission(_ mission: String) {
