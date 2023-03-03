@@ -20,12 +20,11 @@ final class CreateLetterViewController: BaseViewController {
     // MARK: - property
 
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
-    private let viewModel: CreateLetterViewModel
     private let mission: String
     private let manitteeId: String
     private let roomId: String
 
-    var createLetter: (() -> Void)?
+    var succeedInSendingLetter: (() -> Void)?
 
     // MARK: - init
     
@@ -76,21 +75,20 @@ final class CreateLetterViewController: BaseViewController {
     
     // MARK: - network
 
-    private func dispatchLetter(with content: String? = nil, _ image: UIImage? = nil) {
+    private func dispatchLetter(with letterDTO: LetterDTO,
+                                _ jpegData: Data? = nil,
+                                completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let jpegData = image?.jpegData(compressionQuality: 0.3)
-                let letterDTO = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
-
-                let status = try await self.letterSevice.dispatchLetter(roomId: self.roomId, image: jpegData, letter: letterDTO)
-
-                if status == 201 {
-                    self.createLetter?()
+                let statusCode = try await self.letterSevice.dispatchLetter(roomId: self.roomId, image: jpegData, letter: letterDTO)
+                switch statusCode {
+                case 200..<300: completionHandler(.success(()))
+                default: completionHandler(.failure(.unknownError))
                 }
             } catch NetworkError.serverError {
-                print("serverError")
+                completionHandler(.failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                print("clientError:\(String(describing: message))")
+                completionHandler(.failure(.clientError(message: message)))
             }
         }
     }
@@ -113,7 +111,18 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
     }
 
     func sendLetterToManittee(with content: String?, _ image: UIImage?) {
-        self.dispatchLetter(with: <#T##String?#>)
-        self.dismiss(animated: true)
+        let jpegData = image?.jpegData(compressionQuality: 0.3)
+        let letterDTO = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
+
+        self.dispatchLetter(with: letterDTO, jpegData) { [weak self] response in
+            switch response {
+            case .success:
+                self?.succeedInSendingLetter?()
+                self?.dismiss(animated: true)
+            case .failure:
+                self?.makeAlert(title: TextLiteral.createLetterViewControllerErrorTitle,
+                                message: TextLiteral.createLetterViewControllerErrorMessage)
+            }
+        }
     }
 }

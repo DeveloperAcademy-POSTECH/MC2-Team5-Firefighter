@@ -91,7 +91,6 @@
 		B55BCEC628F5AFB200AF7E45 /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC528F5AFB200AF7E45 /* capsule.gif */; };
 		B55BCEC828F5AFD500AF7E45 /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC728F5AFD500AF7E45 /* joystick.gif */; };
 		B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BE029ADC20A0093D198 /* CreateLetterView.swift */; };
-		B5706BEC29AF62700093D198 /* CreateLetterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BEB29AF62700093D198 /* CreateLetterViewModel.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
@@ -249,7 +248,6 @@
 		B55BCEC528F5AFB200AF7E45 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
 		B55BCEC728F5AFD500AF7E45 /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
 		B5706BE029ADC20A0093D198 /* CreateLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterView.swift; sourceTree = "<group>"; };
-		B5706BEB29AF62700093D198 /* CreateLetterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterViewModel.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
@@ -512,6 +510,7 @@
 		B54741E529A4945100B75BA3 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				B5706BED29B189F60093D198 /* Network */,
 				B54741E629A4945A00B75BA3 /* Screens */,
 			);
 			path = Error;
@@ -533,12 +532,19 @@
 			path = Letter;
 			sourceTree = "<group>";
 		};
-		B5706BEA29AF62640093D198 /* ViewModel */ = {
+		B5706BED29B189F60093D198 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				B5706BEB29AF62700093D198 /* CreateLetterViewModel.swift */,
+				B5706BEE29B189FF0093D198 /* Letter */,
 			);
-			path = ViewModel;
+			path = Network;
+			sourceTree = "<group>";
+		};
+		B5706BEE29B189FF0093D198 /* Letter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Letter;
 			sourceTree = "<group>";
 		};
 		B5F31BAE28BE1C7900F61D0F /* Storage */ = {
@@ -668,7 +674,6 @@
 		B5F524EA28519B4B00614FF7 /* Letter */ = {
 			isa = PBXGroup;
 			children = (
-				B5706BEA29AF62640093D198 /* ViewModel */,
 				B54741DE29A3A4BA00B75BA3 /* View */,
 				B5F5253328547EE000614FF7 /* UIComponent */,
 				B5F5253228547CAF00614FF7 /* Cell */,
@@ -1107,7 +1112,6 @@
 				39CD581B28C4BE8800496E91 /* DetailStartingAPI.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
-				B5706BEC29AF62700093D198 /* CreateLetterViewModel.swift in Sources */,
 				39C957D02879521400A04A2B /* String+Extension.swift in Sources */,
 				399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */,
 				7E15F67E28B35B3D00441305 /* TextLiteral.swift in Sources */,
