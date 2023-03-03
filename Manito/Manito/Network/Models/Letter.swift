@@ -23,6 +23,7 @@ struct Message: Codable {
     var content: String?
     var imageUrl: String?
     var createdDate: String?
+    var missionInfo: Mission?
     
     var date: String {
         guard let createdDate = createdDate else { return "" }
