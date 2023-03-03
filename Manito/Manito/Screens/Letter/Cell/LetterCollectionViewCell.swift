@@ -11,10 +11,7 @@ import SnapKit
 
 final class LetterCollectionViewCell: BaseCollectionViewCell {
     
-    var didTappedReport:(() -> ())?
-    var didTappedImage: ((UIImage) -> ())?
-    
-    // MARK: - property
+    // MARK: - ui component
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -29,14 +26,14 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         label.textColor = .grey003
         return label
     }()
-    private var contentLabel: UILabel = {
+    private let contentLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .font(.regular, ofSize: 15)
         label.textColor = .white
         label.numberOfLines = 0
         return label
     }()
-    private var photoImageView: UIImageView = {
+    private let photoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -48,6 +45,11 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         button.setImage(ImageLiterals.icReport, for: .normal)
         return button
     }()
+
+    // MARK: - property
+
+    var didTappedReport: (() -> ())?
+    var didTappedImage: ((UIImage) -> ())?
     
     // MARK: - init
     
@@ -55,11 +57,14 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         super.init(frame: frame)
         setupReportAction()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // MARK: - override
+
     override func prepareForReuse() {
         contentLabel.text = nil
         photoImageView.image = nil
@@ -131,14 +136,17 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
             }
         }
     }
-    
-    @objc func didTapPhoto() {
-        guard let image = photoImageView.image else { return }
-        didTappedImage?(image)
-    }
-    
+
     func setupImageTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPhoto))
         photoImageView.addGestureRecognizer(tapGesture)
+    }
+
+    // MARK: - selector
+
+    @objc
+    private func didTapPhoto() {
+        guard let image = photoImageView.image else { return }
+        didTappedImage?(image)
     }
 }
