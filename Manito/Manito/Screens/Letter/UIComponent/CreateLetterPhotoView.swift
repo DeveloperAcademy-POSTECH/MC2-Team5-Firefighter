@@ -60,6 +60,7 @@ final class CreateLetterPhotoView: UIView {
         return self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
     }
     var image: UIImage? {
+        if self.importPhotosButton.imageView?.image == ImageLiterals.btnCamera { return nil }
         return self.importPhotosButton.imageView?.image
     }
 

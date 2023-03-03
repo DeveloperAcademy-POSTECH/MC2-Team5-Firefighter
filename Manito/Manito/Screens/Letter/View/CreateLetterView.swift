@@ -12,7 +12,7 @@ import SnapKit
 protocol CreateLetterViewDelegate: AnyObject {
     func presentationControllerDidDismiss()
     func showActionSheet()
-    func sendLetterToManittee()
+    func sendLetterToManittee(with content: String?, _ image: UIImage?)
 }
 
 final class CreateLetterView: UIView {
@@ -128,7 +128,9 @@ final class CreateLetterView: UIView {
         self.cancelButton.addAction(cancelAction, for: .touchUpInside)
 
         let sendAction = UIAction { [weak self] _ in
-            self?.delegate?.sendLetterToManittee()
+            let image = self?.letterPhotoView.image
+            let content = self?.letterTextView.text
+            self?.delegate?.sendLetterToManittee(with: content, image)
         }
         self.sendButton.addAction(sendAction, for: .touchUpInside)
     }
