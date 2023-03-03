@@ -7,8 +7,6 @@
 
 import UIKit
 
-import SnapKit
-
 final class CreateLetterViewController: BaseViewController {
 
     typealias AlertAction = ((UIAlertAction) -> ())
