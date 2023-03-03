@@ -48,8 +48,8 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
 
     // MARK: - property
 
-    var didTappedReport: (() -> ())?
-    var didTappedImage: ((UIImage) -> ())?
+    var didTapReport: (() -> ())?
+    var didTapImage: ((UIImage) -> ())?
     
     // MARK: - init
     
@@ -111,7 +111,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     private func setupButtonAction() {
         let reportAction = UIAction { [weak self] _ in
-            self?.didTappedReport?()
+            self?.didTapReport?()
         }
         self.reportButton.addAction(reportAction, for: .touchUpInside)
     }
@@ -150,7 +150,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
 
     @objc
     private func didTapPhoto() {
-        guard let image = photoImageView.image else { return }
-        didTappedImage?(image)
+        guard let image = self.photoImageView.image else { return }
+        self.didTapImage?(image)
     }
 }
