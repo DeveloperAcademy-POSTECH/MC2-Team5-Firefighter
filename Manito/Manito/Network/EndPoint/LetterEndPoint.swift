@@ -54,9 +54,9 @@ enum LetterEndPoint: EndPointable {
         case .dispatchLetter(let roomId,_,_):
             return "\(baseURL)/rooms/\(roomId)/messages-separate"
         case .fetchSendLetter(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/messages-sent"
+            return "https://dev.aenitto.shop/api/v2/rooms/\(roomId)/messages-sent"
         case .fetchReceiveLetter(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/messages-received"
+            return "https://dev.aenitto.shop/api/v2/rooms/\(roomId)/messages-received"
         case .patchReadMessage(let roomId, _):
             return "\(baseURL)/rooms/\(roomId)/messages/status"
         }
