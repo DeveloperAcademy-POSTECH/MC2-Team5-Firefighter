@@ -92,6 +92,13 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
             $0.leading.trailing.equalToSuperview().inset(11)
             $0.bottom.equalTo(self.contentLabel.snp.top).offset(10)
         }
+
+        self.contentView.addSubview(self.reportButton)
+        self.reportButton.snp.makeConstraints {
+            $0.top.equalTo(self.missionLabel.snp.top)
+            $0.trailing.equalToSuperview().inset(11)
+            $0.width.height.equalTo(22)
+        }
     }
     
     override func configureUI() {
@@ -132,7 +139,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         } else {
             self.missionLabel.text = data.date
             self.missionLabel.snp.updateConstraints {
-                $0.bottom.equalTo(self.contentLabel.snp.top)
+                $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
             }
         }
         self.reportButton.isHidden = isHidden

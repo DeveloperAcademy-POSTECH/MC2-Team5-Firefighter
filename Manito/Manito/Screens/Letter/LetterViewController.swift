@@ -384,7 +384,7 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
             heights += [self.calculateContentHeight(text: mission) + 10]
         } else {
             let date = self.letterList[indexPath.item].date
-            heights += [self.calculateContentHeight(text: date)]
+            heights += [self.calculateContentHeight(text: date) + 5]
         }
 
         if self.letterList[indexPath.item].imageUrl != nil {
