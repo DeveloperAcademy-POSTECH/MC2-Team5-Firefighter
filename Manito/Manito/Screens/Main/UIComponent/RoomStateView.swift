@@ -11,9 +11,9 @@ import SnapKit
 
 final class RoomStateView: UIView {
     
-    // MARK: - property
+    // MARK: - ui component
     
-    lazy var state: UILabel = {
+    lazy var stateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 12)
@@ -24,24 +24,24 @@ final class RoomStateView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        self.setupLayout()
+        self.configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - life cycle
+    // MARK: - func
     
-    private func render() {
-        self.addSubview(state)
-        state.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(self.stateLabel)
+        self.stateLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
     }
     
-    private func configUI() {
-        layer.cornerRadius = 12
+    private func configureUI() {
+        self.layer.cornerRadius = 12
     }
 }

@@ -65,6 +65,8 @@ enum TextLiteral {
     static let mainViewControllerGuideTitle: String = "공통 미션이란?"
     static let mainViewControllerGuideDescription: String = "공통 미션이란?\n마니또에 참여한 모두에게 \n수행하는 미션이에요. "
     static let mainViewControllerNewRoomAlert: String = "새로운 마니또 시작"
+    static let mainViewControllerShowIdErrorAlertTitle: String = "해당 마니또 방의 정보를 불러오지 못했습니다."
+    static let mainViewControllerShowIdErrorAlertMessage: String = "해당 마니또 방으로 이동할 수 없습니다."
 
     // MARK: - OpenManittoViewController
     static let openManittoViewController: String = "당신의 마니또는?"

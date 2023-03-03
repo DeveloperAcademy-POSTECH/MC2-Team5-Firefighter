@@ -13,10 +13,7 @@ import SnapKit
 
 final class MainViewController: BaseViewController {
     
-    private let mainService: MainProtocol = MainAPI(apiService: APIService())
-    private var rooms: [ParticipatingRoom]?
-    
-    private enum Size {
+    private enum InternalSize {
         static let collectionHorizontalSpacing: CGFloat = 20
         static let collectionVerticalSpacing: CGFloat = 20
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - collectionHorizontalSpacing * 3) / 2
@@ -45,13 +42,11 @@ final class MainViewController: BaseViewController {
         }
     }
     
-    private let skeletonAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
+    // MARK: - ui component
     
-    private let refreshControl = UIRefreshControl()
-
-    // MARK: - property
-
-    private let appTitleView = UIImageView(image: ImageLiterals.imgLogo)
+    private let skeletonAnimation: SkeletonLayerAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
+    private let refreshControl: UIRefreshControl = UIRefreshControl()
+    private let appTitleView: UIImageView = UIImageView(image: ImageLiterals.imgLogo)
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
         let action = UIAction { [weak self] _ in
@@ -60,8 +55,8 @@ final class MainViewController: BaseViewController {
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-    private let imgStar = UIImageView(image: ImageLiterals.imgStar)
-    private let commonMissionView = CommonMissionView()
+    private let imgStar: UIImageView = UIImageView(image: ImageLiterals.imgStar)
+    private let commonMissionView: CommonMissionView = CommonMissionView()
     private let menuTitle: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.mainViewControllerMenuTitle
@@ -72,14 +67,14 @@ final class MainViewController: BaseViewController {
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
-        flowLayout.sectionInset = Size.collectionInset
-        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
+        flowLayout.sectionInset = InternalSize.collectionInset
+        flowLayout.itemSize = CGSize(width: InternalSize.cellWidth, height: InternalSize.cellWidth)
         flowLayout.minimumLineSpacing = 16
         flowLayout.minimumInteritemSpacing = 16
         return flowLayout
     }()
     private lazy var listCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -91,9 +86,14 @@ final class MainViewController: BaseViewController {
         collectionView.isSkeletonable = true
         return collectionView
     }()
-    private let maCharacterImageView = GIFImageView()
-    private let niCharacterImageView = GIFImageView()
-    private let ttoCharacterImageView = GIFImageView()
+    private let maCharacterImageView: GIFImageView = GIFImageView()
+    private let niCharacterImageView: GIFImageView = GIFImageView()
+    private let ttoCharacterImageView: GIFImageView = GIFImageView()
+    
+    // MARK: - property
+    
+    private let mainService: MainProtocol = MainAPI(apiService: APIService())
+    private var rooms: [ParticipatingRoom]?
     
     // MARK: - init
     
@@ -105,71 +105,71 @@ final class MainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupGifImage()
-        setupGuideArea()
-        renderGuideArea()
-        setupRefreshControl()
-        setupSkeletonView()
+        self.setupGifImage()
+        self.setupRefreshControl()
+        self.setupSkeletonView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        requestCommonMission()
-        requestManittoRoomList()
+        self.requestCommonMission()
+        self.requestManittoRoomList()
     }
+    
+    // MARK: - override
 
     override func setupLayout() {
-        view.addSubview(maCharacterImageView)
-        maCharacterImageView.snp.makeConstraints {
+        self.view.addSubview(self.maCharacterImageView)
+        self.maCharacterImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(70)
             $0.bottom.equalToSuperview().inset(20)
             $0.height.width.equalTo(75)
         }
 
-        view.addSubview(niCharacterImageView)
-        niCharacterImageView.snp.makeConstraints {
+        self.view.addSubview(self.niCharacterImageView)
+        self.niCharacterImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().inset(40)
             $0.height.width.equalTo(75)
         }
 
-        view.addSubview(ttoCharacterImageView)
-        ttoCharacterImageView.snp.makeConstraints {
+        self.view.addSubview(self.ttoCharacterImageView)
+        self.ttoCharacterImageView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(70)
             $0.bottom.equalToSuperview().inset(30)
             $0.height.width.equalTo(75)
         }
 
-        view.addSubview(imgStar)
-        imgStar.snp.makeConstraints {
+        self.view.addSubview(self.imgStar)
+        self.imgStar.snp.makeConstraints {
             $0.width.height.equalTo(30)
             $0.leading.equalToSuperview().inset(13)
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(30)
         }
-        // FIXME: 좌우패딩 20값을 주는데 Size라는 변수명이 겹침
-        view.addSubview(commonMissionView)
-        commonMissionView.snp.makeConstraints {
-            $0.top.equalTo(imgStar.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(Size.commonMissionViewHeight)
+        
+        self.view.addSubview(self.commonMissionView)
+        self.commonMissionView.snp.makeConstraints {
+            $0.top.equalTo(self.imgStar.snp.bottom)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.height.equalTo(InternalSize.commonMissionViewHeight)
         }
 
-        view.addSubview(menuTitle)
-        menuTitle.snp.makeConstraints {
-            $0.top.equalTo(commonMissionView.snp.bottom).offset(50)
+        self.view.addSubview(self.menuTitle)
+        self.menuTitle.snp.makeConstraints {
+            $0.top.equalTo(self.commonMissionView.snp.bottom).offset(50)
             $0.leading.equalToSuperview().offset(16)
         }
 
-        view.addSubview(listCollectionView)
-        listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(menuTitle.snp.bottom).offset(17)
+        self.view.addSubview(self.listCollectionView)
+        self.listCollectionView.snp.makeConstraints {
+            $0.top.equalTo(self.menuTitle.snp.bottom).offset(17)
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
-        view.addSubview(guideButton)
-        guideButton.snp.makeConstraints {
-            $0.top.equalTo(commonMissionView.snp.top).offset(30)
-            $0.trailing.equalTo(commonMissionView.snp.trailing).inset(30)
+        self.view.addSubview(self.guideButton)
+        self.guideButton.snp.makeConstraints {
+            $0.top.equalTo(self.commonMissionView.snp.top).offset(30)
+            $0.trailing.equalTo(self.commonMissionView.snp.trailing).inset(30)
             $0.width.height.equalTo(44)
         }
     }
@@ -177,20 +177,22 @@ final class MainViewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
-        let appTitleView = makeBarButtonItem(with: appTitleView)
-        let settingButtonView = makeBarButtonItem(with: settingButton)
+        let appTitleView = self.makeBarButtonItem(with: self.appTitleView)
+        let settingButtonView = self.makeBarButtonItem(with: self.settingButton)
 
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.largeTitleDisplayMode = .automatic
-        navigationItem.leftBarButtonItem = appTitleView
-        navigationItem.rightBarButtonItem = settingButtonView
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.largeTitleDisplayMode = .automatic
+        self.navigationItem.leftBarButtonItem = appTitleView
+        self.navigationItem.rightBarButtonItem = settingButtonView
     }
     
     override func setupGuideArea() {
         super.setupGuideArea()
-        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
+        self.guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
+        self.setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
     }
+    
+    // MARK: - func
     
     private func setupGifImage() {
         DispatchQueue.main.async {
@@ -208,62 +210,30 @@ final class MainViewController: BaseViewController {
                 self?.refreshControl.endRefreshing()
             }
         }
-        refreshControl.addAction(action, for: .valueChanged)
-        refreshControl.tintColor = .grey001
-        listCollectionView.refreshControl = refreshControl
+        self.refreshControl.addAction(action, for: .valueChanged)
+        self.refreshControl.tintColor = .grey001
+        self.listCollectionView.refreshControl = self.refreshControl
     }
     
     private func setupSkeletonView() {
-        listCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey003, .darkGrey002]), animation: skeletonAnimation, transition: .none)
+        self.listCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(colors: [.grey003, .darkGrey002]),
+                                                             animation: skeletonAnimation,
+                                                             transition: .none)
     }
     
     private func stopSkeletonView() {
         self.listCollectionView.stopSkeletonAnimation()
         self.listCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.5))
     }
-    
-    // MARK: - API
-    
-    private func requestCommonMission() {
-        Task {
-            do {
-                let data = try await mainService.fetchCommonMission()
-                if let commonMission = data?.mission {
-                    commonMissionView.mission.text = commonMission
-                }
-            } catch NetworkError.serverError {
-                print("serverError")
-            } catch NetworkError.clientError(let message) {
-                print("clientError:\(String(describing: message))")
-            }
-        }
-    }
-    
-    private func requestManittoRoomList() {
-        Task {
-            do {
-                let data = try await mainService.fetchManittoList()
-                
-                if let manittoList = data {
-                    rooms = manittoList.participatingRooms
-                    listCollectionView.reloadData()
-                    
-                    self.stopSkeletonView()
-                }
-            } catch NetworkError.serverError {
-                print("serverError")
-            } catch NetworkError.clientError(let message) {
-                print("clientError:\(String(describing: message))")
-            }
-        }
-    }
-    
-    // MARK: - func
 
-    private func newRoom() {
-        let alert = UIAlertController(title: "새로운 마니또 시작", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+    private func createNewRoom() {
+        let alert = UIAlertController(title: TextLiteral.mainViewControllerNewRoomAlert,
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
 
-        let createRoom = UIAlertAction(title: TextLiteral.createRoom, style: .default, handler: { [weak self] _ in
+        let createRoom = UIAlertAction(title: TextLiteral.createRoom,
+                                       style: .default,
+                                       handler: { [weak self] _ in
             let createVC = CreateRoomViewController()
             let navigationController = UINavigationController(rootViewController: createVC)
             navigationController.modalPresentationStyle = .overFullScreen
@@ -271,30 +241,33 @@ final class MainViewController: BaseViewController {
                 self?.present(navigationController,animated: true)
             }
         })
-        let enterRoom = UIAlertAction(title: TextLiteral.enterRoom, style: .default, handler: { [weak self] _ in
+        let enterRoom = UIAlertAction(title: TextLiteral.enterRoom,
+                                      style: .default,
+                                      handler: { [weak self] _ in
             let viewController = ParticipateRoomViewController()
             let navigationController = UINavigationController(rootViewController: viewController)
-            
             navigationController.modalPresentationStyle = .overFullScreen
-            
-            self?.present(navigationController, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
         })
-        let cancel = UIAlertAction(title: TextLiteral.cancel, style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: TextLiteral.cancel, style: .cancel)
 
         alert.addAction(createRoom)
         alert.addAction(enterRoom)
         alert.addAction(cancel)
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true)
     }
 
     private func presentParticipateRoomViewController() {
         let storyboard = UIStoryboard(name: "ParticipateRoom", bundle: nil)
-        let ParticipateRoomVC = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
+        let participateRoomViewController = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
 
-        ParticipateRoomVC.modalPresentationStyle = .fullScreen
-        ParticipateRoomVC.modalTransitionStyle = .crossDissolve
-
-        present(ParticipateRoomVC, animated: true, completion: nil)
+        participateRoomViewController.modalPresentationStyle = .fullScreen
+        participateRoomViewController.modalTransitionStyle = .crossDissolve
+        DispatchQueue.main.async {
+            self.present(participateRoomViewController, animated: true)
+        }
     }
 
     private func pushDetailView(status: RoomStatus, roomIndex: Int, index: Int? = nil) {
@@ -302,7 +275,7 @@ final class MainViewController: BaseViewController {
         case .waiting:
             guard let index = index else { return }
             let viewController = DetailWaitViewController(index: index)
-            viewController.roomInformation = rooms?[roomIndex]
+            viewController.roomInformation = self.rooms?[roomIndex]
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
             guard let roomId = rooms?[roomIndex].id?.description
@@ -321,19 +294,61 @@ final class MainViewController: BaseViewController {
     }
     
     func showRoomIdErrorAlert() {
-        makeRequestAlert(title: "해당 마니또 방의 정보를 불러오지 못했습니다.", message: "해당 마니또 방으로 이동할 수 없습니다.", okAction: nil)
+        self.makeAlert(title: TextLiteral.mainViewControllerShowIdErrorAlertTitle,
+                       message: TextLiteral.mainViewControllerShowIdErrorAlertMessage)
     }
+    
+    // MARK: - selector
     
     @objc
     override func endEditingView() {
-        if !guideButton.isTouchInside {
-            guideBoxImageView.isHidden = true
+        if !self.guideButton.isTouchInside {
+            self.guideBoxImageView.isHidden = true
+        }
+    }
+    
+    // MARK: - network
+    
+    private func requestCommonMission() {
+        Task {
+            do {
+                let data = try await self.mainService.fetchCommonMission()
+                if let commonMission = data?.mission {
+                    self.commonMissionView.missionLabel.text = commonMission
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestManittoRoomList() {
+        Task {
+            do {
+                let data = try await self.mainService.fetchManittoList()
+                
+                if let manittoList = data {
+                    self.rooms = manittoList.participatingRooms
+                    self.listCollectionView.reloadData()
+                    self.stopSkeletonView()
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
         }
     }
 }
 
-// MARK: - SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource
-extension MainViewController: SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource {
+// MARK: - SkeletonCollectionViewDataSource
+extension MainViewController: SkeletonCollectionViewDataSource {
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return ManitoRoomCollectionViewCell.className
     }
@@ -346,7 +361,7 @@ extension MainViewController: SkeletonCollectionViewDelegate, SkeletonCollection
 // MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let count = rooms?.count {
+        if let count = self.rooms?.count {
             return count + 1
         }
         
@@ -366,7 +381,7 @@ extension MainViewController: UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             
-            guard let roomData = rooms?[indexPath.item - 1] else { return cell }
+            guard let roomData = self.rooms?[indexPath.item - 1] else { return cell }
             
             guard let participatingCount = roomData.participatingCount,
                   let capacity = roomData.capacity,
@@ -382,16 +397,16 @@ extension MainViewController: UICollectionViewDataSource {
             
             switch roomStatus {
             case .waiting:
-                cell.roomStateView.state.text = "대기중"
-                cell.roomStateView.state.textColor = .darkGrey001
+                cell.roomStateView.stateLabel.text = "대기중"
+                cell.roomStateView.stateLabel.textColor = .darkGrey001
                 cell.roomStateView.backgroundColor = .badgeBeige
             case .starting:
-                cell.roomStateView.state.text = "진행중"
-                cell.roomStateView.state.textColor = .white
+                cell.roomStateView.stateLabel.text = "진행중"
+                cell.roomStateView.stateLabel.textColor = .white
                 cell.roomStateView.backgroundColor = .mainRed
             case .end:
-                cell.roomStateView.state.text = "완료"
-                cell.roomStateView.state.textColor = .white
+                cell.roomStateView.stateLabel.text = "완료"
+                cell.roomStateView.stateLabel.textColor = .white
                 cell.roomStateView.backgroundColor = .grey002
             }
             
@@ -404,16 +419,16 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == 0 {
-            newRoom()
+            self.createNewRoom()
         } else {
-            guard let state = rooms?[indexPath.item - 1].state,
+            guard let state = self.rooms?[indexPath.item - 1].state,
                   let roomStatus = RoomStatus.init(rawValue: state),
-                  let id = rooms?[indexPath.item - 1].id
+                  let id = self.rooms?[indexPath.item - 1].id
             else { return }
             if roomStatus == .waiting {
-                pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1, index: id)
+                self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1, index: id)
             } else {
-                pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1)
+                self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1)
             }
         }
     }
