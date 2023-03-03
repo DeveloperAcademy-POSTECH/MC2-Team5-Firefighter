@@ -100,13 +100,15 @@ final class LetterViewController: BaseViewController {
     private var roomId: String
     private var roomState: String
     private var mission: String
+    private var missionId: String
     
     // MARK: - init
     
-    init(roomState: String, roomId: String, mission: String, letterState: LetterState) {
+    init(roomState: String, roomId: String, mission: String, missionId: String, letterState: LetterState) {
         self.roomState = roomState
         self.roomId = roomId
         self.mission = mission
+        self.missionId = missionId
         self.letterState = letterState
         super.init()
     }
@@ -219,7 +221,7 @@ final class LetterViewController: BaseViewController {
                   let manitteeId = self.manitteeId
             else { return }
             
-            let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission)
+            let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission, missionId: self.missionId)
             let navigationController = UINavigationController(rootViewController: viewController)
             viewController.createLetter = { [weak self] in
                 guard let roomId = self?.roomId else { return }

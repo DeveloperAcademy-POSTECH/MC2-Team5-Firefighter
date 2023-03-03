@@ -60,13 +60,15 @@ final class CreateLetterViewController: BaseViewController {
     var manitteeId: String
     var roomId: String
     var mission: String
+    var missionId: String
     
     // MARK: - init
     
-    init(manitteeId: String, roomId: String, mission: String) {
+    init(manitteeId: String, roomId: String, mission: String, missionId: String) {
         self.manitteeId = manitteeId
         self.roomId = roomId
         self.mission = mission
+        self.missionId = missionId
         super.init()
     }
     
@@ -226,7 +228,7 @@ final class CreateLetterViewController: BaseViewController {
                     guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
                     
-                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
+                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto, missionId: self.missionId)
 
                     if status == 201 {
                         self.createLetter?()
@@ -234,7 +236,7 @@ final class CreateLetterViewController: BaseViewController {
                 } else if let content = self.letterTextView.text {
                     let dto = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
                     
-                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, letter: dto)
+                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, letter: dto, missionId: self.missionId)
 
                     if status == 201 {
                         self.createLetter?()
@@ -244,7 +246,7 @@ final class CreateLetterViewController: BaseViewController {
                     guard let jpegData = image.jpegData(compressionQuality: 0.3) else { return }
                     let dto = LetterDTO(manitteeId: self.manitteeId)
 
-                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto)
+                    let status = try await self.letterSevice.dispatchLetter(roomId: roomId, image: jpegData, letter: dto, missionId: self.missionId)
                     
                     if status == 201 {
                         self.createLetter?()
