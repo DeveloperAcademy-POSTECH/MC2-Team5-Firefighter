@@ -23,6 +23,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     private let missionLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 14)
+        label.numberOfLines = 0
         return label
     }()
     private let contentLabel: UILabel = {
@@ -118,11 +119,17 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         self.photoImageView.snp.updateConstraints {
             $0.height.equalTo(0)
         }
+        self.missionLabel.snp.updateConstraints {
+            $0.bottom.equalTo(self.contentLabel.snp.top).offset(10)
+        }
     }
 
     func setLetterData(with data: Message, isHidden: Bool) {
         if let mission = data.mission {
             self.missionLabel.text = mission
+            self.missionLabel.snp.updateConstraints {
+                $0.bottom.equalTo(self.contentLabel.snp.top).offset(20)
+            }
         } else {
             self.missionLabel.text = data.date
         }
