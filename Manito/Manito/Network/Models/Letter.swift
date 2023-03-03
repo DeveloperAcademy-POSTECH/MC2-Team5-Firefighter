@@ -31,4 +31,10 @@ struct Message: Codable {
         
         return isToday ? "오늘" : createdDate
     }
+
+    var mission: String? {
+        guard let mission = missionInfo?.content else { return nil }
+
+        return "\(date)의 개별미션\n[\(mission)]"
+    }
 }
