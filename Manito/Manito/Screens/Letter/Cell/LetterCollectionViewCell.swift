@@ -55,7 +55,8 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupReportAction()
+        self.setupButtonAction()
+        self.setupImageTapGesture()
     }
 
     @available(*, unavailable)
@@ -66,80 +67,83 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     // MARK: - override
 
     override func prepareForReuse() {
-        contentLabel.text = nil
-        photoImageView.image = nil
-        photoImageView.snp.updateConstraints {
-            $0.height.equalTo(0)
-        }
+        self.initializeConfiguration()
     }
     
     override func setupLayout() {
-        contentView.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints {
+        self.contentView.addSubview(self.dateLabel)
+        self.dateLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(14).priority(.low)
             $0.leading.equalToSuperview().inset(15)
         }
         
-        contentView.addSubview(reportButton)
-        reportButton.snp.makeConstraints {
-            $0.centerY.equalTo(dateLabel.snp.centerY)
+        self.contentView.addSubview(self.reportButton)
+        self.reportButton.snp.makeConstraints {
+            $0.centerY.equalTo(self.dateLabel.snp.centerY)
             $0.trailing.equalToSuperview().inset(10)
             $0.width.height.equalTo(22)
         }
         
-        contentView.addSubview(stackView)
-        stackView.addArrangedSubview(photoImageView)
-        stackView.addArrangedSubview(contentLabel)
-        stackView.snp.makeConstraints {
+        self.contentView.addSubview(self.stackView)
+        self.stackView.addArrangedSubview(self.photoImageView)
+        self.stackView.addArrangedSubview(self.contentLabel)
+        self.stackView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(dateLabel.snp.top).offset(-10).priority(.required)
         }
         
-        contentLabel.snp.makeConstraints {
+        self.contentLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(16)
         }
         
-        photoImageView.snp.makeConstraints {
+        self.photoImageView.snp.makeConstraints {
             $0.height.equalTo(0)
             $0.top.leading.trailing.equalToSuperview()
         }
     }
     
     override func configureUI() {
-        clipsToBounds = true
-        makeBorderLayer(color: .white.withAlphaComponent(0.5))
-        setupImageTapGesture()
+        self.clipsToBounds = true
+        self.makeBorderLayer(color: .white.withAlphaComponent(0.5))
     }
     
     // MARK: - func
     
-    private func setupReportAction() {
+    private func setupButtonAction() {
         let reportAction = UIAction { [weak self] _ in
             self?.didTappedReport?()
         }
-        reportButton.addAction(reportAction, for: .touchUpInside)
+        self.reportButton.addAction(reportAction, for: .touchUpInside)
     }
-    
-    func setLetterData(with data: Message, isHidden: Bool) {
-        dateLabel.text = data.date
-        reportButton.isHidden = isHidden
-        
-        if let content = data.content {
-            contentLabel.text = content
-            contentLabel.addLabelSpacing()
-        }
-        
-        if let imageUrl = data.imageUrl {
-            photoImageView.loadImageUrl(imageUrl)
-            photoImageView.snp.updateConstraints {
-                $0.height.equalTo(204)
-            }
+
+    private func setupImageTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapPhoto))
+        self.photoImageView.addGestureRecognizer(tapGesture)
+    }
+
+    private func initializeConfiguration() {
+        self.contentLabel.text = nil
+        self.photoImageView.image = nil
+        self.photoImageView.snp.updateConstraints {
+            $0.height.equalTo(0)
         }
     }
 
-    func setupImageTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPhoto))
-        photoImageView.addGestureRecognizer(tapGesture)
+    func setLetterData(with data: Message, isHidden: Bool) {
+        self.dateLabel.text = data.date
+        self.reportButton.isHidden = isHidden
+        
+        if let content = data.content {
+            self.contentLabel.text = content
+            self.contentLabel.addLabelSpacing()
+        }
+        
+        if let imageUrl = data.imageUrl {
+            self.photoImageView.loadImageUrl(imageUrl)
+            self.photoImageView.snp.updateConstraints {
+                $0.height.equalTo(204)
+            }
+        }
     }
 
     // MARK: - selector
