@@ -24,12 +24,14 @@ struct Message: Codable {
     var imageUrl: String?
     var createdDate: String?
     var missionInfo: Mission?
+
+    var isToday: Bool {
+        return Date().letterDateToString == createdDate
+    }
     
     var date: String {
         guard let createdDate = createdDate else { return "" }
-        let isToday = Date().letterDateToString == createdDate
-        
-        return isToday ? "오늘" : createdDate
+        return self.isToday ? "오늘" : createdDate
     }
 
     var mission: String? {

@@ -17,7 +17,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         let stackView = UIStackView()
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 16
+        stackView.spacing = 25
         return stackView
     }()
     private let missionLabel: UILabel = {
@@ -119,12 +119,11 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         self.photoImageView.snp.updateConstraints {
             $0.height.equalTo(0)
         }
-        self.missionLabel.snp.updateConstraints {
-            $0.bottom.equalTo(self.contentLabel.snp.top).offset(10)
-        }
     }
 
     func setLetterData(with data: Message, isHidden: Bool) {
+        self.missionLabel.textColor = data.isToday ? .subOrange : .grey003
+
         if let mission = data.mission {
             self.missionLabel.text = mission
             self.missionLabel.snp.updateConstraints {
@@ -132,6 +131,9 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
             }
         } else {
             self.missionLabel.text = data.date
+            self.missionLabel.snp.updateConstraints {
+                $0.bottom.equalTo(self.contentLabel.snp.top)
+            }
         }
         self.reportButton.isHidden = isHidden
         
