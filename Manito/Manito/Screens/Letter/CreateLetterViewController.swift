@@ -115,13 +115,15 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
         let letterDTO = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
 
         self.dispatchLetter(with: letterDTO, jpegData) { [weak self] response in
-            switch response {
-            case .success:
-                self?.succeedInSendingLetter?()
-                self?.dismiss(animated: true)
-            case .failure:
-                self?.makeAlert(title: TextLiteral.createLetterViewControllerErrorTitle,
-                                message: TextLiteral.createLetterViewControllerErrorMessage)
+            DispatchQueue.main.async {
+                switch response {
+                case .success:
+                    self?.succeedInSendingLetter?()
+                    self?.dismiss(animated: true)
+                case .failure:
+                    self?.makeAlert(title: TextLiteral.createLetterViewControllerErrorTitle,
+                                    message: TextLiteral.createLetterViewControllerErrorMessage)
+                }
             }
         }
     }
