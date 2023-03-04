@@ -91,10 +91,7 @@ final class DetailWaitViewController: BaseViewController {
             if value {
                 button.title = ButtonText.start.status
                 button.isDisabled = false
-                let action = UIAction { [weak self] _ in
-                    self?.requestStartManitto()
-                }
-                button.addAction(action, for: .touchUpInside)
+                button.action = self.requestStartManitto
             } else {
                 button.title = ButtonText.waiting.status
                 button.isDisabled = true
@@ -102,7 +99,7 @@ final class DetailWaitViewController: BaseViewController {
         }
         return button
     }()
-    
+
     // MARK: - property
     
     private var room: Room?

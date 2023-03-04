@@ -194,11 +194,11 @@ final class DetailingCodebaseViewController: BaseViewController {
     // FIXME: - 마니또 공개 API 확실히 하기
     private lazy var manittoOpenButton: MainButton = {
         let button = MainButton()
-        let action = UIAction { [weak self] _ in
+        button.action = { [weak self] in
             guard let roomId = self?.roomId else { return }
-            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: roomId), animated: true)
+            let viewController = OpenManittoViewController(roomId: roomId)
+            self?.navigationController?.pushViewController(viewController, animated: true)
         }
-        button.addAction(action, for: .touchUpInside)
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
         return button
     }()
