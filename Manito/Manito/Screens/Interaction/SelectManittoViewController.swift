@@ -28,19 +28,6 @@ final class SelectManittoViewController: BaseViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var confirmButton: MainButton!
 
-    private lazy var okAction: UIAction = {
-        let action = UIAction { [weak self] _ in
-            guard let navigationController = self?.presentingViewController as? UINavigationController,
-                  let roomId = self?.roomId
-            else { return }
-            let viewController = DetailingCodebaseViewController(roomId: roomId)
-            navigationController.popViewController(animated: true)
-            navigationController.pushViewController(viewController, animated: false)
-            self?.dismiss(animated: true)
-        }
-        return action
-    }()
-
     var manitteeName: String?
     private var stageType: StageType = .joystick {
         didSet {
@@ -73,8 +60,15 @@ final class SelectManittoViewController: BaseViewController {
             nameLabel.text = manittee
         }
         confirmButton.title = TextLiteral.confirm
-        confirmButton.addAction(okAction, for: .touchUpInside)
-
+        confirmButton.action = { [weak self] in
+            guard let navigationController = self?.presentingViewController as? UINavigationController,
+                  let roomId = self?.roomId
+            else { return }
+            let viewController = DetailingCodebaseViewController(roomId: roomId)
+            navigationController.popViewController(animated: true)
+            navigationController.pushViewController(viewController, animated: false)
+            self?.dismiss(animated: true)
+        }
     }
 
     // MARK: - func
