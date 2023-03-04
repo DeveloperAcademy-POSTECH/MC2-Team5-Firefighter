@@ -91,10 +91,7 @@ class ChooseCharacterViewController: BaseViewController {
         case .enterRoom:
             button.title = TextLiteral.enterRoom
         }
-        let action = UIAction { [weak self] _ in
-            self?.didTapEnterButton()
-        }
-        button.addAction(action, for: .touchUpInside)
+        button.action = self.didTapEnterButton
         return button
     }()    
     private lazy var backButton: UIButton = {
