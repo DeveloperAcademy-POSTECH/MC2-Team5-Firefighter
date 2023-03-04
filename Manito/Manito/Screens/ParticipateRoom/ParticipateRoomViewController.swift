@@ -35,10 +35,7 @@ final class ParticipateRoomViewController: BaseViewController {
         let button = MainButton()
         button.title = TextLiteral.searchRoom
         button.isDisabled = true
-        let action = UIAction { [weak self] _ in
-            self?.dispatchInviteCode()
-        }
-        button.addAction(action, for: .touchUpInside)
+        button.action = self.dispatchInviteCode
         return button
     }()    
     private let inputInvitedCodeView = InputInvitedCodeView()
