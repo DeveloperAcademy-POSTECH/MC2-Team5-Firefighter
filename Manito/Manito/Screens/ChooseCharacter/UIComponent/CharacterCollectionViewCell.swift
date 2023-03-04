@@ -24,7 +24,7 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - life cycle
     
-    override func render() {
+    override func setupLayout() {
         contentView.addSubview(characterImageView)
         characterImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -32,7 +32,7 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    override func configUI() {
+    override func configureUI() {
         makeBorderLayer(color: .white)
         layer.cornerRadius = self.frame.size.width / 2
     }

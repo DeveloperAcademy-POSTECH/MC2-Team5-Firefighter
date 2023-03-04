@@ -68,7 +68,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    override func render() {
+    override func setupLayout() {
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(14).priority(.low)
@@ -100,7 +100,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    override func configUI() {
+    override func configureUI() {
         clipsToBounds = true
         makeBorderLayer(color: .white.withAlphaComponent(0.5))
         setupImageTapGesture()

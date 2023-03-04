@@ -11,17 +11,17 @@ import SnapKit
 
 final class CommonMissionView: UIView {
     
-    // MARK: - property
+    // MARK: - ui component
     
-    private let commonMissionImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
-    private let title: UILabel = {
+    private let commonMissionImageView: UIImageView = UIImageView(image: ImageLiterals.imgCommonMisson)
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.commonMissionViewTitle
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 15)
         return label
     }()    
-    let mission: UILabel = {
+    let missionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
         label.textAlignment = .center
@@ -34,30 +34,30 @@ final class CommonMissionView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - life cycle
+    // MARK: - func
     
-    private func render() {
-        self.addSubview(commonMissionImageView)
-        commonMissionImageView.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(self.commonMissionImageView)
+        self.commonMissionImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
-        self.addSubview(title)
-        title.snp.makeConstraints {
+        self.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(56)
             $0.centerX.equalToSuperview()
         }
         
-        self.addSubview(mission)
-        mission.snp.makeConstraints {
-            $0.top.equalTo(title.snp.bottom).offset(40)
+        self.addSubview(self.missionLabel)
+        self.missionLabel.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(40)
             $0.leading.trailing.equalToSuperview()
         }
     }
