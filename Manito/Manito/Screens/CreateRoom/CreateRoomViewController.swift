@@ -43,7 +43,7 @@ class CreateRoomViewController: BaseViewController {
     lazy var nextButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.next
-        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        button.action = self.didTapNextButton
         button.isDisabled = true
         return button
     }()
@@ -168,7 +168,7 @@ class CreateRoomViewController: BaseViewController {
         }
     }
     
-    @objc private func didTapNextButton() {
+    private func didTapNextButton() {
         switch notiIndex {
         case .inputName:
             guard let text = nameView.roomsNameTextField.text else { return }

@@ -53,7 +53,7 @@ class CreateNickNameViewController: BaseViewController {
     private lazy var doneButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.done
-        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        button.action = self.didTapDoneButton
         button.isDisabled = true
         return button
     }()
@@ -119,7 +119,7 @@ class CreateNickNameViewController: BaseViewController {
     
     // MARK: - Seletors
     
-    @objc private func didTapDoneButton() {
+    private func didTapDoneButton() {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
             UserData.setValue(nickname, forKey: .nickname)
