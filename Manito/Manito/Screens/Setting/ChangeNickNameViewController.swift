@@ -47,7 +47,7 @@ class ChangeNickNameViewController: BaseViewController {
     private lazy var doneButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.done
-        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        button.action = self.didTapDoneButton
         button.isDisabled = true
         return button
     }()
@@ -94,7 +94,7 @@ class ChangeNickNameViewController: BaseViewController {
     
     // MARK: - Seletors
     
-    @objc private func didTapDoneButton() {
+    private func didTapDoneButton() {
         if let text = nameTextField.text, !text.isEmpty {
             nickname = text
             UserDefaultHandler.setNickname(nickname: nickname)
