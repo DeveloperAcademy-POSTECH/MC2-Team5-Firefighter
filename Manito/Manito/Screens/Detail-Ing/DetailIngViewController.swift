@@ -264,11 +264,11 @@ class DetailIngViewController: BaseViewController {
     }
     
     private func addActionOpenManittoViewController() {
-        guard let id = roomInformation?.id?.description else { return }
-        let action = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: id), animated: true)
+        self.manitoOpenButton.action = { [weak self] in
+            guard let id = self?.roomInformation?.id?.description else { return }
+            let viewController = OpenManittoViewController(roomId: id)
+            self?.navigationController?.pushViewController(viewController, animated: true)
         }
-        self.manitoOpenButton.addAction(action, for: .touchUpInside)
     }
     
     private func setupOpenManittoButton() {
