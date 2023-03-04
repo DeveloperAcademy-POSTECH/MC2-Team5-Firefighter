@@ -11,71 +11,70 @@ import SnapKit
 
 final class MainButton: UIButton {
     
-    private enum Size {
+    private enum InternalSize {
         static let spacing: CGFloat = 20.0
         static let height: CGFloat = 60.0
-        static let width: CGFloat = UIScreen.main.bounds.size.width - Size.spacing * 2
+        static let width: CGFloat = UIScreen.main.bounds.size.width - InternalSize.spacing * 2
     }
     
     // MARK: - property
     
     var title: String? {
-        didSet { setupAttribute() }
+        didSet { self.setupAttribute() }
     }
     
     var isDisabled: Bool = false {
-        didSet { setupAttribute() }
+        didSet { self.setupAttribute() }
     }
     
     var hasShadow: Bool = false {
-        didSet { setupShadow() }
+        didSet { self.setupShadow() }
     }
 
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        self.setupLayout()
+        self.configureUI()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        render()
-        configUI()
+        self.setupLayout()
+        self.configureUI()
     }
     
     // MARK: - func
     
-    private func render() {
+    private func setupLayout() {
         self.snp.makeConstraints {
-            $0.width.equalTo(Size.width)
-            $0.height.equalTo(Size.height)
+            $0.width.equalTo(InternalSize.width)
+            $0.height.equalTo(InternalSize.height)
         }
     }
     
-    private func configUI() {
-        layer.masksToBounds = true
-        layer.cornerRadius = 30
-        titleLabel?.font = .font(.regular, ofSize: 20)
-        setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
-        setTitleColor(.white, for: .normal)
-        setTitleColor(.white.withAlphaComponent(0.3), for: .disabled)
-        setBackgroundColor(.mainRed, for: .normal)
-        setBackgroundColor(.mainRed.withAlphaComponent(0.3), for: .disabled)
-        setBackgroundColor(.mainRed.withAlphaComponent(0.5), for: .highlighted)
+    private func configureUI() {
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 30
+        self.titleLabel?.font = .font(.regular, ofSize: 20)
+        self.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
+        self.setTitleColor(.white, for: .normal)
+        self.setTitleColor(.white.withAlphaComponent(0.3), for: .disabled)
+        self.setBackgroundColor(.mainRed, for: .normal)
+        self.setBackgroundColor(.mainRed.withAlphaComponent(0.3), for: .disabled)
+        self.setBackgroundColor(.mainRed.withAlphaComponent(0.5), for: .highlighted)
     }
     
     private func setupAttribute() {
-        if let title = title {
-            setTitle(title, for: .normal)
+        if let title = self.title {
+            self.setTitle(title, for: .normal)
         }
         
-        // COLOR: disable색상 추가 #823029
-        isEnabled = !isDisabled
+        self.isEnabled = !isDisabled
     }
     
     private func setupShadow() {
-        makeShadow(color: .shadowRed, opacity: 1.0, offset: CGSize(width: 0, height: 6), radius: 1)
+        self.makeShadow(color: .shadowRed, opacity: 1.0, offset: CGSize(width: 0, height: 6), radius: 1)
     }
 }
