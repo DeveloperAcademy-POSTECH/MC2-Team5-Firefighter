@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MainButton: UIButton {
+final class MainButton: ThrottleButton {
     
     private enum InternalSize {
         static let spacing: CGFloat = 20.0
@@ -29,6 +29,14 @@ final class MainButton: UIButton {
     
     var hasShadow: Bool = false {
         didSet { self.setupShadow() }
+    }
+
+    var action: (() -> Void)? {
+        willSet(action) {
+            if let action {
+                self.throttle(delay: 3.0, callback: action)
+            }
+        }
     }
 
     // MARK: - init

@@ -13,7 +13,7 @@ final class BottomOfSendLetterView: UIView {
     
     // MARK: - ui component
     
-    private let sendLetterButton: UIButton = {
+    private let sendLetterButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.sendLetterViewSendLetterButton
         return button
@@ -49,7 +49,7 @@ final class BottomOfSendLetterView: UIView {
         self.backgroundColor = .backgroundGrey
     }
 
-    func addAction(_ action: UIAction) {
-        self.sendLetterButton.addAction(action, for: .touchUpInside)
+    func addAction(_ action: @escaping (() -> Void)) {
+        self.sendLetterButton.action = action
     }
 }

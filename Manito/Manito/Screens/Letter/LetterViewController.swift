@@ -214,11 +214,11 @@ final class LetterViewController: BaseViewController {
     }
     
     private func setupButtonAction() {
-        let presentSendButtonAction = UIAction { [weak self] _ in
+        self.sendLetterView.addAction { [weak self] in
             guard let self = self,
                   let manitteeId = self.manitteeId
             else { return }
-            
+
             let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission)
             let navigationController = UINavigationController(rootViewController: viewController)
             viewController.createLetter = { [weak self] in
@@ -227,7 +227,6 @@ final class LetterViewController: BaseViewController {
             }
             self.present(navigationController, animated: true, completion: nil)
         }
-        self.sendLetterView.addAction(presentSendButtonAction)
     }
     
     private func reloadCollectionView(with state: LetterState) {
