@@ -90,6 +90,7 @@
 		B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEB528D99F8600AF7E45 /* Settings.bundle */; };
 		B55BCEC628F5AFB200AF7E45 /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC528F5AFB200AF7E45 /* capsule.gif */; };
 		B55BCEC828F5AFD500AF7E45 /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC728F5AFD500AF7E45 /* joystick.gif */; };
+		B5706BF029B2F55B0093D198 /* ThrottleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BEF29B2F55B0093D198 /* ThrottleButton.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
@@ -246,6 +247,7 @@
 		B55BCEB528D99F8600AF7E45 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B55BCEC528F5AFB200AF7E45 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
 		B55BCEC728F5AFD500AF7E45 /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
+		B5706BEF29B2F55B0093D198 /* ThrottleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleButton.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
@@ -685,6 +687,7 @@
 				B5F5253A2854ABF200614FF7 /* MainButton.swift */,
 				39FFE32728EEFFFE008442EE /* MoreButton.swift */,
 				7E7542B22923744300D725CB /* ToastPopupView.swift */,
+				B5706BEF29B2F55B0093D198 /* ThrottleButton.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1187,6 +1190,7 @@
 				39C957E12879A3CF00A04A2B /* DailyMission.swift in Sources */,
 				B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */,
 				39CD582128C4C3E800496E91 /* DetailDoneAPI.swift in Sources */,
+				B5706BF029B2F55B0093D198 /* ThrottleButton.swift in Sources */,
 				D724AF5D287088310003F280 /* SettingViewController.swift in Sources */,
 				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
 				39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */,
