@@ -30,14 +30,13 @@ final class IndividualMissionView: UIView {
     }()
     
     // MARK: - init
-    
-    init(mission: String) {
-        super.init(frame: .zero)
-        self.setupMission(with: mission)
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.setupLayout()
         self.configureUI()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -65,7 +64,7 @@ final class IndividualMissionView: UIView {
         self.makeBorderLayer(color: .subOrange)
     }
 
-    private func setupMission(with mission: String) {
+    func setupMission(with mission: String) {
         self.missionLabel.text = mission
     }
 }

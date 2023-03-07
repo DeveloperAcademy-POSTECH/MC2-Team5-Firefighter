@@ -11,4 +11,5 @@ enum NetworkError: Error {
     case encodingError
     case clientError(message: String?)
     case serverError
+    case unknownError
 }

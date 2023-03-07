@@ -23,11 +23,20 @@ struct Message: Codable {
     var content: String?
     var imageUrl: String?
     var createdDate: String?
+    var missionInfo: Mission?
+
+    var isToday: Bool {
+        return Date().letterDateToString == createdDate
+    }
     
     var date: String {
         guard let createdDate = createdDate else { return "" }
-        let isToday = Date().letterDateToString == createdDate
-        
-        return isToday ? "오늘" : createdDate
+        return self.isToday ? "오늘" : createdDate
+    }
+
+    var mission: String? {
+        guard let mission = missionInfo?.content else { return nil }
+
+        return "\(date)의 개별미션\n[\(mission)]"
     }
 }
