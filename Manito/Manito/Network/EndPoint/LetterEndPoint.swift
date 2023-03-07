@@ -52,7 +52,7 @@ enum LetterEndPoint: EndPointable {
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .dispatchLetter(let roomId,_,_,_):
+        case .dispatchLetter(let roomId, _, _, _):
             return "\(baseURL)/rooms/\(roomId)/messages-separate"
         case .fetchSendLetter(let roomId):
             return "https://dev.aenitto.shop/api/v2/rooms/\(roomId)/messages-sent"
