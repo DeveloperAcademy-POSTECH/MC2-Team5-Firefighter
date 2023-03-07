@@ -21,15 +21,17 @@ final class CreateLetterViewController: BaseViewController {
     private let mission: String
     private let manitteeId: String
     private let roomId: String
+    var missionId: String
 
     var succeedInSendingLetter: (() -> Void)?
 
     // MARK: - init
     
-    init(manitteeId: String, roomId: String, mission: String) {
+    init(manitteeId: String, roomId: String, mission: String, missionId: String) {
         self.manitteeId = manitteeId
         self.roomId = roomId
         self.mission = mission
+        self.missionId = missionId
         super.init()
     }
 
@@ -78,7 +80,7 @@ final class CreateLetterViewController: BaseViewController {
                                 completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let statusCode = try await self.letterSevice.dispatchLetter(roomId: self.roomId, image: jpegData, letter: letterDTO)
+                let statusCode = try await self.letterSevice.dispatchLetter(roomId: self.roomId, image: jpegData, letter: letterDTO, missionId: self.missionId)
                 switch statusCode {
                 case 200..<300: completionHandler(.success(()))
                 default: completionHandler(.failure(.unknownError))

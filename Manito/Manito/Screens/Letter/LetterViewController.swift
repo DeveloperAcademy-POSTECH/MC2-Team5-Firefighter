@@ -38,7 +38,7 @@ final class LetterViewController: BaseViewController {
         static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2
         static let headerHeight: CGFloat = 66.0
         static let imageHeight: CGFloat = 204.0
-        static let cellInset: UIEdgeInsets = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 35.0, right: 16.0)
+        static let cellInset: UIEdgeInsets = UIEdgeInsets(top: 24.0, left: 16.0, bottom: 22.0, right: 16.0)
         static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 18.0,
                                                                 left: Size.leadingTrailingPadding,
                                                                 bottom: 18.0,
@@ -100,13 +100,15 @@ final class LetterViewController: BaseViewController {
     private var roomId: String
     private var roomState: String
     private var mission: String
+    private var missionId: String
     
     // MARK: - init
     
-    init(roomState: String, roomId: String, mission: String, letterState: LetterState) {
+    init(roomState: String, roomId: String, mission: String, missionId: String, letterState: LetterState) {
         self.roomState = roomState
         self.roomId = roomId
         self.mission = mission
+        self.missionId = missionId
         self.letterState = letterState
         super.init()
     }
@@ -218,8 +220,8 @@ final class LetterViewController: BaseViewController {
             guard let self = self,
                   let manitteeId = self.manitteeId
             else { return }
-
-            let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission)
+            
+            let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission, missionId: self.missionId)
             let navigationController = UINavigationController(rootViewController: viewController)
             viewController.succeedInSendingLetter = { [weak self] in
                 guard let roomId = self?.roomId else { return }
@@ -373,15 +375,22 @@ extension LetterViewController: UICollectionViewDataSource {
 extension LetterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var heights = [InternalSize.cellInset.top, InternalSize.cellInset.bottom]
-        
+
         if let content = self.letterList[indexPath.item].content {
             heights += [self.calculateContentHeight(text: content)]
+        }
+
+        if let mission = self.letterList[indexPath.item].mission {
+            heights += [self.calculateContentHeight(text: mission) + 10]
+        } else {
+            let date = self.letterList[indexPath.item].date
+            heights += [self.calculateContentHeight(text: date) + 5]
         }
 
         if self.letterList[indexPath.item].imageUrl != nil {
             heights += [InternalSize.imageHeight]
         }
-        
+
         return CGSize(width: InternalSize.cellWidth, height: heights.reduce(0, +))
     }
     

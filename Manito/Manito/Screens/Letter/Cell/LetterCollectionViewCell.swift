@@ -17,13 +17,13 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         let stackView = UIStackView()
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 16
+        stackView.spacing = 25
         return stackView
     }()
-    private let dateLabel: UILabel = {
+    private let missionLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 14)
-        label.textColor = .grey003
+        label.numberOfLines = 0
         return label
     }()
     private let contentLabel: UILabel = {
@@ -71,34 +71,33 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func setupLayout() {
-        self.contentView.addSubview(self.dateLabel)
-        self.dateLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(14).priority(.low)
-            $0.leading.equalToSuperview().inset(15)
-        }
-        
-        self.contentView.addSubview(self.reportButton)
-        self.reportButton.snp.makeConstraints {
-            $0.centerY.equalTo(self.dateLabel.snp.centerY)
-            $0.trailing.equalToSuperview().inset(10)
-            $0.width.height.equalTo(22)
-        }
-        
         self.contentView.addSubview(self.stackView)
         self.stackView.addArrangedSubview(self.photoImageView)
         self.stackView.addArrangedSubview(self.contentLabel)
         self.stackView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(dateLabel.snp.top).offset(-10).priority(.required)
+            $0.edges.equalToSuperview()
         }
         
         self.contentLabel.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(11)
         }
         
         self.photoImageView.snp.makeConstraints {
             $0.height.equalTo(0)
             $0.top.leading.trailing.equalToSuperview()
+        }
+
+        self.contentView.addSubview(self.missionLabel)
+        self.missionLabel.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(11)
+            $0.bottom.equalTo(self.contentLabel.snp.top).offset(10)
+        }
+
+        self.contentView.addSubview(self.reportButton)
+        self.reportButton.snp.makeConstraints {
+            $0.top.equalTo(self.missionLabel.snp.top)
+            $0.trailing.equalToSuperview().inset(11)
+            $0.width.height.equalTo(22)
         }
     }
     
@@ -130,7 +129,19 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     }
 
     func setLetterData(with data: Message, isHidden: Bool) {
-        self.dateLabel.text = data.date
+        self.missionLabel.textColor = data.isToday ? .subOrange : .grey003
+
+        if let mission = data.mission {
+            self.missionLabel.text = mission
+            self.missionLabel.snp.updateConstraints {
+                $0.bottom.equalTo(self.contentLabel.snp.top).offset(20)
+            }
+        } else {
+            self.missionLabel.text = data.date
+            self.missionLabel.snp.updateConstraints {
+                $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
+            }
+        }
         self.reportButton.isHidden = isHidden
         
         if let content = data.content {

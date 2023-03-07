@@ -29,9 +29,9 @@ struct LetterAPI: LetterProtocol {
     }
     
     @discardableResult
-    func dispatchLetter(roomId: String, image: Data? = nil, letter: LetterDTO) async throws -> Int {
+    func dispatchLetter(roomId: String, image: Data? = nil, letter: LetterDTO, missionId: String) async throws -> Int {
         let request = LetterEndPoint
-            .dispatchLetter(roomId: roomId, image: image, letter: letter)
+            .dispatchLetter(roomId: roomId, image: image, letter: letter, missionId: missionId)
             .createRequest()
         return try await self.apiService.request(request)
     }
