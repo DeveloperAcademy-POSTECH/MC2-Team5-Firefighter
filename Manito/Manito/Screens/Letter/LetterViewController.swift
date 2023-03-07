@@ -223,7 +223,7 @@ final class LetterViewController: BaseViewController {
             
             let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission, missionId: self.missionId)
             let navigationController = UINavigationController(rootViewController: viewController)
-            viewController.createLetter = { [weak self] in
+            viewController.succeedInSendingLetter = { [weak self] in
                 guard let roomId = self?.roomId else { return }
                 self?.fetchSendLetter(roomId: roomId)
             }

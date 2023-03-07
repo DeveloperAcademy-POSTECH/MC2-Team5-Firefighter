@@ -139,6 +139,8 @@ enum TextLiteral {
     // MARK: - CreateLetterViewController
     static let createLetterViewControllerSendButton: String = "보내기"
     static let createLetterViewControllerTitle: String = "쪽지 작성하기"
+    static let createLetterViewControllerErrorTitle = "오류 발생"
+    static let createLetterViewControllerErrorMessage = "쪽지 전송에 실패했습니다. 다시 시도해주세요."
 
     
     // MARK: - DetailIngViewController
