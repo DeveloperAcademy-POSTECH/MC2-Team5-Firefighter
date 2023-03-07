@@ -19,6 +19,7 @@ class DetailIngViewController: BaseViewController {
     lazy var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
     lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
 
+    private var missionId: String?
     var friendList: FriendList?
     var roomInformation: ParticipatingRoom? {
         willSet {
@@ -248,6 +249,7 @@ class DetailIngViewController: BaseViewController {
             let letterViewController = LetterViewController(roomState: roomType.rawValue,
                                                             roomId: roomId.description,
                                                             mission: mission,
+                                                            missionId: self?.missionId ?? "",
                                                             letterState: .sent)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
@@ -317,6 +319,7 @@ class DetailIngViewController: BaseViewController {
                     periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
                     missionContentsLabel.text = missionContent
                     manitteeAnimationLabel.text = manittee
+                    missionId = info.mission?.id?.description
                     if badgeCount > 0 {
                         badgeLabel.isHidden = false
                         badgeLabel.countLabel.text = String(badgeCount)

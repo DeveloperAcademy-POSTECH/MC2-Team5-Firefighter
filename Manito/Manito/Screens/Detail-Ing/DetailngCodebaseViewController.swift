@@ -23,11 +23,13 @@ final class DetailingCodebaseViewController: BaseViewController {
     private let roomId: String
     private var roomType: RoomType = .PROCESSING
     private var isTappedManittee: Bool = false
+    private var missionId: String = ""
     var letterViewController: UIViewController {
         guard let mission = missionContentsLabel.text else { return UIViewController() }
         let viewController = LetterViewController(roomState: roomType.rawValue,
                                                   roomId: roomId,
                                                   mission: mission,
+                                                  missionId: self.missionId,
                                                   letterState: .received)
         return viewController
     }
@@ -144,6 +146,7 @@ final class DetailingCodebaseViewController: BaseViewController {
             let letterViewController = LetterViewController(roomState: roomType.rawValue,
                                                             roomId: roomId,
                                                             mission: mission,
+                                                            missionId: self?.missionId ?? "",
                                                             letterState: .sent)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
@@ -547,6 +550,7 @@ final class DetailingCodebaseViewController: BaseViewController {
                     else { return }
                     
                     roomType = RoomType.init(rawValue: state) ?? .PROCESSING
+                    missionId = info.mission?.id?.description ?? ""
                     
                     DispatchQueue.main.async {
                         self.titleLabel.text = title
