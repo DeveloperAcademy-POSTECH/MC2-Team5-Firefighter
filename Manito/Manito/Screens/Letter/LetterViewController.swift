@@ -331,11 +331,11 @@ extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
         cell.setLetterData(with: self.letterList[indexPath.item], isHidden: self.letterState.isHidden)
-        cell.didTappedReport = { [weak self] in
+        cell.didTapReport = { [weak self] in
             self?.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "",
                                  content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
         }
-        cell.didTappedImage = { [weak self] _ in
+        cell.didTapImage = { [weak self] _ in
             guard let imageUrl = self?.letterList[indexPath.item].imageUrl else { return }
             let viewController = LetterImageViewController(imageUrl: imageUrl)
             viewController.modalPresentationStyle = .fullScreen
