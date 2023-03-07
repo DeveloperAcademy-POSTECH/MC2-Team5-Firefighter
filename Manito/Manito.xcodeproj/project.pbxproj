@@ -90,6 +90,7 @@
 		B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEB528D99F8600AF7E45 /* Settings.bundle */; };
 		B55BCEC628F5AFB200AF7E45 /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC528F5AFB200AF7E45 /* capsule.gif */; };
 		B55BCEC828F5AFD500AF7E45 /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC728F5AFD500AF7E45 /* joystick.gif */; };
+		B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BE029ADC20A0093D198 /* CreateLetterView.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
@@ -246,6 +247,7 @@
 		B55BCEB528D99F8600AF7E45 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B55BCEC528F5AFB200AF7E45 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
 		B55BCEC728F5AFD500AF7E45 /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
+		B5706BE029ADC20A0093D198 /* CreateLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterView.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 			isa = PBXGroup;
 			children = (
 				B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */,
+				B5706BE029ADC20A0093D198 /* CreateLetterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 		B54741E529A4945100B75BA3 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				B5706BED29B189F60093D198 /* Network */,
 				B54741E629A4945A00B75BA3 /* Screens */,
 			);
 			path = Error;
@@ -524,6 +528,21 @@
 			isa = PBXGroup;
 			children = (
 				B54741E929A494E200B75BA3 /* LetterImageError.swift */,
+			);
+			path = Letter;
+			sourceTree = "<group>";
+		};
+		B5706BED29B189F60093D198 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B5706BEE29B189FF0093D198 /* Letter */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		B5706BEE29B189FF0093D198 /* Letter */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Letter;
 			sourceTree = "<group>";
@@ -1145,6 +1164,7 @@
 				D739C36328C7B69D00161117 /* SettingProtocol.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
 				39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */,
+				B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */,
 				39EEF66028CB3D6200437654 /* LoginDTO.swift in Sources */,
 				7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */,
 				CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */,
