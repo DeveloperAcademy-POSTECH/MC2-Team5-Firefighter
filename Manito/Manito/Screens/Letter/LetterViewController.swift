@@ -43,7 +43,7 @@ final class LetterViewController: BaseViewController {
     private var letterState: LetterState {
         didSet {
             self.letterView.reloadCollectionView(with: self.letterState)
-            self.letterView.setupEmptyLabel()
+            self.letterView.setupEmptyLabel(self.letterState.labelText)
         }
     }
     private var letterList: [Message] = [] {

@@ -9,6 +9,10 @@ import UIKit
 
 import SnapKit
 
+protocol LetterViewDelegate: AnyObject {
+
+}
+
 final class LetterView: UIView {
 
     private enum InternalSize {
