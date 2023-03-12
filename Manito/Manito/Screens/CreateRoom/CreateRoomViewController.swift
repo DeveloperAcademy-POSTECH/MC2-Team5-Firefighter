@@ -87,80 +87,80 @@ class CreateRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        toggleButton()
-        setupNotificationCenter()
+        self.toggleButton()
+        self.setupNotificationCenter()
     }
         
     override func setupLayout() {
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
+        self.view.addSubview(titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
             $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
         }
         
-        view.addSubview(closeButton)
-        closeButton.snp.makeConstraints {
+        self.view.addSubview(closeButton)
+        self.closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
             $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
-        view.addSubview(backButton)
-        backButton.snp.makeConstraints {
+        self.view.addSubview(backButton)
+        self.backButton.snp.makeConstraints {
             $0.top.equalTo(closeButton)
             $0.leading.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(44)
         }
         
-        view.addSubview(nextButton)
-        nextButton.snp.makeConstraints {
+        self.view.addSubview(nextButton)
+        self.nextButton.snp.makeConstraints {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
             $0.height.equalTo(60)
         }
         
-        view.addSubview(nameView)
-        nameView.snp.makeConstraints {
+        self.view.addSubview(nameView)
+        self.nameView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
         
-        view.addSubview(personView)
-        personView.snp.makeConstraints {
+        self.view.addSubview(personView)
+        self.personView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
         
-        view.addSubview(dateView)
-        dateView.snp.makeConstraints {
+        self.view.addSubview(dateView)
+        self.dateView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
         
-        view.addSubview(checkView)
-        checkView.snp.makeConstraints {
+        self.view.addSubview(checkView)
+        self.checkView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(nextButton.snp.top)
         }
         
-        view.bringSubviewToFront(nextButton)
+        self.view.bringSubviewToFront(nextButton)
     }
     
     // MARK: - Configure
     
     override func configureUI() {
         super.configureUI()
-        navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     // MARK: - selector
     
     @objc private func didTapBackButton() {
-        notiIndex = RoomState.init(rawValue: notiIndex.rawValue - 1) ?? RoomState.inputName
-        changedInputView()
+        self.notiIndex = RoomState.init(rawValue: self.notiIndex.rawValue - 1) ?? RoomState.inputName
+        self.changedInputView()
     }
     
     @objc private func didTapCloseButton() {
@@ -172,29 +172,29 @@ class CreateRoomViewController: BaseViewController {
     @objc private func didTapNextButton() {
         switch notiIndex {
         case .inputName:
-            guard let text = nameView.roomsNameTextField.text else { return }
-            name = text
-            setDataInCheckView(name: name)
-            changeNotiIndex()
-            changedInputView()
-            nameView.roomsNameTextField.resignFirstResponder()
+            guard let text = self.nameView.roomsNameTextField.text else { return }
+            self.name = text
+            self.setDataInCheckView(name: name)
+            self.changeNotiIndex()
+            self.changedInputView()
+            self.nameView.roomsNameTextField.resignFirstResponder()
         case .inputPerson:
-            person = Int(personView.personSlider.value)
-            setDataInCheckView(person: person)
-            changeNotiIndex()
-            changedInputView()
+            self.person = Int(personView.personSlider.value)
+            self.setDataInCheckView(person: person)
+            self.changeNotiIndex()
+            self.changedInputView()
         case .inputDate:
-            setDataInCheckView(date: "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())")
-            changeNotiIndex()
-            changedInputView()
+            self.setDataInCheckView(date: "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())")
+            self.changeNotiIndex()
+            self.changedInputView()
         case .checkRoom:
-            roomInfo = RoomDTO(title: name,
+            self.roomInfo = RoomDTO(title: name,
                                capacity: person,
                                startDate: "20\(dateView.calendarView.getTempStartDate())",
                                endDate: "20\(dateView.calendarView.getTempEndDate())")
             let viewController = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
             viewController.roomInfo = roomInfo
-            navigationController?.pushViewController(viewController, animated: true)
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
@@ -213,7 +213,7 @@ class CreateRoomViewController: BaseViewController {
     }
     
     override func endEditingView() {
-        if !nextButton.isTouchInside {
+        if !self.nextButton.isTouchInside {
             view.endEditing(true)
         }
     }
@@ -221,11 +221,11 @@ class CreateRoomViewController: BaseViewController {
     // MARK: - func
     
     private func toggleButton() {
-        nameView.changeNextButtonEnableStatus = { [weak self] isEnable in
+        self.nameView.changeNextButtonEnableStatus = { [weak self] isEnable in
             self?.nextButton.isDisabled = !isEnable
         }
         
-        dateView.calendarView.changeButtonState = { [weak self] isEnabled in
+        self.dateView.calendarView.changeButtonState = { [weak self] isEnabled in
             self?.nextButton.isDisabled = !isEnabled
         }
     }
@@ -233,13 +233,13 @@ class CreateRoomViewController: BaseViewController {
     private func changedInputView() {
         switch notiIndex {
         case .inputName:
-            setInputNameView()
+            self.setInputNameView()
         case .inputPerson:
-            setInputPersonView()
+            self.setInputPersonView()
         case .inputDate:
-            setInputDateView()
+            self.setInputDateView()
         case .checkRoom:
-            setCheckRoomView()
+            self.setCheckRoomView()
         }
     }
     
@@ -263,7 +263,7 @@ class CreateRoomViewController: BaseViewController {
     }
     
     private func setInputDateView() {
-        dateView.calendarView.setupButtonState()
+        self.dateView.calendarView.setupButtonState()
         self.personView.fadeOut()
         self.personView.isHidden = true
         self.dateView.fadeIn()
@@ -282,11 +282,11 @@ class CreateRoomViewController: BaseViewController {
     private func setDataInCheckView(name: String = "", person: Int = 0, date: String = "" ) {
         switch notiIndex {
         case .inputName:
-            checkView.name = name
+            self.checkView.name = name
         case .inputPerson:
-            checkView.person = person
+            self.checkView.person = person
         case .inputDate:
-            checkView.dateRange = date
+            self.checkView.dateRange = date
         default:
             return
         }
@@ -294,11 +294,11 @@ class CreateRoomViewController: BaseViewController {
     private func changeNotiIndex() {
         switch notiIndex {
         case .inputName:
-            notiIndex = .inputPerson
+            self.notiIndex = .inputPerson
         case .inputPerson:
-            notiIndex = .inputDate
+            self.notiIndex = .inputDate
         case .inputDate:
-            notiIndex = .checkRoom
+            self.notiIndex = .checkRoom
         default:
             return
         }
