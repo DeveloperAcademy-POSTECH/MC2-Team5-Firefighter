@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class CreateRoomViewController: BaseViewController {
+final class CreateRoomViewController: BaseViewController {
             
     // MARK: - ui component
     
