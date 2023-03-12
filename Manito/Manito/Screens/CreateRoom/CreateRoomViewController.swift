@@ -43,7 +43,7 @@ class CreateRoomViewController: BaseViewController {
         button.isHidden = true
         return button
     }()
-    private let nameView = InputNameView()
+    private let nameView: InputNameView = InputNameView()
     private let personView: InputPersonView = {
         let view = InputPersonView()
         view.alpha = 0.0
