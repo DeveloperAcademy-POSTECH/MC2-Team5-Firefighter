@@ -9,9 +9,9 @@ import UIKit
 
 import SnapKit
 
-class InputDateView: UIView {
+final class InputDateView: UIView {
     
-    // MARK: - Property
+    // MARK: - ui component
     
     private let dateViewLabel: UILabel = {
         let label = UILabel()
@@ -19,7 +19,7 @@ class InputDateView: UIView {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    let calendarView = CalendarView()
+    let calendarView: CalendarView = CalendarView()
     private let dateInfoLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.maxMessage
@@ -32,30 +32,31 @@ class InputDateView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setLayout()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Config
+    // MARK: - func
     
-    private func render() {
+    private func setLayout() {
         self.addSubview(dateViewLabel)
-        dateViewLabel.snp.makeConstraints {
+        self.dateViewLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
         
         self.addSubview(calendarView)
-        calendarView.snp.makeConstraints {
+        self.calendarView.snp.makeConstraints {
             $0.top.equalTo(dateViewLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(380)
         }
         
-        calendarView.addSubview(dateInfoLabel)
-        dateInfoLabel.snp.makeConstraints {
+        self.calendarView.addSubview(dateInfoLabel)
+        self.dateInfoLabel.snp.makeConstraints {
             $0.top.equalTo(calendarView.snp.bottom).offset(5)
             $0.trailing.equalToSuperview()
         }
