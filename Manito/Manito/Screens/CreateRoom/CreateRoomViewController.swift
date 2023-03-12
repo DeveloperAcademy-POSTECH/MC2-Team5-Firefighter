@@ -10,21 +10,8 @@ import UIKit
 import SnapKit
 
 class CreateRoomViewController: BaseViewController {
-    let roomService: RoomProtocol = RoomAPI(apiService: APIService())
-    private var name: String = ""
-    private var person: Int = 0
-    
-    private enum RoomState: Int {
-        case inputName = 0
-        case inputPerson = 1
-        case inputDate = 2
-        case checkRoom = 3
-    }
-    
-    private var notiIndex: RoomState = .inputName
-    private var roomInfo: RoomDTO?
-    
-    // MARK: - Property
+            
+    // MARK: - ui component
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -76,13 +63,27 @@ class CreateRoomViewController: BaseViewController {
         return view
     }()
     
+    // MARK: - property
+    
+    let roomService: RoomProtocol = RoomAPI(apiService: APIService())
+    private var name: String = ""
+    private var person: Int = 0
+    private var notiIndex: RoomState = .inputName
+    private var roomInfo: RoomDTO?
+    private enum RoomState: Int {
+        case inputName = 0
+        case inputPerson = 1
+        case inputDate = 2
+        case checkRoom = 3
+    }
+    
     // MARK: - init
     
     deinit {
         print("\(#file) is dead")
     }
     
-    // MARK: - life Cycle
+    // MARK: - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,9 +156,7 @@ class CreateRoomViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-    
-    
-    // MARK: - Selectors
+    // MARK: - selector
     
     @objc private func didTapBackButton() {
         notiIndex = RoomState.init(rawValue: notiIndex.rawValue - 1) ?? RoomState.inputName
@@ -216,7 +215,7 @@ class CreateRoomViewController: BaseViewController {
         }
     }
     
-    // MARK: - Functions
+    // MARK: - func
     
     private func toggleButton() {
         nameView.changeNextButtonEnableStatus = { [weak self] isEnable in
