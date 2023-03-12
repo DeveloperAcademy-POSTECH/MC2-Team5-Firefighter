@@ -19,24 +19,21 @@ final class CreateRoomViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    private lazy var closeButton: UIButton = {
+    private let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(ImageLiterals.btnXmark, for: .normal)
         button.tintColor = .grey001
-        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         return button
     }()
-    private lazy var nextButton: MainButton = {
+    private let nextButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.next
-        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         button.isDisabled = true
         return button
     }()
-    private lazy var backButton: UIButton = {
+    private let backButton: UIButton = {
         let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
-        button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         button.setTitle(" " + TextLiteral.previous, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
@@ -72,9 +69,10 @@ final class CreateRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.toggleButton()
+        self.detectStartableStatus()
         self.setupNotificationCenter()
         self.setInputViewIsHidden()
+        self.setupAction()
     }
     
     // MARK: - Configure
@@ -85,50 +83,7 @@ final class CreateRoomViewController: BaseViewController {
     }
     
     // MARK: - selector
-    
-    @objc
-    private func didTapBackButton() {
-        self.notiIndex = RoomState.init(rawValue: self.notiIndex.rawValue - 1) ?? RoomState.inputName
-        self.changedInputView()
-    }
-    
-    @objc
-    private func didTapCloseButton() {
-        DispatchQueue.main.async {
-            self.dismiss(animated: true)
-        }
-    }
-    
-    @objc
-    private func didTapNextButton() {
-        switch notiIndex {
-        case .inputName:
-            guard let text = self.nameView.roomsNameTextField.text else { return }
-            self.name = text
-            self.setDataInCheckView(name: name)
-            self.changeNotiIndex()
-            self.changedInputView()
-            self.nameView.roomsNameTextField.resignFirstResponder()
-        case .inputPerson:
-            self.person = Int(personView.personSlider.value)
-            self.setDataInCheckView(person: person)
-            self.changeNotiIndex()
-            self.changedInputView()
-        case .inputDate:
-            self.setDataInCheckView(date: "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())")
-            self.changeNotiIndex()
-            self.changedInputView()
-        case .checkRoom:
-            self.roomInfo = RoomDTO(title: name,
-                               capacity: person,
-                               startDate: "20\(dateView.calendarView.getTempStartDate())",
-                               endDate: "20\(dateView.calendarView.getTempEndDate())")
-            let viewController = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
-            viewController.roomInfo = roomInfo
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
-    }
-    
+        
     @objc
     private func keyboardWillShow(notification:NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -213,7 +168,64 @@ final class CreateRoomViewController: BaseViewController {
     
     // MARK: - func
     
-    private func toggleButton() {
+    private func setupAction() {
+        let closeAction = UIAction { [weak self] _ in
+            self?.didTapCloseButton()
+        }
+        self.closeButton.addAction(closeAction, for: .touchUpInside)
+        
+        let nextAction = UIAction { [weak self] _ in
+            self?.didTapNextButton()
+        }
+        self.nextButton.addAction(nextAction, for: .touchUpInside)
+        
+        let backAction = UIAction { [weak self] _ in
+            self?.didTapBackButton()
+        }
+        self.backButton.addAction(backAction, for: .touchUpInside)
+    }
+    
+    private func didTapBackButton() {
+        self.notiIndex = RoomState.init(rawValue: self.notiIndex.rawValue - 1) ?? RoomState.inputName
+        self.changedInputView()
+    }
+    
+    private func didTapCloseButton() {
+        DispatchQueue.main.async {
+            self.dismiss(animated: true)
+        }
+    }
+    
+    private func didTapNextButton() {
+        switch notiIndex {
+        case .inputName:
+            guard let text = self.nameView.roomsNameTextField.text else { return }
+            self.name = text
+            self.setDataInCheckView(name: name)
+            self.changeNotiIndex()
+            self.changedInputView()
+            self.nameView.roomsNameTextField.resignFirstResponder()
+        case .inputPerson:
+            self.person = Int(personView.personSlider.value)
+            self.setDataInCheckView(person: person)
+            self.changeNotiIndex()
+            self.changedInputView()
+        case .inputDate:
+            self.setDataInCheckView(date: "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())")
+            self.changeNotiIndex()
+            self.changedInputView()
+        case .checkRoom:
+            self.roomInfo = RoomDTO(title: name,
+                               capacity: person,
+                               startDate: "20\(dateView.calendarView.getTempStartDate())",
+                               endDate: "20\(dateView.calendarView.getTempEndDate())")
+            let viewController = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
+            viewController.roomInfo = roomInfo
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    private func detectStartableStatus() {
         self.nameView.changeNextButtonEnableStatus = { [weak self] isEnable in
             self?.nextButton.isDisabled = !isEnable
         }
