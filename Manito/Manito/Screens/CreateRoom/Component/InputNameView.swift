@@ -10,9 +10,8 @@ import UIKit
 import SnapKit
 
 class InputNameView: UIView {
-    private var maxLength = 8
     
-    // MARK: - Property
+    // MARK: - ui component
     
     lazy var roomsNameTextField: UITextField = {
         let textField = UITextField()
@@ -31,8 +30,7 @@ class InputNameView: UIView {
         textField.becomeFirstResponder()
         return textField
     }()
-    
-    private lazy var roomsTextLimit : UILabel = {
+    private lazy var roomsTextLimitLabel : UILabel = {
         let label = UILabel()
         label.text = "0/\(maxLength)"
         label.font = .font(.regular, ofSize: 20)
@@ -40,9 +38,13 @@ class InputNameView: UIView {
         return label
     }()
     
-    var changeNextButtonEnableStatus: ((Bool) -> ())?
+    // MARK: - property
     
-    // MARK: - Init
+    var changeNextButtonEnableStatus: ((Bool) -> ())?
+    private var maxLength = 8
+    
+    // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         render()
@@ -52,7 +54,7 @@ class InputNameView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Config
+    // MARK: - func
     
     private func render() {
         self.addSubview(roomsNameTextField)
@@ -61,20 +63,18 @@ class InputNameView: UIView {
             $0.height.equalTo(60)
         }
         
-        self.addSubview(roomsTextLimit)
-        roomsTextLimit.snp.makeConstraints {
+        self.addSubview(roomsTextLimitLabel)
+        roomsTextLimitLabel.snp.makeConstraints {
             $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
             $0.trailing.equalToSuperview()
         }
     }
     
-    // MARK: - Funtions
-    
     private func setCounter(count: Int) {
         if count <= maxLength {
-            roomsTextLimit.text = "\(count)/\(maxLength)"
+            roomsTextLimitLabel.text = "\(count)/\(maxLength)"
         } else {
-            roomsTextLimit.text = "\(maxLength)/\(maxLength)"
+            roomsTextLimitLabel.text = "\(maxLength)/\(maxLength)"
         }
     }
     

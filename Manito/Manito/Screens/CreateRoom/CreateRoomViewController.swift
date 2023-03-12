@@ -75,13 +75,6 @@ final class CreateRoomViewController: BaseViewController {
         self.setupAction()
     }
     
-    // MARK: - Configure
-    
-    override func configureUI() {
-        super.configureUI()
-        self.navigationController?.navigationBar.isHidden = true
-    }
-    
     // MARK: - selector
         
     @objc
@@ -158,6 +151,11 @@ final class CreateRoomViewController: BaseViewController {
         }
         
         self.view.bringSubviewToFront(nextButton)
+    }
+    
+    override func configureUI() {
+        super.configureUI()
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     override func endEditingView() {
