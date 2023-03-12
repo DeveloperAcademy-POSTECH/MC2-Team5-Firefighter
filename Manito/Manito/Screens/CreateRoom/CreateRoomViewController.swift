@@ -309,17 +309,3 @@ final class CreateRoomViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
-
-extension UIView {
-    func fadeIn(duration: TimeInterval = 0.3) {
-        UIView.animate(withDuration: duration) {
-            self.alpha = 1.0
-        }
-    }
-    
-    func fadeOut(duration: TimeInterval = 0.3) {
-        UIView.animate(withDuration: duration) {
-            self.alpha = 0.0
-        }
-    }
-}
