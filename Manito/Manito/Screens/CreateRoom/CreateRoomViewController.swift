@@ -44,25 +44,10 @@ final class CreateRoomViewController: BaseViewController {
         return button
     }()
     private let nameView: InputNameView = InputNameView()
-    private let personView: InputPersonView = {
-        let view = InputPersonView()
-        view.alpha = 0.0
-        view.isHidden = true
-        return view
-    }()
-    private let dateView: InputDateView = {
-        let view = InputDateView()
-        view.alpha = 0.0
-        view.isHidden = true
-        return view
-    }()
-    private let checkView: CheckRoomView = {
-        let view = CheckRoomView()
-        view.alpha = 0.0
-        view.isHidden = true
-        return view
-    }()
-    
+    private let personView: InputPersonView = InputPersonView()
+    private let dateView: InputDateView = InputDateView()
+    private let checkView: CheckRoomView = CheckRoomView()
+        
     // MARK: - property
     
     private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
@@ -89,6 +74,7 @@ final class CreateRoomViewController: BaseViewController {
         super.viewDidLoad()
         self.toggleButton()
         self.setupNotificationCenter()
+        self.setInputViewIsHidden()
     }
         
     override func setupLayout() {
@@ -302,6 +288,15 @@ final class CreateRoomViewController: BaseViewController {
         default:
             return
         }
+    }
+    
+    private func setInputViewIsHidden() {
+        self.personView.alpha = 0.0
+        self.personView.isHidden = true
+        self.dateView.alpha = 0.0
+        self.dateView.isHidden = true
+        self.checkView.alpha = 0.0
+        self.checkView.isHidden = true
     }
     
     private func setupNotificationCenter() {
