@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class InputNameView: UIView {
+final class InputNameView: UIView {
     
     // MARK: - ui component
     
@@ -19,7 +19,8 @@ class InputNameView: UIView {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         textField.backgroundColor = .darkGrey002
-        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText, attributes:attributes)
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText,
+                                                             attributes:attributes)
         textField.textAlignment = .center
         textField.makeBorderLayer(color: .white)
         textField.font = .font(.regular, ofSize: 18)
@@ -41,30 +42,31 @@ class InputNameView: UIView {
     // MARK: - property
     
     var changeNextButtonEnableStatus: ((Bool) -> ())?
-    private var maxLength = 8
+    private var maxLength: Int = 8
     
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setupLayout()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - func
     
-    private func render() {
+    private func setupLayout() {
         self.addSubview(roomsNameTextField)
-        roomsNameTextField.snp.makeConstraints {
+        self.roomsNameTextField.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(60)
         }
         
         self.addSubview(roomsTextLimitLabel)
-        roomsTextLimitLabel.snp.makeConstraints {
+        self.roomsTextLimitLabel.snp.makeConstraints {
             $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
             $0.trailing.equalToSuperview()
         }
@@ -95,14 +97,14 @@ class InputNameView: UIView {
 
 extension InputNameView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        roomsNameTextField.resignFirstResponder()
+        self.roomsNameTextField.resignFirstResponder()
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        setCounter(count: textField.text?.count ?? 0)
-        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
+        self.setCounter(count: textField.text?.count ?? 0)
+        self.checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
         
-        let hasText = roomsNameTextField.hasText
-        changeNextButtonEnableStatus?(hasText)
+        let hasText = self.roomsNameTextField.hasText
+        self.changeNextButtonEnableStatus?(hasText)
     }
 }
