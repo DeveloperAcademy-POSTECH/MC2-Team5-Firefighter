@@ -60,16 +60,19 @@ class CreateRoomViewController: BaseViewController {
     private let personView: InputPersonView = {
         let view = InputPersonView()
         view.alpha = 0.0
+        view.isHidden = true
         return view
     }()
     private let dateView: InputDateView = {
         let view = InputDateView()
         view.alpha = 0.0
+        view.isHidden = true
         return view
     }()
     private let checkView: CheckRoomView = {
         let view = CheckRoomView()
         view.alpha = 0.0
+        view.isHidden = true
         return view
     }()
     
@@ -239,29 +242,39 @@ class CreateRoomViewController: BaseViewController {
     }
     
     private func setInputNameView() {
-        self.nameView.fadeIn()
-        self.personView.fadeOut()
         self.backButton.isHidden = true
+        self.nameView.fadeIn()
+        self.nameView.isHidden = false
+        self.personView.fadeOut()
+        self.personView.isHidden = true
     }
     
     private func setInputPersonView() {
-        nextButton.isDisabled = false
-        self.nameView.fadeOut()
-        self.personView.fadeIn()
-        self.dateView.fadeOut()
+        self.nextButton.isDisabled = false
         self.backButton.isHidden = false
+        self.nameView.fadeOut()
+        self.nameView.isHidden = true
+        self.personView.fadeIn()
+        self.personView.isHidden = false
+        self.dateView.fadeOut()
+        self.dateView.isHidden = true
     }
     
     private func setInputDateView() {
         dateView.calendarView.setupButtonState()
         self.personView.fadeOut()
+        self.personView.isHidden = true
         self.dateView.fadeIn()
+        self.dateView.isHidden = false
         self.checkView.fadeOut()
+        self.checkView.isHidden = true
     }
     
     private func setCheckRoomView() {
         self.dateView.fadeOut()
+        self.dateView.isHidden = true
         self.checkView.fadeIn()
+        self.checkView.isHidden = false
     }
     
     private func setDataInCheckView(name: String = "", person: Int = 0, date: String = "" ) {
