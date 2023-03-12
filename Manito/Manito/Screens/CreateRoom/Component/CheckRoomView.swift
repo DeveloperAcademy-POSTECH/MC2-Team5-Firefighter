@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class CheckRoomView: UIView {
+final class CheckRoomView: UIView {
     var dateRange = "" {
         willSet {
             dateLabel.text = newValue
@@ -26,7 +26,7 @@ class CheckRoomView: UIView {
         }
     }
 
-    // MARK: - Property
+    // MARK: - ui component
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -56,36 +56,37 @@ class CheckRoomView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        setLayout()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Config
+    // MARK: - func
     
-    private func render() {
+    private func setLayout() {
         self.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
+        self.nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
             $0.centerX.equalToSuperview()
         }
         
         self.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints {
+        self.dateLabel.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(23)
             $0.centerX.equalToSuperview()
         }
         
         self.addSubview(personLabel)
-        personLabel.snp.makeConstraints {
+        self.personLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview().offset(20)
             $0.top.equalTo(dateLabel.snp.bottom).offset(107)
         }
         
         self.addSubview(imageView)
-        imageView.snp.makeConstraints {
+        self.imageView.snp.makeConstraints {
             $0.centerY.equalTo(personLabel.snp.centerY)
             $0.trailing.equalTo(personLabel.snp.leading)
             $0.width.height.equalTo(60)
