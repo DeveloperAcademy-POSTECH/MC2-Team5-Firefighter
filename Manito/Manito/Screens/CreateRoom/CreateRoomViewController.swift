@@ -194,31 +194,6 @@ class CreateRoomViewController: BaseViewController {
         }
     }
     
-    func setDataInCheckView(name: String = "", person: Int = 0, date: String = "" ) {
-        switch notiIndex {
-        case .inputName:
-            checkView.name = name
-        case .inputPerson:
-            checkView.person = person
-        case .inputDate:
-            checkView.dateRange = date
-        default:
-            return
-        }
-    }
-    func changeNotiIndex() {
-        switch notiIndex {
-        case .inputName:
-            notiIndex = .inputPerson
-        case .inputPerson:
-            notiIndex = .inputDate
-        case .inputDate:
-            notiIndex = .checkRoom
-        default:
-            return
-        }
-    }
-    
     @objc private func keyboardWillShow(notification:NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             UIView.animate(withDuration: 0.2, animations: {
@@ -288,6 +263,31 @@ class CreateRoomViewController: BaseViewController {
     private func setCheckRoomView() {
         self.dateView.fadeOut()
         self.checkView.fadeIn()
+    }
+    
+    private func setDataInCheckView(name: String = "", person: Int = 0, date: String = "" ) {
+        switch notiIndex {
+        case .inputName:
+            checkView.name = name
+        case .inputPerson:
+            checkView.person = person
+        case .inputDate:
+            checkView.dateRange = date
+        default:
+            return
+        }
+    }
+    private func changeNotiIndex() {
+        switch notiIndex {
+        case .inputName:
+            notiIndex = .inputPerson
+        case .inputPerson:
+            notiIndex = .inputDate
+        case .inputDate:
+            notiIndex = .checkRoom
+        default:
+            return
+        }
     }
     
     private func setupNotificationCenter() {
