@@ -76,7 +76,77 @@ final class CreateRoomViewController: BaseViewController {
         self.setupNotificationCenter()
         self.setInputViewIsHidden()
     }
-        
+    
+    // MARK: - Configure
+    
+    override func configureUI() {
+        super.configureUI()
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func didTapBackButton() {
+        self.notiIndex = RoomState.init(rawValue: self.notiIndex.rawValue - 1) ?? RoomState.inputName
+        self.changedInputView()
+    }
+    
+    @objc
+    private func didTapCloseButton() {
+        DispatchQueue.main.async {
+            self.dismiss(animated: true)
+        }
+    }
+    
+    @objc
+    private func didTapNextButton() {
+        switch notiIndex {
+        case .inputName:
+            guard let text = self.nameView.roomsNameTextField.text else { return }
+            self.name = text
+            self.setDataInCheckView(name: name)
+            self.changeNotiIndex()
+            self.changedInputView()
+            self.nameView.roomsNameTextField.resignFirstResponder()
+        case .inputPerson:
+            self.person = Int(personView.personSlider.value)
+            self.setDataInCheckView(person: person)
+            self.changeNotiIndex()
+            self.changedInputView()
+        case .inputDate:
+            self.setDataInCheckView(date: "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())")
+            self.changeNotiIndex()
+            self.changedInputView()
+        case .checkRoom:
+            self.roomInfo = RoomDTO(title: name,
+                               capacity: person,
+                               startDate: "20\(dateView.calendarView.getTempStartDate())",
+                               endDate: "20\(dateView.calendarView.getTempEndDate())")
+            let viewController = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
+            viewController.roomInfo = roomInfo
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    @objc
+    private func keyboardWillShow(notification:NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
+            })
+        }
+    }
+    
+    @objc
+    private func keyboardWillHide(notification:NSNotification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.nextButton.transform = .identity
+        })
+    }
+    
+    // MARK: - override
+    
     override func setupLayout() {
         self.view.addSubview(titleLabel)
         self.titleLabel.snp.makeConstraints {
@@ -133,69 +203,6 @@ final class CreateRoomViewController: BaseViewController {
         }
         
         self.view.bringSubviewToFront(nextButton)
-    }
-    
-    // MARK: - Configure
-    
-    override func configureUI() {
-        super.configureUI()
-        self.navigationController?.navigationBar.isHidden = true
-    }
-    
-    // MARK: - selector
-    
-    @objc private func didTapBackButton() {
-        self.notiIndex = RoomState.init(rawValue: self.notiIndex.rawValue - 1) ?? RoomState.inputName
-        self.changedInputView()
-    }
-    
-    @objc private func didTapCloseButton() {
-        DispatchQueue.main.async {
-            self.dismiss(animated: true)
-        }
-    }
-    
-    @objc private func didTapNextButton() {
-        switch notiIndex {
-        case .inputName:
-            guard let text = self.nameView.roomsNameTextField.text else { return }
-            self.name = text
-            self.setDataInCheckView(name: name)
-            self.changeNotiIndex()
-            self.changedInputView()
-            self.nameView.roomsNameTextField.resignFirstResponder()
-        case .inputPerson:
-            self.person = Int(personView.personSlider.value)
-            self.setDataInCheckView(person: person)
-            self.changeNotiIndex()
-            self.changedInputView()
-        case .inputDate:
-            self.setDataInCheckView(date: "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())")
-            self.changeNotiIndex()
-            self.changedInputView()
-        case .checkRoom:
-            self.roomInfo = RoomDTO(title: name,
-                               capacity: person,
-                               startDate: "20\(dateView.calendarView.getTempStartDate())",
-                               endDate: "20\(dateView.calendarView.getTempEndDate())")
-            let viewController = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
-            viewController.roomInfo = roomInfo
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
-    }
-    
-    @objc private func keyboardWillShow(notification:NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
-        }
-    }
-    
-    @objc private func keyboardWillHide(notification:NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.nextButton.transform = .identity
-        })
     }
     
     override func endEditingView() {
