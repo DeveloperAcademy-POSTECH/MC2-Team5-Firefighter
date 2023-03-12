@@ -19,21 +19,21 @@ final class CreateRoomViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    lazy var closeButton: UIButton = {
+    private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(ImageLiterals.btnXmark, for: .normal)
         button.tintColor = .grey001
         button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         return button
     }()
-    lazy var nextButton: MainButton = {
+    private lazy var nextButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.next
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         button.isDisabled = true
         return button
     }()
-    lazy var backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
@@ -65,7 +65,7 @@ final class CreateRoomViewController: BaseViewController {
     
     // MARK: - property
     
-    let roomService: RoomProtocol = RoomAPI(apiService: APIService())
+    private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
     private var name: String = ""
     private var person: Int = 0
     private var notiIndex: RoomState = .inputName
