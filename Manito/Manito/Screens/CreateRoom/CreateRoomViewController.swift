@@ -13,7 +13,6 @@ class CreateRoomViewController: BaseViewController {
     let roomService: RoomProtocol = RoomAPI(apiService: APIService())
     private var name: String = ""
     private var person: Int = 0
-//    private var date: Int = 0
     
     private enum RoomState: Int {
         case inputName = 0
