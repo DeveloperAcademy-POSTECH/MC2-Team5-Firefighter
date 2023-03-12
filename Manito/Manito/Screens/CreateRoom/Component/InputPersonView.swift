@@ -9,12 +9,13 @@ import UIKit
 
 import SnapKit
 
-class InputPersonView: UIView {
+final class InputPersonView: UIView {
     
-    // MARK: - Property
+    // MARK: - ui component
+    
     private let personViewLabel: UILabel = {
         let label = UILabel()
-        label.text = "최대 참여 인원을 설정해 주세요"
+        label.text = TextLiteral.inputPersonViewTitle
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
@@ -63,9 +64,10 @@ class InputPersonView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setLayout()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -74,51 +76,51 @@ class InputPersonView: UIView {
     
     @objc func didSlideSlider(_ slider: UISlider) {
         let value = slider.value
-        personLabel.text = TextLiteral.x + " \(Int(value))인"
+        self.personLabel.text = TextLiteral.x + " \(Int(value))인"
     }
     
-    // MARK: - Config
+    // MARK: - func
     
-    private func render() {
+    private func setLayout() {
         self.addSubview(personViewLabel)
-        personViewLabel.snp.makeConstraints {
+        self.personViewLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
         
         self.addSubview(personBackView)
-        personBackView.snp.makeConstraints {
+        self.personBackView.snp.makeConstraints {
             $0.top.equalTo(personViewLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(140)
         }
         
-        personBackView.addSubview(personLabel)
-        personLabel.snp.makeConstraints {
+        self.personBackView.addSubview(personLabel)
+        self.personLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()
         }
         
-        personBackView.addSubview(imageView)
-        imageView.snp.makeConstraints {
+        self.personBackView.addSubview(imageView)
+        self.imageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalTo(personLabel.snp.leading)
             $0.width.height.equalTo(60)
         }
         
         self.addSubview(minLabel)
-        minLabel.snp.makeConstraints {
+        self.minLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalTo(personBackView.snp.bottom).offset(49)
         }
         
         self.addSubview(maxLabel)
-        maxLabel.snp.makeConstraints {
+        self.maxLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalTo(minLabel.snp.top)
         }
         
         self.addSubview(personSlider)
-        personSlider.snp.makeConstraints {
+        self.personSlider.snp.makeConstraints {
             $0.centerY.equalTo(minLabel.snp.centerY)
             $0.trailing.equalTo(maxLabel.snp.leading).offset(-5)
             $0.leading.equalTo(minLabel.snp.trailing).offset(5)
