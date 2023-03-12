@@ -11,9 +11,9 @@ import SnapKit
 
 class CreateRoomViewController: BaseViewController {
     let roomService: RoomProtocol = RoomAPI(apiService: APIService())
-    private var name = ""
-    private var person = 0
-    private var date = 0
+    private var name: String = ""
+    private var person: Int = 0
+//    private var date: Int = 0
     
     private enum RoomState: Int {
         case inputName = 0
@@ -173,24 +173,49 @@ class CreateRoomViewController: BaseViewController {
         case .inputName:
             guard let text = nameView.roomsNameTextField.text else { return }
             name = text
-            checkView.name = text
-            notiIndex = .inputPerson
+            setDataInCheckView(name: name)
+            changeNotiIndex()
             changedInputView()
             nameView.roomsNameTextField.resignFirstResponder()
         case .inputPerson:
             person = Int(personView.personSlider.value)
-            checkView.person = person
-            notiIndex = .inputDate
+            setDataInCheckView(person: person)
+            changeNotiIndex()
             changedInputView()
         case .inputDate:
-            notiIndex = .checkRoom
-            checkView.dateRange = "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())"
+            setDataInCheckView(date: "\(dateView.calendarView.getTempStartDate()) ~ \(dateView.calendarView.getTempEndDate())")
+            changeNotiIndex()
             changedInputView()
         case .checkRoom:
             roomInfo = RoomDTO(title: name, capacity: person, startDate: "20\(dateView.calendarView.getTempStartDate())", endDate: "20\(dateView.calendarView.getTempEndDate())")
-            let chooseVC = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
-            chooseVC.roomInfo = roomInfo
-            navigationController?.pushViewController(chooseVC, animated: true)
+            let viewController = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
+            viewController.roomInfo = roomInfo
+            navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    func setDataInCheckView(name: String = "", person: Int = 0, date: String = "" ) {
+        switch notiIndex {
+        case .inputName:
+            checkView.name = name
+        case .inputPerson:
+            checkView.person = person
+        case .inputDate:
+            checkView.dateRange = date
+        default:
+            return
+        }
+    }
+    func changeNotiIndex() {
+        switch notiIndex {
+        case .inputName:
+            notiIndex = .inputPerson
+        case .inputPerson:
+            notiIndex = .inputDate
+        case .inputDate:
+            notiIndex = .checkRoom
+        default:
+            return
         }
     }
     
@@ -228,37 +253,59 @@ class CreateRoomViewController: BaseViewController {
     
     private func changedInputView() {
         switch notiIndex {
-        case RoomState.inputName:
-            UIView.animate(withDuration: 0.3) {
-                self.nameView.alpha = 1.0
-                self.personView.alpha = 0.0
-                self.backButton.isHidden = true
-            }
-        case RoomState.inputPerson:
-            nextButton.isDisabled = false
-            UIView.animate(withDuration: 0.3) {
-                self.nameView.alpha = 0.0
-                self.personView.alpha = 1.0
-                self.dateView.alpha = 0.0
-                self.backButton.isHidden = false
-            }
-        case RoomState.inputDate:
-            dateView.calendarView.setupButtonState()
-            UIView.animate(withDuration: 0.3) {
-                self.personView.alpha = 0.0
-                self.dateView.alpha = 1.0
-                self.checkView.alpha = 0.0
-            }
-        case RoomState.checkRoom:
-            UIView.animate(withDuration: 0.3) {
-                self.dateView.alpha = 0.0
-                self.checkView.alpha = 1.0
-            }
+        case .inputName:
+            setInputNameView()
+        case .inputPerson:
+            setInputPersonView()
+        case .inputDate:
+            setInputDateView()
+        case .checkRoom:
+            setCheckRoomView()
         }
+    }
+    
+    private func setInputNameView() {
+        self.nameView.fadeIn()
+        self.personView.fadeOut()
+        self.backButton.isHidden = true
+    }
+    
+    private func setInputPersonView() {
+        nextButton.isDisabled = false
+        self.nameView.fadeOut()
+        self.personView.fadeIn()
+        self.dateView.fadeOut()
+        self.backButton.isHidden = false
+    }
+    
+    private func setInputDateView() {
+        dateView.calendarView.setupButtonState()
+        self.personView.fadeOut()
+        self.dateView.fadeIn()
+        self.checkView.fadeOut()
+    }
+    
+    private func setCheckRoomView() {
+        self.dateView.fadeOut()
+        self.checkView.fadeIn()
     }
     
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+}
+
+extension UIView {
+    func fadeIn(duration: TimeInterval = 0.3) {
+        UIView.animate(withDuration: duration) {
+            self.alpha = 1.0
+        }
+    }
+    
+    func fadeOut(duration: TimeInterval = 0.3) {
+        UIView.animate(withDuration: duration) {
+            self.alpha = 0.0
+        }
     }
 }
