@@ -188,7 +188,10 @@ class CreateRoomViewController: BaseViewController {
             changeNotiIndex()
             changedInputView()
         case .checkRoom:
-            roomInfo = RoomDTO(title: name, capacity: person, startDate: "20\(dateView.calendarView.getTempStartDate())", endDate: "20\(dateView.calendarView.getTempEndDate())")
+            roomInfo = RoomDTO(title: name,
+                               capacity: person,
+                               startDate: "20\(dateView.calendarView.getTempStartDate())",
+                               endDate: "20\(dateView.calendarView.getTempEndDate())")
             let viewController = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
             viewController.roomInfo = roomInfo
             navigationController?.pushViewController(viewController, animated: true)
