@@ -9,7 +9,6 @@ import UIKit
 
 import SnapKit
 
-// FIXME: 스토리보드 삭제 후 클래스명 변경 요
 final class DetailingCodebaseViewController: BaseViewController {
     
     private let detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
