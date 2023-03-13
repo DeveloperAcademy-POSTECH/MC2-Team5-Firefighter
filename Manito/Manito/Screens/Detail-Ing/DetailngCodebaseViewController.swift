@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class DetailingCodebaseViewController: BaseViewController {
+final class DetailingViewController: BaseViewController {
     
     private let detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
     private let detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
