@@ -13,7 +13,7 @@ final class InputDateView: UIView {
     
     // MARK: - ui component
     
-    private let dateViewLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.inputDateViewTitle
         label.font = .font(.regular, ofSize: 18)
@@ -43,14 +43,14 @@ final class InputDateView: UIView {
     // MARK: - func
     
     private func setLayout() {
-        self.addSubview(self.dateViewLabel)
-        self.dateViewLabel.snp.makeConstraints {
+        self.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
         
         self.addSubview(self.calendarView)
         self.calendarView.snp.makeConstraints {
-            $0.top.equalTo(self.dateViewLabel.snp.bottom).offset(36)
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(380)
         }

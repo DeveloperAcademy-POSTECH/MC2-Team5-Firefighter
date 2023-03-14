@@ -13,7 +13,7 @@ final class InputPersonView: UIView {
     
     // MARK: - ui component
     
-    private let personViewLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.inputPersonViewTitle
         label.font = .font(.regular, ofSize: 18)
@@ -75,14 +75,14 @@ final class InputPersonView: UIView {
     // MARK: - func
     
     private func setLayout() {
-        self.addSubview(self.personViewLabel)
-        self.personViewLabel.snp.makeConstraints {
+        self.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
         
         self.addSubview(self.personBackView)
         self.personBackView.snp.makeConstraints {
-            $0.top.equalTo(self.personViewLabel.snp.bottom).offset(36)
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(140)
         }
