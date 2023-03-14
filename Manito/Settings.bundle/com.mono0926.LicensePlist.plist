@@ -12,9 +12,33 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/abseil-cpp-SwiftPM</string>
+			<key>Title</key>
+			<string>abseil (0.20220203.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/boringssl-SwiftPM</string>
+			<key>Title</key>
+			<string>BoringSSL-GRPC (0.9.1)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/firebase-ios-sdk</string>
+			<key>Title</key>
+			<string>Firebase (9.6.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/FSCalendar</string>
 			<key>Title</key>
-			<string>FSCalendar</string>
+			<string>FSCalendar (2.8.4)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -22,7 +46,79 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Gifu</string>
 			<key>Title</key>
-			<string>Gifu</string>
+			<string>Gifu (3.3.1)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/GoogleAppMeasurement</string>
+			<key>Title</key>
+			<string>GoogleAppMeasurement (9.6.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/GoogleDataTransport</string>
+			<key>Title</key>
+			<string>GoogleDataTransport (9.2.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/GoogleUtilities</string>
+			<key>Title</key>
+			<string>GoogleUtilities (7.9.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/grpc-ios</string>
+			<key>Title</key>
+			<string>gRPC (1.44.3-grpc)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/gtm-session-fetcher</string>
+			<key>Title</key>
+			<string>gtm-session-fetcher (2.1.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/leveldb</string>
+			<key>Title</key>
+			<string>leveldb (1.22.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/nanopb</string>
+			<key>Title</key>
+			<string>nanopb (2.30909.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/promises</string>
+			<key>Title</key>
+			<string>Promises (2.1.1)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/SkeletonView</string>
+			<key>Title</key>
+			<string>SkeletonView</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -30,7 +126,15 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/SnapKit</string>
 			<key>Title</key>
-			<string>SnapKit</string>
+			<string>SnapKit (5.6.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/swift-protobuf</string>
+			<key>Title</key>
+			<string>SwiftProtobuf (1.20.2)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
