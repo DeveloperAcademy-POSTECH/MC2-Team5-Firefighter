@@ -92,7 +92,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             appleIDProvider.getCredentialState(forUserID: userIdentifier) { (credentialState, error) in
                 switch credentialState {
                 case .authorized:
-                    // The Apple ID credential is valid. Show Home UI Here
                     guard let token = appleIDCredential.identityToken else { return }
                     guard let tokenToString = String(data: token, encoding: .utf8) else { return }
                     
@@ -128,12 +127,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     }
                     print("userIdentifier = \(userIdentifier)")
                     UserDefaultHandler.setUserID(userID: userIdentifier)
-                    break
-                case .revoked:
-                    // The Apple ID credential is revoked. Show SignIn UI Here.
-                    break
-                case .notFound:
-                    // No credential was found. Show SignIn UI Here.
                     break
                 default:
                     break
