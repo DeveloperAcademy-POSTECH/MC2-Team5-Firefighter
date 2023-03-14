@@ -121,6 +121,7 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
                     self?.succeedInSendingLetter?()
                     self?.dismiss(animated: true)
                 case .failure:
+                    self?.createLetterView.sending = false
                     self?.makeAlert(title: TextLiteral.createLetterViewControllerErrorTitle,
                                     message: TextLiteral.createLetterViewControllerErrorMessage)
                 }

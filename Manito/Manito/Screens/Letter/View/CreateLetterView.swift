@@ -63,6 +63,12 @@ final class CreateLetterView: UIView {
         }
     }
 
+    var sending: Bool = false {
+        willSet(isDisabled) {
+            self.sendButton.isEnabled = !isDisabled
+        }
+    }
+
     // MARK: - init
 
     override init(frame: CGRect) {
@@ -131,6 +137,7 @@ final class CreateLetterView: UIView {
             let image = self?.letterPhotoView.image
             let content = self?.letterTextView.text
             self?.delegate?.sendLetterToManittee(with: content, image)
+            self?.sending = true
         }
         self.sendButton.addAction(sendAction, for: .touchUpInside)
     }
