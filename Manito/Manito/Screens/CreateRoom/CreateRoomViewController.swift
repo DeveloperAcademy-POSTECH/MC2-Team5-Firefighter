@@ -207,8 +207,8 @@ final class CreateRoomViewController: BaseViewController {
     }
     
     private func detectStartableStatus() {
-        self.nameView.changeNextButtonEnableStatus = { [weak self] isEnable in
-            self?.nextButton.isDisabled = !isEnable
+        self.nameView.changeNextButtonEnableStatus = { [weak self] isEnabled in
+            self?.nextButton.isDisabled = !isEnabled
         }
         
         self.dateView.calendarView.changeButtonState = { [weak self] isEnabled in
