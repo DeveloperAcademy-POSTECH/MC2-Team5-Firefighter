@@ -19,6 +19,7 @@ final class SplashViewController: UIViewController {
     
     private let isLogin: Bool = UserDefaultStorage.isLogin
     private let nickname: String? = UserDefaultStorage.nickname
+    private let isSetFcmToken: Bool = UserDefaultStorage.isSetFcmToken
     
     // MARK: - init
     
@@ -73,8 +74,7 @@ final class SplashViewController: UIViewController {
     
     private func presentViewControllerAfterDelay() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            let isSetFcmToken = UserDefaultStorage.isSetFcmToken
-            if !isSetFcmToken {
+            if !self.isSetFcmToken {
                 self.presentLoginViewConroller()
             } else if self.isLogin {
                 self.presentMainViewController()
