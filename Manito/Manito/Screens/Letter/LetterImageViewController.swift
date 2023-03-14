@@ -8,47 +8,20 @@
 import Photos
 import UIKit
 
-import SnapKit
-
 final class LetterImageViewController: BaseViewController {
-    
+
     // MARK: - ui component
-    
-    private lazy var closeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(ImageLiterals.btnXmark, for: .normal)
-        button.tintColor = .grey001
-        button.addTarget(self, action: #selector(self.didTapCloseButton), for: .touchUpInside)
-        return button
-    }()
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.frame = view.bounds
-        scrollView.delegate = self
-        scrollView.zoomScale = 1.0
-        scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 3.0
-        scrollView.contentInsetAdjustmentBehavior = .never
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
-        return scrollView
-    }()
-    private let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.isUserInteractionEnabled = true
-        return imageView
-    }()
-    private let downloadButton: UIButton = {
-        let button = UIButton()
-        button.setImage(ImageLiterals.icSave, for: .normal)
-        return button
-    }()
+
+    private lazy var letterImageView: LetterImageView = LetterImageView()
+
+    // MARK: - property
+
+    private let imageUrl: String
 
     // MARK: - init
 
-    init(image: UIImage) {
-        self.imageView.image = image
+    init(imageUrl: String) {
+        self.imageUrl = imageUrl
         super.init()
     }
 
@@ -56,110 +29,67 @@ final class LetterImageViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        print("\(#file) is dead")
-    }
-    
-    // MARK: - override
-    
-    override func setupLayout() {
-        self.view.addSubview(self.scrollView)
-        self.scrollView.addSubview(self.imageView)
+    // MARK: - life cycle
 
-        self.view.addSubview(self.closeButton)
-        self.closeButton.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(23)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide).inset(17)
-            $0.width.height.equalTo(44)
-        }
-        
-        self.view.addSubview(self.downloadButton)
-        self.downloadButton.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(23)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(17)
-        }
+    override func loadView() {
+        self.view = self.letterImageView
     }
-    
-    override func configureUI() {
-        self.setupImageView()
-        self.setImagePinchGesture()
-        self.setupButtonAction()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureDelegation()
     }
-    
-    private func setupImageView() {
-        self.imageView.frame = self.scrollView.bounds
-        self.imageView.contentMode = .scaleAspectFit
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.configureImageView()
     }
-    
-    private func setImagePinchGesture() {
-        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.didPinchImage(_:)))
-        self.view.addGestureRecognizer(pinch)
+
+    // MARK: - func
+
+    private func configureImageView() {
+        self.letterImageView.configureImageFrame()
+        self.letterImageView.configureImage(self.imageUrl)
     }
-    
-    private func setupButtonAction() {
-        let downloadAction = UIAction { [weak self] _ in
-            guard let image = self?.imageView.image else {
-                self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
-                                message: TextLiteral.letterImageViewControllerErrorMessage)
-                return
-            }
-            
-            PHPhotoLibrary.shared().performChanges({
-                PHAssetChangeRequest.creationRequestForAsset(from: image)
-            }) { (success, error) in
-                DispatchQueue.main.async {
-                    if success {
-                        self?.makeAlert(title: TextLiteral.letterImageViewControllerSuccessTitle,
-                                        message: TextLiteral.letterImageViewControllerSuccessMessage)
-                    } else if let error = error {
-                        Logger.debugDescription(error)
-                        self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
-                                        message: TextLiteral.letterImageViewControllerErrorMessage)
-                    }
-                }
-            }
-        }
-        self.downloadButton.addAction(downloadAction, for: .touchUpInside)
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    private func didTapCloseButton() {
-        self.dismiss(animated: true)
-    }
-    
-    @objc
-    private func didPinchImage(_ pinch: UIPinchGestureRecognizer) {
-        self.imageView.transform = self.imageView.transform.scaledBy(x: pinch.scale, y: pinch.scale)
-        pinch.scale = 1
+
+    private func configureDelegation() {
+        self.letterImageView.configureDelegate(self)
     }
 }
 
-extension LetterImageViewController: UIScrollViewDelegate {
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-         return self.imageView
-     }
+// MARK: - LetterImageViewDelegate
+extension LetterImageViewController: LetterImageViewDelegate {
+    func closeButtonTapped() {
+        self.dismiss(animated: true)
+    }
     
-    func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        if scrollView.zoomScale > 1 {
-            guard let image = self.imageView.image else { return }
-            guard let zoomView = self.viewForZooming(in: scrollView) else { return }
-            
-            let widthRatio = zoomView.frame.width / image.size.width
-            let heightRatio = zoomView.frame.height / image.size.height
-            let ratio = widthRatio < heightRatio ? widthRatio : heightRatio
-            
-            let newWidth = image.size.width * ratio
-            let newHeight = image.size.height * ratio
-            
-            let left = 0.5 * (newWidth * scrollView.zoomScale > zoomView.frame.width ?
-                              (newWidth - zoomView.frame.width) : (scrollView.frame.width - scrollView.contentSize.width))
-            let top = 0.5 * (newHeight * scrollView.zoomScale > zoomView.frame.height ? (newHeight - zoomView.frame.height) : (scrollView.frame.height - scrollView.contentSize.height))
-            
-            scrollView.contentInset = UIEdgeInsets(top: top.rounded(), left: left.rounded(), bottom: top.rounded(), right: left.rounded())
-        } else {
-            scrollView.contentInset = .zero
+    func downloadImageAsset(_ imageAsset: UIImage?) {
+        self.uploadImage(for: imageAsset) { [weak self] result in
+            switch result {
+            case .success(let description):
+                self?.makeAlert(title: description.title,
+                                message: description.message)
+            case .failure(let error):
+                self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
+                                message: error.errorDescription)
+            }
+        }
+    }
+
+    private func uploadImage(for image: UIImage?, completionHandler: @escaping ((Result<(title: String, message: String), LetterImageError>) -> ())) {
+        guard let image else { completionHandler(.failure(.invalidImage)); return }
+
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
+        }) { (success, error) in
+            DispatchQueue.main.async {
+                if success {
+                    completionHandler(.success((title: TextLiteral.letterImageViewControllerSuccessTitle,
+                                                message: TextLiteral.letterImageViewControllerSuccessMessage)))
+                } else {
+                    completionHandler(.failure(.invalidPhotoLibrary))
+                }
+            }
         }
     }
 }

@@ -11,37 +11,41 @@ import SnapKit
 
 final class LetterHeaderView: UICollectionReusableView {
     
-    var changeSegmentControlIndex: ((Int) -> ())?
+    // MARK: - ui component
     
-    // MARK: - property
-    
-    private lazy var segmentControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: [TextLiteral.letterHeaderViewSegmentControlManitti, TextLiteral.letterHeaderViewSegmentControlManitto])
+    private let segmentedControl: UISegmentedControl = {
         let font = UIFont.font(.regular, ofSize: 14)
-        let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
-        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
-        
+        let control = UISegmentedControl(items: [TextLiteral.letterHeaderViewSegmentControlManitti,
+                                                 TextLiteral.letterHeaderViewSegmentControlManitto])
+        let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                    NSAttributedString.Key.font: font]
+        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
+                                      NSAttributedString.Key.font: font]
         control.setTitleTextAttributes(normalTextAttributes, for: .normal)
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentTintColor = .white
         control.backgroundColor = .darkGrey004
-        control.addTarget(self, action: #selector(changedIndexValue(_:)), for: .valueChanged)
-        
         return control
     }()
+
+    // MARK: - property
+
+    var selectedSegmentIndexDidChange: ((_ changedIndex: Int) -> ())?
     
-    var segmentControlIndex: Int = 0 {
+    private var segmentedControlIndex: Int = 0 {
         didSet {
-            segmentControl.selectedSegmentIndex = segmentControlIndex
+            self.segmentedControl.selectedSegmentIndex = self.segmentedControlIndex
         }
     }
+
     
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        self.setupLayout()
+        self.configureUI()
+        self.setupAction()
     }
     
     required init?(coder: NSCoder) {
@@ -50,24 +54,33 @@ final class LetterHeaderView: UICollectionReusableView {
     
     // MARK: - func
     
-    private func render() {
-        self.addSubview(segmentControl)
-        segmentControl.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(self.segmentedControl)
+        self.segmentedControl.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(13)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.height.equalTo(40)
         }
     }
     
-    private func configUI() {
-        backgroundColor = .backgroundGrey
+    private func configureUI() {
+        self.backgroundColor = .backgroundGrey
     }
-    
-    // MARK: - selector
-    
-    @objc
-    private func changedIndexValue(_ sender: UISegmentedControl) {
-        segmentControlIndex = sender.selectedSegmentIndex
-        changeSegmentControlIndex?(segmentControlIndex)
+
+    private func setupAction() {
+        let valueChangedAction = UIAction { [weak self] action in
+            guard let sender = action.sender as? UISegmentedControl else { return }
+            self?.segmentedControlIndexValueChanged(sender)
+        }
+        self.segmentedControl.addAction(valueChangedAction, for: .valueChanged)
+    }
+
+    private func segmentedControlIndexValueChanged(_ segmentedControl: UISegmentedControl) {
+        self.segmentedControlIndex = segmentedControl.selectedSegmentIndex
+        self.selectedSegmentIndexDidChange?(self.segmentedControlIndex)
+    }
+
+    func setSegmentedControlIndex(_ index: Int) {
+        self.segmentedControlIndex = index
     }
 }

@@ -18,7 +18,8 @@ final class OpenManittoPopupViewController: BaseViewController {
     private lazy var typingLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
-        label.font = .font(.regular, ofSize: 30)
+        label.font = .font(.regular, ofSize: 24)
+        label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
         return label
     }()
@@ -80,7 +81,7 @@ final class OpenManittoPopupViewController: BaseViewController {
         typingLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(popupView.frame.height * 0.36)
             $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.leading.trailing.equalToSuperview().inset(24)
         }
         
         popupView.addSubview(openMentLabel)

@@ -1,5 +1,5 @@
 //
-//  SendLetterView.swift
+//  BottomOfSendLetterView.swift
 //  Manito
 //
 //  Created by SHIN YOON AH on 2022/06/11.
@@ -9,11 +9,11 @@ import UIKit
 
 import SnapKit
 
-final class SendLetterView: UIView {
+final class BottomOfSendLetterView: UIView {
     
-    // MARK: - property
+    // MARK: - ui component
     
-    let sendLetterButton: UIButton = {
+    private let sendLetterButton: UIButton = {
         let button = MainButton()
         button.title = TextLiteral.sendLetterViewSendLetterButton
         return button
@@ -23,8 +23,8 @@ final class SendLetterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        self.setupLayout()
+        self.configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -33,19 +33,23 @@ final class SendLetterView: UIView {
     
     // MARK: - func
     
-    private func render() {
+    private func setupLayout() {
         self.snp.makeConstraints {
             $0.height.equalTo(73)
         }
         
-        self.addSubview(sendLetterButton)
-        sendLetterButton.snp.makeConstraints {
+        self.addSubview(self.sendLetterButton)
+        self.sendLetterButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(13)
             $0.centerX.equalToSuperview()
         }
     }
     
-    private func configUI() {
-        backgroundColor = .backgroundGrey
+    private func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    func addAction(_ action: UIAction) {
+        self.sendLetterButton.addAction(action, for: .touchUpInside)
     }
 }

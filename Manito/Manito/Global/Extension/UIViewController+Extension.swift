@@ -25,6 +25,7 @@ extension UIViewController {
                           message: String,
                           okTitle: String = "확인",
                           cancelTitle: String = "취소",
+                          okStyle: UIAlertAction.Style = .destructive,
                           okAction: ((UIAlertAction) -> Void)?,
                           cancelAction: ((UIAlertAction) -> Void)? = nil,
                           completion : (() -> Void)? = nil) {
@@ -37,7 +38,7 @@ extension UIViewController {
         let cancelAction = UIAlertAction(title: cancelTitle, style: .default, handler: cancelAction)
         alertViewController.addAction(cancelAction)
         
-        let okAction = UIAlertAction(title: okTitle, style: .destructive, handler: okAction)
+        let okAction = UIAlertAction(title: okTitle, style: okStyle, handler: okAction)
         alertViewController.addAction(okAction)
         
         self.present(alertViewController, animated: true, completion: completion)

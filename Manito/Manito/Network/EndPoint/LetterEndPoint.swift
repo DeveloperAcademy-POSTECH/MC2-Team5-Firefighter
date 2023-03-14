@@ -8,7 +8,7 @@
 import Foundation
 
 enum LetterEndPoint: EndPointable {
-    case dispatchLetter(roomId: String, image: Data?, letter: LetterDTO)
+    case dispatchLetter(roomId: String, image: Data?, letter: LetterDTO, missionId: String)
     case fetchSendLetter(roomId: String)
     case fetchReceiveLetter(roomId: String)
     case patchReadMessage(roomId: String, status: String)
@@ -32,9 +32,10 @@ enum LetterEndPoint: EndPointable {
 
     var requestBody: Data? {
         switch self {
-        case .dispatchLetter(_, let image, let letter):
+        case .dispatchLetter(_, let image, let letter, let missionId):
             let parameters: [String: String?] = ["manitteeId": letter.manitteeId,
-                                                "messageContent": letter.messageContent]
+                                                 "messageContent": letter.messageContent,
+                                                 "missionId": missionId]
             let dataBody = createDataBody(withParameters: parameters,
                                           media: image ?? nil,
                                           boundary: APIEnvironment.boundary)
@@ -51,12 +52,12 @@ enum LetterEndPoint: EndPointable {
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .dispatchLetter(let roomId,_,_):
+        case .dispatchLetter(let roomId, _, _, _):
             return "\(baseURL)/rooms/\(roomId)/messages-separate"
         case .fetchSendLetter(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/messages-sent"
+            return "https://dev.aenitto.shop/api/v2/rooms/\(roomId)/messages-sent"
         case .fetchReceiveLetter(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/messages-received"
+            return "https://dev.aenitto.shop/api/v2/rooms/\(roomId)/messages-received"
         case .patchReadMessage(let roomId, _):
             return "\(baseURL)/rooms/\(roomId)/messages/status"
         }
