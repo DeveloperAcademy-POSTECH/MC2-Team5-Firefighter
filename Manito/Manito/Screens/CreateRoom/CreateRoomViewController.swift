@@ -76,24 +76,6 @@ final class CreateRoomViewController: BaseViewController {
         self.setupAction()
     }
     
-    // MARK: - selector
-        
-    @objc
-    private func keyboardWillShow(notification:NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
-        }
-    }
-    
-    @objc
-    private func keyboardWillHide(notification:NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.nextButton.transform = .identity
-        })
-    }
-    
     // MARK: - override
     
     override func setupLayout() {
@@ -320,5 +302,23 @@ final class CreateRoomViewController: BaseViewController {
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: - selector
+        
+    @objc
+    private func keyboardWillShow(notification:NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
+            })
+        }
+    }
+    
+    @objc
+    private func keyboardWillHide(notification:NSNotification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.nextButton.transform = .identity
+        })
     }
 }
