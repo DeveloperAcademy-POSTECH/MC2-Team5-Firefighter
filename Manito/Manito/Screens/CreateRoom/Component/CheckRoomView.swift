@@ -49,7 +49,7 @@ final class CheckRoomView: UIView {
             self.nameLabel.text = newValue
         }
     }
-    var person: Int = 0 {
+    var participants: Int = 0 {
         willSet {
             self.personLabel.text = "\(newValue.description)" + TextLiteral.per
         }

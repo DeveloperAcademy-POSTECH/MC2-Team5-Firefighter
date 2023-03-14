@@ -270,7 +270,7 @@ final class CreateRoomViewController: BaseViewController {
         case .inputName:
             self.checkView.name = name
         case .inputPerson:
-            self.checkView.person = person
+            self.checkView.participants = person
         case .inputDate:
             self.checkView.dateRange = date
         default:
