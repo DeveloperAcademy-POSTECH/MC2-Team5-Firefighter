@@ -6,6 +6,8 @@
   
 ![banner](https://user-images.githubusercontent.com/55099365/174474703-d8462f7e-fd99-4244-8574-ecd20e82d718.png)
 
+<img width="100" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://img.shields.io/github/v/release/DeveloperAcademy-POSTECH/MC2-Team5-Firefighter"> <img width="94" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://img.shields.io/github/actions/workflow/status/DeveloperAcademy-POSTECH/MC2-Team5-Firefighter/build.yml?branch=main">
+
 [<img width="220" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/196023806-5eb7be0f-c7cf-4661-bb39-35a15146c33a.png">](https://apps.apple.com/us/app/%EC%95%A0%EB%8B%88%EB%98%90-aenitto/id1642486538?utm_source=appstore)
 
  _**기대되는 다음 날을 만들어줄게!**_ <br/>
@@ -19,6 +21,7 @@
 
 ### 📱 Screenshots
 
+
 | Main Room | AENITTO Room(wait) | AENITTO Room(ing) |
 |:---:|:---:|:---:|
 |<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476681-e2df2980-4626-4592-b649-07e733547015.png">|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476477-ad789c33-89bf-4278-b4e6-dc45fc0f0d0b.png">|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476452-79ef54ea-cb2a-4a03-be7d-bf9837d6e9c2.png">|
@@ -31,6 +34,7 @@
 |:---:|:---:|
 |<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174487001-46c42879-e00c-469f-ac59-4077f3692d56.gif">|<img width="200" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://user-images.githubusercontent.com/55099365/174476990-7d7e0183-ee05-4716-8f3e-82561b829786.gif">|
 
+
 <br/>
 
 ### 🛠 Development Environment
@@ -40,6 +44,7 @@
 ### :sparkles: Skills & Tech Stack
 * UIKit
 * Storyboard + Code base
+* URLSession
 * Github
 
 ### 🎁 Library
@@ -49,6 +54,8 @@
 | SnapKit           | `5.6.0` | `SPM` |
 | FSCalendar        | `2.8.4` | `SPM` |
 | Gifu              | `3.3.1` | `SPM` |
+| Firebase              | `9.6.0` | `SPM` |
+| SkeletonView              | `main` | `SPM` |
 
 ### 🔀 Git branch & [Git Flow](https://techblog.woowahan.com/2553/)
 
@@ -73,24 +80,26 @@ Aenitto-iOS
           │   │── 📁 Protocol
           │   │── 📁 API
           │   │── 📁 EndPoint
-          │   │── 📁 Service
+          │   │── 📁 Foundation
           │   └── 📁 Models
           │
           |── 🗂 Global
+          │   │── 📁 Error
           │   │── 📁 Utils
           │   │── 📁 Literal
           │   │── 📁 Base
           │   │── 📁 Supports
           │   │      │── 📄 SceneDelegate
           │   │      │── 📄 AppDelegate
+          │   │      │── 🗒 GoogleService-Info.plist
           │   │      └── 🗒 Info.plist
           │   │── 📁 Extension
           │   │── 📁 UIComponent
           │   └── 📁 Resource
           │          │── 🖼 Assets.xcassets
-          │          │── 🖼 Font
-          │          │── 🖼 GIF
-          │          └── 🖼 Storyboard
+          │          │── 📁 Font
+          │          │── 📁 GIF
+          │          └── 📁 Storyboard
           └── 🗂 Screens 
               |── 📁 Splash
               |── 📁 Main
@@ -98,8 +107,9 @@ Aenitto-iOS
               |── 📁 CreateRoom
               |── 📁 Setting
               |── 📁 Detail-Wait
-              |     │── 📁 Component
-              |     │── 📁 VC
+              |     │── 📄 UIViewController.swift
+              |     │── 📁 View
+              |     │── 📁 UIComponent
               |     └── 📁 Cell
               ...
 ```
