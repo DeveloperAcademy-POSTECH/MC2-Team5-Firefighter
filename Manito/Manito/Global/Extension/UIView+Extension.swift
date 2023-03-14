@@ -49,11 +49,6 @@ extension UIView {
                         self.alpha = 1.0
                        }, completion: completion)
     }
-    func fadeIn(duration: TimeInterval = 0.3) {
-        UIView.animate(withDuration: duration) {
-            self.alpha = 1.0
-        }
-    }
     
     func fadeOut(duration: TimeInterval = 0.3) {
         UIView.animate(withDuration: duration) {

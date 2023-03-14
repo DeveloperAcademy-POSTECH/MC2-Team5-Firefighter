@@ -248,7 +248,7 @@ final class CreateRoomViewController: BaseViewController {
     
     private func setInputNameView() {
         self.backButton.isHidden = true
-        self.nameView.fadeIn()
+        self.nameView.fadeIn(duration: 0.3)
         self.nameView.isHidden = false
         self.personView.fadeOut()
         self.personView.isHidden = true
@@ -259,7 +259,7 @@ final class CreateRoomViewController: BaseViewController {
         self.backButton.isHidden = false
         self.nameView.fadeOut()
         self.nameView.isHidden = true
-        self.personView.fadeIn()
+        self.personView.fadeIn(duration: 0.3)
         self.personView.isHidden = false
         self.dateView.fadeOut()
         self.dateView.isHidden = true
@@ -269,7 +269,7 @@ final class CreateRoomViewController: BaseViewController {
         self.dateView.calendarView.setupButtonState()
         self.personView.fadeOut()
         self.personView.isHidden = true
-        self.dateView.fadeIn()
+        self.dateView.fadeIn(duration: 0.3)
         self.dateView.isHidden = false
         self.checkView.fadeOut()
         self.checkView.isHidden = true
@@ -278,7 +278,7 @@ final class CreateRoomViewController: BaseViewController {
     private func setCheckRoomView() {
         self.dateView.fadeOut()
         self.dateView.isHidden = true
-        self.checkView.fadeIn()
+        self.checkView.fadeIn(duration: 0.3)
         self.checkView.isHidden = false
     }
     
