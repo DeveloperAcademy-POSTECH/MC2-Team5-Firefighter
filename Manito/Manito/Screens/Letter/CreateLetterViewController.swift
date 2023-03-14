@@ -114,6 +114,7 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
         let jpegData = image?.jpegData(compressionQuality: 0.3)
         let letterDTO = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
 
+        self.createLetterView.sending = true
         self.dispatchLetter(with: letterDTO, jpegData) { [weak self] response in
             DispatchQueue.main.async {
                 switch response {

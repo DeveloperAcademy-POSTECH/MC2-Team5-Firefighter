@@ -137,7 +137,6 @@ final class CreateLetterView: UIView {
             let image = self?.letterPhotoView.image
             let content = self?.letterTextView.text
             self?.delegate?.sendLetterToManittee(with: content, image)
-            self?.sending = true
         }
         self.sendButton.addAction(sendAction, for: .touchUpInside)
     }
