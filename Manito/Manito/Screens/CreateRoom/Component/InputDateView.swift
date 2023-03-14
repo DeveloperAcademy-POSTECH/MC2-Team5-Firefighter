@@ -43,21 +43,21 @@ final class InputDateView: UIView {
     // MARK: - func
     
     private func setLayout() {
-        self.addSubview(dateViewLabel)
+        self.addSubview(self.dateViewLabel)
         self.dateViewLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
         
-        self.addSubview(calendarView)
+        self.addSubview(self.calendarView)
         self.calendarView.snp.makeConstraints {
-            $0.top.equalTo(dateViewLabel.snp.bottom).offset(36)
+            $0.top.equalTo(self.dateViewLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(380)
         }
         
-        self.calendarView.addSubview(dateInfoLabel)
+        self.calendarView.addSubview(self.dateInfoLabel)
         self.dateInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(calendarView.snp.bottom).offset(5)
+            $0.top.equalTo(self.calendarView.snp.bottom).offset(5)
             $0.trailing.equalToSuperview()
         }
     }

@@ -33,7 +33,7 @@ final class InputNameView: UIView {
     }()
     private lazy var roomsTextLimitLabel : UILabel = {
         let label = UILabel()
-        label.text = "0/\(maxLength)"
+        label.text = "0/\(self.maxLength)"
         label.font = .font(.regular, ofSize: 20)
         label.textColor = .grey002
         return label
@@ -59,24 +59,24 @@ final class InputNameView: UIView {
     // MARK: - func
     
     private func setupLayout() {
-        self.addSubview(roomsNameTextField)
+        self.addSubview(self.roomsNameTextField)
         self.roomsNameTextField.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(60)
         }
         
-        self.addSubview(roomsTextLimitLabel)
+        self.addSubview(self.roomsTextLimitLabel)
         self.roomsTextLimitLabel.snp.makeConstraints {
-            $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
+            $0.top.equalTo(self.roomsNameTextField.snp.bottom).offset(10)
             $0.trailing.equalToSuperview()
         }
     }
     
     private func setCounter(count: Int) {
         if count <= maxLength {
-            roomsTextLimitLabel.text = "\(count)/\(maxLength)"
+            self.roomsTextLimitLabel.text = "\(count)/\(self.maxLength)"
         } else {
-            roomsTextLimitLabel.text = "\(maxLength)/\(maxLength)"
+            roomsTextLimitLabel.text = "\(self.maxLength)/\(self.maxLength)"
         }
     }
     
@@ -102,7 +102,7 @@ extension InputNameView: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         self.setCounter(count: textField.text?.count ?? 0)
-        self.checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
+        self.checkMaxLength(textField: self.roomsNameTextField, maxLength: self.maxLength)
         
         let hasText = self.roomsNameTextField.hasText
         self.changeNextButtonEnableStatus?(hasText)
