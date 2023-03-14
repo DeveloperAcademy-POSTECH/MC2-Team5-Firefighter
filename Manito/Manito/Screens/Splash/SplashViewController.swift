@@ -32,18 +32,7 @@ final class SplashViewController: UIViewController {
         super.viewDidLoad()
         self.configureUI()
         self.setupGifImage()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            let isSetFcmToken = UserDefaultStorage.isSetFcmToken
-            if !isSetFcmToken {
-                self.presentLoginViewConroller()
-            } else if self.isLogin {
-                self.presentMainViewController()
-            } else if self.isLogin && self.nickname == "" {
-                self.presentNicknameSettingViewController()
-            } else {
-                self.presentLoginViewConroller()
-            }
-        }
+        self.presentViewControllerAfterDelay()
     }
     
     // MARK: - func
@@ -79,6 +68,21 @@ final class SplashViewController: UIViewController {
     private func setupGifImage() {
         DispatchQueue.main.async {
             self.gifImageView.animate(withGIFNamed: ImageLiterals.gifLogo)
+        }
+    }
+    
+    private func presentViewControllerAfterDelay() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            let isSetFcmToken = UserDefaultStorage.isSetFcmToken
+            if !isSetFcmToken {
+                self.presentLoginViewConroller()
+            } else if self.isLogin {
+                self.presentMainViewController()
+            } else if self.isLogin && self.nickname == "" {
+                self.presentNicknameSettingViewController()
+            } else {
+                self.presentLoginViewConroller()
+            }
         }
     }
 }
