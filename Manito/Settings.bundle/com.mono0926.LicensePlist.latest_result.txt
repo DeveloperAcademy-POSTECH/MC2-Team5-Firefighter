@@ -30,6 +30,6 @@ name: SnapKit, nameSpecified: SnapKit, owner: SnapKit, version: 5.6.0, source: h
 
 name: swift-protobuf, nameSpecified: SwiftProtobuf, owner: apple, version: 1.20.2, source: https://github.com/apple/swift-protobuf
 
-add-version-numbers: true
+add-version-numbers: false
 
 LicensePlist Version: 3.23.3
