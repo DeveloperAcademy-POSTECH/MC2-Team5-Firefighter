@@ -26,7 +26,7 @@ final class SplashViewController: UIViewController {
         print("\(#file) is dead")
     }
 
-    // MARK: - override
+    // MARK: - life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
