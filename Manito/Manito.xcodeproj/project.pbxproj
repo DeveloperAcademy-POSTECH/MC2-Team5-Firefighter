@@ -447,7 +447,7 @@
 			path = CreateNickName;
 			sourceTree = "<group>";
 		};
-		7E3058C42854B45300489E6A /* Component */ = {
+		7E3058C42854B45300489E6A /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				7E3058C52854B47F00489E6A /* InputNameView.swift */,
@@ -455,7 +455,7 @@
 				7E3058C92854B7A900489E6A /* InputDateView.swift */,
 				D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */,
 			);
-			path = Component;
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		B50B1B28285AB7550080992C /* Splash */ = {
@@ -624,7 +624,7 @@
 		B5F524E528519ACA00614FF7 /* CreateRoom */ = {
 			isa = PBXGroup;
 			children = (
-				7E3058C42854B45300489E6A /* Component */,
+				7E3058C42854B45300489E6A /* UIComponent */,
 				B5F525052851A05500614FF7 /* CreateRoomViewController.swift */,
 			);
 			path = CreateRoom;
