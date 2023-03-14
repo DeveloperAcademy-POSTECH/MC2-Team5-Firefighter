@@ -31,14 +31,16 @@ final class LoginViewController: BaseViewController {
     deinit {
         print("\(#file) is dead")
     }
-
-    // MARK: - override
+    
+    // MARK: - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLoginButton()
     }
 
+    // MARK: - override
+    
     override func setupLayout() {
         self.view.addSubview(self.logoImageView)
         self.logoImageView.snp.makeConstraints {
