@@ -60,7 +60,7 @@ final class InputPersonView: UIView {
         return label
     }()
     
-    // MARK: - Init
+    // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,13 +70,6 @@ final class InputPersonView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Selector
-    
-    @objc func didSlideSlider(_ slider: UISlider) {
-        let value = slider.value
-        self.personLabel.text = TextLiteral.x + " \(Int(value))인"
     }
     
     // MARK: - func
@@ -125,5 +118,12 @@ final class InputPersonView: UIView {
             $0.trailing.equalTo(maxLabel.snp.leading).offset(-5)
             $0.leading.equalTo(minLabel.snp.trailing).offset(5)
         }
+    }
+    
+    // MARK: - selector
+    
+    @objc func didSlideSlider(_ slider: UISlider) {
+        let value = slider.value
+        self.personLabel.text = TextLiteral.x + " \(Int(value))인"
     }
 }

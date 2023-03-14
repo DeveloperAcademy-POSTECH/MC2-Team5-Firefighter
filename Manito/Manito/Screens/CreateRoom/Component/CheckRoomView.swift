@@ -10,21 +10,6 @@ import UIKit
 import SnapKit
 
 final class CheckRoomView: UIView {
-    var dateRange = "" {
-        willSet {
-            dateLabel.text = newValue
-        }
-    }
-    var name: String = "" {
-        willSet {
-            nameLabel.text = newValue
-        }
-    }
-    var person: Int = 0 {
-        willSet {
-            personLabel.text = "\(newValue.description)" + TextLiteral.per
-        }
-    }
 
     // MARK: - ui component
     
@@ -52,7 +37,25 @@ final class CheckRoomView: UIView {
         return label
     }()
     
-    // MARK: - Init
+    // MARK: - property
+    
+    var dateRange = "" {
+        willSet {
+            dateLabel.text = newValue
+        }
+    }
+    var name: String = "" {
+        willSet {
+            nameLabel.text = newValue
+        }
+    }
+    var person: Int = 0 {
+        willSet {
+            personLabel.text = "\(newValue.description)" + TextLiteral.per
+        }
+    }
+    
+    // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
