@@ -10,6 +10,13 @@ import UIKit
 import SnapKit
 
 final class CreateRoomViewController: BaseViewController {
+    
+    private enum RoomState: Int {
+        case inputName = 0
+        case inputPerson = 1
+        case inputDate = 2
+        case checkRoom = 3
+    }
             
     // MARK: - ui component
     
@@ -52,12 +59,6 @@ final class CreateRoomViewController: BaseViewController {
     private var person: Int = 0
     private var notiIndex: RoomState = .inputName
     private var roomInfo: RoomDTO?
-    private enum RoomState: Int {
-        case inputName = 0
-        case inputPerson = 1
-        case inputDate = 2
-        case checkRoom = 3
-    }
     
     // MARK: - init
     
