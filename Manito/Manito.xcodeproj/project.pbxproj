@@ -56,7 +56,7 @@
 		39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FFE32728EEFFFE008442EE /* MoreButton.swift */; };
 		39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 39FFE33328F457AF008442EE /* FirebaseMessaging */; };
 		39FFE33628F45E44008442EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39FFE33528F45E44008442EE /* GoogleService-Info.plist */; };
-		435B17682913E71400212663 /* DetailngCodebaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B17672913E71400212663 /* DetailngCodebaseViewController.swift */; };
+		435B17682913E71400212663 /* DetailngViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B17672913E71400212663 /* DetailngViewController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
 		7E15F67E28B35B3D00441305 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E15F67D28B35B3D00441305 /* TextLiteral.swift */; };
@@ -114,6 +114,7 @@
 		B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */; };
 		B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525092851A06700614FF7 /* DetailWaitViewController.swift */; };
 		B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5250D2851A07700614FF7 /* LetterViewController.swift */; };
+		B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F525152851A0F600614FF7 /* DetailIng.storyboard */; };
 		B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525192851A12600614FF7 /* BaseViewController.swift */; };
 		B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5251B2851A19A00614FF7 /* BaseCollectionViewCell.swift */; };
 		B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5251D2851A1C700614FF7 /* BaseTableViewCell.swift */; };
@@ -214,7 +215,7 @@
 		39F1C12D28D756E600585B83 /* LetterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageViewController.swift; sourceTree = "<group>"; };
 		39FFE32728EEFFFE008442EE /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
 		39FFE33528F45E44008442EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		435B17672913E71400212663 /* DetailngCodebaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailngCodebaseViewController.swift; sourceTree = "<group>"; };
+		435B17672913E71400212663 /* DetailngViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailngViewController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		7E15F67D28B35B3D00441305 /* TextLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiteral.swift; sourceTree = "<group>"; };
@@ -271,6 +272,7 @@
 		B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedCodeViewController.swift; sourceTree = "<group>"; };
 		B5F525092851A06700614FF7 /* DetailWaitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewController.swift; sourceTree = "<group>"; };
 		B5F5250D2851A07700614FF7 /* LetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewController.swift; sourceTree = "<group>"; };
+		B5F525152851A0F600614FF7 /* DetailIng.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailIng.storyboard; sourceTree = "<group>"; };
 		B5F525192851A12600614FF7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B5F5251B2851A19A00614FF7 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5F5251D2851A1C700614FF7 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -659,7 +661,7 @@
 			children = (
 				D75E8C7D28D76FB1004A6C41 /* UIcomponent */,
 				333BF66428571C850039F77F /* Cell */,
-				435B17672913E71400212663 /* DetailngCodebaseViewController.swift */,
+				435B17672913E71400212663 /* DetailngViewController.swift */,
 				33BDF5612856E03800564211 /* FriendListViewController.swift */,
 				333BF669285864CE0039F77F /* MemoryViewController.swift */,
 			);
@@ -771,6 +773,7 @@
 				7E0C5C372855B73100F698D1 /* Splash.storyboard */,
 				B5F524D428519AA000614FF7 /* Main.storyboard */,
 				B5F524D928519AA100614FF7 /* LaunchScreen.storyboard */,
+				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
 				B50B1B3D285B04580080992C /* Interaction.storyboard */,
 			);
 			path = Storyboards;
@@ -1055,6 +1058,7 @@
 				B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */,
 				B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */,
 				B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */,
+				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
 				B55BCEC828F5AFD500AF7E45 /* joystick.gif in Resources */,
 				B5F5250428519F7A00614FF7 /* DungGeunMo.otf in Resources */,
 				CB2F0FCC28A5468C005F04C8 /* gifTto.gif in Resources */,
@@ -1126,7 +1130,7 @@
 				39C95808287DB05C00A04A2B /* SettingEndPoint.swift in Sources */,
 				39C957F4287D9EB400A04A2B /* APIService.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
-				435B17682913E71400212663 /* DetailngCodebaseViewController.swift in Sources */,
+				435B17682913E71400212663 /* DetailngViewController.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */,
 				397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */,
 				7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */,
