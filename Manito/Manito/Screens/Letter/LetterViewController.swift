@@ -80,7 +80,7 @@ final class LetterViewController: BaseViewController {
         self.letterView.configureDelegation(self)
     }
 
-    private func calculateContentHeight(text: String) -> CGFloat {
+    private func calculateCellContentViewHeight(by text: String) -> CGFloat {
         let width = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2 - InternalSize.cellInset.left * 2
         let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: width, height: .greatestFiniteMagnitude)))
         label.text = text
@@ -142,22 +142,19 @@ final class LetterViewController: BaseViewController {
 // MARK: - LetterViewDelegate
 extension LetterViewController: LetterViewDelegate {
     func presentCreateLetterViewController() {
-        // TODO: - manitteeId 누락 에러 메시지
         guard let manitteeId else { return }
         let viewController = CreateLetterViewController(manitteeId: manitteeId,
                                                         roomId: self.roomId,
                                                         mission: self.mission,
                                                         missionId: self.missionId)
         let navigationController = UINavigationController(rootViewController: viewController)
-
         viewController.succeedInSendingLetter = { [weak self] in
             guard let roomId = self?.roomId else { return }
             self?.fetchSendLetter(roomId: roomId) { response in
                 self?.handleResponse(response)
             }
         }
-
-        self.present(navigationController, animated: true, completion: nil)
+        self.present(navigationController, animated: true)
     }
 
     func fetchSendLetter() {
@@ -200,22 +197,18 @@ extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                                   withReuseIdentifier: LetterHeaderView.className,
-                                                                                   for: indexPath) as? LetterHeaderView else {
-                assert(false, "do not have reusable view")
-                return UICollectionReusableView()
-            }
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: LetterHeaderView.className,
+                for: indexPath
+            ) as? LetterHeaderView else { return UICollectionReusableView() }
 
-            // TODO: - 이걸 할 필요가 있는가....
-//            headerView.setSegmentedControlIndex(self.letterState.rawValue)
             headerView.selectedSegmentIndexDidChange = { [weak self] index in
                 self?.letterView.updateLetterView(to: index)
             }
-            
+
             return headerView
         default:
-            assert(false, "do not use footer")
             return UICollectionReusableView()
         }
     }
@@ -227,14 +220,14 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
         var heights = [InternalSize.cellInset.top, InternalSize.cellInset.bottom]
 
         if let content = self.letterList[indexPath.item].content {
-            heights += [self.calculateContentHeight(text: content)]
+            heights += [self.calculateCellContentViewHeight(by: content)]
         }
 
         if let mission = self.letterList[indexPath.item].mission {
-            heights += [self.calculateContentHeight(text: mission) + 10]
+            heights += [self.calculateCellContentViewHeight(by: mission) + 10]
         } else {
             let date = self.letterList[indexPath.item].date
-            heights += [self.calculateContentHeight(text: date) + 5]
+            heights += [self.calculateCellContentViewHeight(by: date) + 5]
         }
 
         if self.letterList[indexPath.item].imageUrl != nil {

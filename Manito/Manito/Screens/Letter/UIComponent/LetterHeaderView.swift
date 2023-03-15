@@ -45,6 +45,7 @@ final class LetterHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         self.setupLayout()
         self.configureUI()
+        self.setupSelectedSegmentIndex()
         self.setupAction()
     }
     
@@ -65,6 +66,11 @@ final class LetterHeaderView: UICollectionReusableView {
     
     private func configureUI() {
         self.backgroundColor = .backgroundGrey
+    }
+
+    // TODO: - type으로 바뀌도록 수정
+    private func setupSelectedSegmentIndex() {
+        self.segmentedControlIndex = 0
     }
 
     private func setupAction() {
