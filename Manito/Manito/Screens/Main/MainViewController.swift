@@ -166,12 +166,7 @@ final class MainViewController: BaseViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
-        self.view.addSubview(self.guideButton)
-        self.guideButton.snp.makeConstraints {
-            $0.top.equalTo(self.commonMissionView.snp.top).offset(30)
-            $0.trailing.equalTo(self.commonMissionView.snp.trailing).inset(30)
-            $0.width.height.equalTo(44)
-        }
+        // TODO: - guideview layout
     }
 
     override func setupNavigationBar() {
@@ -184,12 +179,6 @@ final class MainViewController: BaseViewController {
         self.navigationItem.largeTitleDisplayMode = .automatic
         self.navigationItem.leftBarButtonItem = appTitleView
         self.navigationItem.rightBarButtonItem = settingButtonView
-    }
-    
-    override func setupGuideArea() {
-        super.setupGuideArea()
-        self.guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        self.setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
     }
     
     // MARK: - func
@@ -296,15 +285,6 @@ final class MainViewController: BaseViewController {
     func showRoomIdErrorAlert() {
         self.makeAlert(title: TextLiteral.mainViewControllerShowIdErrorAlertTitle,
                        message: TextLiteral.mainViewControllerShowIdErrorAlertMessage)
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    override func endEditingView() {
-        if !self.guideButton.isTouchInside {
-            self.guideBoxImageView.isHidden = true
-        }
     }
     
     // MARK: - network

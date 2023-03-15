@@ -11,6 +11,23 @@ import SnapKit
 
 final class GuideView: UIView {
 
+    enum GuideType: String {
+        case letter
+
+        var text: String {
+            switch self {
+            case .letter: return TextLiteral.letterViewControllerGuideText
+            default: return ""
+            }
+        }
+
+        var image: UIImage {
+            switch self {
+            case .letter: return ImageLiterals.icLetterInfo
+            }
+        }
+    }
+
     // MARK: - ui component
 
     private let guideButton: UIButton = UIButton()
@@ -23,14 +40,17 @@ final class GuideView: UIView {
         return label
     }()
 
+    // MARK: - property
+
+    private let type: GuideType
+
     // MARK: - init
 
-    init(content: String) {
+    init(type: GuideType) {
+        self.type = type
         super.init(frame: .zero)
-        self.setupLayout()
-        self.configureUI()
         self.setupGuideAction()
-        self.configureGuideContent(to: content)
+        self.configureUI(with: type)
     }
 
     @available(*, unavailable)
@@ -40,7 +60,59 @@ final class GuideView: UIView {
 
     // MARK: - func
 
-    private func setupLayout() {
+    private func setupGuideAction() {
+        let guideAction = UIAction { [weak self] _ in
+            self?.guideBoxImageView.isHidden.toggle()
+        }
+        self.guideButton.addAction(guideAction, for: .touchUpInside)
+    }
+
+    private func configureUI(with type: GuideType) {
+        self.guideButton.setImage(type.image, for: .normal)
+        self.guideBoxImageView.isHidden = true
+        self.configureGuideContent(to: type.text)
+    }
+
+    private func configureGuideContent(to text: String) {
+        self.guideLabel.text = text
+        self.guideLabel.addLabelSpacing()
+        self.guideLabel.textAlignment = .center
+        self.applyColorToTargetContent(text)
+    }
+
+    private func applyColorToTargetContent(_ content: String) {
+        guard let targetTitle = content.split(separator: "\n").map({ String($0) }).first else { return }
+        self.guideLabel.applyColor(to: targetTitle, with: .subOrange)
+    }
+
+    private func setupGuideButtonLayout() {
+        self.addSubview(self.guideButton)
+        self.guideButton.snp.makeConstraints {
+            $0.top.equalTo(self.snp.top).offset(30)
+            $0.trailing.equalTo(self.snp.trailing).inset(30)
+            $0.width.height.equalTo(44)
+        }
+    }
+
+    private func setupGuideButtonLayoutInNavigationBar() {
+        self.guideButton.snp.makeConstraints {
+            $0.width.height.equalTo(44)
+        }
+    }
+
+    private func setupGuideBoxLayout(in navigationController: UINavigationController) {
+        if let navigationView = navigationController.view {
+            navigationView.addSubview(self.guideBoxImageView)
+            self.guideBoxImageView.snp.makeConstraints {
+                $0.top.equalTo(navigationView.safeAreaLayoutGuide.snp.top).inset(35)
+                $0.trailing.equalTo(navigationView.snp.trailing).inset(Size.leadingTrailingPadding + 8)
+                $0.width.equalTo(270)
+                $0.height.equalTo(90)
+            }
+        }
+    }
+
+    private func setupGuideBoxLayout() {
         self.addSubview(self.guideBoxImageView)
         self.guideBoxImageView.snp.makeConstraints {
             $0.top.equalTo(self.guideButton.snp.bottom).offset(-10)
@@ -56,26 +128,33 @@ final class GuideView: UIView {
         }
     }
 
-    private func configureUI() {
+    func setupDisappearedConfiguration() {
         self.guideBoxImageView.isHidden = true
     }
 
-    private func setupGuideAction() {
-        let guideAction = UIAction { [weak self] _ in
-            self?.guideBoxImageView.isHidden.toggle()
-        }
-        self.guideButton.addAction(guideAction, for: .touchUpInside)
+    func addGuideViewToNavigationController(_ navigationController: UINavigationController) {
+        self.setupGuideButtonLayoutInNavigationBar()
+        self.setupGuideBoxLayout(in: navigationController)
+
+        let guideButton = UIBarButtonItem(customView: self.guideButton)
+        navigationController.navigationItem.rightBarButtonItem = guideButton
     }
 
-    private func configureGuideContent(to content: String) {
-        self.guideLabel.text = content
-        self.guideLabel.addLabelSpacing()
-        self.guideLabel.textAlignment = .center
-        self.applyColorToTargetContent(content)
+    func hideGuideView(in navigationController: UINavigationController, _ viewController: UIViewController) {
+        let navigationControllerTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissGuideView))
+        let viewControllerTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissGuideView))
+        navigationControllerTapGesture.cancelsTouchesInView = false
+        viewControllerTapGesture.cancelsTouchesInView = false
+        navigationController.view.addGestureRecognizer(navigationControllerTapGesture)
+        viewController.view.addGestureRecognizer(viewControllerTapGesture)
     }
-    
-    private func applyColorToTargetContent(_ content: String) {
-        guard let targetTitle = content.split(separator: "\n").map({ String($0) }).first else { return }
-        self.guideLabel.applyColor(to: targetTitle, with: .subOrange)
+
+    // MARK: - selector
+
+    @objc
+    private func dismissGuideView() {
+        if !self.guideButton.isTouchInside {
+            self.setupDisappearedConfiguration()
+        }
     }
 }

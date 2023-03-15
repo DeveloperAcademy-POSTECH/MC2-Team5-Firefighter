@@ -126,8 +126,6 @@ final class LetterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupButtonAction()
-        self.setupGuideArea()
-        self.renderGuideArea()
         self.hideGuideViewWhenTappedAround()
     }
     
@@ -137,7 +135,8 @@ final class LetterViewController: BaseViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        self.guideBoxImageView.isHidden = true
+        // TODO: - guide setupDisappearedConfiguration
+//        self.guideBoxImageView.isHidden = true
     }
 
     // MARK: - override
@@ -146,11 +145,6 @@ final class LetterViewController: BaseViewController {
         self.view.addSubview(self.listCollectionView)
         self.listCollectionView.snp.makeConstraints {
             $0.edges.equalTo(self.view.safeAreaLayoutGuide)
-        }
-        
-        self.view.addSubview(self.guideButton)
-        self.guideButton.snp.makeConstraints {
-            $0.width.height.equalTo(44)
         }
 
         self.view.addSubview(self.emptyLabel)
@@ -170,38 +164,15 @@ final class LetterViewController: BaseViewController {
         super.configureUI()
         self.reloadCollectionView(with: self.letterState)
         self.setupEmptyLabel()
+        // TODO: - guide view configuration
+//        self.guideButton.setImage(ImageLiterals.icLetterInfo, for: .normal)
+//        self.setupGuideText(title: TextLiteral.letterViewControllerGuideTitle, text: TextLiteral.letterViewControllerGuideText)
     }
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-
-        let guideButton = self.makeBarButtonItem(with: self.guideButton)
-        self.navigationItem.rightBarButtonItem = guideButton
+        // TODO: - guideview navigationcontroller
         self.title = TextLiteral.letterViewControllerTitle
-    }
-    
-    override func setupGuideArea() {
-        super.setupGuideArea()
-        self.guideButton.setImage(ImageLiterals.icLetterInfo, for: .normal)
-        self.setupGuideText(title: TextLiteral.letterViewControllerGuideTitle, text: TextLiteral.letterViewControllerGuideText)
-    }
-    
-    override func renderGuideArea() {
-        if let navigationView = self.navigationController?.view {
-            navigationView.addSubview(self.guideBoxImageView)
-            self.guideBoxImageView.snp.makeConstraints {
-                $0.top.equalTo(navigationView.safeAreaLayoutGuide.snp.top).inset(35)
-                $0.trailing.equalTo(navigationView.snp.trailing).inset(Size.leadingTrailingPadding + 8)
-                $0.width.equalTo(270)
-                $0.height.equalTo(90)
-            }
-        }
-        
-        self.guideBoxImageView.addSubview(self.guideLabel)
-        self.guideLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.leading.trailing.equalToSuperview().inset(15)
-        }
     }
 
     // MARK: - func
@@ -262,28 +233,14 @@ final class LetterViewController: BaseViewController {
         label.sizeToFit()
         return label.frame.height
     }
-    
+
     private func hideGuideViewWhenTappedAround() {
-        let navigationTap = UITapGestureRecognizer(target: self, action: #selector(self.dismissGuideView))
-        let viewTap = UITapGestureRecognizer(target: self, action: #selector(self.dismissGuideView))
-        navigationTap.cancelsTouchesInView = false
-        viewTap.cancelsTouchesInView = false
-        self.navigationController?.view.addGestureRecognizer(navigationTap)
-        self.view.addGestureRecognizer(viewTap)
+        // TODO: - hideGuideView
     }
     
     private func setupEmptyLabel() {
         self.emptyLabel.text = self.letterState.labelText
         self.emptyLabel.isHidden = true
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    private func dismissGuideView() {
-        if !self.guideButton.isTouchInside {
-            self.guideBoxImageView.isHidden = true
-        }
     }
     
     // MARK: - network
@@ -402,6 +359,6 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDelegate
 extension LetterViewController: UICollectionViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        self.guideBoxImageView.isHidden = true
+        // TODO: - setup disappeared configuration
     }
 }
