@@ -203,8 +203,15 @@ extension LetterViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        let data = self.letterList[indexPath.item]
+        let canReport = self.letterView.letterType == .received
+        cell.configure(mission: data.mission,
+                       date: data.date,
+                       content: data.content,
+                       imageURL: data.imageUrl,
+                       isTodayLetter: data.isToday,
+                       canReport: canReport)
         cell.configureDelegation(self)
-        cell.setLetterData(with: self.letterList[indexPath.item], isHidden: self.letterView.letterType == .sent)
         return cell
     }
     

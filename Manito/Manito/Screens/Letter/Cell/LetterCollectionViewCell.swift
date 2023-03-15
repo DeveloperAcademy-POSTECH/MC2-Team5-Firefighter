@@ -95,7 +95,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         self.contentView.addSubview(self.missionLabel)
         self.missionLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(11)
-            $0.bottom.equalTo(self.contentLabel.snp.top).offset(10)
+            $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
         }
 
         self.contentView.addSubview(self.reportButton)
@@ -127,8 +127,12 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     }
 
     private func initializeConfiguration() {
+        self.missionLabel.text = nil
         self.contentLabel.text = nil
         self.photoImageView.image = nil
+        self.missionLabel.snp.updateConstraints {
+            $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
+        }
         self.photoImageView.snp.updateConstraints {
             $0.height.equalTo(0)
         }
@@ -138,34 +142,39 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         self.delegate = delegate
     }
 
-    func setLetterData(with data: Message, isHidden: Bool) {
-        self.missionLabel.textColor = data.isToday ? .subOrange : .grey003
-
-        if let mission = data.mission {
+    func configure(mission: String?,
+                   date: String,
+                   content: String?,
+                   imageURL: String?,
+                   isTodayLetter: Bool,
+                   canReport: Bool) {
+        if let mission {
             self.missionLabel.text = mission
             self.missionLabel.snp.updateConstraints {
                 $0.bottom.equalTo(self.contentLabel.snp.top).offset(20)
             }
         } else {
-            self.missionLabel.text = data.date
+            self.missionLabel.text = date
             self.missionLabel.snp.updateConstraints {
                 $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
             }
         }
-        self.reportButton.isHidden = isHidden
-        
-        if let content = data.content {
+
+        if let content {
             self.contentLabel.text = content
             self.contentLabel.addLabelSpacing()
         }
         
-        if let imageUrl = data.imageUrl {
-            self.imageURL = imageUrl
-            self.photoImageView.loadImageUrl(imageUrl)
+        if let imageURL {
+            self.imageURL = imageURL
+            self.photoImageView.loadImageUrl(imageURL)
             self.photoImageView.snp.updateConstraints {
                 $0.height.equalTo(204)
             }
         }
+
+        self.missionLabel.textColor = isTodayLetter ? .subOrange : .grey003
+        self.reportButton.isHidden = !canReport
     }
 
     // MARK: - selector
