@@ -108,18 +108,16 @@ final class GuideView: UIView {
         }
     }
 
-    private func setupGuideButtonLayoutInNavigationBar() {
-        self.guideButton.snp.makeConstraints {
-            $0.width.height.equalTo(44)
-        }
-    }
+    private func setupGuideViewLayout(in navigationController: UINavigationController) {
+        if let view = navigationController.view {
+            self.guideButton.snp.makeConstraints {
+                $0.width.height.equalTo(44)
+            }
 
-    private func setupGuideBoxLayout(in navigationController: UINavigationController) {
-        if let navigationView = navigationController.view {
-            navigationView.addSubview(self.guideBoxImageView)
+            view.addSubview(self.guideBoxImageView)
             self.guideBoxImageView.snp.makeConstraints {
-                $0.top.equalTo(navigationView.safeAreaLayoutGuide.snp.top).inset(35)
-                $0.trailing.equalTo(navigationView.snp.trailing).inset(Size.leadingTrailingPadding + 8)
+                $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(35)
+                $0.trailing.equalTo(view.snp.trailing).inset(Size.leadingTrailingPadding + 8)
                 $0.width.equalTo(270)
                 $0.height.equalTo(90)
             }
@@ -137,8 +135,7 @@ final class GuideView: UIView {
     }
 
     func addGuideView(in navigationController: UINavigationController) {
-        self.setupGuideButtonLayoutInNavigationBar()
-        self.setupGuideBoxLayout(in: navigationController)
+        self.setupGuideViewLayout(in: navigationController)
     }
 
     func addGuideButton(in navigationItem: UINavigationItem) {
