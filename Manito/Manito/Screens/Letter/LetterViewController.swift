@@ -41,7 +41,11 @@ final class LetterViewController: BaseViewController {
     
     // MARK: - init
     
-    init(roomState: String, roomId: String, mission: String, missionId: String, entryPoint: EntryPoint) {
+    init(roomState: String,
+         roomId: String,
+         mission: String,
+         missionId: String,
+         entryPoint: EntryPoint) {
         self.roomState = roomState
         self.roomId = roomId
         self.mission = mission
