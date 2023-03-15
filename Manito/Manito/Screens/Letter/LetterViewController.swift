@@ -40,14 +40,12 @@ final class LetterViewController: BaseViewController {
     
     private var letterState: LetterState {
         didSet {
-            self.letterView.reloadCollectionView(with: self.letterState)
-            self.letterView.setupEmptyLabel(self.letterState.labelText)
-            self.letterView.setupEmptyView()
+
         }
     }
     private var letterList: [Message] = [] {
         didSet {
-            self.letterView.updateLetterView()
+            self.letterView.updateLetterView(text: <#T##String#>, isHidden: <#T##Bool#>)
         }
     }
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
@@ -81,14 +79,7 @@ final class LetterViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.letterView.setupLargeTitle(<#UINavigationController#>)
-    }
-
-    // MARK: - override
-    
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        // guideView.configureNavigationController()
+        self.letterView.configureNavigationController(self)
     }
 
     // MARK: - func

@@ -72,9 +72,6 @@ final class LetterView: UIView {
         super.init(frame: frame)
         self.setupLayout()
         self.setupButtonAction()
-        self.reloadCollectionView(with: self.letterState)
-        self.setupEmptyLabel()
-        self.setupGuideViewInNavigationController()
     }
 
     @available(*, unavailable)
@@ -98,14 +95,13 @@ final class LetterView: UIView {
         self.emptyLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
+    }
 
-        // TODO: - 진행중일때만 하단 버튼이 나오도록
-//        if self.roomState != "POST" {
-//            self.addSubview(self.sendLetterView)
-//            self.sendLetterView.snp.makeConstraints {
-//                $0.leading.trailing.bottom.equalTo(self.safeAreaLayoutGuide)
-//            }
-//        }
+    private func setupBottomOfSendLetterView() {
+        self.addSubview(self.sendLetterView)
+        self.sendLetterView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalTo(self.safeAreaLayoutGuide)
+        }
     }
 
     private func setupButtonAction() {
@@ -115,11 +111,23 @@ final class LetterView: UIView {
         self.sendLetterView.addAction(presentCreateLetterAction)
     }
 
+    private func setupNavigationTitle(in viewController: UIViewController) {
+        guard let navigationController = viewController.navigationController else { return }
+        viewController.title = TextLiteral.letterViewControllerTitle
+        navigationController.navigationBar.prefersLargeTitles = true
+        navigationController.navigationItem.largeTitleDisplayMode = .automatic
+    }
+
+    private func setupGuideView(in viewController: UIViewController) {
+        guard let navigationController = viewController.navigationController else { return }
+        self.guideView.setupGuideViewLayout(in: navigationController)
+        self.guideView.addGuideButton(in: viewController.navigationItem)
+        self.guideView.hideGuideViewWhenTappedAround(in: navigationController, viewController)
+    }
+
     private func calculateContentHeight(text: String) -> CGFloat {
         let width = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2 - InternalSize.cellInset.left * 2
-        let label = UILabel(frame: CGRect(origin: .zero,
-                                          size: CGSize(width: width,
-                                                       height: .greatestFiniteMagnitude)))
+        let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: width, height: .greatestFiniteMagnitude)))
         label.text = text
         label.font = .font(.regular, ofSize: 15)
         label.numberOfLines = 0
@@ -128,14 +136,12 @@ final class LetterView: UIView {
         return label.frame.height
     }
 
-
-
-    func setupLargeTitle(_ navigationController: UINavigationController) {
-        navigationController.navigationBar.prefersLargeTitles = true
-        navigationController.navigationItem.largeTitleDisplayMode = .automatic
+    private func updateEmptyLabel(text: String, isHidden: Bool) {
+        self.emptyLabel.text = text
+        self.emptyLabel.isHidden = isHidden
     }
 
-    func reloadCollectionView(with state: LetterState) {
+    private func updateListCollectionView(with state: LetterState) {
         let isReceivedState = (state == .received)
         let bottomInset: CGFloat = (isReceivedState ? 0 : 73)
         let topPoint = self.listCollectionView.adjustedContentInset.top + 1
@@ -153,20 +159,6 @@ final class LetterView: UIView {
         }
     }
 
-    func setupEmptyLabel(_ text: String) {
-        self.emptyLabel.text = text
-        self.emptyLabel.isHidden = true
-    }
-
-    func setupEmptyView() {
-        self.emptyLabel.isHidden = !self.letterList.isEmpty
-    }
-
-    func updateLetterView() {
-        self.listCollectionView.reloadData()
-        self.setupEmptyView()
-    }
-
     func configureDelegation(_ delegate: UICollectionViewDataSource & LetterViewDelegate) {
         self.delegate = delegate
         self.listCollectionView.delegate = self
@@ -174,15 +166,14 @@ final class LetterView: UIView {
     }
 
     func configureNavigationController(_ viewController: UIViewController) {
-        viewController.title = TextLiteral.letterViewControllerTitle
-        self.guideView.addGuideButton(in: viewController.navigationItem)
+        self.setupNavigationTitle(in: viewController)
+        self.setupGuideView(in: viewController)
     }
 
-    private func setupGuideViewInNavigationController() {
-        if let navigationController {
-            self.guideView.setupGuideViewLayout(in: navigationController)
-            self.guideView.hideGuideViewWhenTappedAround(in: navigationController, self)
-        }
+    func updateLetterView(text: String, isHidden: Bool) {
+        self.updateEmptyLabel(text: text, isHidden: isHidden)
+        self.updateListCollectionView(with: self.letterState)
+        self.listCollectionView.reloadData()
     }
 }
 
