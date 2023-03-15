@@ -44,14 +44,9 @@ final class GuideView: UIView {
         return label
     }()
 
-    // MARK: - property
-
-    private let type: GuideType
-
     // MARK: - init
 
     init(type: GuideType) {
-        self.type = type
         super.init(frame: .zero)
         self.setupGuideAction()
         self.configureUI(with: type)
