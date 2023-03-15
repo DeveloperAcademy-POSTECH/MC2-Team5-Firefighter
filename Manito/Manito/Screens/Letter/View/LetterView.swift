@@ -11,8 +11,8 @@ import SnapKit
 
 protocol LetterViewDelegate: AnyObject {
     func presentCreateLetterViewController()
-    func fetchSendLetter(completionHandler: @escaping (() -> Void))
-    func fetchReceivedLetter(completionHandler: @escaping (() -> Void))
+    func fetchSendLetter()
+    func fetchReceivedLetter()
 }
 
 final class LetterView: UIView {
@@ -160,13 +160,9 @@ final class LetterView: UIView {
     private func updateLetter(to type: LetterType) {
         switch type {
         case .sent:
-            self.delegate?.fetchSendLetter {
-                self.listCollectionView.reloadData()
-            }
+            self.delegate?.fetchSendLetter()
         case .received:
-            self.delegate?.fetchReceivedLetter {
-                self.listCollectionView.reloadData()
-            }
+            self.delegate?.fetchReceivedLetter()
         }
     }
 
@@ -195,6 +191,10 @@ final class LetterView: UIView {
 
     func updateLetterViewEmptyState(isHidden: Bool) {
         self.emptyLabel.isHidden = isHidden
+    }
+
+    func reloadCollectionViewData() {
+        self.listCollectionView.reloadData()
     }
 }
 

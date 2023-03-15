@@ -22,9 +22,9 @@ final class LetterViewController: BaseViewController {
     // MARK: - property
 
     private var letterList: [Message] = [] {
-        didSet {
-            self.letterView.updateLetterView(to: 0)
-            self.letterView.updateLetterViewEmptyState(isHidden: letterList.isEmpty)
+        willSet(list) {
+            self.letterView.updateLetterViewEmptyState(isHidden: !list.isEmpty)
+            self.letterView.reloadCollectionViewData()
         }
     }
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
@@ -53,6 +53,12 @@ final class LetterViewController: BaseViewController {
 
     override func loadView() {
         self.view = self.letterView
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureDelegation()
+        self.letterView.updateLetterView(to: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,40 +90,50 @@ final class LetterViewController: BaseViewController {
         label.sizeToFit()
         return label.frame.height
     }
+
+    private func handleResponse(_ response: Result<Letter, NetworkError>) {
+        switch response {
+        case .success(let data):
+            self.manitteeId = data.manittee?.id
+            self.letterList = data.messages
+        case .failure:
+            self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
+                           message: TextLiteral.letterViewControllerErrorDescription)
+        }
+    }
     
     // MARK: - network
     
-    private func fetchSendLetter(roomId: String) {
+    private func fetchSendLetter(roomId: String, completionHandler: @escaping ((Result<Letter, NetworkError>) -> Void)) {
         Task {
             do {
-                let letterContent = try await self.letterSevice.fetchSendLetter(roomId: roomId)
-                
-                if let content = letterContent {
-                    dump(content)
-                    self.manitteeId = content.manittee?.id
-                    self.letterList = content.messages
+                let letterData = try await self.letterSevice.fetchSendLetter(roomId: roomId)
+                if let letterData {
+                    completionHandler(.success(letterData))
+                } else {
+                    completionHandler(.failure(.unknownError))
                 }
             } catch NetworkError.serverError {
-                print("serverError")
+                completionHandler(.failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                print("clientError:\(String(describing: message))")
+                completionHandler(.failure(.clientError(message: message)))
             }
         }
     }
     
-    private func fetchReceivedLetter(roomId: String) {
+    private func fetchReceivedLetter(roomId: String, completionHandler: @escaping ((Result<Letter, NetworkError>) -> Void)) {
         Task {
             do {
-                let letterContent = try await self.letterSevice.fetchReceiveLetter(roomId: roomId)
-                
-                if let content = letterContent {
-                    dump(content)
-                    self.letterList = content.messages
+                let letterData = try await self.letterSevice.fetchReceiveLetter(roomId: roomId)
+                if let letterData {
+                    completionHandler(.success(letterData))
+                } else {
+                    completionHandler(.failure(.unknownError))
                 }
             } catch NetworkError.serverError {
-                print("serverError")
+                completionHandler(.failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                print("clientError:\(String(describing: message))")
+                completionHandler(.failure(.clientError(message: message)))
             }
         }
     }
@@ -136,18 +152,24 @@ extension LetterViewController: LetterViewDelegate {
 
         viewController.succeedInSendingLetter = { [weak self] in
             guard let roomId = self?.roomId else { return }
-            self?.fetchSendLetter(roomId: roomId)
+            self?.fetchSendLetter(roomId: roomId) { response in
+                self?.handleResponse(response)
+            }
         }
 
         self.present(navigationController, animated: true, completion: nil)
     }
 
-    func fetchSendLetter(completionHandler: @escaping (() -> Void)) {
-        self.fetchSendLetter(roomId: self.roomId)
+    func fetchSendLetter() {
+        self.fetchSendLetter(roomId: self.roomId) { [weak self] response in
+            self?.handleResponse(response)
+        }
     }
 
-    func fetchReceivedLetter(completionHandler: @escaping (() -> Void)) {
-        self.fetchReceivedLetter(roomId: self.roomId)
+    func fetchReceivedLetter() {
+        self.fetchReceivedLetter(roomId: self.roomId) { [weak self] response in
+            self?.handleResponse(response)
+        }
     }
 }
 

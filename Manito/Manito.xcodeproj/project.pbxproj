@@ -515,7 +515,6 @@
 		B54741E529A4945100B75BA3 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				B5706BED29B189F60093D198 /* Network */,
 				B54741E629A4945A00B75BA3 /* Screens */,
 			);
 			path = Error;
@@ -533,21 +532,6 @@
 			isa = PBXGroup;
 			children = (
 				B54741E929A494E200B75BA3 /* LetterImageError.swift */,
-			);
-			path = Letter;
-			sourceTree = "<group>";
-		};
-		B5706BED29B189F60093D198 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				B5706BEE29B189FF0093D198 /* Letter */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		B5706BEE29B189FF0093D198 /* Letter */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = Letter;
 			sourceTree = "<group>";
