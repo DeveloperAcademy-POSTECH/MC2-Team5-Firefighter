@@ -9,29 +9,6 @@ import UIKit
 
 final class LetterViewController: BaseViewController {
 
-    enum LetterState: Int {
-        case sent = 0
-        case received = 1
-
-        var isHidden: Bool {
-            switch self {
-            case .received:
-                return false
-            case .sent:
-                return true
-            }
-        }
-
-        var labelText: String {
-            switch self {
-            case .sent:
-                return TextLiteral.letterViewControllerEmptyViewTo
-            case .received:
-                return TextLiteral.letterViewControllerEmptyViewFrom
-            }
-        }
-    }
-
     // MARK: - ui component
 
     private let letterView: LetterView = LetterView()
@@ -45,7 +22,8 @@ final class LetterViewController: BaseViewController {
     }
     private var letterList: [Message] = [] {
         didSet {
-            self.letterView.updateLetterView(text: <#T##String#>, isHidden: <#T##Bool#>)
+            self.letterView.updateLetterView(to: .received)
+            self.letterView.updateLetterViewEmptyState(isHidden: letterList.isEmpty)
         }
     }
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
@@ -80,6 +58,14 @@ final class LetterViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.letterView.configureNavigationController(self)
+    }
+
+    override func configureUI() {
+        super.configureUI()
+        // FIXME: - roomState를 Text말고 Enum으로 관리하도록 수정합니다.
+        if roomState == "POST" {
+            self.letterView.configureBottomArea()
+        }
     }
 
     // MARK: - func

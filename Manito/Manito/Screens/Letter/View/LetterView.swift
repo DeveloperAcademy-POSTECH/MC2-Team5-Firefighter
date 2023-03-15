@@ -15,6 +15,19 @@ protocol LetterViewDelegate: AnyObject {
 
 final class LetterView: UIView {
 
+    enum LetterType {
+        case sent, received
+
+        var bottomContentInset: CGFloat { return self == .received ? 0 : 73 }
+        var isHiddenBottomArea: Bool { return self == .received }
+        var emptyText: String {
+            switch self {
+            case .sent: return TextLiteral.letterViewControllerEmptyViewTo
+            case .received: return TextLiteral.letterViewControllerEmptyViewFrom
+            }
+        }
+    }
+
     private enum InternalSize {
         static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2
         static let headerHeight: CGFloat = 66.0
@@ -125,6 +138,32 @@ final class LetterView: UIView {
         self.guideView.hideGuideViewWhenTappedAround(in: navigationController, viewController)
     }
 
+    private func updateEmptyLabel(to text: String) {
+        self.emptyLabel.text = text
+    }
+
+    private func updateListCollectionViewConfiguration(to type: LetterType) {
+        let bottomInset: CGFloat = type.bottomContentInset
+        let yPoint = self.listCollectionView.adjustedContentInset.top + 1
+
+        self.sendLetterView.isHidden = type.isHiddenBottomArea
+        self.listCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+        self.listCollectionView.setContentOffset(CGPoint(x: 0, y: -yPoint), animated: false)
+        self.listCollectionView.collectionViewLayout.invalidateLayout()
+    }
+
+    private func updateLetter(to type: LetterType) {
+
+        switch type {
+        case .sent:
+            self.fetchSendLetter(roomId: self.roomId)
+            self.listCollectionView.reloadData()
+        case .received:
+            self.fetchReceviedLetter(roomId: self.roomId)
+            self.listCollectionView.reloadData()
+        }
+    }
+
     private func calculateContentHeight(text: String) -> CGFloat {
         let width = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2 - InternalSize.cellInset.left * 2
         let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: width, height: .greatestFiniteMagnitude)))
@@ -134,29 +173,6 @@ final class LetterView: UIView {
         label.addLabelSpacing()
         label.sizeToFit()
         return label.frame.height
-    }
-
-    private func updateEmptyLabel(text: String, isHidden: Bool) {
-        self.emptyLabel.text = text
-        self.emptyLabel.isHidden = isHidden
-    }
-
-    private func updateListCollectionView(with state: LetterState) {
-        let isReceivedState = (state == .received)
-        let bottomInset: CGFloat = (isReceivedState ? 0 : 73)
-        let topPoint = self.listCollectionView.adjustedContentInset.top + 1
-
-        self.sendLetterView.isHidden = isReceivedState
-        self.listCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
-        self.listCollectionView.setContentOffset(CGPoint(x: 0, y: -topPoint), animated: false)
-        self.listCollectionView.collectionViewLayout.invalidateLayout()
-
-        switch state {
-        case .sent:
-            self.fetchSendLetter(roomId: self.roomId)
-        case .received:
-            self.fetchReceviedLetter(roomId: self.roomId)
-        }
     }
 
     func configureDelegation(_ delegate: UICollectionViewDataSource & LetterViewDelegate) {
@@ -170,10 +186,18 @@ final class LetterView: UIView {
         self.setupGuideView(in: viewController)
     }
 
-    func updateLetterView(text: String, isHidden: Bool) {
-        self.updateEmptyLabel(text: text, isHidden: isHidden)
-        self.updateListCollectionView(with: self.letterState)
-        self.listCollectionView.reloadData()
+    func configureBottomArea() {
+        self.setupBottomOfSendLetterView()
+    }
+
+    func updateLetterView(to type: LetterType) {
+        self.updateEmptyLabel(to: type.emptyText)
+        self.updateListCollectionViewConfiguration(to: type)
+        self.updateLetter(to: type)
+    }
+
+    func updateLetterViewEmptyState(isHidden: Bool) {
+        self.emptyLabel.isHidden = isHidden
     }
 }
 
