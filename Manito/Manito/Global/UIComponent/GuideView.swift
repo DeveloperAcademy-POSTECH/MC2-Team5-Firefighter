@@ -128,6 +128,12 @@ final class GuideView: UIView {
                 $0.width.equalTo(270)
                 $0.height.equalTo(90)
             }
+
+            self.guideBoxImageView.addSubview(self.guideLabel)
+            self.guideLabel.snp.makeConstraints {
+                $0.top.equalToSuperview().inset(20)
+                $0.leading.trailing.equalToSuperview()
+            }
         }
     }
 
@@ -138,9 +144,11 @@ final class GuideView: UIView {
     func addGuideView(in navigationController: UINavigationController) {
         self.setupGuideButtonLayoutInNavigationBar()
         self.setupGuideBoxLayout(in: navigationController)
+    }
 
+    func addGuideButton(in navigationItem: UINavigationItem) {
         let guideButton = UIBarButtonItem(customView: self.guideButton)
-        navigationController.navigationItem.rightBarButtonItem = guideButton
+        navigationItem.rightBarButtonItem = guideButton
     }
 
     func hideGuideViewWhenTappedAround(in navigationController: UINavigationController, _ viewController: UIViewController) {

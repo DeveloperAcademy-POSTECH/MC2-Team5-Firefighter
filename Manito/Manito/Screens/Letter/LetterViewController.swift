@@ -80,6 +80,7 @@ final class LetterViewController: BaseViewController {
         return label
     }()
     private lazy var sendLetterView: BottomOfSendLetterView = BottomOfSendLetterView()
+    private let guideView: GuideView = GuideView(type: .letter)
 
     // MARK: - property
     
@@ -126,7 +127,7 @@ final class LetterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupButtonAction()
-        self.hideGuideViewWhenTappedAround()
+        self.setupGuideViewInNavigationController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,8 +136,8 @@ final class LetterViewController: BaseViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        // TODO: - guide setupDisappearedConfiguration
-//        self.guideBoxImageView.isHidden = true
+        super.viewWillDisappear(animated)
+        self.guideView.setupDisappearedConfiguration()
     }
 
     // MARK: - override
@@ -164,15 +165,12 @@ final class LetterViewController: BaseViewController {
         super.configureUI()
         self.reloadCollectionView(with: self.letterState)
         self.setupEmptyLabel()
-        // TODO: - guide view configuration
-//        self.guideButton.setImage(ImageLiterals.icLetterInfo, for: .normal)
-//        self.setupGuideText(title: TextLiteral.letterViewControllerGuideTitle, text: TextLiteral.letterViewControllerGuideText)
     }
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        // TODO: - guideview navigationcontroller
         self.title = TextLiteral.letterViewControllerTitle
+        self.guideView.addGuideButton(in: self.navigationItem)
     }
 
     // MARK: - func
@@ -184,6 +182,13 @@ final class LetterViewController: BaseViewController {
     
     private func setupEmptyView() {
         self.emptyLabel.isHidden = !self.letterList.isEmpty
+    }
+
+    private func setupGuideViewInNavigationController() {
+        if let navigationController {
+            self.guideView.addGuideView(in: navigationController)
+            self.guideView.hideGuideViewWhenTappedAround(in: navigationController, self)
+        }
     }
     
     private func setupButtonAction() {
@@ -232,10 +237,6 @@ final class LetterViewController: BaseViewController {
         label.addLabelSpacing()
         label.sizeToFit()
         return label.frame.height
-    }
-
-    private func hideGuideViewWhenTappedAround() {
-        // TODO: - hideGuideView
     }
     
     private func setupEmptyLabel() {
@@ -359,6 +360,6 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDelegate
 extension LetterViewController: UICollectionViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        // TODO: - setup disappeared configuration
+        self.guideView.setupDisappearedConfiguration()
     }
 }
