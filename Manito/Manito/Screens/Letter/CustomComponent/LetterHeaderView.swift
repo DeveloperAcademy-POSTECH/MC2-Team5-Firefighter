@@ -79,8 +79,4 @@ final class LetterHeaderView: UICollectionReusableView {
         self.segmentedControlIndex = segmentedControl.selectedSegmentIndex
         self.selectedSegmentIndexDidChange?(self.segmentedControlIndex)
     }
-
-    func setSegmentedControlIndex(_ index: Int) {
-        self.segmentedControlIndex = index
-    }
 }

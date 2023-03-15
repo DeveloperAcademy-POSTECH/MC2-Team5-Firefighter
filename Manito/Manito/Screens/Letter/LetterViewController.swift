@@ -20,15 +20,10 @@ final class LetterViewController: BaseViewController {
     private let letterView: LetterView = LetterView()
 
     // MARK: - property
-    
-    private var letterState: LetterState {
-        didSet {
 
-        }
-    }
     private var letterList: [Message] = [] {
         didSet {
-            self.letterView.updateLetterView(to: .received)
+            self.letterView.updateLetterView(to: 0)
             self.letterView.updateLetterViewEmptyState(isHidden: letterList.isEmpty)
         }
     }
@@ -41,12 +36,11 @@ final class LetterViewController: BaseViewController {
     
     // MARK: - init
     
-    init(roomState: String, roomId: String, mission: String, missionId: String, letterState: LetterState) {
+    init(roomState: String, roomId: String, mission: String, missionId: String) {
         self.roomState = roomState
         self.roomId = roomId
         self.mission = mission
         self.missionId = missionId
-        self.letterState = letterState
         super.init()
     }
 
@@ -165,7 +159,8 @@ extension LetterViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setLetterData(with: self.letterList[indexPath.item], isHidden: self.letterState.isHidden)
+        // TODO: - 다른 방식으로 신고 버튼을 다룰 순 없을까?
+//        cell.setLetterData(with: self.letterList[indexPath.item], isHidden: self.letterState.isHidden)
         cell.didTapReport = { [weak self] in
             self?.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "",
                                  content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
@@ -189,11 +184,11 @@ extension LetterViewController: UICollectionViewDataSource {
                 assert(false, "do not have reusable view")
                 return UICollectionReusableView()
             }
-            
-            headerView.setSegmentedControlIndex(self.letterState.rawValue)
+
+            // TODO: - 이걸 할 필요가 있는가....
+//            headerView.setSegmentedControlIndex(self.letterState.rawValue)
             headerView.selectedSegmentIndexDidChange = { [weak self] index in
-                guard let letterStatus = LetterState.init(rawValue: index) else { return }
-                self?.letterState = letterStatus
+                self?.letterView.updateLetterView(to: index)
             }
             
             return headerView

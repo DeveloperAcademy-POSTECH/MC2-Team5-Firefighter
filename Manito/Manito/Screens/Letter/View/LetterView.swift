@@ -17,8 +17,8 @@ protocol LetterViewDelegate: AnyObject {
 
 final class LetterView: UIView {
 
-    enum LetterType {
-        case sent, received
+    enum LetterType: Int {
+        case sent = 0, received = 1
 
         var bottomContentInset: CGFloat { return self == .received ? 0 : 73 }
         var isHiddenBottomArea: Bool { return self == .received }
@@ -27,6 +27,10 @@ final class LetterView: UIView {
             case .sent: return TextLiteral.letterViewControllerEmptyViewTo
             case .received: return TextLiteral.letterViewControllerEmptyViewFrom
             }
+        }
+
+        static subscript(index: Int) -> Self {
+            return LetterType(rawValue: index) ?? .sent
         }
     }
 
@@ -167,9 +171,10 @@ final class LetterView: UIView {
     }
 
     func configureDelegation(_ delegate: UICollectionViewDataSource & UICollectionViewDelegateFlowLayout & LetterViewDelegate) {
-        self.delegate = delegate
+        self.listCollectionView.delegate = self
         self.listCollectionView.delegate = delegate
         self.listCollectionView.dataSource = delegate
+        self.delegate = delegate
     }
 
     func configureNavigationController(_ viewController: UIViewController) {
@@ -181,7 +186,8 @@ final class LetterView: UIView {
         self.setupBottomOfSendLetterView()
     }
 
-    func updateLetterView(to type: LetterType) {
+    func updateLetterView(to index: Int) {
+        let type = LetterType[index]
         self.updateEmptyLabel(to: type.emptyText)
         self.updateListCollectionViewConfiguration(to: type)
         self.updateLetter(to: type)
@@ -192,10 +198,9 @@ final class LetterView: UIView {
     }
 }
 
-// TODO: - 일단 Guide 부터 어떻게 해봐야겠다 진짜..ㅎ
 // MARK: - UICollectionViewDelegate
-//extension LetterView: UICollectionViewDelegate {
-//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        self.guideBoxImageView.isHidden = true
-//    }
-//}
+extension LetterView: UICollectionViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.guideView.setupDisappearedConfiguration()
+    }
+}
