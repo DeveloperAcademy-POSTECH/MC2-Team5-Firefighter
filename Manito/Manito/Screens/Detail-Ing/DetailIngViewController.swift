@@ -110,12 +110,6 @@ class DetailIngViewController: BaseViewController {
         case .none: break
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupGuideArea()
-        renderGuideArea()
-    }
 
     override func setupLayout() {
         view.addSubview(manitoOpenButton)
@@ -130,13 +124,6 @@ class DetailIngViewController: BaseViewController {
             $0.trailing.equalTo(manitteeIconView.snp.trailing)
             $0.leading.equalTo(manitteeIconView.snp.leading)
             $0.bottom.equalTo(manitteeIconView.snp.bottom)
-        }
-        
-        view.addSubview(guideButton)
-        guideButton.snp.makeConstraints {
-            $0.top.equalTo(missionBackgroundView.snp.top)
-            $0.trailing.equalTo(missionBackgroundView.snp.trailing)
-            $0.width.height.equalTo(44)
         }
         
         view.addSubview(badgeLabel)
@@ -163,12 +150,6 @@ class DetailIngViewController: BaseViewController {
         manitteeLabel.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
         manitteeIconView.image = ImageLiterals.icManiTti
         listIconView.image = ImageLiterals.icList
-    }
-    
-    override func setupGuideArea() {
-        super.setupGuideArea()
-        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
     }
     
     override func setupNavigationBar() {
@@ -480,13 +461,6 @@ class DetailIngViewController: BaseViewController {
                     self.isTappedManittee = false
                 }
             }
-        }
-    }
-    
-    @objc
-    override func endEditingView() {
-        if !guideButton.isTouchInside {
-            guideBoxImageView.isHidden = true
         }
     }
 }
