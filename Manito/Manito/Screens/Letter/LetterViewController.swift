@@ -42,6 +42,7 @@ final class LetterViewController: BaseViewController {
         didSet {
             self.letterView.reloadCollectionView(with: self.letterState)
             self.letterView.setupEmptyLabel(self.letterState.labelText)
+            self.letterView.setupEmptyView()
         }
     }
     private var letterList: [Message] = [] {
@@ -131,6 +132,26 @@ final class LetterViewController: BaseViewController {
                 print("clientError:\(String(describing: message))")
             }
         }
+    }
+}
+
+// MARK: - LetterViewDelegate
+extension LetterViewController: LetterViewDelegate {
+    func presentCreateLetterViewController() {
+        // TODO: - manitteeId 누락 에러 메시지
+        guard let manitteeId else { return }
+        let viewController = CreateLetterViewController(manitteeId: manitteeId,
+                                                        roomId: self.roomId,
+                                                        mission: self.mission,
+                                                        missionId: self.missionId)
+        let navigationController = UINavigationController(rootViewController: viewController)
+
+        viewController.succeedInSendingLetter = { [weak self] in
+            guard let roomId = self?.roomId else { return }
+            self?.fetchSendLetter(roomId: roomId)
+        }
+
+        self.present(navigationController, animated: true, completion: nil)
     }
 }
 

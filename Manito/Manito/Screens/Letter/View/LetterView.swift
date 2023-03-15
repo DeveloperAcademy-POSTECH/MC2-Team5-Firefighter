@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol LetterViewDelegate: AnyObject {
-
+    func presentCreateLetterViewController()
 }
 
 final class LetterView: UIView {
@@ -63,6 +63,8 @@ final class LetterView: UIView {
 
     // MARK: - property
 
+    private weak var delegate: LetterViewDelegate?
+
 
     // MARK: - init
 
@@ -70,8 +72,8 @@ final class LetterView: UIView {
         super.init(frame: frame)
         self.setupLayout()
         self.setupButtonAction()
-//        self.reloadCollectionView(with: self.letterState)
-//        self.setupEmptyLabel()
+        self.reloadCollectionView(with: self.letterState)
+        self.setupEmptyLabel()
         self.setupGuideViewInNavigationController()
     }
 
@@ -106,27 +108,11 @@ final class LetterView: UIView {
 //        }
     }
 
-
-
-    private func setupEmptyView() {
-//        self.emptyLabel.isHidden = !self.letterList.isEmpty
-    }
-
     private func setupButtonAction() {
-        let presentSendButtonAction = UIAction { [weak self] _ in
-            guard let self = self,
-                  let manitteeId = self.manitteeId
-            else { return }
-
-            let viewController = CreateLetterViewController(manitteeId: manitteeId, roomId: self.roomId, mission: self.mission, missionId: self.missionId)
-            let navigationController = UINavigationController(rootViewController: viewController)
-            viewController.succeedInSendingLetter = { [weak self] in
-                guard let roomId = self?.roomId else { return }
-                self?.fetchSendLetter(roomId: roomId)
-            }
-            self.present(navigationController, animated: true, completion: nil)
+        let presentCreateLetterAction = UIAction { [weak self] _ in
+            self?.delegate?.presentCreateLetterViewController()
         }
-        self.sendLetterView.addAction(presentSendButtonAction)
+        self.sendLetterView.addAction(presentCreateLetterAction)
     }
 
     private func calculateContentHeight(text: String) -> CGFloat {
@@ -141,6 +127,8 @@ final class LetterView: UIView {
         label.sizeToFit()
         return label.frame.height
     }
+
+
 
     func setupLargeTitle(_ navigationController: UINavigationController) {
         navigationController.navigationBar.prefersLargeTitles = true
@@ -170,12 +158,17 @@ final class LetterView: UIView {
         self.emptyLabel.isHidden = true
     }
 
+    func setupEmptyView() {
+        self.emptyLabel.isHidden = !self.letterList.isEmpty
+    }
+
     func updateLetterView() {
         self.listCollectionView.reloadData()
         self.setupEmptyView()
     }
 
-    func configureDelegation(_ delegate: UICollectionViewDataSource) {
+    func configureDelegation(_ delegate: UICollectionViewDataSource & LetterViewDelegate) {
+        self.delegate = delegate
         self.listCollectionView.delegate = self
         self.listCollectionView.dataSource = delegate
     }
