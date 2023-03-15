@@ -72,6 +72,8 @@ final class LetterViewController: BaseViewController {
         self.letterView.configureNavigationController(self)
     }
 
+    // MARK: - override
+
     override func configureUI() {
         super.configureUI()
         // FIXME: - roomState를 Text말고 Enum으로 관리하도록 수정합니다.
@@ -89,17 +91,6 @@ final class LetterViewController: BaseViewController {
     private func configureLetterType() {
         let entryIndex = self.entryPoint.rawValue
         self.letterView.updateLetterType(to: .init(rawValue: entryIndex) ?? .sent)
-    }
-
-    private func calculateCellContentViewHeight(by text: String) -> CGFloat {
-        let width = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2 - InternalSize.cellInset.left * 2
-        let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: width, height: .greatestFiniteMagnitude)))
-        label.text = text
-        label.font = .font(.regular, ofSize: 15)
-        label.numberOfLines = 0
-        label.addLabelSpacing()
-        label.sizeToFit()
-        return label.frame.height
     }
 
     private func handleResponse(_ response: Result<Letter, NetworkError>) {
@@ -159,9 +150,7 @@ extension LetterViewController: LetterViewDelegate {
                                                         mission: self.mission,
                                                         missionId: self.missionId)
         let navigationController = UINavigationController(rootViewController: viewController)
-        viewController.succeedInSendingLetter = { [weak self] in
-            self?.letterView.updateLetterType(to: .sent)
-        }
+        viewController.configureDelegation(self)
         self.present(navigationController, animated: true)
     }
 
@@ -178,6 +167,34 @@ extension LetterViewController: LetterViewDelegate {
     }
 }
 
+// MARK: - CreateLetterViewControllerDelegate
+extension LetterViewController: CreateLetterViewControllerDelegate {
+    func refreshLetterData() {
+        self.letterView.updateLetterType(to: .sent)
+    }
+}
+
+// MARK: - LetterCollectionViewCellDelegate
+extension LetterViewController: LetterCollectionViewCellDelegate {
+    func didTapReportButton(content: String) {
+        self.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "", content: content)
+    }
+
+    func didTapLetterImageView(imageURL: String) {
+        let viewController = LetterImageViewController(imageUrl: imageURL)
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        self.present(viewController, animated: true)
+    }
+}
+
+// MARK: - LetterHeaderViewDelegate
+extension LetterViewController: LetterHeaderViewDelegate {
+    func selectedSegmentIndexDidChange(index: Int) {
+        self.letterView.updateLetterType(to: .init(rawValue: index) ?? .sent)
+    }
+}
+
 // MARK: - UICollectionViewDataSource
 extension LetterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -186,20 +203,8 @@ extension LetterViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-
-        cell.setLetterData(with: self.letterList[indexPath.item], isHidden: false)
-        cell.didTapReport = { [weak self] in
-            self?.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "",
-                                 content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
-        }
-        cell.didTapImage = { [weak self] _ in
-            guard let imageUrl = self?.letterList[indexPath.item].imageUrl else { return }
-            let viewController = LetterImageViewController(imageUrl: imageUrl)
-            viewController.modalPresentationStyle = .fullScreen
-            viewController.modalTransitionStyle = .crossDissolve
-            self?.present(viewController, animated: true)
-        }
-        
+        cell.configureDelegation(self)
+        cell.setLetterData(with: self.letterList[indexPath.item], isHidden: self.letterView.letterType == .sent)
         return cell
     }
     
@@ -211,11 +216,7 @@ extension LetterViewController: UICollectionViewDataSource {
                 withReuseIdentifier: LetterHeaderView.className,
                 for: indexPath
             ) as? LetterHeaderView else { return UICollectionReusableView() }
-
-            headerView.selectedSegmentIndexDidChange = { [weak self] index in
-                self?.letterView.updateLetterType(to: .init(rawValue: index) ?? .sent)
-            }
-
+            headerView.configureDelegation(self)
             return headerView
         default:
             return UICollectionReusableView()
@@ -244,6 +245,17 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
         }
 
         return CGSize(width: InternalSize.cellWidth, height: heights.reduce(0, +))
+    }
+
+    private func calculateCellContentViewHeight(by text: String) -> CGFloat {
+        let width = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2 - InternalSize.cellInset.left * 2
+        let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: width, height: .greatestFiniteMagnitude)))
+        label.text = text
+        label.font = .font(.regular, ofSize: 15)
+        label.numberOfLines = 0
+        label.addLabelSpacing()
+        label.sizeToFit()
+        return label.frame.height
     }
 }
 

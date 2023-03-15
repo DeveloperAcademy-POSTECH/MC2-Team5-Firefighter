@@ -9,6 +9,11 @@ import UIKit
 
 import SnapKit
 
+protocol LetterCollectionViewCellDelegate: AnyObject {
+    func didTapReportButton(content: String)
+    func didTapLetterImageView(imageURL: String)
+}
+
 final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - ui component
@@ -48,8 +53,8 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
 
     // MARK: - property
 
-    var didTapReport: (() -> ())?
-    var didTapImage: ((UIImage) -> ())?
+    private var imageURL: String?
+    private weak var delegate: LetterCollectionViewCellDelegate?
     
     // MARK: - init
     
@@ -110,13 +115,14 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     private func setupButtonAction() {
         let reportAction = UIAction { [weak self] _ in
-            self?.didTapReport?()
+            let content = self?.contentLabel.text ?? "글 내용 없음"
+            self?.delegate?.didTapReportButton(content: content)
         }
         self.reportButton.addAction(reportAction, for: .touchUpInside)
     }
 
     private func setupImageTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapPhoto))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapLetterImageView))
         self.photoImageView.addGestureRecognizer(tapGesture)
     }
 
@@ -126,6 +132,10 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         self.photoImageView.snp.updateConstraints {
             $0.height.equalTo(0)
         }
+    }
+
+    func configureDelegation(_ delegate: LetterCollectionViewCellDelegate) {
+        self.delegate = delegate
     }
 
     func setLetterData(with data: Message, isHidden: Bool) {
@@ -150,6 +160,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         }
         
         if let imageUrl = data.imageUrl {
+            self.imageURL = imageUrl
             self.photoImageView.loadImageUrl(imageUrl)
             self.photoImageView.snp.updateConstraints {
                 $0.height.equalTo(204)
@@ -160,8 +171,8 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     // MARK: - selector
 
     @objc
-    private func didTapPhoto() {
-        guard let image = self.photoImageView.image else { return }
-        self.didTapImage?(image)
+    private func didTapLetterImageView() {
+        guard let imageURL else { return }
+        self.delegate?.didTapLetterImageView(imageURL: imageURL)
     }
 }

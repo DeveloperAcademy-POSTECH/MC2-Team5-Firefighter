@@ -9,6 +9,10 @@ import UIKit
 
 import SnapKit
 
+protocol LetterHeaderViewDelegate: AnyObject {
+    func selectedSegmentIndexDidChange(index: Int)
+}
+
 final class LetterHeaderView: UICollectionReusableView {
     
     // MARK: - ui component
@@ -30,7 +34,7 @@ final class LetterHeaderView: UICollectionReusableView {
 
     // MARK: - property
 
-    var selectedSegmentIndexDidChange: ((_ changedIndex: Int) -> ())?
+    private weak var delegate: LetterHeaderViewDelegate?
     
     // MARK: - init
     
@@ -76,6 +80,10 @@ final class LetterHeaderView: UICollectionReusableView {
 
     private func segmentedControlIndexValueChanged(_ segmentedControl: UISegmentedControl) {
         let selectedSegmentIndex = segmentedControl.selectedSegmentIndex
-        self.selectedSegmentIndexDidChange?(selectedSegmentIndex)
+        self.delegate?.selectedSegmentIndexDidChange(index: selectedSegmentIndex)
+    }
+
+    func configureDelegation(_ delegate: LetterHeaderViewDelegate) {
+        self.delegate = delegate
     }
 }
