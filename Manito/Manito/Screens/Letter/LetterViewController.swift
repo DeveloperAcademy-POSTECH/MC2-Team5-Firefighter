@@ -94,7 +94,7 @@ final class LetterViewController: BaseViewController {
         }
     }
     
-    private func fetchReceviedLetter(roomId: String) {
+    private func fetchReceivedLetter(roomId: String) {
         Task {
             do {
                 let letterContent = try await self.letterSevice.fetchReceiveLetter(roomId: roomId)
@@ -129,6 +129,14 @@ extension LetterViewController: LetterViewDelegate {
         }
 
         self.present(navigationController, animated: true, completion: nil)
+    }
+
+    func fetchSendLetter(completionHandler: @escaping (() -> Void)) {
+        self.fetchSendLetter(roomId: self.roomId)
+    }
+
+    func fetchReceivedLetter(completionHandler: @escaping (() -> Void)) {
+        self.fetchReceivedLetter(roomId: self.roomId)
     }
 }
 
