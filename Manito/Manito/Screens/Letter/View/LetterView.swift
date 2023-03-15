@@ -59,6 +59,7 @@ final class LetterView: UIView {
         return label
     }()
     private lazy var sendLetterView: BottomOfSendLetterView = BottomOfSendLetterView()
+    private let guideView: GuideView = GuideView(type: .letter)
 
     // MARK: - property
 
@@ -71,11 +72,16 @@ final class LetterView: UIView {
         self.setupButtonAction()
 //        self.reloadCollectionView(with: self.letterState)
 //        self.setupEmptyLabel()
+        self.setupGuideViewInNavigationController()
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        self.guideView.setupDisappearedConfiguration()
     }
 
     // MARK: - func
@@ -172,6 +178,18 @@ final class LetterView: UIView {
     func configureDelegation(_ delegate: UICollectionViewDataSource) {
         self.listCollectionView.delegate = self
         self.listCollectionView.dataSource = delegate
+    }
+
+    func configureNavigationController(_ viewController: UIViewController) {
+        viewController.title = TextLiteral.letterViewControllerTitle
+        self.guideView.addGuideButton(in: viewController.navigationItem)
+    }
+
+    private func setupGuideViewInNavigationController() {
+        if let navigationController {
+            self.guideView.setupGuideViewLayout(in: navigationController)
+            self.guideView.hideGuideViewWhenTappedAround(in: navigationController, self)
+        }
     }
 }
 

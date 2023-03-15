@@ -7,35 +7,32 @@
 
 import UIKit
 
-import SnapKit
-
-enum LetterState: Int {
-    case sent = 0
-    case received = 1
-
-    var isHidden: Bool {
-        switch self {
-        case .received:
-            return false
-        case .sent:
-            return true
-        }
-    }
-
-    var labelText: String {
-        switch self {
-        case .sent:
-            return TextLiteral.letterViewControllerEmptyViewTo
-        case .received:
-            return TextLiteral.letterViewControllerEmptyViewFrom
-        }
-    }
-}
-
 final class LetterViewController: BaseViewController {
 
+    enum LetterState: Int {
+        case sent = 0
+        case received = 1
+
+        var isHidden: Bool {
+            switch self {
+            case .received:
+                return false
+            case .sent:
+                return true
+            }
+        }
+
+        var labelText: String {
+            switch self {
+            case .sent:
+                return TextLiteral.letterViewControllerEmptyViewTo
+            case .received:
+                return TextLiteral.letterViewControllerEmptyViewFrom
+            }
+        }
+    }
+
     // MARK: - ui component
-    private let guideView: GuideView = GuideView(type: .letter)
 
     private let letterView: LetterView = LetterView()
 
@@ -81,27 +78,16 @@ final class LetterViewController: BaseViewController {
         self.view = self.letterView
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupGuideViewInNavigationController()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        self.letterView.setupLargeTitle(<#UINavigationController#>)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.guideView.setupDisappearedConfiguration()
     }
 
     // MARK: - override
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        self.title = TextLiteral.letterViewControllerTitle
-        self.guideView.addGuideButton(in: self.navigationItem)
+        // guideView.configureNavigationController()
     }
 
     // MARK: - func
@@ -109,12 +95,7 @@ final class LetterViewController: BaseViewController {
     private func configureDelegation() {
         self.letterView.configureDelegation(self)
     }
-    private func setupGuideViewInNavigationController() {
-        if let navigationController {
-            self.guideView.setupGuideViewLayout(in: navigationController)
-            self.guideView.hideGuideViewWhenTappedAround(in: navigationController, self)
-        }
-    }
+    
     // MARK: - network
     
     private func fetchSendLetter(roomId: String) {
