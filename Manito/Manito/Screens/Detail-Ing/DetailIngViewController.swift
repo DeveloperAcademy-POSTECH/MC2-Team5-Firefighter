@@ -230,7 +230,8 @@ class DetailIngViewController: BaseViewController {
             let letterViewController = LetterViewController(roomState: roomType.rawValue,
                                                             roomId: roomId.description,
                                                             mission: mission,
-                                                            missionId: self?.missionId ?? "")
+                                                            missionId: self?.missionId ?? "",
+                                                            entryPoint: .detail)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         letterBoxButton.addAction(action, for: .touchUpInside)

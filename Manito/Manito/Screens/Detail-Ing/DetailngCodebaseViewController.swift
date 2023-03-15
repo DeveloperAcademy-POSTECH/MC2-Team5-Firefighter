@@ -26,11 +26,11 @@ final class DetailingCodebaseViewController: BaseViewController {
     private var missionId: String = ""
     var letterViewController: UIViewController {
         guard let mission = missionContentsLabel.text else { return UIViewController() }
-        // TODO: - state received 전달
         let viewController = LetterViewController(roomState: roomType.rawValue,
                                                   roomId: roomId,
                                                   mission: mission,
-                                                  missionId: self.missionId)
+                                                  missionId: self.missionId,
+                                                  entryPoint: .notification)
         return viewController
     }
 
@@ -143,11 +143,11 @@ final class DetailingCodebaseViewController: BaseViewController {
                   let roomId = self?.roomId,
                   let mission = self?.missionContentsLabel.text
             else { return }
-            // TODO: - state sent 전달
             let letterViewController = LetterViewController(roomState: roomType.rawValue,
                                                             roomId: roomId,
                                                             mission: mission,
-                                                            missionId: self?.missionId ?? "")
+                                                            missionId: self?.missionId ?? "",
+                                                            entryPoint: .detail)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)

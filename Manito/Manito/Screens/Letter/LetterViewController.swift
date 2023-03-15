@@ -9,6 +9,10 @@ import UIKit
 
 final class LetterViewController: BaseViewController {
 
+    enum EntryPoint {
+        case detail, notification
+    }
+
     private enum InternalSize {
         static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2
         static let cellInset: UIEdgeInsets = UIEdgeInsets(top: 24.0, left: 16.0, bottom: 22.0, right: 16.0)
@@ -33,14 +37,16 @@ final class LetterViewController: BaseViewController {
     private var roomState: String
     private var mission: String
     private var missionId: String
+    private var entryPoint: EntryPoint
     
     // MARK: - init
     
-    init(roomState: String, roomId: String, mission: String, missionId: String) {
+    init(roomState: String, roomId: String, mission: String, missionId: String, entryPoint: EntryPoint) {
         self.roomState = roomState
         self.roomId = roomId
         self.mission = mission
         self.missionId = missionId
+        self.entryPoint = entryPoint
         super.init()
     }
 
@@ -149,10 +155,7 @@ extension LetterViewController: LetterViewDelegate {
                                                         missionId: self.missionId)
         let navigationController = UINavigationController(rootViewController: viewController)
         viewController.succeedInSendingLetter = { [weak self] in
-            guard let roomId = self?.roomId else { return }
-            self?.fetchSendLetter(roomId: roomId) { response in
-                self?.handleResponse(response)
-            }
+            self?.letterView.updateLetterView(to: 0)
         }
         self.present(navigationController, animated: true)
     }
