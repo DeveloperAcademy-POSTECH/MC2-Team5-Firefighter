@@ -84,7 +84,7 @@ final class GuideView: UIView {
         self.guideLabel.applyColor(to: targetTitle, with: .subOrange)
     }
 
-    private func setupGuideViewLayout() {
+    func setupGuideViewLayout() {
         self.addSubview(self.guideButton)
         self.guideButton.snp.makeConstraints {
             $0.top.equalTo(self.snp.top)
@@ -108,7 +108,7 @@ final class GuideView: UIView {
         }
     }
 
-    private func setupGuideViewLayout(in navigationController: UINavigationController) {
+    func setupGuideViewLayout(in navigationController: UINavigationController) {
         if let view = navigationController.view {
             self.guideButton.snp.makeConstraints {
                 $0.width.height.equalTo(44)
@@ -128,14 +128,6 @@ final class GuideView: UIView {
                 $0.leading.trailing.equalToSuperview()
             }
         }
-    }
-
-    func addGuideView() {
-        self.setupGuideViewLayout()
-    }
-
-    func addGuideView(in navigationController: UINavigationController) {
-        self.setupGuideViewLayout(in: navigationController)
     }
 
     func addGuideButton(in navigationItem: UINavigationItem) {

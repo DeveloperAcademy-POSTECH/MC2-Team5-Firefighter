@@ -171,7 +171,7 @@ final class MainViewController: BaseViewController {
         self.guideView.snp.makeConstraints {
             $0.top.trailing.equalToSuperview().inset(30)
         }
-        self.guideView.addGuideView()
+        self.guideView.setupGuideViewLayout()
     }
 
     override func setupNavigationBar() {

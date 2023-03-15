@@ -186,7 +186,7 @@ final class LetterViewController: BaseViewController {
 
     private func setupGuideViewInNavigationController() {
         if let navigationController {
-            self.guideView.addGuideView(in: navigationController)
+            self.guideView.setupGuideViewLayout(in: navigationController)
             self.guideView.hideGuideViewWhenTappedAround(in: navigationController, self)
         }
     }

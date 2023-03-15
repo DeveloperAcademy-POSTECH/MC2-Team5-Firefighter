@@ -398,7 +398,7 @@ final class DetailingCodebaseViewController: BaseViewController {
             $0.top.equalTo(self.missionBackgroundView.snp.top)
             $0.trailing.equalTo(self.missionBackgroundView.snp.trailing)
         }
-        self.guideView.addGuideView()
+        self.guideView.setupGuideViewLayout()
     }
     
     override func setupNavigationBar() {
