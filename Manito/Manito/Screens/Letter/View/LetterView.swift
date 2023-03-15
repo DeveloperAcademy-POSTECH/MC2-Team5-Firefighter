@@ -82,7 +82,11 @@ final class LetterView: UIView {
     // MARK: - property
 
     private weak var delegate: LetterViewDelegate?
-
+    private(set) var letterType: LetterType = .sent {
+        willSet(type) {
+            self.updateLetterView(to: type)
+        }
+    }
 
     // MARK: - init
 
@@ -143,6 +147,12 @@ final class LetterView: UIView {
         self.guideView.hideGuideViewWhenTappedAround(in: navigationController, viewController)
     }
 
+    private func updateLetterView(to type: LetterType) {
+        self.updateEmptyLabel(to: type.emptyText)
+        self.updateListCollectionViewConfiguration(to: type)
+        self.updateLetter(to: type)
+    }
+
     private func updateEmptyLabel(to text: String) {
         self.emptyLabel.text = text
     }
@@ -181,11 +191,8 @@ final class LetterView: UIView {
         self.setupBottomOfSendLetterView()
     }
 
-    func updateLetterView(to index: Int) {
-        let type = LetterType[index]
-        self.updateEmptyLabel(to: type.emptyText)
-        self.updateListCollectionViewConfiguration(to: type)
-        self.updateLetter(to: type)
+    func updateLetterType(to type: LetterType) {
+        self.letterType = type
     }
 
     func updateLetterViewEmptyState(isHidden: Bool) {

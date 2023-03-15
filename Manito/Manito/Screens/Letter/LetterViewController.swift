@@ -9,8 +9,8 @@ import UIKit
 
 final class LetterViewController: BaseViewController {
 
-    enum EntryPoint {
-        case detail, notification
+    enum EntryPoint: Int {
+        case detail = 0, notification = 1
     }
 
     private enum InternalSize {
@@ -64,7 +64,7 @@ final class LetterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
-        self.letterView.updateLetterView(to: 0)
+        self.configureLetterType()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,6 +84,11 @@ final class LetterViewController: BaseViewController {
 
     private func configureDelegation() {
         self.letterView.configureDelegation(self)
+    }
+
+    private func configureLetterType() {
+        let entryIndex = self.entryPoint.rawValue
+        self.letterView.updateLetterType(to: .init(rawValue: entryIndex) ?? .sent)
     }
 
     private func calculateCellContentViewHeight(by text: String) -> CGFloat {
@@ -155,7 +160,7 @@ extension LetterViewController: LetterViewDelegate {
                                                         missionId: self.missionId)
         let navigationController = UINavigationController(rootViewController: viewController)
         viewController.succeedInSendingLetter = { [weak self] in
-            self?.letterView.updateLetterView(to: 0)
+            self?.letterView.updateLetterType(to: .sent)
         }
         self.present(navigationController, animated: true)
     }
@@ -208,7 +213,7 @@ extension LetterViewController: UICollectionViewDataSource {
             ) as? LetterHeaderView else { return UICollectionReusableView() }
 
             headerView.selectedSegmentIndexDidChange = { [weak self] index in
-                self?.letterView.updateLetterView(to: index)
+                self?.letterView.updateLetterType(to: .init(rawValue: index) ?? .sent)
             }
 
             return headerView
