@@ -681,7 +681,7 @@
 			children = (
 				B54741DE29A3A4BA00B75BA3 /* View */,
 				B5F5253228547CAF00614FF7 /* Cell */,
-				B5F5253328547EE000614FF7 /* CustomComponent */,
+				B5F5253328547EE000614FF7 /* UIComponent */,
 				B5F5250D2851A07700614FF7 /* LetterViewController.swift */,
 				B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */,
 				B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */,
@@ -814,7 +814,7 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		B5F5253328547EE000614FF7 /* CustomComponent */ = {
+		B5F5253328547EE000614FF7 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				B5F5253428547F1900614FF7 /* LetterHeaderView.swift */,
@@ -823,7 +823,7 @@
 				B50B1AFC2856C3500080992C /* CreateLetterTextView.swift */,
 				B50B1AFE2856D3820080992C /* CreateLetterPhotoView.swift */,
 			);
-			path = CustomComponent;
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		B5F525462855D00B00614FF7 /* Network */ = {
