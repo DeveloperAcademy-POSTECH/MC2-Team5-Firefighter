@@ -13,17 +13,21 @@ final class GuideView: UIView {
 
     enum GuideType: String {
         case letter
+        case main
+        case detailing
 
         var text: String {
             switch self {
             case .letter: return TextLiteral.letterViewControllerGuideText
-            default: return ""
+            case .main: return TextLiteral.mainViewControllerGuideDescription
+            case .detailing: return TextLiteral.detailIngViewControllerGuideTitle
             }
         }
 
         var image: UIImage {
             switch self {
             case .letter: return ImageLiterals.icLetterInfo
+            default: return ImageLiterals.icMissionInfo
             }
         }
     }
@@ -88,8 +92,8 @@ final class GuideView: UIView {
     private func setupGuideButtonLayout() {
         self.addSubview(self.guideButton)
         self.guideButton.snp.makeConstraints {
-            $0.top.equalTo(self.snp.top).offset(30)
-            $0.trailing.equalTo(self.snp.trailing).inset(30)
+            $0.top.equalTo(self.snp.top)
+            $0.trailing.equalTo(self.snp.trailing)
             $0.width.height.equalTo(44)
         }
     }
