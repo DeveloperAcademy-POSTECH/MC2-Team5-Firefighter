@@ -114,6 +114,7 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
         let jpegData = image?.jpegData(compressionQuality: 0.3)
         let letterDTO = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
 
+        self.createLetterView.sending = true
         self.dispatchLetter(with: letterDTO, jpegData) { [weak self] response in
             DispatchQueue.main.async {
                 switch response {
@@ -121,6 +122,7 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
                     self?.succeedInSendingLetter?()
                     self?.dismiss(animated: true)
                 case .failure:
+                    self?.createLetterView.sending = false
                     self?.makeAlert(title: TextLiteral.createLetterViewControllerErrorTitle,
                                     message: TextLiteral.createLetterViewControllerErrorMessage)
                 }
