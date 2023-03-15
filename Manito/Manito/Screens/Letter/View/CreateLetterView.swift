@@ -63,6 +63,12 @@ final class CreateLetterView: UIView {
         }
     }
 
+    var sending: Bool = false {
+        willSet(isDisabled) {
+            self.sendButton.isEnabled = !isDisabled
+        }
+    }
+
     // MARK: - init
 
     override init(frame: CGRect) {
