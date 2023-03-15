@@ -217,6 +217,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.showsMenuAsPrimaryAction = true
         return button
     }()
+    private let guideView: GuideView = GuideView(type: .detailing)
     
     // MARK: - init
     
@@ -385,14 +386,19 @@ final class DetailingCodebaseViewController: BaseViewController {
             $0.bottom.equalTo(manitteeIconView.snp.bottom)
         }
 
-        // TODO: - guideview layout
-
         view.addSubview(badgeLabel)
         badgeLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview().offset(35)
             $0.centerY.equalTo(letterBoxButton).offset(-10)
             $0.width.height.equalTo(30)
         }
+
+        self.view.addSubview(self.guideView)
+        self.guideView.snp.makeConstraints {
+            $0.top.equalTo(self.missionBackgroundView.snp.top)
+            $0.trailing.equalTo(self.missionBackgroundView.snp.trailing)
+        }
+        self.guideView.addGuideView()
     }
     
     override func setupNavigationBar() {

@@ -174,10 +174,6 @@ final class MainViewController: BaseViewController {
         self.guideView.addGuideView()
     }
 
-    override func endEditingView() {
-        self.guideView.didTapAroundToHideGuideView()
-    }
-
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
@@ -188,6 +184,10 @@ final class MainViewController: BaseViewController {
         self.navigationItem.largeTitleDisplayMode = .automatic
         self.navigationItem.leftBarButtonItem = appTitleView
         self.navigationItem.rightBarButtonItem = settingButtonView
+    }
+
+    override func endEditingView() {
+        self.guideView.didTapAroundToHideGuideView()
     }
     
     // MARK: - func
