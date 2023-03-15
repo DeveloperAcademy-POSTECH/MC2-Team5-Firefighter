@@ -31,10 +31,7 @@ final class LetterView: UIView {
     }
 
     private enum InternalSize {
-        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2
         static let headerHeight: CGFloat = 66.0
-        static let imageHeight: CGFloat = 204.0
-        static let cellInset: UIEdgeInsets = UIEdgeInsets(top: 24.0, left: 16.0, bottom: 22.0, right: 16.0)
         static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 18.0,
                                                                 left: Size.leadingTrailingPadding,
                                                                 bottom: 18.0,
@@ -49,6 +46,8 @@ final class LetterView: UIView {
         flowLayout.sectionInset = InternalSize.collectionInset
         flowLayout.minimumLineSpacing = 33
         flowLayout.sectionHeadersPinToVisibleBounds = true
+        flowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.size.width,
+                                                height: InternalSize.headerHeight)
         return flowLayout
     }()
     private lazy var listCollectionView: UICollectionView = {
@@ -167,20 +166,9 @@ final class LetterView: UIView {
         }
     }
 
-    private func calculateContentHeight(text: String) -> CGFloat {
-        let width = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2 - InternalSize.cellInset.left * 2
-        let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: width, height: .greatestFiniteMagnitude)))
-        label.text = text
-        label.font = .font(.regular, ofSize: 15)
-        label.numberOfLines = 0
-        label.addLabelSpacing()
-        label.sizeToFit()
-        return label.frame.height
-    }
-
-    func configureDelegation(_ delegate: UICollectionViewDataSource & LetterViewDelegate) {
+    func configureDelegation(_ delegate: UICollectionViewDataSource & UICollectionViewDelegateFlowLayout & LetterViewDelegate) {
         self.delegate = delegate
-        self.listCollectionView.delegate = self
+        self.listCollectionView.delegate = delegate
         self.listCollectionView.dataSource = delegate
     }
 
@@ -201,35 +189,6 @@ final class LetterView: UIView {
 
     func updateLetterViewEmptyState(isHidden: Bool) {
         self.emptyLabel.isHidden = isHidden
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension LetterView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var heights = [InternalSize.cellInset.top, InternalSize.cellInset.bottom]
-
-//        // TODO: - calculate 하는건 어디에...
-//        if let content = self.letterList[indexPath.item].content {
-//            heights += [self.calculateContentHeight(text: content)]
-//        }
-//
-//        if let mission = self.letterList[indexPath.item].mission {
-//            heights += [self.calculateContentHeight(text: mission) + 10]
-//        } else {
-//            let date = self.letterList[indexPath.item].date
-//            heights += [self.calculateContentHeight(text: date) + 5]
-//        }
-//
-//        if self.letterList[indexPath.item].imageUrl != nil {
-//            heights += [InternalSize.imageHeight]
-//        }
-
-        return CGSize(width: InternalSize.cellWidth, height: heights.reduce(0, +))
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.size.width, height: InternalSize.headerHeight)
     }
 }
 

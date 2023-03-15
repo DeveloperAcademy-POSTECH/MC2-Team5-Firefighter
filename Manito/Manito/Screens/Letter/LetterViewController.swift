@@ -9,6 +9,12 @@ import UIKit
 
 final class LetterViewController: BaseViewController {
 
+    private enum InternalSize {
+        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2
+        static let cellInset: UIEdgeInsets = UIEdgeInsets(top: 24.0, left: 16.0, bottom: 22.0, right: 16.0)
+        static let imageHeight: CGFloat = 204.0
+    }
+
     // MARK: - ui component
 
     private let letterView: LetterView = LetterView()
@@ -72,6 +78,17 @@ final class LetterViewController: BaseViewController {
 
     private func configureDelegation() {
         self.letterView.configureDelegation(self)
+    }
+
+    private func calculateContentHeight(text: String) -> CGFloat {
+        let width = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2 - InternalSize.cellInset.left * 2
+        let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: width, height: .greatestFiniteMagnitude)))
+        label.text = text
+        label.font = .font(.regular, ofSize: 15)
+        label.numberOfLines = 0
+        label.addLabelSpacing()
+        label.sizeToFit()
+        return label.frame.height
     }
     
     // MARK: - network
@@ -184,5 +201,29 @@ extension LetterViewController: UICollectionViewDataSource {
             assert(false, "do not use footer")
             return UICollectionReusableView()
         }
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension LetterViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var heights = [InternalSize.cellInset.top, InternalSize.cellInset.bottom]
+
+        if let content = self.letterList[indexPath.item].content {
+            heights += [self.calculateContentHeight(text: content)]
+        }
+
+        if let mission = self.letterList[indexPath.item].mission {
+            heights += [self.calculateContentHeight(text: mission) + 10]
+        } else {
+            let date = self.letterList[indexPath.item].date
+            heights += [self.calculateContentHeight(text: date) + 5]
+        }
+
+        if self.letterList[indexPath.item].imageUrl != nil {
+            heights += [InternalSize.imageHeight]
+        }
+
+        return CGSize(width: InternalSize.cellWidth, height: heights.reduce(0, +))
     }
 }
