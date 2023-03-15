@@ -69,7 +69,7 @@ final class LetterViewController: BaseViewController {
     override func configureUI() {
         super.configureUI()
         // FIXME: - roomState를 Text말고 Enum으로 관리하도록 수정합니다.
-        if roomState == "POST" {
+        if roomState == "PROCESSING" {
             self.letterView.configureBottomArea()
         }
     }
@@ -242,5 +242,12 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
         }
 
         return CGSize(width: InternalSize.cellWidth, height: heights.reduce(0, +))
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension LetterViewController: UICollectionViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.letterView.scrollViewDidEndDraggingConfiguration()
     }
 }

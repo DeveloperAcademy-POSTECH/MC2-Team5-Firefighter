@@ -166,8 +166,7 @@ final class LetterView: UIView {
         }
     }
 
-    func configureDelegation(_ delegate: UICollectionViewDataSource & UICollectionViewDelegateFlowLayout & LetterViewDelegate) {
-        self.listCollectionView.delegate = self
+    func configureDelegation(_ delegate: UICollectionViewDataSource & UICollectionViewDelegate & LetterViewDelegate) {
         self.listCollectionView.delegate = delegate
         self.listCollectionView.dataSource = delegate
         self.delegate = delegate
@@ -196,11 +195,8 @@ final class LetterView: UIView {
     func reloadCollectionViewData() {
         self.listCollectionView.reloadData()
     }
-}
 
-// MARK: - UICollectionViewDelegate
-extension LetterView: UICollectionViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    func scrollViewDidEndDraggingConfiguration() {
         self.guideView.setupDisappearedConfiguration()
     }
 }
