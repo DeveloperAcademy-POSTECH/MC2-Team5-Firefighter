@@ -89,6 +89,7 @@ final class MainViewController: BaseViewController {
     private let maCharacterImageView: GIFImageView = GIFImageView()
     private let niCharacterImageView: GIFImageView = GIFImageView()
     private let ttoCharacterImageView: GIFImageView = GIFImageView()
+    private let guideView: GuideView = GuideView(type: .main)
     
     // MARK: - property
     
@@ -166,7 +167,15 @@ final class MainViewController: BaseViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
-        // TODO: - guideview layout
+        self.commonMissionView.addSubview(self.guideView)
+        self.guideView.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview().inset(30)
+        }
+        self.guideView.addGuideView()
+    }
+
+    override func endEditingView() {
+        self.guideView.didTapAroundToHideGuideView()
     }
 
     override func setupNavigationBar() {

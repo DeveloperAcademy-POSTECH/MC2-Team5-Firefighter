@@ -101,6 +101,7 @@ final class GuideView: UIView {
         self.guideBoxImageView.snp.makeConstraints {
             $0.top.equalTo(self.guideButton.snp.bottom).offset(-10)
             $0.trailing.equalTo(self.guideButton.snp.trailing).offset(-12)
+            $0.leading.bottom.equalToSuperview()
             $0.width.equalTo(270)
             $0.height.equalTo(90)
         }
@@ -142,9 +143,9 @@ final class GuideView: UIView {
         navigationController.navigationItem.rightBarButtonItem = guideButton
     }
 
-    func hideGuideView(in navigationController: UINavigationController, _ viewController: UIViewController) {
-        let navigationControllerTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissGuideView))
-        let viewControllerTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissGuideView))
+    func hideGuideViewWhenTappedAround(in navigationController: UINavigationController, _ viewController: UIViewController) {
+        let navigationControllerTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapAroundToHideGuideView))
+        let viewControllerTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapAroundToHideGuideView))
         navigationControllerTapGesture.cancelsTouchesInView = false
         viewControllerTapGesture.cancelsTouchesInView = false
         navigationController.view.addGestureRecognizer(navigationControllerTapGesture)
@@ -158,7 +159,7 @@ final class GuideView: UIView {
     // MARK: - selector
 
     @objc
-    private func dismissGuideView() {
+    func didTapAroundToHideGuideView() {
         if !self.guideButton.isTouchInside {
             self.setupDisappearedConfiguration()
         }
