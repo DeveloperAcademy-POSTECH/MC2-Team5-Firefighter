@@ -178,8 +178,8 @@ extension LetterViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        // TODO: - 다른 방식으로 신고 버튼을 다룰 순 없을까?
-//        cell.setLetterData(with: self.letterList[indexPath.item], isHidden: self.letterState.isHidden)
+
+        cell.setLetterData(with: self.letterList[indexPath.item], isHidden: false)
         cell.didTapReport = { [weak self] in
             self?.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "",
                                  content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
@@ -191,6 +191,7 @@ extension LetterViewController: UICollectionViewDataSource {
             viewController.modalTransitionStyle = .crossDissolve
             self?.present(viewController, animated: true)
         }
+        
         return cell
     }
     

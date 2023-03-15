@@ -32,13 +32,6 @@ final class LetterHeaderView: UICollectionReusableView {
 
     var selectedSegmentIndexDidChange: ((_ changedIndex: Int) -> ())?
     
-    private var segmentedControlIndex: Int = 0 {
-        didSet {
-            self.segmentedControl.selectedSegmentIndex = self.segmentedControlIndex
-        }
-    }
-
-    
     // MARK: - init
     
     override init(frame: CGRect) {
@@ -70,7 +63,7 @@ final class LetterHeaderView: UICollectionReusableView {
 
     // TODO: - type으로 바뀌도록 수정
     private func setupSelectedSegmentIndex() {
-        self.segmentedControlIndex = 0
+        self.segmentedControl.selectedSegmentIndex = 0
     }
 
     private func setupAction() {
@@ -82,7 +75,7 @@ final class LetterHeaderView: UICollectionReusableView {
     }
 
     private func segmentedControlIndexValueChanged(_ segmentedControl: UISegmentedControl) {
-        self.segmentedControlIndex = segmentedControl.selectedSegmentIndex
-        self.selectedSegmentIndexDidChange?(self.segmentedControlIndex)
+        let selectedSegmentIndex = segmentedControl.selectedSegmentIndex
+        self.selectedSegmentIndexDidChange?(selectedSegmentIndex)
     }
 }
