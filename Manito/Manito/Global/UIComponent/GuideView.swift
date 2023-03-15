@@ -89,12 +89,26 @@ final class GuideView: UIView {
         self.guideLabel.applyColor(to: targetTitle, with: .subOrange)
     }
 
-    private func setupGuideButtonLayout() {
+    private func setupGuideViewLayout() {
         self.addSubview(self.guideButton)
         self.guideButton.snp.makeConstraints {
             $0.top.equalTo(self.snp.top)
             $0.trailing.equalTo(self.snp.trailing)
             $0.width.height.equalTo(44)
+        }
+
+        self.addSubview(self.guideBoxImageView)
+        self.guideBoxImageView.snp.makeConstraints {
+            $0.top.equalTo(self.guideButton.snp.bottom).offset(-10)
+            $0.trailing.equalTo(self.guideButton.snp.trailing).offset(-12)
+            $0.width.equalTo(270)
+            $0.height.equalTo(90)
+        }
+
+        self.guideBoxImageView.addSubview(self.guideLabel)
+        self.guideLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(15)
         }
     }
 
@@ -116,27 +130,11 @@ final class GuideView: UIView {
         }
     }
 
-    private func setupGuideBoxLayout() {
-        self.addSubview(self.guideBoxImageView)
-        self.guideBoxImageView.snp.makeConstraints {
-            $0.top.equalTo(self.guideButton.snp.bottom).offset(-10)
-            $0.trailing.equalTo(self.guideButton.snp.trailing).offset(-12)
-            $0.width.equalTo(270)
-            $0.height.equalTo(90)
-        }
-
-        self.guideBoxImageView.addSubview(self.guideLabel)
-        self.guideLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.leading.trailing.equalToSuperview().inset(15)
-        }
+    func addGuideView() {
+        self.setupGuideViewLayout()
     }
 
-    func setupDisappearedConfiguration() {
-        self.guideBoxImageView.isHidden = true
-    }
-
-    func addGuideViewToNavigationController(_ navigationController: UINavigationController) {
+    func addGuideView(in navigationController: UINavigationController) {
         self.setupGuideButtonLayoutInNavigationBar()
         self.setupGuideBoxLayout(in: navigationController)
 
@@ -151,6 +149,10 @@ final class GuideView: UIView {
         viewControllerTapGesture.cancelsTouchesInView = false
         navigationController.view.addGestureRecognizer(navigationControllerTapGesture)
         viewController.view.addGestureRecognizer(viewControllerTapGesture)
+    }
+
+    func setupDisappearedConfiguration() {
+        self.guideBoxImageView.isHidden = true
     }
 
     // MARK: - selector
