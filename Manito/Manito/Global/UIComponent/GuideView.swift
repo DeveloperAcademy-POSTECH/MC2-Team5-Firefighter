@@ -19,14 +19,14 @@ final class GuideView: UIView {
         var text: String {
             switch self {
             case .letter: return TextLiteral.letterViewControllerGuideText
-            case .main: return TextLiteral.mainViewControllerGuideDescription
-            case .detailing: return TextLiteral.detailIngViewControllerGuideTitle
+            case .main: return TextLiteral.mainViewControllerGuideText
+            case .detailing: return TextLiteral.detailIngViewControllerGuideText
             }
         }
 
         var image: UIImage {
             switch self {
-            case .letter: return ImageLiterals.icLetterInfo
+            case .letter: return ImageLiterals.icLetterMissionInfo
             default: return ImageLiterals.icMissionInfo
             }
         }
