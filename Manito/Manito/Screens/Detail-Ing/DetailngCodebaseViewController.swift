@@ -406,6 +406,10 @@ final class DetailingCodebaseViewController: BaseViewController {
         let rightItem = makeBarButtonItem(with: exitButton)
         navigationItem.rightBarButtonItem = rightItem
     }
+
+    override func endEditingView() {
+        self.guideView.didTapAroundToHideGuideView()
+    }
     
     // MARK: - func
     
