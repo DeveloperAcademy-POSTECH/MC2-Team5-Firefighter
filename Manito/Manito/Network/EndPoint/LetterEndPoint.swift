@@ -53,13 +53,13 @@ enum LetterEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .dispatchLetter(let roomId, _, _, _):
-            return "\(baseURL)/rooms/\(roomId)/messages-separate"
+            return "\(APIEnvironment.baseURL())/rooms/\(roomId)/messages-separate"
         case .fetchSendLetter(let roomId):
-            return "https://dev.aenitto.shop/api/v2/rooms/\(roomId)/messages-sent"
+            return "\(APIEnvironment.baseURL(.v2))/rooms/\(roomId)/messages-sent"
         case .fetchReceiveLetter(let roomId):
-            return "https://dev.aenitto.shop/api/v2/rooms/\(roomId)/messages-received"
+            return "\(APIEnvironment.baseURL(.v2))/rooms/\(roomId)/messages-received"
         case .patchReadMessage(let roomId, _):
-            return "\(baseURL)/rooms/\(roomId)/messages/status"
+            return "\(APIEnvironment.baseURL())/rooms/\(roomId)/messages/status"
         }
     }
     
@@ -75,7 +75,7 @@ enum LetterEndPoint: EndPointable {
         
         headers["Authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
         
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
+        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseURL()),
                               headers: headers,
                               reqBody: requestBody,
                               reqTimeout: requestTimeOut,

@@ -43,7 +43,7 @@ enum DetailIngEndPoint: EndPointable {
     }
     
     func createRequest() -> NetworkRequest {
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
+        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseURL()),
                               reqBody: requestBody,
                               reqTimeout: requestTimeOut,
                               httpMethod: httpMethod

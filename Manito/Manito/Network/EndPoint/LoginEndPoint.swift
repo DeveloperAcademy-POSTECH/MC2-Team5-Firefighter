@@ -31,14 +31,14 @@ enum LoginEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .dispatchAppleLogin:
-            return "https://dev.aenitto.shop/api/v2/login"
+            return "\(baseURL)/login"
         }
     }
 
     func createRequest() -> NetworkRequest {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
+        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseURL(.v2)),
                               headers: headers,
                               reqBody: requestBody,
                               reqTimeout: requestTimeOut,

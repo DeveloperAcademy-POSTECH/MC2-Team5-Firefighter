@@ -40,7 +40,7 @@ enum SettingEndPoint: EndPointable {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
         headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
+        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseURL()),
                               headers: headers,
                               reqBody: requestBody,
                               reqTimeout: requestTimeOut,
