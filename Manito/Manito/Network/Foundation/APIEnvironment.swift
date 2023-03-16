@@ -8,6 +8,11 @@
 import Foundation
 
 enum APIEnvironment {
-    static let baseUrl: String = UrlLiteral.productionUrl
+    case v1, v2
+
+    static func baseURL(_ version: Self = v1) -> String {
+        return UrlLiteral.productionUrl + "/api/\(version)"
+    }
+    
     static let boundary: String = "com.TeamFirefighter.Manito"
 }
