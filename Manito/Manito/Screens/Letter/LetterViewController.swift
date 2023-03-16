@@ -33,8 +33,8 @@ final class LetterViewController: BaseViewController {
     }
     private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
     private var manitteeId: String?
-    private var roomId: String
     private var roomState: String
+    private var roomId: String
     private var mission: String
     private var missionId: String
     private var entryPoint: EntryPoint

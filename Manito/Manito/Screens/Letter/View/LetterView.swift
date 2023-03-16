@@ -28,10 +28,6 @@ final class LetterView: UIView {
             case .received: return TextLiteral.letterViewControllerEmptyViewFrom
             }
         }
-
-        static subscript(index: Int) -> Self {
-            return LetterType(rawValue: index) ?? .sent
-        }
     }
 
     private enum InternalSize {
@@ -191,6 +187,8 @@ final class LetterView: UIView {
         self.setupBottomOfSendLetterView()
     }
 
+    /// 원하는 타입(.sent, .received)을 넣으면 해당 타입으로 서버 통신을 진행합니다.
+    /// 서버 통신이 성공하면 ViewController에 있는 List를 통해서 뷰가 update 됩니다.
     func updateLetterType(to type: LetterType) {
         self.letterType = type
     }
