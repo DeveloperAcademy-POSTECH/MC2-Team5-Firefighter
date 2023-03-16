@@ -1,5 +1,5 @@
 //
-//  UrlLiteral.swift
+//  URLLiteral.swift
 //  Manito
 //
 //  Created by 이성호 on 2022/09/06.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum UrlLiteral {
+enum URLLiteral {
     
     // MARK: - server url
     
