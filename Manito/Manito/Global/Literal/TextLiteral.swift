@@ -8,6 +8,9 @@
 import Foundation
 
 enum TextLiteral {
+
+    // MARK: - App Name
+    static let appName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "애니또"
     
     // MARK: - AnyWhere
     static let done: String = "완료"
@@ -62,6 +65,8 @@ enum TextLiteral {
     static let mainViewControllerGuideTitle: String = "공통 미션이란?"
     static let mainViewControllerGuideDescription: String = "공통 미션이란?\n마니또에 참여한 모두에게 \n수행하는 미션이에요. "
     static let mainViewControllerNewRoomAlert: String = "새로운 마니또 시작"
+    static let mainViewControllerShowIdErrorAlertTitle: String = "해당 마니또 방의 정보를 불러오지 못했습니다."
+    static let mainViewControllerShowIdErrorAlertMessage: String = "해당 마니또 방으로 이동할 수 없습니다."
 
     // MARK: - OpenManittoViewController
     static let openManittoViewController: String = "당신의 마니또는?"
@@ -90,16 +95,16 @@ enum TextLiteral {
     static let letterHeaderViewSegmentControlManitti: String = "마니띠에게"
     static let letterHeaderViewSegmentControlManitto: String = "마니또로부터"
     
-    // MARK: - SendLetterView
+    // MARK: - BottomSendLetterView
     static let sendLetterViewSendLetterButton: String = "쪽지 쓰기"
     
     // MARK: - IndividualMissionView
     static let individualMissionViewTitleLabel: String = "오늘의 개별 미션"
     
-    // MARK: - LetterTextView
+    // MARK: - CreateLetterTextView
     static let letterTextViewTitleLabel: String = "쪽지 작성"
     
-    // MARK: - LetterPhotoView
+    // MARK: - CreateLetterPhotoView
     static let letterPhotoViewTitleLabel: String = "사진 추가"
     static let letterPhotoViewTakePhoto: String = "사진 촬영"
     static let letterPhotoViewChoosePhoto: String = "사진 보관함에서 선택"
@@ -107,6 +112,10 @@ enum TextLiteral {
     static let letterPhotoViewChoosePhotoToManitto: String = "마니또에게 보낼 사진 선택"
     static let letterPhotoViewSetting: String = "설정"
     static let letterPhotoViewFail: String = "사진을 불러올 수 없습니다."
+    static let letterPhotoViewErrorTitle: String = "오류"
+    static let letterPhotoViewSettingFail = "설정 화면을 연결할 수 없습니다."
+    static let letterPhotoViewDeviceFail = "해당 기기에서 카메라를 사용할 수 없습니다."
+    static let letterPhotoViewSettingAuthorization = "\(appName)가 카메라에 접근이 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?"
     
     // MARK: - LetterViewController
     static let letterViewControllerTitle = "쪽지함"
@@ -130,6 +139,8 @@ enum TextLiteral {
     // MARK: - CreateLetterViewController
     static let createLetterViewControllerSendButton: String = "보내기"
     static let createLetterViewControllerTitle: String = "쪽지 작성하기"
+    static let createLetterViewControllerErrorTitle = "오류 발생"
+    static let createLetterViewControllerErrorMessage = "쪽지 전송에 실패했습니다. 다시 시도해주세요."
 
     
     // MARK: - DetailIngViewController

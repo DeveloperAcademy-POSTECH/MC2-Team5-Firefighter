@@ -11,7 +11,7 @@ import SnapKit
 
 final class IndividualMissionView: UIView {
     
-    // MARK: - property
+    // MARK: - ui component
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -20,51 +20,51 @@ final class IndividualMissionView: UIView {
         label.textColor = .grey002
         return label
     }()
-    private lazy var missionLabel: UILabel = {
+    private let missionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
-        label.text = missionText
         label.font = .font(.regular, ofSize: 20)
         label.textAlignment = .center
         label.contentMode = .center
         return label
     }()
     
-    private var missionText: String
-
     // MARK: - init
-    
-    init(mission: String) {
-        missionText = mission
-        super.init(frame: .zero)
-        render()
-        configUI()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setupLayout()
+        self.configureUI()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - func
     
-    private func render() {
-        addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(15)
         }
         
-        addSubview(missionLabel)
-        missionLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(12)
+        self.addSubview(self.missionLabel)
+        self.missionLabel.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(12)
             $0.bottom.equalToSuperview().inset(21)
         }
     }
     
-    private func configUI() {
-        backgroundColor = .darkGrey004
-        makeBorderLayer(color: .subOrange)
+    private func configureUI() {
+        self.backgroundColor = .darkGrey004
+        self.makeBorderLayer(color: .subOrange)
+    }
+
+    func setupMission(with mission: String) {
+        self.missionLabel.text = mission
     }
 }
