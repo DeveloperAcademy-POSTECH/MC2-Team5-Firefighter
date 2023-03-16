@@ -60,17 +60,17 @@ enum DetailWaitEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .fetchWithFriend(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/participants"
+            return URLLiteral.DetailWait[.fetchWithFriend(roomId: roomId)]
         case .fetchWaitingRoomInfo(let roomId):
-            return "\(baseURL)/rooms/\(roomId)"
+            return URLLiteral.DetailWait[.fetchWaitingRoomInfo(roomId: roomId)]
         case .patchStartManitto(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/state"
+            return URLLiteral.DetailWait[.patchStartManitto(roomId: roomId)]
         case .putRoomInfo(let roomId, _):
-            return "\(baseURL)/rooms/\(roomId)"
+            return URLLiteral.DetailWait[.putRoomInfo(roomId: roomId)]
         case .deleteRoom(let roomId):
-            return "\(baseURL)/rooms/\(roomId)"
+            return URLLiteral.DetailWait[.deleteRoom(roomId: roomId)]
         case .deleteLeaveRoom(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/participants"
+            return URLLiteral.DetailWait[.deleteLeaveRoom(roomId: roomId)]
         }
     }
     

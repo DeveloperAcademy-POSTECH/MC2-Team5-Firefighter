@@ -36,9 +36,9 @@ enum MainEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .fetchCommonMission:
-            return "\(baseURL)/missions/common/"
+            return URLLiteral.Main[.fetchCommonMission]
         case .fetchManittoList:
-            return "\(baseURL)/rooms/"
+            return URLLiteral.Main[.fetchManittoList]
         }
     }
     

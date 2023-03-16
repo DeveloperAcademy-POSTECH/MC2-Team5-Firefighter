@@ -18,18 +18,29 @@ extension URLLiteral {
 
     // MARK: - detailWait path
 
-    enum DetailWait: String {
-        case fetchCommonMission = "/missions/common/"
-        case fetchManittoList = "/rooms/"
+    enum DetailWait: URLRepresentable {
+        case fetchWithFriend(roomId: String)
+        case fetchWaitingRoomInfo(roomId: String)
+        case patchStartManitto(roomId: String)
+        case putRoomInfo(roomId: String)
+        case deleteRoom(roomId: String)
+        case deleteLeaveRoom(roomId: String)
 
-        static subscript(_ `case`: Self, version: APIEnvironment = .v1) -> String {
-            return APIEnvironment.baseURL(version) + `case`.rawValue
+        var rawValue: String {
+            switch self {
+            case .fetchWithFriend(roomId: let roomId):
+                return "/rooms/\(roomId)/participants"
+            case .fetchWaitingRoomInfo(roomId: let roomId):
+                return "/rooms/\(roomId)"
+            case .patchStartManitto(roomId: let roomId):
+                return "/rooms/\(roomId)/state"
+            case .putRoomInfo(roomId: let roomId):
+                return "/rooms/\(roomId)"
+            case .deleteRoom(roomId: let roomId):
+                return "/rooms/\(roomId)"
+            case .deleteLeaveRoom(roomId: let roomId):
+                return "/rooms/\(roomId)/participants"
+            }
         }
-    }
-}
-
-extension RawRepresentable {
-    static subscript(_ `case`: Self, version: APIEnvironment = .v1) -> String {
-        return APIEnvironment.baseURL(version) + "\(`case`.rawValue)"
     }
 }

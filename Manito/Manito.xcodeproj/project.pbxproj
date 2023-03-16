@@ -87,6 +87,7 @@
 		B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */; };
 		B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741E929A494E200B75BA3 /* LetterImageError.swift */; };
 		B55B482029C353A800CFFDAD /* URLLiteral+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55B481F29C353A800CFFDAD /* URLLiteral+Path.swift */; };
+		B55B482229C3723B00CFFDAD /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55B482129C3723B00CFFDAD /* URLRepresentable.swift */; };
 		B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */; };
 		B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEB528D99F8600AF7E45 /* Settings.bundle */; };
 		B55BCEC628F5AFB200AF7E45 /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC528F5AFB200AF7E45 /* capsule.gif */; };
@@ -245,6 +246,7 @@
 		B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageView.swift; sourceTree = "<group>"; };
 		B54741E929A494E200B75BA3 /* LetterImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageError.swift; sourceTree = "<group>"; };
 		B55B481F29C353A800CFFDAD /* URLLiteral+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLLiteral+Path.swift"; sourceTree = "<group>"; };
+		B55B482129C3723B00CFFDAD /* URLRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRepresentable.swift; sourceTree = "<group>"; };
 		B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		B55BCEB528D99F8600AF7E45 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B55BCEC528F5AFB200AF7E45 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				39C957F5287D9ED000A04A2B /* NetworkRequest.swift */,
 				B5F31C5528BFA87700F61D0F /* Requestable.swift */,
 				B55B481F29C353A800CFFDAD /* URLLiteral+Path.swift */,
+				B55B482129C3723B00CFFDAD /* URLRepresentable.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1209,6 +1212,7 @@
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
 				CB7B23A828C4ECA8004A4CF3 /* Character.swift in Sources */,
 				39C957E12879A3CF00A04A2B /* DailyMission.swift in Sources */,
+				B55B482229C3723B00CFFDAD /* URLRepresentable.swift in Sources */,
 				B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */,
 				39CD582128C4C3E800496E91 /* DetailDoneAPI.swift in Sources */,
 				D724AF5D287088310003F280 /* SettingViewController.swift in Sources */,
