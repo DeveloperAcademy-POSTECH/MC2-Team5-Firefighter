@@ -36,9 +36,9 @@ enum DetailIngEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .requestWithFriend(let roomId):
-            return URLLiteral.DetailIng[.requestWithFriend(roomId: roomId)]
+            return "URLLiteral.DetailIng[.requestWithFriend(roomId: roomId)]"
         case .requestStartingRoomInfo(let roomId):
-            return URLLiteral.DetailIng[.requestStartingRoomInfo(roomId: roomId)]
+            return "URLLiteral.DetailIng[.requestStartingRoomInfo(roomId: roomId)]"
         }
     }
     

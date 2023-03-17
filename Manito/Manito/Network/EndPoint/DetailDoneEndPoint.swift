@@ -51,15 +51,15 @@ enum DetailDoneEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .requestWithFriend(let roomId):
-            return URLLiteral.DetailDone[.requestWithFriend(roomId: roomId)]
+            return "URLLiteral.DetailDone[.requestWithFriend(roomId: roomId)]"
         case .requestMemory(let roomId):
-            return URLLiteral.DetailDone[.requestMemory(roomId: roomId)]
+            return "URLLiteral.DetailDone[.requestMemory(roomId: roomId)]"
         case .requestDoneRoomInfo(let roomId):
-            return URLLiteral.DetailDone[.requestDoneRoomInfo(roomId: roomId)]
+            return "URLLiteral.DetailDone[.requestDoneRoomInfo(roomId: roomId)]"
         case .requestExitRoom(let roomId):
-            return URLLiteral.DetailDone[.requestExitRoom(roomId: roomId)]
+            return "URLLiteral.DetailDone[.requestExitRoom(roomId: roomId)]"
         case .requestDeleteRoom(let roomId):
-            return URLLiteral.DetailDone[.requestDeleteRoom(roomId: roomId)]
+            return "URLLiteral.DetailDone[.requestDeleteRoom(roomId: roomId)]"
         }
     }
     

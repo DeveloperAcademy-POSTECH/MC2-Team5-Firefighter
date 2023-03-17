@@ -7,10 +7,21 @@
 
 import Foundation
 
-enum MainEndPoint: EndPointable {
+enum MainEndPoint: URLRepresentable {
     case fetchCommonMission
     case fetchManittoList
 
+    var path: String {
+        switch self {
+        case .fetchCommonMission:
+            return "/missions/common"
+        case .fetchManittoList:
+            return "/rooms"
+        }
+    }
+}
+
+extension MainEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -36,9 +47,9 @@ enum MainEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .fetchCommonMission:
-            return URLLiteral.Main[.fetchCommonMission]
+            return self[.fetchCommonMission]
         case .fetchManittoList:
-            return URLLiteral.Main[.fetchManittoList]
+            return self[.fetchManittoList]
         }
     }
     

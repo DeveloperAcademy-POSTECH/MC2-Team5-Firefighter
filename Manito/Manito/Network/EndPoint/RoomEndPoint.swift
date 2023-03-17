@@ -44,11 +44,11 @@ enum RoomEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .dispatchCreateRoom(_):
-            return "\(baseURL)/rooms"
+            return "URLLiteral.RoomParticipation[.dispatchCreateRoom]"
         case .fetchVerifyCode:
-            return "\(baseURL)/invitations/verification"
+            return "URLLiteral.RoomParticipation[.fetchVerifyCode]"
         case .dispatchJoinRoom(let roomId, _):
-            return "\(baseURL)/rooms/\(roomId)/participants"
+            return "URLLiteral.RoomParticipation[.dispatchJoinRoom(roomId: roomId)]"
         }
     }
     
