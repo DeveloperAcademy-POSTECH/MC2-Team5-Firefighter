@@ -43,4 +43,45 @@ extension URLLiteral {
             }
         }
     }
+
+    // MARK: - detailIng path
+
+    enum DetailIng: URLRepresentable {
+        case requestWithFriend(roomId: String)
+        case requestStartingRoomInfo(roomId: String)
+
+        var rawValue: String {
+            switch self {
+            case .requestWithFriend(roomId: let roomId):
+                return "/rooms/\(roomId)/participants"
+            case .requestStartingRoomInfo(roomId: let roomId):
+                return "/rooms/\(roomId)"
+            }
+        }
+    }
+
+    // MARK: - detailDone path
+
+    enum DetailDone: URLRepresentable {
+        case requestWithFriend(roomId: String)
+        case requestMemory(roomId: String)
+        case requestDoneRoomInfo(roomId: String)
+        case requestExitRoom(roomId: String)
+        case requestDeleteRoom(roomId: String)
+
+        var rawValue: String {
+            switch self {
+            case .requestWithFriend(roomId: let roomId):
+                return "/rooms/\(roomId)/participants"
+            case .requestMemory(roomId: let roomId):
+                return "/rooms/\(roomId)/memories"
+            case .requestDoneRoomInfo(roomId: let roomId):
+                return "/rooms/\(roomId)"
+            case .requestExitRoom(roomId: let roomId):
+                return "/rooms/\(roomId)/participants"
+            case .requestDeleteRoom(roomId: let roomId):
+                return "/rooms/\(roomId)"
+            }
+        }
+    }
 }
