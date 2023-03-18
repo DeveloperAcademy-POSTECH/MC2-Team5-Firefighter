@@ -44,7 +44,7 @@ extension InteractionEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
         case .mixRandomManitto(let roomId):
             return self[.mixRandomManitto(roomId: roomId), .none]

@@ -55,9 +55,9 @@ final class APIService: Requestable {
 }
 
 extension APIService {
-    typealias UrlResponse = (Data, HTTPURLResponse)
+    typealias URLResponse = (Data, HTTPURLResponse)
     
-    private func requestDataToUrl(_ request: NetworkRequest) async throws -> UrlResponse {
+    private func requestDataToUrl(_ request: NetworkRequest) async throws -> URLResponse {
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.timeoutIntervalForRequest = TimeInterval(request.requestTimeOut ?? requestTimeOut)
         guard let encodedUrl = request.url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),

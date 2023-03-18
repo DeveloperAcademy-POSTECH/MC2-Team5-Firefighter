@@ -54,7 +54,7 @@ extension RoomEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
         case .dispatchCreateRoom(let roomInfo):
             return self[.dispatchCreateRoom(roomInfo: roomInfo)]
@@ -69,11 +69,12 @@ extension RoomEndPoint: EndPointable {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
         headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseURL()),
+
+        return NetworkRequest(url: self.url,
                               headers: headers,
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
 }

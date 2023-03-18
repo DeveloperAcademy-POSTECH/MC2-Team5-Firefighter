@@ -37,7 +37,7 @@ extension LoginEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
         case .dispatchAppleLogin(let loginDTO):
             return self[.dispatchAppleLogin(body: loginDTO), .v2]
@@ -47,11 +47,12 @@ extension LoginEndPoint: EndPointable {
     func createRequest() -> NetworkRequest {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseURL(.v2)),
+
+        return NetworkRequest(url: self.url,
                               headers: headers,
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
 }

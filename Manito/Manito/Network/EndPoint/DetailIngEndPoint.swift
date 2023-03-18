@@ -44,7 +44,7 @@ extension DetailIngEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
         case .requestWithFriend(let roomId):
             return self[.requestWithFriend(roomId: roomId)]
@@ -54,10 +54,10 @@ extension DetailIngEndPoint: EndPointable {
     }
     
     func createRequest() -> NetworkRequest {
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseURL()),
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+        return NetworkRequest(url: self.url,
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
 }

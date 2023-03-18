@@ -65,7 +65,7 @@ extension LetterEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
         case .dispatchLetter(let roomId, let image, let letterDTO, let missionId):
             return self[.dispatchLetter(roomId: roomId, image: image, letter: letterDTO, missionId: missionId)]
@@ -80,21 +80,19 @@ extension LetterEndPoint: EndPointable {
     
     func createRequest() -> NetworkRequest {
         var headers: [String: String] = [:]
-        
         switch self {
         case .dispatchLetter:
             headers["Content-Type"] = "multipart/form-data; boundary=\(APIEnvironment.boundary)"
         default:
             headers["Content-Type"] = "application/json"
         }
-        
         headers["Authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
         
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseURL()),
+        return NetworkRequest(url: self.url,
                               headers: headers,
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod)
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod)
     }
 }
 
