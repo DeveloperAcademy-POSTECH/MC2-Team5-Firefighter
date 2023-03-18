@@ -7,9 +7,18 @@
 
 import Foundation
 
-enum SettingEndPoint: EndPointable {
+enum SettingEndPoint: URLRepresentable {
     case editUserInfo(nickNameDto: NicknameDTO)
 
+    var path: String {
+        switch self {
+        case .editUserInfo:
+            return "/members/nickname"
+        }
+    }
+}
+
+extension SettingEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -31,8 +40,8 @@ enum SettingEndPoint: EndPointable {
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .editUserInfo(_):
-            return "\(baseURL)/members/nickname"
+        case .editUserInfo(let nicknameDTO):
+            return self[.editUserInfo(nickNameDto: nicknameDTO)]
         }
     }
     

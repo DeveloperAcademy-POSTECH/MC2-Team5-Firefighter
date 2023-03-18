@@ -16,7 +16,7 @@ enum InteractionEndPoint: URLRepresentable {
         case .mixRandomManitto(let roomId):
             return "/rooms/\(roomId)/relations"
         case .openManitto:
-            <#code#>
+            return "/relations/my-manitto"
         }
     }
 }
@@ -47,9 +47,9 @@ extension InteractionEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .mixRandomManitto(let roomId):
-            return "\(baseURL)/api"
+            return self[.mixRandomManitto(roomId: roomId), .none]
         case .openManitto:
-            return "\(baseURL)/api/relations/my-manitto"
+            return self[.openManitto, .none]
         }
     }
 }
