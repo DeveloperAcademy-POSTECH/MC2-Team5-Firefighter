@@ -7,11 +7,24 @@
 
 import Foundation
 
-enum RoomEndPoint: EndPointable {
+enum RoomEndPoint: URLRepresentable {
     case dispatchCreateRoom(roomInfo: CreateRoomDTO)
     case fetchVerifyCode(code: String)
     case dispatchJoinRoom(roomId: String, roomDto: MemberDTO)
 
+    var path: String {
+        switch self {
+        case .dispatchCreateRoom:
+            return "/rooms"
+        case .fetchVerifyCode:
+            return "/invitations/verification"
+        case .dispatchJoinRoom(roomId: let roomId):
+            return "/rooms/\(roomId)/participants"
+        }
+    }
+}
+
+extension RoomEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -43,12 +56,12 @@ enum RoomEndPoint: EndPointable {
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .dispatchCreateRoom(_):
-            return "URLLiteral.RoomParticipation[.dispatchCreateRoom]"
-        case .fetchVerifyCode:
-            return "URLLiteral.RoomParticipation[.fetchVerifyCode]"
-        case .dispatchJoinRoom(let roomId, _):
-            return "URLLiteral.RoomParticipation[.dispatchJoinRoom(roomId: roomId)]"
+        case .dispatchCreateRoom(let roomInfo):
+            return self[.dispatchCreateRoom(roomInfo: roomInfo)]
+        case .fetchVerifyCode(let code):
+            return self[.fetchVerifyCode(code: code)]
+        case .dispatchJoinRoom(let roomId, let roomDTO):
+            return self[.dispatchJoinRoom(roomId: roomId, roomDto: roomDTO)]
         }
     }
     

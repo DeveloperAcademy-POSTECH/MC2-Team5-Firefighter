@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DetailWaitEndPoint: EndPointable {
+enum DetailWaitEndPoint: URLRepresentable {
     case fetchWithFriend(roomId: String)
     case fetchWaitingRoomInfo(roomId: String)
     case patchStartManitto(roomId: String)
@@ -15,6 +15,25 @@ enum DetailWaitEndPoint: EndPointable {
     case deleteRoom(roomId: String)
     case deleteLeaveRoom(roomId: String)
 
+    var path: String {
+        switch self {
+        case .fetchWithFriend(roomId: let roomId):
+            return "/rooms/\(roomId)/participants"
+        case .fetchWaitingRoomInfo(roomId: let roomId):
+            return "/rooms/\(roomId)"
+        case .patchStartManitto(roomId: let roomId):
+            return "/rooms/\(roomId)/state"
+        case .putRoomInfo(roomId: let roomId, _):
+            return "/rooms/\(roomId)"
+        case .deleteRoom(roomId: let roomId):
+            return "/rooms/\(roomId)"
+        case .deleteLeaveRoom(roomId: let roomId):
+            return "/rooms/\(roomId)/participants"
+        }
+    }
+}
+
+extension DetailWaitEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -60,17 +79,17 @@ enum DetailWaitEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .fetchWithFriend(let roomId):
-            return "URLLiteral.DetailWait[.fetchWithFriend(roomId: roomId)]"
+            return self[.fetchWithFriend(roomId: roomId)]
         case .fetchWaitingRoomInfo(let roomId):
-            return "URLLiteral.DetailWait[.fetchWaitingRoomInfo(roomId: roomId)]"
+            return self[.fetchWaitingRoomInfo(roomId: roomId)]
         case .patchStartManitto(let roomId):
-            return "URLLiteral.DetailWait[.patchStartManitto(roomId: roomId)]"
-        case .putRoomInfo(let roomId, _):
-            return "URLLiteral.DetailWait[.putRoomInfo(roomId: roomId)]"
+            return self[.patchStartManitto(roomId: roomId)]
+        case .putRoomInfo(let roomId, let roomInfo):
+            return self[.putRoomInfo(roomId: roomId, roomInfo: roomInfo)]
         case .deleteRoom(let roomId):
-            return "URLLiteral.DetailWait[.deleteRoom(roomId: roomId)]"
+            return self[.deleteRoom(roomId: roomId)]
         case .deleteLeaveRoom(let roomId):
-            return "URLLiteral.DetailWait[.deleteLeaveRoom(roomId: roomId)]"
+            return self[.deleteLeaveRoom(roomId: roomId)]
         }
     }
     

@@ -7,10 +7,21 @@
 
 import Foundation
 
-enum DetailIngEndPoint: EndPointable {
+enum DetailIngEndPoint: URLRepresentable {
     case requestWithFriend(roomId: String)
     case requestStartingRoomInfo(roomId: String)
 
+    var path: String {
+        switch self {
+        case .requestWithFriend(roomId: let roomId):
+            return "/rooms/\(roomId)/participants"
+        case .requestStartingRoomInfo(roomId: let roomId):
+            return "/rooms/\(roomId)"
+        }
+    }
+}
+
+extension DetailIngEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -36,9 +47,9 @@ enum DetailIngEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .requestWithFriend(let roomId):
-            return "URLLiteral.DetailIng[.requestWithFriend(roomId: roomId)]"
+            return self[.requestWithFriend(roomId: roomId)]
         case .requestStartingRoomInfo(let roomId):
-            return "URLLiteral.DetailIng[.requestStartingRoomInfo(roomId: roomId)]"
+            return self[.requestStartingRoomInfo(roomId: roomId)]
         }
     }
     

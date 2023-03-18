@@ -7,13 +7,30 @@
 
 import Foundation
 
-enum DetailDoneEndPoint: EndPointable {
+enum DetailDoneEndPoint: URLRepresentable {
     case requestWithFriend(roomId: String)
     case requestMemory(roomId: String)
     case requestDoneRoomInfo(roomId: String)
     case requestExitRoom(roomId: String)
     case requestDeleteRoom(roomId: String)
 
+    var path: String {
+        switch self {
+        case .requestWithFriend(roomId: let roomId):
+            return "/rooms/\(roomId)/participants"
+        case .requestMemory(roomId: let roomId):
+            return "/rooms/\(roomId)/memories"
+        case .requestDoneRoomInfo(roomId: let roomId):
+            return "/rooms/\(roomId)"
+        case .requestExitRoom(roomId: let roomId):
+            return "/rooms/\(roomId)/participants"
+        case .requestDeleteRoom(roomId: let roomId):
+            return "/rooms/\(roomId)"
+        }
+    }
+}
+
+extension DetailDoneEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -51,15 +68,15 @@ enum DetailDoneEndPoint: EndPointable {
     func getURL(baseURL: String) -> String {
         switch self {
         case .requestWithFriend(let roomId):
-            return "URLLiteral.DetailDone[.requestWithFriend(roomId: roomId)]"
+            return self[.requestWithFriend(roomId: roomId)]
         case .requestMemory(let roomId):
-            return "URLLiteral.DetailDone[.requestMemory(roomId: roomId)]"
+            return self[.requestMemory(roomId: roomId)]
         case .requestDoneRoomInfo(let roomId):
-            return "URLLiteral.DetailDone[.requestDoneRoomInfo(roomId: roomId)]"
+            return self[.requestDoneRoomInfo(roomId: roomId)]
         case .requestExitRoom(let roomId):
-            return "URLLiteral.DetailDone[.requestExitRoom(roomId: roomId)]"
+            return self[.requestExitRoom(roomId: roomId)]
         case .requestDeleteRoom(let roomId):
-            return "URLLiteral.DetailDone[.requestDeleteRoom(roomId: roomId)]"
+            return self[.requestDeleteRoom(roomId: roomId)]
         }
     }
     
