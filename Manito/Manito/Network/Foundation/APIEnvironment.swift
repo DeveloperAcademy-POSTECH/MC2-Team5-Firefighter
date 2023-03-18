@@ -7,11 +7,13 @@
 
 import Foundation
 
-enum APIEnvironment {
-    case v1, v2
+enum APIEnvironment: String {
+    case v1 = "/v1"
+    case v2 = "/v2"
+    case none = ""
 
     static func baseURL(_ version: Self = v1) -> String {
-        return URLLiteral.productionUrl + "/api/\(version)"
+        return URLLiteral.productionUrl + "/api\(version.rawValue)"
     }
     
     static let boundary: String = "com.TeamFirefighter.Manito"
