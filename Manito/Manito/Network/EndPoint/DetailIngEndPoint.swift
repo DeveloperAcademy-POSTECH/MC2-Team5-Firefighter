@@ -13,9 +13,9 @@ enum DetailIngEndPoint: URLRepresentable {
 
     var path: String {
         switch self {
-        case .requestWithFriend(roomId: let roomId):
+        case .requestWithFriend(let roomId):
             return "/rooms/\(roomId)/participants"
-        case .requestStartingRoomInfo(roomId: let roomId):
+        case .requestStartingRoomInfo(let roomId):
             return "/rooms/\(roomId)"
         }
     }

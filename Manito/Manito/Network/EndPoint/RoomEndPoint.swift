@@ -18,7 +18,7 @@ enum RoomEndPoint: URLRepresentable {
             return "/rooms"
         case .fetchVerifyCode:
             return "/invitations/verification"
-        case .dispatchJoinRoom(roomId: let roomId):
+        case .dispatchJoinRoom(let roomId, _):
             return "/rooms/\(roomId)/participants"
         }
     }

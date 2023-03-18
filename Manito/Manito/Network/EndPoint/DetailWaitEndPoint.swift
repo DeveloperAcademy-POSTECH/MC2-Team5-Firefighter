@@ -17,17 +17,17 @@ enum DetailWaitEndPoint: URLRepresentable {
 
     var path: String {
         switch self {
-        case .fetchWithFriend(roomId: let roomId):
+        case .fetchWithFriend(let roomId):
             return "/rooms/\(roomId)/participants"
-        case .fetchWaitingRoomInfo(roomId: let roomId):
+        case .fetchWaitingRoomInfo(let roomId):
             return "/rooms/\(roomId)"
-        case .patchStartManitto(roomId: let roomId):
+        case .patchStartManitto(let roomId):
             return "/rooms/\(roomId)/state"
-        case .putRoomInfo(roomId: let roomId, _):
+        case .putRoomInfo(let roomId, _):
             return "/rooms/\(roomId)"
-        case .deleteRoom(roomId: let roomId):
+        case .deleteRoom(let roomId):
             return "/rooms/\(roomId)"
-        case .deleteLeaveRoom(roomId: let roomId):
+        case .deleteLeaveRoom(let roomId):
             return "/rooms/\(roomId)/participants"
         }
     }

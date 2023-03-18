@@ -16,15 +16,15 @@ enum DetailDoneEndPoint: URLRepresentable {
 
     var path: String {
         switch self {
-        case .requestWithFriend(roomId: let roomId):
+        case .requestWithFriend(let roomId):
             return "/rooms/\(roomId)/participants"
-        case .requestMemory(roomId: let roomId):
+        case .requestMemory(let roomId):
             return "/rooms/\(roomId)/memories"
-        case .requestDoneRoomInfo(roomId: let roomId):
+        case .requestDoneRoomInfo(let roomId):
             return "/rooms/\(roomId)"
-        case .requestExitRoom(roomId: let roomId):
+        case .requestExitRoom(let roomId):
             return "/rooms/\(roomId)/participants"
-        case .requestDeleteRoom(roomId: let roomId):
+        case .requestDeleteRoom(let roomId):
             return "/rooms/\(roomId)"
         }
     }

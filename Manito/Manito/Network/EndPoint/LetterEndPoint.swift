@@ -7,12 +7,27 @@
 
 import Foundation
 
-enum LetterEndPoint: EndPointable {
+enum LetterEndPoint: URLRepresentable {
     case dispatchLetter(roomId: String, image: Data?, letter: LetterDTO, missionId: String)
     case fetchSendLetter(roomId: String)
     case fetchReceiveLetter(roomId: String)
     case patchReadMessage(roomId: String, status: String)
-    
+
+    var path: String {
+        switch self {
+        case .dispatchLetter(let roomId, _, _, _):
+            return "/rooms/\(roomId)/messages-separate"
+        case .fetchSendLetter(let roomId):
+            return "/rooms/\(roomId)/messages-sent"
+        case .fetchReceiveLetter(let roomId):
+            return "/rooms/\(roomId)/messages-received"
+        case .patchReadMessage(let roomId, _):
+            return "/rooms/\(roomId)/messages/status"
+        }
+    }
+}
+
+extension LetterEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -52,14 +67,14 @@ enum LetterEndPoint: EndPointable {
 
     func getURL(baseURL: String) -> String {
         switch self {
-        case .dispatchLetter(let roomId, _, _, _):
-            return "\(APIEnvironment.baseURL())/rooms/\(roomId)/messages-separate"
+        case .dispatchLetter(let roomId, let image, let letterDTO, let missionId):
+            return self[.dispatchLetter(roomId: roomId, image: image, letter: letterDTO, missionId: missionId)]
         case .fetchSendLetter(let roomId):
-            return "\(APIEnvironment.baseURL(.v2))/rooms/\(roomId)/messages-sent"
+            return self[.fetchSendLetter(roomId: roomId), .v2]
         case .fetchReceiveLetter(let roomId):
-            return "\(APIEnvironment.baseURL(.v2))/rooms/\(roomId)/messages-received"
-        case .patchReadMessage(let roomId, _):
-            return "\(APIEnvironment.baseURL())/rooms/\(roomId)/messages/status"
+            return self[.fetchReceiveLetter(roomId: roomId), .v2]
+        case .patchReadMessage(let roomId, let status):
+            return self[.patchReadMessage(roomId: roomId, status: status)]
         }
     }
     
@@ -83,6 +98,7 @@ enum LetterEndPoint: EndPointable {
     }
 }
 
+// MARK: - Multipart Form Data Helper Method
 extension LetterEndPoint {
     func createDataBody(withParameters params: [String: String?],
                         media: Data?,
