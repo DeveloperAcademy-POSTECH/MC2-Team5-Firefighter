@@ -198,8 +198,8 @@ final class CreateRoomViewController: BaseViewController {
         case .checkRoom:
             self.roomInfo = RoomDTO(title: self.name,
                                     capacity: self.person,
-                                    startDate: "20\(dateView.calendarView.getTempStartDate())",
-                                    endDate: "20\(dateView.calendarView.getTempEndDate())")
+                                    startDate: "20\(self.dateView.calendarView.getTempStartDate())",
+                                    endDate: "20\(self.dateView.calendarView.getTempEndDate())")
             let viewController = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
             viewController.roomInfo = self.roomInfo
             self.navigationController?.pushViewController(viewController, animated: true)
