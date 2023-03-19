@@ -76,7 +76,7 @@ final class InputNameView: UIView {
         if count <= maxLength {
             self.roomsTextLimitLabel.text = "\(count)/\(self.maxLength)"
         } else {
-            roomsTextLimitLabel.text = "\(self.maxLength)/\(self.maxLength)"
+            self.roomsTextLimitLabel.text = "\(self.maxLength)/\(self.maxLength)"
         }
     }
     
