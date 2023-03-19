@@ -123,7 +123,7 @@ final class InputPersonView: UIView {
     // MARK: - selector
     
     @objc
-    func didSlideSlider(_ slider: UISlider) {
+    private func didSlideSlider(_ slider: UISlider) {
         let value = slider.value
         self.personLabel.text = TextLiteral.x + " \(Int(value))인"
     }
