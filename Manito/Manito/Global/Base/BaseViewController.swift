@@ -19,15 +19,6 @@ class BaseViewController: UIViewController {
         button.addAction(buttonAction, for: .touchUpInside)
         return button
     }()
-    lazy var guideButton = UIButton()
-    lazy var guideBoxImageView = UIImageView(image: ImageLiterals.imgGuideBox)
-    lazy var guideLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = .font(.regular, ofSize: 14)
-        label.contentMode = .center
-        return label
-    }()
     
     private let tokenService: TokenAPI = TokenAPI(apiService: APIService())
     
@@ -101,37 +92,6 @@ class BaseViewController: UIViewController {
         offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
         offsetView.addSubview(button)
         return offsetView
-    }
-    
-    func renderGuideArea() {
-        view.addSubview(guideBoxImageView)
-        guideBoxImageView.snp.makeConstraints {
-            $0.top.equalTo(guideButton.snp.bottom).offset(-10)
-            $0.trailing.equalTo(guideButton.snp.trailing).offset(-12)
-            $0.width.equalTo(270)
-            $0.height.equalTo(90)
-        }
-        
-        guideBoxImageView.addSubview(guideLabel)
-        guideLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.leading.trailing.equalToSuperview().inset(15)
-        }
-    }
-    
-    func setupGuideArea() {
-        let guideAction = UIAction { [weak self] _ in
-            self?.guideBoxImageView.isHidden.toggle()
-        }
-        guideButton.addAction(guideAction, for: .touchUpInside)
-        guideBoxImageView.isHidden = true
-    }
-    
-    func setupGuideText(title: String, text: String) {
-        guideLabel.text = text
-        guideLabel.addLabelSpacing()
-        guideLabel.textAlignment = .center
-        guideLabel.applyColor(to: title, with: .subOrange)
     }
     
     // MARK: - private func

@@ -217,6 +217,7 @@ final class DetailingCodebaseViewController: BaseViewController {
         button.showsMenuAsPrimaryAction = true
         return button
     }()
+    private let guideView: GuideView = GuideView(type: .detailing)
     
     // MARK: - init
     
@@ -234,12 +235,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     }
     
     // MARK: - life cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupGuideArea()
-        renderGuideArea()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -391,31 +386,29 @@ final class DetailingCodebaseViewController: BaseViewController {
             $0.bottom.equalTo(manitteeIconView.snp.bottom)
         }
 
-        view.addSubview(guideButton)
-        guideButton.snp.makeConstraints {
-            $0.top.equalTo(missionBackgroundView.snp.top)
-            $0.trailing.equalTo(missionBackgroundView.snp.trailing)
-            $0.width.height.equalTo(44)
-        }
-
         view.addSubview(badgeLabel)
         badgeLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview().offset(35)
             $0.centerY.equalTo(letterBoxButton).offset(-10)
             $0.width.height.equalTo(30)
         }
-    }
-    
-    override func setupGuideArea() {
-        super.setupGuideArea()
-        guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        setupGuideText(title: TextLiteral.detailIngViewControllerGuideTitle, text: TextLiteral.detailIngViewControllerText)
+
+        self.view.addSubview(self.guideView)
+        self.guideView.snp.makeConstraints {
+            $0.top.equalTo(self.missionBackgroundView.snp.top)
+            $0.trailing.equalTo(self.missionBackgroundView.snp.trailing)
+        }
+        self.guideView.setupGuideViewLayout()
     }
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let rightItem = makeBarButtonItem(with: exitButton)
         navigationItem.rightBarButtonItem = rightItem
+    }
+
+    override func endEditingView() {
+        self.guideView.didTapAroundToHideGuideView()
     }
     
     // MARK: - func
@@ -492,13 +485,6 @@ final class DetailingCodebaseViewController: BaseViewController {
     }
   
     // MARK: - selector
-    
-    @objc
-    override func endEditingView() {
-        if !guideButton.isTouchInside {
-            guideBoxImageView.isHidden = true
-        }
-    }
     
     @objc
     private func didTappedManittee() {
