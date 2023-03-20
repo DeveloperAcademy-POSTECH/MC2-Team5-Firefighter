@@ -11,11 +11,17 @@ import SnapKit
 
 protocol CreateRoomViewDelegate: AnyObject {
     func didTapCloseButton()
-    func didTapNextButton()
-    func didTapBackButton()
+    func pushChooseCharacterViewController(roomInfo: RoomDTO?)
 }
 
 final class CreateRoomView: UIView {
+    
+    private enum CreateRoomState: Int {
+        case inputName = 0
+        case inputPerson = 1
+        case inputDate = 2
+        case checkRoom = 3
+    }
     
     // MARK: - ui component
     
@@ -46,13 +52,17 @@ final class CreateRoomView: UIView {
         button.isHidden = true
         return button
     }()
-    let nameView: InputNameView = InputNameView()
-    let personView: InputPersonView = InputPersonView()
-    let dateView: InputDateView = InputDateView()
-    let checkView: CheckRoomView = CheckRoomView()
+    private let nameView: InputNameView = InputNameView()
+    private let personView: InputPersonView = InputPersonView()
+    private let dateView: InputDateView = InputDateView()
+    private let checkView: CheckRoomView = CheckRoomView()
     
     // MARK: - property
     
+    private var name: String = ""
+    private var participants: Int = 0
+    private var notiIndex: CreateRoomState = .inputName
+    private var roomInfo: RoomDTO?
     private weak var delegate: CreateRoomViewDelegate?
     
     // MARK: - init
@@ -71,6 +81,10 @@ final class CreateRoomView: UIView {
     }
     
     // MARK: - func
+    
+    func configureDelegate(_ delegate: CreateRoomViewDelegate) {
+        self.delegate = delegate
+    }
     
     private func setupLayout() {
         self.addSubview(self.titleLabel)
@@ -137,18 +151,64 @@ final class CreateRoomView: UIView {
         self.closeButton.addAction(closeAction, for: .touchUpInside)
         
         let nextAction = UIAction { [weak self] _ in
-            self?.delegate?.didTapNextButton()
+            self?.changeNextRoom()
         }
         self.nextButton.addAction(nextAction, for: .touchUpInside)
         
         let backAction = UIAction { [weak self] _ in
-            self?.delegate?.didTapBackButton()
+            self?.changePreviousRoomIndex()
         }
         self.backButton.addAction(backAction, for: .touchUpInside)
     }
     
-    func configureDelegate(_ delegate: CreateRoomViewDelegate) {
-        self.delegate = delegate
+    private func changeNextRoom() {
+        switch self.notiIndex {
+        case .inputName:
+            guard let text = self.nameView.roomsNameTextField.text else { return }
+            self.name = text
+            self.setDataInCheckView(name: self.name)
+            self.changeNotiIndex()
+            self.changedInputView()
+            self.nameView.roomsNameTextField.resignFirstResponder()
+        case .inputPerson:
+            self.participants = Int(self.personView.personSlider.value)
+            self.setDataInCheckView(participants: self.participants)
+            self.changeNotiIndex()
+            self.changedInputView()
+        case .inputDate:
+            self.setDataInCheckView(date: "\(self.dateView.calendarView.getTempStartDate()) ~ \(self.dateView.calendarView.getTempEndDate())")
+            self.changeNotiIndex()
+            self.changedInputView()
+        case .checkRoom:
+            self.roomInfo = RoomDTO(title: self.name,
+                                    capacity: self.participants,
+                                    startDate: "20\(self.dateView.calendarView.getTempStartDate())",
+                                    endDate: "20\(self.dateView.calendarView.getTempEndDate())")
+            self.delegate?.pushChooseCharacterViewController(roomInfo: self.roomInfo)
+        }
+    }
+    
+    private func changePreviousRoomIndex() {
+        self.notiIndex = CreateRoomState.init(rawValue: self.notiIndex.rawValue - 1)!
+        self.changedInputView()
+    }
+    
+    private func changeNotiIndex() {
+        self.notiIndex = CreateRoomState.init(rawValue: self.notiIndex.rawValue + 1)!
+        self.changedInputView()
+    }
+    
+    private func changedInputView() {
+        switch self.notiIndex {
+        case .inputName:
+            self.setInputNameView()
+        case .inputPerson:
+            self.setInputPersonView()
+        case .inputDate:
+            self.setInputDateView()
+        case .checkRoom:
+            self.setCheckRoomView()
+        }
     }
     
     private func detectStartableStatus() {
@@ -161,7 +221,7 @@ final class CreateRoomView: UIView {
         }
     }
     
-    func setInputNameView() {
+    private func setInputNameView() {
         self.backButton.isHidden = true
         self.nameView.fadeIn()
         self.nameView.isHidden = false
@@ -169,7 +229,7 @@ final class CreateRoomView: UIView {
         self.personView.isHidden = true
     }
 
-    func setInputPersonView() {
+    private func setInputPersonView() {
         self.nextButton.isDisabled = false
         self.backButton.isHidden = false
         self.nameView.fadeOut()
@@ -180,7 +240,7 @@ final class CreateRoomView: UIView {
         self.dateView.isHidden = true
     }
 
-    func setInputDateView() {
+    private func setInputDateView() {
         self.dateView.calendarView.setupButtonState()
         self.personView.fadeOut()
         self.personView.isHidden = true
@@ -190,14 +250,14 @@ final class CreateRoomView: UIView {
         self.checkView.isHidden = true
     }
 
-    func setCheckRoomView() {
+    private func setCheckRoomView() {
         self.dateView.fadeOut()
         self.dateView.isHidden = true
         self.checkView.fadeIn()
         self.checkView.isHidden = false
     }
 
-    func setInputViewIsHidden() {
+    private func setInputViewIsHidden() {
         self.personView.alpha = 0.0
         self.personView.isHidden = true
         self.dateView.alpha = 0.0
@@ -205,8 +265,17 @@ final class CreateRoomView: UIView {
         self.checkView.alpha = 0.0
         self.checkView.isHidden = true
     }
-    
-    // MARK: - selector
-    
-    // MARK: - network
+
+    private func setDataInCheckView(name: String = "", participants: Int = 0, date: String = "" ) {
+        switch self.notiIndex {
+        case .inputName:
+            self.checkView.name = name
+        case .inputPerson:
+            self.checkView.participants = participants
+        case .inputDate:
+            self.checkView.dateRange = date
+        default:
+            return
+        }
+    }
 }
