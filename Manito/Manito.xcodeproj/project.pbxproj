@@ -164,6 +164,7 @@
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* UrlLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* UrlLiteral.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
+		D7CCB9BB29C82438008D7312 /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CCB9BA29C82438008D7312 /* CreateRoomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -322,6 +323,7 @@
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* UrlLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlLiteral.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
+		D7CCB9BA29C82438008D7312 /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -624,6 +626,7 @@
 		B5F524E528519ACA00614FF7 /* CreateRoom */ = {
 			isa = PBXGroup;
 			children = (
+				D7CCB9B929C8242F008D7312 /* View */,
 				7E3058C42854B45300489E6A /* UIComponent */,
 				B5F525052851A05500614FF7 /* CreateRoomViewController.swift */,
 			);
@@ -981,6 +984,14 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		D7CCB9B929C8242F008D7312 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D7CCB9BA29C82438008D7312 /* CreateRoomView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1087,6 +1098,7 @@
 				39C957EF287AEBB400A04A2B /* Endpointable.swift in Sources */,
 				B5F525292851A2A400614FF7 /* Logger.swift in Sources */,
 				B50B1AFF2856D3820080992C /* CreateLetterPhotoView.swift in Sources */,
+				D7CCB9BB29C82438008D7312 /* CreateRoomView.swift in Sources */,
 				397A241A28BA532A00454E4F /* FriendList.swift in Sources */,
 				B5F31C5628BFA87700F61D0F /* Requestable.swift in Sources */,
 				397A241028BA494100454E4F /* APIEnvironment.swift in Sources */,
