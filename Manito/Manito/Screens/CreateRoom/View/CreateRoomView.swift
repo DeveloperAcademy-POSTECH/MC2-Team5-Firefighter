@@ -167,17 +167,17 @@ final class CreateRoomView: UIView {
             guard let text = self.nameView.roomsNameTextField.text else { return }
             self.name = text
             self.setDataInCheckView(name: self.name)
-            self.changeNotiIndex()
+            self.changeNextRoomIndex()
             self.changedInputView()
             self.nameView.roomsNameTextField.resignFirstResponder()
         case .inputPerson:
             self.participants = Int(self.personView.personSlider.value)
             self.setDataInCheckView(participants: self.participants)
-            self.changeNotiIndex()
+            self.changeNextRoomIndex()
             self.changedInputView()
         case .inputDate:
             self.setDataInCheckView(date: "\(self.dateView.calendarView.getTempStartDate()) ~ \(self.dateView.calendarView.getTempEndDate())")
-            self.changeNotiIndex()
+            self.changeNextRoomIndex()
             self.changedInputView()
         case .checkRoom:
             self.roomInfo = RoomDTO(title: self.name,
@@ -193,7 +193,7 @@ final class CreateRoomView: UIView {
         self.changedInputView()
     }
     
-    private func changeNotiIndex() {
+    private func changeNextRoomIndex() {
         self.notiIndex = CreateRoomState.init(rawValue: self.notiIndex.rawValue + 1)!
         self.changedInputView()
     }
