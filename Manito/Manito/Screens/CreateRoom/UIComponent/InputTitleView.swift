@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class InputNameView: UIView {
+final class InputTitleView: UIView {
     
     // MARK: - ui component
     
@@ -95,7 +95,7 @@ final class InputNameView: UIView {
     }
 }
 
-extension InputNameView: UITextFieldDelegate {
+extension InputTitleView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }

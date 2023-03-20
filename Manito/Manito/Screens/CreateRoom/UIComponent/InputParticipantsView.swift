@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class InputPersonView: UIView {
+final class InputParticipants: UIView {
     
     // MARK: - ui component
     

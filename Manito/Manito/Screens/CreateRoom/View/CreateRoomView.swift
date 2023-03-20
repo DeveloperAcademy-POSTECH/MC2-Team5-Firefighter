@@ -17,8 +17,8 @@ protocol CreateRoomViewDelegate: AnyObject {
 final class CreateRoomView: UIView {
     
     private enum CreateRoomState: Int {
-        case inputName = 0
-        case inputPerson = 1
+        case inputTitle = 0
+        case inputParticipants = 1
         case inputDate = 2
         case checkRoom = 3
     }
@@ -52,16 +52,16 @@ final class CreateRoomView: UIView {
         button.isHidden = true
         return button
     }()
-    private let nameView: InputNameView = InputNameView()
-    private let personView: InputPersonView = InputPersonView()
-    private let dateView: InputDateView = InputDateView()
-    private let checkView: CheckRoomView = CheckRoomView()
+    private let roomTitleView: InputTitleView = InputTitleView()
+    private let roomParticipantsView: InputParticipants = InputParticipants()
+    private let roomDateView: InputDateView = InputDateView()
+    private let roomDataCheckView: CheckRoomView = CheckRoomView()
     
     // MARK: - property
     
     private var name: String = ""
     private var participants: Int = 0
-    private var notiIndex: CreateRoomState = .inputName
+    private var notiIndex: CreateRoomState = .inputTitle
     private var roomInfo: RoomDTO?
     private weak var delegate: CreateRoomViewDelegate?
     
@@ -113,29 +113,29 @@ final class CreateRoomView: UIView {
             $0.height.equalTo(60)
         }
 
-        self.addSubview(self.nameView)
-        self.nameView.snp.makeConstraints {
+        self.addSubview(self.roomTitleView)
+        self.roomTitleView.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(self.nextButton.snp.top)
         }
 
-        self.addSubview(self.personView)
-        self.personView.snp.makeConstraints {
+        self.addSubview(self.roomParticipantsView)
+        self.roomParticipantsView.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(self.nextButton.snp.top)
         }
 
-        self.addSubview(self.dateView)
-        self.dateView.snp.makeConstraints {
+        self.addSubview(self.roomDateView)
+        self.roomDateView.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(self.nextButton.snp.top)
         }
 
-        self.addSubview(self.checkView)
-        self.checkView.snp.makeConstraints {
+        self.addSubview(self.roomDataCheckView)
+        self.roomDataCheckView.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalTo(self.nextButton.snp.top)
@@ -163,27 +163,27 @@ final class CreateRoomView: UIView {
     
     private func changeNextRoom() {
         switch self.notiIndex {
-        case .inputName:
-            guard let text = self.nameView.roomsNameTextField.text else { return }
+        case .inputTitle:
+            guard let text = self.roomTitleView.roomsNameTextField.text else { return }
             self.name = text
             self.setDataInCheckView(name: self.name)
             self.changeNextRoomIndex()
             self.changedInputView()
-            self.nameView.roomsNameTextField.resignFirstResponder()
-        case .inputPerson:
-            self.participants = Int(self.personView.personSlider.value)
+            self.roomTitleView.roomsNameTextField.resignFirstResponder()
+        case .inputParticipants:
+            self.participants = Int(self.roomParticipantsView.personSlider.value)
             self.setDataInCheckView(participants: self.participants)
             self.changeNextRoomIndex()
             self.changedInputView()
         case .inputDate:
-            self.setDataInCheckView(date: "\(self.dateView.calendarView.getTempStartDate()) ~ \(self.dateView.calendarView.getTempEndDate())")
+            self.setDataInCheckView(date: "\(self.roomDateView.calendarView.getTempStartDate()) ~ \(self.roomDateView.calendarView.getTempEndDate())")
             self.changeNextRoomIndex()
             self.changedInputView()
         case .checkRoom:
             self.roomInfo = RoomDTO(title: self.name,
                                     capacity: self.participants,
-                                    startDate: "20\(self.dateView.calendarView.getTempStartDate())",
-                                    endDate: "20\(self.dateView.calendarView.getTempEndDate())")
+                                    startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
+                                    endDate: "20\(self.roomDateView.calendarView.getTempEndDate())")
             self.delegate?.pushChooseCharacterViewController(roomInfo: self.roomInfo)
         }
     }
@@ -200,9 +200,9 @@ final class CreateRoomView: UIView {
     
     private func changedInputView() {
         switch self.notiIndex {
-        case .inputName:
+        case .inputTitle:
             self.setInputNameView()
-        case .inputPerson:
+        case .inputParticipants:
             self.setInputPersonView()
         case .inputDate:
             self.setInputDateView()
@@ -212,68 +212,68 @@ final class CreateRoomView: UIView {
     }
     
     private func detectStartableStatus() {
-        self.nameView.changeNextButtonEnableStatus = { [weak self] isEnabled in
+        self.roomTitleView.changeNextButtonEnableStatus = { [weak self] isEnabled in
             self?.nextButton.isDisabled = !isEnabled
         }
         
-        self.dateView.calendarView.changeButtonState = { [weak self] isEnabled in
+        self.roomDateView.calendarView.changeButtonState = { [weak self] isEnabled in
             self?.nextButton.isDisabled = !isEnabled
         }
     }
     
     private func setInputNameView() {
         self.backButton.isHidden = true
-        self.nameView.fadeIn()
-        self.nameView.isHidden = false
-        self.personView.fadeOut()
-        self.personView.isHidden = true
+        self.roomTitleView.fadeIn()
+        self.roomTitleView.isHidden = false
+        self.roomParticipantsView.fadeOut()
+        self.roomParticipantsView.isHidden = true
     }
 
     private func setInputPersonView() {
         self.nextButton.isDisabled = false
         self.backButton.isHidden = false
-        self.nameView.fadeOut()
-        self.nameView.isHidden = true
-        self.personView.fadeIn()
-        self.personView.isHidden = false
-        self.dateView.fadeOut()
-        self.dateView.isHidden = true
+        self.roomTitleView.fadeOut()
+        self.roomTitleView.isHidden = true
+        self.roomParticipantsView.fadeIn()
+        self.roomParticipantsView.isHidden = false
+        self.roomDateView.fadeOut()
+        self.roomDateView.isHidden = true
     }
 
     private func setInputDateView() {
-        self.dateView.calendarView.setupButtonState()
-        self.personView.fadeOut()
-        self.personView.isHidden = true
-        self.dateView.fadeIn()
-        self.dateView.isHidden = false
-        self.checkView.fadeOut()
-        self.checkView.isHidden = true
+        self.roomDateView.calendarView.setupButtonState()
+        self.roomParticipantsView.fadeOut()
+        self.roomParticipantsView.isHidden = true
+        self.roomDateView.fadeIn()
+        self.roomDateView.isHidden = false
+        self.roomDataCheckView.fadeOut()
+        self.roomDataCheckView.isHidden = true
     }
 
     private func setCheckRoomView() {
-        self.dateView.fadeOut()
-        self.dateView.isHidden = true
-        self.checkView.fadeIn()
-        self.checkView.isHidden = false
+        self.roomDateView.fadeOut()
+        self.roomDateView.isHidden = true
+        self.roomDataCheckView.fadeIn()
+        self.roomDataCheckView.isHidden = false
     }
 
     private func setInputViewIsHidden() {
-        self.personView.alpha = 0.0
-        self.personView.isHidden = true
-        self.dateView.alpha = 0.0
-        self.dateView.isHidden = true
-        self.checkView.alpha = 0.0
-        self.checkView.isHidden = true
+        self.roomParticipantsView.alpha = 0.0
+        self.roomParticipantsView.isHidden = true
+        self.roomDateView.alpha = 0.0
+        self.roomDateView.isHidden = true
+        self.roomDataCheckView.alpha = 0.0
+        self.roomDataCheckView.isHidden = true
     }
 
     private func setDataInCheckView(name: String = "", participants: Int = 0, date: String = "" ) {
         switch self.notiIndex {
-        case .inputName:
-            self.checkView.name = name
-        case .inputPerson:
-            self.checkView.participants = participants
+        case .inputTitle:
+            self.roomDataCheckView.name = name
+        case .inputParticipants:
+            self.roomDataCheckView.participants = participants
         case .inputDate:
-            self.checkView.dateRange = date
+            self.roomDataCheckView.dateRange = date
         default:
             return
         }

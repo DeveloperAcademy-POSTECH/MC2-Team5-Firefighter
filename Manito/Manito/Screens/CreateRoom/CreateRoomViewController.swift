@@ -39,7 +39,7 @@ final class CreateRoomViewController: BaseViewController {
         super.configureUI()
         self.navigationController?.navigationBar.isHidden = true
     }
-    // MARK: - FIXME: View 로 빼보기
+    
     override func endEditingView() {
         if !self.createRoomView.nextButton.isTouchInside {
             self.view.endEditing(true)
