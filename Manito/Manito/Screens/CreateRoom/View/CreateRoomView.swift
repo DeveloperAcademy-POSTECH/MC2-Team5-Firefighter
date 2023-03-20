@@ -59,7 +59,7 @@ final class CreateRoomView: UIView {
     
     // MARK: - property
     
-    private var name: String = ""
+    private var title: String = ""
     private var participants: Int = 0
     private var notiIndex: CreateRoomState = .inputTitle
     private var roomInfo: RoomDTO?
@@ -165,8 +165,8 @@ final class CreateRoomView: UIView {
         switch self.notiIndex {
         case .inputTitle:
             guard let text = self.roomTitleView.roomsNameTextField.text else { return }
-            self.name = text
-            self.setDataInCheckView(name: self.name)
+            self.title = text
+            self.setDataInCheckView(name: self.title)
             self.changeNextRoomIndex()
             self.changedInputView()
             self.roomTitleView.roomsNameTextField.resignFirstResponder()
@@ -180,7 +180,7 @@ final class CreateRoomView: UIView {
             self.changeNextRoomIndex()
             self.changedInputView()
         case .checkRoom:
-            self.roomInfo = RoomDTO(title: self.name,
+            self.roomInfo = RoomDTO(title: self.title,
                                     capacity: self.participants,
                                     startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
                                     endDate: "20\(self.roomDateView.calendarView.getTempEndDate())")
