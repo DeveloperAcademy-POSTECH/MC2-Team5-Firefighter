@@ -40,8 +40,8 @@ final class OpenManittoPopupViewController: BaseViewController {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
             guard let parentViewController = self?.presentingViewController else { return }
-            self?.dismiss(animated: false, completion: {
-                parentViewController.dismiss(animated: false)
+            self?.dismiss(animated: true, completion: {
+                parentViewController.dismiss(animated: true)
             })
         }
         button.title = TextLiteral.confirm
