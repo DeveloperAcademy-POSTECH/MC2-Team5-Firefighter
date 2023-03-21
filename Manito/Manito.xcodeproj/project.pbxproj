@@ -91,6 +91,7 @@
 		B55BCEC628F5AFB200AF7E45 /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC528F5AFB200AF7E45 /* capsule.gif */; };
 		B55BCEC828F5AFD500AF7E45 /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC728F5AFD500AF7E45 /* joystick.gif */; };
 		B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BE029ADC20A0093D198 /* CreateLetterView.swift */; };
+		B5706BF629B9D4650093D198 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BF529B9D4650093D198 /* GuideView.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
@@ -247,6 +248,7 @@
 		B55BCEC528F5AFB200AF7E45 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
 		B55BCEC728F5AFD500AF7E45 /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
 		B5706BE029ADC20A0093D198 /* CreateLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterView.swift; sourceTree = "<group>"; };
+		B5706BF529B9D4650093D198 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
@@ -445,7 +447,7 @@
 			path = CreateNickName;
 			sourceTree = "<group>";
 		};
-		7E3058C42854B45300489E6A /* Component */ = {
+		7E3058C42854B45300489E6A /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				7E3058C52854B47F00489E6A /* InputNameView.swift */,
@@ -453,7 +455,7 @@
 				7E3058C92854B7A900489E6A /* InputDateView.swift */,
 				D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */,
 			);
-			path = Component;
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		B50B1B28285AB7550080992C /* Splash */ = {
@@ -622,7 +624,7 @@
 		B5F524E528519ACA00614FF7 /* CreateRoom */ = {
 			isa = PBXGroup;
 			children = (
-				7E3058C42854B45300489E6A /* Component */,
+				7E3058C42854B45300489E6A /* UIComponent */,
 				B5F525052851A05500614FF7 /* CreateRoomViewController.swift */,
 			);
 			path = CreateRoom;
@@ -701,6 +703,7 @@
 				B5F5253A2854ABF200614FF7 /* MainButton.swift */,
 				39FFE32728EEFFFE008442EE /* MoreButton.swift */,
 				7E7542B22923744300D725CB /* ToastPopupView.swift */,
+				B5706BF529B9D4650093D198 /* GuideView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1185,6 +1188,7 @@
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
 				B50B1AFD2856C3500080992C /* CreateLetterTextView.swift in Sources */,
 				D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */,
+				B5706BF629B9D4650093D198 /* GuideView.swift in Sources */,
 				B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */,
 				CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */,
 				39CD581F28C4C19100496E91 /* Memory.swift in Sources */,
@@ -1361,11 +1365,12 @@
 				CODE_SIGN_ENTITLEMENTS = Manito/Global/Supports/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "'애니또'가 사용자의 앨범에 접근하려고 합니다. 쪽지에 있는 사진을 앨범에 저장하세요.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "‘애니또’가 사용자의 사진에 접근하려고 합니다. 쪽지에 사진을 업로드할 때 사용합니다.";
@@ -1379,7 +1384,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1398,11 +1403,12 @@
 				CODE_SIGN_ENTITLEMENTS = Manito/Global/Supports/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "'애니또'가 사용자의 앨범에 접근하려고 합니다. 쪽지에 있는 사진을 앨범에 저장하세요.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "‘애니또’가 사용자의 사진에 접근하려고 합니다. 쪽지에 사진을 업로드할 때 사용합니다.";
@@ -1416,7 +1422,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -11,52 +11,66 @@ import UIKit
 import SnapKit
 
 final class LoginViewController: BaseViewController {
-    let loginService: LoginAPI = LoginAPI(apiService: APIService())
 
-    // MARK: - property
+    // MARK: - ui component
 
-    private let logoImageView = UIImageView(image: ImageLiterals.imgAppIcon)
-    private let logoTextImageView = UIImageView(image: ImageLiterals.imgTextLogo)
-    private lazy var appleLoginButton: ASAuthorizationAppleIDButton = {
+    private let logoImageView: UIImageView = UIImageView(image: ImageLiterals.imgAppIcon)
+    private let logoTextImageView: UIImageView = UIImageView(image: ImageLiterals.imgTextLogo)
+    private let appleLoginButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
-        let action = UIAction { [weak self] _ in
-            self?.appleSignIn()
-        }
         button.cornerRadius = 25
-        button.addAction(action, for: .touchUpInside)
         return button
     }()
+    
+    // MARK: - property
+    
+    private let loginService: LoginAPI = LoginAPI(apiService: APIService())
     
     // MARK: - init
     
     deinit {
         print("\(#file) is dead")
     }
+    
+    // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupLoginButton()
+    }
 
-    // MARK: - func
-
+    // MARK: - override
+    
     override func setupLayout() {
-        view.addSubview(logoImageView)
-        logoImageView.snp.makeConstraints {
+        self.view.addSubview(self.logoImageView)
+        self.logoImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(-92)
             $0.width.height.equalTo(130)
         }
 
-        view.addSubview(logoTextImageView)
-        logoTextImageView.snp.makeConstraints {
+        self.view.addSubview(self.logoTextImageView)
+        self.logoTextImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(logoImageView.snp.bottom).offset(7)
+            $0.top.equalTo(self.logoImageView.snp.bottom).offset(7)
         }
 
-        appleLoginButton.layer.cornerRadius = 25
-        view.addSubview(appleLoginButton)
-        appleLoginButton.snp.makeConstraints {
+        self.view.addSubview(self.appleLoginButton)
+        self.appleLoginButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(65)
             $0.height.equalTo(50)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(35)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
         }
+    }
+    
+    // MARK: - func
+    
+    private func setupLoginButton() {
+        let action = UIAction { [weak self] _ in
+            self?.appleSignIn()
+        }
+        self.appleLoginButton.addAction(action, for: .touchUpInside)
     }
 
     private func appleSignIn() {
@@ -80,7 +94,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             appleIDProvider.getCredentialState(forUserID: userIdentifier) { (credentialState, error) in
                 switch credentialState {
                 case .authorized:
-                    // The Apple ID credential is valid. Show Home UI Here
                     guard let token = appleIDCredential.identityToken else { return }
                     guard let tokenToString = String(data: token, encoding: .utf8) else { return }
                     
@@ -104,7 +117,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                 let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
                                 viewController.modalPresentationStyle = .fullScreen
                                 viewController.modalTransitionStyle = .crossDissolve
-                                self.present(viewController, animated: true, completion: nil)
+                                self.present(viewController, animated: true)
                             }
                         } catch NetworkError.serverError {
                             print("server Error")
@@ -116,12 +129,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     }
                     print("userIdentifier = \(userIdentifier)")
                     UserDefaultHandler.setUserID(userID: userIdentifier)
-                    break
-                case .revoked:
-                    // The Apple ID credential is revoked. Show SignIn UI Here.
-                    break
-                case .notFound:
-                    // No credential was found. Show SignIn UI Here.
                     break
                 default:
                     break
@@ -137,6 +144,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
 
 extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return view.window!
+        guard let window = self.view.window else { return ASPresentationAnchor() }
+        return window
     }
 }
