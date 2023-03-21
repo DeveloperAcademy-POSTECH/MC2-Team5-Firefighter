@@ -199,7 +199,10 @@ final class DetailingCodebaseViewController: BaseViewController {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
             guard let roomId = self?.roomId else { return }
-            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: roomId), animated: true)
+            let viewController = OpenManittoViewController(roomId: roomId)
+            viewController.modalTransitionStyle = .crossDissolve
+            viewController.modalPresentationStyle = .fullScreen
+            self?.present(viewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
