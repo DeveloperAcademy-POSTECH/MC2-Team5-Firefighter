@@ -80,6 +80,7 @@ final class LetterViewController: BaseViewController {
         return label
     }()
     private lazy var sendLetterView: BottomOfSendLetterView = BottomOfSendLetterView()
+    private let guideView: GuideView = GuideView(type: .letter)
 
     // MARK: - property
     
@@ -126,9 +127,7 @@ final class LetterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupButtonAction()
-        self.setupGuideArea()
-        self.renderGuideArea()
-        self.hideGuideViewWhenTappedAround()
+        self.setupGuideViewInNavigationController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -137,7 +136,8 @@ final class LetterViewController: BaseViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        self.guideBoxImageView.isHidden = true
+        super.viewWillDisappear(animated)
+        self.guideView.setupDisappearedConfiguration()
     }
 
     // MARK: - override
@@ -146,11 +146,6 @@ final class LetterViewController: BaseViewController {
         self.view.addSubview(self.listCollectionView)
         self.listCollectionView.snp.makeConstraints {
             $0.edges.equalTo(self.view.safeAreaLayoutGuide)
-        }
-        
-        self.view.addSubview(self.guideButton)
-        self.guideButton.snp.makeConstraints {
-            $0.width.height.equalTo(44)
         }
 
         self.view.addSubview(self.emptyLabel)
@@ -174,34 +169,8 @@ final class LetterViewController: BaseViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-
-        let guideButton = self.makeBarButtonItem(with: self.guideButton)
-        self.navigationItem.rightBarButtonItem = guideButton
         self.title = TextLiteral.letterViewControllerTitle
-    }
-    
-    override func setupGuideArea() {
-        super.setupGuideArea()
-        self.guideButton.setImage(ImageLiterals.icLetterInfo, for: .normal)
-        self.setupGuideText(title: TextLiteral.letterViewControllerGuideTitle, text: TextLiteral.letterViewControllerGuideText)
-    }
-    
-    override func renderGuideArea() {
-        if let navigationView = self.navigationController?.view {
-            navigationView.addSubview(self.guideBoxImageView)
-            self.guideBoxImageView.snp.makeConstraints {
-                $0.top.equalTo(navigationView.safeAreaLayoutGuide.snp.top).inset(35)
-                $0.trailing.equalTo(navigationView.snp.trailing).inset(Size.leadingTrailingPadding + 8)
-                $0.width.equalTo(270)
-                $0.height.equalTo(90)
-            }
-        }
-        
-        self.guideBoxImageView.addSubview(self.guideLabel)
-        self.guideLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.leading.trailing.equalToSuperview().inset(15)
-        }
+        self.guideView.addGuideButton(in: self.navigationItem)
     }
 
     // MARK: - func
@@ -213,6 +182,13 @@ final class LetterViewController: BaseViewController {
     
     private func setupEmptyView() {
         self.emptyLabel.isHidden = !self.letterList.isEmpty
+    }
+
+    private func setupGuideViewInNavigationController() {
+        if let navigationController {
+            self.guideView.setupGuideViewLayout(in: navigationController)
+            self.guideView.hideGuideViewWhenTappedAround(in: navigationController, self)
+        }
     }
     
     private func setupButtonAction() {
@@ -263,27 +239,9 @@ final class LetterViewController: BaseViewController {
         return label.frame.height
     }
     
-    private func hideGuideViewWhenTappedAround() {
-        let navigationTap = UITapGestureRecognizer(target: self, action: #selector(self.dismissGuideView))
-        let viewTap = UITapGestureRecognizer(target: self, action: #selector(self.dismissGuideView))
-        navigationTap.cancelsTouchesInView = false
-        viewTap.cancelsTouchesInView = false
-        self.navigationController?.view.addGestureRecognizer(navigationTap)
-        self.view.addGestureRecognizer(viewTap)
-    }
-    
     private func setupEmptyLabel() {
         self.emptyLabel.text = self.letterState.labelText
         self.emptyLabel.isHidden = true
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    private func dismissGuideView() {
-        if !self.guideButton.isTouchInside {
-            self.guideBoxImageView.isHidden = true
-        }
     }
     
     // MARK: - network
@@ -402,6 +360,6 @@ extension LetterViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDelegate
 extension LetterViewController: UICollectionViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        self.guideBoxImageView.isHidden = true
+        self.guideView.setupDisappearedConfiguration()
     }
 }

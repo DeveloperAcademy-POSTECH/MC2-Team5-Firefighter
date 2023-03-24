@@ -20,9 +20,9 @@ final class OpenManittoViewController: BaseViewController {
     private enum Size {
         static let collectionHorizontalSpacing: CGFloat = 29.0
         static let collectionVerticalSpacing: CGFloat = 37.0
-        static let cellInterSpacing: CGFloat = 39.0
         static let cellLineSpacing: CGFloat = 20.0
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - (collectionHorizontalSpacing * 2 + cellInterSpacing * 2)) / 3
+        static let cellInteritemSpacing: CGFloat = 39.0
+        static let cellWidth: CGFloat = floor((UIScreen.main.bounds.size.width - (collectionHorizontalSpacing * 2 + cellInteritemSpacing * 2)) / 3)
         static let collectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
                                                   left: collectionHorizontalSpacing,
                                                   bottom: collectionVerticalSpacing,
@@ -36,7 +36,7 @@ final class OpenManittoViewController: BaseViewController {
         flowLayout.scrollDirection = .vertical
         flowLayout.sectionInset = Size.collectionInset
         flowLayout.minimumLineSpacing = Size.cellLineSpacing
-        flowLayout.minimumInteritemSpacing = Size.cellInterSpacing
+        flowLayout.minimumInteritemSpacing = Size.cellInteritemSpacing
         flowLayout.sectionHeadersPinToVisibleBounds = true
         flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
         return flowLayout

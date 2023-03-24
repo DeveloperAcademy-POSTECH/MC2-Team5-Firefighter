@@ -9,24 +9,9 @@ import UIKit
 
 import SnapKit
 
-class CheckRoomView: UIView {
-    var dateRange = "" {
-        willSet {
-            dateLabel.text = newValue
-        }
-    }
-    var name: String = "" {
-        willSet {
-            nameLabel.text = newValue
-        }
-    }
-    var person: Int = 0 {
-        willSet {
-            personLabel.text = "\(newValue.description)" + TextLiteral.per
-        }
-    }
+final class CheckRoomView: UIView {
 
-    // MARK: - Property
+    // MARK: - ui component
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -52,42 +37,61 @@ class CheckRoomView: UIView {
         return label
     }()
     
-    // MARK: - Init
+    // MARK: - property
+    
+    var dateRange = "" {
+        willSet {
+            self.dateLabel.text = newValue
+        }
+    }
+    var name: String = "" {
+        willSet {
+            self.nameLabel.text = newValue
+        }
+    }
+    var participants: Int = 0 {
+        willSet {
+            self.personLabel.text = "\(newValue.description)" + TextLiteral.per
+        }
+    }
+    
+    // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setLayout()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Config
+    // MARK: - func
     
-    private func render() {
-        self.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
+    private func setLayout() {
+        self.addSubview(self.nameLabel)
+        self.nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
             $0.centerX.equalToSuperview()
         }
         
-        self.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(23)
+        self.addSubview(self.dateLabel)
+        self.dateLabel.snp.makeConstraints {
+            $0.top.equalTo(self.nameLabel.snp.bottom).offset(23)
             $0.centerX.equalToSuperview()
         }
         
-        self.addSubview(personLabel)
-        personLabel.snp.makeConstraints {
+        self.addSubview(self.personLabel)
+        self.personLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview().offset(20)
-            $0.top.equalTo(dateLabel.snp.bottom).offset(107)
+            $0.top.equalTo(self.dateLabel.snp.bottom).offset(107)
         }
         
-        self.addSubview(imageView)
-        imageView.snp.makeConstraints {
-            $0.centerY.equalTo(personLabel.snp.centerY)
-            $0.trailing.equalTo(personLabel.snp.leading)
+        self.addSubview(self.imageView)
+        self.imageView.snp.makeConstraints {
+            $0.centerY.equalTo(self.personLabel.snp.centerY)
+            $0.trailing.equalTo(self.personLabel.snp.leading)
             $0.width.height.equalTo(60)
         }
     }

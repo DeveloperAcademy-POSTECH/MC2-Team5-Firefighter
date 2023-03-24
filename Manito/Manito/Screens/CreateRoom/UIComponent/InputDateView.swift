@@ -9,17 +9,17 @@ import UIKit
 
 import SnapKit
 
-class InputDateView: UIView {
+final class InputDateView: UIView {
     
-    // MARK: - Property
+    // MARK: - ui component
     
-    private let dateViewLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.inputDateViewTitle
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    let calendarView = CalendarView()
+    let calendarView: CalendarView = CalendarView()
     private let dateInfoLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.maxMessage
@@ -28,35 +28,36 @@ class InputDateView: UIView {
         return label
     }()
     
-    // MARK: - Init
+    // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setLayout()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Config
+    // MARK: - func
     
-    private func render() {
-        self.addSubview(dateViewLabel)
-        dateViewLabel.snp.makeConstraints {
+    private func setLayout() {
+        self.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
         
-        self.addSubview(calendarView)
-        calendarView.snp.makeConstraints {
-            $0.top.equalTo(dateViewLabel.snp.bottom).offset(36)
+        self.addSubview(self.calendarView)
+        self.calendarView.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(380)
         }
         
-        calendarView.addSubview(dateInfoLabel)
-        dateInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(calendarView.snp.bottom).offset(5)
+        self.calendarView.addSubview(self.dateInfoLabel)
+        self.dateInfoLabel.snp.makeConstraints {
+            $0.top.equalTo(self.calendarView.snp.bottom).offset(5)
             $0.trailing.equalToSuperview()
         }
     }

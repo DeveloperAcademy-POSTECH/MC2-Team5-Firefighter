@@ -10,13 +10,16 @@ import UIKit
 import Gifu
 
 final class SplashViewController: UIViewController {
-
-    let isLogin = UserDefaultStorage.isLogin
-    let nickname = UserDefaultStorage.nickname
+    
+    // MARK: - ui component
+    
+    @IBOutlet weak var gifImageView: GIFImageView!
     
     // MARK: - property
-
-    @IBOutlet weak var gifImageView: GIFImageView!
+    
+    private let isLogin: Bool = UserDefaultStorage.isLogin
+    private let nickname: String? = UserDefaultStorage.nickname
+    private let isSetFcmToken: Bool = UserDefaultStorage.isSetFcmToken
     
     // MARK: - init
     
@@ -28,26 +31,15 @@ final class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
-        setupGifImage()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            let isSetFcmToken = UserDefaultStorage.isSetFcmToken
-            if !isSetFcmToken {
-                self.presentLoginViewConroller()
-            } else if self.isLogin {
-                self.presentMainViewController()
-            } else if self.isLogin && self.nickname == "" {
-                self.presentNicknameSettingViewController()
-            } else {
-                self.presentLoginViewConroller()
-            }
-        }
+        self.configureUI()
+        self.setupGifImage()
+        self.presentViewControllerAfterDelay()
     }
     
     // MARK: - func
     
-    private func configUI() {
-        view.backgroundColor = .backgroundGrey
+    private func configureUI() {
+        self.view.backgroundColor = .backgroundGrey
     }
 
     private func presentLoginViewConroller() {
@@ -56,14 +48,14 @@ final class SplashViewController: UIViewController {
         navigtionViewController.setNavigationBarHidden(true, animated: true)
         navigtionViewController.modalPresentationStyle = .fullScreen
         navigtionViewController.modalTransitionStyle = .crossDissolve
-        present(navigtionViewController, animated: true)
+        self.present(navigtionViewController, animated: true)
     }
 
     private func presentNicknameSettingViewController() {
         let viewController = CreateNickNameViewController()
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
-        present(viewController, animated: true)
+        self.present(viewController, animated: true)
     }
 
     private func presentMainViewController() {
@@ -71,12 +63,26 @@ final class SplashViewController: UIViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
-        present(viewController, animated: true, completion: nil)
+        self.present(viewController, animated: true)
     }
 
     private func setupGifImage() {
         DispatchQueue.main.async {
-            self.gifImageView.animate(withGIFNamed: ImageLiterals.gifLogo, animationBlock: nil)
+            self.gifImageView.animate(withGIFNamed: ImageLiterals.gifLogo)
+        }
+    }
+    
+    private func presentViewControllerAfterDelay() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            if !self.isSetFcmToken {
+                self.presentLoginViewConroller()
+            } else if self.isLogin {
+                self.presentMainViewController()
+            } else if self.isLogin && self.nickname == "" {
+                self.presentNicknameSettingViewController()
+            } else {
+                self.presentLoginViewConroller()
+            }
         }
     }
 }

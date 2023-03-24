@@ -89,6 +89,7 @@ final class MainViewController: BaseViewController {
     private let maCharacterImageView: GIFImageView = GIFImageView()
     private let niCharacterImageView: GIFImageView = GIFImageView()
     private let ttoCharacterImageView: GIFImageView = GIFImageView()
+    private let guideView: GuideView = GuideView(type: .main)
     
     // MARK: - property
     
@@ -166,12 +167,11 @@ final class MainViewController: BaseViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
-        self.view.addSubview(self.guideButton)
-        self.guideButton.snp.makeConstraints {
-            $0.top.equalTo(self.commonMissionView.snp.top).offset(30)
-            $0.trailing.equalTo(self.commonMissionView.snp.trailing).inset(30)
-            $0.width.height.equalTo(44)
+        self.commonMissionView.addSubview(self.guideView)
+        self.guideView.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview().inset(30)
         }
+        self.guideView.setupGuideViewLayout()
     }
 
     override func setupNavigationBar() {
@@ -185,11 +185,9 @@ final class MainViewController: BaseViewController {
         self.navigationItem.leftBarButtonItem = appTitleView
         self.navigationItem.rightBarButtonItem = settingButtonView
     }
-    
-    override func setupGuideArea() {
-        super.setupGuideArea()
-        self.guideButton.setImage(ImageLiterals.icMissionInfo, for: .normal)
-        self.setupGuideText(title: TextLiteral.mainViewControllerGuideTitle, text: TextLiteral.mainViewControllerGuideDescription)
+
+    override func endEditingView() {
+        self.guideView.didTapAroundToHideGuideView()
     }
     
     // MARK: - func
@@ -280,13 +278,13 @@ final class MainViewController: BaseViewController {
         default:
             guard let roomId = rooms?[roomIndex].id?.description
             else { return }
-            let viewController = DetailingCodebaseViewController(roomId: roomId)
+            let viewController = DetailingViewController(roomId: roomId)
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
     func pushDetailViewController(roomId: Int) {
-        let viewController = DetailingCodebaseViewController(roomId: roomId.description)
+        let viewController = DetailingViewController(roomId: roomId.description)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.navigationController?.pushViewController(viewController, animated: true)
             viewController.pushLetterViewControllerReceivedType()
@@ -296,15 +294,6 @@ final class MainViewController: BaseViewController {
     func showRoomIdErrorAlert() {
         self.makeAlert(title: TextLiteral.mainViewControllerShowIdErrorAlertTitle,
                        message: TextLiteral.mainViewControllerShowIdErrorAlertMessage)
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    override func endEditingView() {
-        if !self.guideButton.isTouchInside {
-            self.guideBoxImageView.isHidden = true
-        }
     }
     
     // MARK: - network

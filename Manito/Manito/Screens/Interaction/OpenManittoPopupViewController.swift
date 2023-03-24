@@ -39,9 +39,9 @@ final class OpenManittoPopupViewController: BaseViewController {
     private lazy var confirmButton: UIButton = {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
-            guard let parentViewController = self?.presentingViewController as? UINavigationController else { return }
+            guard let parentViewController = self?.presentingViewController else { return }
             self?.dismiss(animated: true, completion: {
-                parentViewController.popToRootViewController(animated: true)
+                parentViewController.dismiss(animated: true)
             })
         }
         button.title = TextLiteral.confirm
@@ -79,7 +79,7 @@ final class OpenManittoPopupViewController: BaseViewController {
         
         popupView.addSubview(typingLabel)
         typingLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(popupView.frame.height * 0.36)
+            $0.centerY.equalToSuperview().offset(-30)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(24)
         }
