@@ -11,7 +11,7 @@ import SnapKit
 
 protocol LetterViewDelegate: AnyObject {
     func presentCreateLetterViewController()
-    func fetchSendLetter()
+    func fetchSentLetter()
     func fetchReceivedLetter()
 }
 
@@ -166,7 +166,7 @@ final class LetterView: UIView {
     private func updateLetter(to type: LetterType) {
         switch type {
         case .sent:
-            self.delegate?.fetchSendLetter()
+            self.delegate?.fetchSentLetter()
         case .received:
             self.delegate?.fetchReceivedLetter()
         }

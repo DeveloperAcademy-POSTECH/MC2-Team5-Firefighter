@@ -158,7 +158,7 @@ extension LetterViewController: LetterViewDelegate {
         self.present(navigationController, animated: true)
     }
 
-    func fetchSendLetter() {
+    func fetchSentLetter() {
         self.fetchSendLetter(roomId: self.roomId) { [weak self] response in
             self?.handleResponse(response)
         }
