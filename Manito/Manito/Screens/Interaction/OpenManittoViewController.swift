@@ -104,10 +104,10 @@ final class OpenManittoViewController: BaseViewController {
     // MARK: - func
     
     private func animateCollectionView() {
-        let delay: CGFloat = 1.0
-        let timeInterval = 0.3
-        guard let count = friendsList.count else { return }
-        let durationTime = timeInterval * Double(count)
+        guard let count = self.friendsList.count else { return }
+        let timeInterval: Double = 0.3
+        let durationTime: Double = timeInterval * Double(count)
+        let delay: Double = 1.0
         
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
             UIView.animate(withDuration: durationTime, animations: {
@@ -124,9 +124,8 @@ final class OpenManittoViewController: BaseViewController {
         Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) {
             [weak self] _ in
             guard let self = self,
-                  countNumber != self.friendsList.count
-            else { return }
-            guard let count = self.friendsList.count else { return }
+                  let count = self.friendsList.count,
+                  countNumber != self.friendsList.count else { return }
             let characterCount = count - 1
             
             self.manittoRandomIndex = Int.random(in: 0...characterCount, excluding: self.manittoRandomIndex)
@@ -138,6 +137,7 @@ final class OpenManittoViewController: BaseViewController {
         DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
             self.manittoRandomIndex = self.manittoIndex
         })
+
         DispatchQueue.main.asyncAfter(deadline: deadline + 1.0, execute: {
             self.presentPopupViewController()
         })
@@ -149,17 +149,17 @@ final class OpenManittoViewController: BaseViewController {
         viewController.manittoText = manitto
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .overCurrentContext
-        present(viewController, animated: true, completion: nil)
+        self.present(viewController, animated: true, completion: nil)
     }
     
-    // MARK: - API
+    // MARK: - network
     
     private func requestWithFriends(roomId: String) {
         Task {
             do {
-                let data = try await openManittoService.requestWithFriends(roomId: roomId)
+                let data = try await self.openManittoService.requestWithFriends(roomId: roomId)
                 if let list = data {
-                    friendsList = list
+                    self.friendsList = list
                     DispatchQueue.main.async {
                         self.requestRoomInfo(roomId: roomId)
                         self.animateCollectionView()
@@ -179,12 +179,12 @@ final class OpenManittoViewController: BaseViewController {
     private func requestRoomInfo(roomId: String) {
         Task {
             do {
-                let data = try await openManittoService.requestStartingRoomInfo(roomId: roomId)
+                let data = try await self.openManittoService.requestStartingRoomInfo(roomId: roomId)
                 if let info = data {
                     guard let nickname = info.manitto?.nickname else { return }
-                    manitto = nickname
+                    self.manitto = nickname
                     
-                    manittoIndex = friendsList.members?.firstIndex(where: { $0.nickname == manitto }) ?? 0
+                    self.manittoIndex = self.friendsList.members?.firstIndex(where: { $0.nickname == self.manitto }) ?? 0
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -200,16 +200,18 @@ final class OpenManittoViewController: BaseViewController {
 // MARK: - UICollectionViewDataSource
 extension OpenManittoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let count = friendsList.count else { return 0 }
+        guard let count = self.friendsList.count else { return 0 }
         return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        if let colorIdx = friendsList.members?[indexPath.item].colorIdx {
+
+        if let colorIdx = self.friendsList.members?[indexPath.item].colorIdx {
             cell.setManittoCell(with: colorIdx)
-            cell.setHighlightCell(with: indexPath.item, matchIndex: manittoRandomIndex, imageIndex: colorIdx)
+            cell.setHighlightCell(with: indexPath.item, matchIndex: self.manittoRandomIndex, imageIndex: colorIdx)
         }
+
         return cell
     }
 }
