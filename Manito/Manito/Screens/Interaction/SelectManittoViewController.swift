@@ -17,12 +17,24 @@ final class SelectManittoViewController: BaseViewController {
 
     // MARK: - ui component
 
-    @IBOutlet weak var joystickBackgroundView: UIView!
-    @IBOutlet weak var informationLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var joystickImageView: GIFImageView!
-    @IBOutlet weak var openCapsuleImageView: GIFImageView!
-    @IBOutlet weak var confirmButton: MainButton!
+    private let informationLabel: UILabel = {
+        let label = UILabel()
+        label.font = .font(.regular, ofSize: 20)
+        return label
+    }()
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .font(.regular, ofSize: 30)
+        return label
+    }()
+    private let confirmButton: MainButton = {
+        let button = MainButton()
+        button.title = TextLiteral.confirm
+        return button
+    }()
+    private let joystickBackgroundView: UIView = UIView()
+    private let joystickImageView: GIFImageView = GIFImageView(image: UIImage(named: ImageLiterals.gifJoystick))
+    private let openCapsuleImageView: GIFImageView = GIFImageView(image: UIImage(named: ImageLiterals.gifCapsule))
 
     // MARK: - property
 
@@ -90,10 +102,6 @@ final class SelectManittoViewController: BaseViewController {
     override func configureUI() {
         super.configureUI()
 
-        self.informationLabel.font = .font(.regular, ofSize: 20)
-        self.nameLabel.font = .font(.regular, ofSize: 30)
-
-        self.confirmButton.title = TextLiteral.confirm
         if let manittee = self.manitteeName {
             self.nameLabel.text = manittee
         }
