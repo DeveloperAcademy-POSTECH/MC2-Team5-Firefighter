@@ -42,69 +42,66 @@ final class OpenManittoPopupViewController: BaseViewController {
     }()
 
     // MARK: - property
-    
+
     private let userNickname = UserDefaultStorage.nickname ?? "당신"
     var manittoNickname: String = "디너"
-    
-    // MARK: - init
-    
-    deinit {
-        print("\(#file) is dead")
-    }
     
     // MARK: - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setTypingAnimation()
+        self.setupButtonAction()
+        self.setupTypingAnimation()
     }
+
+    // MARK: - override
     
     override func setupLayout() {
-        view.addSubview(popupImageView)
-        popupImageView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(UIScreen.main.bounds.size.height * 0.15)
+        self.view.addSubview(self.popupImageView)
+        self.popupImageView.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(UIScreen.main.bounds.size.height * 0.15)
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.height.equalTo(popupImageView.snp.width).multipliedBy(1.16)
+            $0.height.equalTo(self.popupImageView.snp.width).multipliedBy(1.16)
         }
         
-        view.addSubview(confirmButton)
-        confirmButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(31)
+        self.view.addSubview(self.confirmButton)
+        self.confirmButton.snp.makeConstraints {
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(31)
             $0.centerX.equalToSuperview()
         }
         
-        popupImageView.addSubview(typingLabel)
-        typingLabel.snp.makeConstraints {
+        self.popupImageView.addSubview(self.typingLabel)
+        self.typingLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().offset(-30)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(24)
         }
         
-        popupImageView.addSubview(informationLabel)
-        informationLabel.snp.makeConstraints {
+        self.popupImageView.addSubview(self.informationLabel)
+        self.informationLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(51)
             $0.centerX.equalToSuperview()
         }
     }
     
     override func configureUI() {
-        view.backgroundColor = .black.withAlphaComponent(0.8)
+        self.view.backgroundColor = .black.withAlphaComponent(0.8)
     }
     
     // MARK: - func
 
     private func setupButtonAction() {
-        let action = UIAction { [weak self] _ in
-            guard let parentViewController = self?.presentingViewController else { return }
+        let confirmAction = UIAction { [weak self] _ in
+            guard let presentingViewController = self?.presentingViewController else { return }
             self?.dismiss(animated: true, completion: {
-                parentViewController.dismiss(animated: true)
+                presentingViewController.dismiss(animated: true)
             })
         }
-        self.confirmButton.addAction(action, for: .touchUpInside)
+        self.confirmButton.addAction(confirmAction, for: .touchUpInside)
     }
     
-    private func setTypingAnimation() {
-        typingLabel.setTyping(text: "\(userNickname)의 마니또는\n\(manittoNickname)입니다.")
-        typingLabel.addLabelSpacing()
+    private func setupTypingAnimation() {
+        self.typingLabel.setTyping(text: "\(self.userNickname)의 마니또는\n\(self.manittoNickname)입니다.")
+        self.typingLabel.addLabelSpacing()
     }
 }
