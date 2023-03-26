@@ -9,8 +9,7 @@ import UIKit
 
 import SnapKit
 
-// FIXME: 스토리보드 삭제 후 클래스명 변경 요
-final class DetailingCodebaseViewController: BaseViewController {
+final class DetailingViewController: BaseViewController {
     
     private let detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
     private let detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
@@ -199,7 +198,10 @@ final class DetailingCodebaseViewController: BaseViewController {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
             guard let roomId = self?.roomId else { return }
-            self?.navigationController?.pushViewController(OpenManittoViewController(roomId: roomId), animated: true)
+            let viewController = OpenManittoViewController(roomId: roomId)
+            viewController.modalTransitionStyle = .crossDissolve
+            viewController.modalPresentationStyle = .fullScreen
+            self?.present(viewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton

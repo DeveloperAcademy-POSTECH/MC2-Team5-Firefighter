@@ -278,13 +278,13 @@ final class MainViewController: BaseViewController {
         default:
             guard let roomId = rooms?[roomIndex].id?.description
             else { return }
-            let viewController = DetailingCodebaseViewController(roomId: roomId)
+            let viewController = DetailingViewController(roomId: roomId)
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
     func pushDetailViewController(roomId: Int) {
-        let viewController = DetailingCodebaseViewController(roomId: roomId.description)
+        let viewController = DetailingViewController(roomId: roomId.description)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.navigationController?.pushViewController(viewController, animated: true)
             viewController.pushLetterViewControllerReceivedType()

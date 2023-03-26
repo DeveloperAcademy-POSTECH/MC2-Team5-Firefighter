@@ -56,7 +56,7 @@
 		39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FFE32728EEFFFE008442EE /* MoreButton.swift */; };
 		39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 39FFE33328F457AF008442EE /* FirebaseMessaging */; };
 		39FFE33628F45E44008442EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39FFE33528F45E44008442EE /* GoogleService-Info.plist */; };
-		435B17682913E71400212663 /* DetailngCodebaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B17672913E71400212663 /* DetailngCodebaseViewController.swift */; };
+		435B17682913E71400212663 /* DetailingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B17672913E71400212663 /* DetailingViewController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
 		7E15F67E28B35B3D00441305 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E15F67D28B35B3D00441305 /* TextLiteral.swift */; };
@@ -115,7 +115,6 @@
 		B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525052851A05500614FF7 /* CreateRoomViewController.swift */; };
 		B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */; };
 		B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525092851A06700614FF7 /* DetailWaitViewController.swift */; };
-		B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5250B2851A07000614FF7 /* DetailIngViewController.swift */; };
 		B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5250D2851A07700614FF7 /* LetterViewController.swift */; };
 		B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F525152851A0F600614FF7 /* DetailIng.storyboard */; };
 		B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525192851A12600614FF7 /* BaseViewController.swift */; };
@@ -218,7 +217,7 @@
 		39F1C12D28D756E600585B83 /* LetterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageViewController.swift; sourceTree = "<group>"; };
 		39FFE32728EEFFFE008442EE /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
 		39FFE33528F45E44008442EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		435B17672913E71400212663 /* DetailngCodebaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailngCodebaseViewController.swift; sourceTree = "<group>"; };
+		435B17672913E71400212663 /* DetailingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailingViewController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		7E15F67D28B35B3D00441305 /* TextLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiteral.swift; sourceTree = "<group>"; };
@@ -276,7 +275,6 @@
 		B5F525052851A05500614FF7 /* CreateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewController.swift; sourceTree = "<group>"; };
 		B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedCodeViewController.swift; sourceTree = "<group>"; };
 		B5F525092851A06700614FF7 /* DetailWaitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewController.swift; sourceTree = "<group>"; };
-		B5F5250B2851A07000614FF7 /* DetailIngViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIngViewController.swift; sourceTree = "<group>"; };
 		B5F5250D2851A07700614FF7 /* LetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewController.swift; sourceTree = "<group>"; };
 		B5F525152851A0F600614FF7 /* DetailIng.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailIng.storyboard; sourceTree = "<group>"; };
 		B5F525192851A12600614FF7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -451,7 +449,7 @@
 			path = CreateNickName;
 			sourceTree = "<group>";
 		};
-		7E3058C42854B45300489E6A /* Component */ = {
+		7E3058C42854B45300489E6A /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				7E3058C52854B47F00489E6A /* InputNameView.swift */,
@@ -459,7 +457,7 @@
 				7E3058C92854B7A900489E6A /* InputDateView.swift */,
 				D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */,
 			);
-			path = Component;
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		B50B1B28285AB7550080992C /* Splash */ = {
@@ -613,7 +611,7 @@
 		B5F524E528519ACA00614FF7 /* CreateRoom */ = {
 			isa = PBXGroup;
 			children = (
-				7E3058C42854B45300489E6A /* Component */,
+				7E3058C42854B45300489E6A /* UIComponent */,
 				B5F525052851A05500614FF7 /* CreateRoomViewController.swift */,
 			);
 			path = CreateRoom;
@@ -652,8 +650,7 @@
 			children = (
 				D75E8C7D28D76FB1004A6C41 /* UIcomponent */,
 				333BF66428571C850039F77F /* Cell */,
-				B5F5250B2851A07000614FF7 /* DetailIngViewController.swift */,
-				435B17672913E71400212663 /* DetailngCodebaseViewController.swift */,
+				435B17672913E71400212663 /* DetailingViewController.swift */,
 				33BDF5612856E03800564211 /* FriendListViewController.swift */,
 				333BF669285864CE0039F77F /* MemoryViewController.swift */,
 			);
@@ -1123,7 +1120,7 @@
 				39C95808287DB05C00A04A2B /* SettingEndPoint.swift in Sources */,
 				39C957F4287D9EB400A04A2B /* APIService.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
-				435B17682913E71400212663 /* DetailngCodebaseViewController.swift in Sources */,
+				435B17682913E71400212663 /* DetailingViewController.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */,
 				397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */,
 				7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */,
@@ -1131,7 +1128,6 @@
 				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
 				39C957F6287D9ED000A04A2B /* NetworkRequest.swift in Sources */,
-				B5F5250C2851A07000614FF7 /* DetailIngViewController.swift in Sources */,
 				39EEF65C28CB3CD600437654 /* LoginAPI.swift in Sources */,
 				D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */,
 				39C957FE287DAB6D00A04A2B /* DetailIngEndPoint.swift in Sources */,
@@ -1357,11 +1353,12 @@
 				CODE_SIGN_ENTITLEMENTS = Manito/Global/Supports/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "'애니또'가 사용자의 앨범에 접근하려고 합니다. 쪽지에 있는 사진을 앨범에 저장하세요.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "‘애니또’가 사용자의 사진에 접근하려고 합니다. 쪽지에 사진을 업로드할 때 사용합니다.";
@@ -1375,7 +1372,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1394,11 +1391,12 @@
 				CODE_SIGN_ENTITLEMENTS = Manito/Global/Supports/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "'애니또'가 사용자의 앨범에 접근하려고 합니다. 쪽지에 있는 사진을 앨범에 저장하세요.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "‘애니또’가 사용자의 사진에 접근하려고 합니다. 쪽지에 사진을 업로드할 때 사용합니다.";
@@ -1412,7 +1410,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

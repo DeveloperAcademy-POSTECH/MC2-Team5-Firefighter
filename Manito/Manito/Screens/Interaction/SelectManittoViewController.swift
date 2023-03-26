@@ -33,7 +33,7 @@ final class SelectManittoViewController: BaseViewController {
             guard let navigationController = self?.presentingViewController as? UINavigationController,
                   let roomId = self?.roomId
             else { return }
-            let viewController = DetailingCodebaseViewController(roomId: roomId)
+            let viewController = DetailingViewController(roomId: roomId)
             navigationController.popViewController(animated: true)
             navigationController.pushViewController(viewController, animated: false)
             self?.dismiss(animated: true)

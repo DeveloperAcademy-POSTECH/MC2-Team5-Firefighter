@@ -9,12 +9,13 @@ import UIKit
 
 import SnapKit
 
-class InputPersonView: UIView {
+final class InputPersonView: UIView {
     
-    // MARK: - Property
-    private let personViewLabel: UILabel = {
+    // MARK: - ui component
+    
+    private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "최대 참여 인원을 설정해 주세요"
+        label.text = TextLiteral.inputPersonViewTitle
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
@@ -32,7 +33,7 @@ class InputPersonView: UIView {
     }()
     private lazy var personLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.x + " \(Int(personSlider.value))인"
+        label.text = TextLiteral.x + " \(Int(self.personSlider.value))인"
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
@@ -43,85 +44,87 @@ class InputPersonView: UIView {
         slider.maximumValue = 15
         slider.tintColor = .mainRed
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
-        slider.addTarget(self, action: #selector(didSlideSlider(_:)), for: .valueChanged)
+        slider.addTarget(self, action: #selector(self.didSlideSlider(_:)), for: .valueChanged)
         return slider
     }()
     private lazy var minLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Int(personSlider.minimumValue))인"
+        label.text = "\(Int(self.personSlider.minimumValue))인"
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
     private lazy var maxLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Int(personSlider.maximumValue))인"
+        label.text = "\(Int(self.personSlider.maximumValue))인"
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
     
-    // MARK: - Init
+    // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setLayout()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Selector
+    // MARK: - func
     
-    @objc func didSlideSlider(_ slider: UISlider) {
-        let value = slider.value
-        personLabel.text = TextLiteral.x + " \(Int(value))인"
-    }
-    
-    // MARK: - Config
-    
-    private func render() {
-        self.addSubview(personViewLabel)
-        personViewLabel.snp.makeConstraints {
+    private func setLayout() {
+        self.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
         
-        self.addSubview(personBackView)
-        personBackView.snp.makeConstraints {
-            $0.top.equalTo(personViewLabel.snp.bottom).offset(36)
+        self.addSubview(self.personBackView)
+        self.personBackView.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(140)
         }
         
-        personBackView.addSubview(personLabel)
-        personLabel.snp.makeConstraints {
+        self.personBackView.addSubview(self.personLabel)
+        self.personLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()
         }
         
-        personBackView.addSubview(imageView)
-        imageView.snp.makeConstraints {
+        self.personBackView.addSubview(self.imageView)
+        self.imageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalTo(personLabel.snp.leading)
+            $0.trailing.equalTo(self.personLabel.snp.leading)
             $0.width.height.equalTo(60)
         }
         
-        self.addSubview(minLabel)
-        minLabel.snp.makeConstraints {
+        self.addSubview(self.minLabel)
+        self.minLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.top.equalTo(personBackView.snp.bottom).offset(49)
+            $0.top.equalTo(self.personBackView.snp.bottom).offset(49)
         }
         
-        self.addSubview(maxLabel)
-        maxLabel.snp.makeConstraints {
+        self.addSubview(self.maxLabel)
+        self.maxLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.top.equalTo(minLabel.snp.top)
+            $0.top.equalTo(self.minLabel.snp.top)
         }
         
-        self.addSubview(personSlider)
-        personSlider.snp.makeConstraints {
-            $0.centerY.equalTo(minLabel.snp.centerY)
-            $0.trailing.equalTo(maxLabel.snp.leading).offset(-5)
-            $0.leading.equalTo(minLabel.snp.trailing).offset(5)
+        self.addSubview(self.personSlider)
+        self.personSlider.snp.makeConstraints {
+            $0.centerY.equalTo(self.minLabel.snp.centerY)
+            $0.trailing.equalTo(self.maxLabel.snp.leading).offset(-5)
+            $0.leading.equalTo(self.minLabel.snp.trailing).offset(5)
         }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func didSlideSlider(_ slider: UISlider) {
+        let value = slider.value
+        self.personLabel.text = TextLiteral.x + " \(Int(value))인"
     }
 }

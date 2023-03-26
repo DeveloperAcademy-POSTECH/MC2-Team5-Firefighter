@@ -9,10 +9,9 @@ import UIKit
 
 import SnapKit
 
-class InputNameView: UIView {
-    private var maxLength = 8
+final class InputNameView: UIView {
     
-    // MARK: - Property
+    // MARK: - ui component
     
     lazy var roomsNameTextField: UITextField = {
         let textField = UITextField()
@@ -20,7 +19,8 @@ class InputNameView: UIView {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         textField.backgroundColor = .darkGrey002
-        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText, attributes:attributes)
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText,
+                                                             attributes:attributes)
         textField.textAlignment = .center
         textField.makeBorderLayer(color: .white)
         textField.font = .font(.regular, ofSize: 18)
@@ -31,50 +31,52 @@ class InputNameView: UIView {
         textField.becomeFirstResponder()
         return textField
     }()
-    
-    private lazy var roomsTextLimit : UILabel = {
+    private lazy var roomsTextLimitLabel : UILabel = {
         let label = UILabel()
-        label.text = "0/\(maxLength)"
+        label.text = "0/\(self.maxLength)"
         label.font = .font(.regular, ofSize: 20)
         label.textColor = .grey002
         return label
     }()
     
-    var changeNextButtonEnableStatus: ((Bool) -> ())?
+    // MARK: - property
     
-    // MARK: - Init
+    var changeNextButtonEnableStatus: ((Bool) -> ())?
+    private var maxLength: Int = 8
+    
+    // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setupLayout()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Config
+    // MARK: - func
     
-    private func render() {
-        self.addSubview(roomsNameTextField)
-        roomsNameTextField.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(self.roomsNameTextField)
+        self.roomsNameTextField.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(60)
         }
         
-        self.addSubview(roomsTextLimit)
-        roomsTextLimit.snp.makeConstraints {
-            $0.top.equalTo(roomsNameTextField.snp.bottom).offset(10)
+        self.addSubview(self.roomsTextLimitLabel)
+        self.roomsTextLimitLabel.snp.makeConstraints {
+            $0.top.equalTo(self.roomsNameTextField.snp.bottom).offset(10)
             $0.trailing.equalToSuperview()
         }
     }
     
-    // MARK: - Funtions
-    
     private func setCounter(count: Int) {
         if count <= maxLength {
-            roomsTextLimit.text = "\(count)/\(maxLength)"
+            self.roomsTextLimitLabel.text = "\(count)/\(self.maxLength)"
         } else {
-            roomsTextLimit.text = "\(maxLength)/\(maxLength)"
+            self.roomsTextLimitLabel.text = "\(self.maxLength)/\(self.maxLength)"
         }
     }
     
@@ -95,14 +97,14 @@ class InputNameView: UIView {
 
 extension InputNameView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        roomsNameTextField.resignFirstResponder()
+        textField.resignFirstResponder()
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        setCounter(count: textField.text?.count ?? 0)
-        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
+        self.setCounter(count: textField.text?.count ?? 0)
+        self.checkMaxLength(textField: self.roomsNameTextField, maxLength: self.maxLength)
         
-        let hasText = roomsNameTextField.hasText
-        changeNextButtonEnableStatus?(hasText)
+        let hasText = textField.hasText
+        self.changeNextButtonEnableStatus?(hasText)
     }
 }
