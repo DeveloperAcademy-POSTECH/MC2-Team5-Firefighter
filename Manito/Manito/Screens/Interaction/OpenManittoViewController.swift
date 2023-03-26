@@ -10,39 +10,33 @@ import UIKit
 import SnapKit
 
 final class OpenManittoViewController: BaseViewController {
-    private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService())
     
-    private var roomId: String
-    private var manittoIndex = 0
-    private var friendsList: FriendList = FriendList(count: 0, members: [])
-    private var manitto: String = ""
-    
-    private enum Size {
+    private enum InternalSize {
         static let collectionHorizontalSpacing: CGFloat = 29.0
         static let collectionVerticalSpacing: CGFloat = 37.0
         static let cellLineSpacing: CGFloat = 20.0
         static let cellInteritemSpacing: CGFloat = 39.0
-        static let cellWidth: CGFloat = floor((UIScreen.main.bounds.size.width - (collectionHorizontalSpacing * 2 + cellInteritemSpacing * 2)) / 3)
-        static let collectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
-                                                  left: collectionHorizontalSpacing,
-                                                  bottom: collectionVerticalSpacing,
-                                                  right: collectionHorizontalSpacing)
+        static let cellItemSize: CGFloat = floor((UIScreen.main.bounds.size.width - (collectionHorizontalSpacing * 2 + cellInteritemSpacing * 2)) / 3)
+        static let collectionSectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
+                                                         left: collectionHorizontalSpacing,
+                                                         bottom: collectionVerticalSpacing,
+                                                         right: collectionHorizontalSpacing)
     }
     
-    // MARK: - property
+    // MARK: - ui component
     
     private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
-        flowLayout.sectionInset = Size.collectionInset
-        flowLayout.minimumLineSpacing = Size.cellLineSpacing
-        flowLayout.minimumInteritemSpacing = Size.cellInteritemSpacing
+        flowLayout.sectionInset = InternalSize.collectionSectionInset
+        flowLayout.minimumLineSpacing = InternalSize.cellLineSpacing
+        flowLayout.minimumInteritemSpacing = InternalSize.cellInteritemSpacing
         flowLayout.sectionHeadersPinToVisibleBounds = true
-        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
+        flowLayout.itemSize = CGSize(width: InternalSize.cellItemSize, height: InternalSize.cellItemSize)
         return flowLayout
     }()
     private lazy var manittoCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
@@ -53,15 +47,24 @@ final class OpenManittoViewController: BaseViewController {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.openManittoViewController
         label.font = .font(.regular, ofSize: 34)
+        label.text = TextLiteral.openManittoViewControllerTitle
         return label
     }()
+
+    // MARK: - property
+
     private var scrollNumberIndex = -1 {
         didSet {
             self.manittoCollectionView.reloadData()
         }
     }
+    private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+
+    private var roomId: String
+    private var manittoIndex = 0
+    private var friendsList: FriendList = FriendList(count: 0, members: [])
+    private var manitto: String = ""
     
     // MARK: - init
     
