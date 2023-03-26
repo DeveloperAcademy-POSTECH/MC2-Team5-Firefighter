@@ -54,17 +54,17 @@ final class OpenManittoViewController: BaseViewController {
 
     // MARK: - property
 
-    private var scrollNumberIndex = -1 {
+    private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+
+    private var manittoRandomIndex = -1 {
         didSet {
             self.manittoCollectionView.reloadData()
         }
     }
-    private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService())
-
-    private var roomId: String
-    private var manittoIndex = 0
     private var friendsList: FriendList = FriendList(count: 0, members: [])
     private var manitto: String = ""
+    private var manittoIndex = 0
+    private var roomId: String
     
     // MARK: - init
     
@@ -72,33 +72,32 @@ final class OpenManittoViewController: BaseViewController {
         self.roomId = roomId
         super.init()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        print("\(#file) is dead")
     }
     
     // MARK: - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestWithFriends(roomId: roomId)
+        self.requestWithFriends(roomId: roomId)
     }
+
+    // MARK: - override
     
     override func setupLayout() {
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(57)
+        self.view.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(57)
             $0.leading.equalToSuperview().inset(16)
         }
         
-        view.addSubview(manittoCollectionView)
-        manittoCollectionView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        self.view.addSubview(self.manittoCollectionView)
+        self.manittoCollectionView.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
     
@@ -130,14 +129,14 @@ final class OpenManittoViewController: BaseViewController {
             guard let count = self.friendsList.count else { return }
             let characterCount = count - 1
             
-            self.scrollNumberIndex = Int.random(in: 0...characterCount, excluding: self.scrollNumberIndex)
+            self.manittoRandomIndex = Int.random(in: 0...characterCount, excluding: self.manittoRandomIndex)
             countNumber += 1
         }
     }
     
     private func setManittoAnimation(with deadline: DispatchTime) {
         DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
-            self.scrollNumberIndex = self.manittoIndex
+            self.manittoRandomIndex = self.manittoIndex
         })
         DispatchQueue.main.asyncAfter(deadline: deadline + 1.0, execute: {
             self.presentPopupViewController()
@@ -209,7 +208,7 @@ extension OpenManittoViewController: UICollectionViewDataSource {
         let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
         if let colorIdx = friendsList.members?[indexPath.item].colorIdx {
             cell.setManittoCell(with: colorIdx)
-            cell.setHighlightCell(with: indexPath.item, matchIndex: scrollNumberIndex, imageIndex: colorIdx)
+            cell.setHighlightCell(with: indexPath.item, matchIndex: manittoRandomIndex, imageIndex: colorIdx)
         }
         return cell
     }
