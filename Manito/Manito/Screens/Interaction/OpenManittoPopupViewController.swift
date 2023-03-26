@@ -10,24 +10,23 @@ import UIKit
 import SnapKit
 
 final class OpenManittoPopupViewController: BaseViewController {
-    private let nickname = UserDefaultStorage.nickname ?? "당신"
 
-    // MARK: - property
+    // MARK: - ui component
     
-    private let popupView = UIImageView(image: ImageLiterals.imgEnterRoom)
-    private lazy var typingLabel: UILabel = {
+    private let popupImageView = UIImageView(image: ImageLiterals.imgEnterRoom)
+    private let typingLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 2
         label.font = .font(.regular, ofSize: 24)
+        label.numberOfLines = 2
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
         return label
     }()
-    private let openMentLabel: UILabel = {
+    private let informationLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.openManittoPopupViewControllerOpenMentLabel
-        label.numberOfLines = 2
         label.font = .font(.regular, ofSize: 18)
+        label.text = TextLiteral.openManittoPopupViewControllerInformationText
+        label.numberOfLines = 2
         label.addLabelSpacing()
         label.textAlignment = .center
         label.makeShadow(color: .black,
@@ -36,19 +35,16 @@ final class OpenManittoPopupViewController: BaseViewController {
                          radius: 3)
         return label
     }()
-    private lazy var confirmButton: UIButton = {
+    private let confirmButton: MainButton = {
         let button = MainButton()
-        let action = UIAction { [weak self] _ in
-            guard let parentViewController = self?.presentingViewController else { return }
-            self?.dismiss(animated: true, completion: {
-                parentViewController.dismiss(animated: true)
-            })
-        }
         button.title = TextLiteral.confirm
-        button.addAction(action, for: .touchUpInside)
         return button
     }()
-    var manittoText: String = "디너"
+
+    // MARK: - property
+    
+    private let userNickname = UserDefaultStorage.nickname ?? "당신"
+    var manittoNickname: String = "디너"
     
     // MARK: - init
     
@@ -64,11 +60,11 @@ final class OpenManittoPopupViewController: BaseViewController {
     }
     
     override func setupLayout() {
-        view.addSubview(popupView)
-        popupView.snp.makeConstraints {
+        view.addSubview(popupImageView)
+        popupImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(UIScreen.main.bounds.size.height * 0.15)
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.height.equalTo(popupView.snp.width).multipliedBy(1.16)
+            $0.height.equalTo(popupImageView.snp.width).multipliedBy(1.16)
         }
         
         view.addSubview(confirmButton)
@@ -77,15 +73,15 @@ final class OpenManittoPopupViewController: BaseViewController {
             $0.centerX.equalToSuperview()
         }
         
-        popupView.addSubview(typingLabel)
+        popupImageView.addSubview(typingLabel)
         typingLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().offset(-30)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(24)
         }
         
-        popupView.addSubview(openMentLabel)
-        openMentLabel.snp.makeConstraints {
+        popupImageView.addSubview(informationLabel)
+        informationLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(51)
             $0.centerX.equalToSuperview()
         }
@@ -96,9 +92,19 @@ final class OpenManittoPopupViewController: BaseViewController {
     }
     
     // MARK: - func
+
+    private func setupButtonAction() {
+        let action = UIAction { [weak self] _ in
+            guard let parentViewController = self?.presentingViewController else { return }
+            self?.dismiss(animated: true, completion: {
+                parentViewController.dismiss(animated: true)
+            })
+        }
+        self.confirmButton.addAction(action, for: .touchUpInside)
+    }
     
     private func setTypingAnimation() {
-        typingLabel.setTyping(text: "\(nickname)의 마니또는\n\(manittoText)입니다.")
+        typingLabel.setTyping(text: "\(userNickname)의 마니또는\n\(manittoNickname)입니다.")
         typingLabel.addLabelSpacing()
     }
 }

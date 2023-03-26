@@ -146,7 +146,7 @@ final class OpenManittoViewController: BaseViewController {
     private func presentPopupViewController() {
         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: OpenManittoPopupViewController.className) as? OpenManittoPopupViewController else { return }
-        viewController.manittoText = manitto
+        viewController.manittoNickname = manitto
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .overCurrentContext
         self.present(viewController, animated: true, completion: nil)
