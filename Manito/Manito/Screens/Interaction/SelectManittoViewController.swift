@@ -20,7 +20,10 @@ final class SelectManittoViewController: BaseViewController {
     private let informationLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 20)
+        label.numberOfLines = 2
         label.text = TextLiteral.selectManittoViewControllerInformationText
+        label.addLabelSpacing()
+        label.textAlignment = .center
         return label
     }()
     private let nameLabel: UILabel = {
