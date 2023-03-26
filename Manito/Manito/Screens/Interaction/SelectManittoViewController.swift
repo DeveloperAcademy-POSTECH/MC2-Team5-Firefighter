@@ -47,6 +47,46 @@ final class SelectManittoViewController: BaseViewController {
 
     // MARK: - override
 
+    override func setupLayout() {
+        self.view.addSubview(self.joystickBackgroundView)
+        self.joystickBackgroundView.snp.makeConstraints {
+            $0.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+
+        self.joystickBackgroundView.addSubview(self.joystickImageView)
+        self.joystickImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-30)
+            $0.width.height.equalTo(140)
+        }
+
+        self.joystickBackgroundView.addSubview(self.informationLabel)
+        self.informationLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.joystickImageView.snp.bottom).offset(63)
+        }
+
+        self.view.addSubview(self.openCapsuleImageView)
+        self.openCapsuleImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-30)
+            $0.width.equalTo(199)
+            $0.height.equalTo(285)
+        }
+
+        self.view.addSubview(self.nameLabel)
+        self.nameLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(self.openCapsuleImageView.snp.centerY)
+        }
+
+        self.view.addSubview(self.confirmButton)
+        self.confirmButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(31)
+        }
+    }
+
     override func configureUI() {
         super.configureUI()
 
