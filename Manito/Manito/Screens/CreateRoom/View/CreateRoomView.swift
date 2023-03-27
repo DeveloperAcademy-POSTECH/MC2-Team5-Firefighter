@@ -276,7 +276,7 @@ final class CreateRoomView: UIView {
                                                object: nil)
     }
     
-    func endEditinView() {
+    func endEditingView() {
         if !self.nextButton.isTouchInside {
             self.endEditing(true)
         }

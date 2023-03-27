@@ -40,7 +40,7 @@ final class CreateRoomViewController: BaseViewController {
     }
     
     override func endEditingView() {
-        self.createRoomView.endEditinView()
+        self.createRoomView.endEditingView()
     }
     
     // MARK: - func
