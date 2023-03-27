@@ -37,7 +37,7 @@ final class CreateRoomView: UIView {
         button.tintColor = .grey001
         return button
     }()
-    let nextButton: MainButton = {
+    private let nextButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.next
         button.isDisabled = true
@@ -289,6 +289,12 @@ final class CreateRoomView: UIView {
                                                selector: #selector(self.keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+    }
+    
+    func endEditinView() {
+        if !self.nextButton.isTouchInside {
+            self.endEditing(true)
+        }
     }
     
     // MARK: - selector

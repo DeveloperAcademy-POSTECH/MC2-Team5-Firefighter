@@ -40,9 +40,7 @@ final class CreateRoomViewController: BaseViewController {
     }
     
     override func endEditingView() {
-        if !self.createRoomView.nextButton.isTouchInside {
-            self.view.endEditing(true)
-        }
+        self.createRoomView.endEditinView()
     }
     
     // MARK: - func
