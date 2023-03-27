@@ -114,7 +114,6 @@ final class MainViewController: BaseViewController {
         self.setupGifImage()
         self.setupRefreshControl()
         self.setupSkeletonView()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

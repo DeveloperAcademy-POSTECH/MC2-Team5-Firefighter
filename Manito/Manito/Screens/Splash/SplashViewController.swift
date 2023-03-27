@@ -59,10 +59,10 @@ final class SplashViewController: UIViewController {
     }
 
     private func presentMainViewController() {
-        let viewController = MainViewController()
-        viewController.modalPresentationStyle = .fullScreen
-        viewController.modalTransitionStyle = .crossDissolve
-        self.present(viewController, animated: true)
+        let navigationController = UINavigationController(rootViewController: MainViewController())
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalTransitionStyle = .crossDissolve
+        self.present(navigationController, animated: true)
     }
 
     private func setupGifImage() {
