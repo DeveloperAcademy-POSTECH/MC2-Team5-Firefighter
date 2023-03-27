@@ -73,6 +73,7 @@ final class CreateRoomView: UIView {
         self.setupAction()
         self.detectStartableStatus()
         self.setInputViewIsHidden()
+        self.setupNotificationCenter()
     }
     
     @available(*, unavailable)
@@ -277,5 +278,34 @@ final class CreateRoomView: UIView {
         default:
             return
         }
+    }
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
+            })
+        }
+    }
+    
+    @objc
+    private func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.nextButton.transform = .identity
+        })
     }
 }

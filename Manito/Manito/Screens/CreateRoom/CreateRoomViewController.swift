@@ -25,7 +25,6 @@ final class CreateRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNotificationCenter()
         self.configureDelegation()
     }
     
@@ -50,35 +49,6 @@ final class CreateRoomViewController: BaseViewController {
     
     private func configureDelegation() {
         self.createRoomView.configureDelegate(self)
-    }
-    
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-    }
-    
-    // MARK: - selector
-        
-    @objc
-    private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.createRoomView.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
-        }
-    }
-    
-    @objc
-    private func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.createRoomView.nextButton.transform = .identity
-        })
     }
 }
 
