@@ -154,17 +154,17 @@ final class CreateRoomView: UIView {
             self.title = text
             self.setDataInCheckView(name: self.title)
             self.changeNextRoomIndex()
-            self.changedInputView()
+            self.changeInputView()
             self.roomTitleView.roomsNameTextField.resignFirstResponder()
         case .inputParticipants:
             self.participants = Int(self.roomParticipantsView.personSlider.value)
             self.setDataInCheckView(participants: self.participants)
             self.changeNextRoomIndex()
-            self.changedInputView()
+            self.changeInputView()
         case .inputDate:
             self.setDataInCheckView(date: "\(self.roomDateView.calendarView.getTempStartDate()) ~ \(self.roomDateView.calendarView.getTempEndDate())")
             self.changeNextRoomIndex()
-            self.changedInputView()
+            self.changeInputView()
         case .checkRoom:
             self.roomInfo = RoomDTO(title: self.title,
                                     capacity: self.participants,
@@ -176,15 +176,15 @@ final class CreateRoomView: UIView {
     
     private func changePreviousRoomIndex() {
         self.roomStep = CreateRoomStep.init(rawValue: self.roomStep.rawValue - 1)!
-        self.changedInputView()
+        self.changeInputView()
     }
     
     private func changeNextRoomIndex() {
         self.roomStep = CreateRoomStep.init(rawValue: self.roomStep.rawValue + 1)!
-        self.changedInputView()
+        self.changeInputView()
     }
     
-    private func changedInputView() {
+    private func changeInputView() {
         switch self.roomStep {
         case .inputTitle:
             self.setInputNameView()
