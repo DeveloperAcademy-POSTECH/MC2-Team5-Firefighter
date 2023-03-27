@@ -115,31 +115,16 @@ final class CreateRoomView: UIView {
         }
 
         self.addSubview(self.roomTitleView)
-        self.roomTitleView.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalTo(self.nextButton.snp.top)
-        }
-
         self.addSubview(self.roomParticipantsView)
-        self.roomParticipantsView.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalTo(self.nextButton.snp.top)
-        }
-
         self.addSubview(self.roomDateView)
-        self.roomDateView.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalTo(self.nextButton.snp.top)
-        }
-
         self.addSubview(self.roomDataCheckView)
-        self.roomDataCheckView.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalTo(self.nextButton.snp.top)
+        
+        [self.roomTitleView, self.roomParticipantsView, self.roomDateView, self.roomDataCheckView].forEach {
+            $0.snp.makeConstraints {
+                $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
+                $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+                $0.bottom.equalTo(self.nextButton.snp.top)
+            }
         }
 
         self.bringSubviewToFront(self.nextButton)
