@@ -61,7 +61,7 @@ final class CreateRoomView: UIView {
     
     private var title: String = ""
     private var participants: Int = 0
-    private var notiIndex: CreateRoomStep = .inputTitle
+    private var roomStep: CreateRoomStep = .inputTitle
     private var roomInfo: RoomDTO?
     private weak var delegate: CreateRoomViewDelegate?
     
@@ -148,7 +148,7 @@ final class CreateRoomView: UIView {
     }
     
     private func changeNextRoom() {
-        switch self.notiIndex {
+        switch self.roomStep {
         case .inputTitle:
             guard let text = self.roomTitleView.roomsNameTextField.text else { return }
             self.title = text
@@ -175,17 +175,17 @@ final class CreateRoomView: UIView {
     }
     
     private func changePreviousRoomIndex() {
-        self.notiIndex = CreateRoomStep.init(rawValue: self.notiIndex.rawValue - 1)!
+        self.roomStep = CreateRoomStep.init(rawValue: self.roomStep.rawValue - 1)!
         self.changedInputView()
     }
     
     private func changeNextRoomIndex() {
-        self.notiIndex = CreateRoomStep.init(rawValue: self.notiIndex.rawValue + 1)!
+        self.roomStep = CreateRoomStep.init(rawValue: self.roomStep.rawValue + 1)!
         self.changedInputView()
     }
     
     private func changedInputView() {
-        switch self.notiIndex {
+        switch self.roomStep {
         case .inputTitle:
             self.setInputNameView()
         case .inputParticipants:
@@ -253,7 +253,7 @@ final class CreateRoomView: UIView {
     }
 
     private func setDataInCheckView(name: String = "", participants: Int = 0, date: String = "" ) {
-        switch self.notiIndex {
+        switch self.roomStep {
         case .inputTitle:
             self.roomDataCheckView.name = name
         case .inputParticipants:
