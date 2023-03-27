@@ -82,7 +82,7 @@ final class OpenManittoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.requestWithFriends(roomId: roomId)
+        self.requestWithFriends(roomId: self.roomId)
     }
 
     // MARK: - override
@@ -146,7 +146,7 @@ final class OpenManittoViewController: BaseViewController {
     private func presentPopupViewController() {
         let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: OpenManittoPopupViewController.className) as? OpenManittoPopupViewController else { return }
-        viewController.manittoNickname = manitto
+        viewController.manittoNickname = self.manitto
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .overCurrentContext
         self.present(viewController, animated: true, completion: nil)
