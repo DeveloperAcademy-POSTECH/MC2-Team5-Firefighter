@@ -44,6 +44,11 @@ final class MainViewController: BaseViewController {
     
     // MARK: - ui component
     
+    private let backgroundImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = ImageLiterals.imgBackground
+        return imageView
+    }()
     private let skeletonAnimation: SkeletonLayerAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
     private let refreshControl: UIRefreshControl = UIRefreshControl()
     private let appTitleView: UIImageView = UIImageView(image: ImageLiterals.imgLogo)
@@ -109,6 +114,7 @@ final class MainViewController: BaseViewController {
         self.setupGifImage()
         self.setupRefreshControl()
         self.setupSkeletonView()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,6 +126,11 @@ final class MainViewController: BaseViewController {
     // MARK: - override
 
     override func setupLayout() {
+        self.view.addSubview(self.backgroundImageView)
+        self.backgroundImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         self.view.addSubview(self.maCharacterImageView)
         self.maCharacterImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(70)
