@@ -482,8 +482,24 @@ final class DetailingViewController: BaseViewController {
         }
     }
     
-    func pushLetterViewControllerReceivedType() {
-        self.navigationController?.pushViewController(letterViewController, animated: true)
+    func pushNavigationAfterRequestRoomInfo() {
+        Task {
+            do {
+                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
+                if let info = data {
+                    guard let state = info.roomInformation?.state,
+                          let mission = info.mission?.content,
+                          let missionId = info.mission?.id
+                    else { return }
+                    let viewController = LetterViewController(roomState: state,
+                                                              roomId: self.roomId,
+                                                              mission: mission,
+                                                              missionId: missionId.description,
+                                                              letterState: .received)
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
+            }
+        }
     }
   
     // MARK: - selector

@@ -297,7 +297,7 @@ final class MainViewController: BaseViewController {
         let viewController = DetailingViewController(roomId: roomId.description)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.navigationController?.pushViewController(viewController, animated: true)
-            viewController.pushLetterViewControllerReceivedType()
+            viewController.pushNavigationAfterRequestRoomInfo()
         }
     }
     
