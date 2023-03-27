@@ -53,7 +53,7 @@ final class CreateRoomView: UIView {
         return button
     }()
     private let roomTitleView: InputTitleView = InputTitleView()
-    private let roomParticipantsView: InputParticipants = InputParticipants()
+    private let roomParticipantsView: InputParticipantsView = InputParticipantsView()
     private let roomDateView: InputDateView = InputDateView()
     private let roomDataCheckView: CheckRoomView = CheckRoomView()
     
