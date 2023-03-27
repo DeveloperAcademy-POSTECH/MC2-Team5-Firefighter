@@ -16,7 +16,7 @@ protocol CreateRoomViewDelegate: AnyObject {
 
 final class CreateRoomView: UIView {
     
-    private enum CreateRoomState: Int {
+    private enum CreateRoomStep: Int {
         case inputTitle = 0
         case inputParticipants = 1
         case inputDate = 2
@@ -61,7 +61,7 @@ final class CreateRoomView: UIView {
     
     private var title: String = ""
     private var participants: Int = 0
-    private var notiIndex: CreateRoomState = .inputTitle
+    private var notiIndex: CreateRoomStep = .inputTitle
     private var roomInfo: RoomDTO?
     private weak var delegate: CreateRoomViewDelegate?
     
@@ -175,12 +175,12 @@ final class CreateRoomView: UIView {
     }
     
     private func changePreviousRoomIndex() {
-        self.notiIndex = CreateRoomState.init(rawValue: self.notiIndex.rawValue - 1)!
+        self.notiIndex = CreateRoomStep.init(rawValue: self.notiIndex.rawValue - 1)!
         self.changedInputView()
     }
     
     private func changeNextRoomIndex() {
-        self.notiIndex = CreateRoomState.init(rawValue: self.notiIndex.rawValue + 1)!
+        self.notiIndex = CreateRoomStep.init(rawValue: self.notiIndex.rawValue + 1)!
         self.changedInputView()
     }
     
