@@ -13,7 +13,7 @@ final class OpenManittoPopupViewController: BaseViewController {
 
     // MARK: - ui component
     
-    private let popupImageView = UIImageView(image: ImageLiterals.imgEnterRoom)
+    private let popupImageView: UIImageView = UIImageView(image: ImageLiterals.imgEnterRoom)
     private let typingLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
@@ -43,7 +43,7 @@ final class OpenManittoPopupViewController: BaseViewController {
 
     // MARK: - property
 
-    private let userNickname = UserDefaultStorage.nickname ?? "당신"
+    private let userNickname: String = UserDefaultStorage.nickname ?? "당신"
     var manittoNickname: String = "디너"
     
     // MARK: - life cycle
