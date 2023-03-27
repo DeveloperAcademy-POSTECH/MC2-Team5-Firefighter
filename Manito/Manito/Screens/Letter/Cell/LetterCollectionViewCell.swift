@@ -15,6 +15,8 @@ protocol LetterCollectionViewCellDelegate: AnyObject {
 }
 
 final class LetterCollectionViewCell: BaseCollectionViewCell {
+
+    typealias ConfigurationData = (mission: String?, date: String, content: String?, imageURL: String?, isTodayLetter: Bool, canReport: Bool)
     
     // MARK: - ui component
     
@@ -142,30 +144,25 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         self.delegate = delegate
     }
 
-    func configure(mission: String?,
-                   date: String,
-                   content: String?,
-                   imageURL: String?,
-                   isTodayLetter: Bool,
-                   canReport: Bool) {
-        if let mission {
+    func configureCell(_ data: ConfigurationData) {
+        if let mission = data.mission {
             self.missionLabel.text = mission
             self.missionLabel.snp.updateConstraints {
                 $0.bottom.equalTo(self.contentLabel.snp.top).offset(20)
             }
         } else {
-            self.missionLabel.text = date
+            self.missionLabel.text = data.date
             self.missionLabel.snp.updateConstraints {
                 $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
             }
         }
 
-        if let content {
+        if let content = data.content {
             self.contentLabel.text = content
             self.contentLabel.addLabelSpacing()
         }
         
-        if let imageURL {
+        if let imageURL = data.imageURL {
             self.imageURL = imageURL
             self.photoImageView.loadImageUrl(imageURL)
             self.photoImageView.snp.updateConstraints {
@@ -173,8 +170,8 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
             }
         }
 
-        self.missionLabel.textColor = isTodayLetter ? .subOrange : .grey003
-        self.reportButton.isHidden = !canReport
+        self.missionLabel.textColor = data.isTodayLetter ? .subOrange : .grey003
+        self.reportButton.isHidden = !data.canReport
     }
 
     // MARK: - selector

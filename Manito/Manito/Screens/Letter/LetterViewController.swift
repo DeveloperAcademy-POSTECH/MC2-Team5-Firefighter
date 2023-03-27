@@ -209,12 +209,12 @@ extension LetterViewController: UICollectionViewDataSource {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
         let data = self.letterList[indexPath.item]
         let canReport = self.letterView.letterType == .received
-        cell.configure(mission: data.mission,
-                       date: data.date,
-                       content: data.content,
-                       imageURL: data.imageUrl,
-                       isTodayLetter: data.isToday,
-                       canReport: canReport)
+        cell.configureCell((mission: data.mission,
+                            date: data.date,
+                            content: data.content,
+                            imageURL: data.imageUrl,
+                            isTodayLetter: data.isToday,
+                            canReport: canReport))
         cell.configureDelegation(self)
         return cell
     }
