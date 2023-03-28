@@ -292,7 +292,7 @@ extension LetterViewController: UICollectionViewDataSource {
         let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
         cell.setLetterData(with: self.letterList[indexPath.item], isHidden: self.letterState.isHidden)
         cell.didTapReport = { [weak self] in
-            self?.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "",
+            self?.sendReportMail(userNickname: UserDefaultStorage.nickname,
                                  content: self?.letterList[indexPath.item].content ?? "글 내용 없음")
         }
         cell.didTapImage = { [weak self] _ in

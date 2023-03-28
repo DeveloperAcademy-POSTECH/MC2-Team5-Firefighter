@@ -107,7 +107,7 @@ final class DetailingViewController: BaseViewController {
     private let manitteeIconView = UIImageView(image: ImageLiterals.icManiTti)
     private let manitteeLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
+        label.text = "\(UserDefaultStorage.nickname)의 마니띠"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
         return label
@@ -191,7 +191,7 @@ final class DetailingViewController: BaseViewController {
         view.layer.masksToBounds = false
         view.layer.cornerRadius = 30
         view.makeShadow(color: .shadowRed, opacity: 1.0, offset: CGSize(width: 0, height: 6), radius: 1)
-        view.isHidden = false
+        view.isHidden = true
         return view
     }()
     // FIXME: - 마니또 공개 API 확실히 하기

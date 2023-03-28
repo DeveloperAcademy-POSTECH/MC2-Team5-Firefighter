@@ -135,7 +135,7 @@ final class OpenManittoView: UIView {
 
         DispatchQueue.main.asyncAfter(deadline: deadline + 1.0, execute: {
             self.popupView.fadeIn(duration: 0.2)
-            self.popupView.setupTypingAnimation(user: UserDefaultStorage.nickname ?? "당신", manitto: manittoNickname)
+            self.popupView.setupTypingAnimation(user: UserDefaultStorage.nickname, manitto: manittoNickname)
         })
     }
 

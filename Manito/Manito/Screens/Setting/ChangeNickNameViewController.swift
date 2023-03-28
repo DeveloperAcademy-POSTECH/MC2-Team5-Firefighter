@@ -13,7 +13,7 @@ class ChangeNickNameViewController: BaseViewController {
     
     let settingService: SettingProtocol = SettingAPI(apiService: APIService())
     
-    private var nickname: String = UserDefaultStorage.nickname ?? ""
+    private var nickname: String = UserDefaultStorage.nickname
     private var maxLength = 5
     
     // MARK: - Property
