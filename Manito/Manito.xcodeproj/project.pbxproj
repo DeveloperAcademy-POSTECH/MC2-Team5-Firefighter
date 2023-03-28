@@ -93,6 +93,7 @@
 		B5706BF629B9D4650093D198 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BF529B9D4650093D198 /* GuideView.swift */; };
 		B5AE11F029D1E43B00F86FF8 /* OpenManittoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */; };
 		B5AE11F229D28CB500F86FF8 /* OpenManittoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */; };
+		B5AE11F429D32EE700F86FF8 /* SelectManitteeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
@@ -250,6 +251,7 @@
 		B5706BF529B9D4650093D198 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoView.swift; sourceTree = "<group>"; };
 		B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupView.swift; sourceTree = "<group>"; };
+		B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeView.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
@@ -552,6 +554,7 @@
 			children = (
 				B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */,
 				B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */,
+				B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1221,6 +1224,7 @@
 				CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */,
 				B5FEE9DD28C849B400DEA07E /* UIImageView+Cache.swift in Sources */,
 				CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */,
+				B5AE11F429D32EE700F86FF8 /* SelectManitteeView.swift in Sources */,
 				397A241428BA516B00454E4F /* DetailWaitAPI.swift in Sources */,
 				B5F525242851A25400614FF7 /* UICollectionView+Extension.swift in Sources */,
 			);

@@ -67,8 +67,8 @@ enum TextLiteral {
     static let mainViewControllerShowIdErrorAlertTitle: String = "해당 마니또 방의 정보를 불러오지 못했습니다."
     static let mainViewControllerShowIdErrorAlertMessage: String = "해당 마니또 방으로 이동할 수 없습니다."
 
-    // MARK: - SelectManittoViewController
-    static let selectManittoViewControllerInformationText: String =
+    // MARK: - SelectManitteViewController
+    static let selectManitteViewControllerInformationText: String =
     """
     레버를 스와이프해서
     내 마니띠를 확인하세요.
