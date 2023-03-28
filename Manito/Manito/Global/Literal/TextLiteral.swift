@@ -76,9 +76,10 @@ enum TextLiteral {
 
     // MARK: - OpenManittoViewController
     static let openManittoViewControllerTitle: String = "당신의 마니또는?"
-    
-    // MARK: - OpenManittoPopupViewController
-    static let openManittoPopupViewControllerInformationText: String = """
+    static let openManittoViewControllerErrorTitle: String = "오류"
+    static let openManittoViewControllerErrorDescription = "마니또를 확인할 수 없습니다."
+    static let openManittoViewControllerPopupDescription: String =
+        """
         내일 함께 했던 추억이 열립니다.
         마니또 방에서 확인해 보세요!
         """
