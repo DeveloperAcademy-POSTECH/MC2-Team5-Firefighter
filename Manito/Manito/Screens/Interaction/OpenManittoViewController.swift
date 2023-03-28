@@ -112,7 +112,7 @@ extension OpenManittoViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        let cell: OpenManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
 
         if let colorIndex = self.friendsList.members?[indexPath.item].colorIndex {
             cell.configureCell(colorIndex: colorIndex)

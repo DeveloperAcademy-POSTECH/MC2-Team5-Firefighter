@@ -79,7 +79,7 @@
 		B50B1B33285AC0970080992C /* Gifu in Frameworks */ = {isa = PBXBuildFile; productRef = B50B1B32285AC0970080992C /* Gifu */; };
 		B50B1B3C285AD2B20080992C /* logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = B50B1B3B285AD2B20080992C /* logo.gif */; };
 		B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B40285B048A0080992C /* OpenManittoViewController.swift */; };
-		B50B1B44285B146A0080992C /* ManittoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */; };
+		B50B1B44285B146A0080992C /* OpenManittoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B43285B146A0080992C /* OpenManittoCollectionViewCell.swift */; };
 		B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */; };
 		B517C04C28D1FE5F0008BED0 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */; };
 		B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04D28D1FE660008BED0 /* TokenProtocol.swift */; };
@@ -236,7 +236,7 @@
 		B50B1B29285AB7650080992C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B50B1B3B285AD2B20080992C /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = logo.gif; sourceTree = "<group>"; };
 		B50B1B40285B048A0080992C /* OpenManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoViewController.swift; sourceTree = "<group>"; };
-		B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManittoCollectionViewCell.swift; sourceTree = "<group>"; };
+		B50B1B43285B146A0080992C /* OpenManittoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoCollectionViewCell.swift; sourceTree = "<group>"; };
 		B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEndPoint.swift; sourceTree = "<group>"; };
 		B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
 		B517C04D28D1FE660008BED0 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
@@ -493,7 +493,7 @@
 		B50B1B42285B14550080992C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B50B1B43285B146A0080992C /* ManittoCollectionViewCell.swift */,
+				B50B1B43285B146A0080992C /* OpenManittoCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1129,7 +1129,7 @@
 				39EEF65A28CB3C7B00437654 /* Token.swift in Sources */,
 				39C95804287DAD3000A04A2B /* LetterEndPoint.swift in Sources */,
 				7E77DB0828BF9D2400E95D4B /* RoomAPI.swift in Sources */,
-				B50B1B44285B146A0080992C /* ManittoCollectionViewCell.swift in Sources */,
+				B50B1B44285B146A0080992C /* OpenManittoCollectionViewCell.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				39C957D628799AB900A04A2B /* HTTPMethod.swift in Sources */,
 				B5F525392854871E00614FF7 /* BottomOfSendLetterView.swift in Sources */,

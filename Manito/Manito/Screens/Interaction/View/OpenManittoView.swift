@@ -44,8 +44,8 @@ final class OpenManittoView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
-        collectionView.register(cell: ManittoCollectionViewCell.self,
-                                forCellWithReuseIdentifier: ManittoCollectionViewCell.className)
+        collectionView.register(cell: OpenManittoCollectionViewCell.self,
+                                forCellWithReuseIdentifier: OpenManittoCollectionViewCell.className)
         return collectionView
     }()
     private let titleLabel: UILabel = {

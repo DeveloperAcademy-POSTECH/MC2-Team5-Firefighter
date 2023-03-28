@@ -1,5 +1,5 @@
 //
-//  ManittoCollectionViewCell.swift
+//  OpenManittoCollectionViewCell.swift
 //  Manito
 //
 //  Created by SHIN YOON AH on 2022/06/16.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class ManittoCollectionViewCell: BaseCollectionViewCell {
+final class OpenManittoCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - ui component
     
