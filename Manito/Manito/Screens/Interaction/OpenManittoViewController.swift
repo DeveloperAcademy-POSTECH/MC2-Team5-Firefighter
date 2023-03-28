@@ -59,7 +59,7 @@ final class OpenManittoViewController: BaseViewController {
             case .success((let list, let manittoIndex)):
                 self?.friendsList = list
                 DispatchQueue.main.async {
-                    self?.openManittoView.animateManittoCollectionView(with: list, manittoIndex)
+                    self?.openManittoView.setupManittoAnimation(friendList: list, manittoIndex: manittoIndex)
                 }
             case .failure:
                 DispatchQueue.main.async {

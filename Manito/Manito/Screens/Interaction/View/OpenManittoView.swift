@@ -88,15 +88,30 @@ final class OpenManittoView: UIView {
         }
     }
 
+    private func animateManittoCollectionView(with friendList: FriendList, _ manittoIndex: Int) {
+        let timeInterval: Double = 0.3
+        let durationTime: Double = timeInterval * self.totalCount
+        let delay: Double = 1.0
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+            UIView.animate(withDuration: durationTime, animations: {
+                self.setRandomShuffleAnimation(with: timeInterval, friendList)
+            }, completion: { _ in
+                let deadline: DispatchTime = .now() + delay + durationTime
+                self.setOpenManittoAnimation(with: deadline, manittoIndex)
+            })
+        })
+    }
+
     private func setRandomShuffleAnimation(with timeInterval: TimeInterval, _ friendList: FriendList) {
         guard let count = friendList.count else { return }
         var countNumber = 0
 
         Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { [weak self] _ in
-            defer { countNumber += 1 }
             guard let self = self,
                   countNumber != Int(self.totalCount) else { return }
 
+            countNumber += 1
             self.randomIndex = Int.random(in: 0...count-1, excluding: self.randomIndex)
         }
     }
@@ -111,19 +126,9 @@ final class OpenManittoView: UIView {
         })
     }
 
-    func animateManittoCollectionView(with friendList: FriendList, _ manittoIndex: Int) {
-        let timeInterval: Double = 0.3
-        let durationTime: Double = timeInterval * self.totalCount
-        let delay: Double = 1.0
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-            UIView.animate(withDuration: durationTime, animations: {
-                self.setRandomShuffleAnimation(with: timeInterval, friendList)
-            }, completion: { _ in
-                let deadline: DispatchTime = .now() + delay + durationTime
-                self.setOpenManittoAnimation(with: deadline, manittoIndex)
-            })
-        })
+    func setupManittoAnimation(friendList: FriendList, manittoIndex: Int) {
+        self.animateManittoCollectionView(with: friendList, manittoIndex)
+        self.manittoCollectionView.reloadData()
     }
 
     func configureDelegation(_ delegate: UICollectionViewDataSource) {
