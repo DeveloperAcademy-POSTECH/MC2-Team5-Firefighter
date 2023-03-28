@@ -10,6 +10,10 @@ import UIKit
 import Gifu
 import SnapKit
 
+protocol SelectManitteeViewDelegate: AnyObject {
+    func confirmButtonDidTap()
+}
+
 final class SelectManitteeView: UIView {
 
     // MARK: - ui component
@@ -36,6 +40,10 @@ final class SelectManitteeView: UIView {
     private let joystickBackgroundView: UIView = UIView()
     private let joystickImageView: GIFImageView = GIFImageView(image: UIImage(named: ImageLiterals.gifJoystick))
     private let openCapsuleImageView: GIFImageView = GIFImageView(image: UIImage(named: ImageLiterals.gifCapsule))
+
+    // MARK: - property
+
+    private weak var delegate: SelectManitteeViewDelegate?
 
     // MARK: - init
 
@@ -95,13 +103,7 @@ final class SelectManitteeView: UIView {
 
     private func setupButtonAction() {
         let okAction = UIAction { [weak self] _ in
-            guard let presentingViewController = self?.presentingViewController as? UINavigationController,
-                  let roomId = self?.roomId
-            else { return }
-            let viewController = DetailingViewController(roomId: roomId)
-            presentingViewController.popViewController(animated: true)
-            presentingViewController.pushViewController(viewController, animated: false)
-            self?.dismiss(animated: true)
+            self?.delegate?.confirmButtonDidTap()
         }
         self.confirmButton.addAction(okAction, for: .touchUpInside)
     }
@@ -152,6 +154,10 @@ final class SelectManitteeView: UIView {
         case .openButton:
             self.confirmButton.isHidden = false
         }
+    }
+
+    func configureDelegation(_ delegate: SelectManitteeViewDelegate) {
+        self.delegate = delegate
     }
 
     func configureUI(manitteeNickname: String) {

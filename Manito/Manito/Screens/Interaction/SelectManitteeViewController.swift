@@ -49,5 +49,23 @@ final class SelectManitteeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureDelegation()
+    }
+
+    // MARK: - func
+
+    private func configureDelegation() {
+        self.selectManitteeView.configureDelegation(self)
+    }
+}
+
+// MARK: - SelectManitteeViewDelegate
+extension SelectManitteeViewController: SelectManitteeViewDelegate {
+    func confirmButtonDidTap() {
+        guard let presentingViewController = self.presentingViewController as? UINavigationController else { return }
+        let detailingViewController = DetailingViewController(roomId: self.roomId)
+        presentingViewController.popViewController(animated: true)
+        presentingViewController.pushViewController(detailingViewController, animated: false)
+        self.dismiss(animated: true)
     }
 }
