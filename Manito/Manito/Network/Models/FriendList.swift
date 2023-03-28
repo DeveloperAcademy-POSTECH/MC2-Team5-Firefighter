@@ -14,5 +14,10 @@ struct FriendList: Decodable {
 
 struct Member: Decodable {
     let nickname: String?
-    let colorIdx: Int?
+    let colorIndex: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case nickname
+        case colorIndex = "colorIdx"
+    }
 }

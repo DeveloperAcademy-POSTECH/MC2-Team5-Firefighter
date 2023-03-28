@@ -54,7 +54,7 @@ final class OpenManittoView: UIView {
     // MARK: - property
 
     private let totalCount = 10.0
-    private var randomIndex = -1 {
+    private(set) var randomIndex = -1 {
         didSet {
             self.manittoCollectionView.reloadData()
         }

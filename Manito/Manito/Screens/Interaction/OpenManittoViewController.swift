@@ -25,6 +25,8 @@ final class OpenManittoViewController: BaseViewController {
     // MARK: - init
     
     init(roomId: String, manittoNickname: String) {
+        self.roomId = roomId
+        self.manittoNickname = manittoNickname
         super.init()
     }
 
@@ -97,9 +99,12 @@ extension OpenManittoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
 
-        if let colorIdx = self.friendsList.members?[indexPath.item].colorIdx {
-            cell.setManittoCell(with: colorIdx)
-            cell.setHighlightCell(with: indexPath.item, matchIndex: self.manittoRandomIndex, imageIndex: colorIdx)
+        if let colorIndex = self.friendsList.members?[indexPath.item].colorIndex {
+            cell.configureCell(colorIndex: colorIndex)
+        }
+
+        if indexPath.item == self.openManittoView.randomIndex {
+            cell.highlightCell()
         }
 
         return cell

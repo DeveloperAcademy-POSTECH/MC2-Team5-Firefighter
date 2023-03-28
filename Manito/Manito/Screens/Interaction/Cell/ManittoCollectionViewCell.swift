@@ -36,17 +36,13 @@ final class ManittoCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - func
     
-    func setManittoCell(with manittoTypeIndex: Int) {
-        self.backgroundColor = Character.allCases[manittoTypeIndex].color.withAlphaComponent(0.5)
+    func configureCell(colorIndex: Int) {
+        self.backgroundColor = Character.allCases[colorIndex].color.withAlphaComponent(0.5)
+        self.characterImageView.image = Character.allCases[colorIndex].image
         self.contentView.alpha = 0.5
-        self.characterImageView.image = Character.allCases[manittoTypeIndex].image
     }
     
-    func setHighlightCell(with manittoTypeIndex: Int, matchIndex: Int, imageIndex: Int) {
-        if manittoTypeIndex == matchIndex {
-            self.backgroundColor = Character.allCases[imageIndex].color
-            self.contentView.alpha = 1.0
-            self.characterImageView.image = Character.allCases[imageIndex].image
-        }
+    func highlightCell() {
+        self.contentView.alpha = 1.0
     }
 }
