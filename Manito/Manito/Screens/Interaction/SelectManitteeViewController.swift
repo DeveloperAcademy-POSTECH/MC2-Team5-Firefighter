@@ -9,8 +9,8 @@ import UIKit
 
 final class SelectManitteeViewController: BaseViewController {
 
-    private enum SelectionStage {
-        case showJoystick, showCapsule, openName, openButton
+    private enum SelectionStep: Int {
+        case showJoystick = 0, showCapsule, openName, openButton
     }
 
     // MARK: - ui component
@@ -20,8 +20,7 @@ final class SelectManitteeViewController: BaseViewController {
     // MARK: - property
 
     private let roomId: String
-    var manitteeNickname: String?
-    private var stageType: SelectionStage = .showJoystick {
+    private var stepType: SelectionStep = .showJoystick {
         didSet {
             self.hiddenImageView()
             self.setupGifImage()
@@ -32,8 +31,8 @@ final class SelectManitteeViewController: BaseViewController {
 
     init(roomId: String, manitteeNickname: String) {
         self.roomId = roomId
-        self.manitteeNickname = manitteeNickname
         super.init()
+        self.selectManitteeView.configureUI(manitteeNickname: manitteeNickname)
     }
 
     @available(*, unavailable)
@@ -67,5 +66,10 @@ extension SelectManitteeViewController: SelectManitteeViewDelegate {
         presentingViewController.popViewController(animated: true)
         presentingViewController.pushViewController(detailingViewController, animated: false)
         self.dismiss(animated: true)
+    }
+
+    func moveToNextStep() {
+        guard let nextStep = SelectionStep(rawValue: self.stepType.rawValue + 1) else { return }
+        self.stepType = nextStep
     }
 }

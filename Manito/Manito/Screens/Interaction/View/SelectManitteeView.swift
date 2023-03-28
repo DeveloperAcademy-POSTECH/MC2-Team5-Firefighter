@@ -12,6 +12,7 @@ import SnapKit
 
 protocol SelectManitteeViewDelegate: AnyObject {
     func confirmButtonDidTap()
+    func moveToNextStep()
 }
 
 final class SelectManitteeView: UIView {
@@ -102,19 +103,19 @@ final class SelectManitteeView: UIView {
     }
 
     private func setupButtonAction() {
-        let okAction = UIAction { [weak self] _ in
+        let confirmAction = UIAction { [weak self] _ in
             self?.delegate?.confirmButtonDidTap()
         }
-        self.confirmButton.addAction(okAction, for: .touchUpInside)
+        self.confirmButton.addAction(confirmAction, for: .touchUpInside)
     }
 
     private func setupSwipeGesture() {
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(_:)))
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(_:)))
-        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.joystickBackgroundView.addGestureRecognizer(swipeLeft)
-        self.joystickBackgroundView.addGestureRecognizer(swipeRight)
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(_:)))
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(_:)))
+        swipeLeftGesture.direction = UISwipeGestureRecognizer.Direction.left
+        swipeRightGesture.direction = UISwipeGestureRecognizer.Direction.right
+        self.joystickBackgroundView.addGestureRecognizer(swipeLeftGesture)
+        self.joystickBackgroundView.addGestureRecognizer(swipeRightGesture)
     }
 
     private func setupGifImage() {
@@ -170,10 +171,8 @@ final class SelectManitteeView: UIView {
     private func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
-            case .left, .right:
-                self.stageType = .showCapsule
-            default:
-                break
+            case .left, .right: self.delegate?.moveToNextStep()
+            default: break
             }
         }
     }
