@@ -91,6 +91,7 @@ final class OpenManittoPopupView: UIView {
 
     private func configureUI() {
         self.backgroundColor = .black.withAlphaComponent(0.8)
+        self.alpha = 0.0
     }
 
     private func setupButtonAction() {

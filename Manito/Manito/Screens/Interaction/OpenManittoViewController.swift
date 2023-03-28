@@ -55,17 +55,20 @@ final class OpenManittoViewController: BaseViewController {
 
     private func fetchManittoData() {
         self.fetchFriendList(roomId: self.roomId, manittoNickname: self.manittoNickname) { [weak self] response in
+            guard let self = self else { return }
             switch response {
             case .success((let list, let manittoIndex)):
-                self?.friendsList = list
+                self.friendsList = list
                 DispatchQueue.main.async {
-                    self?.openManittoView.setupManittoAnimation(friendList: list, manittoIndex: manittoIndex)
+                    self.openManittoView.setupManittoAnimation(friendList: list,
+                                                               manittoIndex: manittoIndex,
+                                                               manittoNickname: self.manittoNickname)
                 }
             case .failure:
                 DispatchQueue.main.async {
-                    self?.makeAlert(title: TextLiteral.openManittoViewControllerErrorTitle,
-                                    message: TextLiteral.openManittoViewControllerErrorDescription)
-                    self?.dismiss(animated: true)
+                    self.makeAlert(title: TextLiteral.openManittoViewControllerErrorTitle,
+                                   message: TextLiteral.openManittoViewControllerErrorDescription)
+                    self.dismiss(animated: true)
                 }
             }
         }

@@ -98,7 +98,9 @@ final class OpenManittoView: UIView {
         }
     }
 
-    private func animateManittoCollectionView(with friendList: FriendList, _ manittoIndex: Int) {
+    private func animateManittoCollectionView(with friendList: FriendList,
+                                              _ manittoIndex: Int,
+                                              _ manittoNickname: String) {
         let timeInterval: Double = 0.3
         let durationTime: Double = timeInterval * self.totalCount
         let delay: Double = 1.0
@@ -108,7 +110,7 @@ final class OpenManittoView: UIView {
                 self.performRandomShuffleAnimation(with: timeInterval, friendList)
             }, completion: { _ in
                 let deadline: DispatchTime = .now() + delay + durationTime
-                self.performOpenManittoAnimation(with: deadline, manittoIndex)
+                self.performOpenManittoAnimation(with: deadline, manittoIndex, manittoNickname)
             })
         })
     }
@@ -126,18 +128,19 @@ final class OpenManittoView: UIView {
         }
     }
 
-    private func performOpenManittoAnimation(with deadline: DispatchTime, _ manittoIndex: Int) {
+    private func performOpenManittoAnimation(with deadline: DispatchTime, _ manittoIndex: Int, _ manittoNickname: String) {
         DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
             self.randomIndex = manittoIndex
         })
 
         DispatchQueue.main.asyncAfter(deadline: deadline + 1.0, execute: {
-//            self.presentPopupViewController()
+            self.popupView.fadeIn(duration: 0.2)
+            self.popupView.setupTypingAnimation(user: UserDefaultStorage.nickname ?? "당신", manitto: manittoNickname)
         })
     }
 
-    func setupManittoAnimation(friendList: FriendList, manittoIndex: Int) {
-        self.animateManittoCollectionView(with: friendList, manittoIndex)
+    func setupManittoAnimation(friendList: FriendList, manittoIndex: Int, manittoNickname: String) {
+        self.animateManittoCollectionView(with: friendList, manittoIndex, manittoNickname)
         self.manittoCollectionView.reloadData()
     }
 
