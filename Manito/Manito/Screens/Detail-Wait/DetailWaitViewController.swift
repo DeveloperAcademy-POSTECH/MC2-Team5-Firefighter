@@ -349,7 +349,7 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     private func presentSelectManittoViewController(nickname: String) {
-        let viewController = SelectManittoViewController()
+        let viewController = SelectManitteeViewController()
         viewController.modalPresentationStyle = .fullScreen
         viewController.manitteeName = nickname
         viewController.roomId = self.roomInformation?.id?.description

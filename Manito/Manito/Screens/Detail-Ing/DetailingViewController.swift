@@ -456,7 +456,7 @@ final class DetailingViewController: BaseViewController {
     }
     
     private func openManittee(manitteeName: String ) {
-            let viewController = SelectManittoViewController()
+            let viewController = SelectManitteeViewController()
             viewController.modalPresentationStyle = .fullScreen
             viewController.roomId = roomId
             viewController.manitteeName = manitteeName
