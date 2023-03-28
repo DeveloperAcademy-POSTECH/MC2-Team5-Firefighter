@@ -76,7 +76,7 @@ final class OpenManittoView: UIView {
         }
     }
 
-    private func setRandomAnimationTimer(with timeInterval: TimeInterval, _ friendList: FriendList) {
+    private func setRandomShuffleAnimation(with timeInterval: TimeInterval, _ friendList: FriendList) {
         guard let count = friendList.count else { return }
         var countNumber = 0
 
@@ -89,7 +89,7 @@ final class OpenManittoView: UIView {
         }
     }
 
-    private func setManittoAnimation(with deadline: DispatchTime, _ manittoIndex: Int) {
+    private func setOpenManittoAnimation(with deadline: DispatchTime, _ manittoIndex: Int) {
         DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
             self.randomIndex = manittoIndex
         })
@@ -106,10 +106,10 @@ final class OpenManittoView: UIView {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
             UIView.animate(withDuration: durationTime, animations: {
-                self.setRandomAnimationTimer(with: timeInterval, friendList)
+                self.setRandomShuffleAnimation(with: timeInterval, friendList)
             }, completion: { _ in
                 let deadline: DispatchTime = .now() + delay + durationTime
-                self.setManittoAnimation(with: deadline, manittoIndex)
+                self.setOpenManittoAnimation(with: deadline, manittoIndex)
             })
         })
     }
