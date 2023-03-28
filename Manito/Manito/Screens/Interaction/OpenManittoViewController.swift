@@ -56,14 +56,14 @@ final class OpenManittoViewController: BaseViewController {
 
     private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService())
 
-    private var manittoRandomIndex = -1 {
+    private var manittoRandomIndex: Int = -1 {
         didSet {
             self.manittoCollectionView.reloadData()
         }
     }
     private var friendsList: FriendList = FriendList(count: 0, members: [])
     private var manitto: String = ""
-    private var manittoIndex = 0
+    private var manittoIndex: Int = 0
     private var roomId: String
     
     // MARK: - init
@@ -82,7 +82,7 @@ final class OpenManittoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.requestWithFriends(roomId: roomId)
+        self.requestWithFriends(roomId: self.roomId)
     }
 
     // MARK: - override
@@ -206,9 +206,9 @@ extension OpenManittoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
 
-        if let colorIdx = self.friendsList.members?[indexPath.item].colorIdx {
-            cell.setManittoCell(with: colorIdx)
-            cell.setHighlightCell(with: indexPath.item, matchIndex: self.manittoRandomIndex, imageIndex: colorIdx)
+        if let colorIndex = self.friendsList.members?[indexPath.item].colorIndex {
+            cell.setManittoCell(with: colorIndex)
+            cell.setHighlightCell(with: indexPath.item, matchIndex: self.manittoRandomIndex, imageIndex: colorIndex)
         }
 
         return cell
