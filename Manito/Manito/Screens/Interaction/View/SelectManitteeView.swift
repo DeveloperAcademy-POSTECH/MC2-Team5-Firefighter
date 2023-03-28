@@ -39,8 +39,8 @@ final class SelectManitteeView: UIView {
         return button
     }()
     private let joystickBackgroundView: UIView = UIView()
-    private let joystickImageView: GIFImageView = GIFImageView(image: UIImage(named: ImageLiterals.gifJoystick))
-    private let openCapsuleImageView: GIFImageView = GIFImageView(image: UIImage(named: ImageLiterals.gifCapsule))
+    private let joystickImageView: GIFImageView = GIFImageView()
+    private let openCapsuleImageView: GIFImageView = GIFImageView()
 
     // MARK: - property
 
@@ -118,43 +118,32 @@ final class SelectManitteeView: UIView {
         self.joystickBackgroundView.addGestureRecognizer(swipeRightGesture)
     }
 
-    private func setupGifImage() {
-        switch stageType {
-        case .showJoystick:
-            DispatchQueue.main.async {
-                self.joystickImageView.animate(withGIFNamed: ImageLiterals.gifJoystick)
-            }
-        case .showCapsule:
-            self.joystickImageView.stopAnimatingGIF()
-            DispatchQueue.main.async {
-                self.openCapsuleImageView.animate(withGIFNamed: ImageLiterals.gifCapsule, loopCount: 1, animationBlock: { [weak self] in
-                    self?.stageType = .openName
-                })
-            }
-        case .openName:
-            self.openCapsuleImageView.stopAnimatingGIF()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                self.stageType = .openButton
-            })
-        case .openButton:
-            break
-        }
+    func setupShowJoyStick() {
+        self.nameLabel.alpha = 0.0
+        self.openCapsuleImageView.isHidden = true
+        self.confirmButton.isHidden = true
+        self.joystickImageView.animate(withGIFNamed: ImageLiterals.gifJoystick)
     }
 
-    private func hiddenImageView() {
-        switch stageType {
-        case .showJoystick:
-            self.nameLabel.alpha = 0.0
-            self.openCapsuleImageView.isHidden = true
-            self.confirmButton.isHidden = true
-        case .showCapsule:
-            self.openCapsuleImageView.isHidden = false
-            self.joystickBackgroundView.isHidden = true
-        case .openName:
-            self.nameLabel.fadeIn()
-        case .openButton:
-            self.confirmButton.isHidden = false
-        }
+    func setupShowCapsule() {
+        self.openCapsuleImageView.isHidden = false
+        self.joystickBackgroundView.isHidden = true
+        self.joystickImageView.stopAnimatingGIF()
+        self.openCapsuleImageView.animate(withGIFNamed: ImageLiterals.gifCapsule, loopCount: 1, animationBlock: { [weak self] in
+            self?.delegate?.moveToNextStep()
+        })
+    }
+
+    func setupOpenName() {
+        self.nameLabel.fadeIn()
+        self.openCapsuleImageView.stopAnimatingGIF()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+            self?.delegate?.moveToNextStep()
+        })
+    }
+
+    func setupOpenButton() {
+        self.confirmButton.isHidden = false
     }
 
     func configureDelegation(_ delegate: SelectManitteeViewDelegate) {

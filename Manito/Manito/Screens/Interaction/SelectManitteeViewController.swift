@@ -22,8 +22,7 @@ final class SelectManitteeViewController: BaseViewController {
     private let roomId: String
     private var stepType: SelectionStep = .showJoystick {
         didSet {
-            self.hiddenImageView()
-            self.setupGifImage()
+            
         }
     }
 
