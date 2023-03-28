@@ -49,10 +49,10 @@ final class OpenManittoViewController: BaseViewController {
     private func fetchManittoData() {
         self.fetchFriendList(roomId: self.roomId, manittoNickname: self.manittoNickname) { [weak self] response in
             switch response {
-            case .success((let list, let manittoId)):
+            case .success((let list, let manittoIndex)):
                 self?.friendsList = list
                 DispatchQueue.main.async {
-                    self?.openManittoView.animateManittoCollectionView(with: list)
+                    self?.openManittoView.animateManittoCollectionView(with: list, manittoIndex)
                 }
             case .failure:
                 DispatchQueue.main.async {

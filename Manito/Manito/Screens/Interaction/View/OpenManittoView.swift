@@ -53,6 +53,7 @@ final class OpenManittoView: UIView {
 
     // MARK: - property
 
+    private let totalCount = 10.0
     private var randomIndex = -1 {
         didSet {
             self.manittoCollectionView.reloadData()
@@ -75,46 +76,41 @@ final class OpenManittoView: UIView {
         }
     }
 
-    func animateManittoCollectionView(with friendList: FriendList) {
-        guard let count = self.friendsList.count else { return }
-        let timeInterval: Double = 0.3
-        let durationTime: Double = timeInterval * Double(count)
-        let delay: Double = 1.0
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-            UIView.animate(withDuration: durationTime, animations: {
-                self.setRandomAnimationTimer(withTimeInterval: timeInterval)
-            }, completion: { _ in
-                self.setManittoAnimation(with: .now() + delay + durationTime)
-            })
-        })
-    }
-
-    private func setRandomAnimationTimer(withTimeInterval timeInterval: TimeInterval) {
+    private func setRandomAnimationTimer(with timeInterval: TimeInterval, _ friendList: FriendList) {
+        guard let count = friendList.count else { return }
         var countNumber = 0
 
-        // friend list, randomIndex
-//        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { [weak self] _ in
-//            guard let self = self,
-//                  let count = self.friendsList.count,
-//                  countNumber != self.friendsList.count else { return }
-//            let characterCount = count - 1
-//
-//            self.randomIndex = Int.random(in: 0...characterCount, excluding: self.manittoRandomIndex)
-//            countNumber += 1
-//        }
+        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { [weak self] _ in
+            defer { countNumber += 1 }
+            guard let self = self,
+                  countNumber != Int(self.totalCount) else { return }
+
+            self.randomIndex = Int.random(in: 0...count-1, excluding: self.randomIndex)
+        }
     }
 
-    private func setManittoAnimation(with deadline: DispatchTime) {
+    private func setManittoAnimation(with deadline: DispatchTime, _ manittoIndex: Int) {
         DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
-            // manittoIndex
-//            self.randomIndex = self.manittoIndex
+            self.randomIndex = manittoIndex
         })
 
         DispatchQueue.main.asyncAfter(deadline: deadline + 1.0, execute: {
-            // 팝업 화면 띄우기 구현
 //            self.presentPopupViewController()
         })
     }
 
+    func animateManittoCollectionView(with friendList: FriendList, _ manittoIndex: Int) {
+        let timeInterval: Double = 0.3
+        let durationTime: Double = timeInterval * self.totalCount
+        let delay: Double = 1.0
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+            UIView.animate(withDuration: durationTime, animations: {
+                self.setRandomAnimationTimer(with: timeInterval, friendList)
+            }, completion: { _ in
+                let deadline: DispatchTime = .now() + delay + durationTime
+                self.setManittoAnimation(with: deadline, manittoIndex)
+            })
+        })
+    }
 }
