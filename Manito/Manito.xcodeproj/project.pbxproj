@@ -92,8 +92,8 @@
 		B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BE029ADC20A0093D198 /* CreateLetterView.swift */; };
 		B5706BF629B9D4650093D198 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BF529B9D4650093D198 /* GuideView.swift */; };
 		B5AE11F029D1E43B00F86FF8 /* OpenManittoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */; };
+		B5AE11F229D28CB500F86FF8 /* OpenManittoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
-		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
 		B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */; };
@@ -249,8 +249,8 @@
 		B5706BE029ADC20A0093D198 /* CreateLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterView.swift; sourceTree = "<group>"; };
 		B5706BF529B9D4650093D198 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoView.swift; sourceTree = "<group>"; };
+		B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupView.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
-		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
@@ -485,7 +485,6 @@
 				B5AE11EE29D1E38D00F86FF8 /* View */,
 				B50B1B42285B14550080992C /* Cell */,
 				B50B1B40285B048A0080992C /* OpenManittoViewController.swift */,
-				B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */,
 				B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */,
 			);
 			path = Interaction;
@@ -552,6 +551,7 @@
 			isa = PBXGroup;
 			children = (
 				B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */,
+				B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1135,6 +1135,7 @@
 				B5F525392854871E00614FF7 /* BottomOfSendLetterView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
 				7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */,
+				B5AE11F229D28CB500F86FF8 /* OpenManittoPopupView.swift in Sources */,
 				B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */,
 				39C957DF2879A35300A04A2B /* RoomDTO.swift in Sources */,
 				39C95808287DB05C00A04A2B /* SettingEndPoint.swift in Sources */,
@@ -1156,7 +1157,6 @@
 				CB4C77E428C0D4C9007A1AD2 /* MainProtocol.swift in Sources */,
 				CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */,
 				D739C36528C7B75400161117 /* SettingAPI.swift in Sources */,
-				B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */,
 				B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */,
 				B517C04C28D1FE5F0008BED0 /* TokenAPI.swift in Sources */,
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,

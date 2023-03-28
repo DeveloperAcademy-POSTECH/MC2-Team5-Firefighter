@@ -94,6 +94,13 @@ final class OpenManittoViewController: BaseViewController {
     }
 }
 
+// MARK: - OpenManittoViewDelegate
+extension OpenManittoViewController: OpenManittoViewDelegate {
+    func confirmButtonTapped() {
+        self.dismiss(animated: true)
+    }
+}
+
 // MARK: - UICollectionViewDataSource
 extension OpenManittoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

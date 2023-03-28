@@ -9,6 +9,10 @@ import UIKit
 
 import SnapKit
 
+protocol OpenManittoViewDelegate: AnyObject {
+    func confirmButtonTapped()
+}
+
 final class OpenManittoView: UIView {
 
     private enum InternalSize {
@@ -50,6 +54,7 @@ final class OpenManittoView: UIView {
         label.text = TextLiteral.openManittoViewControllerTitle
         return label
     }()
+    private let popupView: OpenManittoPopupView = OpenManittoPopupView()
 
     // MARK: - property
 
@@ -86,6 +91,11 @@ final class OpenManittoView: UIView {
             $0.top.equalTo(self.titleLabel.snp.bottom)
             $0.leading.trailing.bottom.equalTo(self.safeAreaLayoutGuide)
         }
+
+        self.addSubview(self.popupView)
+        self.popupView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
 
     private func animateManittoCollectionView(with friendList: FriendList, _ manittoIndex: Int) {
@@ -95,15 +105,15 @@ final class OpenManittoView: UIView {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
             UIView.animate(withDuration: durationTime, animations: {
-                self.setRandomShuffleAnimation(with: timeInterval, friendList)
+                self.performRandomShuffleAnimation(with: timeInterval, friendList)
             }, completion: { _ in
                 let deadline: DispatchTime = .now() + delay + durationTime
-                self.setOpenManittoAnimation(with: deadline, manittoIndex)
+                self.performOpenManittoAnimation(with: deadline, manittoIndex)
             })
         })
     }
 
-    private func setRandomShuffleAnimation(with timeInterval: TimeInterval, _ friendList: FriendList) {
+    private func performRandomShuffleAnimation(with timeInterval: TimeInterval, _ friendList: FriendList) {
         guard let count = friendList.count else { return }
         var countNumber = 0
 
@@ -116,7 +126,7 @@ final class OpenManittoView: UIView {
         }
     }
 
-    private func setOpenManittoAnimation(with deadline: DispatchTime, _ manittoIndex: Int) {
+    private func performOpenManittoAnimation(with deadline: DispatchTime, _ manittoIndex: Int) {
         DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
             self.randomIndex = manittoIndex
         })
@@ -131,7 +141,8 @@ final class OpenManittoView: UIView {
         self.manittoCollectionView.reloadData()
     }
 
-    func configureDelegation(_ delegate: UICollectionViewDataSource) {
+    func configureDelegation(_ delegate: UICollectionViewDataSource & OpenManittoViewDelegate) {
         self.manittoCollectionView.dataSource = delegate
+        self.popupView.configureDelegation(delegate)
     }
 }
