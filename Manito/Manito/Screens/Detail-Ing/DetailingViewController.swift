@@ -23,6 +23,7 @@ final class DetailingViewController: BaseViewController {
     private var roomType: RoomType = .PROCESSING
     private var isTappedManittee: Bool = false
     private var missionId: String = ""
+    private var manittoNickname: String = ""
     var letterViewController: UIViewController {
         guard let mission = missionContentsLabel.text else { return UIViewController() }
         let viewController = LetterViewController(roomState: roomType.rawValue,
@@ -190,15 +191,18 @@ final class DetailingViewController: BaseViewController {
         view.layer.masksToBounds = false
         view.layer.cornerRadius = 30
         view.makeShadow(color: .shadowRed, opacity: 1.0, offset: CGSize(width: 0, height: 6), radius: 1)
-        view.isHidden = true
+        view.isHidden = false
         return view
     }()
     // FIXME: - 마니또 공개 API 확실히 하기
     private lazy var manittoOpenButton: MainButton = {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
-            guard let roomId = self?.roomId else { return }
-            let viewController = OpenManittoViewController(roomId: roomId)
+            guard
+                let roomId = self?.roomId,
+                let manittoNickname = self?.manittoNickname
+            else { return }
+            let viewController = OpenManittoViewController(roomId: roomId, manittoNickname: manittoNickname)
             viewController.modalTransitionStyle = .crossDissolve
             viewController.modalPresentationStyle = .fullScreen
             self?.present(viewController, animated: true)
@@ -548,9 +552,11 @@ final class DetailingViewController: BaseViewController {
                         if self.roomType == .PROCESSING {
                             self.setupProcessingUI()
                             guard let missionContent = info.mission?.content,
-                                  let didView = info.didViewRoulette
+                                  let didView = info.didViewRoulette,
+                                  let manittoNickname = info.manitto?.nickname
                             else { return }
                             self.missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
+                            self.manittoNickname = manittoNickname
                             if !didView && !admin {
                                 self.openManittee(manitteeName: manittee)
                             }

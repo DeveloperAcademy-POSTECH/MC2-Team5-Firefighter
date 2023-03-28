@@ -60,6 +60,18 @@ final class OpenManittoView: UIView {
         }
     }
 
+    // MARK: - init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setupLayout()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - func
 
     private func setupLayout() {
@@ -112,5 +124,9 @@ final class OpenManittoView: UIView {
                 self.setOpenManittoAnimation(with: deadline, manittoIndex)
             })
         })
+    }
+
+    func configureDelegation(_ delegate: UICollectionViewDataSource) {
+        self.manittoCollectionView.dataSource = delegate
     }
 }

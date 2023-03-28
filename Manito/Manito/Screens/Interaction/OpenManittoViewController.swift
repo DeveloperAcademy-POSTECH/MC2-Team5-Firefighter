@@ -43,10 +43,15 @@ final class OpenManittoViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureDelegation()
         self.fetchManittoData()
     }
 
     // MARK: - func
+
+    private func configureDelegation() {
+        self.openManittoView.configureDelegation(self)
+    }
 
     private func fetchManittoData() {
         self.fetchFriendList(roomId: self.roomId, manittoNickname: self.manittoNickname) { [weak self] response in
