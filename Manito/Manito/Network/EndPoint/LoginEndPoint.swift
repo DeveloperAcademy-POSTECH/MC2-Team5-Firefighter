@@ -8,11 +8,11 @@
 import Foundation
 
 enum LoginEndPoint: URLRepresentable {
-    case dispatchAppleLogin(body: LoginDTO)
+    case dispatchLogin(body: LoginDTO)
 
     var path: String {
         switch self {
-        case .dispatchAppleLogin:
+        case .dispatchLogin:
             return "/login"
         }
     }
@@ -25,22 +25,22 @@ extension LoginEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .dispatchAppleLogin:
+        case .dispatchLogin:
             return .post
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .dispatchAppleLogin(let body):
+        case .dispatchLogin(let body):
             return body.encode()
         }
     }
 
     var url: String {
         switch self {
-        case .dispatchAppleLogin(let loginDTO):
-            return self[.dispatchAppleLogin(body: loginDTO), .v2]
+        case .dispatchLogin(let loginDTO):
+            return self[.dispatchLogin(body: loginDTO), .v2]
         }
     }
 
