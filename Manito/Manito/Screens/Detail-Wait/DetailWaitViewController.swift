@@ -393,7 +393,7 @@ final class DetailWaitViewController: BaseViewController {
     private func requestWaitRoomInfo() {
         Task {
             do {
-                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
+                let data = try await self.detailWaitService.fetchWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
                     guard let title = roomInfo.roomInformation?.title,
                           let state = roomInfo.roomInformation?.state,
@@ -425,7 +425,7 @@ final class DetailWaitViewController: BaseViewController {
     private func requestStartManitto() {
         Task {
             do {
-                let data = try await self.detailWaitService.startManitto(roomId: "\(roomIndex)")
+                let data = try await self.detailWaitService.patchStartManitto(roomId: "\(roomIndex)")
                 if let manittee = data {
                     guard let nickname = manittee.nickname else { return }
                     self.presentSelectManittoViewController(nickname: nickname)

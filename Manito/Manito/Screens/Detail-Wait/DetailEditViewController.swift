@@ -320,7 +320,7 @@ final class DetailEditViewController: BaseViewController {
     private func putChangeRoomInfo(roomDto: RoomDTO) {
         Task {
             do {
-                let status = try await self.detailWaitService.editRoomInfo(roomId: "\(roomIndex)",
+                let status = try await self.detailWaitService.putRoomInfo(roomId: "\(roomIndex)",
                                                                            roomInfo: roomDto)
                 if status == 204 {
                     ToastView.showToast(message: "방 정보 수정 완료",
