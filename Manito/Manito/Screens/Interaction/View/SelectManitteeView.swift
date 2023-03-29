@@ -140,8 +140,8 @@ final class SelectManitteeView: UIView {
 
     private func setupHiddenStepView(at step: Int) {
         self.joystickBackgroundView.isHidden = !(step == 0)
-        self.openCapsuleImageView.isHidden = !(step == 1)
-        self.nameLabel.isHidden = !(step == 2)
+        self.openCapsuleImageView.isHidden = !(step == 1 || step == 2 || step == 3)
+        self.nameLabel.isHidden = !(step == 2 || step == 3)
         self.confirmButton.isHidden = !(step == 3)
     }
 
