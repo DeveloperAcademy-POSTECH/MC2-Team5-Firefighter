@@ -291,7 +291,7 @@ final class LetterViewController: BaseViewController {
     private func fetchSendLetter(roomId: String) {
         Task {
             do {
-                let letterContent = try await self.letterSevice.fetchSendLetter(roomId: roomId)
+                let letterContent = try await self.letterSevice.fetchSentLetter(roomId: roomId)
                 
                 if let content = letterContent {
                     dump(content)
@@ -309,7 +309,7 @@ final class LetterViewController: BaseViewController {
     private func fetchReceviedLetter(roomId: String) {
         Task {
             do {
-                let letterContent = try await self.letterSevice.fetchReceiveLetter(roomId: roomId)
+                let letterContent = try await self.letterSevice.fetchReceivedLetter(roomId: roomId)
                 
                 if let content = letterContent {
                     dump(content)

@@ -14,16 +14,16 @@ struct LetterAPI: LetterProtocol {
         self.apiService = apiService
     }
     
-    func fetchSendLetter(roomId: String) async throws -> Letter? {
+    func fetchSentLetter(roomId: String) async throws -> Letter? {
         let request = LetterEndPoint
-            .fetchSendLetter(roomId: roomId)
+            .fetchSentLetter(roomId: roomId)
             .createRequest()
         return try await self.apiService.request(request)
     }
     
-    func fetchReceiveLetter(roomId: String) async throws -> Letter? {
+    func fetchReceivedLetter(roomId: String) async throws -> Letter? {
         let request = LetterEndPoint
-            .fetchReceiveLetter(roomId: roomId)
+            .fetchReceivedLetter(roomId: roomId)
             .createRequest()
         return try await self.apiService.request(request)
     }

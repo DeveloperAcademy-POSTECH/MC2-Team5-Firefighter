@@ -9,17 +9,17 @@ import Foundation
 
 enum LetterEndPoint: URLRepresentable {
     case dispatchLetter(roomId: String, image: Data?, letter: LetterDTO, missionId: String)
-    case fetchSendLetter(roomId: String)
-    case fetchReceiveLetter(roomId: String)
+    case fetchSentLetter(roomId: String)
+    case fetchReceivedLetter(roomId: String)
     case patchReadMessage(roomId: String, status: String)
 
     var path: String {
         switch self {
         case .dispatchLetter(let roomId, _, _, _):
             return "/rooms/\(roomId)/messages-separate"
-        case .fetchSendLetter(let roomId):
+        case .fetchSentLetter(let roomId):
             return "/rooms/\(roomId)/messages-sent"
-        case .fetchReceiveLetter(let roomId):
+        case .fetchReceivedLetter(let roomId):
             return "/rooms/\(roomId)/messages-received"
         case .patchReadMessage(let roomId, _):
             return "/rooms/\(roomId)/messages/status"
@@ -36,9 +36,9 @@ extension LetterEndPoint: EndPointable {
         switch self {
         case .dispatchLetter:
             return .post
-        case .fetchSendLetter:
+        case .fetchSentLetter:
             return .get
-        case .fetchReceiveLetter:
+        case .fetchReceivedLetter:
             return .get
         case .patchReadMessage:
             return .patch
@@ -55,9 +55,9 @@ extension LetterEndPoint: EndPointable {
                                           media: image ?? nil,
                                           boundary: APIEnvironment.boundary)
             return dataBody
-        case .fetchSendLetter:
+        case .fetchSentLetter:
             return nil
-        case .fetchReceiveLetter:
+        case .fetchReceivedLetter:
             return nil
         case .patchReadMessage(_, let status):
             let body = ["status": status]
@@ -69,10 +69,10 @@ extension LetterEndPoint: EndPointable {
         switch self {
         case .dispatchLetter(let roomId, let image, let letterDTO, let missionId):
             return self[.dispatchLetter(roomId: roomId, image: image, letter: letterDTO, missionId: missionId)]
-        case .fetchSendLetter(let roomId):
-            return self[.fetchSendLetter(roomId: roomId), .v2]
-        case .fetchReceiveLetter(let roomId):
-            return self[.fetchReceiveLetter(roomId: roomId), .v2]
+        case .fetchSentLetter(let roomId):
+            return self[.fetchSentLetter(roomId: roomId), .v2]
+        case .fetchReceivedLetter(let roomId):
+            return self[.fetchReceivedLetter(roomId: roomId), .v2]
         case .patchReadMessage(let roomId, let status):
             return self[.patchReadMessage(roomId: roomId, status: status)]
         }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LetterProtocol {
-    func fetchSendLetter(roomId: String) async throws -> Letter?
-    func fetchReceiveLetter(roomId: String) async throws -> Letter?
+    func fetchSentLetter(roomId: String) async throws -> Letter?
+    func fetchReceivedLetter(roomId: String) async throws -> Letter?
     func dispatchLetter(roomId: String, image: Data?, letter: LetterDTO, missionId: String) async throws -> Int
 }
