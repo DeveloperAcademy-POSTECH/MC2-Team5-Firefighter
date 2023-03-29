@@ -14,9 +14,9 @@ struct SettingAPI: SettingProtocol {
         self.apiService = apiService
     }
     
-    func putChangeNickname(body: NicknameDTO) async throws -> String? {
+    func putNickname(body: NicknameDTO) async throws -> String? {
         let request = SettingEndPoint
-            .editUserInfo(nickNameDto: body)
+            .putNickname(nickNameDto: body)
             .createRequest()
         return try await apiService.request(request)
     }

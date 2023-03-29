@@ -8,5 +8,5 @@
 import Foundation
 
 protocol SettingProtocol {
-    func putChangeNickname(body: NicknameDTO) async throws -> String?
+    func putNickname(body: NicknameDTO) async throws -> String?
 }

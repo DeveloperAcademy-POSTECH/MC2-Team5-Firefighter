@@ -76,7 +76,7 @@ class CreateNickNameViewController: BaseViewController {
     func requestNickname(setting: NicknameDTO) {
         Task {
             do {
-                let data = try await settingService.putChangeNickname(body: setting)
+                let data = try await settingService.putNickname(body: setting)
                 if let nickname = data {
                     UserDefaultHandler.setNickname(nickname: nickname)
                 }

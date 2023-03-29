@@ -127,7 +127,7 @@ class ChangeNickNameViewController: BaseViewController {
     func requestChangeNickname(nickname: NicknameDTO) {
         Task {
             do {
-                let _ = try await settingService.putChangeNickname(body: nickname)
+                let _ = try await settingService.putNickname(body: nickname)
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {

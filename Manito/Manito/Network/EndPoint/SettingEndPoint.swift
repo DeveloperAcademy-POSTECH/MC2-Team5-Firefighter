@@ -8,11 +8,11 @@
 import Foundation
 
 enum SettingEndPoint: URLRepresentable {
-    case editUserInfo(nickNameDto: NicknameDTO)
+    case putNickname(nickNameDto: NicknameDTO)
 
     var path: String {
         switch self {
-        case .editUserInfo:
+        case .putNickname:
             return "/members/nickname"
         }
     }
@@ -25,14 +25,14 @@ extension SettingEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .editUserInfo:
+        case .putNickname:
             return .put
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .editUserInfo(let setting):
+        case .putNickname(let setting):
             let body = setting
             return body.encode()
         }
@@ -40,8 +40,8 @@ extension SettingEndPoint: EndPointable {
 
     var url: String {
         switch self {
-        case .editUserInfo(let nicknameDTO):
-            return self[.editUserInfo(nickNameDto: nicknameDTO)]
+        case .putNickname(let nicknameDTO):
+            return self[.putNickname(nickNameDto: nicknameDTO)]
         }
     }
     
