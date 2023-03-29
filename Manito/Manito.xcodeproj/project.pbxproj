@@ -34,9 +34,8 @@
 		39C957FC287DAAFA00A04A2B /* DetailWaitEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957FB287DAAFA00A04A2B /* DetailWaitEndPoint.swift */; };
 		39C957FE287DAB6D00A04A2B /* DetailIngEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957FD287DAB6D00A04A2B /* DetailIngEndPoint.swift */; };
 		39C95800287DAC2900A04A2B /* DetailDoneEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957FF287DAC2900A04A2B /* DetailDoneEndPoint.swift */; };
-		39C95802287DACC300A04A2B /* RoomEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95801287DACC300A04A2B /* RoomEndPoint.swift */; };
+		39C95802287DACC300A04A2B /* RoomParticipationEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95801287DACC300A04A2B /* RoomParticipationEndPoint.swift */; };
 		39C95804287DAD3000A04A2B /* LetterEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95803287DAD3000A04A2B /* LetterEndPoint.swift */; };
-		39C95806287DAE5700A04A2B /* InteractionEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95805287DAE5700A04A2B /* InteractionEndPoint.swift */; };
 		39C95808287DB05C00A04A2B /* SettingEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95807287DB05C00A04A2B /* SettingEndPoint.swift */; };
 		39C9580A287DC03500A04A2B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95809287DC03500A04A2B /* Encodable+Extension.swift */; };
 		39CD581928C4BD9D00496E91 /* DetailIngProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CD581828C4BD9D00496E91 /* DetailIngProtocol.swift */; };
@@ -64,9 +63,9 @@
 		7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C72854B64D00489E6A /* InputPersonView.swift */; };
 		7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C92854B7A900489E6A /* InputDateView.swift */; };
 		7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7542B22923744300D725CB /* ToastPopupView.swift */; };
-		7E77DB0428BF9A6700E95D4B /* RoomProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */; };
+		7E77DB0428BF9A6700E95D4B /* RoomParticipationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0328BF9A6700E95D4B /* RoomParticipationProtocol.swift */; };
 		7E77DB0628BF9C0600E95D4B /* VerificationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0528BF9C0600E95D4B /* VerificationCode.swift */; };
-		7E77DB0828BF9D2400E95D4B /* RoomAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */; };
+		7E77DB0828BF9D2400E95D4B /* RoomParticipationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0728BF9D2400E95D4B /* RoomParticipationAPI.swift */; };
 		7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */; };
 		7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */; };
 		B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */; };
@@ -195,9 +194,8 @@
 		39C957FB287DAAFA00A04A2B /* DetailWaitEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitEndPoint.swift; sourceTree = "<group>"; };
 		39C957FD287DAB6D00A04A2B /* DetailIngEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIngEndPoint.swift; sourceTree = "<group>"; };
 		39C957FF287DAC2900A04A2B /* DetailDoneEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDoneEndPoint.swift; sourceTree = "<group>"; };
-		39C95801287DACC300A04A2B /* RoomEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomEndPoint.swift; sourceTree = "<group>"; };
+		39C95801287DACC300A04A2B /* RoomParticipationEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomParticipationEndPoint.swift; sourceTree = "<group>"; };
 		39C95803287DAD3000A04A2B /* LetterEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterEndPoint.swift; sourceTree = "<group>"; };
-		39C95805287DAE5700A04A2B /* InteractionEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionEndPoint.swift; sourceTree = "<group>"; };
 		39C95807287DB05C00A04A2B /* SettingEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingEndPoint.swift; sourceTree = "<group>"; };
 		39C95809287DC03500A04A2B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		39CD581828C4BD9D00496E91 /* DetailIngProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIngProtocol.swift; sourceTree = "<group>"; };
@@ -225,9 +223,9 @@
 		7E3058C72854B64D00489E6A /* InputPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPersonView.swift; sourceTree = "<group>"; };
 		7E3058C92854B7A900489E6A /* InputDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDateView.swift; sourceTree = "<group>"; };
 		7E7542B22923744300D725CB /* ToastPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPopupView.swift; sourceTree = "<group>"; };
-		7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomProtocol.swift; sourceTree = "<group>"; };
+		7E77DB0328BF9A6700E95D4B /* RoomParticipationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomParticipationProtocol.swift; sourceTree = "<group>"; };
 		7E77DB0528BF9C0600E95D4B /* VerificationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCode.swift; sourceTree = "<group>"; };
-		7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAPI.swift; sourceTree = "<group>"; };
+		7E77DB0728BF9D2400E95D4B /* RoomParticipationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomParticipationAPI.swift; sourceTree = "<group>"; };
 		7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNickNameViewController.swift; sourceTree = "<group>"; };
 		7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewTableCell.swift; sourceTree = "<group>"; };
 		B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterViewController.swift; sourceTree = "<group>"; };
@@ -363,11 +361,11 @@
 		397A241128BA513E00454E4F /* API */ = {
 			isa = PBXGroup;
 			children = (
+				CB4C77E528C0D4EB007A1AD2 /* MainAPI.swift */,
 				397A241328BA516B00454E4F /* DetailWaitAPI.swift */,
-				7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */,
+				7E77DB0728BF9D2400E95D4B /* RoomParticipationAPI.swift */,
 				39CD581A28C4BE8800496E91 /* DetailIngAPI.swift */,
 				39CD582028C4C3E800496E91 /* DetailDoneAPI.swift */,
-				CB4C77E528C0D4EB007A1AD2 /* MainAPI.swift */,
 				B5F31C5128BFA64F00F61D0F /* LetterAPI.swift */,
 				39EEF65B28CB3CD600437654 /* LoginAPI.swift */,
 				D739C36428C7B75400161117 /* SettingAPI.swift */,
@@ -379,11 +377,11 @@
 		397A241528BA519200454E4F /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				CB4C77E328C0D4C9007A1AD2 /* MainProtocol.swift */,
 				397A241728BA51B400454E4F /* DetailWaitProtocol.swift */,
-				7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */,
+				7E77DB0328BF9A6700E95D4B /* RoomParticipationProtocol.swift */,
 				39CD581828C4BD9D00496E91 /* DetailIngProtocol.swift */,
 				39CD581C28C4C03B00496E91 /* DetailDoneProtocol.swift */,
-				CB4C77E328C0D4C9007A1AD2 /* MainProtocol.swift */,
 				B5F31C5328BFA70100F61D0F /* LetterProtocol.swift */,
 				39EEF65528CB3BB200437654 /* LoginProtocol.swift */,
 				D739C36228C7B69D00161117 /* SettingProtocol.swift */,
@@ -420,13 +418,12 @@
 			children = (
 				39C957EC287AE4D100A04A2B /* MainEndPoint.swift */,
 				39C957FB287DAAFA00A04A2B /* DetailWaitEndPoint.swift */,
+				39C95801287DACC300A04A2B /* RoomParticipationEndPoint.swift */,
 				39C957FD287DAB6D00A04A2B /* DetailIngEndPoint.swift */,
 				39C957FF287DAC2900A04A2B /* DetailDoneEndPoint.swift */,
-				39C95801287DACC300A04A2B /* RoomEndPoint.swift */,
 				39C95803287DAD3000A04A2B /* LetterEndPoint.swift */,
-				39C95805287DAE5700A04A2B /* InteractionEndPoint.swift */,
-				39C95807287DB05C00A04A2B /* SettingEndPoint.swift */,
 				39EEF65D28CB3CFE00437654 /* LoginEndPoint.swift */,
+				39C95807287DB05C00A04A2B /* SettingEndPoint.swift */,
 				B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */,
 			);
 			path = EndPoint;
@@ -1124,7 +1121,7 @@
 				CB21C33928C4C10200128D25 /* CharacterCollectionViewCell.swift in Sources */,
 				39EEF65A28CB3C7B00437654 /* Token.swift in Sources */,
 				39C95804287DAD3000A04A2B /* LetterEndPoint.swift in Sources */,
-				7E77DB0828BF9D2400E95D4B /* RoomAPI.swift in Sources */,
+				7E77DB0828BF9D2400E95D4B /* RoomParticipationAPI.swift in Sources */,
 				B50B1B44285B146A0080992C /* ManittoCollectionViewCell.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				39C957D628799AB900A04A2B /* HTTPMethod.swift in Sources */,
@@ -1163,7 +1160,7 @@
 				391B3003286198C200421F1D /* Size.swift in Sources */,
 				39C95800287DAC2900A04A2B /* DetailDoneEndPoint.swift in Sources */,
 				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
-				7E77DB0428BF9A6700E95D4B /* RoomProtocol.swift in Sources */,
+				7E77DB0428BF9A6700E95D4B /* RoomParticipationProtocol.swift in Sources */,
 				D739C36328C7B69D00161117 /* SettingProtocol.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
 				39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */,
@@ -1181,7 +1178,7 @@
 				39CD581D28C4C03C00496E91 /* DetailDoneProtocol.swift in Sources */,
 				CB9592B52855D52700847751 /* CommonMissionView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
-				39C95802287DACC300A04A2B /* RoomEndPoint.swift in Sources */,
+				39C95802287DACC300A04A2B /* RoomParticipationEndPoint.swift in Sources */,
 				CB4C77E628C0D4EB007A1AD2 /* MainAPI.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
@@ -1202,7 +1199,6 @@
 				B5FEE9DB28C8498A00DEA07E /* ImageCacheManager.swift in Sources */,
 				39CD581928C4BD9D00496E91 /* DetailIngProtocol.swift in Sources */,
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
-				39C95806287DAE5700A04A2B /* InteractionEndPoint.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
 				7E77DB0628BF9C0600E95D4B /* VerificationCode.swift in Sources */,
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,

@@ -11,7 +11,7 @@ import SnapKit
 
 final class ParticipateRoomViewController: BaseViewController {
     
-    private let checkRoomInfoService: RoomProtocol = RoomAPI(apiService: APIService())
+    private let checkRoomInfoService: RoomParticipationProtocol = RoomParticipationAPI(apiService: APIService())
     
     // MARK: - property
     

@@ -1,5 +1,5 @@
 //
-//  RoomEndPoint.swift
+//  RoomParticipationEndPoint.swift
 //  Manito
 //
 //  Created by Mingwan Choi on 2022/07/12.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RoomEndPoint: URLRepresentable {
+enum RoomParticipationEndPoint: URLRepresentable {
     case dispatchCreateRoom(roomInfo: CreateRoomDTO)
     case dispatchVerifyCode(code: String)
     case dispatchJoinRoom(roomId: String, roomDto: MemberDTO)
@@ -24,7 +24,7 @@ enum RoomEndPoint: URLRepresentable {
     }
 }
 
-extension RoomEndPoint: EndPointable {
+extension RoomParticipationEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }

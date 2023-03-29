@@ -11,7 +11,6 @@ enum LetterEndPoint: URLRepresentable {
     case dispatchLetter(roomId: String, image: Data?, letter: LetterDTO, missionId: String)
     case fetchSentLetter(roomId: String)
     case fetchReceivedLetter(roomId: String)
-    case patchReadMessage(roomId: String, status: String)
 
     var path: String {
         switch self {
@@ -21,8 +20,6 @@ enum LetterEndPoint: URLRepresentable {
             return "/rooms/\(roomId)/messages-sent"
         case .fetchReceivedLetter(let roomId):
             return "/rooms/\(roomId)/messages-received"
-        case .patchReadMessage(let roomId, _):
-            return "/rooms/\(roomId)/messages/status"
         }
     }
 }
@@ -40,8 +37,6 @@ extension LetterEndPoint: EndPointable {
             return .get
         case .fetchReceivedLetter:
             return .get
-        case .patchReadMessage:
-            return .patch
         }
     }
 
@@ -59,9 +54,6 @@ extension LetterEndPoint: EndPointable {
             return nil
         case .fetchReceivedLetter:
             return nil
-        case .patchReadMessage(_, let status):
-            let body = ["status": status]
-            return body.encode()
         }
     }
 
@@ -73,8 +65,6 @@ extension LetterEndPoint: EndPointable {
             return self[.fetchSentLetter(roomId: roomId), .v2]
         case .fetchReceivedLetter(let roomId):
             return self[.fetchReceivedLetter(roomId: roomId), .v2]
-        case .patchReadMessage(let roomId, let status):
-            return self[.patchReadMessage(roomId: roomId, status: status)]
         }
     }
     
