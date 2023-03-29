@@ -8,5 +8,5 @@
 import Foundation
 
 protocol LoginProtocol {
-    func dispatchLogin(dto: LoginDTO) async throws -> Login?
+    func dispatchLogin(identityToken: String, fcmToken: String) async throws -> Login?
 }

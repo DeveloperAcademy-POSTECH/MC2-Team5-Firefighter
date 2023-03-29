@@ -86,7 +86,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     
                     Task {
                         do {
-                            let response = try await self.loginService.dispatchLogin(dto: LoginDTO(identityToken: tokenToString, fcmToken: UserDefaultStorage.fcmToken))
+                            let response = try await self.loginService.dispatchLogin(identityToken: tokenToString, fcmToken: UserDefaultStorage.fcmToken)
                             
                             if let data = response {
                                 UserDefaultHandler.setIsLogin(isLogin: true)

@@ -8,7 +8,7 @@
 import Foundation
 
 enum LoginEndPoint: URLRepresentable {
-    case dispatchLogin(body: LoginDTO)
+    case dispatchLogin(loginDTO: LoginDTO)
 
     var path: String {
         switch self {
@@ -40,7 +40,7 @@ extension LoginEndPoint: EndPointable {
     var url: String {
         switch self {
         case .dispatchLogin(let loginDTO):
-            return self[.dispatchLogin(body: loginDTO), .v2]
+            return self[.dispatchLogin(loginDTO: loginDTO), .v2]
         }
     }
 
