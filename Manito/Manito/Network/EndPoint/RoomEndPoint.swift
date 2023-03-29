@@ -9,14 +9,14 @@ import Foundation
 
 enum RoomEndPoint: URLRepresentable {
     case dispatchCreateRoom(roomInfo: CreateRoomDTO)
-    case fetchVerifyCode(code: String)
+    case dispatchVerifyCode(code: String)
     case dispatchJoinRoom(roomId: String, roomDto: MemberDTO)
 
     var path: String {
         switch self {
         case .dispatchCreateRoom:
             return "/rooms"
-        case .fetchVerifyCode:
+        case .dispatchVerifyCode:
             return "/invitations/verification"
         case .dispatchJoinRoom(let roomId, _):
             return "/rooms/\(roomId)/participants"
@@ -33,7 +33,7 @@ extension RoomEndPoint: EndPointable {
         switch self {
         case .dispatchCreateRoom:
             return .post
-        case .fetchVerifyCode:
+        case .dispatchVerifyCode:
             return .post
         case .dispatchJoinRoom:
             return .post
@@ -45,7 +45,7 @@ extension RoomEndPoint: EndPointable {
         case .dispatchCreateRoom(let roomInfo):
             let body = roomInfo
             return body.encode()
-        case .fetchVerifyCode(let code):
+        case .dispatchVerifyCode(let code):
             let body = ["invitationCode": code]
             return body.encode()
         case .dispatchJoinRoom(_, let roomDto):
@@ -58,8 +58,8 @@ extension RoomEndPoint: EndPointable {
         switch self {
         case .dispatchCreateRoom(let roomInfo):
             return self[.dispatchCreateRoom(roomInfo: roomInfo)]
-        case .fetchVerifyCode(let code):
-            return self[.fetchVerifyCode(code: code)]
+        case .dispatchVerifyCode(let code):
+            return self[.dispatchVerifyCode(code: code)]
         case .dispatchJoinRoom(let roomId, let roomDTO):
             return self[.dispatchJoinRoom(roomId: roomId, roomDto: roomDTO)]
         }

@@ -178,7 +178,7 @@ class ChooseCharacterViewController: BaseViewController {
         Task {
             do {
                 guard
-                    let roomId = try await roomService.postCreateRoom(body: room),
+                    let roomId = try await roomService.dispatchCreateRoom(body: room),
                     let navigationController = self.presentingViewController as? UINavigationController
                 else { return }
                 let viewController = DetailWaitViewController(index: roomId)
