@@ -22,7 +22,7 @@ final class SelectManitteeView: UIView {
     private let informationLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 20)
-        label.text = TextLiteral.selectManitteViewControllerInformationText
+        label.text = TextLiteral.selectManitteeViewControllerInformationText
         label.numberOfLines = 2
         label.addLabelSpacing()
         label.textAlignment = .center
