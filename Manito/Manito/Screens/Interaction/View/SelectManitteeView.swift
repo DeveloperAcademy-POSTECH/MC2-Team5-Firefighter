@@ -119,7 +119,7 @@ final class SelectManitteeView: UIView {
         self.joystickBackgroundView.addGestureRecognizer(swipeRightGesture)
     }
 
-    private func setupShowJoyStickConfiguration() {
+    private func setupShowJoystickConfiguration() {
         self.joystickImageView.animate(withGIFNamed: ImageLiterals.gifJoystick)
     }
 
@@ -156,7 +156,7 @@ final class SelectManitteeView: UIView {
     func manageStepView(step: Int) {
         self.setupHiddenStepView(at: step)
         switch step {
-        case 0: self.setupShowJoyStickConfiguration()
+        case 0: self.setupShowJoystickConfiguration()
         case 1: self.setupShowCapsuleConfiguration()
         case 2: self.setupOpenNameConfiguration()
         default: break
