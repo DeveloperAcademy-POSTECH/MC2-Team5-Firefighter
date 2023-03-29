@@ -329,7 +329,7 @@ final class MainViewController: BaseViewController {
     private func requestManittoRoomList() {
         Task {
             do {
-                let data = try await self.mainService.fetchManittoList()
+                let data = try await self.mainService.fetchRooms()
                 
                 if let manittoList = data {
                     self.rooms = manittoList.participatingRooms

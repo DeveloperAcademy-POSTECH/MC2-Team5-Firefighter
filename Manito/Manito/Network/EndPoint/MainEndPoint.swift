@@ -9,13 +9,13 @@ import Foundation
 
 enum MainEndPoint: URLRepresentable {
     case fetchCommonMission
-    case fetchManittoList
+    case fetchRooms
 
     var path: String {
         switch self {
         case .fetchCommonMission:
             return "/missions/common"
-        case .fetchManittoList:
+        case .fetchRooms:
             return "/rooms"
         }
     }
@@ -30,7 +30,7 @@ extension MainEndPoint: EndPointable {
         switch self {
         case .fetchCommonMission:
             return .get
-        case .fetchManittoList:
+        case .fetchRooms:
             return .get
         }
     }
@@ -39,7 +39,7 @@ extension MainEndPoint: EndPointable {
         switch self {
         case .fetchCommonMission:
             return nil
-        case .fetchManittoList:
+        case .fetchRooms:
             return nil
         }
     }
@@ -48,8 +48,8 @@ extension MainEndPoint: EndPointable {
         switch self {
         case .fetchCommonMission:
             return self[.fetchCommonMission]
-        case .fetchManittoList:
-            return self[.fetchManittoList]
+        case .fetchRooms:
+            return self[.fetchRooms]
         }
     }
     

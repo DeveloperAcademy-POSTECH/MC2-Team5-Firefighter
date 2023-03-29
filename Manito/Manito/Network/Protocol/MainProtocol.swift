@@ -9,5 +9,5 @@ import Foundation
 
 protocol MainProtocol {
     func fetchCommonMission() async throws -> DailyMission?
-    func fetchManittoList() async throws -> ParticipatingRooms?
+    func fetchRooms() async throws -> ParticipatingRooms?
 }

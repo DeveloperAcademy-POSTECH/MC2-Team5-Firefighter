@@ -21,9 +21,9 @@ struct MainAPI: MainProtocol {
         return try await apiService.request(request)
     }
     
-    func fetchManittoList() async throws -> ParticipatingRooms? {
+    func fetchRooms() async throws -> ParticipatingRooms? {
         let request = MainEndPoint
-            .fetchManittoList
+            .fetchRooms
             .createRequest()
         return try await apiService.request(request)
     }
