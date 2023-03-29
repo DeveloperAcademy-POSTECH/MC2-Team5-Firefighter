@@ -31,6 +31,7 @@ final class SelectManitteeView: UIView {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 30)
+        label.alpha = 0.0
         return label
     }()
     private let confirmButton: MainButton = {
@@ -118,23 +119,18 @@ final class SelectManitteeView: UIView {
         self.joystickBackgroundView.addGestureRecognizer(swipeRightGesture)
     }
 
-    func setupShowJoyStick() {
-        self.nameLabel.alpha = 0.0
-        self.openCapsuleImageView.isHidden = true
-        self.confirmButton.isHidden = true
+    private func setupShowJoyStickConfiguration() {
         self.joystickImageView.animate(withGIFNamed: ImageLiterals.gifJoystick)
     }
 
-    func setupShowCapsule() {
-        self.openCapsuleImageView.isHidden = false
-        self.joystickBackgroundView.isHidden = true
+    private func setupShowCapsuleConfiguration() {
         self.joystickImageView.stopAnimatingGIF()
         self.openCapsuleImageView.animate(withGIFNamed: ImageLiterals.gifCapsule, loopCount: 1, animationBlock: { [weak self] in
             self?.delegate?.moveToNextStep()
         })
     }
 
-    func setupOpenName() {
+    private func setupOpenNameConfiguration() {
         self.nameLabel.fadeIn()
         self.openCapsuleImageView.stopAnimatingGIF()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
@@ -142,8 +138,11 @@ final class SelectManitteeView: UIView {
         })
     }
 
-    func setupOpenButton() {
-        self.confirmButton.isHidden = false
+    private func setupHiddenStepView(at step: Int) {
+        self.joystickBackgroundView.isHidden = !(step == 0)
+        self.openCapsuleImageView.isHidden = !(step == 1)
+        self.nameLabel.isHidden = !(step == 2)
+        self.confirmButton.isHidden = !(step == 3)
     }
 
     func configureDelegation(_ delegate: SelectManitteeViewDelegate) {
@@ -152,6 +151,16 @@ final class SelectManitteeView: UIView {
 
     func configureUI(manitteeNickname: String) {
         self.nameLabel.text = manitteeNickname
+    }
+
+    func manageStepView(step: Int) {
+        self.setupHiddenStepView(at: step)
+        switch step {
+        case 0: self.setupShowJoyStickConfiguration()
+        case 1: self.setupShowCapsuleConfiguration()
+        case 2: self.setupOpenNameConfiguration()
+        default: break
+        }
     }
 
     // MARK: - selector

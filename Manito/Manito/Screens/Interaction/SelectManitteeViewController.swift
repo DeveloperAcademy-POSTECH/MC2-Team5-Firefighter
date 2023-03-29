@@ -20,9 +20,10 @@ final class SelectManitteeViewController: BaseViewController {
     // MARK: - property
 
     private let roomId: String
-    private var stepType: SelectionStep = .showJoystick {
-        didSet {
-            
+    private var stepType: SelectionStep? {
+        willSet(step) {
+            guard let stepIndex = step?.rawValue else { return }
+            self.selectManitteeView.manageStepView(step: stepIndex)
         }
     }
 
@@ -50,6 +51,13 @@ final class SelectManitteeViewController: BaseViewController {
         self.configureDelegation()
     }
 
+    // MARK: - override
+
+    override func configureUI() {
+        super.configureUI()
+        self.stepType = .showJoystick
+    }
+
     // MARK: - func
 
     private func configureDelegation() {
@@ -68,7 +76,8 @@ extension SelectManitteeViewController: SelectManitteeViewDelegate {
     }
 
     func moveToNextStep() {
-        guard let nextStep = SelectionStep(rawValue: self.stepType.rawValue + 1) else { return }
+        guard let stepIndex = self.stepType?.rawValue,
+              let nextStep = SelectionStep(rawValue: stepIndex + 1) else { return }
         self.stepType = nextStep
     }
 }
