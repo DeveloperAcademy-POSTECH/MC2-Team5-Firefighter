@@ -587,7 +587,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private func requestExitRoom() {
         Task {
             do {
-                let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId)
+                let statusCode = try await detailDoneService.deleteRoomByMember(roomId: roomId)
                 if statusCode == 204 {
                     navigationController?.popViewController(animated: true)
                 }
@@ -605,7 +605,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private func requestDeleteRoom() {
         Task {
             do {
-                let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId)
+                let statusCode = try await detailDoneService.deleteRoomByOwner(roomId: roomId)
                 if statusCode == 204 {
                     navigationController?.popViewController(animated: true)
                 }

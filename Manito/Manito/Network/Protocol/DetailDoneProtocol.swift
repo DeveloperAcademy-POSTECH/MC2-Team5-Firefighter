@@ -8,9 +8,9 @@
 import Foundation
 
 protocol DetailDoneProtocol {
-    func requestMemory(roomId: String) async throws -> Memory?
-    func requestDoneRoomInfo(roomId: String) async throws -> Room?
-    func requestWithFriends(roomId: String) async throws -> FriendList?
-    func requestExitRoom(roomId: String) async throws -> Int
-    func requestDeleteRoom(roomId: String) async throws -> Int
+    func fetchMemory(roomId: String) async throws -> Memory?
+    func fetchDoneRoomInfo(roomId: String) async throws -> Room?
+    func fetchWithFriend(roomId: String) async throws -> FriendList?
+    func deleteRoomByMember(roomId: String) async throws -> Int
+    func deleteRoomByOwner(roomId: String) async throws -> Int
 }

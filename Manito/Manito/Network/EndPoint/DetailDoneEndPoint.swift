@@ -8,23 +8,23 @@
 import Foundation
 
 enum DetailDoneEndPoint: URLRepresentable {
-    case requestWithFriend(roomId: String)
-    case requestMemory(roomId: String)
-    case requestDoneRoomInfo(roomId: String)
-    case requestExitRoom(roomId: String)
-    case requestDeleteRoom(roomId: String)
+    case fetchWithFriend(roomId: String)
+    case fetchMemory(roomId: String)
+    case fetchDoneRoomInfo(roomId: String)
+    case deleteRoomByMember(roomId: String)
+    case deleteRoomByOwner(roomId: String)
 
     var path: String {
         switch self {
-        case .requestWithFriend(let roomId):
+        case .fetchWithFriend(let roomId):
             return "/rooms/\(roomId)/participants"
-        case .requestMemory(let roomId):
+        case .fetchMemory(let roomId):
             return "/rooms/\(roomId)/memories"
-        case .requestDoneRoomInfo(let roomId):
+        case .fetchDoneRoomInfo(let roomId):
             return "/rooms/\(roomId)"
-        case .requestExitRoom(let roomId):
+        case .deleteRoomByMember(let roomId):
             return "/rooms/\(roomId)/participants"
-        case .requestDeleteRoom(let roomId):
+        case .deleteRoomByOwner(let roomId):
             return "/rooms/\(roomId)"
         }
     }
@@ -37,46 +37,46 @@ extension DetailDoneEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .requestWithFriend:
+        case .fetchWithFriend:
             return .get
-        case .requestMemory:
+        case .fetchMemory:
             return .get
-        case .requestDoneRoomInfo:
+        case .fetchDoneRoomInfo:
             return .get
-        case .requestExitRoom:
+        case .deleteRoomByMember:
             return .delete
-        case .requestDeleteRoom:
+        case .deleteRoomByOwner:
             return .delete
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .requestWithFriend:
+        case .fetchWithFriend:
             return nil
-        case .requestMemory:
+        case .fetchMemory:
             return nil
-        case .requestDoneRoomInfo:
+        case .fetchDoneRoomInfo:
             return nil
-        case .requestExitRoom:
+        case .deleteRoomByMember:
             return nil
-        case .requestDeleteRoom:
+        case .deleteRoomByOwner:
             return nil
         }
     }
 
     var url: String {
         switch self {
-        case .requestWithFriend(let roomId):
-            return self[.requestWithFriend(roomId: roomId)]
-        case .requestMemory(let roomId):
-            return self[.requestMemory(roomId: roomId)]
-        case .requestDoneRoomInfo(let roomId):
-            return self[.requestDoneRoomInfo(roomId: roomId)]
-        case .requestExitRoom(let roomId):
-            return self[.requestExitRoom(roomId: roomId)]
-        case .requestDeleteRoom(let roomId):
-            return self[.requestDeleteRoom(roomId: roomId)]
+        case .fetchWithFriend(let roomId):
+            return self[.fetchWithFriend(roomId: roomId)]
+        case .fetchMemory(let roomId):
+            return self[.fetchMemory(roomId: roomId)]
+        case .fetchDoneRoomInfo(let roomId):
+            return self[.fetchDoneRoomInfo(roomId: roomId)]
+        case .deleteRoomByMember(let roomId):
+            return self[.deleteRoomByMember(roomId: roomId)]
+        case .deleteRoomByOwner(let roomId):
+            return self[.deleteRoomByOwner(roomId: roomId)]
         }
     }
     

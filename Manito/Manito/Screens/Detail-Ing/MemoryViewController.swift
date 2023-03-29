@@ -244,7 +244,7 @@ final class MemoryViewController: BaseViewController {
     private func requestMemory(roomId: String) {
         Task {
             do {
-                let data = try await detailDoneService.requestMemory(roomId: roomId)
+                let data = try await detailDoneService.fetchMemory(roomId: roomId)
                 if let memory = data {
                     self.memory = memory
                     self.setupData(with: .manittee)

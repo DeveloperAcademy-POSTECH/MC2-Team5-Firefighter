@@ -370,7 +370,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 guard let roomId = roomInformation?.id?.description else { return }
-                let data = try await detailDoneService.requestDoneRoomInfo(roomId: roomId)
+                let data = try await detailDoneService.fetchDoneRoomInfo(roomId: roomId)
                 if let info = data {
                     titleLabel.text = info.roomInformation?.title
                     guard let startDate = info.roomInformation?.startDate,
@@ -397,7 +397,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 guard let roomId = roomInformation?.id?.description else { return }
-                let data = try await detailDoneService.requestMemory(roomId: roomId)
+                let data = try await detailDoneService.fetchMemory(roomId: roomId)
                 if let _ = data {
                 }
             } catch NetworkError.serverError {
@@ -414,7 +414,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 guard let roomId = roomInformation?.id?.description else { return }
-                let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId)
+                let statusCode = try await detailDoneService.deleteRoomByMember(roomId: roomId)
                 if statusCode == 204 {
                     navigationController?.popViewController(animated: true)
                 }
@@ -433,7 +433,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 guard let roomId = roomInformation?.id?.description else { return }
-                let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId)
+                let statusCode = try await detailDoneService.deleteRoomByOwner(roomId: roomId)
                 if statusCode == 204 {
                     navigationController?.popViewController(animated: true)
                 }

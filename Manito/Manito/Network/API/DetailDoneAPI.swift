@@ -14,37 +14,37 @@ struct DetailDoneAPI: DetailDoneProtocol {
         self.apiService = apiService
     }
     
-    func requestMemory(roomId: String) async throws -> Memory? {
+    func fetchMemory(roomId: String) async throws -> Memory? {
         let request = DetailDoneEndPoint
-            .requestMemory(roomId: roomId)
+            .fetchMemory(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
     
-    func requestDoneRoomInfo(roomId: String) async throws -> Room? {
+    func fetchDoneRoomInfo(roomId: String) async throws -> Room? {
         let request = DetailDoneEndPoint
-            .requestDoneRoomInfo(roomId: roomId)
+            .fetchDoneRoomInfo(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
     
-    func requestWithFriends(roomId: String) async throws -> FriendList? {
+    func fetchWithFriend(roomId: String) async throws -> FriendList? {
         let request = DetailDoneEndPoint
-            .requestWithFriend(roomId: roomId)
+            .fetchWithFriend(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
     
-    func requestExitRoom(roomId: String) async throws -> Int {
+    func deleteRoomByMember(roomId: String) async throws -> Int {
         let request = DetailDoneEndPoint
-            .requestExitRoom(roomId: roomId)
+            .deleteRoomByMember(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
     
-    func requestDeleteRoom(roomId: String) async throws -> Int {
+    func deleteRoomByOwner(roomId: String) async throws -> Int {
         let request = DetailDoneEndPoint
-            .requestDeleteRoom(roomId: roomId)
+            .deleteRoomByOwner(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
