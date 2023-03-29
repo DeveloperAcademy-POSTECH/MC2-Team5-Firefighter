@@ -14,23 +14,23 @@ struct RoomParticipationAPI: RoomParticipationProtocol {
         self.apiService = apiService
     }
     
-    func dispatchCreateRoom(body: CreateRoomDTO) async throws -> Int? {
+    func dispatchCreateRoom(roomInfo: CreateRoomDTO) async throws -> Int? {
         let request = RoomParticipationEndPoint
-            .dispatchCreateRoom(roomInfo: body)
+            .dispatchCreateRoom(roomInfo: roomInfo)
             .createRequest()
         return try await apiService.requestCreateRoom(request)
     }
     
-    func dispatchVerification(body: String) async throws -> VerificationCode? {
+    func dispatchVerification(code: String) async throws -> VerificationCode? {
         let request = RoomParticipationEndPoint
-            .dispatchVerifyCode(code: body)
+            .dispatchVerifyCode(code: code)
             .createRequest()
         return try await apiService.request(request)
     }
     
-    func dispatchJoinRoom(roodId: String, dto: MemberDTO) async throws -> Int {
+    func dispatchJoinRoom(roodId: String, colorIndex: Int) async throws -> Int {
         let request = RoomParticipationEndPoint
-            .dispatchJoinRoom(roomId: roodId, roomDto: dto)
+            .dispatchJoinRoom(roomId: roodId, memberDTO: MemberDTO(colorIdx: colorIndex))
             .createRequest()
         return try await apiService.request(request)
     }

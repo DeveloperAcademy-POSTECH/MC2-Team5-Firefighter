@@ -10,7 +10,7 @@ import Foundation
 enum RoomParticipationEndPoint: URLRepresentable {
     case dispatchCreateRoom(roomInfo: CreateRoomDTO)
     case dispatchVerifyCode(code: String)
-    case dispatchJoinRoom(roomId: String, roomDto: MemberDTO)
+    case dispatchJoinRoom(roomId: String, memberDTO: MemberDTO)
 
     var path: String {
         switch self {
@@ -60,8 +60,8 @@ extension RoomParticipationEndPoint: EndPointable {
             return self[.dispatchCreateRoom(roomInfo: roomInfo)]
         case .dispatchVerifyCode(let code):
             return self[.dispatchVerifyCode(code: code)]
-        case .dispatchJoinRoom(let roomId, let roomDTO):
-            return self[.dispatchJoinRoom(roomId: roomId, roomDto: roomDTO)]
+        case .dispatchJoinRoom(let roomId, let memberDTO):
+            return self[.dispatchJoinRoom(roomId: roomId, memberDTO: memberDTO)]
         }
     }
     

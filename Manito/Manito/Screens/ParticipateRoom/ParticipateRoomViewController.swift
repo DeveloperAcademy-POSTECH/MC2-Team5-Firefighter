@@ -94,7 +94,7 @@ final class ParticipateRoomViewController: BaseViewController {
             do {
                 guard let code = inputInvitedCodeView.roomCodeTextField.text else { return }
                 let data = try await checkRoomInfoService
-                    .dispatchVerification(body: code)
+                    .dispatchVerification(code: code)
                 if let info = data {
                     guard let id = info.id else { return }
                     let viewController = CheckRoomViewController()

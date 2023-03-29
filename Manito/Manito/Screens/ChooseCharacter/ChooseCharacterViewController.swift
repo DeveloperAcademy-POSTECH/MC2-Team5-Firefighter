@@ -178,7 +178,7 @@ class ChooseCharacterViewController: BaseViewController {
         Task {
             do {
                 guard
-                    let roomId = try await roomService.dispatchCreateRoom(body: room),
+                    let roomId = try await roomService.dispatchCreateRoom(roomInfo: room),
                     let navigationController = self.presentingViewController as? UINavigationController
                 else { return }
                 let viewController = DetailWaitViewController(index: roomId)
@@ -205,7 +205,7 @@ class ChooseCharacterViewController: BaseViewController {
             do {
                 guard let id = roomId else { return }
                 let status = try await roomService.dispatchJoinRoom(roodId: id.description,
-                                                               dto: MemberDTO(colorIdx: colorIdx))
+                                                                    colorIndex: colorIdx)
                 if status == 201 {
                     guard let navigationController = self.presentingViewController as? UINavigationController else { return }
                     guard let id = self.roomId else { return }
