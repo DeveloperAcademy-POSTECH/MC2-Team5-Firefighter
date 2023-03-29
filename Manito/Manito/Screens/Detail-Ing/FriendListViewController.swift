@@ -51,7 +51,7 @@ final class FriendListViewController: BaseViewController {
     private func requestWithFriends() {
         Task {
             do {
-                let data = try await detailIngService.requestWithFriends(roomId: "\(roomIndex)")
+                let data = try await detailIngService.fetchWithFriends(roomId: "\(roomIndex)")
                 if let list = data {
                     friendArray = list.members ?? []
                 }

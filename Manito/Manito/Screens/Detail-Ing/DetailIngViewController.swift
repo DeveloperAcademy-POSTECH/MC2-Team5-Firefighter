@@ -305,7 +305,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 guard let roomId = roomInformation?.id?.description else { return }
-                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
+                let data = try await detailIngService.fetchStartingRoomInfo(roomId: roomId)
                 if let info = data {
                     titleLabel.text = info.roomInformation?.title
                     guard let startDate = info.roomInformation?.startDate,
@@ -350,7 +350,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 guard let roomId = roomInformation?.id?.description else { return }
-                let data = try await detailIngService.requestWithFriends(roomId: roomId)
+                let data = try await detailIngService.fetchWithFriends(roomId: roomId)
                 if let list = data {
                     friendList = list
                 }

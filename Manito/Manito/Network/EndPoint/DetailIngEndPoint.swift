@@ -8,14 +8,14 @@
 import Foundation
 
 enum DetailIngEndPoint: URLRepresentable {
-    case requestWithFriend(roomId: String)
-    case requestStartingRoomInfo(roomId: String)
+    case fetchWithFriend(roomId: String)
+    case fetchStartingRoomInfo(roomId: String)
 
     var path: String {
         switch self {
-        case .requestWithFriend(let roomId):
+        case .fetchWithFriend(let roomId):
             return "/rooms/\(roomId)/participants"
-        case .requestStartingRoomInfo(let roomId):
+        case .fetchStartingRoomInfo(let roomId):
             return "/rooms/\(roomId)"
         }
     }
@@ -28,28 +28,28 @@ extension DetailIngEndPoint: EndPointable {
 
     var httpMethod: HTTPMethod {
         switch self {
-        case .requestWithFriend:
+        case .fetchWithFriend:
             return .get
-        case .requestStartingRoomInfo:
+        case .fetchStartingRoomInfo:
             return .get
         }
     }
 
     var requestBody: Data? {
         switch self {
-        case .requestWithFriend:
+        case .fetchWithFriend:
             return nil
-        case .requestStartingRoomInfo:
+        case .fetchStartingRoomInfo:
             return nil
         }
     }
 
     var url: String {
         switch self {
-        case .requestWithFriend(let roomId):
-            return self[.requestWithFriend(roomId: roomId)]
-        case .requestStartingRoomInfo(let roomId):
-            return self[.requestStartingRoomInfo(roomId: roomId)]
+        case .fetchWithFriend(let roomId):
+            return self[.fetchWithFriend(roomId: roomId)]
+        case .fetchStartingRoomInfo(let roomId):
+            return self[.fetchStartingRoomInfo(roomId: roomId)]
         }
     }
     

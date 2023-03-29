@@ -7,23 +7,23 @@
 
 import Foundation
 
-struct DetailIngAPI: DetailStartingProtocol {
+struct DetailIngAPI: DetailIngProtocol {
     private let apiService: Requestable
     
     init(apiService: Requestable) {
         self.apiService = apiService
     }
     
-    func requestStartingRoomInfo(roomId: String) async throws -> Room? {
+    func fetchStartingRoomInfo(roomId: String) async throws -> Room? {
         let request = DetailIngEndPoint
-            .requestStartingRoomInfo(roomId: roomId)
+            .fetchStartingRoomInfo(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
     
-    func requestWithFriends(roomId: String) async throws -> FriendList? {
+    func fetchWithFriends(roomId: String) async throws -> FriendList? {
         let request = DetailIngEndPoint
-            .requestWithFriend(roomId: roomId)
+            .fetchWithFriend(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }

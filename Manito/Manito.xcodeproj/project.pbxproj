@@ -39,8 +39,8 @@
 		39C95806287DAE5700A04A2B /* InteractionEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95805287DAE5700A04A2B /* InteractionEndPoint.swift */; };
 		39C95808287DB05C00A04A2B /* SettingEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95807287DB05C00A04A2B /* SettingEndPoint.swift */; };
 		39C9580A287DC03500A04A2B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C95809287DC03500A04A2B /* Encodable+Extension.swift */; };
-		39CD581928C4BD9D00496E91 /* DetailStartingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CD581828C4BD9D00496E91 /* DetailStartingProtocol.swift */; };
-		39CD581B28C4BE8800496E91 /* DetailStartingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CD581A28C4BE8800496E91 /* DetailStartingAPI.swift */; };
+		39CD581928C4BD9D00496E91 /* DetailIngProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CD581828C4BD9D00496E91 /* DetailIngProtocol.swift */; };
+		39CD581B28C4BE8800496E91 /* DetailIngAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CD581A28C4BE8800496E91 /* DetailIngAPI.swift */; };
 		39CD581D28C4C03C00496E91 /* DetailDoneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CD581C28C4C03B00496E91 /* DetailDoneProtocol.swift */; };
 		39CD581F28C4C19100496E91 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CD581E28C4C19100496E91 /* Memory.swift */; };
 		39CD582128C4C3E800496E91 /* DetailDoneAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CD582028C4C3E800496E91 /* DetailDoneAPI.swift */; };
@@ -200,8 +200,8 @@
 		39C95805287DAE5700A04A2B /* InteractionEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionEndPoint.swift; sourceTree = "<group>"; };
 		39C95807287DB05C00A04A2B /* SettingEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingEndPoint.swift; sourceTree = "<group>"; };
 		39C95809287DC03500A04A2B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
-		39CD581828C4BD9D00496E91 /* DetailStartingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStartingProtocol.swift; sourceTree = "<group>"; };
-		39CD581A28C4BE8800496E91 /* DetailStartingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStartingAPI.swift; sourceTree = "<group>"; };
+		39CD581828C4BD9D00496E91 /* DetailIngProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIngProtocol.swift; sourceTree = "<group>"; };
+		39CD581A28C4BE8800496E91 /* DetailIngAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIngAPI.swift; sourceTree = "<group>"; };
 		39CD581C28C4C03B00496E91 /* DetailDoneProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDoneProtocol.swift; sourceTree = "<group>"; };
 		39CD581E28C4C19100496E91 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		39CD582028C4C3E800496E91 /* DetailDoneAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDoneAPI.swift; sourceTree = "<group>"; };
@@ -365,7 +365,7 @@
 			children = (
 				397A241328BA516B00454E4F /* DetailWaitAPI.swift */,
 				7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */,
-				39CD581A28C4BE8800496E91 /* DetailStartingAPI.swift */,
+				39CD581A28C4BE8800496E91 /* DetailIngAPI.swift */,
 				39CD582028C4C3E800496E91 /* DetailDoneAPI.swift */,
 				CB4C77E528C0D4EB007A1AD2 /* MainAPI.swift */,
 				B5F31C5128BFA64F00F61D0F /* LetterAPI.swift */,
@@ -381,7 +381,7 @@
 			children = (
 				397A241728BA51B400454E4F /* DetailWaitProtocol.swift */,
 				7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */,
-				39CD581828C4BD9D00496E91 /* DetailStartingProtocol.swift */,
+				39CD581828C4BD9D00496E91 /* DetailIngProtocol.swift */,
 				39CD581C28C4C03B00496E91 /* DetailDoneProtocol.swift */,
 				CB4C77E328C0D4C9007A1AD2 /* MainProtocol.swift */,
 				B5F31C5328BFA70100F61D0F /* LetterProtocol.swift */,
@@ -1112,7 +1112,7 @@
 				39C957D828799DB900A04A2B /* NetworkError.swift in Sources */,
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
 				7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */,
-				39CD581B28C4BE8800496E91 /* DetailStartingAPI.swift in Sources */,
+				39CD581B28C4BE8800496E91 /* DetailIngAPI.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
 				39C957D02879521400A04A2B /* String+Extension.swift in Sources */,
@@ -1200,7 +1200,7 @@
 				B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */,
 				B50B1B2A285AB7650080992C /* SplashViewController.swift in Sources */,
 				B5FEE9DB28C8498A00DEA07E /* ImageCacheManager.swift in Sources */,
-				39CD581928C4BD9D00496E91 /* DetailStartingProtocol.swift in Sources */,
+				39CD581928C4BD9D00496E91 /* DetailIngProtocol.swift in Sources */,
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
 				39C95806287DAE5700A04A2B /* InteractionEndPoint.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,

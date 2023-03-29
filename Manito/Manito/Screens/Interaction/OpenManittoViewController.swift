@@ -155,7 +155,7 @@ final class OpenManittoViewController: BaseViewController {
     private func requestWithFriends(roomId: String) {
         Task {
             do {
-                let data = try await openManittoService.requestWithFriends(roomId: roomId)
+                let data = try await openManittoService.fetchWithFriends(roomId: roomId)
                 if let list = data {
                     friendsList = list
                     DispatchQueue.main.async {
@@ -177,7 +177,7 @@ final class OpenManittoViewController: BaseViewController {
     private func requestRoomInfo(roomId: String) {
         Task {
             do {
-                let data = try await openManittoService.requestStartingRoomInfo(roomId: roomId)
+                let data = try await openManittoService.fetchStartingRoomInfo(roomId: roomId)
                 if let info = data {
                     guard let nickname = info.manitto?.nickname else { return }
                     manitto = nickname

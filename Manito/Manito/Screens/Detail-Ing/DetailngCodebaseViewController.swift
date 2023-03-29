@@ -538,7 +538,7 @@ final class DetailingCodebaseViewController: BaseViewController {
     private func requestRoomInfo() {
         Task {
             do {
-                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
+                let data = try await detailIngService.fetchStartingRoomInfo(roomId: roomId)
                 if let info = data {
                     guard let state = data?.roomInformation?.state,
                           let title = info.roomInformation?.title,
