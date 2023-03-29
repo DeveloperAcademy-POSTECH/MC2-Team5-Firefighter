@@ -8,7 +8,7 @@
 import Foundation
 
 enum TokenEndPoint: URLRepresentable {
-    case patchRefreshToken(body: Token)
+    case patchRefreshToken(token: Token)
 
     var path: String {
         switch self {
@@ -32,17 +32,17 @@ extension TokenEndPoint: EndPointable {
 
     var requestBody: Data? {
         switch self {
-        case .patchRefreshToken(let body):
-            let body = ["accessToken": body.accessToken,
-                        "refreshToken": body.refreshToken]
+        case .patchRefreshToken(let token):
+            let body = ["accessToken": token.accessToken,
+                        "refreshToken": token.refreshToken]
             return body.encode()
         }
     }
 
     var url: String {
         switch self {
-        case .patchRefreshToken(let body):
-            return self[.patchRefreshToken(body: body)]
+        case .patchRefreshToken(let token):
+            return self[.patchRefreshToken(token: token)]
         }
     }
 

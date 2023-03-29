@@ -14,9 +14,9 @@ struct TokenAPI: TokenProtocol {
         self.apiService = apiService
     }
     
-    func patchRefreshToken(dto: Token) async throws -> Token? {
+    func patchRefreshToken(token: Token) async throws -> Token? {
         let request = TokenEndPoint
-            .patchRefreshToken(body: dto)
+            .patchRefreshToken(token: token)
             .createRequest()
         return try await apiService.request(request)
     }
