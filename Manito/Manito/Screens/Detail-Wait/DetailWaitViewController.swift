@@ -349,10 +349,10 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     private func presentSelectManittoViewController(nickname: String) {
-        let viewController = SelectManitteeViewController()
+        guard let roomId = self.roomInformation?.id?.description else { return }
+        let viewController = SelectManitteeViewController(roomId: roomId, manitteeNickname: nickname)
+        viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
-        viewController.manitteeName = nickname
-        viewController.roomId = self.roomInformation?.id?.description
         self.present(viewController, animated: true)
     }
 

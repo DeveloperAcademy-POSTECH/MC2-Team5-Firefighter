@@ -455,12 +455,11 @@ final class DetailingViewController: BaseViewController {
         }
     }
     
-    private func openManittee(manitteeName: String ) {
-            let viewController = SelectManitteeViewController()
-            viewController.modalPresentationStyle = .fullScreen
-            viewController.roomId = roomId
-            viewController.manitteeName = manitteeName
-            present(viewController, animated: true)
+    private func openManittee(manitteeName: String) {
+        let viewController = SelectManitteeViewController(roomId: self.roomId, manitteeNickname: manitteeName)
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true)
     }
     
     private func setupExitButton(admin: Bool) {
