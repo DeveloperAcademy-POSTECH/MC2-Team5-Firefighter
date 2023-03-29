@@ -8,7 +8,7 @@
 import Foundation
 
 enum SettingEndPoint: URLRepresentable {
-    case putNickname(nickNameDto: NicknameDTO)
+    case putNickname(nicknameDTO: NicknameDTO)
 
     var path: String {
         switch self {
@@ -41,7 +41,7 @@ extension SettingEndPoint: EndPointable {
     var url: String {
         switch self {
         case .putNickname(let nicknameDTO):
-            return self[.putNickname(nickNameDto: nicknameDTO)]
+            return self[.putNickname(nicknameDTO: nicknameDTO)]
         }
     }
     
