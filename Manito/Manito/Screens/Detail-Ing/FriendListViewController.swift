@@ -13,7 +13,7 @@ final class FriendListViewController: BaseViewController {
             friendListCollectionView.reloadData()
         }
     }
-    var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+    var detailIngService: DetailRoomAPI = DetailRoomAPI(apiService: APIService())
     
     var roomIndex: Int = 0
     
@@ -51,7 +51,7 @@ final class FriendListViewController: BaseViewController {
     private func requestWithFriends() {
         Task {
             do {
-                let data = try await detailIngService.fetchWithFriends(roomId: "\(roomIndex)")
+                let data = try await detailIngService.fetchWithFriend(roomId: "\(roomIndex)")
                 if let list = data {
                     friendArray = list.members ?? []
                 }

@@ -1,49 +1,56 @@
 //
-//  DetailEndAPI.swift
+//  DetailRoomAPI.swift
 //  Manito
 //
-//  Created by Mingwan Choi on 2022/09/04.
+//  Created by SHIN YOON AH on 2023/03/29.
 //
 
 import Foundation
 
-struct DetailDoneAPI: DetailDoneProtocol {
+struct DetailRoomAPI: DetailRoomProtocol {
     private let apiService: Requestable
-    
+
     init(apiService: Requestable) {
         self.apiService = apiService
     }
-    
-    func fetchMemory(roomId: String) async throws -> Memory? {
-        let request = DetailDoneEndPoint
-            .fetchMemory(roomId: roomId)
+
+    func fetchStartingRoomInfo(roomId: String) async throws -> Room? {
+        let request = DetailRoomEndPoint
+            .fetchStartingRoomInfo(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
-    
+
     func fetchDoneRoomInfo(roomId: String) async throws -> Room? {
-        let request = DetailDoneEndPoint
+        let request = DetailRoomEndPoint
             .fetchDoneRoomInfo(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
-    
+
     func fetchWithFriend(roomId: String) async throws -> FriendList? {
-        let request = DetailDoneEndPoint
+        let request = DetailRoomEndPoint
             .fetchWithFriend(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
-    
+
+    func fetchMemory(roomId: String) async throws -> Memory? {
+        let request = DetailRoomEndPoint
+            .fetchMemory(roomId: roomId)
+            .createRequest()
+        return try await apiService.request(request)
+    }
+
     func deleteRoomByMember(roomId: String) async throws -> Int {
-        let request = DetailDoneEndPoint
+        let request = DetailRoomEndPoint
             .deleteRoomByMember(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)
     }
-    
+
     func deleteRoomByOwner(roomId: String) async throws -> Int {
-        let request = DetailDoneEndPoint
+        let request = DetailRoomEndPoint
             .deleteRoomByOwner(roomId: roomId)
             .createRequest()
         return try await apiService.request(request)

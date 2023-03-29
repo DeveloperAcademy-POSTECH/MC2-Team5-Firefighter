@@ -1,27 +1,30 @@
 //
-//  DetailDoneEndPoint.swift
+//  DetailRoomEndPoint.swift
 //  Manito
 //
-//  Created by Mingwan Choi on 2022/07/12.
+//  Created by SHIN YOON AH on 2023/03/29.
 //
 
 import Foundation
 
-enum DetailDoneEndPoint: URLRepresentable {
+enum DetailRoomEndPoint: URLRepresentable {
+    case fetchStartingRoomInfo(roomId: String)
+    case fetchDoneRoomInfo(roomId: String)
     case fetchWithFriend(roomId: String)
     case fetchMemory(roomId: String)
-    case fetchDoneRoomInfo(roomId: String)
     case deleteRoomByMember(roomId: String)
     case deleteRoomByOwner(roomId: String)
 
     var path: String {
         switch self {
+        case .fetchStartingRoomInfo(let roomId):
+            return "/rooms/\(roomId)"
+        case .fetchDoneRoomInfo(let roomId):
+            return "/rooms/\(roomId)"
         case .fetchWithFriend(let roomId):
             return "/rooms/\(roomId)/participants"
         case .fetchMemory(let roomId):
             return "/rooms/\(roomId)/memories"
-        case .fetchDoneRoomInfo(let roomId):
-            return "/rooms/\(roomId)"
         case .deleteRoomByMember(let roomId):
             return "/rooms/\(roomId)/participants"
         case .deleteRoomByOwner(let roomId):
@@ -30,18 +33,20 @@ enum DetailDoneEndPoint: URLRepresentable {
     }
 }
 
-extension DetailDoneEndPoint: EndPointable {
+extension DetailRoomEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
 
     var httpMethod: HTTPMethod {
         switch self {
+        case .fetchStartingRoomInfo:
+            return .get
+        case .fetchDoneRoomInfo:
+            return .get
         case .fetchWithFriend:
             return .get
         case .fetchMemory:
-            return .get
-        case .fetchDoneRoomInfo:
             return .get
         case .deleteRoomByMember:
             return .delete
@@ -52,11 +57,13 @@ extension DetailDoneEndPoint: EndPointable {
 
     var requestBody: Data? {
         switch self {
+        case .fetchStartingRoomInfo:
+            return nil
+        case .fetchDoneRoomInfo:
+            return nil
         case .fetchWithFriend:
             return nil
         case .fetchMemory:
-            return nil
-        case .fetchDoneRoomInfo:
             return nil
         case .deleteRoomByMember:
             return nil
@@ -67,19 +74,21 @@ extension DetailDoneEndPoint: EndPointable {
 
     var url: String {
         switch self {
+        case .fetchStartingRoomInfo(let roomId):
+            return self[.fetchStartingRoomInfo(roomId: roomId)]
+        case .fetchDoneRoomInfo(let roomId):
+            return self[.fetchDoneRoomInfo(roomId: roomId)]
         case .fetchWithFriend(let roomId):
             return self[.fetchWithFriend(roomId: roomId)]
         case .fetchMemory(let roomId):
             return self[.fetchMemory(roomId: roomId)]
-        case .fetchDoneRoomInfo(let roomId):
-            return self[.fetchDoneRoomInfo(roomId: roomId)]
         case .deleteRoomByMember(let roomId):
             return self[.deleteRoomByMember(roomId: roomId)]
         case .deleteRoomByOwner(let roomId):
             return self[.deleteRoomByOwner(roomId: roomId)]
         }
     }
-    
+
     func createRequest() -> NetworkRequest {
         return NetworkRequest(url: self.url,
                               reqBody: self.requestBody,

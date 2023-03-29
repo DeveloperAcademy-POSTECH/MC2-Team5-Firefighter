@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 final class OpenManittoViewController: BaseViewController {
-    private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+    private let openManittoService: DetailRoomAPI = DetailRoomAPI(apiService: APIService())
     
     private var roomId: String
     private var manittoIndex = 0
@@ -155,7 +155,7 @@ final class OpenManittoViewController: BaseViewController {
     private func requestWithFriends(roomId: String) {
         Task {
             do {
-                let data = try await openManittoService.fetchWithFriends(roomId: roomId)
+                let data = try await openManittoService.fetchWithFriend(roomId: roomId)
                 if let list = data {
                     friendsList = list
                     DispatchQueue.main.async {

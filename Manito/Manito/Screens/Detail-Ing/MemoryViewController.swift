@@ -88,7 +88,7 @@ final class MemoryViewController: BaseViewController {
         return view
     }()
     
-    private var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
+    private var detailDoneService: DetailRoomAPI = DetailRoomAPI(apiService: APIService())
     private var memoryType: MemoryType = .manittee {
         willSet {
             setupData(with: newValue)

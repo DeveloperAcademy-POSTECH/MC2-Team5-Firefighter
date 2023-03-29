@@ -16,8 +16,8 @@ class DetailIngViewController: BaseViewController {
         case POST
     }
     
-    lazy var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
-    lazy var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
+    lazy var detailIngService: DetailRoomAPI = DetailRoomAPI(apiService: APIService())
+    lazy var detailDoneService: DetailRoomAPI = DetailRoomAPI(apiService: APIService())
 
     private var missionId: String?
     var friendList: FriendList?
@@ -350,7 +350,7 @@ class DetailIngViewController: BaseViewController {
         Task {
             do {
                 guard let roomId = roomInformation?.id?.description else { return }
-                let data = try await detailIngService.fetchWithFriends(roomId: roomId)
+                let data = try await detailIngService.fetchWithFriend(roomId: roomId)
                 if let list = data {
                     friendList = list
                 }
