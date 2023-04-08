@@ -10,7 +10,7 @@ import UIKit
 final class LetterViewController: BaseViewController {
 
     enum EntryPoint: Int {
-        case detail = 0, notification = 1
+        case detail = 0, notification
     }
 
     private enum InternalSize {
