@@ -58,8 +58,8 @@ final class OpenManittoView: UIView {
 
     // MARK: - property
 
-    private let totalCount = 10.0
-    private(set) var randomIndex = -1 {
+    private let totalCount: Double = 10.0
+    private(set) var randomIndex: Int = -1 {
         didSet {
             self.manittoCollectionView.reloadData()
         }
@@ -117,7 +117,7 @@ final class OpenManittoView: UIView {
 
     private func performRandomShuffleAnimation(with timeInterval: TimeInterval, _ friendList: FriendList) {
         guard let count = friendList.count else { return }
-        var countNumber = 0
+        var countNumber: Int = 0
 
         Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { [weak self] _ in
             guard let self = self,
