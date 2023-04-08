@@ -134,13 +134,13 @@ class SettingViewController: BaseViewController {
     }
     
     private func goToPersonalInfomation() {
-        if let url = URL(string: UrlLiteral.personalInfomationUrl) {
+        if let url = URL(string: URLLiteral.personalInfomationUrl) {
             UIApplication.shared.open(url, options: [:])
         }
     }
     
     private func goToTermsOfService() {
-        if let url = URL(string: UrlLiteral.termsOfServiceUrl) {
+        if let url = URL(string: URLLiteral.termsOfServiceUrl) {
             UIApplication.shared.open(url, options: [:])
         }
     }

@@ -7,10 +7,21 @@
 
 import Foundation
 
-enum InteractionEndPoint: EndPointable {
+enum InteractionEndPoint: URLRepresentable {
     case mixRandomManitto(roomId: String)
     case openManitto
 
+    var path: String {
+        switch self {
+        case .mixRandomManitto(let roomId):
+            return "/rooms/\(roomId)/relations"
+        case .openManitto:
+            return "/relations/my-manitto"
+        }
+    }
+}
+
+extension InteractionEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -33,12 +44,12 @@ enum InteractionEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
         case .mixRandomManitto(let roomId):
-            return "\(baseURL)/api/rooms/\(roomId)/relations"
+            return self[.mixRandomManitto(roomId: roomId), .none]
         case .openManitto:
-            return "\(baseURL)/api/relations/my-manitto"
+            return self[.openManitto, .none]
         }
     }
 }
