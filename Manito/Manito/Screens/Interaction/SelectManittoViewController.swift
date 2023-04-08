@@ -17,12 +17,28 @@ final class SelectManittoViewController: BaseViewController {
 
     // MARK: - ui component
 
-    @IBOutlet weak var joystickBackgroundView: UIView!
-    @IBOutlet weak var informationLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var joystickImageView: GIFImageView!
-    @IBOutlet weak var openCapsuleImageView: GIFImageView!
-    @IBOutlet weak var confirmButton: MainButton!
+    private let informationLabel: UILabel = {
+        let label = UILabel()
+        label.font = .font(.regular, ofSize: 20)
+        label.numberOfLines = 2
+        label.text = TextLiteral.selectManittoViewControllerInformationText
+        label.addLabelSpacing()
+        label.textAlignment = .center
+        return label
+    }()
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .font(.regular, ofSize: 30)
+        return label
+    }()
+    private let confirmButton: MainButton = {
+        let button = MainButton()
+        button.title = TextLiteral.confirm
+        return button
+    }()
+    private let joystickBackgroundView: UIView = UIView()
+    private let joystickImageView: GIFImageView = GIFImageView(image: UIImage(named: ImageLiterals.gifJoystick))
+    private let openCapsuleImageView: GIFImageView = GIFImageView(image: UIImage(named: ImageLiterals.gifCapsule))
 
     // MARK: - property
 
@@ -47,13 +63,49 @@ final class SelectManittoViewController: BaseViewController {
 
     // MARK: - override
 
+    override func setupLayout() {
+        self.view.addSubview(self.joystickBackgroundView)
+        self.joystickBackgroundView.snp.makeConstraints {
+            $0.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+
+        self.joystickBackgroundView.addSubview(self.joystickImageView)
+        self.joystickImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-30)
+            $0.width.height.equalTo(140)
+        }
+
+        self.joystickBackgroundView.addSubview(self.informationLabel)
+        self.informationLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.joystickImageView.snp.bottom).offset(63)
+        }
+
+        self.view.addSubview(self.openCapsuleImageView)
+        self.openCapsuleImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-30)
+            $0.width.equalTo(199)
+            $0.height.equalTo(285)
+        }
+
+        self.view.addSubview(self.nameLabel)
+        self.nameLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(self.openCapsuleImageView.snp.centerY)
+        }
+
+        self.view.addSubview(self.confirmButton)
+        self.confirmButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(31)
+        }
+    }
+
     override func configureUI() {
         super.configureUI()
 
-        self.informationLabel.font = .font(.regular, ofSize: 20)
-        self.nameLabel.font = .font(.regular, ofSize: 30)
-
-        self.confirmButton.title = TextLiteral.confirm
         if let manittee = self.manitteeName {
             self.nameLabel.text = manittee
         }

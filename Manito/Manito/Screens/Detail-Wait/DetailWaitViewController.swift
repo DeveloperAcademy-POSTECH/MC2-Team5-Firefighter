@@ -349,8 +349,7 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     private func presentSelectManittoViewController(nickname: String) {
-        let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+        let viewController = SelectManittoViewController()
         viewController.modalPresentationStyle = .fullScreen
         viewController.manitteeName = nickname
         viewController.roomId = self.roomInformation?.id?.description
