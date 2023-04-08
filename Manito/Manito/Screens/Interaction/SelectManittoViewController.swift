@@ -10,92 +10,86 @@ import UIKit
 import Gifu
 
 final class SelectManittoViewController: BaseViewController {
-    var roomId: String?
 
-    private enum StageType {
-        case joystick
-        case capsule
-        case openName
-        case openButton
+    private enum SelectionStage {
+        case showJoystick, showCapsule, openName, openButton
     }
+
+    // MARK: - ui component
+
+    @IBOutlet weak var joystickBackgroundView: UIView!
+    @IBOutlet weak var informationLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var joystickImageView: GIFImageView!
+    @IBOutlet weak var openCapsuleImageView: GIFImageView!
+    @IBOutlet weak var confirmButton: MainButton!
 
     // MARK: - property
 
-    @IBOutlet weak var joystickBackgroundView: UIView!
-    @IBOutlet weak var joystickImageView: GIFImageView!
-    @IBOutlet weak var informationLabel: UILabel!
-    @IBOutlet weak var openCapsuleImageView: GIFImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var confirmButton: MainButton!
-
-    private lazy var okAction: UIAction = {
-        let action = UIAction { [weak self] _ in
-            guard let navigationController = self?.presentingViewController as? UINavigationController,
-                  let roomId = self?.roomId
-            else { return }
-            let viewController = DetailingViewController(roomId: roomId)
-            navigationController.popViewController(animated: true)
-            navigationController.pushViewController(viewController, animated: false)
-            self?.dismiss(animated: true)
-        }
-        return action
-    }()
-
+    var roomId: String?
     var manitteeName: String?
-    private var stageType: StageType = .joystick {
+    private var stageType: SelectionStage = .showJoystick {
         didSet {
-            hiddenImageView()
-            setupGifImage()
+            self.hiddenImageView()
+            self.setupGifImage()
         }
-    }
-    
-    // MARK: - init
-    
-    deinit {
-        print("\(#file) is dead")
     }
 
     // MARK: - life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSwipeGesture()
-        hiddenImageView()
-        setupGifImage()
+        self.setupButtonAction()
+        self.setupSwipeGesture()
+        self.setupGifImage()
+        self.hiddenImageView()
     }
+
+    // MARK: - override
 
     override func configureUI() {
         super.configureUI()
 
-        informationLabel.font = .font(.regular, ofSize: 20)
-        nameLabel.font = .font(.regular, ofSize: 30)
-        if let manittee = manitteeName {
-            nameLabel.text = manittee
-        }
-        confirmButton.title = TextLiteral.confirm
-        confirmButton.addAction(okAction, for: .touchUpInside)
+        self.informationLabel.font = .font(.regular, ofSize: 20)
+        self.nameLabel.font = .font(.regular, ofSize: 30)
 
+        self.confirmButton.title = TextLiteral.confirm
+        if let manittee = self.manitteeName {
+            self.nameLabel.text = manittee
+        }
     }
 
     // MARK: - func
 
+    private func setupButtonAction() {
+        let okAction = UIAction { [weak self] _ in
+            guard let presentingViewController = self?.presentingViewController as? UINavigationController,
+                  let roomId = self?.roomId
+            else { return }
+            let viewController = DetailingViewController(roomId: roomId)
+            presentingViewController.popViewController(animated: true)
+            presentingViewController.pushViewController(viewController, animated: false)
+            self?.dismiss(animated: true)
+        }
+        self.confirmButton.addAction(okAction, for: .touchUpInside)
+    }
+
     private func setupSwipeGesture() {
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(_:)))
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(_:)))
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-
-        joystickBackgroundView.addGestureRecognizer(swipeLeft)
-        joystickBackgroundView.addGestureRecognizer(swipeRight)
+        self.joystickBackgroundView.addGestureRecognizer(swipeLeft)
+        self.joystickBackgroundView.addGestureRecognizer(swipeRight)
     }
 
     private func setupGifImage() {
         switch stageType {
-        case .joystick:
+        case .showJoystick:
             DispatchQueue.main.async {
-                self.joystickImageView.animate(withGIFNamed: ImageLiterals.gifJoystick, animationBlock: nil)
+                self.joystickImageView.animate(withGIFNamed: ImageLiterals.gifJoystick)
             }
-        case .capsule:
+        case .showCapsule:
             self.joystickImageView.stopAnimatingGIF()
             DispatchQueue.main.async {
                 self.openCapsuleImageView.animate(withGIFNamed: ImageLiterals.gifCapsule, loopCount: 1, animationBlock: { [weak self] in
@@ -105,7 +99,7 @@ final class SelectManittoViewController: BaseViewController {
         case .openName:
             self.openCapsuleImageView.stopAnimatingGIF()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                    self.stageType = .openButton
+                self.stageType = .openButton
             })
         case .openButton:
             break
@@ -114,17 +108,17 @@ final class SelectManittoViewController: BaseViewController {
 
     private func hiddenImageView() {
         switch stageType {
-        case .joystick:
-            nameLabel.alpha = 0.0
-            openCapsuleImageView.isHidden = true
-            confirmButton.isHidden = true
-        case .capsule:
-            openCapsuleImageView.isHidden = false
-            joystickBackgroundView.isHidden = true
+        case .showJoystick:
+            self.nameLabel.alpha = 0.0
+            self.openCapsuleImageView.isHidden = true
+            self.confirmButton.isHidden = true
+        case .showCapsule:
+            self.openCapsuleImageView.isHidden = false
+            self.joystickBackgroundView.isHidden = true
         case .openName:
-            nameLabel.fadeIn()
+            self.nameLabel.fadeIn()
         case .openButton:
-            confirmButton.isHidden = false
+            self.confirmButton.isHidden = false
         }
     }
 
@@ -134,10 +128,8 @@ final class SelectManittoViewController: BaseViewController {
     private func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
-            case .left:
-                stageType = .capsule
-            case .right:
-                stageType = .capsule
+            case .left, .right:
+                self.stageType = .showCapsule
             default:
                 break
             }
