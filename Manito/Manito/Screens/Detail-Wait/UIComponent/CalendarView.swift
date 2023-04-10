@@ -206,12 +206,12 @@ extension CalendarView: FSCalendarDelegate {
             calendar.select(self.selectStartDate)
             calendar.reloadData()
         } else if isSelectedDateRange {
-            self.tempEndDateText = date.dateToString
             if self.countDateRange() > 7 {
                 calendar.deselect(date)
                 self.viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle,
                                           message: TextLiteral.maxMessage)
             } else {
+                self.tempEndDateText = date.dateToString
                 self.setDateRange()
                 calendar.reloadData()
             }
