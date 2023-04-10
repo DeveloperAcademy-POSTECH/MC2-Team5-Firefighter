@@ -7,9 +7,18 @@
 
 import Foundation
 
-enum SettingEndPoint: EndPointable {
+enum SettingEndPoint: URLRepresentable {
     case editUserInfo(nickNameDto: NicknameDTO)
 
+    var path: String {
+        switch self {
+        case .editUserInfo:
+            return "/members/nickname"
+        }
+    }
+}
+
+extension SettingEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -29,10 +38,10 @@ enum SettingEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
-        case .editUserInfo(_):
-            return "\(baseURL)/members/nickname"
+        case .editUserInfo(let nicknameDTO):
+            return self[.editUserInfo(nickNameDto: nicknameDTO)]
         }
     }
     
@@ -40,11 +49,12 @@ enum SettingEndPoint: EndPointable {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
         headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
+        
+        return NetworkRequest(url: self.url,
                               headers: headers,
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
 }

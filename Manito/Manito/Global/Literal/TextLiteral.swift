@@ -67,11 +67,18 @@ enum TextLiteral {
     static let mainViewControllerShowIdErrorAlertTitle: String = "해당 마니또 방의 정보를 불러오지 못했습니다."
     static let mainViewControllerShowIdErrorAlertMessage: String = "해당 마니또 방으로 이동할 수 없습니다."
 
+    // MARK: - SelectManittoViewController
+    static let selectManittoViewControllerInformationText: String =
+    """
+    레버를 스와이프해서
+    내 마니띠를 확인하세요.
+    """
+
     // MARK: - OpenManittoViewController
-    static let openManittoViewController: String = "당신의 마니또는?"
+    static let openManittoViewControllerTitle: String = "당신의 마니또는?"
     
     // MARK: - OpenManittoPopupViewController
-    static let openManittoPopupViewControllerOpenMentLabel: String = """
+    static let openManittoPopupViewControllerInformationText: String = """
         내일 함께 했던 추억이 열립니다.
         마니또 방에서 확인해 보세요!
         """

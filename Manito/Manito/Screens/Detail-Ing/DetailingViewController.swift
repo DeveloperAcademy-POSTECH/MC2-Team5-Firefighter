@@ -452,8 +452,7 @@ final class DetailingViewController: BaseViewController {
     }
     
     private func openManittee(manitteeName: String ) {
-            let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-            guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+            let viewController = SelectManittoViewController()
             viewController.modalPresentationStyle = .fullScreen
             viewController.roomId = roomId
             viewController.manitteeName = manitteeName

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DetailWaitEndPoint: EndPointable {
+enum DetailWaitEndPoint: URLRepresentable {
     case fetchWithFriend(roomId: String)
     case fetchWaitingRoomInfo(roomId: String)
     case patchStartManitto(roomId: String)
@@ -15,6 +15,25 @@ enum DetailWaitEndPoint: EndPointable {
     case deleteRoom(roomId: String)
     case deleteLeaveRoom(roomId: String)
 
+    var path: String {
+        switch self {
+        case .fetchWithFriend(let roomId):
+            return "/rooms/\(roomId)/participants"
+        case .fetchWaitingRoomInfo(let roomId):
+            return "/rooms/\(roomId)"
+        case .patchStartManitto(let roomId):
+            return "/rooms/\(roomId)/state"
+        case .putRoomInfo(let roomId, _):
+            return "/rooms/\(roomId)"
+        case .deleteRoom(let roomId):
+            return "/rooms/\(roomId)"
+        case .deleteLeaveRoom(let roomId):
+            return "/rooms/\(roomId)/participants"
+        }
+    }
+}
+
+extension DetailWaitEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -57,20 +76,20 @@ enum DetailWaitEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
         case .fetchWithFriend(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/participants"
+            return self[.fetchWithFriend(roomId: roomId)]
         case .fetchWaitingRoomInfo(let roomId):
-            return "\(baseURL)/rooms/\(roomId)"
+            return self[.fetchWaitingRoomInfo(roomId: roomId)]
         case .patchStartManitto(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/state"
-        case .putRoomInfo(let roomId, _):
-            return "\(baseURL)/rooms/\(roomId)"
+            return self[.patchStartManitto(roomId: roomId)]
+        case .putRoomInfo(let roomId, let roomInfo):
+            return self[.putRoomInfo(roomId: roomId, roomInfo: roomInfo)]
         case .deleteRoom(let roomId):
-            return "\(baseURL)/rooms/\(roomId)"
+            return self[.deleteRoom(roomId: roomId)]
         case .deleteLeaveRoom(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/participants"
+            return self[.deleteLeaveRoom(roomId: roomId)]
         }
     }
     
@@ -78,11 +97,12 @@ enum DetailWaitEndPoint: EndPointable {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
         headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
+
+        return NetworkRequest(url: self.url,
                               headers: headers,
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
 }

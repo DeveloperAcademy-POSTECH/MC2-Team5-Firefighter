@@ -7,9 +7,18 @@
 
 import Foundation
 
-enum LoginEndPoint: EndPointable {
+enum LoginEndPoint: URLRepresentable {
     case dispatchAppleLogin(body: LoginDTO)
-    
+
+    var path: String {
+        switch self {
+        case .dispatchAppleLogin:
+            return "/login"
+        }
+    }
+}
+
+extension LoginEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -28,22 +37,22 @@ enum LoginEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
-        case .dispatchAppleLogin:
-            return "https://dev.aenitto.shop/api/v2/login"
+        case .dispatchAppleLogin(let loginDTO):
+            return self[.dispatchAppleLogin(body: loginDTO), .v2]
         }
     }
 
     func createRequest() -> NetworkRequest {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
+
+        return NetworkRequest(url: self.url,
                               headers: headers,
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
-
 }

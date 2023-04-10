@@ -77,7 +77,7 @@ extension FriendListViewController: UICollectionViewDataSource {
         cell.setupViewLayer()
         cell.makeBorderLayer(color: .white)
         cell.setFriendName(name: friendArray[indexPath.item].nickname ?? "닉네임")
-        cell.setFriendImage(index: friendArray[indexPath.item].colorIdx ?? 0)
+        cell.setFriendImage(index: friendArray[indexPath.item].colorIndex ?? 0)
         return cell
     }
 }

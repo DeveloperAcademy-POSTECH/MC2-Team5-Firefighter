@@ -7,11 +7,24 @@
 
 import Foundation
 
-enum RoomEndPoint: EndPointable {
+enum RoomEndPoint: URLRepresentable {
     case dispatchCreateRoom(roomInfo: CreateRoomDTO)
     case fetchVerifyCode(code: String)
     case dispatchJoinRoom(roomId: String, roomDto: MemberDTO)
 
+    var path: String {
+        switch self {
+        case .dispatchCreateRoom:
+            return "/rooms"
+        case .fetchVerifyCode:
+            return "/invitations/verification"
+        case .dispatchJoinRoom(let roomId, _):
+            return "/rooms/\(roomId)/participants"
+        }
+    }
+}
+
+extension RoomEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -41,14 +54,14 @@ enum RoomEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
-        case .dispatchCreateRoom(_):
-            return "\(baseURL)/rooms"
-        case .fetchVerifyCode:
-            return "\(baseURL)/invitations/verification"
-        case .dispatchJoinRoom(let roomId, _):
-            return "\(baseURL)/rooms/\(roomId)/participants"
+        case .dispatchCreateRoom(let roomInfo):
+            return self[.dispatchCreateRoom(roomInfo: roomInfo)]
+        case .fetchVerifyCode(let code):
+            return self[.fetchVerifyCode(code: code)]
+        case .dispatchJoinRoom(let roomId, let roomDTO):
+            return self[.dispatchJoinRoom(roomId: roomId, roomDto: roomDTO)]
         }
     }
     
@@ -56,11 +69,12 @@ enum RoomEndPoint: EndPointable {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
         headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
+
+        return NetworkRequest(url: self.url,
                               headers: headers,
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
 }
