@@ -9,21 +9,20 @@ import UIKit
 
 import SnapKit
 
+protocol DetailWaitViewDelegate: AnyObject {
+    // 마니또 시작
+    func startManitto()
+    // 방 정보 수정 뷰로 이동
+    func presentRoomEditViewController()
+    // 방 삭제
+    func deleteRoom()
+    // 방 나가기
+    func leaveRoom()
+    // 시작 날짜 지남 alert 표시
+    func showAlert(title: String, message: String)
+}
+
 final class DetailWaitView: UIView {
-    private var userArray: [User] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.listTableView.reloadData()
-                self.updateTableViewHeight()
-            }
-        }
-    }
-    private var canStart: Bool = false {
-        didSet {
-            self.setStartButton(self.canStart)
-        }
-    }
-    
     private enum UserStatus: CaseIterable {
         case owner
         case member
@@ -102,6 +101,22 @@ final class DetailWaitView: UIView {
     }()
     private let startButton: MainButton = MainButton()
     
+    private var userArray: [User] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.listTableView.reloadData()
+                self.updateTableViewHeight()
+            }
+        }
+    }
+    private var canStart: Bool = false {
+        didSet {
+            self.setStartButton(self.canStart)
+        }
+    }
+    
+    private weak var delegate: DetailWaitViewDelegate?
+    
     // MARK: - init
     
     override init(frame: CGRect) {
@@ -174,6 +189,10 @@ final class DetailWaitView: UIView {
         self.copyButton.addAction(action, for: .touchUpInside)
     }
     
+    func configureDelegation(_ delegate: DetailWaitViewDelegate) {
+        self.delegate = delegate
+    }
+    
     func configureNavigationItem(_ navigationController: UINavigationController) {
         let navigationItem = navigationController.topViewController?.navigationItem
         let moreButton = UIBarButtonItem(customView: self.moreButton)
@@ -223,7 +242,7 @@ final class DetailWaitView: UIView {
             self.startButton.title = ButtonText.start.status
             self.startButton.isDisabled = false
             let action = UIAction { [weak self] _ in
-                // FIXME: - delegate 연결
+                self?.delegate?.startManitto()
 //                self?.requestStartManitto()
             }
             self.startButton.addAction(action, for: .touchUpInside)
@@ -236,28 +255,27 @@ final class DetailWaitView: UIView {
     private func setExitButtonMenu(_ isOwner: Bool) {
         var children: [UIAction]
         if isOwner {
-            children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { _ in
-                // FIXME: - delegate 연결
+            children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
+                self?.delegate?.presentRoomEditViewController()
     //            self?.presentEditRoomView()
-            }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { _ in
+            }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
 //                viewController.makeRequestAlert(title: UserStatus.owner.alertText.title,
 //                                       message: UserStatus.owner.alertText.message,
 //                                       okTitle: UserStatus.owner.alertText.okTitle,
 //                                       okAction: { _ in
                     // FIXME: - delegate 연결
+                self?.delegate?.deleteRoom()
     //                self?.requestDeleteRoom()
-                    
 //                })
-                
             })
             ]
         } else {
-            children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { _ in
+            children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
 //                viewController.makeRequestAlert(title: UserStatus.member.alertText.title,
 //                                       message: UserStatus.member.alertText.message,
 //                                       okTitle: UserStatus.member.alertText.okTitle,
 //                                       okAction: { _ in
-                    // FIXME: - delegate 연결
+                self?.delegate?.leaveRoom()
     //                self?.requestDeleteLeaveRoom()
 //                })
             })]
@@ -271,8 +289,7 @@ final class DetailWaitView: UIView {
         if !isStart {
             switch type {
             case .owner:
-                print("delegate로 넘겨야함")
-                // FIXME: - delegate로 넘겨야함
+                self.delegate?.presentRoomEditViewController()
 //                let action: ((UIAlertAction) -> ()) = { [weak self] _ in
 //                    self?.editInfoFromDefaultDate(isDateEdit: true)
 //                }
@@ -280,10 +297,8 @@ final class DetailWaitView: UIView {
 //                               message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
 //                               okAction: action)
             case .member:
-                print("delegate로 넘겨야함")
-                // FIXME: - delegate로 넘겨야함
-//                viewController.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-//                               message: TextLiteral.detailWaitViewControllerPastAlertMessage)
+                self.delegate?.showAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                                         message: TextLiteral.detailWaitViewControllerPastAlertMessage)
             }
         }
     }

@@ -149,6 +149,7 @@ final class DetailWaitViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.requestWaitRoomInfo()
+        self.configureDelegation()
         self.configureNavigationController()
 //        self.setupDelegation()
 //        self.setupNotificationCenter()
@@ -204,6 +205,10 @@ final class DetailWaitViewController: BaseViewController {
 //    }
 
     // MARK: - func
+    
+    private func configureDelegation() {
+        self.detailWaitView.configureDelegation(self)
+    }
 
 //    private func setupDelegation() {
 //        self.listTableView.delegate = self
@@ -399,5 +404,27 @@ final class DetailWaitViewController: BaseViewController {
                 print("client Error: \(String(describing: message))")
             }
         }
+    }
+}
+
+extension DetailWaitViewController: DetailWaitViewDelegate {
+    func startManitto() {
+        
+    }
+    
+    func presentRoomEditViewController() {
+        
+    }
+    
+    func deleteRoom() {
+        
+    }
+    
+    func leaveRoom() {
+        
+    }
+    
+    func showAlert(title: String, message: String) {
+        self.makeAlert(title: title, message: message)
     }
 }
