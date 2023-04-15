@@ -181,13 +181,14 @@ final class DetailWaitView: UIView {
         navigationItem?.rightBarButtonItem = moreButton
     }
     
-    func updateLayoutWithData(room: Room) {
+    func configureLayout(room: Room) {
         guard let title = room.roomInformation?.title,
               let state = room.roomInformation?.state,
               let dateRange = room.roomInformation?.dateRange,
               let users = room.participants?.members,
               let isOwner = room.admin,
-              let code = room.invitation?.code
+              let code = room.invitation?.code,
+              let isStart = room.roomInformation?.isStart
         else { return }
         self.titleView.setRoomTitleLabelText(text: title)
         self.titleView.setStartState(state: state)
@@ -198,6 +199,7 @@ final class DetailWaitView: UIView {
         self.canStart = room.canStart
         self.setExitButtonMenu(isOwner)
         self.setupCopyButton(code)
+        self.showAlertWhenPastDate(isOwner, isStart: isStart)
     }
     
     private func updateTableViewHeight() {
@@ -215,6 +217,7 @@ final class DetailWaitView: UIView {
         self.startButton.isHidden = !isOwner
     }
     
+    // FIXME: - configureStartButton이 더 났나?
     private func setStartButton(_ canStart: Bool) {
         if canStart {
             self.startButton.title = ButtonText.start.status
@@ -231,37 +234,58 @@ final class DetailWaitView: UIView {
     }
     
     private func setExitButtonMenu(_ isOwner: Bool) {
-        let viewController = UIViewController()
         var children: [UIAction]
         if isOwner {
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { _ in
                 // FIXME: - delegate 연결
     //            self?.presentEditRoomView()
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { _ in
-                viewController.makeRequestAlert(title: UserStatus.owner.alertText.title,
-                                       message: UserStatus.owner.alertText.message,
-                                       okTitle: UserStatus.owner.alertText.okTitle,
-                                       okAction: { _ in
+//                viewController.makeRequestAlert(title: UserStatus.owner.alertText.title,
+//                                       message: UserStatus.owner.alertText.message,
+//                                       okTitle: UserStatus.owner.alertText.okTitle,
+//                                       okAction: { _ in
                     // FIXME: - delegate 연결
     //                self?.requestDeleteRoom()
                     
-                })
+//                })
                 
             })
             ]
         } else {
             children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { _ in
-                viewController.makeRequestAlert(title: UserStatus.member.alertText.title,
-                                       message: UserStatus.member.alertText.message,
-                                       okTitle: UserStatus.member.alertText.okTitle,
-                                       okAction: { _ in
+//                viewController.makeRequestAlert(title: UserStatus.member.alertText.title,
+//                                       message: UserStatus.member.alertText.message,
+//                                       okTitle: UserStatus.member.alertText.okTitle,
+//                                       okAction: { _ in
                     // FIXME: - delegate 연결
     //                self?.requestDeleteLeaveRoom()
-                })
+//                })
             })]
         }
         let menu = UIMenu(children: children)
         self.moreButton.menu = menu
+    }
+    
+    private func showAlertWhenPastDate(_ isAdmin: Bool, isStart: Bool) {
+        let type: UserStatus = isAdmin ? .owner : .member
+        if !isStart {
+            switch type {
+            case .owner:
+                print("delegate로 넘겨야함")
+                // FIXME: - delegate로 넘겨야함
+//                let action: ((UIAlertAction) -> ()) = { [weak self] _ in
+//                    self?.editInfoFromDefaultDate(isDateEdit: true)
+//                }
+//                viewController.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+//                               message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
+//                               okAction: action)
+            case .member:
+                print("delegate로 넘겨야함")
+                // FIXME: - delegate로 넘겨야함
+//                viewController.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+//                               message: TextLiteral.detailWaitViewControllerPastAlertMessage)
+            }
+        }
     }
 }
 

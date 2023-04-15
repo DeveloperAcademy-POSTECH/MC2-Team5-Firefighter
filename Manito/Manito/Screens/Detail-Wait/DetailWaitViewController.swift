@@ -412,7 +412,7 @@ final class DetailWaitViewController: BaseViewController {
 //                          let participants = roomInfo.participants,
 //                          let isAdmin = roomInfo.admin else { return }
                     DispatchQueue.main.async {
-                        self.detailWaitView.updateLayoutWithData(room: roomInfo)
+                        self.detailWaitView.configureLayout(room: roomInfo)
                     }
 //                    self.room = roomInfo
 //                    self.userArr = participants.membersNickname
@@ -489,24 +489,3 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
 }
-
-//extension DetailWaitViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 44
-//    }
-//}
-//
-//extension DetailWaitViewController: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return self.userArr.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = self.listTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
-//        cell.textLabel?.text = self.userArr[indexPath.row]
-//        cell.textLabel?.font = .font(.regular, ofSize: 17)
-//        cell.backgroundColor = .darkGrey003
-//        cell.selectionStyle = .none
-//        return cell
-//    }
-//}
