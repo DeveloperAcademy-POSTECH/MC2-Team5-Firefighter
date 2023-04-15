@@ -246,106 +246,34 @@ final class DetailWaitViewController: BaseViewController {
 //        self.navigationItem.rightBarButtonItem = settingButton
 //    }
 
-//    private func setExitButtonMenu() -> UIMenu {
-//        let children: [UIAction] = memberType == .owner
-//        ? [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
-//            self?.presentEditRoomView()
-//        }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-//               self?.makeRequestAlert(title: UserStatus.owner.alertText.title,
-//                                      message: UserStatus.owner.alertText.message,
-//                                      okTitle: UserStatus.owner.alertText.okTitle,
-//                                      okAction: { _ in
-//                   self?.requestDeleteRoom()
-//
-//               })
-//
-//        })
-//        ]
-//        : [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-//            self?.makeRequestAlert(title: UserStatus.member.alertText.title,
-//                                   message: UserStatus.member.alertText.message,
-//                                   okTitle: UserStatus.member.alertText.okTitle,
-//                                   okAction: { _ in
-//                self?.requestDeleteLeaveRoom()
-//            })
-//        })]
-//        let menu = UIMenu(children: children)
-//        return menu
-//    }
-
-//    private func presentEditRoomView() {
+    private func presentEditRoomView() {
 //        guard let roomInformation = self.room?.roomInformation else { return }
 //        if roomInformation.isAlreadyPastDate {
 //            self.editInfoFromDefaultDate(isDateEdit: false)
 //        } else {
 //            self.editInfoFromCurrentDate()
 //        }
-//    }
+    }
     
-//    private func editInfoFromDefaultDate(isDateEdit: Bool) {
+    private func editInfoFromDefaultDate(isDateEdit: Bool) {
 //        let fiveDaysInterval: TimeInterval = 86400 * 4
 //        let defaultStartDate = Date().dateToString
 //        let defaultEndDate = (Date() + fiveDaysInterval).dateToString
 //        self.presentDetailEditViewController(startString: defaultStartDate,
 //                                             endString: defaultEndDate,
 //                                             isDateEdit: isDateEdit)
-//    }
+    }
     
-//    private func editInfoFromCurrentDate() {
+    private func editInfoFromCurrentDate() {
 //        guard let startDate = self.room?.roomInformation?.startDate,
 //              let endDate = self.room?.roomInformation?.endDate else { return }
 //        self.presentDetailEditViewController(startString: startDate,
 //                                             endString: endDate,
 //                                             isDateEdit: false)
-//    }
+    }
 
 //    private func setupNotificationCenter() {
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
-//    }
-
-//    private func isPastStartDate() {
-//        guard let isStart = self.room?.roomInformation?.isStart else { return }
-//        if !isStart {
-//            switch memberType {
-//            case .owner:
-//                let action: ((UIAlertAction) -> ()) = { [weak self] _ in
-//                    self?.editInfoFromDefaultDate(isDateEdit: true)
-//                }
-//                self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-//                          message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
-//                          okAction: action)
-//            case .member:
-//                self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-//                          message: TextLiteral.detailWaitViewControllerPastAlertMessage)
-//            }
-//        }
-//    }
-
-//    private func setStartButton() {
-//        if memberType == .owner {
-//            guard let canStart = self.room?.canStart else { return }
-//            self.detectStartableStatus?(canStart)
-//        } else {
-//            self.detectStartableStatus?(false)
-//        }
-//    }
-    
-//    private func setupLayoutTableView() {
-//        DispatchQueue.main.async {
-//            self.listTableView.reloadData()
-//            self.view.addSubview(self.listTableView)
-//            var tableHeight = self.userArr.count * 44
-//            if tableHeight > 400 {
-//                tableHeight = 400
-//                self.listTableView.isScrollEnabled = true
-//            }
-//            self.listTableView.snp.makeConstraints {
-//                $0.top.equalTo(self.togetherFriendLabel.snp.bottom).offset(30)
-//                $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-//                $0.centerX.equalToSuperview()
-//                $0.height.equalTo(tableHeight)
-//            }
-//        }
 //    }
     
 //    private func setupTitleViewGesture() {
@@ -407,25 +335,9 @@ final class DetailWaitViewController: BaseViewController {
             do {
                 let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
-//                    guard let title = roomInfo.roomInformation?.title,
-//                          let state = roomInfo.roomInformation?.state,
-//                          let participants = roomInfo.participants,
-//                          let isAdmin = roomInfo.admin else { return }
                     DispatchQueue.main.async {
                         self.detailWaitView.configureLayout(room: roomInfo)
                     }
-//                    self.room = roomInfo
-//                    self.userArr = participants.membersNickname
-//                    self.memberType = isAdmin ? .owner : .member
-//                    self.roomInfo = roomInfo.roomDTO
-//                    self.setStartButton()
-//                    DispatchQueue.main.async {
-//                        self.isPastStartDate()
-//                        self.titleView.setStartState(state: state)
-//                        self.userCountLabel.text = roomInfo.userCount
-//                        self.titleView.setRoomTitleLabelText(text: title)
-//                        self.titleView.setDurationDateLabel(text: roomInfo.roomInformation?.dateRange ?? "")
-//                    }
                 }
             } catch NetworkError.serverError {
                 print("server Error")
