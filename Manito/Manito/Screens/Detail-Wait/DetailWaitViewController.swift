@@ -10,120 +10,15 @@ import UIKit
 import SnapKit
 
 final class DetailWaitViewController: BaseViewController {
-
-//    private enum UserStatus: CaseIterable {
-//        case owner
-//        case member
-//
-//        var alertText: (title: String,
-//                        message: String,
-//                        okTitle: String) {
-//            switch self {
-//            case .owner:
-//                return (title: TextLiteral.datailWaitViewControllerDeleteTitle,
-//                        message: TextLiteral.datailWaitViewControllerDeleteMessage,
-//                        okTitle: TextLiteral.delete)
-//            case .member:
-//                return (title: TextLiteral.datailWaitViewControllerExitTitle,
-//                        message: TextLiteral.datailWaitViewControllerExitMessage,
-//                        okTitle: TextLiteral.leave)
-//            }
-//        }
-//    }
-//
-//    private enum ButtonText: String {
-//        case waiting
-//        case start
-//
-//        var status: String {
-//            switch self {
-//            case .waiting:
-//                return TextLiteral.datailWaitViewControllerButtonWaitingText
-//            case .start:
-//                return TextLiteral.datailWaitViewControllerButtonStartText
-//            }
-//        }
-//    }
-
+    
     // MARK: - ui component
     
     private let detailWaitView = DetailWaitView()
-
-//    private let moreButton: UIButton = {
-//        let button = MoreButton()
-//        button.showsMenuAsPrimaryAction = true
-//        return button
-//    }()
-//    private let titleView: DetailWaitTitleView = DetailWaitTitleView()
-//    private let togetherFriendLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = TextLiteral.togetherFriend
-//        label.textColor = .white
-//        label.font = .font(.regular, ofSize: 16)
-//        return label
-//    }()
-//    private let imgNiView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.image = ImageLiterals.imgNi
-//        return imageView
-//    }()
-//    private let userCountLabel: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .white
-//        label.font = .font(.regular, ofSize: 14)
-//        return label
-//    }()
-//    private let copyButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle(TextLiteral.copyCode, for: .normal)
-//        button.setTitleColor(.subBlue, for: .normal)
-//        button.titleLabel?.font = .font(.regular, ofSize: 16)
-//        return button
-//    }()
-//    private let listTableView: UITableView = {
-//        let tableView = UITableView()
-//        tableView.layer.cornerRadius = 10
-//        tableView.isScrollEnabled = false
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-//        return tableView
-//    }()
-//    private lazy var startButton: UIButton = {
-//        let button = MainButton()
-//        self.detectStartableStatus = { value in
-//            if value {
-//                button.title = ButtonText.start.status
-//                button.isDisabled = false
-//                let action = UIAction { [weak self] _ in
-//                    self?.requestStartManitto()
-//                }
-//                button.addAction(action, for: .touchUpInside)
-//            } else {
-//                button.title = ButtonText.waiting.status
-//                button.isDisabled = true
-//            }
-//        }
-//        return button
-//    }()
     
     // MARK: - property
     
-//    private var room: Room?
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     private let roomIndex: Int
-//    var roomInformation: ParticipatingRoom?
-//    private var roomInfo: RoomDTO?
-//    private var userArr: [String] = [] {
-//        didSet {
-//            self.setupLayoutTableView()
-//        }
-//    }
-//    private var detectStartableStatus: ((Bool) -> ())?
-//    private var memberType = UserStatus.member {
-//        didSet {
-//            self.moreButton.menu = self.setExitButtonMenu()
-//            self.setupTitleViewGesture()
-//        }
-//    }
 
     // MARK: - init
     
@@ -151,59 +46,8 @@ final class DetailWaitViewController: BaseViewController {
         self.requestWaitRoomInfo()
         self.configureDelegation()
         self.configureNavigationController()
-//        self.setupDelegation()
-//        self.setupNotificationCenter()
-//        self.setupCopyButton()
     }
     
-    // MARK: - override
-
-//    override func setupLayout() {
-//        self.view.addSubview(self.titleView)
-//        self.titleView.snp.makeConstraints {
-//            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-//            $0.top.equalToSuperview().offset(100)
-//            $0.height.equalTo(86)
-//        }
-//
-//        self.view.addSubview(self.togetherFriendLabel)
-//        self.togetherFriendLabel.snp.makeConstraints {
-//            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
-//            $0.top.equalTo(titleView.snp.bottom).offset(44)
-//        }
-//
-//        self.view.addSubview(self.imgNiView)
-//        self.imgNiView.snp.makeConstraints {
-//            $0.centerY.equalTo(self.togetherFriendLabel.snp.centerY)
-//            $0.leading.equalTo(self.togetherFriendLabel.snp.trailing).offset(7)
-//            $0.width.height.equalTo(30)
-//        }
-//
-//        self.view.addSubview(self.userCountLabel)
-//        self.userCountLabel.snp.makeConstraints {
-//            $0.leading.equalTo(self.imgNiView.snp.trailing)
-//            $0.centerY.equalTo(self.imgNiView.snp.centerY)
-//        }
-//
-//        self.view.addSubview(self.copyButton)
-//        self.copyButton.snp.makeConstraints {
-//            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-//            $0.centerY.equalTo(self.togetherFriendLabel.snp.centerY)
-//        }
-//
-//        self.view.addSubview(self.startButton)
-//        self.startButton.snp.makeConstraints {
-//            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-//            $0.bottom.equalToSuperview().inset(65)
-//            $0.height.equalTo(60)
-//        }
-//    }
-
-//    override func configureUI() {
-//        super.configureUI()
-//        self.setupSettingButton()
-//    }
-
     // MARK: - func
     
     private func configureDelegation() {
@@ -409,19 +253,19 @@ final class DetailWaitViewController: BaseViewController {
 
 extension DetailWaitViewController: DetailWaitViewDelegate {
     func startManitto() {
-        
+        print("startManitto")
     }
     
     func presentRoomEditViewController() {
-        
+        print("presentRoomEditViewController")
     }
     
     func deleteRoom() {
-        
+        print("deleteRoom")
     }
     
     func leaveRoom() {
-        
+        print("leaveRoom")
     }
     
     func showAlert(title: String, message: String) {
