@@ -41,9 +41,10 @@ struct Room: Decodable {
     
     var canStart: Bool {
         if let count = participants?.count,
-           let date = roomInformation?.startDate?.stringToDate {
+           let date = roomInformation?.startDate?.stringToDate,
+           let isAdmin = admin {
             let isMinimumUserCount = count >= 4
-            return isMinimumUserCount && date.isToday
+            return isMinimumUserCount && date.isToday && isAdmin
         } else {
             return false
         }
