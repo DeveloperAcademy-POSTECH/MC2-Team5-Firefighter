@@ -98,7 +98,6 @@ final class DetailWaitViewController: BaseViewController {
         viewController.modalPresentationStyle = .fullScreen
         viewController.manitteeName = nickname
         viewController.roomId = self.roomIndex.description
-//        viewController.roomId = self.roomInformation?.id?.description
         self.present(viewController, animated: true)
     }
     
@@ -159,13 +158,13 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
     
-    private func requestStartManitto() {
+    private func requestStartManitto(completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
         Task {
             do {
                 let data = try await self.detailWaitService.startManitto(roomId: "\(roomIndex)")
                 if let manittee = data {
                     guard let nickname = manittee.nickname else { return }
-                    self.presentSelectManittoViewController(nickname: nickname)
+                    completionHandler(.success(nickname))
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -214,7 +213,15 @@ final class DetailWaitViewController: BaseViewController {
 
 extension DetailWaitViewController: DetailWaitViewDelegate {
     func startManitto() {
-        print("startManitto")
+        self.requestStartManitto() { [weak self] result in
+            switch result {
+            case .success(let nickname):
+                self?.presentSelectManittoViewController(nickname: nickname)
+            case .failure:
+                // FIXME: - ERROR 추가
+                self?.makeAlert(title: "error")
+            }
+        }
     }
     
     func presentRoomEditViewController(room: Room, _ isOnlyDateEdit: Bool) {

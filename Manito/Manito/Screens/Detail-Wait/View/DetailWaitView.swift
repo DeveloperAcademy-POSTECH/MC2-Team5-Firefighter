@@ -10,15 +10,10 @@ import UIKit
 import SnapKit
 
 protocol DetailWaitViewDelegate: AnyObject {
-    // 마니또 시작
     func startManitto()
-    // 방 정보 수정 뷰로 이동
     func presentRoomEditViewController(room: Room, _ isOnlyDateEdit: Bool)
-    // 방 삭제
     func deleteRoom(title: String, message: String, okTitle: String)
-    // 방 나가기
     func leaveRoom()
-    // 시작 날짜 지남 alert 표시
     func presentEditViewControllerAfterShowAlert(room: Room)
     func showAlert(title: String, message: String)
 }
@@ -114,7 +109,7 @@ final class DetailWaitView: UIView {
     }
     private var canStart: Bool = false {
         didSet {
-            self.setStartButton(self.canStart)
+            self.configureStartButton(self.canStart)
         }
     }
     
@@ -241,14 +236,12 @@ final class DetailWaitView: UIView {
         self.startButton.isHidden = !isOwner
     }
     
-    // FIXME: - configureStartButton이 더 났나?
-    private func setStartButton(_ canStart: Bool) {
+    private func configureStartButton(_ canStart: Bool) {
         if canStart {
             self.startButton.title = ButtonText.start.status
             self.startButton.isDisabled = false
             let action = UIAction { [weak self] _ in
                 self?.delegate?.startManitto()
-//                self?.requestStartManitto()
             }
             self.startButton.addAction(action, for: .touchUpInside)
         } else {
