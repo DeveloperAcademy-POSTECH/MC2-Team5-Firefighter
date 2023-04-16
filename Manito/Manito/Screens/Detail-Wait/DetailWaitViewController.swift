@@ -2,7 +2,7 @@
 //  DetailWaitViewController.swift
 //  Manito
 //
-//  Created by SHIN YOON AH on 2022/06/09.
+//  Created by Mingwan Choi on 2023/04/15.
 //
 
 import UIKit
@@ -19,7 +19,7 @@ final class DetailWaitViewController: BaseViewController {
     
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     private let roomIndex: Int
-
+    
     // MARK: - init
     
     init(index: Int) {
@@ -40,7 +40,7 @@ final class DetailWaitViewController: BaseViewController {
     override func loadView() {
         self.view = self.detailWaitView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.requestWaitRoomInfo()
@@ -81,17 +81,17 @@ final class DetailWaitViewController: BaseViewController {
         guard let startDate = startDate.stringToDate else { return false }
         return startDate.isPast()
     }
-
-//    private func setupNotificationCenter() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
-//    }
     
-//    private func setupTitleViewGesture() {
-//        if self.memberType == .owner {
-//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.presentEditViewController))
-//            self.titleView.addGestureRecognizer(tapGesture)
-//        }
-//    }
+    //    private func setupNotificationCenter() {
+    //        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
+    //    }
+    
+    //    private func setupTitleViewGesture() {
+    //        if self.memberType == .owner {
+    //            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.presentEditViewController))
+    //            self.titleView.addGestureRecognizer(tapGesture)
+    //        }
+    //    }
     
     private func presentSelectManittoViewController(nickname: String) {
         let viewController = SelectManittoViewController()
@@ -105,37 +105,37 @@ final class DetailWaitViewController: BaseViewController {
         guard let navigationController = self.navigationController else { return }
         self.detailWaitView.configureNavigationItem(navigationController)
     }
-
+    
     // MARK: - selector
     
-//    @objc
-//    private func didTapEnterButton() {
-//        guard let roomInfo = self.roomInfo,
-//              let code = self.room?.invitation?.code else { return }
-//        let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
-//                                                             capacity: roomInfo.capacity,
-//                                                             startDate: roomInfo.startDate,
-//                                                             endDate: roomInfo.endDate),
-//                                                       code: code)
-//        viewController.roomInfo = roomInfo
-//        viewController.modalPresentationStyle = .overCurrentContext
-//        viewController.modalTransitionStyle = .crossDissolve
-//        self.present(viewController, animated: true)
-//    }
+    //    @objc
+    //    private func didTapEnterButton() {
+    //        guard let roomInfo = self.roomInfo,
+    //              let code = self.room?.invitation?.code else { return }
+    //        let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
+    //                                                             capacity: roomInfo.capacity,
+    //                                                             startDate: roomInfo.startDate,
+    //                                                             endDate: roomInfo.endDate),
+    //                                                       code: code)
+    //        viewController.roomInfo = roomInfo
+    //        viewController.modalPresentationStyle = .overCurrentContext
+    //        viewController.modalTransitionStyle = .crossDissolve
+    //        self.present(viewController, animated: true)
+    //    }
     
-//    @objc
-//    private func presentEditViewController() {
-//        guard let startDate = self.room?.roomInformation?.startDate,
-//              let endDate = self.room?.roomInformation?.endDate else { return }
-//        self.presentDetailEditViewController(startString: startDate,
-//                                             endString: endDate,
-//                                             isDateEdit: false)
-//    }
+    //    @objc
+    //    private func presentEditViewController() {
+    //        guard let startDate = self.room?.roomInformation?.startDate,
+    //              let endDate = self.room?.roomInformation?.endDate else { return }
+    //        self.presentDetailEditViewController(startString: startDate,
+    //                                             endString: endDate,
+    //                                             isDateEdit: false)
+    //    }
     
-//    @objc
-//    private func changeStartButton() {
-//        self.setStartButton()
-//    }
+    //    @objc
+    //    private func changeStartButton() {
+    //        self.setStartButton()
+    //    }
     
     // MARK: - network
     

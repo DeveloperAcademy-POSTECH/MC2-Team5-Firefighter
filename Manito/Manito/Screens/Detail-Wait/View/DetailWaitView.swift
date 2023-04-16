@@ -22,7 +22,7 @@ final class DetailWaitView: UIView {
     private enum UserStatus: CaseIterable {
         case owner
         case member
-
+        
         var alertText: (title: String,
                         message: String,
                         okTitle: String) {
@@ -38,7 +38,7 @@ final class DetailWaitView: UIView {
             }
         }
     }
-
+    
     private enum ButtonText: String {
         case waiting
         case start
@@ -137,26 +137,26 @@ final class DetailWaitView: UIView {
             $0.top.equalToSuperview().offset(100)
             $0.height.equalTo(86)
         }
-
+        
         self.addSubview(self.togetherFriendLabel)
         self.togetherFriendLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
-
+        
         self.addSubview(self.imgNiView)
         self.imgNiView.snp.makeConstraints {
             $0.centerY.equalTo(self.togetherFriendLabel.snp.centerY)
             $0.leading.equalTo(self.togetherFriendLabel.snp.trailing).offset(7)
             $0.width.height.equalTo(30)
         }
-
+        
         self.addSubview(self.userCountLabel)
         self.userCountLabel.snp.makeConstraints {
             $0.leading.equalTo(self.imgNiView.snp.trailing)
             $0.centerY.equalTo(self.imgNiView.snp.centerY)
         }
-
+        
         self.addSubview(self.copyButton)
         self.copyButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
@@ -170,7 +170,7 @@ final class DetailWaitView: UIView {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(44)
         }
-
+        
         self.addSubview(self.startButton)
         self.startButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
@@ -264,16 +264,10 @@ final class DetailWaitView: UIView {
             ]
         } else {
             children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-//                viewController.makeRequestAlert(title: UserStatus.member.alertText.title,
-//                                       message: UserStatus.member.alertText.message,
-//                                       okTitle: UserStatus.member.alertText.okTitle,
-//                                       okAction: { _ in
                 self?.delegate?.leaveRoom(title: UserStatus.member.alertText.title,
                                           message: UserStatus.member.alertText.message,
                                           okTitle: UserStatus.member.alertText.okTitle
                 )
-    //                self?.requestDeleteLeaveRoom()
-//                })
             })]
         }
         let menu = UIMenu(children: children)
@@ -305,7 +299,7 @@ extension DetailWaitView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.userArray.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.listTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
         cell.textLabel?.text = self.userArray[indexPath.row].nickname
