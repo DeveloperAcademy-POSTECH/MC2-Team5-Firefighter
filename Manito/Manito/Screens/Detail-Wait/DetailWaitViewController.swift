@@ -282,6 +282,13 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         print("leaveRoom")
     }
     
+    func presentEditViewControllerAfterShowAlert(room: Room) {
+        self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                       message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
+                       okAction: { _ in self.presentDetailEditViewController(room: room, true) }
+        )
+    }
+    
     func showAlert(title: String, message: String) {
         self.makeAlert(title: title, message: message)
     }

@@ -19,6 +19,7 @@ protocol DetailWaitViewDelegate: AnyObject {
     // 방 나가기
     func leaveRoom()
     // 시작 날짜 지남 alert 표시
+    func presentEditViewControllerAfterShowAlert(room: Room)
     func showAlert(title: String, message: String)
 }
 
@@ -286,14 +287,8 @@ final class DetailWaitView: UIView {
         if !isStart {
             switch type {
             case .owner:
-                print("")
-//                self.delegate?.presentRoomEditViewController()
-//                let action: ((UIAlertAction) -> ()) = { [weak self] _ in
-//                    self?.editInfoFromDefaultDate(isDateEdit: true)
-//                }
-//                viewController.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-//                               message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
-//                               okAction: action)
+                guard let roomInformation = self.roomInformation else { return }
+                self.delegate?.presentEditViewControllerAfterShowAlert(room: roomInformation)
             case .member:
                 self.delegate?.showAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                                          message: TextLiteral.detailWaitViewControllerPastAlertMessage)
