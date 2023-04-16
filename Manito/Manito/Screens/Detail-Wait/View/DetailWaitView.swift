@@ -13,7 +13,7 @@ protocol DetailWaitViewDelegate: AnyObject {
     func startManitto()
     func presentRoomEditViewController(room: Room, _ isOnlyDateEdit: Bool)
     func deleteRoom(title: String, message: String, okTitle: String)
-    func leaveRoom()
+    func leaveRoom(title: String, message: String, okTitle: String)
     func presentEditViewControllerAfterShowAlert(room: Room)
     func showAlert(title: String, message: String)
 }
@@ -268,7 +268,10 @@ final class DetailWaitView: UIView {
 //                                       message: UserStatus.member.alertText.message,
 //                                       okTitle: UserStatus.member.alertText.okTitle,
 //                                       okAction: { _ in
-                self?.delegate?.leaveRoom()
+                self?.delegate?.leaveRoom(title: UserStatus.member.alertText.title,
+                                          message: UserStatus.member.alertText.message,
+                                          okTitle: UserStatus.member.alertText.okTitle
+                )
     //                self?.requestDeleteLeaveRoom()
 //                })
             })]

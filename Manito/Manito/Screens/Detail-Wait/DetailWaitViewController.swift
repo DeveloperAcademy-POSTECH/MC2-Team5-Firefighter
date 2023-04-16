@@ -243,15 +243,19 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         })
     }
     
-    func leaveRoom() {
-        self.requestDeleteLeaveRoom() { [weak self] result in
-            switch result {
-            case .success:
-                self?.navigationController?.popViewController(animated: true)
-            case .failure:
-                self?.makeAlert(title: "error")
+    func leaveRoom(title: String, message: String, okTitle: String) {
+        self.makeRequestAlert(title: title,
+                              message: message,
+                              okAction: { [weak self] _ in
+            self?.requestDeleteLeaveRoom() { result in
+                switch result {
+                case .success:
+                    self?.navigationController?.popViewController(animated: true)
+                case .failure:
+                    self?.makeAlert(title: "error")
+                }
             }
-        }
+        })
     }
     
     func presentEditViewControllerAfterShowAlert(room: Room) {
