@@ -167,11 +167,9 @@ final class DetailWaitViewController: BaseViewController {
                     completionHandler(.success(nickname))
                 }
             } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
+                completionHandler(.failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
+                completionHandler(.failure(.clientError(message: message)))
             }
         }
     }
