@@ -53,22 +53,6 @@ final class DetailWaitViewController: BaseViewController {
     private func configureDelegation() {
         self.detailWaitView.configureDelegation(self)
     }
-
-//    private func setupDelegation() {
-//        self.listTableView.delegate = self
-//        self.listTableView.dataSource = self
-//    }
-    
-//    private func setupCopyButton() {
-//        let action = UIAction { [weak self] _ in
-//            if let code = self?.room?.invitation?.code {
-//                ToastView.showToast(code: code,
-//                                    message: TextLiteral.detailWaitViewControllerCopyCode,
-//                                    controller: self ?? UIViewController())
-//            }
-//        }
-//        copyButton.addAction(action, for: .touchUpInside)
-//    }
     
     private func presentDetailEditViewController(room: Room, _ isOnlyDateEdit: Bool) {
         guard let index = room.roomInformation?.id,

@@ -102,6 +102,8 @@ final class DetailWaitView: UIView {
     }()
     private let startButton: MainButton = MainButton()
     
+    // MARK: - property
+    
     private var userArray: [User] = [] {
         didSet {
             DispatchQueue.main.async {
