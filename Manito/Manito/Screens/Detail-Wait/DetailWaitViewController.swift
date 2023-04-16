@@ -80,45 +80,22 @@ final class DetailWaitViewController: BaseViewController {
         let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
                                                       roomIndex: index,
                                                       title: title)
-        viewController.startDateText = startDate
-        viewController.endDateText = endDate
+        if self.checkStartDateIsPast(startDate) {
+            let fiveDaysInterval: TimeInterval = 86400 * 4
+            viewController.startDateText = Date().dateToString
+            viewController.endDateText = (Date() + fiveDaysInterval).dateToString
+        } else {
+            viewController.startDateText = startDate
+            viewController.endDateText = endDate
+        }
         viewController.currentUserCount = currentUserCount
         viewController.sliderValue = capacity
         self.present(viewController, animated: true)
     }
-
-//    private func setupSettingButton() {
-//        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: moreButton,
-//                                                                       offsetX: -10)
-//        let settingButton = super.makeBarButtonItem(with: rightOffsetSettingButton)
-//
-//        self.navigationItem.rightBarButtonItem = settingButton
-//    }
-
-    private func presentEditRoomView() {
-//        guard let roomInformation = self.room?.roomInformation else { return }
-//        if roomInformation.isAlreadyPastDate {
-//            self.editInfoFromDefaultDate(isDateEdit: false)
-//        } else {
-//            self.editInfoFromCurrentDate()
-//        }
-    }
     
-    private func editInfoFromDefaultDate(isDateEdit: Bool) {
-//        let fiveDaysInterval: TimeInterval = 86400 * 4
-//        let defaultStartDate = Date().dateToString
-//        let defaultEndDate = (Date() + fiveDaysInterval).dateToString
-//        self.presentDetailEditViewController(startString: defaultStartDate,
-//                                             endString: defaultEndDate,
-//                                             isDateEdit: isDateEdit)
-    }
-    
-    private func editInfoFromCurrentDate() {
-//        guard let startDate = self.room?.roomInformation?.startDate,
-//              let endDate = self.room?.roomInformation?.endDate else { return }
-//        self.presentDetailEditViewController(startString: startDate,
-//                                             endString: endDate,
-//                                             isDateEdit: false)
+    private func checkStartDateIsPast(_ startDate: String) -> Bool {
+        guard let startDate = startDate.stringToDate else { return false }
+        return startDate.isPast()
     }
 
 //    private func setupNotificationCenter() {
