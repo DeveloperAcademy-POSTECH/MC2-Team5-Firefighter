@@ -86,13 +86,6 @@ final class DetailWaitViewController: BaseViewController {
     //        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
     //    }
     
-    //    private func setupTitleViewGesture() {
-    //        if self.memberType == .owner {
-    //            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.presentEditViewController))
-    //            self.titleView.addGestureRecognizer(tapGesture)
-    //        }
-    //    }
-    
     private func presentSelectManittoViewController(nickname: String) {
         let viewController = SelectManittoViewController()
         viewController.modalPresentationStyle = .fullScreen
@@ -121,20 +114,6 @@ final class DetailWaitViewController: BaseViewController {
     //        viewController.modalPresentationStyle = .overCurrentContext
     //        viewController.modalTransitionStyle = .crossDissolve
     //        self.present(viewController, animated: true)
-    //    }
-    
-//        @objc
-//        private func presentEditViewController() {
-//            guard let startDate = self.room?.roomInformation?.startDate,
-//                  let endDate = self.room?.roomInformation?.endDate else { return }
-//            self.presentDetailEditViewController(startString: startDate,
-//                                                 endString: endDate,
-//                                                 isDateEdit: false)
-//        }
-    
-    //    @objc
-    //    private func changeStartButton() {
-    //        self.setStartButton()
     //    }
     
     // MARK: - network
