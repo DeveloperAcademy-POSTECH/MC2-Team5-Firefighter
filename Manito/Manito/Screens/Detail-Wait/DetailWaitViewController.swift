@@ -216,19 +216,19 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
     
-    private func requestDeleteRoom() {
+    private func requestDeleteRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let status = try await self.detailWaitService.deleteRoom(roomId: "\(roomIndex)")
-                if status == 204 {
-                    self.navigationController?.popViewController(animated: true)
+                let statusCode = try await self.detailWaitService.deleteRoom(roomId: "\(roomIndex)")
+                switch statusCode {
+                case 200..<300: completionHandler(.success(()))
+                default:
+                    completionHandler(.failure(.unknownError))
                 }
             } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
+                completionHandler(.failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
+                completionHandler(.failure(.clientError(message: message)))
             }
         }
     }
@@ -256,12 +256,31 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         print("startManitto")
     }
     
-    func presentRoomEditViewController() {
-        print("presentRoomEditViewController")
+    func presentRoomEditViewController(title: String, message: String, okTitle: String) {
+        self.makeRequestAlert(title: title,
+                              message: message,
+                              okTitle: okTitle,
+                              okAction: { [weak self] _ in
+            print("presentRoomEditViewController")
+        })
     }
     
-    func deleteRoom() {
-        print("deleteRoom")
+    func deleteRoom(title: String, message: String, okTitle: String) {
+        self.makeRequestAlert(title: title,
+                              message: message,
+                              okTitle: okTitle,
+                              okAction: { [weak self] _ in
+            self?.requestDeleteRoom() { response in
+                guard let self else { return }
+                switch response {
+                case .success:
+                    self.navigationController?.popToViewController(self, animated: true)
+                case .failure:
+                    // FIXME: - 에러 메시지 추가
+                    self.makeAlert(title: "에러 메시지 표시하기")
+                }
+            }
+        })
     }
     
     func leaveRoom() {

@@ -13,9 +13,9 @@ protocol DetailWaitViewDelegate: AnyObject {
     // 마니또 시작
     func startManitto()
     // 방 정보 수정 뷰로 이동
-    func presentRoomEditViewController()
+    func presentRoomEditViewController(title: String, message: String, okTitle: String)
     // 방 삭제
-    func deleteRoom()
+    func deleteRoom(title: String, message: String, okTitle: String)
     // 방 나가기
     func leaveRoom()
     // 시작 날짜 지남 alert 표시
@@ -256,15 +256,19 @@ final class DetailWaitView: UIView {
         var children: [UIAction]
         if isOwner {
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
-                self?.delegate?.presentRoomEditViewController()
+                self?.delegate?.presentRoomEditViewController(title: UserStatus.owner.alertText.title,
+                                                              message: UserStatus.owner.alertText.message,
+                                                              okTitle: UserStatus.owner.alertText.okTitle)
     //            self?.presentEditRoomView()
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
+                self?.delegate?.deleteRoom(title: UserStatus.owner.alertText.title,
+                                                              message: UserStatus.owner.alertText.message,
+                                                              okTitle: UserStatus.owner.alertText.okTitle)
 //                viewController.makeRequestAlert(title: UserStatus.owner.alertText.title,
 //                                       message: UserStatus.owner.alertText.message,
 //                                       okTitle: UserStatus.owner.alertText.okTitle,
 //                                       okAction: { _ in
                     // FIXME: - delegate 연결
-                self?.delegate?.deleteRoom()
     //                self?.requestDeleteRoom()
 //                })
             })
@@ -289,7 +293,8 @@ final class DetailWaitView: UIView {
         if !isStart {
             switch type {
             case .owner:
-                self.delegate?.presentRoomEditViewController()
+                print("")
+//                self.delegate?.presentRoomEditViewController()
 //                let action: ((UIAlertAction) -> ()) = { [weak self] _ in
 //                    self?.editInfoFromDefaultDate(isDateEdit: true)
 //                }
