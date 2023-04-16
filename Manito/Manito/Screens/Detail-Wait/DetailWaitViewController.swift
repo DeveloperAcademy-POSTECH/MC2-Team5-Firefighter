@@ -195,8 +195,8 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
             case .success(let nickname):
                 self?.presentSelectManittoViewController(nickname: nickname)
             case .failure:
-                // FIXME: - ERROR 추가
-                self?.makeAlert(title: "error")
+                self?.makeAlert(title: TextLiteral.detailWaitViewControllerStartErrorTitle,
+                                message: TextLiteral.detailWaitViewControllerStartErrorMessage)
             }
         }
     }
@@ -215,8 +215,8 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                 case .success:
                     self?.navigationController?.popViewController(animated: true)
                 case .failure:
-                    // FIXME: - 에러 메시지 추가
-                    self?.makeAlert(title: "에러 메시지 표시하기")
+                    self?.makeAlert(title: TextLiteral.detailWaitViewControllerDeleteErrorTitle,
+                                    message: TextLiteral.detailWaitViewControllerDeleteErrorMessage)
                 }
             }
         })
@@ -231,7 +231,8 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                 case .success:
                     self?.navigationController?.popViewController(animated: true)
                 case .failure:
-                    self?.makeAlert(title: "error")
+                    self?.makeAlert(title: TextLiteral.detailWaitViewControllerLeaveErrorTitle,
+                                    message: TextLiteral.detailWaitViewControllerLeaveErrorMessage)
                 }
             }
         })
