@@ -69,23 +69,23 @@ final class DetailWaitViewController: BaseViewController {
 //        }
 //        copyButton.addAction(action, for: .touchUpInside)
 //    }
-
-//    private func presentDetailEditViewController(startString: String, endString: String, isDateEdit: Bool) {
-//        guard let title = self.titleView.roomTitleLabel.text else { return }
-//        let viewController = DetailEditViewController(editMode: isDateEdit ? .date : .information,
-//                                                      roomIndex: roomIndex,
-//                                                      title: title)
-//        viewController.didTappedChangeButton = { [weak self] in
-//            self?.requestWaitRoomInfo()
-//        }
-//        guard let userCount = room?.participants?.count,
-//              let capacity = room?.roomInformation?.capacity else { return }
-//        viewController.currentUserCount = userCount
-//        viewController.sliderValue = capacity
-//        viewController.startDateText = startString
-//        viewController.endDateText = endString
-//        self.present(viewController, animated: true, completion: nil)
-//    }
+    
+    private func presentDetailEditViewController(room: Room, _ isOnlyDateEdit: Bool) {
+        guard let index = room.roomInformation?.id,
+              let title = room.roomInformation?.title,
+              let startDate = room.roomInformation?.startDate,
+              let endDate = room.roomInformation?.endDate,
+              let currentUserCount = room.participants?.count,
+              let capacity = room.roomInformation?.capacity else { return}
+        let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
+                                                      roomIndex: index,
+                                                      title: title)
+        viewController.startDateText = startDate
+        viewController.endDateText = endDate
+        viewController.currentUserCount = currentUserCount
+        viewController.sliderValue = capacity
+        self.present(viewController, animated: true)
+    }
 
 //    private func setupSettingButton() {
 //        let rightOffsetSettingButton = super.removeBarButtonItemOffset(with: moreButton,
@@ -256,13 +256,8 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         print("startManitto")
     }
     
-    func presentRoomEditViewController(title: String, message: String, okTitle: String) {
-        self.makeRequestAlert(title: title,
-                              message: message,
-                              okTitle: okTitle,
-                              okAction: { [weak self] _ in
-            print("presentRoomEditViewController")
-        })
+    func presentRoomEditViewController(room: Room, _ isOnlyDateEdit: Bool) {
+        self.presentDetailEditViewController(room: room, isOnlyDateEdit)
     }
     
     func deleteRoom(title: String, message: String, okTitle: String) {
