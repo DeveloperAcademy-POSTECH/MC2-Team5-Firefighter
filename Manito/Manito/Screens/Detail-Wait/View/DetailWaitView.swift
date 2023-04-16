@@ -219,6 +219,7 @@ final class DetailWaitView: UIView {
         self.setExitButtonMenu(isOwner)
         self.setupCopyButton(code)
         self.showAlertWhenPastDate(isOwner, isStart: isStart)
+        self.setupTitleViewGesture(isOwner)
     }
     
     private func updateTableViewHeight() {
@@ -286,6 +287,21 @@ final class DetailWaitView: UIView {
                                          message: TextLiteral.detailWaitViewControllerPastAlertMessage)
             }
         }
+    }
+    
+    private func setupTitleViewGesture(_ isOwner: Bool) {
+        if isOwner {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.presentEditViewController))
+            self.titleView.addGestureRecognizer(tapGesture)
+        }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func presentEditViewController() {
+        guard let roomInformation = self.roomInformation else { return }
+        self.delegate?.presentRoomEditViewController(room: roomInformation, false)
     }
 }
 

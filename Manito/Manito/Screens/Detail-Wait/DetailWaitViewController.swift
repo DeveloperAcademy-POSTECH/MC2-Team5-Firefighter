@@ -123,14 +123,14 @@ final class DetailWaitViewController: BaseViewController {
     //        self.present(viewController, animated: true)
     //    }
     
-    //    @objc
-    //    private func presentEditViewController() {
-    //        guard let startDate = self.room?.roomInformation?.startDate,
-    //              let endDate = self.room?.roomInformation?.endDate else { return }
-    //        self.presentDetailEditViewController(startString: startDate,
-    //                                             endString: endDate,
-    //                                             isDateEdit: false)
-    //    }
+//        @objc
+//        private func presentEditViewController() {
+//            guard let startDate = self.room?.roomInformation?.startDate,
+//                  let endDate = self.room?.roomInformation?.endDate else { return }
+//            self.presentDetailEditViewController(startString: startDate,
+//                                                 endString: endDate,
+//                                                 isDateEdit: false)
+//        }
     
     //    @objc
     //    private func changeStartButton() {
