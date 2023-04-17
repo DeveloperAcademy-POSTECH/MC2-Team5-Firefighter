@@ -30,15 +30,15 @@ final class OpenManittoCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureUI() {
-        self.makeBorderLayer(color: .white)
-        self.layer.cornerRadius = self.frame.size.width / 2
+        self.contentView.makeBorderLayer(color: .white)
+        self.contentView.layer.cornerRadius = self.frame.size.width / 2
     }
     
     // MARK: - func
     
     func configureCell(colorIndex: Int) {
-        self.backgroundColor = Character.allCases[colorIndex].color.withAlphaComponent(0.5)
         self.characterImageView.image = Character.allCases[colorIndex].image
+        self.contentView.backgroundColor = Character.allCases[colorIndex].color
         self.contentView.alpha = 0.5
     }
     
