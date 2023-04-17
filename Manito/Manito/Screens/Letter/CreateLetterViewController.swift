@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CreateLetterViewControllerDelegate: AnyObject {
+    func refreshLetterData()
+}
+
 final class CreateLetterViewController: BaseViewController {
 
     typealias AlertAction = ((UIAlertAction) -> ())
@@ -21,9 +25,9 @@ final class CreateLetterViewController: BaseViewController {
     private let mission: String
     private let manitteeId: String
     private let roomId: String
-    var missionId: String
+    private let missionId: String
 
-    var succeedInSendingLetter: (() -> Void)?
+    private weak var delegate: CreateLetterViewControllerDelegate?
 
     // MARK: - init
     
@@ -72,6 +76,10 @@ final class CreateLetterViewController: BaseViewController {
         self.createLetterView.configureNavigationBar(navigationController)
         self.createLetterView.configureNavigationItem(navigationController)
     }
+
+    func configureDelegation(_ delegate: CreateLetterViewControllerDelegate) {
+        self.delegate = delegate
+    }
     
     // MARK: - network
 
@@ -119,7 +127,7 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
             DispatchQueue.main.async {
                 switch response {
                 case .success:
-                    self?.succeedInSendingLetter?()
+                    self?.delegate?.refreshLetterData()
                     self?.dismiss(animated: true)
                 case .failure:
                     self?.createLetterView.sending = false

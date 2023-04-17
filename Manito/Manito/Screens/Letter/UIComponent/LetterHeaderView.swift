@@ -9,6 +9,10 @@ import UIKit
 
 import SnapKit
 
+protocol LetterHeaderViewDelegate: AnyObject {
+    func selectedSegmentIndexDidChange(index: Int)
+}
+
 final class LetterHeaderView: UICollectionReusableView {
     
     // MARK: - ui component
@@ -30,14 +34,7 @@ final class LetterHeaderView: UICollectionReusableView {
 
     // MARK: - property
 
-    var selectedSegmentIndexDidChange: ((_ changedIndex: Int) -> ())?
-    
-    private var segmentedControlIndex: Int = 0 {
-        didSet {
-            self.segmentedControl.selectedSegmentIndex = self.segmentedControlIndex
-        }
-    }
-
+    private weak var delegate: LetterHeaderViewDelegate?
     
     // MARK: - init
     
@@ -45,6 +42,7 @@ final class LetterHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         self.setupLayout()
         self.configureUI()
+        self.setupSelectedSegmentIndex()
         self.setupAction()
     }
     
@@ -67,6 +65,11 @@ final class LetterHeaderView: UICollectionReusableView {
         self.backgroundColor = .backgroundGrey
     }
 
+    // TODO: - type으로 바뀌도록 수정
+    private func setupSelectedSegmentIndex() {
+        self.segmentedControl.selectedSegmentIndex = 0
+    }
+
     private func setupAction() {
         let valueChangedAction = UIAction { [weak self] action in
             guard let sender = action.sender as? UISegmentedControl else { return }
@@ -76,11 +79,11 @@ final class LetterHeaderView: UICollectionReusableView {
     }
 
     private func segmentedControlIndexValueChanged(_ segmentedControl: UISegmentedControl) {
-        self.segmentedControlIndex = segmentedControl.selectedSegmentIndex
-        self.selectedSegmentIndexDidChange?(self.segmentedControlIndex)
+        let selectedSegmentIndex = segmentedControl.selectedSegmentIndex
+        self.delegate?.selectedSegmentIndexDidChange(index: selectedSegmentIndex)
     }
 
-    func setSegmentedControlIndex(_ index: Int) {
-        self.segmentedControlIndex = index
+    func configureDelegation(_ delegate: LetterHeaderViewDelegate) {
+        self.delegate = delegate
     }
 }
