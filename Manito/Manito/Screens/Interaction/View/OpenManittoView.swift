@@ -128,7 +128,9 @@ final class OpenManittoView: UIView {
         }
     }
 
-    private func performOpenManittoAnimation(with deadline: DispatchTime, _ manittoIndex: Int, _ manittoNickname: String) {
+    private func performOpenManittoAnimation(with deadline: DispatchTime,
+                                             _ manittoIndex: Int,
+                                             _ manittoNickname: String) {
         DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
             self.randomIndex = manittoIndex
         })
