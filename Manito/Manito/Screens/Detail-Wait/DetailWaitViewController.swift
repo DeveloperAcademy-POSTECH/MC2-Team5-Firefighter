@@ -117,7 +117,7 @@ final class DetailWaitViewController: BaseViewController {
     private func requestWaitRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
         Task {
             do {
-                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
+                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
                 if let roomInfo = data {
                     self.roomInformation = roomInfo
                     completionHandler(.success(roomInfo))
@@ -133,7 +133,7 @@ final class DetailWaitViewController: BaseViewController {
     private func requestStartManitto(completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
         Task {
             do {
-                let data = try await self.detailWaitService.startManitto(roomId: "\(roomIndex)")
+                let data = try await self.detailWaitService.startManitto(roomId: self.roomIndex.description)
                 if let manittee = data {
                     guard let nickname = manittee.nickname else { return }
                     completionHandler(.success(nickname))
@@ -149,7 +149,7 @@ final class DetailWaitViewController: BaseViewController {
     private func requestDeleteRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let statusCode = try await self.detailWaitService.deleteRoom(roomId: "\(roomIndex)")
+                let statusCode = try await self.detailWaitService.deleteRoom(roomId: self.roomIndex.description)
                 switch statusCode {
                 case 200..<300: completionHandler(.success(()))
                 default:
@@ -167,7 +167,7 @@ final class DetailWaitViewController: BaseViewController {
     private func requestDeleteLeaveRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let statusCode = try await self.detailWaitService.deleteLeaveRoom(roomId: "\(roomIndex)")
+                let statusCode = try await self.detailWaitService.deleteLeaveRoom(roomId: self.roomIndex.description)
                 switch statusCode {
                 case 200..<300: completionHandler(.success(()))
                 default: completionHandler(.failure(.unknownError))
