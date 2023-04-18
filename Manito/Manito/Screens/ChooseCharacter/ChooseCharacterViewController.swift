@@ -181,7 +181,7 @@ class ChooseCharacterViewController: BaseViewController {
                     let roomId = try await roomService.postCreateRoom(body: room),
                     let navigationController = self.presentingViewController as? UINavigationController
                 else { return }
-                let viewController = DetailWaitViewController(index: roomId)
+                let viewController = DetailWaitViewController(roomIndex: roomId)
                 navigationController.popViewController(animated: true)
                 navigationController.pushViewController(viewController, animated: false)
                 
@@ -209,7 +209,7 @@ class ChooseCharacterViewController: BaseViewController {
                 if status == 201 {
                     guard let navigationController = self.presentingViewController as? UINavigationController else { return }
                     guard let id = self.roomId else { return }
-                    let viewController = DetailWaitViewController(index: id)
+                    let viewController = DetailWaitViewController(roomIndex: id)
                     self.dismiss(animated: true) {
                         navigationController.pushViewController(viewController, animated: true)
                     }
