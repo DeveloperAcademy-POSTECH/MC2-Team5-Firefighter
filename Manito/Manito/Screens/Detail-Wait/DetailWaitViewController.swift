@@ -85,10 +85,6 @@ final class DetailWaitViewController: BaseViewController {
         return startDate.isPast()
     }
     
-    //    private func setupNotificationCenter() {
-    //        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
-    //    }
-    
     private func presentSelectManittoViewController(nickname: String) {
         let viewController = SelectManittoViewController()
         viewController.modalPresentationStyle = .fullScreen

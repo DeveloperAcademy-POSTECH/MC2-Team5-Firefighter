@@ -113,7 +113,6 @@ final class DetailWaitView: UIView {
         }
     }
     
-//    private var roomInformation: Room?
     private weak var delegate: DetailWaitViewDelegate?
     
     // MARK: - init
@@ -200,7 +199,6 @@ final class DetailWaitView: UIView {
     }
     
     func configureLayout(room: Room) {
-//        self.roomInformation = room
         guard let title = room.roomInformation?.title,
               let state = room.roomInformation?.state,
               let dateRange = room.roomInformation?.dateRange,
