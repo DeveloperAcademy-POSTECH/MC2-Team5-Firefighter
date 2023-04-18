@@ -11,50 +11,42 @@ import SnapKit
 
 final class ManittoCollectionViewCell: BaseCollectionViewCell {
     
-    // MARK: - property
+    // MARK: - ui component
     
     private let characterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
-    // MARK: - init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
+    // MARK: - override
     
     override func setupLayout() {
-        contentView.addSubview(characterImageView)
-        characterImageView.snp.makeConstraints {
+        self.contentView.addSubview(self.characterImageView)
+        self.characterImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.width.height.equalTo(self.frame.size.width).multipliedBy(0.92)
         }
     }
     
     override func configureUI() {
-        makeBorderLayer(color: .white)
-        layer.cornerRadius = self.frame.size.width / 2
+        self.makeBorderLayer(color: .white)
+        self.layer.cornerRadius = self.frame.size.width / 2
     }
     
     // MARK: - func
     
     func setManittoCell(with manittoTypeIndex: Int) {
-        backgroundColor = Character.allCases[manittoTypeIndex].color.withAlphaComponent(0.5)
-        contentView.alpha = 0.5
-        characterImageView.image = Character.allCases[manittoTypeIndex].image
+        self.backgroundColor = Character.allCases[manittoTypeIndex].color.withAlphaComponent(0.5)
+        self.contentView.alpha = 0.5
+        self.characterImageView.image = Character.allCases[manittoTypeIndex].image
     }
     
     func setHighlightCell(with manittoTypeIndex: Int, matchIndex: Int, imageIndex: Int) {
         if manittoTypeIndex == matchIndex {
-            backgroundColor = Character.allCases[imageIndex].color
-            contentView.alpha = 1.0
-            characterImageView.image = Character.allCases[imageIndex].image
+            self.backgroundColor = Character.allCases[imageIndex].color
+            self.contentView.alpha = 1.0
+            self.characterImageView.image = Character.allCases[imageIndex].image
         }
     }
 }

@@ -7,9 +7,18 @@
 
 import Foundation
 
-enum TokenEndPoint: EndPointable {
+enum TokenEndPoint: URLRepresentable {
     case patchRefreshToken(body: Token)
-    
+
+    var path: String {
+        switch self {
+        case .patchRefreshToken:
+            return "/auth/reissue"
+        }
+    }
+}
+
+extension TokenEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -30,22 +39,22 @@ enum TokenEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
-        case .patchRefreshToken:
-            return "\(baseURL)/auth/reissue"
+        case .patchRefreshToken(let body):
+            return self[.patchRefreshToken(body: body)]
         }
     }
 
     func createRequest() -> NetworkRequest {
         var headers: [String: String] = [:]
         headers["Content-Type"] = "application/json"
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
+
+        return NetworkRequest(url: self.url,
                               headers: headers,
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
-
 }

@@ -29,7 +29,7 @@ final class DetailingViewController: BaseViewController {
                                                   roomId: roomId,
                                                   mission: mission,
                                                   missionId: self.missionId,
-                                                  letterState: .received)
+                                                  entryPoint: .notification)
         return viewController
     }
 
@@ -146,7 +146,7 @@ final class DetailingViewController: BaseViewController {
                                                             roomId: roomId,
                                                             mission: mission,
                                                             missionId: self?.missionId ?? "",
-                                                            letterState: .sent)
+                                                            entryPoint: .detail)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
@@ -452,8 +452,7 @@ final class DetailingViewController: BaseViewController {
     }
     
     private func openManittee(manitteeName: String ) {
-            let storyboard = UIStoryboard(name: "Interaction", bundle: nil)
-            guard let viewController = storyboard.instantiateViewController(withIdentifier: SelectManittoViewController.className) as? SelectManittoViewController else { return }
+            let viewController = SelectManittoViewController()
             viewController.modalPresentationStyle = .fullScreen
             viewController.roomId = roomId
             viewController.manitteeName = manitteeName
