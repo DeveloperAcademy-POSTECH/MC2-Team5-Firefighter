@@ -11,10 +11,10 @@ import SnapKit
 
 protocol DetailWaitViewDelegate: AnyObject {
     func startManitto()
-    func presentRoomEditViewController(room: Room, _ isOnlyDateEdit: Bool)
+    func presentRoomEditViewController(isOnlyDateEdit: Bool)
     func deleteRoom(title: String, message: String, okTitle: String)
     func leaveRoom(title: String, message: String, okTitle: String)
-    func presentEditViewControllerAfterShowAlert(room: Room)
+    func presentEditViewControllerAfterShowAlert()
     func showAlert(title: String, message: String)
 }
 
@@ -113,7 +113,7 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private var roomInformation: Room?
+//    private var roomInformation: Room?
     private weak var delegate: DetailWaitViewDelegate?
     
     // MARK: - init
@@ -200,7 +200,7 @@ final class DetailWaitView: UIView {
     }
     
     func configureLayout(room: Room) {
-        self.roomInformation = room
+//        self.roomInformation = room
         guard let title = room.roomInformation?.title,
               let state = room.roomInformation?.state,
               let dateRange = room.roomInformation?.dateRange,
@@ -255,8 +255,7 @@ final class DetailWaitView: UIView {
         var children: [UIAction]
         if isOwner {
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
-                guard let roomInformation = self?.roomInformation else { return }
-                self?.delegate?.presentRoomEditViewController(room: roomInformation, false)
+                self?.delegate?.presentRoomEditViewController(isOnlyDateEdit: false)
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
                 self?.delegate?.deleteRoom(title: UserStatus.owner.alertText.title,
                                            message: UserStatus.owner.alertText.message,
@@ -280,8 +279,7 @@ final class DetailWaitView: UIView {
         if !isStart {
             switch type {
             case .owner:
-                guard let roomInformation = self.roomInformation else { return }
-                self.delegate?.presentEditViewControllerAfterShowAlert(room: roomInformation)
+                self.delegate?.presentEditViewControllerAfterShowAlert()
             case .member:
                 self.delegate?.showAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                                          message: TextLiteral.detailWaitViewControllerPastAlertMessage)
@@ -300,8 +298,7 @@ final class DetailWaitView: UIView {
     
     @objc
     private func presentEditViewController() {
-        guard let roomInformation = self.roomInformation else { return }
-        self.delegate?.presentRoomEditViewController(room: roomInformation, false)
+        self.delegate?.presentRoomEditViewController(isOnlyDateEdit: false)
     }
 }
 

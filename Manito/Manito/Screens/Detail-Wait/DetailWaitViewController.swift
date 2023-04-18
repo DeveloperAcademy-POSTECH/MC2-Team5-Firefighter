@@ -19,6 +19,7 @@ final class DetailWaitViewController: BaseViewController {
     
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     private let roomIndex: Int
+    private var roomInformation: Room?
     
     // MARK: - init
     
@@ -55,8 +56,9 @@ final class DetailWaitViewController: BaseViewController {
         self.detailWaitView.configureDelegation(self)
     }
     
-    private func presentDetailEditViewController(room: Room, _ isOnlyDateEdit: Bool) {
-        guard let index = room.roomInformation?.id,
+    private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
+        guard let room = self.roomInformation,
+              let index = room.roomInformation?.id,
               let title = room.roomInformation?.title,
               let startDate = room.roomInformation?.startDate,
               let endDate = room.roomInformation?.endDate,
@@ -121,6 +123,7 @@ final class DetailWaitViewController: BaseViewController {
             do {
                 let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
+                    self.roomInformation = roomInfo
                     completionHandler(.success(roomInfo))
                 }
             } catch NetworkError.serverError {
@@ -195,8 +198,8 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         }
     }
     
-    func presentRoomEditViewController(room: Room, _ isOnlyDateEdit: Bool) {
-        self.presentDetailEditViewController(room: room, isOnlyDateEdit)
+    func presentRoomEditViewController(isOnlyDateEdit: Bool) {
+        self.presentDetailEditViewController(isOnlyDateEdit: isOnlyDateEdit)
     }
     
     func deleteRoom(title: String, message: String, okTitle: String) {
@@ -232,10 +235,11 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         })
     }
     
-    func presentEditViewControllerAfterShowAlert(room: Room) {
+    func presentEditViewControllerAfterShowAlert() {
         self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                        message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
-                       okAction: { _ in self.presentDetailEditViewController(room: room, true) }
+                       okAction: { [weak self] _ in
+            self?.presentDetailEditViewController(isOnlyDateEdit: true) }
         )
     }
     
