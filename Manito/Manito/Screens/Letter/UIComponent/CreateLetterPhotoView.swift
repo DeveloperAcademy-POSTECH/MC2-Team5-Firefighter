@@ -169,10 +169,10 @@ final class CreateLetterPhotoView: UIView {
     private func phPickerControllerDidShow() {
         var configuration = PHPickerConfiguration()
         configuration.filter = .any(of: [.images, .livePhotos])
-        let phPickerController = PHPickerViewController(configuration: configuration)
-        phPickerController.delegate = self
 
         DispatchQueue.main.async {
+            let phPickerController = PHPickerViewController(configuration: configuration)
+            phPickerController.delegate = self
             self.viewController?.present(phPickerController, animated: true)
         }
     }

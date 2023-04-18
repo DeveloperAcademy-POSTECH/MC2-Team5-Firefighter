@@ -153,7 +153,8 @@ final class LetterViewController: BaseViewController {
             $0.center.equalToSuperview()
         }
 
-        if self.roomState != "POST" {
+        // FIXME: - POST로 변경
+        if self.roomState != "" {
             self.view.addSubview(self.sendLetterView)
             self.sendLetterView.snp.makeConstraints {
                 $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
@@ -212,8 +213,9 @@ final class LetterViewController: BaseViewController {
         let isReceivedState = (state == .received)
         let bottomInset: CGFloat = (isReceivedState ? 0 : 73)
         let topPoint = self.listCollectionView.adjustedContentInset.top + 1
-        
-        self.sendLetterView.isHidden = isReceivedState
+
+        // FIXME: - isReceivedState로 변경
+        self.sendLetterView.isHidden = false
         self.listCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
         self.listCollectionView.setContentOffset(CGPoint(x: 0, y: -topPoint), animated: false)
         self.listCollectionView.collectionViewLayout.invalidateLayout()
