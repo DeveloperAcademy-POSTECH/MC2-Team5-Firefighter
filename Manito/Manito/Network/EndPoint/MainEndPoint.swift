@@ -7,10 +7,21 @@
 
 import Foundation
 
-enum MainEndPoint: EndPointable {
+enum MainEndPoint: URLRepresentable {
     case fetchCommonMission
     case fetchManittoList
 
+    var path: String {
+        switch self {
+        case .fetchCommonMission:
+            return "/missions/common"
+        case .fetchManittoList:
+            return "/rooms"
+        }
+    }
+}
+
+extension MainEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -33,12 +44,12 @@ enum MainEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
         case .fetchCommonMission:
-            return "\(baseURL)/missions/common/"
+            return self[.fetchCommonMission]
         case .fetchManittoList:
-            return "\(baseURL)/rooms/"
+            return self[.fetchManittoList]
         }
     }
     
@@ -47,11 +58,11 @@ enum MainEndPoint: EndPointable {
         headers["Content-Type"] = "application/json"
         headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
         
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
+        return NetworkRequest(url: self.url,
                               headers: headers,
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
 }

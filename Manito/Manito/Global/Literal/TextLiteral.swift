@@ -135,6 +135,8 @@ enum TextLiteral {
         쪽지함이 비었어요.
         마니띠에게 쪽지를 보내볼까요?
         """
+    static let letterViewControllerErrorTitle: String = "오류"
+    static let letterViewControllerErrorDescription: String = "쪽지를 가져올 수 없습니다."
 
     // MARK: - LetterImageViewController
     static let letterImageViewControllerErrorTitle = "오류 발생"

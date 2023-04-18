@@ -11,5 +11,5 @@ protocol EndPointable {
     var requestTimeOut: Float { get }
     var httpMethod: HTTPMethod { get }
     var requestBody: Data? { get }
-    func getURL(baseURL: String) -> String
+    var url: String { get }
 }
