@@ -247,11 +247,15 @@ extension CreateLetterPhotoView: PHPickerViewControllerDelegate {
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
-                        self?.viewController?.makeAlert(title: "", message: error.errorDescription, okAction: { _ in
+                        picker.makeAlert(title: "", message: error.errorDescription, okAction: { _ in
                             picker.dismiss(animated: true)
                         })
                     }
                 }
+            }
+        } else {
+            DispatchQueue.main.async {
+                picker.dismiss(animated: true)
             }
         }
     }
