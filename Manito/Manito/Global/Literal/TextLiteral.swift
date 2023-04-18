@@ -185,6 +185,8 @@ enum TextLiteral {
     static let detailWaitViewControllerStartErrorMessage: String = "마니또 시작에 실패했습니다. 다시 시도해주세요"
     static let detailWaitViewControllerLeaveErrorTitle: String = "오류 발생"
     static let detailWaitViewControllerLeaveErrorMessage: String = "방 나가기에 실패했습니다. 다시 시도해주세요"
+    static let detailWaitViewControllerLoadDataTitle: String = "오류 발생"
+    static let detailWaitViewControllerLoadDataMessage: String = "방 정보를 불러올 수 없습니다. 다시 시도해주세요"
     
     // MARK: - MemoryViewController
     static let memoryViewControllerTitleLabel: String = "함께 했던 기록"

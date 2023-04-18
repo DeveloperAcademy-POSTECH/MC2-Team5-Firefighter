@@ -22,11 +22,12 @@ final class DetailWaitViewController: BaseViewController {
     
     // MARK: - init
     
-    init(index: Int) {
-        self.roomIndex = index
+    init(roomIndex: Int) {
+        self.roomIndex = roomIndex
         super.init()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -43,7 +44,7 @@ final class DetailWaitViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.requestWaitRoomInfo()
+        self.fetchRoomData()
         self.configureDelegation()
         self.configureNavigationController()
     }
@@ -60,7 +61,7 @@ final class DetailWaitViewController: BaseViewController {
               let startDate = room.roomInformation?.startDate,
               let endDate = room.roomInformation?.endDate,
               let currentUserCount = room.participants?.count,
-              let capacity = room.roomInformation?.capacity else { return}
+              let capacity = room.roomInformation?.capacity else { return }
         let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
                                                       roomIndex: index,
                                                       title: title)
@@ -99,40 +100,33 @@ final class DetailWaitViewController: BaseViewController {
         self.detailWaitView.configureNavigationItem(navigationController)
     }
     
-    // MARK: - selector
-    
-    //    @objc
-    //    private func didTapEnterButton() {
-    //        guard let roomInfo = self.roomInfo,
-    //              let code = self.room?.invitation?.code else { return }
-    //        let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: roomInfo.title,
-    //                                                             capacity: roomInfo.capacity,
-    //                                                             startDate: roomInfo.startDate,
-    //                                                             endDate: roomInfo.endDate),
-    //                                                       code: code)
-    //        viewController.roomInfo = roomInfo
-    //        viewController.modalPresentationStyle = .overCurrentContext
-    //        viewController.modalTransitionStyle = .crossDissolve
-    //        self.present(viewController, animated: true)
-    //    }
+    private func fetchRoomData() {
+        self.requestWaitRoomInfo() { [weak self] result in
+            switch result {
+            case .success(let room):
+                DispatchQueue.main.async {
+                    self?.detailWaitView.configureLayout(room: room)
+                }
+            case .failure:
+                self?.makeAlert(title: TextLiteral.detailWaitViewControllerLoadDataTitle,
+                                message: TextLiteral.detailWaitViewControllerLoadDataMessage)
+            }
+        }
+    }
     
     // MARK: - network
     
-    private func requestWaitRoomInfo() {
+    private func requestWaitRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
         Task {
             do {
                 let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: "\(roomIndex)")
                 if let roomInfo = data {
-                    DispatchQueue.main.async {
-                        self.detailWaitView.configureLayout(room: roomInfo)
-                    }
+                    completionHandler(.success(roomInfo))
                 }
             } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
+                completionHandler(.failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
+                completionHandler(.failure(.clientError(message: message)))
             }
         }
     }
