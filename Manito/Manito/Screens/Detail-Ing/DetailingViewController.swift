@@ -29,7 +29,7 @@ final class DetailingViewController: BaseViewController {
                                                   roomId: roomId,
                                                   mission: mission,
                                                   missionId: self.missionId,
-                                                  letterState: .received)
+                                                  entryPoint: .notification)
         return viewController
     }
 
@@ -146,7 +146,7 @@ final class DetailingViewController: BaseViewController {
                                                             roomId: roomId,
                                                             mission: mission,
                                                             missionId: self?.missionId ?? "",
-                                                            letterState: .sent)
+                                                            entryPoint: .detail)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
