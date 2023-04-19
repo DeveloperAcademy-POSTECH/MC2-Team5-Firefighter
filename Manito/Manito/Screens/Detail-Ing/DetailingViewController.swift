@@ -494,7 +494,7 @@ final class DetailingViewController: BaseViewController {
                                                               roomId: self.roomId,
                                                               mission: mission,
                                                               missionId: missionId.description,
-                                                              letterState: .received)
+                                                              entryPoint: .notification)
                     self.navigationController?.pushViewController(viewController, animated: true)
                 }
             }
