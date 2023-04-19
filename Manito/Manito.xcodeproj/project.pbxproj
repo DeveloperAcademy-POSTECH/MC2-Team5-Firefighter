@@ -92,6 +92,7 @@
 		B55BCEC628F5AFB200AF7E45 /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC528F5AFB200AF7E45 /* capsule.gif */; };
 		B55BCEC828F5AFD500AF7E45 /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC728F5AFD500AF7E45 /* joystick.gif */; };
 		B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BE029ADC20A0093D198 /* CreateLetterView.swift */; };
+		B5706BF429B710FC0093D198 /* LetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BF329B710FC0093D198 /* LetterView.swift */; };
 		B5706BF629B9D4650093D198 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BF529B9D4650093D198 /* GuideView.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */; };
@@ -250,6 +251,7 @@
 		B55BCEC528F5AFB200AF7E45 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
 		B55BCEC728F5AFD500AF7E45 /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
 		B5706BE029ADC20A0093D198 /* CreateLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterView.swift; sourceTree = "<group>"; };
+		B5706BF329B710FC0093D198 /* LetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterView.swift; sourceTree = "<group>"; };
 		B5706BF529B9D4650093D198 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2AF285EBB31006D880B /* OpenManittoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupViewController.swift; sourceTree = "<group>"; };
@@ -512,8 +514,9 @@
 		B54741DE29A3A4BA00B75BA3 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */,
+				B5706BF329B710FC0093D198 /* LetterView.swift */,
 				B5706BE029ADC20A0093D198 /* CreateLetterView.swift */,
+				B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -521,7 +524,6 @@
 		B54741E529A4945100B75BA3 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				B5706BED29B189F60093D198 /* Network */,
 				B54741E629A4945A00B75BA3 /* Screens */,
 			);
 			path = Error;
@@ -539,21 +541,6 @@
 			isa = PBXGroup;
 			children = (
 				B54741E929A494E200B75BA3 /* LetterImageError.swift */,
-			);
-			path = Letter;
-			sourceTree = "<group>";
-		};
-		B5706BED29B189F60093D198 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				B5706BEE29B189FF0093D198 /* Letter */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		B5706BEE29B189FF0093D198 /* Letter */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = Letter;
 			sourceTree = "<group>";
@@ -686,8 +673,8 @@
 			isa = PBXGroup;
 			children = (
 				B54741DE29A3A4BA00B75BA3 /* View */,
-				B5F5253328547EE000614FF7 /* UIComponent */,
 				B5F5253228547CAF00614FF7 /* Cell */,
+				B5F5253328547EE000614FF7 /* UIComponent */,
 				B5F5250D2851A07700614FF7 /* LetterViewController.swift */,
 				B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */,
 				B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */,
@@ -1158,6 +1145,7 @@
 				B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */,
 				CB4C77E428C0D4C9007A1AD2 /* MainProtocol.swift in Sources */,
 				CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */,
+				B5706BF429B710FC0093D198 /* LetterView.swift in Sources */,
 				D739C36528C7B75400161117 /* SettingAPI.swift in Sources */,
 				B5E1F2B0285EBB31006D880B /* OpenManittoPopupViewController.swift in Sources */,
 				B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */,

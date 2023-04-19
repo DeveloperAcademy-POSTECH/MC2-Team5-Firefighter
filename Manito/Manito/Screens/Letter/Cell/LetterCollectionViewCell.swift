@@ -9,7 +9,14 @@ import UIKit
 
 import SnapKit
 
+protocol LetterCollectionViewCellDelegate: AnyObject {
+    func didTapReportButton(content: String)
+    func didTapLetterImageView(imageURL: String)
+}
+
 final class LetterCollectionViewCell: BaseCollectionViewCell {
+
+    typealias ConfigurationData = (mission: String?, date: String, content: String?, imageURL: String?, isTodayLetter: Bool, canReport: Bool)
     
     // MARK: - ui component
     
@@ -48,8 +55,8 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
 
     // MARK: - property
 
-    var didTapReport: (() -> ())?
-    var didTapImage: ((UIImage) -> ())?
+    private var imageURL: String?
+    private weak var delegate: LetterCollectionViewCellDelegate?
     
     // MARK: - init
     
@@ -90,7 +97,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         self.contentView.addSubview(self.missionLabel)
         self.missionLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(11)
-            $0.bottom.equalTo(self.contentLabel.snp.top).offset(10)
+            $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
         }
 
         self.contentView.addSubview(self.reportButton)
@@ -110,27 +117,34 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     private func setupButtonAction() {
         let reportAction = UIAction { [weak self] _ in
-            self?.didTapReport?()
+            let content = self?.contentLabel.text ?? "글 내용 없음"
+            self?.delegate?.didTapReportButton(content: content)
         }
         self.reportButton.addAction(reportAction, for: .touchUpInside)
     }
 
     private func setupImageTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapPhoto))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapLetterImageView))
         self.photoImageView.addGestureRecognizer(tapGesture)
     }
 
     private func initializeConfiguration() {
+        self.missionLabel.text = nil
         self.contentLabel.text = nil
         self.photoImageView.image = nil
+        self.missionLabel.snp.updateConstraints {
+            $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
+        }
         self.photoImageView.snp.updateConstraints {
             $0.height.equalTo(0)
         }
     }
 
-    func setLetterData(with data: Message, isHidden: Bool) {
-        self.missionLabel.textColor = data.isToday ? .subOrange : .grey003
+    func configureDelegation(_ delegate: LetterCollectionViewCellDelegate) {
+        self.delegate = delegate
+    }
 
+    func configureCell(_ data: ConfigurationData) {
         if let mission = data.mission {
             self.missionLabel.text = mission
             self.missionLabel.snp.updateConstraints {
@@ -142,26 +156,29 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
                 $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
             }
         }
-        self.reportButton.isHidden = isHidden
-        
+
         if let content = data.content {
             self.contentLabel.text = content
             self.contentLabel.addLabelSpacing()
         }
         
-        if let imageUrl = data.imageUrl {
-            self.photoImageView.loadImageUrl(imageUrl)
+        if let imageURL = data.imageURL {
+            self.imageURL = imageURL
+            self.photoImageView.loadImageUrl(imageURL)
             self.photoImageView.snp.updateConstraints {
                 $0.height.equalTo(204)
             }
         }
+
+        self.missionLabel.textColor = data.isTodayLetter ? .subOrange : .grey003
+        self.reportButton.isHidden = !data.canReport
     }
 
     // MARK: - selector
 
     @objc
-    private func didTapPhoto() {
-        guard let image = self.photoImageView.image else { return }
-        self.didTapImage?(image)
+    private func didTapLetterImageView() {
+        guard let imageURL else { return }
+        self.delegate?.didTapLetterImageView(imageURL: imageURL)
     }
 }
