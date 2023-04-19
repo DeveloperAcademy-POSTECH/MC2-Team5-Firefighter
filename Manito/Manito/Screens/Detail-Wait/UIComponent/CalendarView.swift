@@ -207,7 +207,9 @@ extension CalendarView: FSCalendarDelegate {
             calendar.reloadData()
         } else if isSelectedDateRange {
             if self.countDateRange() > 7 {
-                calendar.deselect(date)
+                DispatchQueue.main.async {                
+                    calendar.deselect(date)
+                }
                 self.viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle,
                                           message: TextLiteral.maxMessage)
             } else {
