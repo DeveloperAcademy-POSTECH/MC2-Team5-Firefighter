@@ -153,152 +153,15 @@ final class DetailEditViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.setupCalendarLayout()
-//        self.setupCalendarChangeButton()
-//        self.setupCancleButton()
-//        self.setupChangeButton()
-//        self.setupMemberSlider()
     }
     
-//    override func configureUI() {
-//        super.configureUI()
-//        self.navigationController?.isNavigationBarHidden = true
-//        self.presentationController?.delegate = self
-//        self.isModalInPresentation = true
-//    }
-
-//    override func setupLayout() {
-//        self.view.addSubview(self.cancelButton)
-//        self.cancelButton.snp.makeConstraints {
-//            $0.top.equalToSuperview().inset(24)
-//            $0.leading.equalToSuperview().inset(29)
-//            $0.width.height.equalTo(44)
-//        }
-//
-//        self.view.addSubview(self.changeButton)
-//        self.changeButton.snp.makeConstraints {
-//            $0.top.equalToSuperview().inset(24)
-//            $0.trailing.equalToSuperview().inset(29)
-//            $0.width.height.equalTo(44)
-//        }
-//
-//        self.view.addSubview(self.topIndicatorView)
-//        self.topIndicatorView.snp.makeConstraints {
-//            $0.top.equalToSuperview().inset(8)
-//            $0.centerX.equalToSuperview()
-//            $0.width.equalTo(40)
-//            $0.height.equalTo(3)
-//        }
-//
-//        self.view.addSubview(self.titleLabel)
-//        self.titleLabel.snp.makeConstraints {
-//            $0.centerX.equalToSuperview()
-//            $0.centerY.equalTo(self.cancelButton.snp.centerY)
-//        }
-//
-//        self.view.addSubview(self.startSettingLabel)
-//        self.startSettingLabel.snp.makeConstraints {
-//            $0.top.equalTo(self.cancelButton.snp.bottom).offset(51)
-//            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
-//        }
-//
-//        self.view.addSubview(self.calendarView)
-//        self.calendarView.snp.makeConstraints {
-//            $0.top.equalTo(self.startSettingLabel.snp.bottom).offset(30)
-//            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-//            $0.height.equalTo(400)
-//        }
-//
-//        self.view.addSubview(tipLabel)
-//        self.tipLabel.snp.makeConstraints {
-//            $0.top.equalTo(self.calendarView.snp.bottom).offset(8)
-//            $0.trailing.equalToSuperview().inset(25)
-//        }
-//
-//        if self.editMode == .information {
-//            self.view.addSubview(self.setMemberLabel)
-//            self.setMemberLabel.snp.makeConstraints {
-//                $0.top.equalTo(self.calendarView.snp.bottom).offset(60)
-//                $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
-//            }
-//
-//            self.view.addSubview(self.minMemberLabel)
-//            self.minMemberLabel.snp.makeConstraints {
-//                $0.top.equalTo(self.setMemberLabel.snp.bottom).offset(30)
-//                $0.leading.equalToSuperview().inset(24)
-//            }
-//
-//            self.view.addSubview(self.memberSlider)
-//            self.memberSlider.snp.makeConstraints {
-//                $0.leading.equalTo(self.minMemberLabel.snp.trailing).offset(5)
-//                $0.height.equalTo(45)
-//                $0.centerY.equalTo(self.minMemberLabel.snp.centerY)
-//            }
-//
-//            self.view.addSubview(self.maxMemberLabel)
-//            self.maxMemberLabel.snp.makeConstraints {
-//                $0.top.equalTo(self.setMemberLabel.snp.bottom).offset(30)
-//                $0.leading.equalTo(self.memberSlider.snp.trailing).offset(5)
-//                $0.trailing.equalToSuperview().inset(24)
-//            }
-//
-//            self.view.addSubview(self.memberCountLabel)
-//            self.memberCountLabel.snp.makeConstraints {
-//                $0.centerX.equalToSuperview()
-//                $0.centerY.equalTo(self.setMemberLabel.snp.centerY)
-//            }
-//        }
-//    }
+    override func configureUI() {
+        super.configureUI()
+        self.presentationController?.delegate = self
+        self.isModalInPresentation = true
+    }
 
     // MARK: - func
-    
-//    private func setupCancleButton() {
-//        let action = UIAction { [weak self] _ in
-//            self?.dismiss(animated: true)
-//        }
-//        self.cancelButton.addAction(action, for: .touchUpInside)
-//    }
-    
-//    private func setupChangeButton() {
-//        let action = UIAction { [weak self] _ in
-//            self?.didTapChangeButton()
-//        }
-//        self.changeButton.addAction(action, for: .touchUpInside)
-//    }
-    
-//    private func setupMemberSlider() {
-//        let valueChangeAction = UIAction { [weak self] action in
-//            guard let sender = action.sender as? UISlider else { return }
-//            self?.changeMemberCount(sender: sender)
-//        }
-//        self.memberSlider.addAction(valueChangeAction, for: .valueChanged)
-//    }
-
-//    private func presentationControllerDidAttemptToDismissAlert() {
-//        guard self.calendarView.isFirstTap else {
-//            self.dismiss(animated: true)
-//            return
-//        }
-//        self.showDiscardChangAlert()
-//    }
-
-    private func showDiscardChangAlert() {
-        let actionTitles = [TextLiteral.destructive, TextLiteral.cancel]
-        let actionStyle: [UIAlertAction.Style] = [.destructive, .cancel]
-        let actions: [((UIAlertAction) -> Void)?] = [{ [weak self] _ in
-            self?.dismiss(animated: true)
-        }, nil]
-        makeActionSheet(actionTitles: actionTitles,
-                        actionStyle: actionStyle,
-                        actions: actions)
-    }
-
-//    private func setupCalendarChangeButton() {
-//        self.calendarView.changeButtonState = { [weak self] value in
-//            self?.changeButton.isEnabled = value
-//            self?.changeButton.setTitleColor(.subBlue, for: .normal)
-//            self?.changeButton.setTitleColor(.grey002, for: .disabled)
-//        }
-//    }
 
 //    private func didTapChangeButton() {
 //        let dto = RoomDTO(title: self.roomTitle,
@@ -318,19 +181,31 @@ final class DetailEditViewController: BaseViewController {
 //        }
 //    }
     
-//    private func changeMemberCount(sender: UISlider) {
-//        self.sliderValue = Int(sender.value)
-//        self.memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
-//        self.memberCountLabel.font = .font(.regular, ofSize: 24)
-//        self.memberCountLabel.textColor = .white
-//    }
-    
     private func configureDelegation() {
         self.detailEditView.configureDelegation(self)
     }
     
     private func setupCalendarLayout() {
         self.detailEditView.setupDateRange(from: self.startDateText, to: self.endDateText)
+    }
+    
+    private func presentationControllerDidAttemptToDismissAlert() {
+        guard self.detailEditView.calendarView.isFirstTap else {
+            self.dismiss(animated: true)
+            return
+        }
+        self.showDiscardActionSheet()
+    }
+
+    private func showDiscardActionSheet() {
+        let actionTitles = [TextLiteral.destructive, TextLiteral.cancel]
+        let actionStyle: [UIAlertAction.Style] = [.destructive, .cancel]
+        let actions: [((UIAlertAction) -> Void)?] = [{ [weak self] _ in
+            self?.dismiss(animated: true)
+        }, nil]
+        self.makeActionSheet(actionTitles: actionTitles,
+                        actionStyle: actionStyle,
+                        actions: actions)
     }
     
     // MARK: - network
@@ -359,7 +234,7 @@ final class DetailEditViewController: BaseViewController {
 
 extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
-//        self.presentationControllerDidAttemptToDismissAlert()
+        self.presentationControllerDidAttemptToDismissAlert()
     }
 }
 

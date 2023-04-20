@@ -56,7 +56,7 @@ final class DetailEditView: UIView {
         label.textColor = .white
         return label
     }()
-    private let calendarView: CalendarView = CalendarView()
+    let calendarView: CalendarView = CalendarView()
     private let tipLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.maxMessage
