@@ -11,7 +11,7 @@ import SnapKit
 
 protocol DetailEditDelegate: AnyObject {
     func dismiss()
-    func changeRoomInformation(from startDate: String, to endDate: String)
+    func changeRoomInformation(capacity: Int, from startDate: String, to endDate: String)
 }
 
 final class DetailEditView: UIView {
@@ -91,14 +91,14 @@ final class DetailEditView: UIView {
         slider.maximumValue = 15
         slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001
-        //        slider.value = Float(self.sliderValue)
+        slider.value = Float(self.maximumMemberCount)
         slider.isContinuous = true
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         return slider
     }()
     private lazy var memberCountLabel: UILabel = {
         let label = UILabel()
-        //        label.text = "\(self.sliderValue)" + TextLiteral.per
+        label.text = "\(self.maximumMemberCount)" + TextLiteral.per
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
         return label
@@ -107,20 +107,16 @@ final class DetailEditView: UIView {
     // MARK: - property
     
     private weak var delegate: DetailEditDelegate?
+    private var maximumMemberCount: Int
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(maximumMemberCount: Int) {
+        self.maximumMemberCount = maximumMemberCount
+        super.init(frame: .zero)
         self.setupLayout()
         self.setupCancleButton()
         self.setupChangeButton()
+        self.setupMemberSlider()
     }
-//    private var editMode: EditMode
-    
-//    init(editMode: EditMode) {
-//        self.editMode = editMode
-//        super.init(frame: .zero)
-//        self.setupLayout()
-//    }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
@@ -178,7 +174,7 @@ final class DetailEditView: UIView {
         }
         
 //        if self.editMode == .information {
-//            self.setupEditMembersLayout()
+            self.setupEditMembersLayout()
 //        }
     }
     
@@ -235,9 +231,11 @@ final class DetailEditView: UIView {
     
     private func setupChangeButton() {
         let action = UIAction { [weak self] _ in
-            guard let startDateString = self?.calendarView.getTempStartDate(),
+            guard let capacity = self?.memberSlider.value,
+                  let startDateString = self?.calendarView.getTempStartDate(),
                   let endDateString = self?.calendarView.getTempEndDate() else { return }
-            self?.delegate?.changeRoomInformation(from: startDateString,
+            self?.delegate?.changeRoomInformation(capacity: Int(capacity),
+                                                  from: startDateString,
                                                   to: endDateString)
         }
         self.changeButton.addAction(action, for: .touchUpInside)
@@ -247,5 +245,20 @@ final class DetailEditView: UIView {
             self?.changeButton.setTitleColor(.subBlue, for: .normal)
             self?.changeButton.setTitleColor(.grey002, for: .disabled)
         }
+    }
+    
+    private func setupMemberSlider() {
+        let valueChangeAction = UIAction { [weak self] action in
+            guard let sender = action.sender as? UISlider else { return }
+            self?.changeMemberCount(sender: sender)
+        }
+        self.memberSlider.addAction(valueChangeAction, for: .valueChanged)
+    }
+    
+    private func changeMemberCount(sender: UISlider) {
+        self.maximumMemberCount = Int(sender.value)
+        self.memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
+        self.memberCountLabel.font = .font(.regular, ofSize: 24)
+        self.memberCountLabel.textColor = .white
     }
 }

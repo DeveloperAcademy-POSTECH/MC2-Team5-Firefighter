@@ -19,7 +19,7 @@ final class DetailEditViewController: BaseViewController {
 
     // MARK: - ui component
     
-    private lazy var detailEditView = DetailEditView()
+    private lazy var detailEditView = DetailEditView(maximumMemberCount: self.sliderValue)
 
 //    private let cancelButton: UIButton = {
 //        let button = UIButton(type: .system)
@@ -107,7 +107,7 @@ final class DetailEditViewController: BaseViewController {
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
 //    var didTappedChangeButton: (() -> ())?
     private let roomIndex: Int
-//    private let roomTitle: String
+    private let roomTitle: String
     var editMode: EditMode
     var currentUserCount: Int = 0
     var sliderValue: Int = 10
@@ -131,7 +131,7 @@ final class DetailEditViewController: BaseViewController {
     init(editMode: EditMode, roomIndex: Int, title: String) {
         self.editMode = editMode
         self.roomIndex = roomIndex
-//        self.roomTitle = title
+        self.roomTitle = title
         super.init()
     }
     
@@ -368,8 +368,11 @@ extension DetailEditViewController: DetailEditDelegate {
         self.dismiss(animated: true)
     }
     
-    func changeRoomInformation(from startDate: String, to endDate: String) {
-        print("startDate", startDate)
-        print("endDate", endDate)
+    func changeRoomInformation(capacity: Int, from startDate: String, to endDate: String) {
+        let dto = RoomDTO(title: self.roomTitle,
+                          capacity: capacity,
+                          startDate: "20\(startDate)",
+                          endDate: "20\(endDate)")
+        print(dto)
     }
 }
