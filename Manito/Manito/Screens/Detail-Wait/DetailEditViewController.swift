@@ -210,23 +210,21 @@ final class DetailEditViewController: BaseViewController {
     
     // MARK: - network
     
-    private func putChangeRoomInfo(roomDto: RoomDTO) {
+    private func putChangeRoomInfo(roomDto: RoomDTO, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
                 let status = try await self.detailWaitService.editRoomInfo(roomId: "\(roomIndex)",
                                                                            roomInfo: roomDto)
-                if status == 204 {
-                    ToastView.showToast(message: "방 정보 수정 완료",
-                                        view: self.view ?? UIView())
-//                    self.didTappedChangeButton?()
-                    self.dismiss(animated: true)
+                switch status {
+                case 200..<300:
+                    completionHandler(.success(()))
+                default:
+                    completionHandler(.failure((.unknownError)))
                 }
             } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
+                completionHandler(.failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
+                completionHandler(.failure(.clientError(message: message)))
             }
         }
     }
@@ -248,6 +246,23 @@ extension DetailEditViewController: DetailEditDelegate {
                           capacity: capacity,
                           startDate: "20\(startDate)",
                           endDate: "20\(endDate)")
-        print(dto)
+        if self.currentUserCount <= capacity {
+            self.putChangeRoomInfo(roomDto: dto) { [weak self] result in
+                switch result {
+                case .success:
+                    // FIXME: - 토스트 고장
+                    ToastView.showToast(message: "방 정보 수정 완료",
+                                        controller: self ?? UIViewController())
+                    self?.dismiss()
+                case .failure:
+                    self?.makeAlert(title: TextLiteral.detailEditViewControllerChangeErrorTitle,
+                                    message: TextLiteral.detailEditViewControllerChangeErrorMessage
+                    )
+                }
+            }
+        } else {
+            self.makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle,
+                           message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
+        }
     }
 }
