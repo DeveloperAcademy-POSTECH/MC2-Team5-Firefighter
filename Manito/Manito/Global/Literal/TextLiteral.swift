@@ -202,6 +202,8 @@ enum TextLiteral {
     static let detailEditViewControllerSetMember: String = "인원 설정"
     static let detailEditViewControllerChangeRoomInfoAlertTitle: String = "인원을 다시 설정해 주세요"
     static let detailEditViewControllerChangeRoomInfoAlertMessage: String = "현재 인원보다 최대 인원을 \n더 적게 설정할 수 없어요."
+    static let detailEditViewControllerChangeErrorTitle: String = "오류 발생"
+    static let detailEditViewControllerChangeErrorMessage: String = "방 정보 수정에 실패했습니다. 다시 시도해주세요"
     
     // MARK: - InputNameView
     static let inputNameViewRoomNameText: String = "방 이름을 적어주세요"
