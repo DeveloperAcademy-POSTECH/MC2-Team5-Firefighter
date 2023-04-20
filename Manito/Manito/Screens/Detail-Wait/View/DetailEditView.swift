@@ -241,5 +241,11 @@ final class DetailEditView: UIView {
                                                   to: endDateString)
         }
         self.changeButton.addAction(action, for: .touchUpInside)
+        
+        self.calendarView.changeButtonState = { [weak self] value in
+            self?.changeButton.isEnabled = value
+            self?.changeButton.setTitleColor(.subBlue, for: .normal)
+            self?.changeButton.setTitleColor(.grey002, for: .disabled)
+        }
     }
 }
