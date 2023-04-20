@@ -9,12 +9,16 @@ import UIKit
 
 import SnapKit
 
+protocol DetailEditDelegate: AnyObject {
+    func dismiss()
+}
+
 final class DetailEditView: UIView {
     
-    enum EditMode {
-        case date
-        case information
-    }
+//    enum EditMode {
+//        case date
+//        case information
+//    }
     
     // MARK: - ui component
     
@@ -99,13 +103,22 @@ final class DetailEditView: UIView {
         return label
     }()
     
-    private var editMode: EditMode
+    // MARK: - property
     
-    init(editMode: EditMode) {
-        self.editMode = editMode
-        super.init(frame: .zero)
+    private weak var delegate: DetailEditDelegate?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.setupLayout()
+        self.setupCancleButton()
     }
+//    private var editMode: EditMode
+    
+//    init(editMode: EditMode) {
+//        self.editMode = editMode
+//        super.init(frame: .zero)
+//        self.setupLayout()
+//    }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
@@ -162,9 +175,9 @@ final class DetailEditView: UIView {
             $0.trailing.equalToSuperview().inset(25)
         }
         
-        if self.editMode == .information {
-            self.setupEditMembersLayout()
-        }
+//        if self.editMode == .information {
+//            self.setupEditMembersLayout()
+//        }
     }
     
     private func setupEditMembersLayout() {
@@ -199,5 +212,16 @@ final class DetailEditView: UIView {
             $0.centerX.equalToSuperview()
             $0.centerY.equalTo(self.setMemberLabel.snp.centerY)
         }
+    }
+    
+    func configureDelegation(_ delegate: DetailEditDelegate) {
+        self.delegate = delegate
+    }
+    
+    private func setupCancleButton() {
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.dismiss()
+        }
+        self.cancelButton.addAction(action, for: .touchUpInside)
     }
 }
