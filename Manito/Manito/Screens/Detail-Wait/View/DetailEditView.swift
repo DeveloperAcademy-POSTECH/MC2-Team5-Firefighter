@@ -107,7 +107,11 @@ final class DetailEditView: UIView {
     // MARK: - property
     
     private weak var delegate: DetailEditDelegate?
-    private var maximumMemberCount: Int
+    private var maximumMemberCount: Int {
+        didSet {
+            self.memberCountLabel.text = maximumMemberCount.description + TextLiteral.per
+        }
+    }
     
     init(maximumMemberCount: Int) {
         self.maximumMemberCount = maximumMemberCount
@@ -250,15 +254,12 @@ final class DetailEditView: UIView {
     private func setupMemberSlider() {
         let valueChangeAction = UIAction { [weak self] action in
             guard let sender = action.sender as? UISlider else { return }
-            self?.changeMemberCount(sender: sender)
+            self?.changeMemberSliderValue(sender: sender)
         }
         self.memberSlider.addAction(valueChangeAction, for: .valueChanged)
     }
     
-    private func changeMemberCount(sender: UISlider) {
+    private func changeMemberSliderValue(sender: UISlider) {
         self.maximumMemberCount = Int(sender.value)
-        self.memberCountLabel.text = String(Int(sender.value)) + TextLiteral.per
-        self.memberCountLabel.font = .font(.regular, ofSize: 24)
-        self.memberCountLabel.textColor = .white
     }
 }
