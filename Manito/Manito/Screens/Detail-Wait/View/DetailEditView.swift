@@ -11,8 +11,13 @@ import SnapKit
 
 final class DetailEditView: UIView {
     
+    enum EditMode {
+        case date
+        case information
+    }
+    
     // MARK: - ui component
-
+    
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(TextLiteral.cancel, for: .normal)
@@ -81,18 +86,31 @@ final class DetailEditView: UIView {
         slider.maximumValue = 15
         slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001
-//        slider.value = Float(self.sliderValue)
+        //        slider.value = Float(self.sliderValue)
         slider.isContinuous = true
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         return slider
     }()
     private lazy var memberCountLabel: UILabel = {
         let label = UILabel()
-//        label.text = "\(self.sliderValue)" + TextLiteral.per
+        //        label.text = "\(self.sliderValue)" + TextLiteral.per
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
         return label
     }()
+    
+    private var editMode: EditMode
+    
+    init(editMode: EditMode) {
+        self.editMode = editMode
+        super.init(frame: .zero)
+        self.setupLayout()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - func
     
@@ -103,14 +121,14 @@ final class DetailEditView: UIView {
             $0.leading.equalToSuperview().inset(29)
             $0.width.height.equalTo(44)
         }
-
+        
         self.addSubview(self.changeButton)
         self.changeButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
             $0.trailing.equalToSuperview().inset(29)
             $0.width.height.equalTo(44)
         }
-
+        
         self.addSubview(self.topIndicatorView)
         self.topIndicatorView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(8)
@@ -118,64 +136,68 @@ final class DetailEditView: UIView {
             $0.width.equalTo(40)
             $0.height.equalTo(3)
         }
-
+        
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalTo(self.cancelButton.snp.centerY)
         }
-
+        
         self.addSubview(self.startSettingLabel)
         self.startSettingLabel.snp.makeConstraints {
             $0.top.equalTo(self.cancelButton.snp.bottom).offset(51)
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
-
+        
         self.addSubview(self.calendarView)
         self.calendarView.snp.makeConstraints {
             $0.top.equalTo(self.startSettingLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.height.equalTo(400)
         }
-
+        
         self.addSubview(tipLabel)
         self.tipLabel.snp.makeConstraints {
             $0.top.equalTo(self.calendarView.snp.bottom).offset(8)
             $0.trailing.equalToSuperview().inset(25)
         }
-
-//        if self.editMode == .information {
-//            self.addSubview(self.setMemberLabel)
-//            self.setMemberLabel.snp.makeConstraints {
-//                $0.top.equalTo(self.calendarView.snp.bottom).offset(60)
-//                $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
-//            }
-//
-//            self.addSubview(self.minMemberLabel)
-//            self.minMemberLabel.snp.makeConstraints {
-//                $0.top.equalTo(self.setMemberLabel.snp.bottom).offset(30)
-//                $0.leading.equalToSuperview().inset(24)
-//            }
-//
-//            self.addSubview(self.memberSlider)
-//            self.memberSlider.snp.makeConstraints {
-//                $0.leading.equalTo(self.minMemberLabel.snp.trailing).offset(5)
-//                $0.height.equalTo(45)
-//                $0.centerY.equalTo(self.minMemberLabel.snp.centerY)
-//            }
-//
-//            self.addSubview(self.maxMemberLabel)
-//            self.maxMemberLabel.snp.makeConstraints {
-//                $0.top.equalTo(self.setMemberLabel.snp.bottom).offset(30)
-//                $0.leading.equalTo(self.memberSlider.snp.trailing).offset(5)
-//                $0.trailing.equalToSuperview().inset(24)
-//            }
-//
-//            self.addSubview(self.memberCountLabel)
-//            self.memberCountLabel.snp.makeConstraints {
-//                $0.centerX.equalToSuperview()
-//                $0.centerY.equalTo(self.setMemberLabel.snp.centerY)
-//            }
-//        }
+        
+        if self.editMode == .information {
+            self.setupEditMembersLayout()
+        }
+    }
+    
+    private func setupEditMembersLayout() {
+        self.addSubview(self.setMemberLabel)
+        self.setMemberLabel.snp.makeConstraints {
+            $0.top.equalTo(self.calendarView.snp.bottom).offset(60)
+            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+        }
+        
+        self.addSubview(self.minMemberLabel)
+        self.minMemberLabel.snp.makeConstraints {
+            $0.top.equalTo(self.setMemberLabel.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().inset(24)
+        }
+        
+        self.addSubview(self.memberSlider)
+        self.memberSlider.snp.makeConstraints {
+            $0.leading.equalTo(self.minMemberLabel.snp.trailing).offset(5)
+            $0.height.equalTo(45)
+            $0.centerY.equalTo(self.minMemberLabel.snp.centerY)
+        }
+        
+        self.addSubview(self.maxMemberLabel)
+        self.maxMemberLabel.snp.makeConstraints {
+            $0.top.equalTo(self.setMemberLabel.snp.bottom).offset(30)
+            $0.leading.equalTo(self.memberSlider.snp.trailing).offset(5)
+            $0.trailing.equalToSuperview().inset(24)
+        }
+        
+        self.addSubview(self.memberCountLabel)
+        self.memberCountLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(self.setMemberLabel.snp.centerY)
+        }
     }
 }
