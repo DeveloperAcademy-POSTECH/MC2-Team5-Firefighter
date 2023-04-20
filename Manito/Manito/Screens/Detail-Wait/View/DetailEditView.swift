@@ -11,6 +11,7 @@ import SnapKit
 
 protocol DetailEditDelegate: AnyObject {
     func dismiss()
+    func changeRoomInformation()
 }
 
 final class DetailEditView: UIView {
@@ -111,6 +112,7 @@ final class DetailEditView: UIView {
         super.init(frame: frame)
         self.setupLayout()
         self.setupCancleButton()
+        self.setupChangeButton()
     }
 //    private var editMode: EditMode
     
@@ -223,5 +225,12 @@ final class DetailEditView: UIView {
             self?.delegate?.dismiss()
         }
         self.cancelButton.addAction(action, for: .touchUpInside)
+    }
+    
+    private func setupChangeButton() {
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.changeRoomInformation()
+        }
+        self.changeButton.addAction(action, for: .touchUpInside)
     }
 }

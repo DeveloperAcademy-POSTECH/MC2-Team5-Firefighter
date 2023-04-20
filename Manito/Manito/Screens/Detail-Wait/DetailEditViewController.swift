@@ -362,4 +362,8 @@ extension DetailEditViewController: DetailEditDelegate {
     func dismiss() {
         self.dismiss(animated: true)
     }
+    
+    func changeRoomInformation() {
+        print("변경")
+    }
 }
