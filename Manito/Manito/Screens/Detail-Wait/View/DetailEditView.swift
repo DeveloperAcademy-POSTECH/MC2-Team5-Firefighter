@@ -11,7 +11,7 @@ import SnapKit
 
 protocol DetailEditDelegate: AnyObject {
     func dismiss()
-    func changeRoomInformation()
+    func changeRoomInformation(from startDate: String, to endDate: String)
 }
 
 final class DetailEditView: UIView {
@@ -220,6 +220,12 @@ final class DetailEditView: UIView {
         self.delegate = delegate
     }
     
+    func setupDateRange(from startDateString: String, to endDateString: String) {
+        self.calendarView.startDateText = startDateString
+        self.calendarView.endDateText = endDateString
+        self.calendarView.setupDateRange()
+    }
+    
     private func setupCancleButton() {
         let action = UIAction { [weak self] _ in
             self?.delegate?.dismiss()
@@ -229,7 +235,10 @@ final class DetailEditView: UIView {
     
     private func setupChangeButton() {
         let action = UIAction { [weak self] _ in
-            self?.delegate?.changeRoomInformation()
+            guard let startDateString = self?.calendarView.getTempStartDate(),
+                  let endDateString = self?.calendarView.getTempEndDate() else { return }
+            self?.delegate?.changeRoomInformation(from: startDateString,
+                                                  to: endDateString)
         }
         self.changeButton.addAction(action, for: .touchUpInside)
     }

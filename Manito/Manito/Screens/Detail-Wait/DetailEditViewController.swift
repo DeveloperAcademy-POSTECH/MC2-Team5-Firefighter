@@ -152,6 +152,7 @@ final class DetailEditViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
+        self.setupCalendarLayout()
 //        self.setupCalendarChangeButton()
 //        self.setupCancleButton()
 //        self.setupChangeButton()
@@ -328,6 +329,10 @@ final class DetailEditViewController: BaseViewController {
         self.detailEditView.configureDelegation(self)
     }
     
+    private func setupCalendarLayout() {
+        self.detailEditView.setupDateRange(from: self.startDateText, to: self.endDateText)
+    }
+    
     // MARK: - network
     
     private func putChangeRoomInfo(roomDto: RoomDTO) {
@@ -363,7 +368,8 @@ extension DetailEditViewController: DetailEditDelegate {
         self.dismiss(animated: true)
     }
     
-    func changeRoomInformation() {
-        print("변경")
+    func changeRoomInformation(from startDate: String, to endDate: String) {
+        print("startDate", startDate)
+        print("endDate", endDate)
     }
 }
