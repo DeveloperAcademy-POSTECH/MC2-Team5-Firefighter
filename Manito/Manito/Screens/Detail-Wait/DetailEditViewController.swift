@@ -23,7 +23,7 @@ final class DetailEditViewController: BaseViewController {
     // MARK: - property
     
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-//    var didTappedChangeButton: (() -> ())?
+    var didTappedChangeButton: (() -> ())?
     private let roomIndex: Int
     private let roomTitle: String
     var editMode: EditMode
@@ -141,6 +141,7 @@ extension DetailEditViewController: DetailEditDelegate {
                     // FIXME: - 토스트 고장
                     ToastView.showToast(message: "방 정보 수정 완료",
                                         controller: self ?? UIViewController())
+                    self?.didTappedChangeButton?()
                     self?.dismiss()
                 case .failure:
                     self?.makeAlert(title: TextLiteral.detailEditViewControllerChangeErrorTitle,

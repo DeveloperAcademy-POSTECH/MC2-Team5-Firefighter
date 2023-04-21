@@ -67,6 +67,9 @@ final class DetailWaitViewController: BaseViewController {
         let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
                                                       roomIndex: index,
                                                       title: title)
+        viewController.didTappedChangeButton = { [weak self] in
+            self?.fetchRoomData()
+        }
         if self.checkStartDateIsPast(startDate) {
             let fiveDaysInterval: TimeInterval = 86400 * 4
             viewController.startDateText = Date().dateToString
