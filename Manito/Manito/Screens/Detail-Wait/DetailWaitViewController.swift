@@ -62,6 +62,8 @@ final class DetailWaitViewController: BaseViewController {
                                                       room: room)
         viewController.didTappedChangeButton = { [weak self] in
             self?.fetchRoomData()
+            ToastView.showToast(message: "방 정보 수정 완료",
+                                controller: self ?? UIViewController())
         }
         self.present(viewController, animated: true)
     }

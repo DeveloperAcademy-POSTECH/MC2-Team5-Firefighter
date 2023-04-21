@@ -138,9 +138,6 @@ extension DetailEditViewController: DetailEditDelegate {
             self.putChangeRoomInfo(roomDto: dto) { [weak self] result in
                 switch result {
                 case .success:
-                    // FIXME: - 토스트 고장
-                    ToastView.showToast(message: "방 정보 수정 완료",
-                                        controller: self ?? UIViewController())
                     self?.didTappedChangeButton?()
                     self?.dismiss()
                 case .failure:
