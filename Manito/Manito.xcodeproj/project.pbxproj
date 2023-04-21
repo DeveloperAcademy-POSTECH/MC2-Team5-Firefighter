@@ -95,8 +95,9 @@
 		B5706BF629B9D4650093D198 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BF529B9D4650093D198 /* GuideView.swift */; };
 		B5AE11F029D1E43B00F86FF8 /* OpenManittoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */; };
 		B5AE11F229D28CB500F86FF8 /* OpenManittoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */; };
+		B5AE11F429D32EE700F86FF8 /* SelectManitteeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
-		B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */; };
+		B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
 		B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */; };
 		B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */; };
@@ -254,8 +255,9 @@
 		B5706BF529B9D4650093D198 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoView.swift; sourceTree = "<group>"; };
 		B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupView.swift; sourceTree = "<group>"; };
+		B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeView.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
-		B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManittoViewController.swift; sourceTree = "<group>"; };
+		B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewController.swift; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LetterViewController+MailCompose.swift"; sourceTree = "<group>"; };
@@ -490,7 +492,7 @@
 				B5AE11EE29D1E38D00F86FF8 /* View */,
 				B50B1B42285B14550080992C /* Cell */,
 				B50B1B40285B048A0080992C /* OpenManittoViewController.swift */,
-				B5E1F2B1285ECBDF006D880B /* SelectManittoViewController.swift */,
+				B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */,
 			);
 			path = Interaction;
 			sourceTree = "<group>";
@@ -557,6 +559,7 @@
 			children = (
 				B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */,
 				B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */,
+				B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1147,7 +1150,7 @@
 				39C957F4287D9EB400A04A2B /* APIService.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				435B17682913E71400212663 /* DetailingViewController.swift in Sources */,
-				B5E1F2B2285ECBDF006D880B /* SelectManittoViewController.swift in Sources */,
+				B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */,
 				397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */,
 				7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */,
 				D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */,
@@ -1228,6 +1231,7 @@
 				CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */,
 				B5FEE9DD28C849B400DEA07E /* UIImageView+Cache.swift in Sources */,
 				CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */,
+				B5AE11F429D32EE700F86FF8 /* SelectManitteeView.swift in Sources */,
 				397A241428BA516B00454E4F /* DetailWaitAPI.swift in Sources */,
 				B5F525242851A25400614FF7 /* UICollectionView+Extension.swift in Sources */,
 			);
