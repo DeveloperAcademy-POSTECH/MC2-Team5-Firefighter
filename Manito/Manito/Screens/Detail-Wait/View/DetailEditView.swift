@@ -95,7 +95,7 @@ final class DetailEditView: UIView {
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         return slider
     }()
-    private lazy var memberCountLabel: UILabel = {
+    private let memberCountLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
