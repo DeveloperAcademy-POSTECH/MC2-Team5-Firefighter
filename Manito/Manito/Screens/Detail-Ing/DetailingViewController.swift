@@ -23,6 +23,7 @@ final class DetailingViewController: BaseViewController {
     private var roomType: RoomType = .PROCESSING
     private var isTappedManittee: Bool = false
     private var missionId: String = ""
+    private var manittoNickname: String = ""
     var letterViewController: UIViewController {
         guard let mission = missionContentsLabel.text else { return UIViewController() }
         let viewController = LetterViewController(roomState: roomType.rawValue,
@@ -106,7 +107,7 @@ final class DetailingViewController: BaseViewController {
     private let manitteeIconView = UIImageView(image: ImageLiterals.icManiTti)
     private let manitteeLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(UserDefaultStorage.nickname ?? "당신")의 마니띠"
+        label.text = "\(UserDefaultStorage.nickname)의 마니띠"
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
         return label
@@ -197,8 +198,11 @@ final class DetailingViewController: BaseViewController {
     private lazy var manittoOpenButton: MainButton = {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
-            guard let roomId = self?.roomId else { return }
-            let viewController = OpenManittoViewController(roomId: roomId)
+            guard
+                let roomId = self?.roomId,
+                let manittoNickname = self?.manittoNickname
+            else { return }
+            let viewController = OpenManittoViewController(roomId: roomId, manittoNickname: manittoNickname)
             viewController.modalTransitionStyle = .crossDissolve
             viewController.modalPresentationStyle = .fullScreen
             self?.present(viewController, animated: true)
@@ -451,12 +455,11 @@ final class DetailingViewController: BaseViewController {
         }
     }
     
-    private func openManittee(manitteeName: String ) {
-            let viewController = SelectManittoViewController()
-            viewController.modalPresentationStyle = .fullScreen
-            viewController.roomId = roomId
-            viewController.manitteeName = manitteeName
-            present(viewController, animated: true)
+    private func openManittee(manitteeName: String) {
+        let viewController = SelectManitteeViewController(roomId: self.roomId, manitteeNickname: manitteeName)
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true)
     }
     
     private func setupExitButton(admin: Bool) {
@@ -564,9 +567,11 @@ final class DetailingViewController: BaseViewController {
                         if self.roomType == .PROCESSING {
                             self.setupProcessingUI()
                             guard let missionContent = info.mission?.content,
-                                  let didView = info.didViewRoulette
+                                  let didView = info.didViewRoulette,
+                                  let manittoNickname = info.manitto?.nickname
                             else { return }
                             self.missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
+                            self.manittoNickname = manittoNickname
                             if !didView && !admin {
                                 self.openManittee(manitteeName: manittee)
                             }
