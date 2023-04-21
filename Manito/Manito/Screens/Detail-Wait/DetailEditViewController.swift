@@ -7,7 +7,6 @@
 
 import UIKit
 
-import FSCalendar
 import SnapKit
 
 final class DetailEditViewController: BaseViewController {
@@ -20,87 +19,6 @@ final class DetailEditViewController: BaseViewController {
     // MARK: - ui component
     
     private lazy var detailEditView = DetailEditView(maximumMemberCount: self.sliderValue)
-
-//    private let cancelButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle(TextLiteral.cancel, for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.titleLabel?.font = .font(.regular, ofSize: 16)
-//        return button
-//    }()
-//    private let topIndicatorView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .white.withAlphaComponent(0.8)
-//        view.layer.cornerRadius = 1.5
-//        return view
-//    }()
-//    private let changeButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle(TextLiteral.change, for: .normal)
-//        button.setTitleColor(.subBlue, for: .normal)
-//        button.titleLabel?.font = .font(.regular, ofSize: 16)
-//        return button
-//    }()
-//    private let titleLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = TextLiteral.modifiedRoomInfo
-//        label.font = .font(.regular, ofSize: 16)
-//        return label
-//    }()
-//    private let startSettingLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = TextLiteral.detailEditViewControllerStartSetting
-//        label.font = .font(.regular, ofSize: 16)
-//        label.textColor = .white
-//        return label
-//    }()
-//    private let calendarView: CalendarView = CalendarView()
-//    private let tipLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = TextLiteral.maxMessage
-//        label.textColor = .grey004
-//        label.font = .font(.regular, ofSize: 14)
-//        return label
-//    }()
-//    private let setMemberLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = TextLiteral.detailEditViewControllerSetMember
-//        label.font = .font(.regular, ofSize: 18)
-//        label.textColor = .white
-//        return label
-//    }()
-//    private lazy var minMemberLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "\(Int(self.memberSlider.minimumValue))인"
-//        label.font = .font(.regular, ofSize: 16)
-//        label.textColor = .white
-//        return label
-//    }()
-//    private lazy var maxMemberLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "\(Int(self.memberSlider.maximumValue))인"
-//        label.font = .font(.regular, ofSize: 16)
-//        label.textColor = .white
-//        return label
-//    }()
-//    private lazy var memberSlider: UISlider = {
-//        let slider = UISlider()
-//        slider.minimumValue = 4
-//        slider.maximumValue = 15
-//        slider.maximumTrackTintColor = .darkGrey003
-//        slider.minimumTrackTintColor = .red001
-//        slider.value = Float(self.sliderValue)
-//        slider.isContinuous = true
-//        slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
-//        return slider
-//    }()
-//    private lazy var memberCountLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "\(self.sliderValue)" + TextLiteral.per
-//        label.font = .font(.regular, ofSize: 24)
-//        label.textColor = .white
-//        return label
-//    }()
     
     // MARK: - property
     
@@ -112,19 +30,7 @@ final class DetailEditViewController: BaseViewController {
     var currentUserCount: Int = 0
     var sliderValue: Int = 10
     var startDateText: String = ""
-//    {
-//        didSet {
-//            self.calendarView.startDateText = startDateText
-//            self.calendarView.setupDateRange()
-//        }
-//    }
     var endDateText: String = ""
-//    {
-//        didSet {
-//            self.calendarView.endDateText = endDateText
-//            self.calendarView.setupDateRange()
-//        }
-//    }
     
     // MARK: - init
     
@@ -162,24 +68,6 @@ final class DetailEditViewController: BaseViewController {
     }
 
     // MARK: - func
-
-//    private func didTapChangeButton() {
-//        let dto = RoomDTO(title: self.roomTitle,
-//                          capacity: Int(self.memberSlider.value),
-//                          startDate: "20\(self.calendarView.getTempStartDate())",
-//                          endDate: "20\(self.calendarView.getTempEndDate())")
-//        switch self.editMode {
-//        case .date:
-//            self.putChangeRoomInfo(roomDto: dto)
-//        case .information:
-//            if self.currentUserCount <= self.sliderValue {
-//                self.putChangeRoomInfo(roomDto: dto)
-//            } else {
-//                self.makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle,
-//                          message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
-//            }
-//        }
-//    }
     
     private func configureDelegation() {
         self.detailEditView.configureDelegation(self)
