@@ -57,29 +57,12 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
-        guard let room = self.roomInformation,
-              let index = room.roomInformation?.id,
-              let title = room.roomInformation?.title,
-              let startDate = room.roomInformation?.startDate,
-              let endDate = room.roomInformation?.endDate,
-              let currentUserCount = room.participants?.count,
-              let capacity = room.roomInformation?.capacity else { return }
+        guard let room = self.roomInformation else { return }
         let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
-                                                      roomIndex: index,
-                                                      title: title)
+                                                      room: room)
         viewController.didTappedChangeButton = { [weak self] in
             self?.fetchRoomData()
         }
-        if self.checkStartDateIsPast(startDate) {
-            let fiveDaysInterval: TimeInterval = 86400 * 4
-            viewController.startDateText = Date().dateToString
-            viewController.endDateText = (Date() + fiveDaysInterval).dateToString
-        } else {
-            viewController.startDateText = startDate
-            viewController.endDateText = endDate
-        }
-        viewController.currentUserCount = currentUserCount
-        viewController.sliderValue = capacity
         self.present(viewController, animated: true)
     }
     

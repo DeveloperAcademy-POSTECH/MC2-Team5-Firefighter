@@ -16,6 +16,11 @@ protocol DetailEditDelegate: AnyObject {
 
 final class DetailEditView: UIView {
     
+    enum EditMode {
+        case date
+        case information
+    }
+    
     // MARK: - ui component
     
     private let cancelButton: UIButton = {
@@ -80,20 +85,18 @@ final class DetailEditView: UIView {
         label.textColor = .white
         return label
     }()
-    private lazy var memberSlider: UISlider = {
+    private let memberSlider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 4
         slider.maximumValue = 15
         slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001
-        slider.value = Float(self.maximumMemberCount)
         slider.isContinuous = true
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         return slider
     }()
     private lazy var memberCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(self.maximumMemberCount)" + TextLiteral.per
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
         return label
@@ -102,16 +105,19 @@ final class DetailEditView: UIView {
     // MARK: - property
     
     private weak var delegate: DetailEditDelegate?
-    private var maximumMemberCount: Int {
-        didSet {
-            self.memberCountLabel.text = maximumMemberCount.description + TextLiteral.per
+    private let editMode: EditMode
+    private var maximumMemberCount: Int? {
+        willSet(count) {
+            if let count {
+                self.memberCountLabel.text = count.description + TextLiteral.per
+            }
         }
     }
     
     // MARK: - init
     
-    init(maximumMemberCount: Int) {
-        self.maximumMemberCount = maximumMemberCount
+    init(editMode: EditMode) {
+        self.editMode = editMode
         super.init(frame: .zero)
         self.setupLayout()
         self.setupCancleButton()
@@ -174,7 +180,9 @@ final class DetailEditView: UIView {
             $0.trailing.equalToSuperview().inset(25)
         }
         
-        self.setupEditMembersLayout()
+        if self.editMode == .information {        
+            self.setupEditMembersLayout()
+        }
     }
     
     private func setupEditMembersLayout() {
@@ -219,6 +227,11 @@ final class DetailEditView: UIView {
         self.calendarView.startDateText = startDateString
         self.calendarView.endDateText = endDateString
         self.calendarView.setupDateRange()
+    }
+    
+    func setupSliderValue(_ value: Int) {
+        self.maximumMemberCount = value
+        self.memberSlider.value = Float(value)
     }
     
     private func setupCancleButton() {

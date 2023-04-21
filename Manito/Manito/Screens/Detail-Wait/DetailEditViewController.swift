@@ -11,33 +11,21 @@ import SnapKit
 
 final class DetailEditViewController: BaseViewController {
     
-    enum EditMode {
-        case date
-        case information
-    }
-
     // MARK: - ui component
     
-    private lazy var detailEditView = DetailEditView(maximumMemberCount: self.sliderValue)
+    private let detailEditView: DetailEditView
     
     // MARK: - property
     
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     var didTappedChangeButton: (() -> ())?
-    private let roomIndex: Int
-    private let roomTitle: String
-    var editMode: EditMode
-    var currentUserCount: Int = 0
-    var sliderValue: Int = 10
-    var startDateText: String = ""
-    var endDateText: String = ""
+    private let room: Room
     
     // MARK: - init
     
-    init(editMode: EditMode, roomIndex: Int, title: String) {
-        self.editMode = editMode
-        self.roomIndex = roomIndex
-        self.roomTitle = title
+    init(editMode: DetailEditView.EditMode, room: Room) {
+        self.detailEditView = DetailEditView(editMode: editMode)
+        self.room = room
         super.init()
     }
     
@@ -60,6 +48,7 @@ final class DetailEditViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.setupCalendarLayout()
+        self.setupMemberSliderValue()
     }
     
     override func configureUI() {
@@ -75,7 +64,14 @@ final class DetailEditViewController: BaseViewController {
     }
     
     private func setupCalendarLayout() {
-        self.detailEditView.setupDateRange(from: self.startDateText, to: self.endDateText)
+        guard let startDate = self.room.roomInformation?.startDate,
+              let endDate = self.room.roomInformation?.endDate else { return }
+        self.detailEditView.setupDateRange(from: startDate, to: endDate)
+    }
+    
+    private func setupMemberSliderValue() {
+        guard let capacity = self.room.roomInformation?.capacity else { return }
+        self.detailEditView.setupSliderValue(capacity)
     }
     
     private func presentationControllerDidAttemptToDismissAlert() {
@@ -85,7 +81,7 @@ final class DetailEditViewController: BaseViewController {
         }
         self.showDiscardActionSheet()
     }
-
+ 
     private func showDiscardActionSheet() {
         let actionTitles = [TextLiteral.destructive, TextLiteral.cancel]
         let actionStyle: [UIAlertAction.Style] = [.destructive, .cancel]
@@ -100,9 +96,10 @@ final class DetailEditViewController: BaseViewController {
     // MARK: - network
     
     private func putChangeRoomInfo(roomDto: RoomDTO, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
+        guard let roomIndex = self.room.roomInformation?.id else { return }
         Task {
             do {
-                let status = try await self.detailWaitService.editRoomInfo(roomId: "\(roomIndex)",
+                let status = try await self.detailWaitService.editRoomInfo(roomId: roomIndex.description,
                                                                            roomInfo: roomDto)
                 switch status {
                 case 200..<300:
@@ -131,11 +128,13 @@ extension DetailEditViewController: DetailEditDelegate {
     }
     
     func changeRoomInformation(capacity: Int, from startDate: String, to endDate: String) {
-        let dto = RoomDTO(title: self.roomTitle,
+        guard let roomTitle = self.room.roomInformation?.title,
+              let currentUserCount = self.room.participants?.count else { return }
+        let dto = RoomDTO(title: roomTitle,
                           capacity: capacity,
                           startDate: "20\(startDate)",
                           endDate: "20\(endDate)")
-        if self.currentUserCount <= capacity {
+        if currentUserCount <= capacity {
             self.putChangeRoomInfo(roomDto: dto) { [weak self] result in
                 switch result {
                 case .success:
