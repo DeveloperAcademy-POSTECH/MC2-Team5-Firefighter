@@ -16,11 +16,6 @@ protocol DetailEditDelegate: AnyObject {
 
 final class DetailEditView: UIView {
     
-//    enum EditMode {
-//        case date
-//        case information
-//    }
-    
     // MARK: - ui component
     
     private let cancelButton: UIButton = {
@@ -113,6 +108,8 @@ final class DetailEditView: UIView {
         }
     }
     
+    // MARK: - init
+    
     init(maximumMemberCount: Int) {
         self.maximumMemberCount = maximumMemberCount
         super.init(frame: .zero)
@@ -177,9 +174,7 @@ final class DetailEditView: UIView {
             $0.trailing.equalToSuperview().inset(25)
         }
         
-//        if self.editMode == .information {
-            self.setupEditMembersLayout()
-//        }
+        self.setupEditMembersLayout()
     }
     
     private func setupEditMembersLayout() {
