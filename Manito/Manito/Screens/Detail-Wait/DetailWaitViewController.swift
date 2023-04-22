@@ -242,4 +242,10 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
     func showAlert(title: String, message: String) {
         self.makeAlert(title: title, message: message)
     }
+    
+    func didTapCodeCopyButton(invitationCode: String) {
+        ToastView.showToast(code: invitationCode,
+                            message: TextLiteral.detailWaitViewControllerCopyCode,
+                            controller: self)
+    }
 }

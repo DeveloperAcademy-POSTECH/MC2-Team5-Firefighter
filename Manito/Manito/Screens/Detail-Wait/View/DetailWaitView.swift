@@ -16,6 +16,7 @@ protocol DetailWaitViewDelegate: AnyObject {
     func leaveRoom(title: String, message: String, okTitle: String)
     func presentEditViewControllerAfterShowAlert()
     func showAlert(title: String, message: String)
+    func didTapCodeCopyButton(invitationCode: String)
 }
 
 final class DetailWaitView: UIView {
@@ -180,9 +181,7 @@ final class DetailWaitView: UIView {
     
     private func setupCopyButton(_ invitationCode: String) {
         let action = UIAction { [weak self] _ in
-            ToastView.showToast(code: invitationCode,
-                                message: TextLiteral.detailWaitViewControllerCopyCode,
-                                view: self ?? UIView())
+            self?.delegate?.didTapCodeCopyButton(invitationCode: invitationCode)
         }
         self.copyButton.addAction(action, for: .touchUpInside)
     }

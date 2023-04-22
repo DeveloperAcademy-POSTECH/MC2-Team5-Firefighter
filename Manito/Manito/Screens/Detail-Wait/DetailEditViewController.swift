@@ -324,7 +324,7 @@ final class DetailEditViewController: BaseViewController {
                                                                            roomInfo: roomDto)
                 if status == 204 {
                     ToastView.showToast(message: "방 정보 수정 완료",
-                                        view: self.view ?? UIView())
+                                        controller: self)
                     self.didTappedChangeButton?()
                     self.dismiss(animated: true)
                 }
