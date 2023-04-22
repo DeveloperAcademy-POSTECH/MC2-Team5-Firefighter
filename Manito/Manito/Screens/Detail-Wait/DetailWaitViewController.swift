@@ -60,21 +60,17 @@ final class DetailWaitViewController: BaseViewController {
         guard let room = self.roomInformation,
               let index = room.roomInformation?.id,
               let title = room.roomInformation?.title,
-              let startDate = room.roomInformation?.startDate,
-              let endDate = room.roomInformation?.endDate,
               let currentUserCount = room.participants?.count,
               let capacity = room.roomInformation?.capacity else { return }
         let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
                                                       roomIndex: index,
                                                       title: title)
-        if self.checkStartDateIsPast(startDate) {
-            let fiveDaysInterval: TimeInterval = 86400 * 4
-            viewController.startDateText = Date().dateToString
-            viewController.endDateText = (Date() + fiveDaysInterval).dateToString
-        } else {
-            viewController.startDateText = startDate
-            viewController.endDateText = endDate
-        }
+        
+        guard let startDate = room.roomInformation?.dateRange.startDate,
+              let endDate = room.roomInformation?.dateRange.endDate else { return }
+        
+        viewController.startDateText = startDate
+        viewController.endDateText = endDate
         viewController.currentUserCount = currentUserCount
         viewController.sliderValue = capacity
         self.present(viewController, animated: true)

@@ -200,7 +200,7 @@ final class DetailWaitView: UIView {
     func configureLayout(room: Room) {
         guard let title = room.roomInformation?.title,
               let state = room.roomInformation?.state,
-              let dateRange = room.roomInformation?.dateRange,
+              let dateRange = room.roomInformation?.dateRangeText,
               let users = room.participants?.members,
               let isOwner = room.admin,
               let code = room.invitation?.code,
