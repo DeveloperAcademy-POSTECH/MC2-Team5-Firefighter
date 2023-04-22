@@ -21,14 +21,14 @@ protocol DetailWaitViewDelegate: AnyObject {
 
 final class DetailWaitView: UIView {
     private enum UserStatus: CaseIterable {
-        case owner
+        case admin
         case member
         
         var alertText: (title: String,
                         message: String,
                         okTitle: String) {
             switch self {
-            case .owner:
+            case .admin:
                 return (title: TextLiteral.datailWaitViewControllerDeleteTitle,
                         message: TextLiteral.datailWaitViewControllerDeleteMessage,
                         okTitle: TextLiteral.delete)
@@ -202,7 +202,7 @@ final class DetailWaitView: UIView {
               let state = room.roomInformation?.state,
               let dateRange = room.roomInformation?.dateRangeText,
               let users = room.participants?.members,
-              let isOwner = room.admin,
+              let isAdmin = room.admin,
               let code = room.invitation?.code,
               let isStart = room.roomInformation?.isStart
         else { return }
@@ -211,12 +211,12 @@ final class DetailWaitView: UIView {
         self.userCountLabel.text = room.userCount
         self.titleView.setDurationDateLabel(text: dateRange)
         self.userArray = users
-        self.showStartButtonForAdmin(isOwner)
+        self.showStartButtonForAdmin(isAdmin)
         self.canStart = room.canStart
-        self.setExitButtonMenu(isOwner)
+        self.setExitButtonMenu(isAdmin)
         self.setupCopyButton(code)
-        self.showAlertWhenPastDate(isOwner, isStart: isStart)
-        self.setupTitleViewGesture(isOwner)
+        self.showAlertWhenPastDate(isAdmin, isStart: isStart)
+        self.setupTitleViewGesture(isAdmin)
     }
     
     private func updateTableViewHeight() {
@@ -230,8 +230,8 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private func showStartButtonForAdmin(_ isOwner: Bool) {
-        self.startButton.isHidden = !isOwner
+    private func showStartButtonForAdmin(_ isAdmin: Bool) {
+        self.startButton.isHidden = !isAdmin
     }
     
     private func configureStartButton(_ canStart: Bool) {
@@ -248,15 +248,15 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private func setExitButtonMenu(_ isOwner: Bool) {
+    private func setExitButtonMenu(_ isAdmin: Bool) {
         var children: [UIAction]
-        if isOwner {
+        if isAdmin {
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
                 self?.delegate?.presentRoomEditViewController(isOnlyDateEdit: false)
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-                self?.delegate?.deleteRoom(title: UserStatus.owner.alertText.title,
-                                           message: UserStatus.owner.alertText.message,
-                                           okTitle: UserStatus.owner.alertText.okTitle)
+                self?.delegate?.deleteRoom(title: UserStatus.admin.alertText.title,
+                                           message: UserStatus.admin.alertText.message,
+                                           okTitle: UserStatus.admin.alertText.okTitle)
             })
             ]
         } else {
@@ -272,10 +272,10 @@ final class DetailWaitView: UIView {
     }
     
     private func showAlertWhenPastDate(_ isAdmin: Bool, isStart: Bool) {
-        let type: UserStatus = isAdmin ? .owner : .member
+        let type: UserStatus = isAdmin ? .admin : .member
         if !isStart {
             switch type {
-            case .owner:
+            case .admin:
                 self.delegate?.presentEditViewControllerAfterShowAlert()
             case .member:
                 self.delegate?.showAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
@@ -284,8 +284,8 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private func setupTitleViewGesture(_ isOwner: Bool) {
-        if isOwner {
+    private func setupTitleViewGesture(_ isAdmin: Bool) {
+        if isAdmin {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.presentEditViewController))
             self.titleView.addGestureRecognizer(tapGesture)
         }

@@ -229,7 +229,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
     
     func presentEditViewControllerAfterShowAlert() {
         self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-                       message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
+                       message: TextLiteral.detailWaitViewControllerPastAdminAlertMessage,
                        okAction: { [weak self] _ in
             self?.presentDetailEditViewController(isOnlyDateEdit: true) }
         )
