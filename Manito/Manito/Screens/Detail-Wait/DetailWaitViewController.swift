@@ -82,7 +82,7 @@ final class DetailWaitViewController: BaseViewController {
     
     private func checkStartDateIsPast(_ startDate: String) -> Bool {
         guard let startDate = startDate.stringToDate else { return false }
-        return startDate.isPast()
+        return startDate.isPast
     }
     
     private func presentSelectManittoViewController(nickname: String) {
