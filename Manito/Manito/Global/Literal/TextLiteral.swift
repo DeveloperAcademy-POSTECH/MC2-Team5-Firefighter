@@ -35,6 +35,7 @@ enum TextLiteral {
     static let createRoom: String = "방 생성하기"
     static let next: String = "다음"
     static let previous: String = "이전"
+    static let errorAlertTitle: String = "오류 발생"
     
     // MARK: - SettingDeveloperInfo
     static let settingDeveloperInfoTitle: String = "개발자 정보"
@@ -182,13 +183,9 @@ enum TextLiteral {
     static let detailWaitViewControllerPastAlertTitle: String = "마니또 시작일이 지났어요"
     static let detailWaitViewControllerPastAlertMessage: String = "방장이 진행기간을 재설정 \n 할 때까지 기다려주세요."
     static let detailWaitViewControllerPastOwnerAlertMessage: String = "진행기간을 재설정 해주세요"
-    static let detailWaitViewControllerDeleteErrorTitle: String = "오류 발생"
     static let detailWaitViewControllerDeleteErrorMessage: String = "방 삭제에 실패했습니다. 다시 시도해주세요"
-    static let detailWaitViewControllerStartErrorTitle: String = "오류 발생"
     static let detailWaitViewControllerStartErrorMessage: String = "마니또 시작에 실패했습니다. 다시 시도해주세요"
-    static let detailWaitViewControllerLeaveErrorTitle: String = "오류 발생"
     static let detailWaitViewControllerLeaveErrorMessage: String = "방 나가기에 실패했습니다. 다시 시도해주세요"
-    static let detailWaitViewControllerLoadDataTitle: String = "오류 발생"
     static let detailWaitViewControllerLoadDataMessage: String = "방 정보를 불러올 수 없습니다. 다시 시도해주세요"
     
     // MARK: - MemoryViewController

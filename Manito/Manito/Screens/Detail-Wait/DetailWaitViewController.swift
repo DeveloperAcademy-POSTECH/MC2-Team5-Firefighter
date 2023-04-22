@@ -106,7 +106,7 @@ final class DetailWaitViewController: BaseViewController {
                     self?.detailWaitView.configureLayout(room: room)
                 }
             case .failure:
-                self?.makeAlert(title: TextLiteral.detailWaitViewControllerLoadDataTitle,
+                self?.makeAlert(title: TextLiteral.errorAlertTitle,
                                 message: TextLiteral.detailWaitViewControllerLoadDataMessage)
             }
         }
@@ -188,7 +188,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
             case .success(let nickname):
                 self?.presentSelectManittoViewController(nickname: nickname)
             case .failure:
-                self?.makeAlert(title: TextLiteral.detailWaitViewControllerStartErrorTitle,
+                self?.makeAlert(title: TextLiteral.errorAlertTitle,
                                 message: TextLiteral.detailWaitViewControllerStartErrorMessage)
             }
         }
@@ -208,7 +208,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                 case .success:
                     self?.navigationController?.popViewController(animated: true)
                 case .failure:
-                    self?.makeAlert(title: TextLiteral.detailWaitViewControllerDeleteErrorTitle,
+                    self?.makeAlert(title: TextLiteral.errorAlertTitle,
                                     message: TextLiteral.detailWaitViewControllerDeleteErrorMessage)
                 }
             }
@@ -224,7 +224,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                 case .success:
                     self?.navigationController?.popViewController(animated: true)
                 case .failure:
-                    self?.makeAlert(title: TextLiteral.detailWaitViewControllerLeaveErrorTitle,
+                    self?.makeAlert(title: TextLiteral.errorAlertTitle,
                                     message: TextLiteral.detailWaitViewControllerLeaveErrorMessage)
                 }
             }
