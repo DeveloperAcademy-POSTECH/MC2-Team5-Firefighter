@@ -69,7 +69,7 @@ final class DetailWaitView: UIView {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private let imgNiView: UIImageView = {
+    private let niCharacterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = ImageLiterals.imgNi
         return imageView
@@ -144,8 +144,8 @@ final class DetailWaitView: UIView {
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
         
-        self.addSubview(self.imgNiView)
-        self.imgNiView.snp.makeConstraints {
+        self.addSubview(self.niCharacterImageView)
+        self.niCharacterImageView.snp.makeConstraints {
             $0.centerY.equalTo(self.togetherFriendLabel.snp.centerY)
             $0.leading.equalTo(self.togetherFriendLabel.snp.trailing).offset(7)
             $0.width.height.equalTo(30)
@@ -153,8 +153,8 @@ final class DetailWaitView: UIView {
         
         self.addSubview(self.userCountLabel)
         self.userCountLabel.snp.makeConstraints {
-            $0.leading.equalTo(self.imgNiView.snp.trailing)
-            $0.centerY.equalTo(self.imgNiView.snp.centerY)
+            $0.leading.equalTo(self.niCharacterImageView.snp.trailing)
+            $0.centerY.equalTo(self.niCharacterImageView.snp.centerY)
         }
         
         self.addSubview(self.copyButton)
