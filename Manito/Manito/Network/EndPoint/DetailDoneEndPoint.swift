@@ -7,13 +7,30 @@
 
 import Foundation
 
-enum DetailDoneEndPoint: EndPointable {
+enum DetailDoneEndPoint: URLRepresentable {
     case requestWithFriend(roomId: String)
     case requestMemory(roomId: String)
     case requestDoneRoomInfo(roomId: String)
     case requestExitRoom(roomId: String)
     case requestDeleteRoom(roomId: String)
 
+    var path: String {
+        switch self {
+        case .requestWithFriend(let roomId):
+            return "/rooms/\(roomId)/participants"
+        case .requestMemory(let roomId):
+            return "/rooms/\(roomId)/memories"
+        case .requestDoneRoomInfo(let roomId):
+            return "/rooms/\(roomId)"
+        case .requestExitRoom(let roomId):
+            return "/rooms/\(roomId)/participants"
+        case .requestDeleteRoom(let roomId):
+            return "/rooms/\(roomId)"
+        }
+    }
+}
+
+extension DetailDoneEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -48,26 +65,26 @@ enum DetailDoneEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
         case .requestWithFriend(let roomId):
-            return "\(baseURL)/rooms/\(roomId))/participants"
+            return self[.requestWithFriend(roomId: roomId)]
         case .requestMemory(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/memories"
+            return self[.requestMemory(roomId: roomId)]
         case .requestDoneRoomInfo(let roomId):
-            return "\(baseURL)/rooms/\(roomId)"
+            return self[.requestDoneRoomInfo(roomId: roomId)]
         case .requestExitRoom(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/participants"
+            return self[.requestExitRoom(roomId: roomId)]
         case .requestDeleteRoom(let roomId):
-            return "\(baseURL)/rooms/\(roomId)"
+            return self[.requestDeleteRoom(roomId: roomId)]
         }
     }
     
     func createRequest() -> NetworkRequest {
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+        return NetworkRequest(url: self.url,
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
 }

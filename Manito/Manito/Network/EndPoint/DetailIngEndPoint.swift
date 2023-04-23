@@ -7,10 +7,21 @@
 
 import Foundation
 
-enum DetailIngEndPoint: EndPointable {
+enum DetailIngEndPoint: URLRepresentable {
     case requestWithFriend(roomId: String)
     case requestStartingRoomInfo(roomId: String)
 
+    var path: String {
+        switch self {
+        case .requestWithFriend(let roomId):
+            return "/rooms/\(roomId)/participants"
+        case .requestStartingRoomInfo(let roomId):
+            return "/rooms/\(roomId)"
+        }
+    }
+}
+
+extension DetailIngEndPoint: EndPointable {
     var requestTimeOut: Float {
         return 20
     }
@@ -33,20 +44,20 @@ enum DetailIngEndPoint: EndPointable {
         }
     }
 
-    func getURL(baseURL: String) -> String {
+    var url: String {
         switch self {
         case .requestWithFriend(let roomId):
-            return "\(baseURL)/rooms/\(roomId)/participants"
+            return self[.requestWithFriend(roomId: roomId)]
         case .requestStartingRoomInfo(let roomId):
-            return "\(baseURL)/rooms/\(roomId)"
+            return self[.requestStartingRoomInfo(roomId: roomId)]
         }
     }
     
     func createRequest() -> NetworkRequest {
-        return NetworkRequest(url: getURL(baseURL: APIEnvironment.baseUrl),
-                              reqBody: requestBody,
-                              reqTimeout: requestTimeOut,
-                              httpMethod: httpMethod
+        return NetworkRequest(url: self.url,
+                              reqBody: self.requestBody,
+                              reqTimeout: self.requestTimeOut,
+                              httpMethod: self.httpMethod
         )
     }
 }

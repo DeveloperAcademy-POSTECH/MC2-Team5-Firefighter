@@ -134,13 +134,13 @@ class SettingViewController: BaseViewController {
     }
     
     private func goToPersonalInfomation() {
-        if let url = URL(string: UrlLiteral.personalInfomationUrl) {
+        if let url = URL(string: URLLiteral.personalInfomationUrl) {
             UIApplication.shared.open(url, options: [:])
         }
     }
     
     private func goToTermsOfService() {
-        if let url = URL(string: UrlLiteral.termsOfServiceUrl) {
+        if let url = URL(string: URLLiteral.termsOfServiceUrl) {
             UIApplication.shared.open(url, options: [:])
         }
     }
@@ -203,7 +203,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                               
                               -----------------------------
                               
-                              - 문의하는 닉네임: \(String(describing: UserDefaultStorage.nickname ?? ""))
+                              - 문의하는 닉네임: \(String(describing: UserDefaultStorage.nickname))
                               - 문의 메시지 제목 한줄 요약:
                               - 문의 날짜: \(Date())
                               
