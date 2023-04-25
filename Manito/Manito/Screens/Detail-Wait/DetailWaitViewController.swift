@@ -159,7 +159,6 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
     
-    // FIXME: - 나가기 테스트 해야함
     private func requestDeleteLeaveRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
