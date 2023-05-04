@@ -108,11 +108,11 @@ final class DetailWaitView: UIView {
             }
         }
     }
-    private var canStart: Bool = false {
-        didSet {
-            self.configureStartButton(self.canStart)
-        }
-    }
+//    private var canStart: Bool = false {
+//        didSet {
+//            self.configureStartButton(self.canStart)
+//        }
+//    }
     
     private weak var delegate: DetailWaitViewDelegate?
     
@@ -202,21 +202,33 @@ final class DetailWaitView: UIView {
               let state = room.roomInformation?.state,
               let dateRange = room.roomInformation?.dateRangeText,
               let users = room.participants?.members,
-              let isAdmin = room.admin,
-              let code = room.invitation?.code,
-              let isStart = room.roomInformation?.isStart
+              let isStart = room.roomInformation?.isStart,
+              let admin = room.admin
         else { return }
-        self.titleView.setRoomTitleLabelText(text: title)
-        self.titleView.setStartState(state: state)
-        self.userCountLabel.text = room.userCount
-        self.titleView.setDurationDateLabel(text: dateRange)
+        
         self.userArray = users
-        self.showStartButtonForAdmin(isAdmin)
-        self.canStart = room.canStart
-        self.setExitButtonMenu(isAdmin)
-        self.setupCopyButton(code)
-        self.showAlertWhenPastDate(isAdmin, isStart: isStart)
-        self.setupTitleViewGesture(isAdmin)
+
+        self.setupTitleViewData(title: title, state: state, dateRange: dateRange)
+        self.setupRelatedViews(of: admin, isStart)
+
+        self.configureStartButton(room.canStart)
+        self.configureUserCountLabel(userCount: room.userCount)
+    }
+    
+    private func setupTitleViewData(title: String, state: String, dateRange: String) {
+        self.titleView.setStartState(state: state)
+        self.titleView.setupLabelData(title: title, dateRange: dateRange)
+    }
+
+    private func setupRelatedViews(of userStatus: Bool, _ isStart: Bool) {
+        self.showStartButtonForAdmin(userStatus)
+        self.setExitButtonMenu(userStatus)
+        self.showAlertWhenPastDate(userStatus, isStart: isStart)
+        self.setupTitleViewGesture(userStatus)
+    }
+
+    private func configureUserCountLabel(userCount: String) {
+        self.userCountLabel.text = userCount
     }
     
     private func updateTableViewHeight() {
