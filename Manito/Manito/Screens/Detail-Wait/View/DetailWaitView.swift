@@ -16,7 +16,7 @@ protocol DetailWaitViewDelegate: AnyObject {
     func leaveButtonDidTap(title: String, message: String, okTitle: String)
     func presentEditViewControllerAfterShowAlert()
     func showAlert(title: String, message: String)
-    func codeCopyButtonDidTap(invitationCode: String)
+    func codeCopyButtonDidTap()
 }
 
 final class DetailWaitView: UIView {
@@ -181,7 +181,7 @@ final class DetailWaitView: UIView {
     
     private func setupCopyButton(_ invitationCode: String) {
         let action = UIAction { [weak self] _ in
-            self?.delegate?.codeCopyButtonDidTap(invitationCode: invitationCode)
+            self?.delegate?.codeCopyButtonDidTap()
         }
         self.copyButton.addAction(action, for: .touchUpInside)
     }
