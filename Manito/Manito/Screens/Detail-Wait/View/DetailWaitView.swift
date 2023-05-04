@@ -186,35 +186,6 @@ final class DetailWaitView: UIView {
         self.copyButton.addAction(action, for: .touchUpInside)
     }
     
-    func configureDelegation(_ delegate: DetailWaitViewDelegate) {
-        self.delegate = delegate
-    }
-    
-    func configureNavigationItem(_ navigationController: UINavigationController) {
-        let navigationItem = navigationController.topViewController?.navigationItem
-        let moreButton = UIBarButtonItem(customView: self.moreButton)
-        
-        navigationItem?.rightBarButtonItem = moreButton
-    }
-    
-    func bind(room: Room) {
-        guard let title = room.roomInformation?.title,
-              let state = room.roomInformation?.state,
-              let dateRange = room.roomInformation?.dateRangeText,
-              let users = room.participants?.members,
-              let isStart = room.roomInformation?.isStart,
-              let admin = room.admin
-        else { return }
-        
-        self.userArray = users
-
-        self.setupTitleViewData(title: title, state: state, dateRange: dateRange)
-        self.setupRelatedViews(of: admin, isStart)
-
-        self.configureStartButton(room.canStart)
-        self.configureUserCountLabel(userCount: room.userCount)
-    }
-    
     private func setupTitleViewData(title: String, state: String, dateRange: String) {
         self.titleView.setStartState(state: state)
         self.titleView.setupLabelData(title: title, dateRange: dateRange)
@@ -301,6 +272,35 @@ final class DetailWaitView: UIView {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.presentEditViewController))
             self.titleView.addGestureRecognizer(tapGesture)
         }
+    }
+    
+    func configureDelegation(_ delegate: DetailWaitViewDelegate) {
+        self.delegate = delegate
+    }
+    
+    func configureNavigationItem(_ navigationController: UINavigationController) {
+        let navigationItem = navigationController.topViewController?.navigationItem
+        let moreButton = UIBarButtonItem(customView: self.moreButton)
+        
+        navigationItem?.rightBarButtonItem = moreButton
+    }
+    
+    func bind(room: Room) {
+        guard let title = room.roomInformation?.title,
+              let state = room.roomInformation?.state,
+              let dateRange = room.roomInformation?.dateRangeText,
+              let users = room.participants?.members,
+              let isStart = room.roomInformation?.isStart,
+              let admin = room.admin
+        else { return }
+        
+        self.userArray = users
+
+        self.setupTitleViewData(title: title, state: state, dateRange: dateRange)
+        self.setupRelatedViews(of: admin, isStart)
+
+        self.configureStartButton(room.canStart)
+        self.configureUserCountLabel(userCount: room.userCount)
     }
     
     // MARK: - selector
