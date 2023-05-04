@@ -177,7 +177,7 @@ final class DetailWaitViewController: BaseViewController {
 }
 
 extension DetailWaitViewController: DetailWaitViewDelegate {
-    func startManitto() {
+    func startButtonDidTap() {
         self.requestStartManitto() { [weak self] result in
             switch result {
             case .success(let nickname):
@@ -193,7 +193,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         self.presentDetailEditViewController(isOnlyDateEdit: isOnlyDateEdit)
     }
     
-    func deleteRoom(title: String, message: String, okTitle: String) {
+    func deleteButtonDidTap(title: String, message: String, okTitle: String) {
         self.makeRequestAlert(title: title,
                               message: message,
                               okTitle: okTitle,
@@ -210,7 +210,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         })
     }
     
-    func leaveRoom(title: String, message: String, okTitle: String) {
+    func leaveButtonDidTap(title: String, message: String, okTitle: String) {
         self.makeRequestAlert(title: title,
                               message: message,
                               okAction: { [weak self] _ in
@@ -238,7 +238,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         self.makeAlert(title: title, message: message)
     }
     
-    func didTapCodeCopyButton(invitationCode: String) {
+    func codeCopyButtonDidTap(invitationCode: String) {
         ToastView.showToast(code: invitationCode,
                             message: TextLiteral.detailWaitViewControllerCopyCode,
                             controller: self)

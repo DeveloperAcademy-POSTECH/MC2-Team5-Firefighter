@@ -10,13 +10,13 @@ import UIKit
 import SnapKit
 
 protocol DetailWaitViewDelegate: AnyObject {
-    func startManitto()
+    func startButtonDidTap()
     func presentRoomEditViewController(isOnlyDateEdit: Bool)
-    func deleteRoom(title: String, message: String, okTitle: String)
-    func leaveRoom(title: String, message: String, okTitle: String)
+    func deleteButtonDidTap(title: String, message: String, okTitle: String)
+    func leaveButtonDidTap(title: String, message: String, okTitle: String)
     func presentEditViewControllerAfterShowAlert()
     func showAlert(title: String, message: String)
-    func didTapCodeCopyButton(invitationCode: String)
+    func codeCopyButtonDidTap(invitationCode: String)
 }
 
 final class DetailWaitView: UIView {
@@ -181,7 +181,7 @@ final class DetailWaitView: UIView {
     
     private func setupCopyButton(_ invitationCode: String) {
         let action = UIAction { [weak self] _ in
-            self?.delegate?.didTapCodeCopyButton(invitationCode: invitationCode)
+            self?.delegate?.codeCopyButtonDidTap(invitationCode: invitationCode)
         }
         self.copyButton.addAction(action, for: .touchUpInside)
     }
@@ -239,7 +239,7 @@ final class DetailWaitView: UIView {
             self.startButton.title = ButtonText.start.status
             self.startButton.isDisabled = false
             let action = UIAction { [weak self] _ in
-                self?.delegate?.startManitto()
+                self?.delegate?.startButtonDidTap()
             }
             self.startButton.addAction(action, for: .touchUpInside)
         } else {
@@ -254,14 +254,14 @@ final class DetailWaitView: UIView {
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
                 self?.delegate?.presentRoomEditViewController(isOnlyDateEdit: false)
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-                self?.delegate?.deleteRoom(title: UserStatus.admin.alertText.title,
+                self?.delegate?.deleteButtonDidTap(title: UserStatus.admin.alertText.title,
                                            message: UserStatus.admin.alertText.message,
                                            okTitle: UserStatus.admin.alertText.okTitle)
             })
             ]
         } else {
             children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                self?.delegate?.leaveRoom(title: UserStatus.member.alertText.title,
+                self?.delegate?.leaveButtonDidTap(title: UserStatus.member.alertText.title,
                                           message: UserStatus.member.alertText.message,
                                           okTitle: UserStatus.member.alertText.okTitle
                 )
