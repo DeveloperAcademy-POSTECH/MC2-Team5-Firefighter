@@ -99,7 +99,7 @@ final class DetailWaitViewController: BaseViewController {
             switch result {
             case .success(let room):
                 DispatchQueue.main.async {
-                    self?.detailWaitView.bind(room: room)
+                    self?.detailWaitView.updateDetailWaitView(room: room)
                 }
             case .failure:
                 self?.makeAlert(title: TextLiteral.errorAlertTitle,

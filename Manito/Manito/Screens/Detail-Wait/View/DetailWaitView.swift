@@ -285,7 +285,7 @@ final class DetailWaitView: UIView {
         navigationItem?.rightBarButtonItem = moreButton
     }
     
-    func bind(room: Room) {
+    func updateDetailWaitView(room: Room) {
         guard let title = room.roomInformation?.title,
               let state = room.roomInformation?.state,
               let dateRange = room.roomInformation?.dateRangeText,
