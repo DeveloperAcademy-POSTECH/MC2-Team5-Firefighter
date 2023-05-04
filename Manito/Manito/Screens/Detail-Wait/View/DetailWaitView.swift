@@ -312,8 +312,10 @@ extension DetailWaitView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.listTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
-        cell.textLabel?.text = self.userArray[indexPath.row].nickname
-        cell.textLabel?.font = .font(.regular, ofSize: 17)
+        var cellConfigure = cell.defaultContentConfiguration()
+        cellConfigure.text =  self.userArray[indexPath.row].nickname
+        cellConfigure.textProperties.font = .font(.regular, ofSize: 17)
+        cell.contentConfiguration = cellConfigure
         cell.backgroundColor = .darkGrey003
         cell.selectionStyle = .none
         return cell
