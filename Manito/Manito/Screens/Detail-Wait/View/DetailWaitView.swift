@@ -14,9 +14,8 @@ protocol DetailWaitViewDelegate: AnyObject {
     func editButtonDidTap(isOnlyDateEdit: Bool)
     func deleteButtonDidTap(title: String, message: String, okTitle: String)
     func leaveButtonDidTap(title: String, message: String, okTitle: String)
-    func presentEditViewControllerAfterShowAlert()
-    func showAlert(title: String, message: String)
     func codeCopyButtonDidTap()
+    func didPassStartDate(isAdmin: Bool)
 }
 
 final class DetailWaitView: UIView {
@@ -250,15 +249,8 @@ final class DetailWaitView: UIView {
     }
     
     private func showAlertWhenPastDate(_ isAdmin: Bool, isStart: Bool) {
-        let type: UserStatus = isAdmin ? .admin : .member
         if !isStart {
-            switch type {
-            case .admin:
-                self.delegate?.presentEditViewControllerAfterShowAlert()
-            case .member:
-                self.delegate?.showAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-                                         message: TextLiteral.detailWaitViewControllerPastAlertMessage)
-            }
+            self.delegate?.didPassStartDate(isAdmin: isAdmin)
         }
     }
     

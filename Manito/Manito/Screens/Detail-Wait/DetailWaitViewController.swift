@@ -226,22 +226,23 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         })
     }
     
-    func presentEditViewControllerAfterShowAlert() {
-        self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-                       message: TextLiteral.detailWaitViewControllerPastAdminAlertMessage,
-                       okAction: { [weak self] _ in
-            self?.presentDetailEditViewController(isOnlyDateEdit: true) }
-        )
-    }
-    
-    func showAlert(title: String, message: String) {
-        self.makeAlert(title: title, message: message)
-    }
-    
     func codeCopyButtonDidTap() {
         guard let invitationCode = self.roomInformation?.invitation?.code else { return }
         ToastView.showToast(code: invitationCode,
                             message: TextLiteral.detailWaitViewControllerCopyCode,
                             controller: self)
+    }
+    
+    func didPassStartDate(isAdmin: Bool) {
+        if isAdmin {
+            self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                           message: TextLiteral.detailWaitViewControllerPastAdminAlertMessage,
+                           okAction: { [weak self] _ in
+                self?.presentDetailEditViewController(isOnlyDateEdit: true) }
+            )
+        } else {
+            self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                           message: TextLiteral.detailWaitViewControllerPastAlertMessage)
+        }
     }
 }
