@@ -11,8 +11,6 @@ import SnapKit
 
 class ChooseCharacterViewController: BaseViewController {
     
-    let roomService: RoomProtocol = RoomAPI(apiService: APIService())
-    
     private enum Size {
         static let leadingTrailingPadding: CGFloat = 20
         static let collectionHorizontalSpacing: CGFloat = 29.0
@@ -31,13 +29,7 @@ class ChooseCharacterViewController: BaseViewController {
         case enterRoom
     }
     
-    var statusMode: Status
-    var roomInfo: RoomDTO?
-    var roomId: Int?
-    
-    private var colorIdx: Int = 0
-    
-    // MARK: - Property
+    // MARK: - ui component
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -96,7 +88,7 @@ class ChooseCharacterViewController: BaseViewController {
         }
         button.addAction(action, for: .touchUpInside)
         return button
-    }()    
+    }()
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(ImageLiterals.icBack, for: .normal)
@@ -108,6 +100,14 @@ class ChooseCharacterViewController: BaseViewController {
         button.addAction(action, for: .touchUpInside)
         return button
     }()
+    
+    // MARK: - property
+    
+    let roomService: RoomProtocol = RoomAPI(apiService: APIService())
+    var statusMode: Status
+    var roomInfo: RoomDTO?
+    var roomId: Int?
+    private var colorIdx: Int = 0
     
     // MARK: - init
     
@@ -125,7 +125,7 @@ class ChooseCharacterViewController: BaseViewController {
         print("\(#file) is dead")
     }
     
-    // MARK: - life cycle
+    // MARK: - override
     
     override func setupLayout() {
         view.addSubview(closeButton)
@@ -172,33 +172,23 @@ class ChooseCharacterViewController: BaseViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
-    // MARK: - API
+    // MARK: - func
     
-    func requestCreateRoom(room: CreateRoomDTO) {
-        Task {
-            do {
-                guard
-                    let roomId = try await roomService.postCreateRoom(body: room),
-                    let navigationController = self.presentingViewController as? UINavigationController
-                else { return }
-                let viewController = DetailWaitViewController(index: roomId)
-                navigationController.popViewController(animated: true)
-                navigationController.pushViewController(viewController, animated: false)
-                
-                self.dismiss(animated: true) {
-                    NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
+    private func didTapEnterButton() {
+        switch statusMode {
+        case .createRoom:
+            guard let roomInfo = roomInfo else { return }
+            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
+                                                                capacity: roomInfo.capacity,
+                                                                startDate: roomInfo.startDate,
+                                                                endDate: roomInfo.endDate) ,
+                                                  member: MemberDTO(colorIdx: colorIdx)))
+        case .enterRoom:
+            requestJoinRoom()
         }
     }
     
-    // MARK: - func
+    // MARK: - network
     
     private func requestJoinRoom() {
         Task {
@@ -227,17 +217,27 @@ class ChooseCharacterViewController: BaseViewController {
         }
     }
     
-    private func didTapEnterButton() {
-        switch statusMode {
-        case .createRoom:
-            guard let roomInfo = roomInfo else { return }
-            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
-                                                                capacity: roomInfo.capacity,
-                                                                startDate: roomInfo.startDate,
-                                                                endDate: roomInfo.endDate) ,
-                                                  member: MemberDTO(colorIdx: colorIdx)))
-        case .enterRoom:
-            requestJoinRoom()
+    func requestCreateRoom(room: CreateRoomDTO) {
+        Task {
+            do {
+                guard
+                    let roomId = try await roomService.postCreateRoom(body: room),
+                    let navigationController = self.presentingViewController as? UINavigationController
+                else { return }
+                let viewController = DetailWaitViewController(index: roomId)
+                navigationController.popViewController(animated: true)
+                navigationController.pushViewController(viewController, animated: false)
+                
+                self.dismiss(animated: true) {
+                    NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
         }
     }
 }
