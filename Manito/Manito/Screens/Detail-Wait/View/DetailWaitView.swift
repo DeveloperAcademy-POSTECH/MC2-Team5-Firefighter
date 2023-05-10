@@ -226,8 +226,10 @@ final class DetailWaitView: UIView {
     }
     
     private func setExitButtonMenu(_ isAdmin: Bool) {
+        let type: UserStatus = isAdmin ? .admin : .member
         var children: [UIAction]
-        if isAdmin {
+        switch type {
+        case .admin:
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
                 self?.delegate?.editButtonDidTap(isOnlyDateEdit: false)
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
@@ -236,7 +238,7 @@ final class DetailWaitView: UIView {
                                            okTitle: UserStatus.admin.alertText.okTitle)
             })
             ]
-        } else {
+        case .member:
             children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
                 self?.delegate?.leaveButtonDidTap(title: UserStatus.member.alertText.title,
                                           message: UserStatus.member.alertText.message,
