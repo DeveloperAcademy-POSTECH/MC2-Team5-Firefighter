@@ -17,63 +17,16 @@ final class ChooseCharacterViewController: BaseViewController {
     }
     
     // MARK: - ui component
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = TextLiteral.chooseCharacterViewControllerTitleLabel
-        label.font = .font(.regular, ofSize: 34)
-        return label
-    }()
-    private let subTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = TextLiteral.chooseCharacterViewControllerSubTitleLabel
-        label.font = .font(.regular, ofSize: 18)
-        label.textColor = .grey002
-        return label
-    }()
-    private lazy var closeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.tintColor = .lightGray
-        button.setImage(ImageLiterals.btnXmark, for: .normal)
-        let action = UIAction { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-        button.addAction(action, for: .touchUpInside)
-        return button
-    }()
-    private let manittoCollectionView: CharacterCollectionView = CharacterCollectionView()
-    private lazy var enterButton: MainButton = {
-        let button = MainButton()
-        switch statusMode {
-        case .createRoom:
-            button.title = TextLiteral.createRoom
-        case .enterRoom:
-            button.title = TextLiteral.enterRoom
-        }
-        let action = UIAction { [weak self] _ in
-            self?.didTapEnterButton()
-        }
-        button.addAction(action, for: .touchUpInside)
-        return button
-    }()
-    private lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(ImageLiterals.icBack, for: .normal)
-        button.titleLabel?.font = .font(.regular, ofSize: 14)
-        button.tintColor = .white
-        let action = UIAction { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        button.addAction(action, for: .touchUpInside)
-        return button
-    }()
+
+    private lazy var chooseCharacterView: ChooseCharacterView = ChooseCharacterView()
     
     // MARK: - property
     
     private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
+    // FIXME: 삭제예정
     private var statusMode: Status
     private var roomId: Int?
-    private var colorIdx: Int = 0
+    private var characterIndex: Int = 0
     var roomInfo: RoomDTO?
     
     // MARK: - init
@@ -93,57 +46,33 @@ final class ChooseCharacterViewController: BaseViewController {
         print("\(#file) is dead")
     }
     
-    // MARK: - override
+    // MARK: - life cycle
     
-    override func setupLayout() {
-        self.view.addSubview(self.closeButton)
-        self.closeButton.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(9)
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-        }
-        
-        self.view.addSubview(self.titleLabel)
-        self.titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(66)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
-        }
-        
-        self.view.addSubview(self.subTitleLabel)
-        self.subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
-        }
-        
-        self.view.addSubview(self.backButton)
-        self.backButton.snp.makeConstraints {
-            $0.top.equalTo(self.closeButton)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide)
-        }
-        
-        self.view.addSubview(self.enterButton)
-        self.enterButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalToSuperview().inset(57)
-            $0.height.equalTo(60)
-        }
-        
-        self.view.addSubview(self.manittoCollectionView)
-        self.manittoCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(37)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalTo(self.enterButton.snp.top)
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureDelegation()
     }
+    
+    override func loadView() {
+        self.view = self.chooseCharacterView
+    }
+    
+    // MARK: - override
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        self.navigationController?.navigationBar.isHidden = true
-        self.navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     // MARK: - func
     
+    private func configureDelegation() {
+        self.chooseCharacterView.configureDelegate(self)
+    }
+    
     private func didTapEnterButton() {
+        // FIXME: statusMode 삭제 이후 enterRoom 변경 예정 
         switch self.statusMode {
         case .createRoom:
             guard let roomInfo = self.roomInfo else { return }
@@ -151,7 +80,7 @@ final class ChooseCharacterViewController: BaseViewController {
                                                                 capacity: roomInfo.capacity,
                                                                 startDate: roomInfo.startDate,
                                                                 endDate: roomInfo.endDate) ,
-                                                  member: MemberDTO(colorIdx: colorIdx)))
+                                                  member: MemberDTO(colorIdx: characterIndex)))
         case .enterRoom:
             self.requestJoinRoom()
         }
@@ -164,7 +93,7 @@ final class ChooseCharacterViewController: BaseViewController {
             do {
                 guard let id = self.roomId else { return }
                 let status = try await self.roomService.dispatchJoinRoom(roodId: id.description,
-                                                                         dto: MemberDTO(colorIdx: self.colorIdx))
+                                                                         dto: MemberDTO(colorIdx: self.characterIndex))
                 if status == 201 {
                     guard let navigationController = self.presentingViewController as? UINavigationController else { return }
                     guard let id = self.roomId else { return }
@@ -208,5 +137,20 @@ final class ChooseCharacterViewController: BaseViewController {
                 print("client Error: \(String(describing: message))")
             }
         }
+    }
+}
+
+extension ChooseCharacterViewController: ChooseCharacterViewDelegate {
+    func backButtonDidTap() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func closeButtonDidTap() {
+        self.dismiss(animated: true)
+    }
+    
+    func joinButtonDidTap(characterIndex: Int) {
+        self.characterIndex = characterIndex
+        self.didTapEnterButton()
     }
 }
