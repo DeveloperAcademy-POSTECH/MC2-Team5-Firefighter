@@ -11,7 +11,7 @@ import SnapKit
 
 protocol DetailWaitViewDelegate: AnyObject {
     func startButtonDidTap()
-    func presentRoomEditViewController(isOnlyDateEdit: Bool)
+    func editButtonDidTap(isOnlyDateEdit: Bool)
     func deleteButtonDidTap(title: String, message: String, okTitle: String)
     func leaveButtonDidTap(title: String, message: String, okTitle: String)
     func presentEditViewControllerAfterShowAlert()
@@ -108,11 +108,6 @@ final class DetailWaitView: UIView {
             }
         }
     }
-//    private var canStart: Bool = false {
-//        didSet {
-//            self.configureStartButton(self.canStart)
-//        }
-//    }
     
     private weak var delegate: DetailWaitViewDelegate?
     
@@ -235,7 +230,7 @@ final class DetailWaitView: UIView {
         var children: [UIAction]
         if isAdmin {
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
-                self?.delegate?.presentRoomEditViewController(isOnlyDateEdit: false)
+                self?.delegate?.editButtonDidTap(isOnlyDateEdit: false)
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
                 self?.delegate?.deleteButtonDidTap(title: UserStatus.admin.alertText.title,
                                            message: UserStatus.admin.alertText.message,
@@ -307,7 +302,7 @@ final class DetailWaitView: UIView {
     
     @objc
     private func presentEditViewController() {
-        self.delegate?.presentRoomEditViewController(isOnlyDateEdit: false)
+        self.delegate?.editButtonDidTap(isOnlyDateEdit: false)
     }
 }
 

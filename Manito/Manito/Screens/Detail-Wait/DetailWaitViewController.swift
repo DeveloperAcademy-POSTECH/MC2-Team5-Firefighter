@@ -189,7 +189,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         }
     }
     
-    func presentRoomEditViewController(isOnlyDateEdit: Bool) {
+    func editButtonDidTap(isOnlyDateEdit: Bool) {
         self.presentDetailEditViewController(isOnlyDateEdit: isOnlyDateEdit)
     }
     
