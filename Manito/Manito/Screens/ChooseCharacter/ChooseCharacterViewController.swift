@@ -9,20 +9,7 @@ import UIKit
 
 import SnapKit
 
-class ChooseCharacterViewController: BaseViewController {
-    
-    private enum Size {
-        static let leadingTrailingPadding: CGFloat = 20
-        static let collectionHorizontalSpacing: CGFloat = 29.0
-        static let collectionVerticalSpacing: CGFloat = 37.0
-        static let cellInterSpacing: CGFloat = 39.0
-        static let cellLineSpacing: CGFloat = 24.0
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - (collectionHorizontalSpacing * 2 + cellInterSpacing * 2)) / 3
-        static let collectionInset = UIEdgeInsets(top: collectionVerticalSpacing,
-                                                  left: collectionHorizontalSpacing,
-                                                  bottom: collectionVerticalSpacing,
-                                                  right: collectionHorizontalSpacing)
-    }
+final class ChooseCharacterViewController: BaseViewController {
     
     enum Status {
         case createRoom
@@ -54,27 +41,7 @@ class ChooseCharacterViewController: BaseViewController {
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-    private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .vertical
-        flowLayout.sectionInset = Size.collectionInset
-        flowLayout.minimumLineSpacing = Size.cellLineSpacing
-        flowLayout.minimumInteritemSpacing = Size.cellInterSpacing
-        flowLayout.sectionHeadersPinToVisibleBounds = true
-        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellWidth)
-        return flowLayout
-    }()
-    private lazy var manittoCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
-        collectionView.backgroundColor = .clear
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.isScrollEnabled = false
-        collectionView.register(cell: CharacterCollectionViewCell.self,
-                                forCellWithReuseIdentifier: CharacterCollectionViewCell.className)
-        return collectionView
-    }()
+    private let manittoCollectionView: CharacterCollectionView = CharacterCollectionView()
     private lazy var enterButton: MainButton = {
         let button = MainButton()
         switch statusMode {
@@ -103,11 +70,11 @@ class ChooseCharacterViewController: BaseViewController {
     
     // MARK: - property
     
-    let roomService: RoomProtocol = RoomAPI(apiService: APIService())
-    var statusMode: Status
-    var roomInfo: RoomDTO?
-    var roomId: Int?
+    private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
+    private var statusMode: Status
+    private var roomId: Int?
     private var colorIdx: Int = 0
+    var roomInfo: RoomDTO?
     
     // MARK: - init
     
@@ -117,6 +84,7 @@ class ChooseCharacterViewController: BaseViewController {
         super.init()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -128,63 +96,64 @@ class ChooseCharacterViewController: BaseViewController {
     // MARK: - override
     
     override func setupLayout() {
-        view.addSubview(closeButton)
-        closeButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(9)
+        self.view.addSubview(self.closeButton)
+        self.closeButton.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(9)
             $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(66)
+        self.view.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(66)
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
-        view.addSubview(subTitleLabel)
-        subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
+        self.view.addSubview(self.subTitleLabel)
+        self.subTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
-        view.addSubview(backButton)
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(closeButton)
-            $0.leading.equalTo(view.safeAreaLayoutGuide)
+        self.view.addSubview(self.backButton)
+        self.backButton.snp.makeConstraints {
+            $0.top.equalTo(self.closeButton)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide)
         }
         
-        view.addSubview(manittoCollectionView)
-        manittoCollectionView.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel.snp.bottom)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        view.addSubview(enterButton)
-        enterButton.snp.makeConstraints {
+        self.view.addSubview(self.enterButton)
+        self.enterButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(57)
             $0.height.equalTo(60)
+        }
+        
+        self.view.addSubview(self.manittoCollectionView)
+        self.manittoCollectionView.snp.makeConstraints {
+            $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(37)
+            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.bottom.equalTo(self.enterButton.snp.top)
         }
     }
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        navigationController?.navigationBar.isHidden = true
-        navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     // MARK: - func
     
     private func didTapEnterButton() {
-        switch statusMode {
+        switch self.statusMode {
         case .createRoom:
-            guard let roomInfo = roomInfo else { return }
-            requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
+            guard let roomInfo = self.roomInfo else { return }
+            self.requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomInfo.title,
                                                                 capacity: roomInfo.capacity,
                                                                 startDate: roomInfo.startDate,
                                                                 endDate: roomInfo.endDate) ,
                                                   member: MemberDTO(colorIdx: colorIdx)))
         case .enterRoom:
-            requestJoinRoom()
+            self.requestJoinRoom()
         }
     }
     
@@ -193,9 +162,9 @@ class ChooseCharacterViewController: BaseViewController {
     private func requestJoinRoom() {
         Task {
             do {
-                guard let id = roomId else { return }
-                let status = try await roomService.dispatchJoinRoom(roodId: id.description,
-                                                               dto: MemberDTO(colorIdx: colorIdx))
+                guard let id = self.roomId else { return }
+                let status = try await self.roomService.dispatchJoinRoom(roodId: id.description,
+                                                                         dto: MemberDTO(colorIdx: self.colorIdx))
                 if status == 201 {
                     guard let navigationController = self.presentingViewController as? UINavigationController else { return }
                     guard let id = self.roomId else { return }
@@ -210,7 +179,7 @@ class ChooseCharacterViewController: BaseViewController {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
                 print("client Error: \(String(describing: message))")
-                makeAlert(title: "이미 참여중인 방입니다", message: "참여중인 애니또 리스트를 확인해 보세요", okAction: { [weak self] _ in
+                self.makeAlert(title: "이미 참여중인 방입니다", message: "참여중인 애니또 리스트를 확인해 보세요", okAction: { [weak self] _ in
                     self?.dismiss(animated: true)
                 })
             }
@@ -221,7 +190,7 @@ class ChooseCharacterViewController: BaseViewController {
         Task {
             do {
                 guard
-                    let roomId = try await roomService.postCreateRoom(body: room),
+                    let roomId = try await self.roomService.postCreateRoom(body: room),
                     let navigationController = self.presentingViewController as? UINavigationController
                 else { return }
                 let viewController = DetailWaitViewController(index: roomId)
@@ -239,34 +208,5 @@ class ChooseCharacterViewController: BaseViewController {
                 print("client Error: \(String(describing: message))")
             }
         }
-    }
-}
-
-// MARK: - UICollectionViewDataSource
-extension ChooseCharacterViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Character.allCases.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: CharacterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        
-        cell.characterBackground = Character.allCases[indexPath.item].color
-        cell.characterImageView.image = Character.allCases[indexPath.item].image
-        cell.setImageBackgroundColor()
-        
-        if indexPath.item == 0 {
-            cell.isSelected = true
-            collectionView.selectItem(at: indexPath, animated: false , scrollPosition: .init())
-        }
-        
-        return cell
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-extension ChooseCharacterViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        colorIdx = indexPath.item
     }
 }

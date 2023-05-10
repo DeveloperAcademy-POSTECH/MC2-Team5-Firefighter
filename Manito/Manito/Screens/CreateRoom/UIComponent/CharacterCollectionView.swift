@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class ChooseCharacterView: UIView {
+final class CharacterCollectionView: UIView {
     
     private enum InternalSize {
         static let collectionHorizontalSpacing: CGFloat = 29.0
@@ -72,17 +72,16 @@ final class ChooseCharacterView: UIView {
     }
 }
 
-extension ChooseCharacterView: UICollectionViewDataSource {
+extension CharacterCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Character.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell: CharacterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath) as? CharacterCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterCollectionViewCell.className, for: indexPath) as? CharacterCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.characterBackground = Character.allCases[indexPath.item].color
-        cell.characterImageView.image = Character.allCases[indexPath.item].image
-        cell.setImageBackgroundColor()
+        cell.configureBackground(color: Character.allCases[indexPath.item].color)
+        cell.configureImage(image: Character.allCases[indexPath.item].image)
         
         if indexPath.item == 0 {
             cell.isSelected = true
@@ -93,7 +92,7 @@ extension ChooseCharacterView: UICollectionViewDataSource {
     }
 }
 
-extension ChooseCharacterView: UICollectionViewDelegateFlowLayout {
+extension CharacterCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.characterIndex = indexPath.item
     }
