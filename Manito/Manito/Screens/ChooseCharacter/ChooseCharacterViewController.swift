@@ -58,14 +58,6 @@ final class ChooseCharacterViewController: BaseViewController {
         self.view = self.chooseCharacterView
     }
     
-    // MARK: - override
-    
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        // FIXME: ParticipateRoomVC 수정 시 삭제 예정
-        navigationController?.navigationBar.isHidden = false
-    }
-    
     // MARK: - func
     
     private func configureDelegation() {
