@@ -56,10 +56,9 @@ final class ParticipateRoomViewController: BaseViewController {
     
     // MARK: - network
     
-    private func dispatchInviteCode() {
+    private func dispatchInviteCode(_ code : String) {
         Task {
             do {
-                guard let code = self.participateRoomView.inputInvitedCodeView.roomCodeTextField.text else { return }
                 let data = try await self.checkRoomInfoService
                     .dispatchVerification(body: code)
                 if let info = data {
@@ -89,8 +88,8 @@ extension ParticipateRoomViewController: ParticipateRoomViewDelegate {
         self.dismiss(animated: true)
     }
     
-    func nextButtonDidTap() {
-        self.dispatchInviteCode()
+    func nextButtonDidTap(code: String) {
+        self.dispatchInviteCode(code)
     }
     
     func observeNextNotification(roomId: Int) {

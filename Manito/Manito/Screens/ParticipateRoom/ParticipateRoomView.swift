@@ -11,7 +11,7 @@ import SnapKit
 
 protocol ParticipateRoomViewDelegate: AnyObject {
     func closeButtonDidTap()
-    func nextButtonDidTap()
+    func nextButtonDidTap(code: String)
     func observeNextNotification(roomId: Int)
 }
 
@@ -36,7 +36,7 @@ final class ParticipateRoomView: UIView {
         button.isDisabled = true
         return button
     }()
-    let inputInvitedCodeView: InputInvitedCodeView = InputInvitedCodeView()
+    private let inputInvitedCodeView: InputInvitedCodeView = InputInvitedCodeView()
     
     // MARK: - property
     
@@ -90,7 +90,8 @@ final class ParticipateRoomView: UIView {
         }
         
         let didTapNextButton = UIAction { [weak self] _ in
-            self?.delegate?.nextButtonDidTap()
+            guard let code = self?.inputInvitedCodeView.roomCodeTextField.text else { return }
+            self?.delegate?.nextButtonDidTap(code: code)
         }
         
         self.closeButton.addAction(didTapCloseButton, for: .touchUpInside)
