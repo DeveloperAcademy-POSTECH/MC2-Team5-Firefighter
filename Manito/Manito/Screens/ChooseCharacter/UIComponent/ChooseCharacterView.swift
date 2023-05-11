@@ -21,15 +21,12 @@ final class ChooseCharacterView: UIView {
     
     private let closeButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
-        button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
         return button
     }()
     private let backButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
         button.setImage(ImageLiterals.icBack, for: .normal)
-        button.titleLabel?.font = .font(.regular, ofSize: 14)
-        button.tintColor = .white
         return button
     }()
     private let titleLabel: UILabel = {
@@ -46,7 +43,7 @@ final class ChooseCharacterView: UIView {
         return label
     }()
     private let manittoCollectionView: CharacterCollectionView = CharacterCollectionView()
-    private lazy var joinButton: MainButton = {
+    private let joinButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.enterRoom
         return button

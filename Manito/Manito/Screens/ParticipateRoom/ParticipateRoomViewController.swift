@@ -119,6 +119,7 @@ final class ParticipateRoomViewController: BaseViewController {
     // MARK: - func
     
     override func setupNavigationBar() {
+        // FIXME: navigation으로 변경하면서 삭제예정
         navigationController?.navigationBar.isHidden = true
     }
     
