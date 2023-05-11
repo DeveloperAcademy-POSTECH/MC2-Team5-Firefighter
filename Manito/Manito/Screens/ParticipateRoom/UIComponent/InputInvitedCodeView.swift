@@ -30,7 +30,7 @@ final class InputInvitedCodeView: UIView {
         textField.returnKeyType = .done
         textField.delegate = self
         textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
+        textField.autocapitalizationType = .allCharacters
         textField.becomeFirstResponder()
         return textField
     }()    
@@ -104,5 +104,7 @@ extension InputInvitedCodeView: UITextFieldDelegate {
         guard let textCount = roomCodeTextField.text?.count else { return }
         let hasText = textCount >= maxLength
         changeNextButtonEnableStatus?(hasText)
+        
+        textField.text = textField.text?.uppercased()
     }
 }
