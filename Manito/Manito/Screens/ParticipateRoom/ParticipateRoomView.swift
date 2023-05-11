@@ -26,8 +26,7 @@ final class ParticipateRoomView: UIView {
         return label
     }()
     private let closeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.tintColor = .lightGray
+        let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
         button.setImage(ImageLiterals.btnXmark, for: .normal)
         return button
     }()
@@ -61,15 +60,10 @@ final class ParticipateRoomView: UIView {
     // MARK: - func
     
     private func setupLayout() {
-        self.addSubview(self.closeButton)
-        self.closeButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).inset(9)
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-        }
         
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).inset(66)
+            $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
                 
@@ -117,6 +111,14 @@ final class ParticipateRoomView: UIView {
     
     func configureDelegate(_ delegate: ParticipateRoomViewDelegate) {
         self.delegate = delegate
+    }
+    
+    func configureNavigationBarItem(_ navigationController: UINavigationController) {
+        let navigationItem = navigationController.topViewController?.navigationItem
+        let closeButton = UIBarButtonItem(customView: self.closeButton)
+        
+        navigationItem?.rightBarButtonItem = closeButton
+        navigationItem?.leftBarButtonItem = nil
     }
     
     func endEditing() {

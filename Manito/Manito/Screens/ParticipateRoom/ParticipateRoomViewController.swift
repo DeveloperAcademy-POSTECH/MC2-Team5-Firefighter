@@ -30,25 +30,14 @@ final class ParticipateRoomViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
+        self.configureNavigation()
     }
     
     override func loadView() {
         self.view = self.participateRoomView
     }
     
-    // FIXME: 플로우 연결 하면서 변경 될 예정
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    // FIXME: 뒤로가기 버그 수정(PR에서 얘기후 삭제 예정)
-        navigationController?.navigationBar.isHidden = true
-    }
-    
     // MARK: - override
-    
-    override func setupNavigationBar() {
-        // FIXME: navigation으로 변경하면서 삭제예정
-        navigationController?.navigationBar.isHidden = true
-    }
     
     override func endEditingView() {
         self.participateRoomView.endEditing()
@@ -60,6 +49,10 @@ final class ParticipateRoomViewController: BaseViewController {
         self.participateRoomView.configureDelegate(self)
     }
     
+    private func configureNavigation() {
+        guard let navigationController = self.navigationController else { return }
+        self.participateRoomView.configureNavigationBarItem(navigationController)
+    }
     
     // MARK: - network
     
