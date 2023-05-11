@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 final class ChooseCharacterViewController: BaseViewController {
-    
+    // FIXME: Status 삭제예정
     enum Status {
         case createRoom
         case enterRoom
@@ -18,7 +18,7 @@ final class ChooseCharacterViewController: BaseViewController {
     
     // MARK: - ui component
 
-    private lazy var chooseCharacterView: ChooseCharacterView = ChooseCharacterView()
+    private let chooseCharacterView: ChooseCharacterView = ChooseCharacterView()
     
     // MARK: - property
     
@@ -51,6 +51,7 @@ final class ChooseCharacterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
+        self.configureNavigationController()
     }
     
     override func loadView() {
@@ -61,14 +62,19 @@ final class ChooseCharacterViewController: BaseViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        navigationController?.navigationBar.isHidden = true
-        navigationController?.navigationBar.prefersLargeTitles = false
+        // FIXME: ParticipateRoomVC 수정 시 삭제 예정
+        navigationController?.navigationBar.isHidden = false
     }
     
     // MARK: - func
     
     private func configureDelegation() {
         self.chooseCharacterView.configureDelegate(self)
+    }
+    
+    private func configureNavigationController() {
+        guard let navigationController = self.navigationController else { return }
+        self.chooseCharacterView.configureNavigationItem(navigationController)
     }
     
     private func didTapEnterButton() {

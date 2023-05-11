@@ -20,13 +20,13 @@ final class ChooseCharacterView: UIView {
     // MARK: - ui component
     
     private let closeButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
         return button
     }()
     private let backButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
         button.setImage(ImageLiterals.icBack, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
@@ -72,15 +72,10 @@ final class ChooseCharacterView: UIView {
     // MARK: - func
     
     private func setupLayout() {
-        self.addSubview(self.closeButton)
-        self.closeButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).inset(9)
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-        }
         
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).inset(66)
+            $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
@@ -88,12 +83,6 @@ final class ChooseCharacterView: UIView {
         self.subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
-        }
-        
-        self.addSubview(self.backButton)
-        self.backButton.snp.makeConstraints {
-            $0.top.equalTo(self.closeButton)
-            $0.leading.equalToSuperview()
         }
         
         self.addSubview(self.joinButton)
@@ -129,5 +118,14 @@ final class ChooseCharacterView: UIView {
         
     func configureDelegate(_ delegate: ChooseCharacterViewDelegate) {
         self.delegate = delegate
+    }
+    
+    func configureNavigationItem(_ navigationController: UINavigationController) {
+        let navigationItem = navigationController.topViewController?.navigationItem
+        let backButton = UIBarButtonItem(customView: self.backButton)
+        let closeButton = UIBarButtonItem(customView: self.closeButton)
+        
+        navigationItem?.leftBarButtonItem = backButton
+        navigationItem?.rightBarButtonItem = closeButton
     }
 }
