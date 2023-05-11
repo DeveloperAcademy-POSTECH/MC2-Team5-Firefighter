@@ -11,9 +11,7 @@ import SnapKit
 
 final class ParticipateRoomViewController: BaseViewController {
     
-    private let checkRoomInfoService: RoomProtocol = RoomAPI(apiService: APIService())
-    
-    // MARK: - property
+    // MARK: - ui component
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -21,27 +19,23 @@ final class ParticipateRoomViewController: BaseViewController {
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    private lazy var closeButton: UIButton = {
+    private let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(ImageLiterals.btnXmark, for: .normal)
-        let action = UIAction { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-        button.addAction(action, for: .touchUpInside)
         return button
     }()
-    private lazy var nextButton: MainButton = {
+    private let nextButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.searchRoom
         button.isDisabled = true
-        let action = UIAction { [weak self] _ in
-            self?.dispatchInviteCode()
-        }
-        button.addAction(action, for: .touchUpInside)
         return button
     }()    
-    private let inputInvitedCodeView = InputInvitedCodeView()
+    private let inputInvitedCodeView: InputInvitedCodeView = InputInvitedCodeView()
+    
+    // MARK: - property
+    
+    private let checkRoomInfoService: RoomProtocol = RoomAPI(apiService: APIService())
     
     // MARK: - init
     
@@ -53,7 +47,8 @@ final class ParticipateRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        toggleButton()
+        self.toggleButton()
+        self.setupButtonAction()
     }
     // FIXME: 플로우 연결 하면서 변경 될 예정
     override func viewWillAppear(_ animated: Bool) {
@@ -62,6 +57,8 @@ final class ParticipateRoomViewController: BaseViewController {
         self.setupNotificationCenter()
         navigationController?.navigationBar.isHidden = true
     }
+    
+    // MARK: - override
     
     override func setupLayout() {
         view.addSubview(closeButton)
@@ -93,13 +90,75 @@ final class ParticipateRoomViewController: BaseViewController {
         view.bringSubviewToFront(nextButton)
     }
     
-    // MARK: - API
+    override func setupNavigationBar() {
+        // FIXME: navigation으로 변경하면서 삭제예정
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    // MARK: - func
+    
+    private func setupButtonAction() {
+        let didTapCloseButton = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        
+        let didTapNextButton = UIAction { [weak self] _ in
+            self?.dispatchInviteCode()
+        }
+        
+        self.closeButton.addAction(didTapCloseButton, for: .touchUpInside)
+        self.nextButton.addAction(didTapNextButton, for: .touchUpInside)
+    }
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func toggleButton() {
+        self.inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
+            self?.nextButton.isDisabled = !isEnable
+        }
+    }
+    
+    override func endEditingView() {
+        if !self.nextButton.isTouchInside {
+            self.view.endEditing(true)
+        }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
+            })
+        }
+    }
+    
+    @objc
+    private func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.nextButton.transform = .identity
+        })
+    }
+    
+    @objc
+    private func didReceiveNextNotification(_ notification: Notification) {
+        guard let id = notification.userInfo?["roomId"] as? Int else { return }
+        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom, roomId: id), animated: true)
+    }
+    
+    // MARK: - network
     
     private func dispatchInviteCode() {
         Task {
             do {
-                guard let code = inputInvitedCodeView.roomCodeTextField.text else { return }
-                let data = try await checkRoomInfoService
+                guard let code = self.inputInvitedCodeView.roomCodeTextField.text else { return }
+                let data = try await self.checkRoomInfoService
                     .dispatchVerification(body: code)
                 if let info = data {
                     guard let id = info.id else { return }
@@ -120,51 +179,5 @@ final class ParticipateRoomViewController: BaseViewController {
                 print("client Error: \(String(describing: message))")
             }
         }
-    }
-    
-    // MARK: - func
-    
-    override func setupNavigationBar() {
-        // FIXME: navigation으로 변경하면서 삭제예정
-        navigationController?.navigationBar.isHidden = true
-    }
-    
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    private func toggleButton() {
-        inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
-            self?.nextButton.isDisabled = !isEnable
-        }
-    }
-    
-    override func endEditingView() {
-        if !nextButton.isTouchInside {
-            view.endEditing(true)
-        }
-    }
-    
-    // MARK: - selector
-    
-    @objc private func keyboardWillShow(notification:NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
-        }
-    }
-    
-    @objc private func keyboardWillHide(notification:NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.nextButton.transform = .identity
-        })
-    }
-    
-    @objc private func didReceiveNextNotification(_ notification: Notification) {
-        guard let id = notification.userInfo?["roomId"] as? Int else { return }
-        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom, roomId: id), animated: true)
     }
 }
