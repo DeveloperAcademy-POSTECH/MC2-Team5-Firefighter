@@ -169,6 +169,7 @@
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
 		D7C4A1A72A0B2EB000C3AE4C /* CharacterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */; };
 		D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */; };
+		D7C4A1AB2A0D1AA400C3AE4C /* ParticipateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -332,6 +333,7 @@
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
 		D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionView.swift; sourceTree = "<group>"; };
 		D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterView.swift; sourceTree = "<group>"; };
+		D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -870,6 +872,7 @@
 			children = (
 				CB637A3928595BF900FF1240 /* UIComponent */,
 				CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */,
+				D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */,
 			);
 			path = ParticipateRoom;
 			sourceTree = "<group>";
@@ -1118,6 +1121,7 @@
 				39CD581B28C4BE8800496E91 /* DetailStartingAPI.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
+				D7C4A1AB2A0D1AA400C3AE4C /* ParticipateRoomView.swift in Sources */,
 				39C957D02879521400A04A2B /* String+Extension.swift in Sources */,
 				399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */,
 				7E15F67E28B35B3D00441305 /* TextLiteral.swift in Sources */,
