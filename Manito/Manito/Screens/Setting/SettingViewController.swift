@@ -10,30 +10,11 @@ import UIKit
 
 import SnapKit
 
-struct Option {
-    let title: String
-    let handler: () -> Void
-}
-
 class SettingViewController: BaseViewController {
     
-    private var options = [Option]()
+    // MARK: - ui component
     
-    // MARK: - Property
-    
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(SettingViewTableCell.self, forCellReuseIdentifier: SettingViewTableCell.className)
-        tableView.separatorStyle = .none
-        tableView.alwaysBounceVertical = false
-        tableView.backgroundColor = .backgroundGrey
-        return tableView
-    }()
-    
-    private let imageRow: ImageRowView = {
-        let view = ImageRowView()
-        return view
-    }()
+    private let settingView: SettingView = SettingView()
     
     // MARK: - init
     
@@ -41,12 +22,11 @@ class SettingViewController: BaseViewController {
         print("\(#file) is dead")
     }
     
-    // MARK: - Life Cycle
+    // MARK: - life cycle
     
     override func viewDidLoad() {
-        configureModels()
         super.viewDidLoad()
-        setupDelegate()
+        self.configureDelegation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,142 +34,52 @@ class SettingViewController: BaseViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
-    override func setupLayout() {
-        view.addSubview(imageRow)
-        imageRow.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(40)
-            $0.centerX.equalToSuperview()
-        }
-        
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints {
-            $0.top.equalTo(imageRow.snp.bottom)
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalToSuperview()
-        }
+    override func loadView() {
+        self.view = self.settingView
     }
     
-    // MARK: - Configure
+    // MARK: - func
     
-    override func configureUI() {
-        super.configureUI()
-    }
-    
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-
-        navigationController?.navigationBar.prefersLargeTitles = false
-    }
-    
-    // MARK: - Functions
-    
-    private func setupDelegate() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-    }
-    
-    private func configureModels() {
-        options.append(Option(title: TextLiteral.settingViewControllerChangeNickNameTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.goToChangeNickname()
-            }
-        }))
-        
-        options.append(Option(title: TextLiteral.settingViewControllerPersonalInfomationTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.goToPersonalInfomation()
-            }
-        }))
-        
-        options.append(Option(title: TextLiteral.settingViewControllerTermsOfServiceTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.goToTermsOfService()
-            }
-        }))
-        
-        options.append(Option(title: TextLiteral.settingViewControllerDeveloperInfoTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.goToDeveloperInfo()
-            }
-        }))
-        
-        options.append(Option(title: TextLiteral.settingViewControllerHelpTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.goToHelp()
-            }
-        }))
-        
-        options.append(Option(title: TextLiteral.settingViewControllerLogoutTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.goToLogOut()
-            }
-        }))
-    }
-    
-    private func goToChangeNickname() {
-        navigationController?.pushViewController(ChangeNickNameViewController(), animated: true)
-    }
-    
-    private func goToPersonalInfomation() {
-        if let url = URL(string: URLLiteral.personalInfomationUrl) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-    
-    private func goToTermsOfService() {
-        if let url = URL(string: URLLiteral.termsOfServiceUrl) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-    
-    private func goToDeveloperInfo() {
-        navigationController?.pushViewController(SettingDeveloperInfoViewController(), animated: true)
-    }
-    
-    private func goToHelp() {
-        self.sendReportMail()
-    }
-    
-    private func goToLogOut() {
-        makeRequestAlert(title: "로그아웃 하시겠습니까?", message: "", okTitle: "확인", cancelTitle: "취소", okAction: { _ in
-            UserDefaultHandler.clearAllDataExcludingFcmToken()
-            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
-                    as? SceneDelegate else { return }
-            sceneDelegate.logout()
-        })
+    private func configureDelegation() {
+        self.settingView.configureDelegate(self)
     }
 }
 
 
 // MARK: - Extensions
 
-extension SettingViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = options[indexPath.row]
-        model.handler()
+extension SettingViewController: SettingViewDelegate {
+    func changNicknameButtonDidTap() {
+        navigationController?.pushViewController(ChangeNickNameViewController(), animated: true)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
-    }
-}
-
-extension SettingViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return options.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = options[indexPath.row]
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as? SettingViewTableCell else {
-            return UITableViewCell()
+    func personalInfomationButtonDidTap() {
+        if let url = URL(string: URLLiteral.personalInfomationUrl) {
+            UIApplication.shared.open(url, options: [:])
         }
-        cell.titleLabel.text = model.title
-        cell.selectionStyle = .none
-        return cell
+    }
+    
+    func termsOfServiceButtonDidTap() {
+        if let url = URL(string: URLLiteral.termsOfServiceUrl) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
+    
+    func developerInfoButtonDidTap() {
+        navigationController?.pushViewController(SettingDeveloperInfoViewController(), animated: true)
+    }
+    
+    func helpButtonDidTap() {
+        self.sendReportMail()
+    }
+    
+    func logoutButtonDidTap() {
+        makeRequestAlert(title: "로그아웃 하시겠습니까?", message: "", okTitle: "확인", cancelTitle: "취소", okAction: { _ in
+            UserDefaultHandler.clearAllDataExcludingFcmToken()
+            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
+                    as? SceneDelegate else { return }
+            sceneDelegate.logout()
+        })
     }
 }
 
