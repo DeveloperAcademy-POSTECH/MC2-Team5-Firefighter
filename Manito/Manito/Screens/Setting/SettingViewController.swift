@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-class SettingViewController: BaseViewController {
+final class SettingViewController: BaseViewController {
     
     // MARK: - ui component
     
@@ -31,7 +31,7 @@ class SettingViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     override func loadView() {
@@ -50,7 +50,7 @@ class SettingViewController: BaseViewController {
 
 extension SettingViewController: SettingViewDelegate {
     func changNicknameButtonDidTap() {
-        navigationController?.pushViewController(ChangeNickNameViewController(), animated: true)
+        self.navigationController?.pushViewController(ChangeNickNameViewController(), animated: true)
     }
     
     func personalInfomationButtonDidTap() {
@@ -66,7 +66,7 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func developerInfoButtonDidTap() {
-        navigationController?.pushViewController(SettingDeveloperInfoViewController(), animated: true)
+        self.navigationController?.pushViewController(SettingDeveloperInfoViewController(), animated: true)
     }
     
     func helpButtonDidTap() {
@@ -74,7 +74,7 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func logoutButtonDidTap() {
-        makeRequestAlert(title: "로그아웃 하시겠습니까?", message: "", okTitle: "확인", cancelTitle: "취소", okAction: { _ in
+        self.makeRequestAlert(title: "로그아웃 하시겠습니까?", message: "", okTitle: "확인", cancelTitle: "취소", okAction: { _ in
             UserDefaultHandler.clearAllDataExcludingFcmToken()
             guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
                     as? SceneDelegate else { return }

@@ -24,6 +24,7 @@ final class SettingView: UIView {
         let title: String
         let handler: () -> Void
     }
+    
     // MARK: - ui component
     
     private lazy var tableView: UITableView = {
@@ -77,37 +78,37 @@ final class SettingView: UIView {
     }
     
     func configureModels() {
-        options.append(Option(title: TextLiteral.settingViewControllerChangeNickNameTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.settingViewControllerChangeNickNameTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.delegate?.changNicknameButtonDidTap()
             }
         }))
         
-        options.append(Option(title: TextLiteral.settingViewControllerPersonalInfomationTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.settingViewControllerPersonalInfomationTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.delegate?.personalInfomationButtonDidTap()
             }
         }))
         
-        options.append(Option(title: TextLiteral.settingViewControllerTermsOfServiceTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.settingViewControllerTermsOfServiceTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.delegate?.termsOfServiceButtonDidTap()
             }
         }))
         
-        options.append(Option(title: TextLiteral.settingViewControllerDeveloperInfoTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.settingViewControllerDeveloperInfoTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.delegate?.developerInfoButtonDidTap()
             }
         }))
         
-        options.append(Option(title: TextLiteral.settingViewControllerHelpTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.settingViewControllerHelpTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.delegate?.helpButtonDidTap()
             }
         }))
         
-        options.append(Option(title: TextLiteral.settingViewControllerLogoutTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.settingViewControllerLogoutTitle, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.delegate?.logoutButtonDidTap()
             }
@@ -121,7 +122,7 @@ final class SettingView: UIView {
 
 extension SettingView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = options[indexPath.row]
+        let model = self.options[indexPath.row]
         model.handler()
     }
 
@@ -132,11 +133,11 @@ extension SettingView: UITableViewDelegate {
 
 extension SettingView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return options.count
+        return self.options.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = options[indexPath.row]
+        let model = self.options[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as? SettingViewTableCell else {
             return UITableViewCell()
         }
