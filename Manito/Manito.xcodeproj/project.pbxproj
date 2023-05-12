@@ -167,6 +167,7 @@
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* URLLiteral.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
+		D7C4A1AD2A0DD8FA00C3AE4C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -328,6 +329,7 @@
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* URLLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLLiteral.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
+		D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -953,6 +955,7 @@
 				D75ECB6E28A5EDC400A5B271 /* Component */,
 				D75ECB6D28A5EDBC00A5B271 /* Cell */,
 				D724AF5C287088310003F280 /* SettingViewController.swift */,
+				D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */,
 				7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */,
 			);
 			path = Setting;
@@ -1183,6 +1186,7 @@
 				CB4C77E628C0D4EB007A1AD2 /* MainAPI.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
+				D7C4A1AD2A0DD8FA00C3AE4C /* SettingView.swift in Sources */,
 				39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
