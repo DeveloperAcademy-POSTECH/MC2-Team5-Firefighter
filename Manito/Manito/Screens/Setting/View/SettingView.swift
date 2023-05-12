@@ -141,8 +141,7 @@ extension SettingView: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as? SettingViewTableCell else {
             return UITableViewCell()
         }
-        cell.titleLabel.text = model.title
-        cell.selectionStyle = .none
+        cell.configureCell(title: model.title)
         return cell
     }
 }
