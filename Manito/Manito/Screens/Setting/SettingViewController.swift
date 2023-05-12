@@ -5,7 +5,6 @@
 //  Created by 이성호 on 2022/07/02.
 //
 
-import MessageUI
 import UIKit
 
 import SnapKit
