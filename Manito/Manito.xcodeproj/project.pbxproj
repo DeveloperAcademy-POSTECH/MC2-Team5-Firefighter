@@ -20,6 +20,8 @@
 		397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241728BA51B400454E4F /* DetailWaitProtocol.swift */; };
 		397A241A28BA532A00454E4F /* FriendList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241928BA532A00454E4F /* FriendList.swift */; };
 		398B1CBC2A12415C00DEFCEC /* ManitoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */; };
+		398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CC92A13597600DEFCEC /* FSCalendar */; };
+		398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CCB2A13599D00DEFCEC /* FirebaseAuth */; };
 		399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */; };
 		39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957CD2876E2ED00A04A2B /* LoginViewController.swift */; };
 		39C957D02879521400A04A2B /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957CF2879521400A04A2B /* String+Extension.swift */; };
@@ -350,6 +352,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */,
+				398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +436,13 @@
 				398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */,
 			);
 			path = ManitoTests;
+			sourceTree = "<group>";
+		};
+		398B1CC82A13597600DEFCEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		39C957CC2876E2BE00A04A2B /* Login */ = {
@@ -603,6 +614,7 @@
 				B5F524CD28519AA000614FF7 /* Manito */,
 				398B1CBA2A12415C00DEFCEC /* ManitoTests */,
 				B5F524CC28519AA000614FF7 /* Products */,
+				398B1CC82A13597600DEFCEC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1040,6 +1052,10 @@
 				398B1CBE2A12415C00DEFCEC /* PBXTargetDependency */,
 			);
 			name = ManitoTests;
+			packageProductDependencies = (
+				398B1CC92A13597600DEFCEC /* FSCalendar */,
+				398B1CCB2A13599D00DEFCEC /* FirebaseAuth */,
+			);
 			productName = ManitoTests;
 			productReference = 398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1646,6 +1662,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		398B1CC92A13597600DEFCEC /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B50B1B0528596CB10080992C /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+		398B1CCB2A13599D00DEFCEC /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39FFE33228F457AF008442EE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		39FFE33328F457AF008442EE /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 39FFE33228F457AF008442EE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

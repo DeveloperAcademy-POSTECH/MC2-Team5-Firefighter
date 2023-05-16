@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import Manito
 
 final class ManitoTests: XCTestCase {
 
