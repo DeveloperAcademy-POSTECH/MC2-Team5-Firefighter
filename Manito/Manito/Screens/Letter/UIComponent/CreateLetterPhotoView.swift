@@ -169,10 +169,10 @@ final class CreateLetterPhotoView: UIView {
     private func phPickerControllerDidShow() {
         var configuration = PHPickerConfiguration()
         configuration.filter = .any(of: [.images, .livePhotos])
-        let phPickerController = PHPickerViewController(configuration: configuration)
-        phPickerController.delegate = self
 
         DispatchQueue.main.async {
+            let phPickerController = PHPickerViewController(configuration: configuration)
+            phPickerController.delegate = self
             self.viewController?.present(phPickerController, animated: true)
         }
     }
@@ -236,21 +236,33 @@ extension CreateLetterPhotoView: UIImagePickerControllerDelegate & UINavigationC
 // MARK: - PHPickerViewControllerDelegate
 extension CreateLetterPhotoView: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        if let itemProvider = results.first?.itemProvider {
-            self.loadUIImage(for: itemProvider) { [weak self] result in
-                switch result {
-                case .success(let image):
-                    DispatchQueue.main.async {
-                        self?.importPhotosButton.setImage(image, for: .normal)
-                        self?.sendHasImageValue?(self?.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+        if let selectedAsset = results.first?.itemProvider {
+            self.pickerController(picker, didFinishPicking: selectedAsset)
+        } else {
+            self.pickerControllerDidCancel(picker)
+        }
+    }
+
+    private func pickerControllerDidCancel(_ picker: PHPickerViewController) {
+        DispatchQueue.main.async {
+            picker.dismiss(animated: true)
+        }
+    }
+
+    private func pickerController(_ picker: PHPickerViewController, didFinishPicking asset: NSItemProvider) {
+        self.loadUIImage(for: asset) { [weak self] result in
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self?.importPhotosButton.setImage(image, for: .normal)
+                    self?.sendHasImageValue?(self?.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+                    picker.dismiss(animated: true)
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    picker.makeAlert(title: "", message: error.errorDescription, okAction: { _ in
                         picker.dismiss(animated: true)
-                    }
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        self?.viewController?.makeAlert(title: "", message: error.errorDescription, okAction: { _ in
-                            picker.dismiss(animated: true)
-                        })
-                    }
+                    })
                 }
             }
         }

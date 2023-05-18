@@ -38,7 +38,7 @@ extension Date {
         return self.isToday && self.isOverOpenTime
     }
     
-    func isPast() -> Bool {
+    var isPast: Bool {
         let distance = self.distance(to: Date())
         return distance > 86400
     }

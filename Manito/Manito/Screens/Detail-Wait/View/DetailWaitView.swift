@@ -10,24 +10,24 @@ import UIKit
 import SnapKit
 
 protocol DetailWaitViewDelegate: AnyObject {
-    func startManitto()
-    func presentRoomEditViewController(isOnlyDateEdit: Bool)
-    func deleteRoom(title: String, message: String, okTitle: String)
-    func leaveRoom(title: String, message: String, okTitle: String)
-    func presentEditViewControllerAfterShowAlert()
-    func showAlert(title: String, message: String)
+    func startButtonDidTap()
+    func editButtonDidTap(isOnlyDateEdit: Bool)
+    func deleteButtonDidTap(title: String, message: String, okTitle: String)
+    func leaveButtonDidTap(title: String, message: String, okTitle: String)
+    func codeCopyButtonDidTap()
+    func didPassStartDate(isAdmin: Bool)
 }
 
 final class DetailWaitView: UIView {
     private enum UserStatus: CaseIterable {
-        case owner
+        case admin
         case member
         
         var alertText: (title: String,
                         message: String,
                         okTitle: String) {
             switch self {
-            case .owner:
+            case .admin:
                 return (title: TextLiteral.datailWaitViewControllerDeleteTitle,
                         message: TextLiteral.datailWaitViewControllerDeleteMessage,
                         okTitle: TextLiteral.delete)
@@ -68,7 +68,7 @@ final class DetailWaitView: UIView {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private let imgNiView: UIImageView = {
+    private let characterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = ImageLiterals.imgNi
         return imageView
@@ -107,11 +107,6 @@ final class DetailWaitView: UIView {
             }
         }
     }
-    private var canStart: Bool = false {
-        didSet {
-            self.configureStartButton(self.canStart)
-        }
-    }
     
     private weak var delegate: DetailWaitViewDelegate?
     
@@ -143,8 +138,8 @@ final class DetailWaitView: UIView {
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
         
-        self.addSubview(self.imgNiView)
-        self.imgNiView.snp.makeConstraints {
+        self.addSubview(self.characterImageView)
+        self.characterImageView.snp.makeConstraints {
             $0.centerY.equalTo(self.togetherFriendLabel.snp.centerY)
             $0.leading.equalTo(self.togetherFriendLabel.snp.trailing).offset(7)
             $0.width.height.equalTo(30)
@@ -152,8 +147,8 @@ final class DetailWaitView: UIView {
         
         self.addSubview(self.userCountLabel)
         self.userCountLabel.snp.makeConstraints {
-            $0.leading.equalTo(self.imgNiView.snp.trailing)
-            $0.centerY.equalTo(self.imgNiView.snp.centerY)
+            $0.leading.equalTo(self.characterImageView.snp.trailing)
+            $0.centerY.equalTo(self.characterImageView.snp.centerY)
         }
         
         self.addSubview(self.copyButton)
@@ -180,44 +175,25 @@ final class DetailWaitView: UIView {
     
     private func setupCopyButton(_ invitationCode: String) {
         let action = UIAction { [weak self] _ in
-            ToastView.showToast(code: invitationCode,
-                                message: TextLiteral.detailWaitViewControllerCopyCode,
-                                view: self ?? UIView())
+            self?.delegate?.codeCopyButtonDidTap()
         }
         self.copyButton.addAction(action, for: .touchUpInside)
     }
     
-    func configureDelegation(_ delegate: DetailWaitViewDelegate) {
-        self.delegate = delegate
-    }
-    
-    func configureNavigationItem(_ navigationController: UINavigationController) {
-        let navigationItem = navigationController.topViewController?.navigationItem
-        let moreButton = UIBarButtonItem(customView: self.moreButton)
-        
-        navigationItem?.rightBarButtonItem = moreButton
-    }
-    
-    func configureLayout(room: Room) {
-        guard let title = room.roomInformation?.title,
-              let state = room.roomInformation?.state,
-              let dateRange = room.roomInformation?.dateRange,
-              let users = room.participants?.members,
-              let isOwner = room.admin,
-              let code = room.invitation?.code,
-              let isStart = room.roomInformation?.isStart
-        else { return }
-        self.titleView.setRoomTitleLabelText(text: title)
+    private func setupTitleViewData(title: String, state: String, dateRange: String) {
         self.titleView.setStartState(state: state)
-        self.userCountLabel.text = room.userCount
-        self.titleView.setDurationDateLabel(text: dateRange)
-        self.userArray = users
-        self.showStartButtonForAdmin(isOwner)
-        self.canStart = room.canStart
-        self.setExitButtonMenu(isOwner)
-        self.setupCopyButton(code)
-        self.showAlertWhenPastDate(isOwner, isStart: isStart)
-        self.setupTitleViewGesture(isOwner)
+        self.titleView.setupLabelData(title: title, dateRange: dateRange)
+    }
+
+    private func setupRelatedViews(of userStatus: Bool, _ isStart: Bool) {
+        self.showStartButtonForAdmin(userStatus)
+        self.setExitButtonMenu(userStatus)
+        self.showAlertWhenPastDate(userStatus, isStart: isStart)
+        self.setupTitleViewGesture(userStatus)
+    }
+
+    private func configureUserCountLabel(userCount: String) {
+        self.userCountLabel.text = userCount
     }
     
     private func updateTableViewHeight() {
@@ -231,8 +207,8 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private func showStartButtonForAdmin(_ isOwner: Bool) {
-        self.startButton.isHidden = !isOwner
+    private func showStartButtonForAdmin(_ isAdmin: Bool) {
+        self.startButton.isHidden = !isAdmin
     }
     
     private func configureStartButton(_ canStart: Bool) {
@@ -240,7 +216,7 @@ final class DetailWaitView: UIView {
             self.startButton.title = ButtonText.start.status
             self.startButton.isDisabled = false
             let action = UIAction { [weak self] _ in
-                self?.delegate?.startManitto()
+                self?.delegate?.startButtonDidTap()
             }
             self.startButton.addAction(action, for: .touchUpInside)
         } else {
@@ -249,20 +225,22 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private func setExitButtonMenu(_ isOwner: Bool) {
+    private func setExitButtonMenu(_ isAdmin: Bool) {
+        let type: UserStatus = isAdmin ? .admin : .member
         var children: [UIAction]
-        if isOwner {
+        switch type {
+        case .admin:
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
-                self?.delegate?.presentRoomEditViewController(isOnlyDateEdit: false)
+                self?.delegate?.editButtonDidTap(isOnlyDateEdit: false)
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-                self?.delegate?.deleteRoom(title: UserStatus.owner.alertText.title,
-                                           message: UserStatus.owner.alertText.message,
-                                           okTitle: UserStatus.owner.alertText.okTitle)
+                self?.delegate?.deleteButtonDidTap(title: UserStatus.admin.alertText.title,
+                                           message: UserStatus.admin.alertText.message,
+                                           okTitle: UserStatus.admin.alertText.okTitle)
             })
             ]
-        } else {
+        case .member:
             children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                self?.delegate?.leaveRoom(title: UserStatus.member.alertText.title,
+                self?.delegate?.leaveButtonDidTap(title: UserStatus.member.alertText.title,
                                           message: UserStatus.member.alertText.message,
                                           okTitle: UserStatus.member.alertText.okTitle
                 )
@@ -273,30 +251,52 @@ final class DetailWaitView: UIView {
     }
     
     private func showAlertWhenPastDate(_ isAdmin: Bool, isStart: Bool) {
-        let type: UserStatus = isAdmin ? .owner : .member
         if !isStart {
-            switch type {
-            case .owner:
-                self.delegate?.presentEditViewControllerAfterShowAlert()
-            case .member:
-                self.delegate?.showAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-                                         message: TextLiteral.detailWaitViewControllerPastAlertMessage)
-            }
+            self.delegate?.didPassStartDate(isAdmin: isAdmin)
         }
     }
     
-    private func setupTitleViewGesture(_ isOwner: Bool) {
-        if isOwner {
+    private func setupTitleViewGesture(_ isAdmin: Bool) {
+        if isAdmin {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.presentEditViewController))
             self.titleView.addGestureRecognizer(tapGesture)
         }
+    }
+    
+    func configureDelegation(_ delegate: DetailWaitViewDelegate) {
+        self.delegate = delegate
+    }
+    
+    func configureNavigationItem(_ navigationController: UINavigationController) {
+        let navigationItem = navigationController.topViewController?.navigationItem
+        let moreButton = UIBarButtonItem(customView: self.moreButton)
+        
+        navigationItem?.rightBarButtonItem = moreButton
+    }
+    
+    func updateDetailWaitView(room: Room) {
+        guard let title = room.roomInformation?.title,
+              let state = room.roomInformation?.state,
+              let dateRange = room.roomInformation?.dateRangeText,
+              let users = room.participants?.members,
+              let isStart = room.roomInformation?.isStart,
+              let admin = room.admin
+        else { return }
+        
+        self.userArray = users
+
+        self.setupTitleViewData(title: title, state: state, dateRange: dateRange)
+        self.setupRelatedViews(of: admin, isStart)
+
+        self.configureStartButton(room.canStart)
+        self.configureUserCountLabel(userCount: room.userCount)
     }
     
     // MARK: - selector
     
     @objc
     private func presentEditViewController() {
-        self.delegate?.presentRoomEditViewController(isOnlyDateEdit: false)
+        self.delegate?.editButtonDidTap(isOnlyDateEdit: false)
     }
 }
 
@@ -313,8 +313,10 @@ extension DetailWaitView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.listTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
-        cell.textLabel?.text = self.userArray[indexPath.row].nickname
-        cell.textLabel?.font = .font(.regular, ofSize: 17)
+        var cellConfigure = cell.defaultContentConfiguration()
+        cellConfigure.text =  self.userArray[indexPath.row].nickname
+        cellConfigure.textProperties.font = .font(.regular, ofSize: 17)
+        cell.contentConfiguration = cellConfigure
         cell.backgroundColor = .darkGrey003
         cell.selectionStyle = .none
         return cell

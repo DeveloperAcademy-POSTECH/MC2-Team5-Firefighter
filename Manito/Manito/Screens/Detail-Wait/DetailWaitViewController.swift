@@ -70,14 +70,14 @@ final class DetailWaitViewController: BaseViewController {
     
     private func checkStartDateIsPast(_ startDate: String) -> Bool {
         guard let startDate = startDate.stringToDate else { return false }
-        return startDate.isPast()
+        return startDate.isPast
     }
     
     private func presentSelectManittoViewController(nickname: String) {
-        let viewController = SelectManittoViewController()
+        guard let roomId = self.roomInformation?.roomInformation?.id?.description else { return }
+        let viewController = SelectManitteeViewController(roomId: roomId, manitteeNickname: nickname)
+        viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
-        viewController.manitteeName = nickname
-        viewController.roomId = self.roomIndex.description
         self.present(viewController, animated: true)
     }
     
@@ -91,10 +91,10 @@ final class DetailWaitViewController: BaseViewController {
             switch result {
             case .success(let room):
                 DispatchQueue.main.async {
-                    self?.detailWaitView.configureLayout(room: room)
+                    self?.detailWaitView.updateDetailWaitView(room: room)
                 }
             case .failure:
-                self?.makeAlert(title: TextLiteral.detailWaitViewControllerLoadDataTitle,
+                self?.makeAlert(title: TextLiteral.errorAlertTitle,
                                 message: TextLiteral.detailWaitViewControllerLoadDataMessage)
             }
         }
@@ -151,7 +151,6 @@ final class DetailWaitViewController: BaseViewController {
         }
     }
     
-    // FIXME: - 나가기 테스트 해야함
     private func requestDeleteLeaveRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
@@ -170,23 +169,23 @@ final class DetailWaitViewController: BaseViewController {
 }
 
 extension DetailWaitViewController: DetailWaitViewDelegate {
-    func startManitto() {
+    func startButtonDidTap() {
         self.requestStartManitto() { [weak self] result in
             switch result {
             case .success(let nickname):
                 self?.presentSelectManittoViewController(nickname: nickname)
             case .failure:
-                self?.makeAlert(title: TextLiteral.detailWaitViewControllerStartErrorTitle,
+                self?.makeAlert(title: TextLiteral.errorAlertTitle,
                                 message: TextLiteral.detailWaitViewControllerStartErrorMessage)
             }
         }
     }
     
-    func presentRoomEditViewController(isOnlyDateEdit: Bool) {
+    func editButtonDidTap(isOnlyDateEdit: Bool) {
         self.presentDetailEditViewController(isOnlyDateEdit: isOnlyDateEdit)
     }
     
-    func deleteRoom(title: String, message: String, okTitle: String) {
+    func deleteButtonDidTap(title: String, message: String, okTitle: String) {
         self.makeRequestAlert(title: title,
                               message: message,
                               okTitle: okTitle,
@@ -196,14 +195,14 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                 case .success:
                     self?.navigationController?.popViewController(animated: true)
                 case .failure:
-                    self?.makeAlert(title: TextLiteral.detailWaitViewControllerDeleteErrorTitle,
+                    self?.makeAlert(title: TextLiteral.errorAlertTitle,
                                     message: TextLiteral.detailWaitViewControllerDeleteErrorMessage)
                 }
             }
         })
     }
     
-    func leaveRoom(title: String, message: String, okTitle: String) {
+    func leaveButtonDidTap(title: String, message: String, okTitle: String) {
         self.makeRequestAlert(title: title,
                               message: message,
                               okAction: { [weak self] _ in
@@ -212,22 +211,30 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                 case .success:
                     self?.navigationController?.popViewController(animated: true)
                 case .failure:
-                    self?.makeAlert(title: TextLiteral.detailWaitViewControllerLeaveErrorTitle,
+                    self?.makeAlert(title: TextLiteral.errorAlertTitle,
                                     message: TextLiteral.detailWaitViewControllerLeaveErrorMessage)
                 }
             }
         })
     }
     
-    func presentEditViewControllerAfterShowAlert() {
-        self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-                       message: TextLiteral.detailWaitViewControllerPastOwnerAlertMessage,
-                       okAction: { [weak self] _ in
-            self?.presentDetailEditViewController(isOnlyDateEdit: true) }
-        )
+    func codeCopyButtonDidTap() {
+        guard let invitationCode = self.roomInformation?.invitation?.code else { return }
+        ToastView.showToast(code: invitationCode,
+                            message: TextLiteral.detailWaitViewControllerCopyCode,
+                            controller: self)
     }
     
-    func showAlert(title: String, message: String) {
-        self.makeAlert(title: title, message: message)
+    func didPassStartDate(isAdmin: Bool) {
+        if isAdmin {
+            self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                           message: TextLiteral.detailWaitViewControllerPastAdminAlertMessage,
+                           okAction: { [weak self] _ in
+                self?.presentDetailEditViewController(isOnlyDateEdit: true) }
+            )
+        } else {
+            self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                           message: TextLiteral.detailWaitViewControllerPastAlertMessage)
+        }
     }
 }
