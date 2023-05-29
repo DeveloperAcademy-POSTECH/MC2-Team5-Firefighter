@@ -27,6 +27,7 @@ final class ChooseCharacterViewController: BaseViewController {
     private var statusMode: Status
     private var roomId: Int?
     private var characterIndex: Int = 0
+    // FIXME: private 변경 예정
     var roomInfo: RoomDTO?
     
     // MARK: - init
