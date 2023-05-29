@@ -125,11 +125,11 @@ extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
 }
 
 extension DetailEditViewController: DetailEditDelegate {
-    func dismiss() {
+    func cancleButtonDidTap() {
         self.dismiss(animated: true)
     }
     
-    func changeRoomInformation(capacity: Int, from startDate: String, to endDate: String) {
+    func changeButtonDidTap(capacity: Int, from startDate: String, to endDate: String) {
         guard let roomTitle = self.room.roomInformation?.title,
               let currentUserCount = self.room.participants?.count else { return }
         let dto = RoomDTO(title: roomTitle,
@@ -141,7 +141,7 @@ extension DetailEditViewController: DetailEditDelegate {
                 switch result {
                 case .success:
                     self?.didTappedChangeButton?()
-                    self?.dismiss()
+                    self?.cancleButtonDidTap()
                 case .failure:
                     self?.makeAlert(title: TextLiteral.detailEditViewControllerChangeErrorTitle,
                                     message: TextLiteral.detailEditViewControllerChangeErrorMessage

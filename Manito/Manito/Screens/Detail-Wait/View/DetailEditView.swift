@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 
 protocol DetailEditDelegate: AnyObject {
-    func dismiss()
-    func changeRoomInformation(capacity: Int, from startDate: String, to endDate: String)
+    func cancleButtonDidTap()
+    func changeButtonDidTap(capacity: Int, from startDate: String, to endDate: String)
 }
 
 final class DetailEditView: UIView {
@@ -243,7 +243,7 @@ final class DetailEditView: UIView {
     
     private func setupCancleButton() {
         let action = UIAction { [weak self] _ in
-            self?.delegate?.dismiss()
+            self?.delegate?.cancleButtonDidTap()
         }
         self.cancelButton.addAction(action, for: .touchUpInside)
     }
@@ -253,7 +253,7 @@ final class DetailEditView: UIView {
             guard let capacity = self?.memberSlider.value,
                   let startDateString = self?.calendarView.getTempStartDate(),
                   let endDateString = self?.calendarView.getTempEndDate() else { return }
-            self?.delegate?.changeRoomInformation(capacity: Int(capacity),
+            self?.delegate?.changeButtonDidTap(capacity: Int(capacity),
                                                   from: startDateString,
                                                   to: endDateString)
         }
