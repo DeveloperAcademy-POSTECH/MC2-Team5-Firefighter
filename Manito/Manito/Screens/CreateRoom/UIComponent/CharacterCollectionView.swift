@@ -16,10 +16,7 @@ final class CharacterCollectionView: UIView {
         static let cellInterSpacing: CGFloat = 39.0
         static let cellLineSpacing: CGFloat = 24.0
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - (collectionHorizontalSpacing * 2 + cellInterSpacing * 2)) / 3
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 0,
-                                                  bottom: 0,
-                                                  right: 0)
+        static let collectionInset = UIEdgeInsets.zero
     }
     
     // MARK: - ui component
@@ -35,7 +32,7 @@ final class CharacterCollectionView: UIView {
         return flowLayout
     }()
     private lazy var manittoCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -80,7 +77,7 @@ extension CharacterCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterCollectionViewCell.className, for: indexPath) as? CharacterCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.configureBackground(color: Character.allCases[indexPath.item].color)
+        cell.configureBackgroundColor(color: Character.allCases[indexPath.item].color)
         cell.configureImage(image: Character.allCases[indexPath.item].image)
         
         if indexPath.item == 0 {
@@ -92,7 +89,7 @@ extension CharacterCollectionView: UICollectionViewDataSource {
     }
 }
 
-extension CharacterCollectionView: UICollectionViewDelegateFlowLayout {
+extension CharacterCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.characterIndex = indexPath.item
     }

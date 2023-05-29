@@ -282,8 +282,7 @@ final class MainViewController: BaseViewController {
         switch status {
         case .waiting:
             guard let index = index else { return }
-            let viewController = DetailWaitViewController(index: index)
-            viewController.roomInformation = self.rooms?[roomIndex]
+            let viewController = DetailWaitViewController(roomIndex: index)
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
             guard let roomId = rooms?[roomIndex].id?.description

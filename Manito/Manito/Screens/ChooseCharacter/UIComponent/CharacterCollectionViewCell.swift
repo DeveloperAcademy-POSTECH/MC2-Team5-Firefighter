@@ -22,7 +22,7 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - property
     
-    private var characterBackground: UIColor?
+    private var characterBackgroundColor: UIColor?
     
     // MARK: - override
     
@@ -41,14 +41,14 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            self.backgroundColor = self.isSelected ? self.characterBackground : self.characterBackground?.withAlphaComponent(0.5)
+            self.backgroundColor = self.isSelected ? self.characterBackgroundColor : self.characterBackgroundColor?.withAlphaComponent(0.5)
             self.contentView.alpha = self.isSelected ? 1.0 : 0.5
         }
     }
 
-    func configureBackground(color: UIColor) {
-        self.characterBackground = color
-        self.backgroundColor = self.characterBackground?.withAlphaComponent(0.5)
+    func configureBackgroundColor(color: UIColor) {
+        self.characterBackgroundColor = color
+        self.backgroundColor = self.characterBackgroundColor?.withAlphaComponent(0.5)
         self.contentView.alpha = 0.5
     }
     
