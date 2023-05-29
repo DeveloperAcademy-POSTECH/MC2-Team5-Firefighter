@@ -63,8 +63,6 @@ final class SettingViewTableCell: UITableViewCell {
     }
     
     func configureCell(title: String) {
-        DispatchQueue.main.async {
-            self.titleLabel.text = title
-        }
+        self.titleLabel.text = title
     }
 }
