@@ -16,10 +16,7 @@ final class CharacterCollectionView: UIView {
         static let cellInterSpacing: CGFloat = 39.0
         static let cellLineSpacing: CGFloat = 24.0
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - (collectionHorizontalSpacing * 2 + cellInterSpacing * 2)) / 3
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 0,
-                                                  bottom: 0,
-                                                  right: 0)
+        static let collectionInset = UIEdgeInsets.zero
     }
     
     // MARK: - ui component
@@ -80,7 +77,7 @@ extension CharacterCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterCollectionViewCell.className, for: indexPath) as? CharacterCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.configureBackground(color: Character.allCases[indexPath.item].color)
+        cell.configureBackgroundColor(color: Character.allCases[indexPath.item].color)
         cell.configureImage(image: Character.allCases[indexPath.item].image)
         
         if indexPath.item == 0 {

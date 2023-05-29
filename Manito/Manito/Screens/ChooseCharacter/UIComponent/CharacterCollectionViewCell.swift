@@ -46,7 +46,7 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
         }
     }
 
-    func configureBackground(color: UIColor) {
+    func configureBackgroundColor(color: UIColor) {
         self.characterBackgroundColor = color
         self.backgroundColor = self.characterBackgroundColor?.withAlphaComponent(0.5)
         self.contentView.alpha = 0.5
