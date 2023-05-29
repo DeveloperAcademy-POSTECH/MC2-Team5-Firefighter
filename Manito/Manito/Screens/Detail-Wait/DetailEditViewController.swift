@@ -38,7 +38,7 @@ final class DetailEditViewController: BaseViewController {
         print("\(#file) is dead")
     }
     
-    // MARK: - override
+    // MARK: - life cycle
     
     override func loadView() {
         self.view = self.detailEditView
