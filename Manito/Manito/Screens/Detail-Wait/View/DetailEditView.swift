@@ -173,7 +173,7 @@ final class DetailEditView: UIView {
             $0.height.equalTo(400)
         }
         
-        self.addSubview(helpLabel)
+        self.addSubview(self.helpLabel)
         self.helpLabel.snp.makeConstraints {
             $0.top.equalTo(self.calendarView.snp.bottom).offset(8)
             $0.trailing.equalToSuperview().inset(25)
