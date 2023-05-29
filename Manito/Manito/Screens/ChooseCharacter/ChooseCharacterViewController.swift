@@ -78,7 +78,7 @@ final class ChooseCharacterViewController: BaseViewController {
         self.chooseCharacterView.configureNavigationItem(navigationController)
     }
     
-    private func didTapEnterButton() {
+    private func didTapEnterButton(characterIndex: Int) {
         // FIXME: statusMode 삭제 이후 enterRoom 변경 예정 
         switch self.statusMode {
         case .createRoom:
@@ -87,7 +87,7 @@ final class ChooseCharacterViewController: BaseViewController {
                                                                 capacity: roomInfo.capacity,
                                                                 startDate: roomInfo.startDate,
                                                                 endDate: roomInfo.endDate) ,
-                                                       member: MemberDTO(colorIdx: self.characterIndex)))
+                                                       member: MemberDTO(colorIdx: characterIndex)))
         case .enterRoom:
             self.requestJoinRoom()
         }
@@ -169,6 +169,6 @@ extension ChooseCharacterViewController: ChooseCharacterViewDelegate {
     
     func joinButtonDidTap(characterIndex: Int) {
         self.characterIndex = characterIndex
-        self.didTapEnterButton()
+        self.didTapEnterButton(characterIndex: self.characterIndex)
     }
 }
