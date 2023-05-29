@@ -71,21 +71,21 @@ final class DetailEditView: UIView {
         label.textColor = .white
         return label
     }()
-    private lazy var minimumNumberOfMembersLabel: UILabel = {
+    private lazy var minimumNumberOfParticipantsLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Int(self.memberSlider.minimumValue))인"
+        label.text = "\(Int(self.participantsSlider.minimumValue))인"
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
-    private lazy var maxNumberOfMembersLabel: UILabel = {
+    private lazy var maxNumberOfParticipantsLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Int(self.memberSlider.maximumValue))인"
+        label.text = "\(Int(self.participantsSlider.maximumValue))인"
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
-    private let memberSlider: UISlider = {
+    private let participantsSlider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 4
         slider.maximumValue = 15
@@ -95,7 +95,7 @@ final class DetailEditView: UIView {
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         return slider
     }()
-    private let memberCountLabel: UILabel = {
+    private let numberOfParticipantsLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
@@ -109,7 +109,7 @@ final class DetailEditView: UIView {
     private var maximumMemberCount: Int? {
         willSet(count) {
             if let count {
-                self.memberCountLabel.text = count.description + TextLiteral.per
+                self.numberOfParticipantsLabel.text = count.description + TextLiteral.per
             }
         }
     }
@@ -192,28 +192,28 @@ final class DetailEditView: UIView {
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
-        self.addSubview(self.minimumNumberOfMembersLabel)
-        self.minimumNumberOfMembersLabel.snp.makeConstraints {
+        self.addSubview(self.minimumNumberOfParticipantsLabel)
+        self.minimumNumberOfParticipantsLabel.snp.makeConstraints {
             $0.top.equalTo(self.numberOfParticipantsTitleLabel.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(24)
         }
         
-        self.addSubview(self.memberSlider)
-        self.memberSlider.snp.makeConstraints {
-            $0.leading.equalTo(self.minimumNumberOfMembersLabel.snp.trailing).offset(5)
+        self.addSubview(self.participantsSlider)
+        self.participantsSlider.snp.makeConstraints {
+            $0.leading.equalTo(self.minimumNumberOfParticipantsLabel.snp.trailing).offset(5)
             $0.height.equalTo(45)
-            $0.centerY.equalTo(self.minimumNumberOfMembersLabel.snp.centerY)
+            $0.centerY.equalTo(self.minimumNumberOfParticipantsLabel.snp.centerY)
         }
         
-        self.addSubview(self.maxNumberOfMembersLabel)
-        self.maxNumberOfMembersLabel.snp.makeConstraints {
+        self.addSubview(self.maxNumberOfParticipantsLabel)
+        self.maxNumberOfParticipantsLabel.snp.makeConstraints {
             $0.top.equalTo(self.numberOfParticipantsTitleLabel.snp.bottom).offset(30)
-            $0.leading.equalTo(self.memberSlider.snp.trailing).offset(5)
+            $0.leading.equalTo(self.participantsSlider.snp.trailing).offset(5)
             $0.trailing.equalToSuperview().inset(24)
         }
         
-        self.addSubview(self.memberCountLabel)
-        self.memberCountLabel.snp.makeConstraints {
+        self.addSubview(self.numberOfParticipantsLabel)
+        self.numberOfParticipantsLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalTo(self.numberOfParticipantsTitleLabel.snp.centerY)
         }
@@ -238,7 +238,7 @@ final class DetailEditView: UIView {
     
     func setupSliderValue(_ value: Int) {
         self.maximumMemberCount = value
-        self.memberSlider.value = Float(value)
+        self.participantsSlider.value = Float(value)
     }
     
     private func setupCancleButton() {
@@ -250,7 +250,7 @@ final class DetailEditView: UIView {
     
     private func setupChangeButton() {
         let action = UIAction { [weak self] _ in
-            guard let capacity = self?.memberSlider.value,
+            guard let capacity = self?.participantsSlider.value,
                   let startDateString = self?.calendarView.getTempStartDate(),
                   let endDateString = self?.calendarView.getTempEndDate() else { return }
             self?.delegate?.changeButtonDidTap(capacity: Int(capacity),
@@ -271,7 +271,7 @@ final class DetailEditView: UIView {
             guard let sender = action.sender as? UISlider else { return }
             self?.changeMemberSliderValue(sender: sender)
         }
-        self.memberSlider.addAction(valueChangeAction, for: .valueChanged)
+        self.participantsSlider.addAction(valueChangeAction, for: .valueChanged)
     }
     
     private func changeMemberSliderValue(sender: UISlider) {
