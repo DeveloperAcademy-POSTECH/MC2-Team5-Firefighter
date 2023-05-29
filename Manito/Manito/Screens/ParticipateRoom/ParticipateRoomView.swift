@@ -60,7 +60,6 @@ final class ParticipateRoomView: UIView {
     // MARK: - func
     
     private func setupLayout() {
-        
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
