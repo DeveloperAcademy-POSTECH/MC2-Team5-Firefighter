@@ -17,6 +17,7 @@ final class DetailEditViewController: BaseViewController {
     
     // MARK: - property
     
+    private let editMode: DetailEditView.EditMode
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     var didTappedChangeButton: (() -> ())?
     private let room: Room
@@ -25,6 +26,7 @@ final class DetailEditViewController: BaseViewController {
     
     init(editMode: DetailEditView.EditMode, room: Room) {
         self.detailEditView = DetailEditView(editMode: editMode)
+        self.editMode = editMode
         self.room = room
         super.init()
     }
@@ -48,7 +50,9 @@ final class DetailEditViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.setupCalendarDateRange()
-        self.setupMemberSliderValue()
+        if self.editMode == .information {
+            self.setupMemberSliderValue()
+        }
     }
     
     // MARK: - override

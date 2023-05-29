@@ -64,7 +64,7 @@ final class DetailEditView: UIView {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    private let numberOfParticipantsTitleLabel: UILabel = {
+    private lazy var numberOfParticipantsTitleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.detailEditViewControllerSetMember
         label.font = .font(.regular, ofSize: 18)
@@ -85,7 +85,7 @@ final class DetailEditView: UIView {
         label.textColor = .white
         return label
     }()
-    private let participantsSlider: UISlider = {
+    private lazy var participantsSlider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 4
         slider.maximumValue = 15
@@ -95,7 +95,7 @@ final class DetailEditView: UIView {
         slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
         return slider
     }()
-    private let numberOfParticipantsLabel: UILabel = {
+    private lazy var numberOfParticipantsLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
         label.textColor = .white
@@ -122,7 +122,6 @@ final class DetailEditView: UIView {
         self.setupLayout()
         self.setupCancleButton()
         self.setupChangeButton()
-        self.setupMemberSlider()
     }
     
     @available(*, unavailable)
@@ -182,6 +181,7 @@ final class DetailEditView: UIView {
         
         if self.editMode == .information {        
             self.setupEditMembersLayout()
+            self.setupMemberSlider()
         }
     }
     
@@ -219,28 +219,6 @@ final class DetailEditView: UIView {
         }
     }
     
-    func configureDelegation(_ delegate: DetailEditDelegate) {
-        self.delegate = delegate
-    }
-    
-    func setupDateRange(from startDateString: String, to endDateString: String) {
-        guard let startDate = startDateString.stringToDate else { return }
-        if startDate.isPast {
-            let fiveDaysInterval: TimeInterval = 86400 * 4
-            self.calendarView.startDateText = Date().dateToString
-            self.calendarView.endDateText = (Date() + fiveDaysInterval).dateToString
-        } else {
-            self.calendarView.startDateText = startDateString
-            self.calendarView.endDateText = endDateString
-        }
-        self.calendarView.setupDateRange()
-    }
-    
-    func setupSliderValue(_ value: Int) {
-        self.maximumMemberCount = value
-        self.participantsSlider.value = Float(value)
-    }
-    
     private func setupCancleButton() {
         let action = UIAction { [weak self] _ in
             self?.delegate?.cancleButtonDidTap()
@@ -276,5 +254,27 @@ final class DetailEditView: UIView {
     
     private func changeMemberSliderValue(sender: UISlider) {
         self.maximumMemberCount = Int(sender.value)
+    }
+    
+    func setupSliderValue(_ value: Int) {
+        self.maximumMemberCount = value
+        self.participantsSlider.value = Float(value)
+    }
+    
+    func setupDateRange(from startDateString: String, to endDateString: String) {
+        guard let startDate = startDateString.stringToDate else { return }
+        if startDate.isPast {
+            let fiveDaysInterval: TimeInterval = 86400 * 4
+            self.calendarView.startDateText = Date().dateToString
+            self.calendarView.endDateText = (Date() + fiveDaysInterval).dateToString
+        } else {
+            self.calendarView.startDateText = startDateString
+            self.calendarView.endDateText = endDateString
+        }
+        self.calendarView.setupDateRange()
+    }
+    
+    func configureDelegation(_ delegate: DetailEditDelegate) {
+        self.delegate = delegate
     }
 }
