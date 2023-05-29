@@ -26,7 +26,6 @@ final class ChooseCharacterViewController: BaseViewController {
     // FIXME: 삭제예정
     private var statusMode: Status
     private var roomId: Int?
-    private var characterIndex: Int = 0
     // FIXME: private 변경 예정
     var roomInfo: RoomDTO?
     
@@ -89,7 +88,7 @@ final class ChooseCharacterViewController: BaseViewController {
                                                                 endDate: roomInfo.endDate) ,
                                                        member: MemberDTO(colorIndex: characterIndex)))
         case .enterRoom:
-            self.requestJoinRoom()
+            self.requestJoinRoom(characterIndex: characterIndex)
         }
     }
     
@@ -122,12 +121,12 @@ final class ChooseCharacterViewController: BaseViewController {
     
     // MARK: - network
     
-    private func requestJoinRoom() {
+    private func requestJoinRoom(characterIndex: Int) {
         Task {
             do {
                 guard let roomId = self.roomId else { return }
                 let status = try await self.roomService.dispatchJoinRoom(roodId: roomId.description,
-                                                                         dto: MemberDTO(colorIndex: self.characterIndex))
+                                                                         dto: MemberDTO(colorIndex: characterIndex))
                 if status == 201 {
                     self.pushDetailWaitViewController(status: .enterRoom, roomId: roomId)
                 }
@@ -168,7 +167,6 @@ extension ChooseCharacterViewController: ChooseCharacterViewDelegate {
     }
     
     func joinButtonDidTap(characterIndex: Int) {
-        self.characterIndex = characterIndex
         self.didTapEnterButton(characterIndex: characterIndex)
     }
 }
