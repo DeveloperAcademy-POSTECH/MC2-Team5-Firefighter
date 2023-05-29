@@ -87,7 +87,7 @@ final class ChooseCharacterViewController: BaseViewController {
                                                                 capacity: roomInfo.capacity,
                                                                 startDate: roomInfo.startDate,
                                                                 endDate: roomInfo.endDate) ,
-                                                       member: MemberDTO(colorIdx: characterIndex)))
+                                                       member: MemberDTO(colorIndex: characterIndex)))
         case .enterRoom:
             self.requestJoinRoom()
         }
@@ -127,7 +127,7 @@ final class ChooseCharacterViewController: BaseViewController {
             do {
                 guard let roomId = self.roomId else { return }
                 let status = try await self.roomService.dispatchJoinRoom(roodId: roomId.description,
-                                                                         dto: MemberDTO(colorIdx: self.characterIndex))
+                                                                         dto: MemberDTO(colorIndex: self.characterIndex))
                 if status == 201 {
                     self.pushDetailWaitViewController(status: .enterRoom, roomId: roomId)
                 }
@@ -169,6 +169,6 @@ extension ChooseCharacterViewController: ChooseCharacterViewDelegate {
     
     func joinButtonDidTap(characterIndex: Int) {
         self.characterIndex = characterIndex
-        self.didTapEnterButton(characterIndex: self.characterIndex)
+        self.didTapEnterButton(characterIndex: characterIndex)
     }
 }
