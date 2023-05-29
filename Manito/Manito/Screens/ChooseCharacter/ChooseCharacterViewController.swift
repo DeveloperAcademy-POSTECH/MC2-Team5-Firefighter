@@ -49,14 +49,14 @@ final class ChooseCharacterViewController: BaseViewController {
     
     // MARK: - life cycle
     
+    override func loadView() {
+        self.view = self.chooseCharacterView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
         self.configureNavigationController()
-    }
-    
-    override func loadView() {
-        self.view = self.chooseCharacterView
     }
     
     // MARK: - override
