@@ -37,4 +37,9 @@ extension Date {
     var isOpenManitto: Bool {
         return self.isToday && self.isOverOpenTime
     }
+    
+    var isPast: Bool {
+        let distance = self.distance(to: Date())
+        return distance > 86400
+    }
 }

@@ -131,11 +131,8 @@ final class DetailWaitTitleView: UIView {
         }
     }
     
-    func setRoomTitleLabelText(text: String) {
-        self.roomTitleLabel.text = text
-    }
-    
-    func setDurationDateLabel(text: String) {
-        self.durationDateLabel.text = text
+    func setupLabelData(title: String, dateRange: String) {
+        self.roomTitleLabel.text = title
+        self.durationDateLabel.text = dateRange
     }
 }

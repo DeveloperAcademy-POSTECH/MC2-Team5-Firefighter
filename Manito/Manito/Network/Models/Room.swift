@@ -41,9 +41,10 @@ struct Room: Decodable {
     
     var canStart: Bool {
         if let count = participants?.count,
-           let date = roomInformation?.startDate?.stringToDate {
+           let date = roomInformation?.startDate?.stringToDate,
+           let isAdmin = admin {
             let isMinimumUserCount = count >= 4
-            return isMinimumUserCount && date.isToday
+            return isMinimumUserCount && date.isToday && isAdmin
         } else {
             return false
         }
@@ -103,7 +104,7 @@ struct RoomInfo: Decodable {
     let id, capacity: Int?
     let title, startDate, endDate, state: String?
     
-    var dateRange: String {
+    var dateRangeText: String {
         if let startDate,
            let endDate {
             return startDate + " ~ " + endDate
@@ -128,6 +129,19 @@ struct RoomInfo: Decodable {
         } else {
             return false
         }
+    }
+    
+    var isStartDatePast: Bool {
+        guard let startDate = self.startDate?.stringToDate else { return true }
+        return startDate.isPast
+    }
+    
+    var dateRange: (startDate: String, endDate: String) {
+        let fiveDaysInterval: TimeInterval = 86400 * 4
+        let startDate: String = isStartDatePast ? Date().dateToString : self.startDate ?? ""
+        let endDate: String = isStartDatePast ? (Date() + fiveDaysInterval).dateToString : self.endDate ?? ""
+
+        return (startDate, endDate)
     }
 }
 
