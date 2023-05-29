@@ -23,6 +23,10 @@ final class SettingViewController: BaseViewController {
     
     // MARK: - life cycle
     
+    override func loadView() {
+        self.view = self.settingView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
@@ -30,17 +34,17 @@ final class SettingViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.prefersLargeTitles = false
-    }
-    
-    override func loadView() {
-        self.view = self.settingView
+        self.configureNavigationBar()
     }
     
     // MARK: - func
     
     private func configureDelegation() {
         self.settingView.configureDelegate(self)
+    }
+    
+    private func configureNavigationBar() {
+        self.navigationController?.navigationBar.prefersLargeTitles = false
     }
 }
 
