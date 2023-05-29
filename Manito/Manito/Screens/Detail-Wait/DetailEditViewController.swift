@@ -51,6 +51,8 @@ final class DetailEditViewController: BaseViewController {
         self.setupMemberSliderValue()
     }
     
+    // MARK: - override
+    
     override func configureUI() {
         super.configureUI()
         self.presentationController?.delegate = self
@@ -81,7 +83,7 @@ final class DetailEditViewController: BaseViewController {
         }
         self.showDiscardActionSheet()
     }
- 
+
     private func showDiscardActionSheet() {
         let actionTitles = [TextLiteral.destructive, TextLiteral.cancel]
         let actionStyle: [UIAlertAction.Style] = [.destructive, .cancel]
