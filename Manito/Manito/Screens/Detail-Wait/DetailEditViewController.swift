@@ -97,7 +97,7 @@ final class DetailEditViewController: BaseViewController {
     
     // MARK: - network
     
-    private func putChangeRoomInfo(roomDto: RoomDTO, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
+    private func putRoomInfo(roomDto: RoomDTO, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         guard let roomIndex = self.room.roomInformation?.id else { return }
         Task {
             do {
@@ -137,7 +137,7 @@ extension DetailEditViewController: DetailEditDelegate {
                           startDate: "20\(startDate)",
                           endDate: "20\(endDate)")
         if currentUserCount <= capacity {
-            self.putChangeRoomInfo(roomDto: dto) { [weak self] result in
+            self.putRoomInfo(roomDto: dto) { [weak self] result in
                 switch result {
                 case .success:
                     self?.didTappedChangeButton?()
