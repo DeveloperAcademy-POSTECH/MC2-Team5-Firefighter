@@ -47,7 +47,7 @@ final class DetailEditViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
-        self.setupCalendarLayout()
+        self.setupCalendarDateRange()
         self.setupMemberSliderValue()
     }
     
@@ -65,7 +65,7 @@ final class DetailEditViewController: BaseViewController {
         self.detailEditView.configureDelegation(self)
     }
     
-    private func setupCalendarLayout() {
+    private func setupCalendarDateRange() {
         guard let startDate = self.room.roomInformation?.startDate,
               let endDate = self.room.roomInformation?.endDate else { return }
         self.detailEditView.setupDateRange(from: startDate, to: endDate)
