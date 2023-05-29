@@ -93,21 +93,43 @@ final class ChooseCharacterViewController: BaseViewController {
         }
     }
     
+    private func pushDetailWaitViewController(status: Status, roomId: Int) {
+        guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+        
+        let viewController = DetailWaitViewController(roomIndex: roomId)
+        
+        switch status {
+        case .createRoom:
+            navigationController.popViewController(animated: true)
+            navigationController.pushViewController(viewController, animated: false)
+            
+            self.dismiss(animated: true) {
+                NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
+            }
+        case .enterRoom:
+            self.dismiss(animated: true) {
+                navigationController.pushViewController(viewController, animated: true)
+            }
+        }
+        
+    }
+    
+    private func makeAlertWhenAlreadyJoin() {
+        self.makeAlert(title: "이미 참여중인 방입니다", message: "참여중인 애니또 리스트를 확인해 보세요", okAction: { [weak self] _ in
+            self?.dismiss(animated: true)
+        })
+    }
+    
     // MARK: - network
     
     private func requestJoinRoom() {
         Task {
             do {
-                guard let id = self.roomId else { return }
-                let status = try await self.roomService.dispatchJoinRoom(roodId: id.description,
+                guard let roomId = self.roomId else { return }
+                let status = try await self.roomService.dispatchJoinRoom(roodId: roomId.description,
                                                                          dto: MemberDTO(colorIdx: self.characterIndex))
                 if status == 201 {
-                    guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-                    guard let id = self.roomId else { return }
-                    let viewController = DetailWaitViewController(roomIndex: id)
-                    self.dismiss(animated: true) {
-                        navigationController.pushViewController(viewController, animated: true)
-                    }
+                    self.pushDetailWaitViewController(status: .enterRoom, roomId: roomId)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -115,9 +137,7 @@ final class ChooseCharacterViewController: BaseViewController {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
                 print("client Error: \(String(describing: message))")
-                self.makeAlert(title: "이미 참여중인 방입니다", message: "참여중인 애니또 리스트를 확인해 보세요", okAction: { [weak self] _ in
-                    self?.dismiss(animated: true)
-                })
+                self.makeAlertWhenAlreadyJoin()
             }
         }
     }
@@ -125,17 +145,8 @@ final class ChooseCharacterViewController: BaseViewController {
     func requestCreateRoom(room: CreateRoomDTO) {
         Task {
             do {
-                guard
-                    let roomId = try await self.roomService.postCreateRoom(body: room),
-                    let navigationController = self.presentingViewController as? UINavigationController
-                else { return }
-                let viewController = DetailWaitViewController(roomIndex: roomId)
-                navigationController.popViewController(animated: true)
-                navigationController.pushViewController(viewController, animated: false)
-                
-                self.dismiss(animated: true) {
-                    NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
-                }
+                guard let roomId = try await self.roomService.postCreateRoom(body: room) else { return }
+                self.pushDetailWaitViewController(status: .createRoom, roomId: roomId)
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
