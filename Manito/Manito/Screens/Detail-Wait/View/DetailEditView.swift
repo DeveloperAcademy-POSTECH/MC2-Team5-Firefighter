@@ -49,7 +49,7 @@ final class DetailEditView: UIView {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
-    private let startSettingLabel: UILabel = {
+    private let manittoPeriodTitleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.detailEditViewControllerStartSetting
         label.font = .font(.regular, ofSize: 16)
@@ -161,15 +161,15 @@ final class DetailEditView: UIView {
             $0.centerY.equalTo(self.cancelButton.snp.centerY)
         }
         
-        self.addSubview(self.startSettingLabel)
-        self.startSettingLabel.snp.makeConstraints {
+        self.addSubview(self.manittoPeriodTitleLabel)
+        self.manittoPeriodTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.cancelButton.snp.bottom).offset(51)
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
         self.addSubview(self.calendarView)
         self.calendarView.snp.makeConstraints {
-            $0.top.equalTo(self.startSettingLabel.snp.bottom).offset(30)
+            $0.top.equalTo(self.manittoPeriodTitleLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
             $0.height.equalTo(400)
         }
