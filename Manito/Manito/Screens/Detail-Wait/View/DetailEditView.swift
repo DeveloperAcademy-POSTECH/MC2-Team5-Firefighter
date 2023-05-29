@@ -57,28 +57,28 @@ final class DetailEditView: UIView {
         return label
     }()
     let calendarView: CalendarView = CalendarView()
-    private let tipLabel: UILabel = {
+    private let helpLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.maxMessage
         label.textColor = .grey004
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    private let setMemberLabel: UILabel = {
+    private let numberOfParticipantsTitleLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.detailEditViewControllerSetMember
         label.font = .font(.regular, ofSize: 18)
         label.textColor = .white
         return label
     }()
-    private lazy var minMemberLabel: UILabel = {
+    private lazy var minimumNumberOfMembersLabel: UILabel = {
         let label = UILabel()
         label.text = "\(Int(self.memberSlider.minimumValue))인"
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
-    private lazy var maxMemberLabel: UILabel = {
+    private lazy var maxNumberOfMembersLabel: UILabel = {
         let label = UILabel()
         label.text = "\(Int(self.memberSlider.maximumValue))인"
         label.font = .font(.regular, ofSize: 16)
@@ -174,8 +174,8 @@ final class DetailEditView: UIView {
             $0.height.equalTo(400)
         }
         
-        self.addSubview(tipLabel)
-        self.tipLabel.snp.makeConstraints {
+        self.addSubview(helpLabel)
+        self.helpLabel.snp.makeConstraints {
             $0.top.equalTo(self.calendarView.snp.bottom).offset(8)
             $0.trailing.equalToSuperview().inset(25)
         }
@@ -186,28 +186,28 @@ final class DetailEditView: UIView {
     }
     
     private func setupEditMembersLayout() {
-        self.addSubview(self.setMemberLabel)
-        self.setMemberLabel.snp.makeConstraints {
+        self.addSubview(self.numberOfParticipantsTitleLabel)
+        self.numberOfParticipantsTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.calendarView.snp.bottom).offset(60)
             $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
         }
         
-        self.addSubview(self.minMemberLabel)
-        self.minMemberLabel.snp.makeConstraints {
-            $0.top.equalTo(self.setMemberLabel.snp.bottom).offset(30)
+        self.addSubview(self.minimumNumberOfMembersLabel)
+        self.minimumNumberOfMembersLabel.snp.makeConstraints {
+            $0.top.equalTo(self.numberOfParticipantsTitleLabel.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(24)
         }
         
         self.addSubview(self.memberSlider)
         self.memberSlider.snp.makeConstraints {
-            $0.leading.equalTo(self.minMemberLabel.snp.trailing).offset(5)
+            $0.leading.equalTo(self.minimumNumberOfMembersLabel.snp.trailing).offset(5)
             $0.height.equalTo(45)
-            $0.centerY.equalTo(self.minMemberLabel.snp.centerY)
+            $0.centerY.equalTo(self.minimumNumberOfMembersLabel.snp.centerY)
         }
         
-        self.addSubview(self.maxMemberLabel)
-        self.maxMemberLabel.snp.makeConstraints {
-            $0.top.equalTo(self.setMemberLabel.snp.bottom).offset(30)
+        self.addSubview(self.maxNumberOfMembersLabel)
+        self.maxNumberOfMembersLabel.snp.makeConstraints {
+            $0.top.equalTo(self.numberOfParticipantsTitleLabel.snp.bottom).offset(30)
             $0.leading.equalTo(self.memberSlider.snp.trailing).offset(5)
             $0.trailing.equalToSuperview().inset(24)
         }
@@ -215,7 +215,7 @@ final class DetailEditView: UIView {
         self.addSubview(self.memberCountLabel)
         self.memberCountLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.centerY.equalTo(self.setMemberLabel.snp.centerY)
+            $0.centerY.equalTo(self.numberOfParticipantsTitleLabel.snp.centerY)
         }
     }
     
