@@ -19,8 +19,8 @@ final class DetailEditViewController: BaseViewController {
     
     private let editMode: DetailEditView.EditMode
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-    var didTappedChangeButton: (() -> ())?
     private let room: Room
+    weak var detailWaitDelegate: DetailWaitViewControllerDelegate?
     
     // MARK: - init
     
@@ -145,7 +145,7 @@ extension DetailEditViewController: DetailEditDelegate {
             self.putRoomInfo(roomDto: dto) { [weak self] result in
                 switch result {
                 case .success:
-                    self?.didTappedChangeButton?()
+                    self?.detailWaitDelegate?.didTappedChangeButton()
                     self?.cancleButtonDidTap()
                 case .failure:
                     self?.makeAlert(title: TextLiteral.detailEditViewControllerChangeErrorTitle,

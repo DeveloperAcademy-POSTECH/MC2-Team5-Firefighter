@@ -9,6 +9,10 @@ import UIKit
 
 import SnapKit
 
+protocol DetailWaitViewControllerDelegate: AnyObject {
+    func didTappedChangeButton()
+}
+
 final class DetailWaitViewController: BaseViewController {
     
     // MARK: - ui component
@@ -20,6 +24,7 @@ final class DetailWaitViewController: BaseViewController {
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     private let roomIndex: Int
     private var roomInformation: Room?
+    private weak var delegate: DetailWaitViewControllerDelegate?
     
     // MARK: - init
     
@@ -60,11 +65,7 @@ final class DetailWaitViewController: BaseViewController {
         guard let room = self.roomInformation else { return }
         let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
                                                       room: room)
-        viewController.didTappedChangeButton = { [weak self] in
-            self?.fetchRoomData()
-            ToastView.showToast(message: "방 정보 수정 완료",
-                                controller: self ?? UIViewController())
-        }
+        viewController.detailWaitDelegate = self
         self.present(viewController, animated: true)
     }
     
@@ -236,5 +237,13 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
             self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                            message: TextLiteral.detailWaitViewControllerPastAlertMessage)
         }
+    }
+}
+
+extension DetailWaitViewController: DetailWaitViewControllerDelegate {
+    func didTappedChangeButton() {
+        self.fetchRoomData()
+        ToastView.showToast(message: "방 정보 수정 완료",
+                            controller: self)
     }
 }
