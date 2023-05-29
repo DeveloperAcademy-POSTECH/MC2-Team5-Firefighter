@@ -105,6 +105,7 @@ final class DetailEditView: UIView {
     // MARK: - property
     
     private weak var delegate: DetailEditDelegate?
+    private weak var calendarDelegate: CalendarDelegate?
     private let editMode: EditMode
     private var maximumMemberCount: Int? {
         willSet(count) {
@@ -236,12 +237,12 @@ final class DetailEditView: UIView {
                                                   to: endDateString)
         }
         self.changeButton.addAction(action, for: .touchUpInside)
-        
-        self.calendarView.changeButtonState = { [weak self] value in
-            self?.changeButton.isEnabled = value
-            self?.changeButton.setTitleColor(.subBlue, for: .normal)
-            self?.changeButton.setTitleColor(.grey002, for: .disabled)
-        }
+    }
+    
+    func setupChangeButton(_ value: Bool) {
+        self.changeButton.isEnabled = value
+        self.changeButton.setTitleColor(.subBlue, for: .normal)
+        self.changeButton.setTitleColor(.grey002, for: .disabled)
     }
     
     private func setupMemberSlider() {
@@ -276,5 +277,9 @@ final class DetailEditView: UIView {
     
     func configureDelegation(_ delegate: DetailEditDelegate) {
         self.delegate = delegate
+    }
+    
+    func configureCalendarDelegate(_ delegate: CalendarDelegate) {
+        self.calendarView.configureCalendarDelegate(delegate)
     }
 }

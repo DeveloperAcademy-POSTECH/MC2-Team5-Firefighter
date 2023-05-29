@@ -67,6 +67,7 @@ final class DetailEditViewController: BaseViewController {
     
     private func configureDelegation() {
         self.detailEditView.configureDelegation(self)
+        self.detailEditView.configureCalendarDelegate(self)
     }
     
     private func setupCalendarDateRange() {
@@ -156,5 +157,11 @@ extension DetailEditViewController: DetailEditDelegate {
             self.makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle,
                            message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
         }
+    }
+}
+
+extension DetailEditViewController: CalendarDelegate {
+    func detectChangeButton(_ value: Bool) {
+        self.detailEditView.setupChangeButton(value)
     }
 }
