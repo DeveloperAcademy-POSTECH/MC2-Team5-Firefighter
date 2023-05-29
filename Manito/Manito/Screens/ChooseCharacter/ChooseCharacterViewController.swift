@@ -87,7 +87,7 @@ final class ChooseCharacterViewController: BaseViewController {
                                                                 capacity: roomInfo.capacity,
                                                                 startDate: roomInfo.startDate,
                                                                 endDate: roomInfo.endDate) ,
-                                                  member: MemberDTO(colorIdx: characterIndex)))
+                                                       member: MemberDTO(colorIdx: self.characterIndex)))
         case .enterRoom:
             self.requestJoinRoom()
         }
@@ -142,7 +142,7 @@ final class ChooseCharacterViewController: BaseViewController {
         }
     }
     
-    func requestCreateRoom(room: CreateRoomDTO) {
+    private func requestCreateRoom(room: CreateRoomDTO) {
         Task {
             do {
                 guard let roomId = try await self.roomService.postCreateRoom(body: room) else { return }
