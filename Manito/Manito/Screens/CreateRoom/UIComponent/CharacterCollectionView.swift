@@ -35,7 +35,7 @@ final class CharacterCollectionView: UIView {
         return flowLayout
     }()
     private lazy var manittoCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -92,7 +92,7 @@ extension CharacterCollectionView: UICollectionViewDataSource {
     }
 }
 
-extension CharacterCollectionView: UICollectionViewDelegateFlowLayout {
+extension CharacterCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.characterIndex = indexPath.item
     }
