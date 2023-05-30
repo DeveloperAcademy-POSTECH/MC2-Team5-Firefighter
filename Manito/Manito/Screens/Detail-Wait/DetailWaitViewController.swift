@@ -5,6 +5,7 @@
 //  Created by Mingwan Choi on 2023/04/15.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -17,6 +18,8 @@ final class DetailWaitViewController: BaseViewController {
     
     // MARK: - property
     
+    private var cancleable = Set<AnyCancellable>()
+    private let viewModel = DetailWaitViewModel()
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     private let roomIndex: Int
     private var roomInformation: Room?
@@ -48,9 +51,25 @@ final class DetailWaitViewController: BaseViewController {
         self.fetchRoomData()
         self.configureDelegation()
         self.configureNavigationController()
+        self.bind()
     }
     
     // MARK: - func
+    
+    private func bind() {
+        self.viewModel.roomInformationSubject
+            .sink(receiveCompletion: { result in
+            switch result {
+            case .finished:
+                print("finish")
+            case .failure:
+                print("error")
+            }
+        }, receiveValue: { room in
+            dump(room)
+        })
+            .store(in: &self.cancleable)
+    }
     
     private func configureDelegation() {
         self.detailWaitView.configureDelegation(self)
@@ -111,6 +130,7 @@ final class DetailWaitViewController: BaseViewController {
     // MARK: - network
     
     private func requestWaitRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
+        self.viewModel.fetchRoomInformation(roomIndex: self.roomIndex)
         Task {
             do {
                 let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)

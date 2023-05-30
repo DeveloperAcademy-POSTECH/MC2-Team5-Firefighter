@@ -15,6 +15,7 @@
 		391B3003286198C200421F1D /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391B3002286198C200421F1D /* Size.swift */; };
 		392EC77E2855C388006918A9 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC77D2855C388006918A9 /* SettingButton.swift */; };
 		392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */; };
+		395B5BC22A25E20000CE1420 /* DetailWaitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */; };
 		397A241028BA494100454E4F /* APIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F0287D984900A04A2B /* APIEnvironment.swift */; };
 		397A241428BA516B00454E4F /* DetailWaitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241328BA516B00454E4F /* DetailWaitAPI.swift */; };
 		397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241728BA51B400454E4F /* DetailWaitProtocol.swift */; };
@@ -179,6 +180,7 @@
 		391B3002286198C200421F1D /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		392EC77D2855C388006918A9 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitTitleView.swift; sourceTree = "<group>"; };
+		395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModel.swift; sourceTree = "<group>"; };
 		397A241328BA516B00454E4F /* DetailWaitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitAPI.swift; sourceTree = "<group>"; };
 		397A241728BA51B400454E4F /* DetailWaitProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitProtocol.swift; sourceTree = "<group>"; };
 		397A241928BA532A00454E4F /* FriendList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendList.swift; sourceTree = "<group>"; };
@@ -372,6 +374,14 @@
 				39D95264285B097800183B09 /* CalendarView.swift */,
 			);
 			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		395B5BC02A25E1F400CE1420 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		397A241128BA513E00454E4F /* API */ = {
@@ -663,6 +673,7 @@
 		B5F524E828519B2F00614FF7 /* Detail-Wait */ = {
 			isa = PBXGroup;
 			children = (
+				395B5BC02A25E1F400CE1420 /* ViewModel */,
 				391612D629E92308004AE982 /* View */,
 				392EC77F2855D107006918A9 /* UIComponent */,
 				B5F525092851A06700614FF7 /* DetailWaitViewController.swift */,
@@ -1192,6 +1203,7 @@
 				CB9592B52855D52700847751 /* CommonMissionView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
 				39C95802287DACC300A04A2B /* RoomEndPoint.swift in Sources */,
+				395B5BC22A25E20000CE1420 /* DetailWaitViewModel.swift in Sources */,
 				CB4C77E628C0D4EB007A1AD2 /* MainAPI.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
