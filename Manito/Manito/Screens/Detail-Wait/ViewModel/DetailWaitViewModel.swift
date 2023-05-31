@@ -9,23 +9,21 @@ import Combine
 
 final class DetailWaitViewModel {
     
+    // MARK: - property
+    
     private let roomIndex: Int
     private let detailWaitService: DetailWaitAPI
     
-    struct Input {
-        let viewDidLoad: AnyPublisher<Void, Never>
-    }
-    
-    struct Output {
-        let roomInformationDidUpdate: AnyPublisher<Room, Error>
-    }
-        
     let roomInformationSubject = PassthroughSubject<Room, Error>()
+    
+    // MARK: - init
     
     init(roomIndex: Int, detailWaitService: DetailWaitAPI) {
         self.roomIndex = roomIndex
         self.detailWaitService = detailWaitService
     }
+    
+    // MARK: - func
     
     func fetchRoomInformation() {
         Task {

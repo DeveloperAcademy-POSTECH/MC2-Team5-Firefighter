@@ -48,10 +48,10 @@ final class DetailWaitViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetchRoomData()
         self.configureDelegation()
         self.configureNavigationController()
         self.bind()
+        self.viewModel.fetchRoomInformation()
     }
     
     // MARK: - func
@@ -66,13 +66,11 @@ final class DetailWaitViewController: BaseViewController {
                 print("error")
             }
         }, receiveValue: { room in
-            dump(room)
+            DispatchQueue.main.async {
+                self.detailWaitView.updateDetailWaitView(room: room)
+            }
         })
             .store(in: &self.cancleable)
-        
-        
-        let detailWaitInput = DetailWaitViewModel.Input(
-            viewDidLoad: Just(Void()).eraseToAnyPublisher())
     }
     
     private func configureDelegation() {
@@ -117,37 +115,37 @@ final class DetailWaitViewController: BaseViewController {
         self.detailWaitView.configureNavigationItem(navigationController)
     }
     
-    private func fetchRoomData() {
-        self.requestWaitRoomInfo() { [weak self] result in
-            switch result {
-            case .success(let room):
-                DispatchQueue.main.async {
-                    self?.detailWaitView.updateDetailWaitView(room: room)
-                }
-            case .failure:
-                self?.makeAlert(title: TextLiteral.errorAlertTitle,
-                                message: TextLiteral.detailWaitViewControllerLoadDataMessage)
-            }
-        }
-    }
+//    private func fetchRoomData() {
+//        self.requestWaitRoomInfo() { [weak self] result in
+//            switch result {
+//            case .success(let room):
+//                DispatchQueue.main.async {
+//                    self?.detailWaitView.updateDetailWaitView(room: room)
+//                }
+//            case .failure:
+//                self?.makeAlert(title: TextLiteral.errorAlertTitle,
+//                                message: TextLiteral.detailWaitViewControllerLoadDataMessage)
+//            }
+//        }
+//    }
     
     // MARK: - network
     
-    private func requestWaitRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
-                if let roomInfo = data {
-                    self.roomInformation = roomInfo
-                    completionHandler(.success(roomInfo))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
+//    private func requestWaitRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
+//        Task {
+//            do {
+//                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
+//                if let roomInfo = data {
+//                    self.roomInformation = roomInfo
+//                    completionHandler(.success(roomInfo))
+//                }
+//            } catch NetworkError.serverError {
+//                completionHandler(.failure(.serverError))
+//            } catch NetworkError.clientError(let message) {
+//                completionHandler(.failure(.clientError(message: message)))
+//            }
+//        }
+//    }
     
     private func requestStartManitto(completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
         Task {
