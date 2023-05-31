@@ -57,7 +57,7 @@ final class DetailWaitViewController: BaseViewController {
     // MARK: - func
     
     private func bind() {
-        self.viewModel.roomInformationSubject
+        self.viewModel.$roomInformation
             .sink(receiveCompletion: { result in
             switch result {
             case .finished:
@@ -66,8 +66,10 @@ final class DetailWaitViewController: BaseViewController {
                 print("error")
             }
         }, receiveValue: { room in
-            DispatchQueue.main.async {
-                self.detailWaitView.updateDetailWaitView(room: room)
+            if let room {
+                DispatchQueue.main.async {
+                    self.detailWaitView.updateDetailWaitView(room: room)
+                }
             }
         })
             .store(in: &self.cancleable)
@@ -114,38 +116,6 @@ final class DetailWaitViewController: BaseViewController {
         guard let navigationController = self.navigationController else { return }
         self.detailWaitView.configureNavigationItem(navigationController)
     }
-    
-//    private func fetchRoomData() {
-//        self.requestWaitRoomInfo() { [weak self] result in
-//            switch result {
-//            case .success(let room):
-//                DispatchQueue.main.async {
-//                    self?.detailWaitView.updateDetailWaitView(room: room)
-//                }
-//            case .failure:
-//                self?.makeAlert(title: TextLiteral.errorAlertTitle,
-//                                message: TextLiteral.detailWaitViewControllerLoadDataMessage)
-//            }
-//        }
-//    }
-    
-    // MARK: - network
-    
-//    private func requestWaitRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
-//        Task {
-//            do {
-//                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
-//                if let roomInfo = data {
-//                    self.roomInformation = roomInfo
-//                    completionHandler(.success(roomInfo))
-//                }
-//            } catch NetworkError.serverError {
-//                completionHandler(.failure(.serverError))
-//            } catch NetworkError.clientError(let message) {
-//                completionHandler(.failure(.clientError(message: message)))
-//            }
-//        }
-//    }
     
     private func requestStartManitto(completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
         Task {
@@ -248,7 +218,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
     }
     
     func codeCopyButtonDidTap() {
-        guard let invitationCode = self.roomInformation?.invitation?.code else { return }
+        guard let invitationCode = self.viewModel.roomInformation?.invitation?.code else { return }
         ToastView.showToast(code: invitationCode,
                             message: TextLiteral.detailWaitViewControllerCopyCode,
                             controller: self)

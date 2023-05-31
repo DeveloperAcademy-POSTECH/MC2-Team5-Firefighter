@@ -13,8 +13,7 @@ final class DetailWaitViewModel {
     
     private let roomIndex: Int
     private let detailWaitService: DetailWaitAPI
-    
-    let roomInformationSubject = PassthroughSubject<Room, Error>()
+    @Published var roomInformation: Room?
     
     // MARK: - init
     
@@ -29,7 +28,7 @@ final class DetailWaitViewModel {
         Task {
             let data = try await detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
             if let roomInformation = data {
-                self.roomInformationSubject.send(roomInformation)
+                self.roomInformation = roomInformation
             }
         }
     }
