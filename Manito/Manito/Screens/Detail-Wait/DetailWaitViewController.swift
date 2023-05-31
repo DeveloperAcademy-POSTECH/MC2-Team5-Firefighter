@@ -19,7 +19,7 @@ final class DetailWaitViewController: BaseViewController {
     // MARK: - property
     
     private var cancleable = Set<AnyCancellable>()
-    private let viewModel = DetailWaitViewModel()
+    private lazy var viewModel = DetailWaitViewModel(roomIndex: self.roomIndex, detailWaitService: DetailWaitAPI(apiService: APIService()))
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     private let roomIndex: Int
     private var roomInformation: Room?
@@ -69,6 +69,10 @@ final class DetailWaitViewController: BaseViewController {
             dump(room)
         })
             .store(in: &self.cancleable)
+        
+        
+        let detailWaitInput = DetailWaitViewModel.Input(
+            viewDidLoad: Just(Void()).eraseToAnyPublisher())
     }
     
     private func configureDelegation() {
@@ -130,7 +134,6 @@ final class DetailWaitViewController: BaseViewController {
     // MARK: - network
     
     private func requestWaitRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
-        self.viewModel.fetchRoomInformation(roomIndex: self.roomIndex)
         Task {
             do {
                 let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)

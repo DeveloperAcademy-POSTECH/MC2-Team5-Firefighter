@@ -6,17 +6,30 @@
 //
 
 import Combine
-import Foundation
 
 final class DetailWaitViewModel {
     
-    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
+    private let roomIndex: Int
+    private let detailWaitService: DetailWaitAPI
     
+    struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
+    }
+    
+    struct Output {
+        let roomInformationDidUpdate: AnyPublisher<Room, Error>
+    }
+        
     let roomInformationSubject = PassthroughSubject<Room, Error>()
     
-    func fetchRoomInformation(roomIndex: Int) {
+    init(roomIndex: Int, detailWaitService: DetailWaitAPI) {
+        self.roomIndex = roomIndex
+        self.detailWaitService = detailWaitService
+    }
+    
+    func fetchRoomInformation() {
         Task {
-            let data = try await detailWaitService.getWaitingRoomInfo(roomId: roomIndex.description)
+            let data = try await detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
             if let roomInformation = data {
                 self.roomInformationSubject.send(roomInformation)
             }
