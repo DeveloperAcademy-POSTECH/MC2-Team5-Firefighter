@@ -16,7 +16,6 @@ final class SettingViewTableCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 15)
-        label.text = "SSSSS"
         return label
     }()
     
