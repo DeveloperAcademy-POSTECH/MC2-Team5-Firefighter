@@ -20,6 +20,9 @@
 		397A241428BA516B00454E4F /* DetailWaitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241328BA516B00454E4F /* DetailWaitAPI.swift */; };
 		397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241728BA51B400454E4F /* DetailWaitProtocol.swift */; };
 		397A241A28BA532A00454E4F /* FriendList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241928BA532A00454E4F /* FriendList.swift */; };
+		398B1CBC2A12415C00DEFCEC /* ManitoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */; };
+		398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CC92A13597600DEFCEC /* FSCalendar */; };
+		398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CCB2A13599D00DEFCEC /* FirebaseAuth */; };
 		399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */; };
 		39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957CD2876E2ED00A04A2B /* LoginViewController.swift */; };
 		39C957D02879521400A04A2B /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957CF2879521400A04A2B /* String+Extension.swift */; };
@@ -171,6 +174,16 @@
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		398B1CBD2A12415C00DEFCEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5F524C328519AA000614FF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B5F524CA28519AA000614FF7;
+			remoteInfo = Manito;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewCell.swift; sourceTree = "<group>"; };
 		333BF669285864CE0039F77F /* MemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +197,8 @@
 		397A241328BA516B00454E4F /* DetailWaitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitAPI.swift; sourceTree = "<group>"; };
 		397A241728BA51B400454E4F /* DetailWaitProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitProtocol.swift; sourceTree = "<group>"; };
 		397A241928BA532A00454E4F /* FriendList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendList.swift; sourceTree = "<group>"; };
+		398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoTests.swift; sourceTree = "<group>"; };
 		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
 		39C957CD2876E2ED00A04A2B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		39C957CF2879521400A04A2B /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -335,6 +350,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		398B1CB62A12415B00DEFCEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */,
+				398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B5F524C828519AA000614FF7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -414,6 +438,21 @@
 				B517C04D28D1FE660008BED0 /* TokenProtocol.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		398B1CBA2A12415C00DEFCEC /* ManitoTests */ = {
+			isa = PBXGroup;
+			children = (
+				398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */,
+			);
+			path = ManitoTests;
+			sourceTree = "<group>";
+		};
+		398B1CC82A13597600DEFCEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		39C957CC2876E2BE00A04A2B /* Login */ = {
@@ -583,7 +622,9 @@
 			children = (
 				B55BCEB528D99F8600AF7E45 /* Settings.bundle */,
 				B5F524CD28519AA000614FF7 /* Manito */,
+				398B1CBA2A12415C00DEFCEC /* ManitoTests */,
 				B5F524CC28519AA000614FF7 /* Products */,
+				398B1CC82A13597600DEFCEC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -591,6 +632,7 @@
 			isa = PBXGroup;
 			children = (
 				B5F524CB28519AA000614FF7 /* Manito.app */,
+				398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1007,6 +1049,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		398B1CB82A12415B00DEFCEC /* ManitoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 398B1CC12A12415C00DEFCEC /* Build configuration list for PBXNativeTarget "ManitoTests" */;
+			buildPhases = (
+				398B1CB52A12415B00DEFCEC /* Sources */,
+				398B1CB62A12415B00DEFCEC /* Frameworks */,
+				398B1CB72A12415B00DEFCEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				398B1CBE2A12415C00DEFCEC /* PBXTargetDependency */,
+			);
+			name = ManitoTests;
+			packageProductDependencies = (
+				398B1CC92A13597600DEFCEC /* FSCalendar */,
+				398B1CCB2A13599D00DEFCEC /* FirebaseAuth */,
+			);
+			productName = ManitoTests;
+			productReference = 398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B5F524CA28519AA000614FF7 /* Manito */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5F524DF28519AA100614FF7 /* Build configuration list for PBXNativeTarget "Manito" */;
@@ -1038,9 +1102,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					398B1CB82A12415B00DEFCEC = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = B5F524CA28519AA000614FF7;
+					};
 					B5F524CA28519AA000614FF7 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -1067,11 +1135,19 @@
 			projectRoot = "";
 			targets = (
 				B5F524CA28519AA000614FF7 /* Manito */,
+				398B1CB82A12415B00DEFCEC /* ManitoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		398B1CB72A12415B00DEFCEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B5F524C928519AA000614FF7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1096,6 +1172,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		398B1CB52A12415B00DEFCEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				398B1CBC2A12415C00DEFCEC /* ManitoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B5F524C728519AA000614FF7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1248,6 +1332,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		398B1CBE2A12415C00DEFCEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B5F524CA28519AA000614FF7 /* Manito */;
+			targetProxy = 398B1CBD2A12415C00DEFCEC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		B5F524D428519AA000614FF7 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -1268,6 +1360,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		398B1CBF2A12415C00DEFCEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HF8GHZB58X;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mingwan.ManitoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Manito.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Manito";
+			};
+			name = Debug;
+		};
+		398B1CC02A12415C00DEFCEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HF8GHZB58X;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mingwan.ManitoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Manito.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Manito";
+			};
+			name = Release;
+		};
 		B5F524DD28519AA100614FF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1463,6 +1601,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		398B1CC12A12415C00DEFCEC /* Build configuration list for PBXNativeTarget "ManitoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				398B1CBF2A12415C00DEFCEC /* Debug */,
+				398B1CC02A12415C00DEFCEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B5F524C628519AA000614FF7 /* Build configuration list for PBXProject "Manito" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1527,6 +1674,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		398B1CC92A13597600DEFCEC /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B50B1B0528596CB10080992C /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+		398B1CCB2A13599D00DEFCEC /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39FFE33228F457AF008442EE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		39FFE33328F457AF008442EE /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 39FFE33228F457AF008442EE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
