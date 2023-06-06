@@ -85,5 +85,3 @@ extension SettingViewController: SettingViewDelegate {
         })
     }
 }
-
-

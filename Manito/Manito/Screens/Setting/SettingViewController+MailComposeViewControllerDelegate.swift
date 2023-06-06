@@ -11,7 +11,7 @@ import MessageUI
 extension SettingViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
-            let composeVC = MFMailComposeViewController()
+            let composeViewController = MFMailComposeViewController()
             let aenittoEmail = "aenitto@gmail.com"
             let messageBody = """
                               
@@ -27,12 +27,12 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                               
                               """
             
-            composeVC.mailComposeDelegate = self
-            composeVC.setToRecipients([aenittoEmail])
-            composeVC.setSubject("[문의 사항]")
-            composeVC.setMessageBody(messageBody, isHTML: false)
+            composeViewController.mailComposeDelegate = self
+            composeViewController.setToRecipients([aenittoEmail])
+            composeViewController.setSubject("[문의 사항]")
+            composeViewController.setMessageBody(messageBody, isHTML: false)
             
-            self.present(composeVC, animated: true, completion: nil)
+            self.present(composeViewController, animated: true, completion: nil)
         }
         else {
             self.showSendMailErrorAlert()
