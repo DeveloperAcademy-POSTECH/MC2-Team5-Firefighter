@@ -171,6 +171,8 @@
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* URLLiteral.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
+		D7C4A1A72A0B2EB000C3AE4C /* CharacterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */; };
+		D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -345,6 +347,8 @@
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* URLLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLLiteral.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
+		D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionView.swift; sourceTree = "<group>"; };
+		D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -510,6 +514,7 @@
 				7E3058C72854B64D00489E6A /* InputPersonView.swift */,
 				7E3058C92854B7A900489E6A /* InputDateView.swift */,
 				D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */,
+				D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -978,6 +983,7 @@
 			isa = PBXGroup;
 			children = (
 				CB21C33828C4C10200128D25 /* CharacterCollectionViewCell.swift */,
+				D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1232,6 +1238,7 @@
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				435B17682913E71400212663 /* DetailingViewController.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */,
+				D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */,
 				397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */,
 				7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */,
 				D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */,
@@ -1275,6 +1282,7 @@
 				39CD581D28C4C03C00496E91 /* DetailDoneProtocol.swift in Sources */,
 				CB9592B52855D52700847751 /* CommonMissionView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
+				D7C4A1A72A0B2EB000C3AE4C /* CharacterCollectionView.swift in Sources */,
 				39C95802287DACC300A04A2B /* RoomEndPoint.swift in Sources */,
 				CB4C77E628C0D4EB007A1AD2 /* MainAPI.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,

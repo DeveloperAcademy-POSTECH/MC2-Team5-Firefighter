@@ -54,7 +54,13 @@ final class ParticipateRoomViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         toggleButton()
-        setupNotificationCenter()
+    }
+    // FIXME: 플로우 연결 하면서 변경 될 예정
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    // FIXME: 뒤로가기 버그 수정(PR에서 얘기후 삭제 예정)
+        self.setupNotificationCenter()
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func setupLayout() {
@@ -119,6 +125,7 @@ final class ParticipateRoomViewController: BaseViewController {
     // MARK: - func
     
     override func setupNavigationBar() {
+        // FIXME: navigation으로 변경하면서 삭제예정
         navigationController?.navigationBar.isHidden = true
     }
     
