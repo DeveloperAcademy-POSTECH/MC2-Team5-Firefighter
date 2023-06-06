@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol DetailEditDelegate: AnyObject {
-    func cancleButtonDidTap()
+    func cancelButtonDidTap()
     func changeButtonDidTap(capacity: Int, from startDate: String, to endDate: String)
 }
 
@@ -222,7 +222,7 @@ final class DetailEditView: UIView {
     
     private func setupCancleButton() {
         let action = UIAction { [weak self] _ in
-            self?.delegate?.cancleButtonDidTap()
+            self?.delegate?.cancelButtonDidTap()
         }
         self.cancelButton.addAction(action, for: .touchUpInside)
     }

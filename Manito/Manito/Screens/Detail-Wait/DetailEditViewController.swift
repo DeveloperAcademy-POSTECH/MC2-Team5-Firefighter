@@ -130,7 +130,7 @@ extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
 }
 
 extension DetailEditViewController: DetailEditDelegate {
-    func cancleButtonDidTap() {
+    func cancelButtonDidTap() {
         self.dismiss(animated: true)
     }
     
@@ -146,7 +146,7 @@ extension DetailEditViewController: DetailEditDelegate {
                 switch result {
                 case .success:
                     self?.detailWaitDelegate?.didTappedChangeButton()
-                    self?.cancleButtonDidTap()
+                    self?.cancelButtonDidTap()
                 case .failure:
                     self?.makeAlert(title: TextLiteral.detailEditViewControllerChangeErrorTitle,
                                     message: TextLiteral.detailEditViewControllerChangeErrorMessage
