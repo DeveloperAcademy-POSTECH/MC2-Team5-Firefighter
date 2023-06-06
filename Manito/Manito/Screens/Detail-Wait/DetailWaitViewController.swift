@@ -58,6 +58,7 @@ final class DetailWaitViewController: BaseViewController {
     
     private func bind() {
         self.viewModel.$roomInformation
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { result in
             switch result {
             case .finished:
@@ -67,9 +68,7 @@ final class DetailWaitViewController: BaseViewController {
             }
         }, receiveValue: { room in
             if let room {
-                DispatchQueue.main.async {
-                    self.detailWaitView.updateDetailWaitView(room: room)
-                }
+                self.detailWaitView.updateDetailWaitView(room: room)
             }
         })
             .store(in: &self.cancleable)
