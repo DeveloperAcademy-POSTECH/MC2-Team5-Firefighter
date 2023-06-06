@@ -24,7 +24,6 @@ final class DetailWaitViewController: BaseViewController {
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     private let roomIndex: Int
     private var roomInformation: Room?
-    private weak var delegate: DetailWaitViewControllerDelegate?
     
     // MARK: - init
     
