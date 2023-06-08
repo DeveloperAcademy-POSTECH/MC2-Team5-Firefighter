@@ -78,6 +78,11 @@ final class DetailWaitViewController: BaseViewController {
         self.detailWaitView.configureDelegation(self)
     }
     
+    private func configureNavigationController() {
+        guard let navigationController = self.navigationController else { return }
+        self.detailWaitView.configureNavigationItem(navigationController)
+    }
+    
     private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
         guard let room = self.roomInformation,
               let index = room.roomInformation?.id,
@@ -98,22 +103,12 @@ final class DetailWaitViewController: BaseViewController {
         self.present(viewController, animated: true)
     }
     
-    private func checkStartDateIsPast(_ startDate: String) -> Bool {
-        guard let startDate = startDate.stringToDate else { return false }
-        return startDate.isPast
-    }
-    
     private func presentSelectManittoViewController(nickname: String) {
         guard let roomId = self.roomInformation?.roomInformation?.id?.description else { return }
         let viewController = SelectManitteeViewController(roomId: roomId, manitteeNickname: nickname)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)
-    }
-    
-    private func configureNavigationController() {
-        guard let navigationController = self.navigationController else { return }
-        self.detailWaitView.configureNavigationItem(navigationController)
     }
 }
 
