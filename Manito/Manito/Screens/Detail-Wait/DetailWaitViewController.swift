@@ -120,12 +120,14 @@ final class DetailWaitViewController: BaseViewController {
 extension DetailWaitViewController: DetailWaitViewDelegate {
     func startButtonDidTap() {
         self.viewModel.requestStartManitto() { [weak self] result in
-            switch result {
-            case .success(let nickname):
-                self?.presentSelectManittoViewController(nickname: nickname)
-            case .failure:
-                self?.makeAlert(title: TextLiteral.errorAlertTitle,
-                                message: TextLiteral.detailWaitViewControllerStartErrorMessage)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let nickname):
+                    self?.presentSelectManittoViewController(nickname: nickname)
+                case .failure:
+                    self?.makeAlert(title: TextLiteral.errorAlertTitle,
+                                    message: TextLiteral.detailWaitViewControllerStartErrorMessage)
+                }
             }
         }
     }
@@ -140,12 +142,14 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                               okTitle: okTitle,
                               okAction: { [weak self] _ in
             self?.viewModel.requestDeleteRoom() { result in
-                switch result {
-                case .success:
-                    self?.navigationController?.popViewController(animated: true)
-                case .failure:
-                    self?.makeAlert(title: TextLiteral.errorAlertTitle,
-                                    message: TextLiteral.detailWaitViewControllerDeleteErrorMessage)
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success:
+                        self?.navigationController?.popViewController(animated: true)
+                    case .failure:
+                        self?.makeAlert(title: TextLiteral.errorAlertTitle,
+                                        message: TextLiteral.detailWaitViewControllerDeleteErrorMessage)
+                    }
                 }
             }
         })
@@ -156,12 +160,14 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                               message: message,
                               okAction: { [weak self] _ in
             self?.viewModel.requestDeleteLeaveRoom() { result in
-                switch result {
-                case .success:
-                    self?.navigationController?.popViewController(animated: true)
-                case .failure:
-                    self?.makeAlert(title: TextLiteral.errorAlertTitle,
-                                    message: TextLiteral.detailWaitViewControllerLeaveErrorMessage)
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success:
+                        self?.navigationController?.popViewController(animated: true)
+                    case .failure:
+                        self?.makeAlert(title: TextLiteral.errorAlertTitle,
+                                        message: TextLiteral.detailWaitViewControllerLeaveErrorMessage)
+                    }
                 }
             }
         })
