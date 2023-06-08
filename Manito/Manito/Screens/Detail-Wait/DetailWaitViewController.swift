@@ -50,13 +50,13 @@ final class DetailWaitViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.configureNavigationController()
-        self.bind()
+        self.setBind()
         self.viewModel.fetchRoomInformation()
     }
     
     // MARK: - func
     
-    private func bind() {
+    private func setBind() {
         self.viewModel.$roomInformation
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { result in
@@ -115,60 +115,11 @@ final class DetailWaitViewController: BaseViewController {
         guard let navigationController = self.navigationController else { return }
         self.detailWaitView.configureNavigationItem(navigationController)
     }
-    
-    private func requestStartManitto(completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let data = try await self.detailWaitService.startManitto(roomId: self.roomIndex.description)
-                if let manittee = data {
-                    guard let nickname = manittee.nickname else { return }
-                    completionHandler(.success(nickname))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
-    
-    private func requestDeleteRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let statusCode = try await self.detailWaitService.deleteRoom(roomId: self.roomIndex.description)
-                switch statusCode {
-                case 200..<300: completionHandler(.success(()))
-                default:
-                    completionHandler(.failure(.unknownError))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
-    
-    private func requestDeleteLeaveRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let statusCode = try await self.detailWaitService.deleteLeaveRoom(roomId: self.roomIndex.description)
-                switch statusCode {
-                case 200..<300: completionHandler(.success(()))
-                default: completionHandler(.failure(.unknownError))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
 }
 
 extension DetailWaitViewController: DetailWaitViewDelegate {
     func startButtonDidTap() {
-        self.requestStartManitto() { [weak self] result in
+        self.viewModel.requestStartManitto() { [weak self] result in
             switch result {
             case .success(let nickname):
                 self?.presentSelectManittoViewController(nickname: nickname)
@@ -188,7 +139,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                               message: message,
                               okTitle: okTitle,
                               okAction: { [weak self] _ in
-            self?.requestDeleteRoom() { result in
+            self?.viewModel.requestDeleteRoom() { result in
                 switch result {
                 case .success:
                     self?.navigationController?.popViewController(animated: true)
@@ -204,7 +155,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         self.makeRequestAlert(title: title,
                               message: message,
                               okAction: { [weak self] _ in
-            self?.requestDeleteLeaveRoom() { result in
+            self?.viewModel.requestDeleteLeaveRoom() { result in
                 switch result {
                 case .success:
                     self?.navigationController?.popViewController(animated: true)
