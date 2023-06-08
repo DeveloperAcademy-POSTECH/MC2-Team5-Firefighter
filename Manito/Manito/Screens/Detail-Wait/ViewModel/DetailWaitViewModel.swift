@@ -25,10 +25,29 @@ final class DetailWaitViewModel {
     // MARK: - func
     
     func fetchRoomInformation() {
+        requestWaitRoomInfo { [weak self] result in
+            switch result {
+            case .success(let roominformation):
+                self?.roomInformation = roominformation
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    // MARK: - network
+    
+    private func requestWaitRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
         Task {
-            let data = try await detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
-            if let roomInformation = data {
-                self.roomInformation = roomInformation
+            do {
+                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
+                if let roomInformation = data {
+                    completionHandler(.success(roomInformation))
+                }
+            } catch NetworkError.serverError {
+                completionHandler(.failure(.serverError))
+            } catch NetworkError.clientError(let message) {
+                completionHandler(.failure(.clientError(message: message)))
             }
         }
     }
