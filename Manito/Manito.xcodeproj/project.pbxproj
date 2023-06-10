@@ -21,6 +21,7 @@
 		397A241428BA516B00454E4F /* DetailWaitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241328BA516B00454E4F /* DetailWaitAPI.swift */; };
 		397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241728BA51B400454E4F /* DetailWaitProtocol.swift */; };
 		397A241A28BA532A00454E4F /* FriendList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241928BA532A00454E4F /* FriendList.swift */; };
+		398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */; };
 		398B1CBC2A12415C00DEFCEC /* ManitoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */; };
 		398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CC92A13597600DEFCEC /* FSCalendar */; };
 		398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CCB2A13599D00DEFCEC /* FirebaseAuth */; };
@@ -173,6 +174,10 @@
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* URLLiteral.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */; };
+		D7C4A1A72A0B2EB000C3AE4C /* CharacterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */; };
+		D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */; };
+		D7C4A1AD2A0DD8FA00C3AE4C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */; };
+		D7C4A1B02A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +204,7 @@
 		397A241328BA516B00454E4F /* DetailWaitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitAPI.swift; sourceTree = "<group>"; };
 		397A241728BA51B400454E4F /* DetailWaitProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitProtocol.swift; sourceTree = "<group>"; };
 		397A241928BA532A00454E4F /* FriendList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendList.swift; sourceTree = "<group>"; };
+		398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
 		398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoTests.swift; sourceTree = "<group>"; };
 		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
@@ -349,6 +355,10 @@
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* URLLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLLiteral.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
+		D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionView.swift; sourceTree = "<group>"; };
+		D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterView.swift; sourceTree = "<group>"; };
+		D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingViewController+MailComposeViewControllerDelegate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -389,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				391612D729E9231B004AE982 /* DetailWaitView.swift */,
+				398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -523,6 +534,7 @@
 				7E3058C72854B64D00489E6A /* InputPersonView.swift */,
 				7E3058C92854B7A900489E6A /* InputDateView.swift */,
 				D7B6C97B2858B2D40024F326 /* CheckRoomView.swift */,
+				D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -992,6 +1004,7 @@
 			isa = PBXGroup;
 			children = (
 				CB21C33828C4C10200128D25 /* CharacterCollectionViewCell.swift */,
+				D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1017,9 +1030,11 @@
 		D724AF5B287088110003F280 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				D7C4A1AE2A0E51F500C3AE4C /* View */,
 				D75ECB6E28A5EDC400A5B271 /* Component */,
 				D75ECB6D28A5EDBC00A5B271 /* Cell */,
 				D724AF5C287088310003F280 /* SettingViewController.swift */,
+				D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */,
 				7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */,
 			);
 			path = Setting;
@@ -1047,6 +1062,14 @@
 				D724AF5E28708D830003F280 /* ImageRowView.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		D7C4A1AE2A0E51F500C3AE4C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1247,6 +1270,7 @@
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				435B17682913E71400212663 /* DetailingViewController.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */,
+				D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */,
 				397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */,
 				7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */,
 				D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */,
@@ -1290,16 +1314,20 @@
 				39CD581D28C4C03C00496E91 /* DetailDoneProtocol.swift in Sources */,
 				CB9592B52855D52700847751 /* CommonMissionView.swift in Sources */,
 				CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */,
+				D7C4A1A72A0B2EB000C3AE4C /* CharacterCollectionView.swift in Sources */,
 				39C95802287DACC300A04A2B /* RoomEndPoint.swift in Sources */,
 				395B5BC22A25E20000CE1420 /* DetailWaitViewModel.swift in Sources */,
 				CB4C77E628C0D4EB007A1AD2 /* MainAPI.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
+				D7C4A1AD2A0DD8FA00C3AE4C /* SettingView.swift in Sources */,
 				39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */,
+				D7C4A1B02A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
+				398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */,
 				B50B1AFD2856C3500080992C /* CreateLetterTextView.swift in Sources */,
 				D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */,
 				B5706BF629B9D4650093D198 /* GuideView.swift in Sources */,

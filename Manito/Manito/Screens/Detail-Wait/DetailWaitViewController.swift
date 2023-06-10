@@ -10,6 +10,10 @@ import UIKit
 
 import SnapKit
 
+protocol DetailWaitViewControllerDelegate: AnyObject {
+    func didTappedChangeButton()
+}
+
 final class DetailWaitViewController: BaseViewController {
     
     // MARK: - ui component
@@ -84,22 +88,10 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
-        guard let room = self.roomInformation,
-              let index = room.roomInformation?.id,
-              let title = room.roomInformation?.title,
-              let currentUserCount = room.participants?.count,
-              let capacity = room.roomInformation?.capacity else { return }
+        guard let room = self.roomInformation else { return }
         let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
-                                                      roomIndex: index,
-                                                      title: title)
-        
-        guard let startDate = room.roomInformation?.dateRange.startDate,
-              let endDate = room.roomInformation?.dateRange.endDate else { return }
-        
-        viewController.startDateText = startDate
-        viewController.endDateText = endDate
-        viewController.currentUserCount = currentUserCount
-        viewController.sliderValue = capacity
+                                                      room: room)
+        viewController.detailWaitDelegate = self
         self.present(viewController, animated: true)
     }
     
@@ -186,5 +178,13 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
             self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                            message: TextLiteral.detailWaitViewControllerPastAlertMessage)
         }
+    }
+}
+
+extension DetailWaitViewController: DetailWaitViewControllerDelegate {
+    func didTappedChangeButton() {
+        self.fetchRoomData()
+        ToastView.showToast(message: "방 정보 수정 완료",
+                            controller: self)
     }
 }
