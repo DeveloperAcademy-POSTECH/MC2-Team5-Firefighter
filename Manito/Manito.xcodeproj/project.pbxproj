@@ -19,6 +19,7 @@
 		397A241428BA516B00454E4F /* DetailWaitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241328BA516B00454E4F /* DetailWaitAPI.swift */; };
 		397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241728BA51B400454E4F /* DetailWaitProtocol.swift */; };
 		397A241A28BA532A00454E4F /* FriendList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241928BA532A00454E4F /* FriendList.swift */; };
+		398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */; };
 		398B1CBC2A12415C00DEFCEC /* ManitoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */; };
 		398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CC92A13597600DEFCEC /* FSCalendar */; };
 		398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CCB2A13599D00DEFCEC /* FirebaseAuth */; };
@@ -199,6 +200,7 @@
 		397A241328BA516B00454E4F /* DetailWaitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitAPI.swift; sourceTree = "<group>"; };
 		397A241728BA51B400454E4F /* DetailWaitProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitProtocol.swift; sourceTree = "<group>"; };
 		397A241928BA532A00454E4F /* FriendList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendList.swift; sourceTree = "<group>"; };
+		398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
 		398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoTests.swift; sourceTree = "<group>"; };
 		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				391612D729E9231B004AE982 /* DetailWaitView.swift */,
+				398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1308,6 +1311,7 @@
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
+				398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */,
 				B50B1AFD2856C3500080992C /* CreateLetterTextView.swift in Sources */,
 				D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */,
 				B5706BF629B9D4650093D198 /* GuideView.swift in Sources */,
