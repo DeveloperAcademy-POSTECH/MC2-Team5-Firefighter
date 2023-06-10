@@ -13,7 +13,27 @@ final class DetailWaitViewModel {
     
     let roomIndex: Int
     private let detailWaitService: DetailWaitAPI
-    @Published var roomInformation: Room?
+    var roomInformation = CurrentValueSubject<Room?, Never>(nil)
+    
+    struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
+        let copyButtonDidTap: AnyPublisher<Void, Never>
+    }
+    
+    struct Output {
+        let roomInformationDidUpdate: AnyPublisher<Room?, Never>
+        let showToastView: AnyPublisher<String, Never>
+    }
+    
+    func transform(_ input: Input) -> Output {
+        let showToastView = input.copyButtonDidTap
+            .compactMap { self.roomInformation.value?.invitation?.code }
+            .eraseToAnyPublisher()
+        
+        return Output(
+            roomInformationDidUpdate: self.roomInformation.eraseToAnyPublisher(),
+            showToastView: showToastView)
+    }
     
     // MARK: - init
     
@@ -28,7 +48,7 @@ final class DetailWaitViewModel {
         requestWaitRoomInfo { [weak self] result in
             switch result {
             case .success(let roominformation):
-                self?.roomInformation = roominformation
+                self?.roomInformation.send(roominformation)
             case .failure(let error):
                 print(error)
             }

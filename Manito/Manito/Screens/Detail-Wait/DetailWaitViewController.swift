@@ -52,27 +52,32 @@ final class DetailWaitViewController: BaseViewController {
         self.configureDelegation()
         self.configureNavigationController()
         self.setBind()
-        self.detailWaitViewModel.fetchRoomInformation()
     }
     
     // MARK: - func
     
     private func setBind() {
-        self.detailWaitViewModel.$roomInformation
+        let input = DetailWaitViewModel.Input(
+            viewDidLoad: Just(Void())
+                .map { self.detailWaitViewModel.fetchRoomInformation() }
+                .eraseToAnyPublisher(),
+            copyButtonDidTap: self.detailWaitView.copyButton.tapPublisher)
+        
+        let output = detailWaitViewModel.transform(input)
+        
+        output.roomInformationDidUpdate
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { result in
-            switch result {
-            case .finished:
-                print("finish")
-            case .failure:
-                print("error")
-            }
-        }, receiveValue: { room in
-            if let room {
-                self.detailWaitView.updateDetailWaitView(room: room)
-            }
-        })
+            .sink(receiveValue: { room in
+                if let room {
+                    self.detailWaitView.updateDetailWaitView(room: room)
+                }
+            })
             .store(in: &self.cancleable)
+        
+        output.showToastView.sink(receiveValue: { [weak self] code in
+            self?.codeCopyButtonDidTap()
+        })
+        .store(in: &self.cancleable)
     }
     
     private func configureDelegation() {
@@ -85,7 +90,7 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
-        guard let roominformation = self.detailWaitViewModel.roomInformation else { return }
+        guard let roominformation = self.detailWaitViewModel.roomInformation.value else { return }
         let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
                                                       room: roominformation)
         viewController.detailWaitDelegate = self
@@ -158,7 +163,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
     }
     
     func codeCopyButtonDidTap() {
-        guard let invitationCode = self.detailWaitViewModel.roomInformation?.invitation?.code else { return }
+        guard let invitationCode = self.detailWaitViewModel.roomInformation.value?.invitation?.code else { return }
         ToastView.showToast(code: invitationCode,
                             message: TextLiteral.detailWaitViewControllerCopyCode,
                             controller: self)

@@ -79,7 +79,7 @@ final class DetailWaitView: UIView {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    private let copyButton: UIButton = {
+    let copyButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(TextLiteral.copyCode, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
