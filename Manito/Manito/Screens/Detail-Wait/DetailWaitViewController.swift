@@ -24,7 +24,6 @@ final class DetailWaitViewController: BaseViewController {
     
     private var cancleable = Set<AnyCancellable>()
     private let detailWaitViewModel: DetailWaitViewModel
-    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
     
     // MARK: - init
     
