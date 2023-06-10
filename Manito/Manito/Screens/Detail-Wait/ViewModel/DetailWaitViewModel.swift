@@ -11,7 +11,7 @@ final class DetailWaitViewModel {
     
     // MARK: - property
     
-    private let roomIndex: Int
+    let roomIndex: Int
     private let detailWaitService: DetailWaitAPI
     @Published var roomInformation: Room?
     

@@ -23,15 +23,13 @@ final class DetailWaitViewController: BaseViewController {
     // MARK: - property
     
     private var cancleable = Set<AnyCancellable>()
-    private lazy var viewModel = DetailWaitViewModel(roomIndex: self.roomIndex, detailWaitService: DetailWaitAPI(apiService: APIService()))
+    private let detailWaitViewModel: DetailWaitViewModel
     private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-    private let roomIndex: Int
-    private var roomInformation: Room?
     
     // MARK: - init
     
     init(roomIndex: Int) {
-        self.roomIndex = roomIndex
+        self.detailWaitViewModel = DetailWaitViewModel(roomIndex: roomIndex, detailWaitService: DetailWaitAPI(apiService: APIService()))
         super.init()
     }
     
@@ -55,13 +53,13 @@ final class DetailWaitViewController: BaseViewController {
         self.configureDelegation()
         self.configureNavigationController()
         self.setBind()
-        self.viewModel.fetchRoomInformation()
+        self.detailWaitViewModel.fetchRoomInformation()
     }
     
     // MARK: - func
     
     private func setBind() {
-        self.viewModel.$roomInformation
+        self.detailWaitViewModel.$roomInformation
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { result in
             switch result {
@@ -88,16 +86,16 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
-        guard let room = self.roomInformation else { return }
+        guard let roominformation = self.detailWaitViewModel.roomInformation else { return }
         let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
-                                                      room: room)
+                                                      room: roominformation)
         viewController.detailWaitDelegate = self
         self.present(viewController, animated: true)
     }
     
     private func presentSelectManittoViewController(nickname: String) {
-        guard let roomId = self.roomInformation?.roomInformation?.id?.description else { return }
-        let viewController = SelectManitteeViewController(roomId: roomId, manitteeNickname: nickname)
+        let roomIndex = self.detailWaitViewModel.roomIndex.description
+        let viewController = SelectManitteeViewController(roomId: roomIndex, manitteeNickname: nickname)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)
@@ -106,7 +104,7 @@ final class DetailWaitViewController: BaseViewController {
 
 extension DetailWaitViewController: DetailWaitViewDelegate {
     func startButtonDidTap() {
-        self.viewModel.requestStartManitto() { [weak self] result in
+        self.detailWaitViewModel.requestStartManitto() { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let nickname):
@@ -128,7 +126,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                               message: message,
                               okTitle: okTitle,
                               okAction: { [weak self] _ in
-            self?.viewModel.requestDeleteRoom() { result in
+            self?.detailWaitViewModel.requestDeleteRoom() { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success:
@@ -146,7 +144,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         self.makeRequestAlert(title: title,
                               message: message,
                               okAction: { [weak self] _ in
-            self?.viewModel.requestDeleteLeaveRoom() { result in
+            self?.detailWaitViewModel.requestDeleteLeaveRoom() { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success:
@@ -161,7 +159,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
     }
     
     func codeCopyButtonDidTap() {
-        guard let invitationCode = self.viewModel.roomInformation?.invitation?.code else { return }
+        guard let invitationCode = self.detailWaitViewModel.roomInformation?.invitation?.code else { return }
         ToastView.showToast(code: invitationCode,
                             message: TextLiteral.detailWaitViewControllerCopyCode,
                             controller: self)
@@ -183,7 +181,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
 
 extension DetailWaitViewController: DetailWaitViewControllerDelegate {
     func didTappedChangeButton() {
-        self.fetchRoomData()
+        self.detailWaitViewModel.fetchRoomInformation()
         ToastView.showToast(message: "방 정보 수정 완료",
                             controller: self)
     }
