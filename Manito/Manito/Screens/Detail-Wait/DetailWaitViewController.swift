@@ -60,8 +60,8 @@ final class DetailWaitViewController: BaseViewController {
         let input = DetailWaitViewModel.Input(
             viewDidLoad: Just(Void())
                 .map { self.detailWaitViewModel.fetchRoomInformation() }
-                .eraseToAnyPublisher(),
-            copyButtonDidTap: self.detailWaitView.copyButton.tapPublisher)
+                .eraseToAnyPublisher())
+//            copyButtonDidTap: self.detailWaitView.copyButton.tapPublisher)
         
         let output = detailWaitViewModel.transform(input)
         
@@ -74,10 +74,16 @@ final class DetailWaitViewController: BaseViewController {
             })
             .store(in: &self.cancleable)
         
-        output.showToastView.sink(receiveValue: { [weak self] code in
-            self?.codeCopyButtonDidTap()
-        })
-        .store(in: &self.cancleable)
+//        output.showToastView.sink(receiveValue: { [weak self] code in
+//            self?.codeCopyButtonDidTap()
+//        })
+//        .store(in: &self.cancleable)
+        
+        self.detailWaitViewModel.copyButtonStream
+            .sink(receiveValue: { [weak self] _ in
+                self?.codeCopyButtonDidTap()
+            })
+            .store(in: &self.cancleable)
     }
     
     private func configureDelegation() {
@@ -163,6 +169,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
     }
     
     func codeCopyButtonDidTap() {
+        self.detailWaitViewModel.copyButtonStream.send(Void())
         guard let invitationCode = self.detailWaitViewModel.roomInformation.value?.invitation?.code else { return }
         ToastView.showToast(code: invitationCode,
                             message: TextLiteral.detailWaitViewControllerCopyCode,
