@@ -13,30 +13,15 @@ protocol DetailWaitViewDelegate: AnyObject {
     func startButtonDidTap()
     func editButtonDidTap()
     func deleteButtonDidTap()
-    func leaveButtonDidTap(title: String, message: String, okTitle: String)
+    func leaveButtonDidTap()
     func codeCopyButtonDidTap()
     func didPassStartDate(isAdmin: Bool)
 }
 
 final class DetailWaitView: UIView {
-    private enum UserStatus: CaseIterable {
+    private enum UserStatus {
         case admin
         case member
-        
-        var alertText: (title: String,
-                        message: String,
-                        okTitle: String) {
-            switch self {
-            case .admin:
-                return (title: TextLiteral.datailWaitViewControllerDeleteTitle,
-                        message: TextLiteral.datailWaitViewControllerDeleteMessage,
-                        okTitle: TextLiteral.delete)
-            case .member:
-                return (title: TextLiteral.datailWaitViewControllerExitTitle,
-                        message: TextLiteral.datailWaitViewControllerExitMessage,
-                        okTitle: TextLiteral.leave)
-            }
-        }
     }
     
     private enum ButtonText: String {
@@ -239,10 +224,7 @@ final class DetailWaitView: UIView {
             ]
         case .member:
             children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                self?.delegate?.leaveButtonDidTap(title: UserStatus.member.alertText.title,
-                                          message: UserStatus.member.alertText.message,
-                                          okTitle: UserStatus.member.alertText.okTitle
-                )
+                self?.delegate?.leaveButtonDidTap()
             })]
         }
         let menu = UIMenu(children: children)

@@ -101,6 +101,13 @@ final class DetailWaitViewController: BaseViewController {
                 self?.deleteRoom()
             })
             .store(in: &self.cancleable)
+        
+        self.detailWaitViewModel.leaveButtonDidTap
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.leaveRoom()
+            })
+            .store(in: &self.cancleable)
     }
     
     private func configureDelegation() {
@@ -166,6 +173,25 @@ final class DetailWaitViewController: BaseViewController {
             }
         })
     }
+    
+    private func leaveRoom() {
+        self.makeRequestAlert(title: TextLiteral.datailWaitViewControllerExitTitle,
+                              message: TextLiteral.datailWaitViewControllerExitMessage,
+                              okTitle: TextLiteral.leave,
+                              okAction: { [weak self] _ in
+            self?.detailWaitViewModel.requestDeleteLeaveRoom() { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success:
+                        self?.navigationController?.popViewController(animated: true)
+                    case .failure:
+                        self?.makeAlert(title: TextLiteral.errorAlertTitle,
+                                        message: TextLiteral.detailWaitViewControllerLeaveErrorMessage)
+                    }
+                }
+            }
+        })
+    }
 }
 
 extension DetailWaitViewController: DetailWaitViewDelegate {
@@ -181,22 +207,8 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         self.detailWaitViewModel.deleteButtonDidTap.send(())
     }
     
-    func leaveButtonDidTap(title: String, message: String, okTitle: String) {
-        self.makeRequestAlert(title: title,
-                              message: message,
-                              okAction: { [weak self] _ in
-            self?.detailWaitViewModel.requestDeleteLeaveRoom() { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success:
-                        self?.navigationController?.popViewController(animated: true)
-                    case .failure:
-                        self?.makeAlert(title: TextLiteral.errorAlertTitle,
-                                        message: TextLiteral.detailWaitViewControllerLeaveErrorMessage)
-                    }
-                }
-            }
-        })
+    func leaveButtonDidTap() {
+        self.detailWaitViewModel.leaveButtonDidTap.send(())
     }
     
     func codeCopyButtonDidTap() {
