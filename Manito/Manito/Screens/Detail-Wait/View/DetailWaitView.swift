@@ -289,7 +289,7 @@ final class DetailWaitView: UIView {
         self.setupTitleViewData(title: title, state: state, dateRange: dateRange)
         self.setupRelatedViews(of: admin, isStart)
 
-        self.configureStartButton(true)
+        self.configureStartButton(room.canStart)
         self.configureUserCountLabel(userCount: room.userCount)
     }
     
