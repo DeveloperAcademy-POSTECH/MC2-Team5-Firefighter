@@ -69,7 +69,7 @@ final class ParticipateRoomViewController: BaseViewController {
                     viewController.verification = info
                     viewController.roomId = id
                     
-                    present(viewController, animated: true)
+                    self.present(viewController, animated: true)
                 }
             } catch NetworkError.serverError {
                 print("server Error")
