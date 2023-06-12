@@ -58,7 +58,11 @@ final class DetailWaitViewController: BaseViewController {
     // MARK: - func
     
     private func setBind() {
-        let input = DetailWaitViewModel.Input(viewDidLoad: Just(()).eraseToAnyPublisher())
+        let input = DetailWaitViewModel.Input(
+            viewDidLoad: Just(()).eraseToAnyPublisher(),
+            codeCopyButtonDidTap: self.detailWaitView.copyButton.tapPublisher,
+            startButtonDidTap: self.detailWaitView.startButton.tapPublisher
+        )
         let output = self.detailWaitViewModel.transform(input)
         
         output.roomInformationDidUpdate
@@ -67,6 +71,21 @@ final class DetailWaitViewController: BaseViewController {
                 if let room {
                     self?.detailWaitView.updateDetailWaitView(room: room)
                 }
+            })
+            .store(in: &self.cancleable)
+        
+        output.showToast
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] code in
+                self?.showToastView(code: code)
+            })
+            .store(in: &self.cancleable)
+        
+        output.startManitto
+            .receive(on: DispatchQueue.main)
+            .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
+            .sink(receiveValue: { [weak self] _ in
+                self?.startManitto()
             })
             .store(in: &self.cancleable)
     }
@@ -96,16 +115,13 @@ final class DetailWaitViewController: BaseViewController {
         self.present(viewController, animated: true)
     }
     
-    private func showToastView() {
-        guard let invitationCode = self.detailWaitViewModel.roomInformation.value?.invitation?.code else { return }
-        ToastView.showToast(code: invitationCode,
+    private func showToastView(code: String) {
+        ToastView.showToast(code: code,
                             message: TextLiteral.detailWaitViewControllerCopyCode,
                             controller: self)
     }
-}
-
-extension DetailWaitViewController: DetailWaitViewDelegate {
-    func startButtonDidTap() {
+    
+    private func startManitto() {
         self.detailWaitViewModel.requestStartManitto() { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -117,6 +133,12 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                 }
             }
         }
+    }
+}
+
+extension DetailWaitViewController: DetailWaitViewDelegate {
+    func startButtonDidTap() {
+        // delegate 삭제 예정
     }
     
     func editButtonDidTap(isOnlyDateEdit: Bool) {
@@ -161,12 +183,7 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
     }
     
     func codeCopyButtonDidTap() {
-//        self.detailWaitViewModel.didTappedCopyButton()
-//        self.detailWaitViewModel.copyButtonStream.send(Void())
-//        guard let invitationCode = self.detailWaitViewModel.roomInformation.value?.invitation?.code else { return }
-//        ToastView.showToast(code: invitationCode,
-//                            message: TextLiteral.detailWaitViewControllerCopyCode,
-//                            controller: self)
+        // delegate 삭제 예정
     }
     
     func didPassStartDate(isAdmin: Bool) {

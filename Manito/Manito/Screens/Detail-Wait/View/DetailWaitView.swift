@@ -95,7 +95,7 @@ final class DetailWaitView: UIView {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
-    private let startButton: MainButton = MainButton()
+    let startButton: MainButton = MainButton()
     
     // MARK: - property
     
@@ -289,7 +289,7 @@ final class DetailWaitView: UIView {
         self.setupTitleViewData(title: title, state: state, dateRange: dateRange)
         self.setupRelatedViews(of: admin, isStart)
 
-        self.configureStartButton(room.canStart)
+        self.configureStartButton(true)
         self.configureUserCountLabel(userCount: room.userCount)
     }
     

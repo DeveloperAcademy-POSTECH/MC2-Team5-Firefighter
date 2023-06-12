@@ -17,14 +17,28 @@ final class DetailWaitViewModel {
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
+        let codeCopyButtonDidTap: AnyPublisher<Void, Never>
+        let startButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
         let roomInformationDidUpdate: AnyPublisher<Room?, Never>
+        let showToast: AnyPublisher<String, Never>
+        let startManitto: AnyPublisher<Void, Never>
     }
     
     func transform(_ input: Input) -> Output {
-        return Output(roomInformationDidUpdate: self.roomInformation.eraseToAnyPublisher())
+        let showToastOutput = input.codeCopyButtonDidTap
+            .compactMap { self.roomInformation.value?.invitation?.code }
+            .eraseToAnyPublisher()
+        
+        let startManittoOutput = input.startButtonDidTap
+            .eraseToAnyPublisher()
+        
+        return Output(roomInformationDidUpdate: self.roomInformation.eraseToAnyPublisher(),
+                      showToast: showToastOutput,
+                      startManitto: startManittoOutput
+        )
     }
     
     // MARK: - init
@@ -46,10 +60,6 @@ final class DetailWaitViewModel {
             }
         }
     }
-    
-//    func didTappedCopyButton() {
-//        self.copyButtonStream.send(Void())
-//    }
     
     // MARK: - network
     
