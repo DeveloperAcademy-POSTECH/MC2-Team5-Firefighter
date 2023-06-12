@@ -107,6 +107,13 @@ final class DetailWaitViewController: BaseViewController {
                 self?.leaveRoom()
             })
             .store(in: &self.cancleable)
+        
+        output.showStartDatePassedAlert
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] value in
+                self?.showStartDatePassedAlert(isAdmin: value)
+            })
+            .store(in: &self.cancleable)
     }
     
     private func configureDelegation() {
@@ -191,22 +198,8 @@ final class DetailWaitViewController: BaseViewController {
             }
         })
     }
-}
-
-extension DetailWaitViewController: DetailWaitViewDelegate {
-    func editButtonDidTap() {
-        self.detailWaitViewModel.editButtonDidTap.send(())
-    }
     
-    func deleteButtonDidTap() {
-        self.detailWaitViewModel.deleteButtonDidTap.send(())
-    }
-    
-    func leaveButtonDidTap() {
-        self.detailWaitViewModel.leaveButtonDidTap.send(())
-    }
-    
-    func didPassStartDate(isAdmin: Bool) {
+    private func showStartDatePassedAlert(isAdmin: Bool) {
         if isAdmin {
             self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                            message: TextLiteral.detailWaitViewControllerPastAdminAlertMessage,
@@ -217,6 +210,24 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
             self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                            message: TextLiteral.detailWaitViewControllerPastAlertMessage)
         }
+    }
+}
+
+extension DetailWaitViewController: DetailWaitViewDelegate {
+    func editButtonDidTap() {
+        self.detailWaitViewModel.editMenuButtonDidTap.send(())
+    }
+    
+    func deleteButtonDidTap() {
+        self.detailWaitViewModel.deleteMenuButtonDidTap.send(())
+    }
+    
+    func leaveButtonDidTap() {
+        self.detailWaitViewModel.leaveMenuButtonDidTap.send(())
+    }
+    
+    func didPassStartDate(isAdmin: Bool) {
+        self.detailWaitViewModel.didPassedStartDate.send(isAdmin)
     }
 }
 

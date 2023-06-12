@@ -15,9 +15,10 @@ final class DetailWaitViewModel {
     let roomIndex: Int
     private let detailWaitService: DetailWaitAPI
     var roomInformation = CurrentValueSubject<Room?, Never>(nil)
-    lazy var editButtonDidTap = PassthroughSubject<Void, Never>()
-    lazy var deleteButtonDidTap = PassthroughSubject<Void, Never>()
-    lazy var leaveButtonDidTap = PassthroughSubject<Void, Never>()
+    lazy var editMenuButtonDidTap = PassthroughSubject<Void, Never>()
+    lazy var deleteMenuButtonDidTap = PassthroughSubject<Void, Never>()
+    lazy var leaveMenuButtonDidTap = PassthroughSubject<Void, Never>()
+    var didPassedStartDate = PassthroughSubject<Bool, Never>()
     
     struct Input {
         let codeCopyButtonDidTap: AnyPublisher<Void, Never>
@@ -31,6 +32,7 @@ final class DetailWaitViewModel {
         let presentEditView: AnyPublisher<Void, Never>
         let deleteRoom: AnyPublisher<Void, Never>
         let leaveRoom: AnyPublisher<Void, Never>
+        let showStartDatePassedAlert: AnyPublisher<Bool, Never>
     }
     
     func transform(_ input: Input) -> Output {
@@ -45,9 +47,10 @@ final class DetailWaitViewModel {
         return Output(roomInformationDidUpdate: self.roomInformation.eraseToAnyPublisher(),
                       showToast: showToastOutput,
                       startManitto: startManittoOutput,
-                      presentEditView: self.editButtonDidTap.eraseToAnyPublisher(),
-                      deleteRoom: self.deleteButtonDidTap.eraseToAnyPublisher(),
-                      leaveRoom: self.leaveButtonDidTap.eraseToAnyPublisher()
+                      presentEditView: self.editMenuButtonDidTap.eraseToAnyPublisher(),
+                      deleteRoom: self.deleteMenuButtonDidTap.eraseToAnyPublisher(),
+                      leaveRoom: self.leaveMenuButtonDidTap.eraseToAnyPublisher(),
+                      showStartDatePassedAlert: self.didPassedStartDate.eraseToAnyPublisher()
         )
     }
     
