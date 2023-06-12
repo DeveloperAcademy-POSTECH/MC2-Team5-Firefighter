@@ -195,10 +195,6 @@ final class DetailWaitViewController: BaseViewController {
 }
 
 extension DetailWaitViewController: DetailWaitViewDelegate {
-    func startButtonDidTap() {
-        // delegate 삭제 예정
-    }
-    
     func editButtonDidTap() {
         self.detailWaitViewModel.editButtonDidTap.send(())
     }

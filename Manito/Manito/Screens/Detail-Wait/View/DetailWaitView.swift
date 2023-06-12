@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 
 protocol DetailWaitViewDelegate: AnyObject {
-    func startButtonDidTap()
     func editButtonDidTap()
     func deleteButtonDidTap()
     func leaveButtonDidTap()
@@ -198,17 +197,9 @@ final class DetailWaitView: UIView {
     }
     
     private func configureStartButton(_ canStart: Bool) {
-        if canStart {
-            self.startButton.title = ButtonText.start.status
-            self.startButton.isDisabled = false
-            let action = UIAction { [weak self] _ in
-                self?.delegate?.startButtonDidTap()
-            }
-            self.startButton.addAction(action, for: .touchUpInside)
-        } else {
-            self.startButton.title = ButtonText.waiting.status
-            self.startButton.isDisabled = true
-        }
+        let type: ButtonText = canStart ? .start : .waiting
+        self.startButton.title = type.status
+        self.startButton.isDisabled = !canStart
     }
     
     private func setExitButtonMenu(_ isAdmin: Bool) {
