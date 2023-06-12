@@ -207,10 +207,6 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         self.detailWaitViewModel.leaveButtonDidTap.send(())
     }
     
-    func codeCopyButtonDidTap() {
-        // delegate 삭제 예정
-    }
-    
     func didPassStartDate(isAdmin: Bool) {
         if isAdmin {
             self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
