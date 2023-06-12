@@ -88,6 +88,13 @@ final class DetailWaitViewController: BaseViewController {
                 self?.startManitto()
             })
             .store(in: &self.cancleable)
+        
+        self.detailWaitViewModel.editButtonDidTap
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.presentDetailEditViewController(isOnlyDateEdit: false)
+            })
+            .store(in: &self.cancleable)
     }
     
     private func configureDelegation() {
@@ -141,8 +148,8 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
         // delegate 삭제 예정
     }
     
-    func editButtonDidTap(isOnlyDateEdit: Bool) {
-        self.presentDetailEditViewController(isOnlyDateEdit: isOnlyDateEdit)
+    func editButtonDidTap() {
+        self.detailWaitViewModel.editButtonDidTap.send(())
     }
     
     func deleteButtonDidTap(title: String, message: String, okTitle: String) {

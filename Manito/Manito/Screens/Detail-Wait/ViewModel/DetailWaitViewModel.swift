@@ -14,6 +14,7 @@ final class DetailWaitViewModel {
     let roomIndex: Int
     private let detailWaitService: DetailWaitAPI
     var roomInformation = CurrentValueSubject<Room?, Never>(nil)
+    lazy var editButtonDidTap = PassthroughSubject<Void, Never>()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -34,7 +35,7 @@ final class DetailWaitViewModel {
         
         let startManittoOutput = input.startButtonDidTap
             .eraseToAnyPublisher()
-        
+                
         return Output(roomInformationDidUpdate: self.roomInformation.eraseToAnyPublisher(),
                       showToast: showToastOutput,
                       startManitto: startManittoOutput
