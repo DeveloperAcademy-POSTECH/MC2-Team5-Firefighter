@@ -27,14 +27,14 @@ final class ParticipateRoomViewController: BaseViewController {
     
     // MARK: - life cycle
     
+    override func loadView() {
+        self.view = self.participateRoomView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
         self.configureNavigation()
-    }
-    
-    override func loadView() {
-        self.view = self.participateRoomView
     }
     
     // MARK: - override
