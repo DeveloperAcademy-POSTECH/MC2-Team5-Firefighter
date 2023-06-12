@@ -51,37 +51,22 @@ final class DetailWaitViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.configureNavigationController()
+        self.detailWaitViewModel.fetchRoomInformation()
         self.setBind()
     }
     
     // MARK: - func
     
     private func setBind() {
-        let input = DetailWaitViewModel.Input(
-            viewDidLoad: Just(Void())
-                .map { self.detailWaitViewModel.fetchRoomInformation() }
-                .eraseToAnyPublisher())
-//            copyButtonDidTap: self.detailWaitView.copyButton.tapPublisher)
-        
-        let output = detailWaitViewModel.transform(input)
+        let input = DetailWaitViewModel.Input(viewDidLoad: Just(()).eraseToAnyPublisher())
+        let output = self.detailWaitViewModel.transform(input)
         
         output.roomInformationDidUpdate
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { room in
+            .sink(receiveValue: { [weak self] room in
                 if let room {
-                    self.detailWaitView.updateDetailWaitView(room: room)
+                    self?.detailWaitView.updateDetailWaitView(room: room)
                 }
-            })
-            .store(in: &self.cancleable)
-        
-//        output.showToastView.sink(receiveValue: { [weak self] code in
-//            self?.codeCopyButtonDidTap()
-//        })
-//        .store(in: &self.cancleable)
-        
-        self.detailWaitViewModel.copyButtonStream
-            .sink(receiveValue: { [weak self] _ in
-                self?.codeCopyButtonDidTap()
             })
             .store(in: &self.cancleable)
     }
@@ -109,6 +94,13 @@ final class DetailWaitViewController: BaseViewController {
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)
+    }
+    
+    private func showToastView() {
+        guard let invitationCode = self.detailWaitViewModel.roomInformation.value?.invitation?.code else { return }
+        ToastView.showToast(code: invitationCode,
+                            message: TextLiteral.detailWaitViewControllerCopyCode,
+                            controller: self)
     }
 }
 
@@ -169,11 +161,12 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
     }
     
     func codeCopyButtonDidTap() {
-        self.detailWaitViewModel.copyButtonStream.send(Void())
-        guard let invitationCode = self.detailWaitViewModel.roomInformation.value?.invitation?.code else { return }
-        ToastView.showToast(code: invitationCode,
-                            message: TextLiteral.detailWaitViewControllerCopyCode,
-                            controller: self)
+//        self.detailWaitViewModel.didTappedCopyButton()
+//        self.detailWaitViewModel.copyButtonStream.send(Void())
+//        guard let invitationCode = self.detailWaitViewModel.roomInformation.value?.invitation?.code else { return }
+//        ToastView.showToast(code: invitationCode,
+//                            message: TextLiteral.detailWaitViewControllerCopyCode,
+//                            controller: self)
     }
     
     func didPassStartDate(isAdmin: Bool) {
