@@ -59,7 +59,6 @@ final class DetailWaitViewController: BaseViewController {
     
     private func setBind() {
         let input = DetailWaitViewModel.Input(
-            viewDidLoad: Just(()).eraseToAnyPublisher(),
             codeCopyButtonDidTap: self.detailWaitView.copyButton.tapPublisher,
             startButtonDidTap: self.detailWaitView.startButton.tapPublisher
         )

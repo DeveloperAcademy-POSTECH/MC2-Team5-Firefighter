@@ -17,7 +17,6 @@ final class DetailWaitViewModel {
     lazy var editButtonDidTap = PassthroughSubject<Void, Never>()
     
     struct Input {
-        let viewDidLoad: AnyPublisher<Void, Never>
         let codeCopyButtonDidTap: AnyPublisher<Void, Never>
         let startButtonDidTap: AnyPublisher<Void, Never>
     }
