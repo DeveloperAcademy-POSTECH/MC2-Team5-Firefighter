@@ -76,7 +76,7 @@ final class ParticipateRoomViewController: BaseViewController {
             } catch NetworkError.encodingError {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
-                makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage)
+                self.makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage)
                 print("client Error: \(String(describing: message))")
             }
         }
