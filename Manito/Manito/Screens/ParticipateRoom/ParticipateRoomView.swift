@@ -49,7 +49,7 @@ final class ParticipateRoomView: UIView {
         self.setupLayout()
         self.setupButtonAction()
         self.setupNotificationCenter()
-        self.toggleButton()
+        self.detectNextButtonStatus()
     }
     
     @available(*, unavailable)
@@ -103,7 +103,7 @@ final class ParticipateRoomView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func toggleButton() {
+    private func detectNextButtonStatus() {
         self.inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
             self?.nextButton.isDisabled = !isEnable
         }
