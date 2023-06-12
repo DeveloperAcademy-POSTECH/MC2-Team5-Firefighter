@@ -82,27 +82,26 @@ final class DetailWaitViewController: BaseViewController {
         
         output.startManitto
             .receive(on: DispatchQueue.main)
-            .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
             .sink(receiveValue: { [weak self] _ in
                 self?.startManitto()
             })
             .store(in: &self.cancleable)
         
-        self.detailWaitViewModel.editButtonDidTap
+        output.presentEditView
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.presentDetailEditViewController(isOnlyDateEdit: false)
             })
             .store(in: &self.cancleable)
         
-        self.detailWaitViewModel.deleteButtonDidTap
+        output.deleteRoom
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.deleteRoom()
             })
             .store(in: &self.cancleable)
         
-        self.detailWaitViewModel.leaveButtonDidTap
+        output.leaveRoom
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.leaveRoom()

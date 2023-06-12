@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 
 final class DetailWaitViewModel {
     
@@ -27,6 +28,9 @@ final class DetailWaitViewModel {
         let roomInformationDidUpdate: AnyPublisher<Room?, Never>
         let showToast: AnyPublisher<String, Never>
         let startManitto: AnyPublisher<Void, Never>
+        let presentEditView: AnyPublisher<Void, Never>
+        let deleteRoom: AnyPublisher<Void, Never>
+        let leaveRoom: AnyPublisher<Void, Never>
     }
     
     func transform(_ input: Input) -> Output {
@@ -35,11 +39,15 @@ final class DetailWaitViewModel {
             .eraseToAnyPublisher()
         
         let startManittoOutput = input.startButtonDidTap
+            .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
             .eraseToAnyPublisher()
                 
         return Output(roomInformationDidUpdate: self.roomInformation.eraseToAnyPublisher(),
                       showToast: showToastOutput,
-                      startManitto: startManittoOutput
+                      startManitto: startManittoOutput,
+                      presentEditView: self.editButtonDidTap.eraseToAnyPublisher(),
+                      deleteRoom: self.deleteButtonDidTap.eraseToAnyPublisher(),
+                      leaveRoom: self.leaveButtonDidTap.eraseToAnyPublisher()
         )
     }
     
