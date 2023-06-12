@@ -15,6 +15,7 @@ final class DetailWaitViewModel {
     private let detailWaitService: DetailWaitAPI
     var roomInformation = CurrentValueSubject<Room?, Never>(nil)
     lazy var editButtonDidTap = PassthroughSubject<Void, Never>()
+    lazy var deleteButtonDidTap = PassthroughSubject<Void, Never>()
     
     struct Input {
         let codeCopyButtonDidTap: AnyPublisher<Void, Never>

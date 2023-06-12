@@ -12,7 +12,7 @@ import SnapKit
 protocol DetailWaitViewDelegate: AnyObject {
     func startButtonDidTap()
     func editButtonDidTap()
-    func deleteButtonDidTap(title: String, message: String, okTitle: String)
+    func deleteButtonDidTap()
     func leaveButtonDidTap(title: String, message: String, okTitle: String)
     func codeCopyButtonDidTap()
     func didPassStartDate(isAdmin: Bool)
@@ -234,9 +234,7 @@ final class DetailWaitView: UIView {
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
                 self?.delegate?.editButtonDidTap()
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-                self?.delegate?.deleteButtonDidTap(title: UserStatus.admin.alertText.title,
-                                           message: UserStatus.admin.alertText.message,
-                                           okTitle: UserStatus.admin.alertText.okTitle)
+                self?.delegate?.deleteButtonDidTap()
             })
             ]
         case .member:

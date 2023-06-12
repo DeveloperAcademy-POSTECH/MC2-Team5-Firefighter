@@ -94,6 +94,13 @@ final class DetailWaitViewController: BaseViewController {
                 self?.presentDetailEditViewController(isOnlyDateEdit: false)
             })
             .store(in: &self.cancleable)
+        
+        self.detailWaitViewModel.deleteButtonDidTap
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.deleteRoom()
+            })
+            .store(in: &self.cancleable)
     }
     
     private func configureDelegation() {
@@ -140,21 +147,11 @@ final class DetailWaitViewController: BaseViewController {
             }
         }
     }
-}
-
-extension DetailWaitViewController: DetailWaitViewDelegate {
-    func startButtonDidTap() {
-        // delegate 삭제 예정
-    }
     
-    func editButtonDidTap() {
-        self.detailWaitViewModel.editButtonDidTap.send(())
-    }
-    
-    func deleteButtonDidTap(title: String, message: String, okTitle: String) {
-        self.makeRequestAlert(title: title,
-                              message: message,
-                              okTitle: okTitle,
+    private func deleteRoom() {
+        self.makeRequestAlert(title: TextLiteral.datailWaitViewControllerDeleteTitle,
+                              message: TextLiteral.datailWaitViewControllerDeleteMessage,
+                              okTitle: TextLiteral.delete,
                               okAction: { [weak self] _ in
             self?.detailWaitViewModel.requestDeleteRoom() { result in
                 DispatchQueue.main.async {
@@ -168,6 +165,20 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
                 }
             }
         })
+    }
+}
+
+extension DetailWaitViewController: DetailWaitViewDelegate {
+    func startButtonDidTap() {
+        // delegate 삭제 예정
+    }
+    
+    func editButtonDidTap() {
+        self.detailWaitViewModel.editButtonDidTap.send(())
+    }
+    
+    func deleteButtonDidTap() {
+        self.detailWaitViewModel.deleteButtonDidTap.send(())
     }
     
     func leaveButtonDidTap(title: String, message: String, okTitle: String) {
