@@ -51,7 +51,7 @@ final class DetailWaitViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.configureNavigationController()
-        self.detailWaitViewModel.fetchRoomInformation()
+        self.fetchRoomInformationAtViewModel()
         self.setBind()
     }
     
@@ -123,6 +123,10 @@ final class DetailWaitViewController: BaseViewController {
     private func configureNavigationController() {
         guard let navigationController = self.navigationController else { return }
         self.detailWaitView.configureNavigationItem(navigationController)
+    }
+    
+    private func fetchRoomInformationAtViewModel() {
+        self.detailWaitViewModel.fetchRoomInformation()
     }
     
     private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
