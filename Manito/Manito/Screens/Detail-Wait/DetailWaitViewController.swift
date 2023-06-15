@@ -52,12 +52,25 @@ final class DetailWaitViewController: BaseViewController {
         self.configureDelegation()
         self.configureNavigationController()
         self.fetchRoomInformationAtViewModel()
-        self.setBind()
+        self.setupBindings()
     }
     
     // MARK: - func
     
-    private func setBind() {
+    private func configureDelegation() {
+        self.detailWaitView.configureDelegation(self)
+    }
+    
+    private func configureNavigationController() {
+        guard let navigationController = self.navigationController else { return }
+        self.detailWaitView.configureNavigationItem(navigationController)
+    }
+    
+    private func fetchRoomInformationAtViewModel() {
+        self.detailWaitViewModel.fetchRoomInformation()
+    }
+    
+    private func setupBindings() {
         let input = DetailWaitViewModel.Input(
             codeCopyButtonDidTap: self.detailWaitView.copyButton.tapPublisher,
             startButtonDidTap: self.detailWaitView.startButton.tapPublisher
@@ -114,19 +127,6 @@ final class DetailWaitViewController: BaseViewController {
                 self?.showStartDatePassedAlert(isAdmin: value)
             })
             .store(in: &self.cancellable)
-    }
-    
-    private func configureDelegation() {
-        self.detailWaitView.configureDelegation(self)
-    }
-    
-    private func configureNavigationController() {
-        guard let navigationController = self.navigationController else { return }
-        self.detailWaitView.configureNavigationItem(navigationController)
-    }
-    
-    private func fetchRoomInformationAtViewModel() {
-        self.detailWaitViewModel.fetchRoomInformation()
     }
     
     private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
