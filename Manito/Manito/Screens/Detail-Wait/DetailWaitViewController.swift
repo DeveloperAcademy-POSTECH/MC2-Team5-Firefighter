@@ -22,7 +22,7 @@ final class DetailWaitViewController: BaseViewController {
     
     // MARK: - property
     
-    private var cancleable = Set<AnyCancellable>()
+    private var cancellable = Set<AnyCancellable>()
     private let detailWaitViewModel: DetailWaitViewModel
     
     // MARK: - init
@@ -71,49 +71,49 @@ final class DetailWaitViewController: BaseViewController {
                     self?.detailWaitView.updateDetailWaitView(room: room)
                 }
             })
-            .store(in: &self.cancleable)
+            .store(in: &self.cancellable)
         
         output.showToast
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] code in
                 self?.showToastView(code: code)
             })
-            .store(in: &self.cancleable)
+            .store(in: &self.cancellable)
         
         output.startManitto
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.startManitto()
             })
-            .store(in: &self.cancleable)
+            .store(in: &self.cancellable)
         
         output.presentEditView
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.presentDetailEditViewController(isOnlyDateEdit: false)
             })
-            .store(in: &self.cancleable)
+            .store(in: &self.cancellable)
         
         output.deleteRoom
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.deleteRoom()
             })
-            .store(in: &self.cancleable)
+            .store(in: &self.cancellable)
         
         output.leaveRoom
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.leaveRoom()
             })
-            .store(in: &self.cancleable)
+            .store(in: &self.cancellable)
         
         output.showStartDatePassedAlert
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] value in
                 self?.showStartDatePassedAlert(isAdmin: value)
             })
-            .store(in: &self.cancleable)
+            .store(in: &self.cancellable)
     }
     
     private func configureDelegation() {
