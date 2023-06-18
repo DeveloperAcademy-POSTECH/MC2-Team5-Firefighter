@@ -75,9 +75,9 @@ final class ParticipateRoomView: UIView {
         
         self.addSubview(self.inputInvitedCodeView)
         self.inputInvitedCodeView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(66)
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalTo(nextButton.snp.top)
+            $0.bottom.equalTo(self.nextButton.snp.top)
         }
         
         self.bringSubviewToFront(self.nextButton)
