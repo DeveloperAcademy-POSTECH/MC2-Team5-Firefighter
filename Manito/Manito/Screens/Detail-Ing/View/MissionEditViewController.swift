@@ -11,6 +11,8 @@ import SnapKit
 
 final class MissionEditViewController: BaseViewController {
     
+    let mission: String
+    
     // MARK: - component
     
     private let backgroundView: UIView = {
@@ -21,6 +23,35 @@ final class MissionEditViewController: BaseViewController {
         view.backgroundColor = .darkGrey004
         return view
     }()
+    private lazy var missionTextField: UITextField = {
+        let textField = UITextField()
+        let attributes = [
+            NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
+        ]
+        textField.backgroundColor = .darkGrey002
+        textField.attributedPlaceholder = NSAttributedString(string: self.mission, attributes:attributes)
+        textField.font = .font(.regular, ofSize: 18)
+        textField.layer.cornerRadius = 10
+        textField.layer.masksToBounds = true
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.white.cgColor
+        textField.textAlignment = .center
+        textField.returnKeyType = .done
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.becomeFirstResponder()
+        return textField
+    }()
+    
+    init(mission: String) {
+        self.mission = mission
+        super.init()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - life cycle
     
@@ -40,6 +71,13 @@ final class MissionEditViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview()
             $0.centerY.equalToSuperview()
             $0.height.equalTo(120)
+        }
+        
+        self.view.addSubview(missionTextField)
+        self.missionTextField.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.center.equalToSuperview()
+            $0.height.equalTo(60)
         }
     }
     

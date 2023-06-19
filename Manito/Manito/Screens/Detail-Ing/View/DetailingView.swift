@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol DetailingDelegate: AnyObject {
-    func editMissionButtonDidTap()
+    func editMissionButtonDidTap(mission: String)
     func listBackDidTap()
     func letterBoxDidTap(type: String,
                          mission: String,
@@ -75,7 +75,8 @@ final class DetailingView: UIView {
     private lazy var pencilButton: UIButton = {
         let button = UIButton(type: .system)
         let action = UIAction { [weak self] _ in
-            self?.delegate?.editMissionButtonDidTap()
+            guard let mission = self?.missionContentsLabel.text else { return }
+            self?.delegate?.editMissionButtonDidTap(mission: mission)
         }
         button.addAction(action, for: .touchUpInside)
         button.setImage(ImageLiterals.icPencil, for: .normal)
