@@ -85,7 +85,34 @@ final class DetailingViewController: BaseViewController {
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)
     }
-        
+    
+    private func pushFriendListViewController() {
+        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className) as? FriendListViewController else { return }
+        guard let roomId = Int(roomId) else { return }
+        viewController.roomIndex = roomId
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    // MARK: - network
+   
+    private func requestRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
+        Task {
+            do {
+                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
+                if let info = data {
+                    completionHandler(.success(info))
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
     func pushNavigationAfterRequestRoomInfo() {
         Task {
             do {
@@ -106,40 +133,13 @@ final class DetailingViewController: BaseViewController {
         }
     }
     
-    @objc
-    private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
-        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className) as? FriendListViewController else { return }
-        guard let roomId = Int(roomId) else { return }
-        viewController.roomIndex = roomId
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    // MARK: - DetailStarting API
-   
-    private func requestRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
-                if let info = data {
-                    completionHandler(.success(info))
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
-    
-    private func requestExitRoom() {
+    private func requestExitRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
                 let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId)
-                if statusCode == 204 {
-                    navigationController?.popViewController(animated: true)
+                switch statusCode {
+                case 200..<300: completionHandler(.success(()))
+                default: completionHandler(.failure(.unknownError))
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -152,12 +152,13 @@ final class DetailingViewController: BaseViewController {
         }
     }
     
-    private func requestDeleteRoom() {
+    private func requestDeleteRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
                 let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId)
-                if statusCode == 204 {
-                    navigationController?.popViewController(animated: true)
+                switch statusCode {
+                case 200..<300: completionHandler(.success(()))
+                default: completionHandler(.failure(.unknownError))
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -173,7 +174,7 @@ final class DetailingViewController: BaseViewController {
 extension DetailingViewController: DetailingDelegate {
     
     func listBackDidTap() {
-        print("")
+        self.pushFriendListViewController()
     }
     
     func letterBoxDidTap() {
@@ -189,11 +190,25 @@ extension DetailingViewController: DetailingDelegate {
     }
     
     func deleteButtonDidTap() {
-        print("")
+        self.requestDeleteRoom() { [weak self] result in
+            switch result {
+            case .success:
+                self?.navigationController?.popViewController(animated: true)
+            case .failure:
+                print("error")
+            }
+        }
     }
     
     func leaveButtonDidTap() {
-        print("")
+        self.requestExitRoom() { [weak self] result in
+            switch result {
+            case .success:
+                self?.navigationController?.popViewController(animated: true)
+            case .failure:
+                print("error")
+            }
+        }
     }
     
     func didNotShowManitteeView(manitteeName: String) {
