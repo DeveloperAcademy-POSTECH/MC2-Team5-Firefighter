@@ -118,6 +118,7 @@ final class MissionEditViewController: BaseViewController {
                               okTitle: TextLiteral.change,
                               okStyle: .default,
                               okAction: { [weak self] _ in
+            // FIXME: - API 연결 후 작업해야함
             self?.dismiss(animated: true)
         })
     }
