@@ -431,7 +431,7 @@ final class DetailingView: UIView {
             self.periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
             self.manitteeAnimationLabel.text = manittee
             self.setupBadge(count: badgeCount)
-            
+            self.updateMissionEditButton(admin, type: self.roomType)
             if self.roomType == .PROCESSING {
                 self.setupProcessingUI()
                 guard let missionContent = room.mission?.content,
@@ -505,6 +505,15 @@ final class DetailingView: UIView {
         self.manitteeIconView.alpha = value ? 0 : 1
         self.manitiRealIconView.alpha = value ? 1 : 0
         self.manitteeAnimationLabel.alpha = value ? 1 : 0
+    }
+    
+    private func updateMissionEditButton(_ isAdmin: Bool, type: RoomType) {
+        if type == .POST {
+            self.pencilButton.isHidden = true
+        }
+        if !isAdmin {
+            self.pencilButton.isHidden = true
+        }
     }
     
     // MARK: - selector
