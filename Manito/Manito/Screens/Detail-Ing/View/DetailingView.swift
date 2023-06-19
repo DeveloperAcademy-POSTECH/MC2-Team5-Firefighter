@@ -71,6 +71,15 @@ final class DetailingView: UIView {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
+    private let pencilButton: UIButton = {
+        let button = UIButton(type: .system)
+        let action = UIAction { _ in
+            print("pencil")
+        }
+        button.addAction(action, for: .touchUpInside)
+        button.setImage(ImageLiterals.icPencil, for: .normal)
+        return button
+    }()
     private let missionContentsLabel: UILabel = {
         let label = UILabel()
         let paragraphStyle = NSMutableParagraphStyle()
@@ -384,6 +393,13 @@ final class DetailingView: UIView {
             $0.trailing.equalTo(self.missionBackgroundView.snp.trailing)
         }
         self.guideView.setupGuideViewLayout()
+        
+        self.addSubview(self.pencilButton)
+        self.pencilButton.snp.makeConstraints {
+            $0.leading.equalTo(self.missionTitleLabel.snp.trailing).offset(-6)
+            $0.centerY.equalTo(self.missionTitleLabel.snp.centerY)
+            $0.width.height.equalTo(44)
+        }
     }
     
     func configureDelegation(_ delegate: DetailingDelegate) {
