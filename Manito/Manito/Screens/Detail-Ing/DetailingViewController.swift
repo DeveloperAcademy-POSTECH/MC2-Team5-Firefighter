@@ -106,9 +106,8 @@ final class DetailingViewController: BaseViewController {
                               message: TextLiteral.detailIngViewControllerResetMissionAlertMessage,
                               okTitle: TextLiteral.detailIngViewControllerResetMissionAlertOkTitle,
                               okStyle: .default,
-                              okAction: { [weak self] _ in
+                              okAction: { _ in
             // FIXME: - API 연결
-            self?.dismiss(animated: true)
         })
     }
     
