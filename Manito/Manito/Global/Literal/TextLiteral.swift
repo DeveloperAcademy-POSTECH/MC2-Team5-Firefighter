@@ -225,6 +225,6 @@ enum TextLiteral {
     static let invitedCodeViewCOntroller: String = "글자를 탭하여 코드를 복사하세요"
     
     // MARK: - MissionEditViewController
-    static let missionEditViewControllerChangeMissionAlertTitle: String = ""
-    static let missionEditViewControllerChangeMissionAlertMessage: String = ""
+    static let missionEditViewControllerChangeMissionAlertTitle: String = "개별 미션을 수정하시겠습니까?"
+    static let missionEditViewControllerChangeMissionAlertMessage: String = "기본 미션으로 변경을 통해\n되돌릴 수 있습니다."
 }
