@@ -94,6 +94,16 @@ final class DetailingViewController: BaseViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    private func presentEditMissionView() {
+        // FIXME: - view 연결
+        print("view 연결")
+    }
+    
+    private func resetMission() {
+        // FIXME: - api 연결 해야함.
+        print("미션 되돌리기 API 연결")
+    }
+    
     // MARK: - network
    
     private func requestRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
@@ -173,12 +183,21 @@ final class DetailingViewController: BaseViewController {
 
 extension DetailingViewController: DetailingDelegate {
     func editMissionButtonDidTap() {
+        typealias AlertAction = ((UIAlertAction) -> ())
+        let editMissionAction: AlertAction = { [weak self] _ in
+            self?.presentEditMissionView()
+        }
+        let resetAction: AlertAction = { [weak self] _ in
+            self?.resetMission()
+        }
+        
         self.makeActionSheet(title: TextLiteral.detailIngViewControllerMissionEditTitle,
                              actionTitles: [
                                 TextLiteral.detailIngViewControllerSelfEditMissionTitle,
                                 TextLiteral.detailIngViewControllerResetMissionTitle,
                                 TextLiteral.cancel],
-                             actionStyle: [.default, .default, .cancel], actions: [nil, nil, nil])
+                             actionStyle: [.default, .default, .cancel],
+                             actions: [editMissionAction, resetAction, nil])
     }
     
     func listBackDidTap() {
