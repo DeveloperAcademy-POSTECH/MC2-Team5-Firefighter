@@ -96,6 +96,7 @@ final class DetailingViewController: BaseViewController {
     
     private func presentEditMissionView(mission: String) {
         let viewController = MissionEditViewController(mission: mission)
+        viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .overCurrentContext
         self.present(viewController, animated: true)
     }
