@@ -102,8 +102,14 @@ final class DetailingViewController: BaseViewController {
     }
     
     private func resetMission() {
-        // FIXME: - api 연결 해야함.
-        print("미션 되돌리기 API 연결")
+        self.makeRequestAlert(title: TextLiteral.detailIngViewControllerResetMissionAlertTitle,
+                              message: TextLiteral.detailIngViewControllerResetMissionAlertMessage,
+                              okTitle: TextLiteral.detailIngViewControllerResetMissionAlertOkTitle,
+                              okStyle: .default,
+                              okAction: { [weak self] _ in
+            // FIXME: - API 연결
+            self?.dismiss(animated: true)
+        })
     }
     
     // MARK: - network

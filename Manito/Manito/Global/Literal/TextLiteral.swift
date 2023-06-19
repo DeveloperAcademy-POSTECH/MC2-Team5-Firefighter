@@ -164,6 +164,9 @@ enum TextLiteral {
     static let detailIngViewControllerMissionEditTitle: String = "개별 미션 설정"
     static let detailIngViewControllerSelfEditMissionTitle: String = "개별 미션 직접 설정"
     static let detailIngViewControllerResetMissionTitle: String = "기본 미션으로 변경"
+    static let detailIngViewControllerResetMissionAlertTitle: String = "개별 미션을 되돌리시겠습니까?"
+    static let detailIngViewControllerResetMissionAlertMessage: String = "기존에 주어지는 기본 미션으로 재설정됩니다."
+    static let detailIngViewControllerResetMissionAlertOkTitle: String = "되돌리기"
     
     // MARK: - CalendarView
     static let calendarViewAlertMaxTitle: String = "최대 선택 기간을 넘었어요"
