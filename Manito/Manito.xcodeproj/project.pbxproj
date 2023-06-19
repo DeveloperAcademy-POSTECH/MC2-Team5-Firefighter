@@ -51,6 +51,7 @@
 		39CD582128C4C3E800496E91 /* DetailDoneAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CD582028C4C3E800496E91 /* DetailDoneAPI.swift */; };
 		39D95265285B097800183B09 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D95264285B097800183B09 /* CalendarView.swift */; };
 		39E099AD287FC020004F464E /* LetterDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E099AC287FC020004F464E /* LetterDTO.swift */; };
+		39EE956D2A401ED400AF6857 /* DetailingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EE956C2A401ED400AF6857 /* DetailingView.swift */; };
 		39EEF65628CB3BB200437654 /* LoginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65528CB3BB200437654 /* LoginProtocol.swift */; };
 		39EEF65828CB3C1100437654 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65728CB3C1100437654 /* Login.swift */; };
 		39EEF65A28CB3C7B00437654 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65928CB3C7B00437654 /* Token.swift */; };
@@ -233,6 +234,7 @@
 		39D95264285B097800183B09 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		39E099AC287FC020004F464E /* LetterDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterDTO.swift; sourceTree = "<group>"; };
 		39E6321328BDE59C00CFC6C4 /* Manito.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Manito.entitlements; sourceTree = "<group>"; };
+		39EE956C2A401ED400AF6857 /* DetailingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailingView.swift; sourceTree = "<group>"; };
 		39EEF65528CB3BB200437654 /* LoginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProtocol.swift; sourceTree = "<group>"; };
 		39EEF65728CB3C1100437654 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		39EEF65928CB3C7B00437654 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -506,6 +508,14 @@
 			path = Request;
 			sourceTree = "<group>";
 		};
+		39EE956B2A401E9600AF6857 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				39EE956C2A401ED400AF6857 /* DetailingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7E0C5C342855B1EF00F698D1 /* CreateNickName */ = {
 			isa = PBXGroup;
 			children = (
@@ -728,6 +738,7 @@
 		B5F524E928519B3F00614FF7 /* Detail-Ing */ = {
 			isa = PBXGroup;
 			children = (
+				39EE956B2A401E9600AF6857 /* View */,
 				D75E8C7D28D76FB1004A6C41 /* UIcomponent */,
 				333BF66428571C850039F77F /* Cell */,
 				435B17672913E71400212663 /* DetailingViewController.swift */,
@@ -1250,6 +1261,7 @@
 				B5AE11F229D28CB500F86FF8 /* OpenManittoPopupView.swift in Sources */,
 				B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */,
 				39C957DF2879A35300A04A2B /* RoomDTO.swift in Sources */,
+				39EE956D2A401ED400AF6857 /* DetailingView.swift in Sources */,
 				39C95808287DB05C00A04A2B /* SettingEndPoint.swift in Sources */,
 				39C957F4287D9EB400A04A2B /* APIService.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
