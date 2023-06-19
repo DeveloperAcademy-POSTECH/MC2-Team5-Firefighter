@@ -172,6 +172,15 @@ final class DetailingViewController: BaseViewController {
 }
 
 extension DetailingViewController: DetailingDelegate {
+    func editMissionButtonDidTap() {
+        self.makeActionSheet(title: TextLiteral.detailIngViewControllerMissionEditTitle,
+                             actionTitles: [
+                                TextLiteral.detailIngViewControllerSelfEditMissionTitle,
+                                TextLiteral.detailIngViewControllerResetMissionTitle,
+                                TextLiteral.cancel],
+                             actionStyle: [.default, .default, .cancel], actions: [nil, nil, nil])
+    }
+    
     func listBackDidTap() {
         self.pushFriendListViewController()
     }

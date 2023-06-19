@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 protocol DetailingDelegate: AnyObject {
+    func editMissionButtonDidTap()
     func listBackDidTap()
     func letterBoxDidTap(type: String,
                          mission: String,
@@ -71,10 +72,10 @@ final class DetailingView: UIView {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    private let pencilButton: UIButton = {
+    private lazy var pencilButton: UIButton = {
         let button = UIButton(type: .system)
-        let action = UIAction { _ in
-            print("pencil")
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.editMissionButtonDidTap()
         }
         button.addAction(action, for: .touchUpInside)
         button.setImage(ImageLiterals.icPencil, for: .normal)

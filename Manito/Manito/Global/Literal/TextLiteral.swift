@@ -161,6 +161,9 @@ enum TextLiteral {
     static let detailIngViewControllerDoneExitAlertMessage: String = "나간 방은 다시 들어올 수 없어요"
     static let detailIngViewControllerDoneExitAlertAdmin: String = "방장이 방을 삭제하면\n 참여자들의 방도 삭제됩니다"
     static let detailIngViewControllerDetailInformatioin: String = "진행 정보"
+    static let detailIngViewControllerMissionEditTitle: String = "개별 미션 설정"
+    static let detailIngViewControllerSelfEditMissionTitle: String = "개별 미션 직접 설정"
+    static let detailIngViewControllerResetMissionTitle: String = "기본 미션으로 변경"
     
     // MARK: - CalendarView
     static let calendarViewAlertMaxTitle: String = "최대 선택 기간을 넘었어요"
