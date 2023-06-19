@@ -15,7 +15,7 @@ protocol DetailingDelegate: AnyObject {
                          mission: String,
                          missionId: String)
     func manittoMemoryButtonDidTap()
-    func manittoOpenButtonDidTap()
+    func manittoOpenButtonDidTap(nickname: String)
     func deleteButtonDidTap()
     func leaveButtonDidTap()
     func didNotShowManitteeView(manitteeName: String)
@@ -32,6 +32,7 @@ final class DetailingView: UIView {
     
     private var isTappedManittee: Bool = false
     private var missionId: String = ""
+    private var manittoNickname: String = ""
     private var roomType: RoomType = .PROCESSING
     private weak var delegate: DetailingDelegate?
     
@@ -193,7 +194,8 @@ final class DetailingView: UIView {
     private lazy var manittoOpenButton: MainButton = {
         let button = MainButton()
         let action = UIAction { [weak self] _ in
-            self?.delegate?.manittoOpenButtonDidTap()
+            guard let manittoNickname = self?.manittoNickname else { return }
+            self?.delegate?.manittoOpenButtonDidTap(nickname: manittoNickname)
         }
         button.addAction(action, for: .touchUpInside)
         button.title = TextLiteral.detailIngViewControllerManitoOpenButton
@@ -415,9 +417,11 @@ final class DetailingView: UIView {
             if self.roomType == .PROCESSING {
                 self.setupProcessingUI()
                 guard let missionContent = room.mission?.content,
-                      let didView = room.didViewRoulette
+                      let didView = room.didViewRoulette,
+                      let manittoNickname = room.manitto?.nickname
                 else { return }
                 self.missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
+                self.manittoNickname = manittoNickname
                 if !didView && !admin {
                     self.delegate?.didNotShowManitteeView(manitteeName: manittee)
                 }

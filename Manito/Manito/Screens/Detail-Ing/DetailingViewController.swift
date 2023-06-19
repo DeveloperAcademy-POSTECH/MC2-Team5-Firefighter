@@ -172,7 +172,6 @@ final class DetailingViewController: BaseViewController {
 }
 
 extension DetailingViewController: DetailingDelegate {
-    
     func listBackDidTap() {
         self.pushFriendListViewController()
     }
@@ -189,11 +188,15 @@ extension DetailingViewController: DetailingDelegate {
     }
     
     func manittoMemoryButtonDidTap() {
-        print("")
+        let viewController = MemoryViewController(roomId: self.roomId)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func manittoOpenButtonDidTap() {
-        print("")
+    func manittoOpenButtonDidTap(nickname: String) {
+        let viewController = OpenManittoViewController(roomId: self.roomId, manittoNickname: nickname)
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .fullScreen
+        self.present(viewController, animated: true)
     }
     
     func deleteButtonDidTap() {
