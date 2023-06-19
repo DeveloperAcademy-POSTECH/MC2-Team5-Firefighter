@@ -429,23 +429,23 @@ final class DetailingView: UIView {
                     self?.delegate?.deleteButtonDidTap()
                 })
             ])
-            exitButton.menu = menu
+            self.exitButton.menu = menu
         } else {
             let menu = UIMenu(options: [], children: [
                 UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
                     self?.delegate?.leaveButtonDidTap()
                 })
             ])
-            exitButton.menu = menu
+            self.exitButton.menu = menu
         }
     }
     
     private func setupBadge(count: Int) {
         if count > 0 {
-            badgeLabel.isHidden = false
-            badgeLabel.countLabel.text = String(count)
+            self.badgeLabel.isHidden = false
+            self.badgeLabel.countLabel.text = String(count)
         } else {
-            badgeLabel.isHidden = true
+            self.badgeLabel.isHidden = true
         }
     }
     
@@ -472,10 +472,10 @@ final class DetailingView: UIView {
     }
     
     private func toggledManitteeAnimation(_ value: Bool) {
-        manitteeLabel.alpha = value ? 0 : 1
-        manitteeIconView.alpha = value ? 0 : 1
-        manitiRealIconView.alpha = value ? 1 : 0
-        manitteeAnimationLabel.alpha = value ? 1 : 0
+        self.manitteeLabel.alpha = value ? 0 : 1
+        self.manitteeIconView.alpha = value ? 0 : 1
+        self.manitiRealIconView.alpha = value ? 1 : 0
+        self.manitteeAnimationLabel.alpha = value ? 1 : 0
     }
     
     // MARK: - selector

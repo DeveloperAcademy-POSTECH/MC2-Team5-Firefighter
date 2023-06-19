@@ -11,12 +11,14 @@ import SnapKit
 
 final class DetailingViewController: BaseViewController {
     
+    // MARK: - property
+    
     private let detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
     private let detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
     private let roomId: String
     private var missionId: String = ""
-
-    // MARK: - property
+    
+    // MARK: - component
     
     private let detailingView: DetailingView = DetailingView()
     
@@ -27,6 +29,7 @@ final class DetailingViewController: BaseViewController {
         super.init()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -49,7 +52,7 @@ final class DetailingViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupLargeTitleToOriginal()
+        self.setupLargeTitleToOriginal()
         self.requestRoomInfo() { [weak self] result in
             switch result {
             case .success(let roomInformation):
@@ -72,21 +75,21 @@ final class DetailingViewController: BaseViewController {
     }
     
     private func setupLargeTitleToOriginal() {
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationItem.largeTitleDisplayMode = .never
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .never
     }
         
     private func openManittee(manitteeName: String) {
         let viewController = SelectManitteeViewController(roomId: self.roomId, manitteeNickname: manitteeName)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true)
+        self.present(viewController, animated: true)
     }
         
     func pushNavigationAfterRequestRoomInfo() {
         Task {
             do {
-                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
+                let data = try await detailIngService.requestStartingRoomInfo(roomId: self.roomId)
                 if let info = data {
                     guard let state = info.roomInformation?.state,
                           let mission = info.mission?.content,
@@ -102,8 +105,7 @@ final class DetailingViewController: BaseViewController {
             }
         }
     }
-      
-    // FIXME: - 추후 PR 때, friendslistViewController codebase로 만들 예정
+    
     @objc
     private func pushFriendListViewController(_ gesture: UITapGestureRecognizer) {
         let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
