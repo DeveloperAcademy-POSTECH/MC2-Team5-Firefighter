@@ -95,8 +95,9 @@ final class DetailingViewController: BaseViewController {
     }
     
     private func presentEditMissionView() {
-        // FIXME: - view 연결
-        print("view 연결")
+        let viewController = MissionEditViewController()
+        viewController.modalPresentationStyle = .overCurrentContext
+        self.present(viewController, animated: true)
     }
     
     private func resetMission() {

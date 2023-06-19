@@ -52,6 +52,7 @@
 		39D95265285B097800183B09 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D95264285B097800183B09 /* CalendarView.swift */; };
 		39E099AD287FC020004F464E /* LetterDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E099AC287FC020004F464E /* LetterDTO.swift */; };
 		39EE956D2A401ED400AF6857 /* DetailingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EE956C2A401ED400AF6857 /* DetailingView.swift */; };
+		39EE956F2A404A3800AF6857 /* MissionEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EE956E2A404A3800AF6857 /* MissionEditViewController.swift */; };
 		39EEF65628CB3BB200437654 /* LoginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65528CB3BB200437654 /* LoginProtocol.swift */; };
 		39EEF65828CB3C1100437654 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65728CB3C1100437654 /* Login.swift */; };
 		39EEF65A28CB3C7B00437654 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65928CB3C7B00437654 /* Token.swift */; };
@@ -235,6 +236,7 @@
 		39E099AC287FC020004F464E /* LetterDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterDTO.swift; sourceTree = "<group>"; };
 		39E6321328BDE59C00CFC6C4 /* Manito.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Manito.entitlements; sourceTree = "<group>"; };
 		39EE956C2A401ED400AF6857 /* DetailingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailingView.swift; sourceTree = "<group>"; };
+		39EE956E2A404A3800AF6857 /* MissionEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionEditViewController.swift; sourceTree = "<group>"; };
 		39EEF65528CB3BB200437654 /* LoginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProtocol.swift; sourceTree = "<group>"; };
 		39EEF65728CB3C1100437654 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		39EEF65928CB3C7B00437654 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -512,6 +514,7 @@
 			isa = PBXGroup;
 			children = (
 				39EE956C2A401ED400AF6857 /* DetailingView.swift */,
+				39EE956E2A404A3800AF6857 /* MissionEditViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1240,6 +1243,7 @@
 				7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */,
 				39CD581B28C4BE8800496E91 /* DetailStartingAPI.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
+				39EE956F2A404A3800AF6857 /* MissionEditViewController.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
 				39C957D02879521400A04A2B /* String+Extension.swift in Sources */,
 				399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */,
