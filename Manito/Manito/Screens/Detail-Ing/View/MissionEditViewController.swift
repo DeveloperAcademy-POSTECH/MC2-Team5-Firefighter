@@ -43,6 +43,13 @@ final class MissionEditViewController: BaseViewController {
         textField.delegate = self
         return textField
     }()
+    private let missionMaxLengthLabel: UILabel = {
+        let label = UILabel()
+        label.text = "0/18"
+        label.font = .font(.regular, ofSize: 16)
+        label.textColor = .white
+        return label
+    }()
     
     init(mission: String) {
         self.mission = mission
@@ -70,15 +77,22 @@ final class MissionEditViewController: BaseViewController {
     override func setupLayout() {
         self.view.addSubview(self.backgroundView)
         self.backgroundView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(-5)
             $0.height.equalTo(120)
         }
         
-        self.backgroundView.addSubview(missionTextField)
+        self.backgroundView.addSubview(self.missionTextField)
         self.missionTextField.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.center.equalToSuperview()
             $0.height.equalTo(60)
+        }
+        
+        self.backgroundView.addSubview(self.missionMaxLengthLabel)
+        self.missionMaxLengthLabel.snp.makeConstraints {
+            $0.top.equalTo(self.missionTextField.snp.bottom).offset(4)
+            $0.trailing.equalTo(self.missionTextField.snp.trailing)
         }
     }
     
@@ -136,5 +150,20 @@ extension MissionEditViewController: UITextFieldDelegate {
         guard let text = textField.text else { return true }
         self.didChangedTextField(text)
         return true
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        if text.count > 18 {
+            let endIndex = text.index(text.startIndex, offsetBy: 18)
+            let fixedText = text[text.startIndex..<endIndex]
+            textField.text = fixedText + " "
+            
+            DispatchQueue.main.async {
+                self.missionTextField.text = String(fixedText)
+            }
+        }
+        guard text.count <= 18 else { return }
+        self.missionMaxLengthLabel.text = "\(text.count)/18"
     }
 }
