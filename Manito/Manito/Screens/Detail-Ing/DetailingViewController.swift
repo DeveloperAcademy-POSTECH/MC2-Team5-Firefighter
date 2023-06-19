@@ -177,8 +177,15 @@ extension DetailingViewController: DetailingDelegate {
         self.pushFriendListViewController()
     }
     
-    func letterBoxDidTap() {
-        print("")
+    func letterBoxDidTap(type: String,
+                         mission: String,
+                         missionId: String) {
+          let letterViewController = LetterViewController(roomState: type,
+                                                          roomId: self.roomId,
+                                                          mission: mission,
+                                                          missionId: missionId,
+                                                          entryPoint: .detail)
+          self.navigationController?.pushViewController(letterViewController, animated: true)
     }
     
     func manittoMemoryButtonDidTap() {

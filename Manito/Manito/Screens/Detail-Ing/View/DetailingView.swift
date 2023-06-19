@@ -11,7 +11,9 @@ import SnapKit
 
 protocol DetailingDelegate: AnyObject {
     func listBackDidTap()
-    func letterBoxDidTap()
+    func letterBoxDidTap(type: String,
+                         mission: String,
+                         missionId: String)
     func manittoMemoryButtonDidTap()
     func manittoOpenButtonDidTap()
     func deleteButtonDidTap()
@@ -138,7 +140,12 @@ final class DetailingView: UIView {
     private lazy var letterBoxButton: UIButton = {
         let button = UIButton(type: .system)
         let action = UIAction { [weak self] _ in
-            self?.delegate?.letterBoxDidTap()
+            guard let roomType = self?.roomType,
+                  let mission = self?.missionContentsLabel.text
+            else { return }
+            self?.delegate?.letterBoxDidTap(type: roomType.rawValue,
+                                            mission: mission,
+                                            missionId: self?.missionId ?? "")
         }
         button.addAction(action, for: .touchUpInside)
         button.setTitle(TextLiteral.letterViewControllerTitle, for: .normal)
