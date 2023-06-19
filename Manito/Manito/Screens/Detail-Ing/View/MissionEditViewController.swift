@@ -94,6 +94,20 @@ final class MissionEditViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    private func didChangedTextField(_ text: String) {
+        guard !text.isEmpty else {
+            self.dismiss(animated: true)
+            return
+        }
+        self.makeRequestAlert(title: TextLiteral.missionEditViewControllerChangeMissionAlertTitle,
+                              message: TextLiteral.missionEditViewControllerChangeMissionAlertMessage,
+                              okTitle: TextLiteral.change,
+                              okStyle: .default,
+                              okAction: { [weak self] _ in
+            self?.dismiss(animated: true)
+        })
+    }
+    
     // MARK: - selector
     
     @objc
@@ -119,7 +133,8 @@ final class MissionEditViewController: BaseViewController {
 extension MissionEditViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.missionTextField.endEditing(true)
-        self.dismiss(animated: true)
+        guard let text = textField.text else { return true }
+        self.didChangedTextField(text)
         return true
     }
 }

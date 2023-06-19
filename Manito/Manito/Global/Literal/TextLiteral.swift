@@ -220,4 +220,8 @@ enum TextLiteral {
     
     // MARK: - InvitedCodeViewController
     static let invitedCodeViewCOntroller: String = "글자를 탭하여 코드를 복사하세요"
+    
+    // MARK: - MissionEditViewController
+    static let missionEditViewControllerChangeMissionAlertTitle: String = ""
+    static let missionEditViewControllerChangeMissionAlertMessage: String = ""
 }
