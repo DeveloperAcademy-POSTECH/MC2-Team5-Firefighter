@@ -40,6 +40,7 @@ final class MissionEditViewController: BaseViewController {
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
         textField.becomeFirstResponder()
+        textField.delegate = self
         return textField
     }()
     
@@ -63,7 +64,6 @@ final class MissionEditViewController: BaseViewController {
     
     override func configureUI() {
         super.configureUI()
-//        self.view.backgroundColor = .clear
         self.view.backgroundColor = .darkGrey001.withAlphaComponent(0.5)
     }
     
@@ -113,5 +113,13 @@ final class MissionEditViewController: BaseViewController {
         UIView.animate(withDuration: 0.2, animations: {
             self.backgroundView.transform = .identity
         })
+    }
+}
+
+extension MissionEditViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.missionTextField.endEditing(true)
+        self.dismiss(animated: true)
+        return true
     }
 }
