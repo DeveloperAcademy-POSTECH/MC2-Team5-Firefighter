@@ -25,6 +25,8 @@ final class LetterViewController: BaseViewController {
 
     // MARK: - property
 
+    private let viewModel: any ViewModelType
+
     private var letterList: [Message] = [] {
         willSet(list) {
             self.letterView.updateLetterViewEmptyState(isHidden: !list.isEmpty)

@@ -104,6 +104,7 @@
 		B5B3C15D2A41D6EB00AABD6F /* LetterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C15C2A41D6EB00AABD6F /* LetterViewModel.swift */; };
 		B5B3C15F2A41D6F400AABD6F /* LetterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C15E2A41D6F400AABD6F /* LetterService.swift */; };
 		B5B3C1612A41D79E00AABD6F /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1602A41D79E00AABD6F /* ViewModelType.swift */; };
+		B5B3C1632A41DBC400AABD6F /* Servicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1622A41DBC400AABD6F /* Servicable.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
@@ -285,6 +286,7 @@
 		B5B3C15C2A41D6EB00AABD6F /* LetterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewModel.swift; sourceTree = "<group>"; };
 		B5B3C15E2A41D6F400AABD6F /* LetterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterService.swift; sourceTree = "<group>"; };
 		B5B3C1602A41D79E00AABD6F /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		B5B3C1622A41DBC400AABD6F /* Servicable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Servicable.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewController.swift; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
@@ -860,6 +862,7 @@
 			isa = PBXGroup;
 			children = (
 				B5B3C1602A41D79E00AABD6F /* ViewModelType.swift */,
+				B5B3C1622A41DBC400AABD6F /* Servicable.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1304,6 +1307,7 @@
 				39C957F4287D9EB400A04A2B /* APIService.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				435B17682913E71400212663 /* DetailingViewController.swift in Sources */,
+				B5B3C1632A41DBC400AABD6F /* Servicable.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */,
 				D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */,
 				397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */,
