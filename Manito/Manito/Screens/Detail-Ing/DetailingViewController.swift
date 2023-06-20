@@ -53,14 +53,7 @@ final class DetailingViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupLargeTitleToOriginal()
-        self.requestRoomInfo() { [weak self] result in
-            switch result {
-            case .success(let roomInformation):
-                self?.detailingView.updateDetailingView(room: roomInformation)
-            case .failure:
-                print("error")
-            }
-        }
+        self.requestRoomInformation()
     }
     
     // MARK: - func
@@ -111,9 +104,20 @@ final class DetailingViewController: BaseViewController {
         })
     }
     
+    private func requestRoomInformation() {
+        self.fetchRoomInformation() { [weak self] result in
+            switch result {
+            case .success(let roomInformation):
+                self?.detailingView.updateDetailingView(room: roomInformation)
+            case .failure:
+                print("error")
+            }
+        }
+    }
+    
     // MARK: - network
    
-    private func requestRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
+    private func fetchRoomInformation(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
         Task {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
