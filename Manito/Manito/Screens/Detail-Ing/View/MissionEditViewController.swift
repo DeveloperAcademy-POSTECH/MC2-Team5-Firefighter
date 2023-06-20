@@ -11,6 +11,8 @@ import SnapKit
 
 final class MissionEditViewController: BaseViewController {
     
+    // MARK: - property
+    
     let mission: String
     
     // MARK: - component
@@ -51,6 +53,8 @@ final class MissionEditViewController: BaseViewController {
         return label
     }()
     
+    // MARK: - init
+    
     init(mission: String) {
         self.mission = mission
         super.init()
@@ -68,6 +72,8 @@ final class MissionEditViewController: BaseViewController {
         self.setupGesture()
         self.setupNotificationCenter()
     }
+    
+    // MARK: - override
     
     override func configureUI() {
         super.configureUI()

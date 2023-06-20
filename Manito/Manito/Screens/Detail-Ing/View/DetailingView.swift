@@ -226,6 +226,8 @@ final class DetailingView: UIView {
     }()
     private let guideView: GuideView = GuideView(type: .detailing)
     
+    // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
