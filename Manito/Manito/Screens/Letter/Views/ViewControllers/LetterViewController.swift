@@ -112,39 +112,7 @@ final class LetterViewController: BaseViewController {
     
     // MARK: - network
     
-    private func fetchSendLetter(roomId: String, completionHandler: @escaping ((Result<Letter, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let letterData = try await self.letterSevice.fetchSendLetter(roomId: roomId)
-                if let letterData {
-                    completionHandler(.success(letterData))
-                } else {
-                    completionHandler(.failure(.unknownError))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
     
-    private func fetchReceivedLetter(roomId: String, completionHandler: @escaping ((Result<Letter, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let letterData = try await self.letterSevice.fetchReceiveLetter(roomId: roomId)
-                if let letterData {
-                    completionHandler(.success(letterData))
-                } else {
-                    completionHandler(.failure(.unknownError))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
 }
 
 // MARK: - LetterViewDelegate
