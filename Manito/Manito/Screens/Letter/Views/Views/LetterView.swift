@@ -107,6 +107,24 @@ final class LetterView: UIView {
 
     // MARK: - func
 
+    // TODO: - roomstate를 public한 enum으로 변경할 것
+    func configureLayout(with state: RoomState) {
+        self.setupLayout()
+
+        if state == .PROCESSING {
+            self.setupBottomViewLayout()
+        }
+    }
+
+    func configureNavigationBar(of viewController: UIViewController) {
+        self.setupNavigationTitle(in: viewController)
+        self.setupGuideView(in: viewController)
+    }
+
+    func hideGuideView() {
+        self.guideView.setupDisappearedConfiguration()
+    }
+
     private func setupLayout() {
         self.addSubview(self.listCollectionView)
         self.listCollectionView.snp.makeConstraints {
@@ -166,33 +184,6 @@ final class LetterView: UIView {
 //        self.listCollectionView.setContentOffset(CGPoint(x: 0, y: -yPoint), animated: false)
 //        self.listCollectionView.collectionViewLayout.invalidateLayout()
 //    }
-//
-//    private func updateLetter(to type: LetterType) {
-//        switch type {
-//        case .sent:
-//            self.delegate?.fetchSentLetter()
-//        case .received:
-//            self.delegate?.fetchReceivedLetter()
-//        }
-//    }
-
-    // TODO: - roomstate를 public한 enum으로 변경할 것
-    func configureLayout(with state: RoomState) {
-        self.setupLayout()
-
-        if state == .PROCESSING {
-            self.setupBottomViewLayout()
-        }
-    }
-
-    func configureNavigationBar(of viewController: UIViewController) {
-        self.setupNavigationTitle(in: viewController)
-        self.setupGuideView(in: viewController)
-    }
-
-    func hideGuideView() {
-        self.guideView.setupDisappearedConfiguration()
-    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

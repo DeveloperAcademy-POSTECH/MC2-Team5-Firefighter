@@ -18,7 +18,7 @@ final class LetterViewController: BaseViewController {
 
     // MARK: - property
 
-    private let messageTypeSubject: PassthroughSubject<LetterViewModel.MessageType, Never> = PassthroughSubject()
+    private let reportSubject: PassthroughSubject<String, Never> = PassthroughSubject()
     private let refreshSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
 
     private var cancelBag: Set<AnyCancellable> = Set()
@@ -67,35 +67,32 @@ final class LetterViewController: BaseViewController {
 
     private func bindViewModel() {
         let output = self.transformedOutput()
-
-        self.bindInputToViewModel()
         self.bindOutputToViewModel(output)
     }
 
     private func transformedOutput() -> LetterViewModel.Output? {
         guard let viewModel = self.viewModel as? LetterViewModel else { return nil }
         let input = LetterViewModel.Input(
-            viewDidLoad: self.viewDidLoadPublisher
-                .withUnretained(self)
-                .map { owner, _ in owner.messageType.rawValue }
-                .map { LetterViewModel.MessageType(rawValue: $0)! }
-                .eraseToAnyPublisher(),
-            segmentControlValueChanged: self.messageTypeSubject,
+            viewDidLoad:
+                self.viewDidLoadPublisher
+                    .withUnretained(self)
+                    .map { owner, _ in owner.messageType.rawValue }
+                    .map { LetterViewModel.MessageType(rawValue: $0)! }
+                    .eraseToAnyPublisher(),
+            segmentControlValueChanged:
+                self.letterView.headerView.segmentedControlTapPublisher
+                    .withUnretained(self)
+                    .map { owner, _ -> LetterViewModel.MessageType in
+                        guard let type = LetterViewModel.MessageType(rawValue: owner.messageType.rawValue) else { return .sent }
+                        return type
+                    }
+                    .eraseToAnyPublisher(),
             refresh: self.refreshSubject,
-            sendLetterButtonDidTap: self.letterView.sendLetterButton.tapPublisher
+            sendLetterButtonDidTap: self.letterView.sendLetterButton.tapPublisher,
+            reportButtonDidTap: self.reportSubject
         )
 
         return viewModel.transform(from: input)
-    }
-
-    private func bindInputToViewModel() {
-        self.letterView.headerView.tapPublisher()
-            .withUnretained(self)
-            .sink(receiveValue: { owner, _ in
-                guard let type = LetterViewModel.MessageType(rawValue: owner.messageType.rawValue) else { return }
-                owner.messageTypeSubject.send(type)
-            })
-            .store(in: &self.cancelBag)
     }
 
     private func bindOutputToViewModel(_ output: LetterViewModel.Output?) {
@@ -138,6 +135,13 @@ final class LetterViewController: BaseViewController {
                 owner.present(navigationController, animated: true)
             })
             .store(in: &self.cancelBag)
+
+        output.reportDetails
+            .withUnretained(self)
+            .sink(receiveValue: { owner, details in
+                owner.sendReportMail(userNickname: details.nickname, content: details.content)
+            })
+            .store(in: &self.cancelBag)
     }
 }
 
@@ -158,7 +162,11 @@ extension LetterViewController {
         cell.reportButtonTapPublisher
             .withUnretained(self)
             .sink(receiveValue: { owner, _ in
-//                owner.sendReportMail(userNickname: <#T##String#>, content: <#T##String#>)
+                if let content = item.content {
+                    owner.reportSubject.send(content)
+                } else {
+                    owner.reportSubject.send("쪽지 내용 없음")
+                }
             })
             .store(in: &self.cancelBag)
 
@@ -186,11 +194,9 @@ extension LetterViewController {
     }
 }
 
-// TODO: - CreateLetter 부분에서 수정 더 진행해볼 예정
-// MARK: - CreateLetterViewControllerDelegate
 extension LetterViewController: CreateLetterViewControllerDelegate {
     func refreshLetterData() {
-//        self.letterView.updateLetterType(to: .sent)
+        self.refreshSubject.send(())
     }
 }
 

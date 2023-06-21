@@ -10,9 +10,11 @@ import Foundation
 
 protocol LetterServicable: Servicable {
     var manitteeId: String? { get set }
+    var nickname: String { get set }
 
     func fetchSendLetter(roomId: String) async throws -> [Message]
     func fetchReceiveLetter(roomId: String) async throws -> [Message]
+    func loadNickname()
 }
 
 final class LetterService: LetterServicable {
@@ -20,6 +22,7 @@ final class LetterService: LetterServicable {
     // MARK: - property
 
     @Published var manitteeId: String?
+    @Published var nickname: String = ""
 
     private let api: LetterProtocol
 
@@ -65,9 +68,14 @@ final class LetterService: LetterServicable {
         }
     }
 
+    func loadNickname() {
+        self.nickname = UserDefaultStorage.nickname
+    }
+
     // MARK: - Private - func
 
     private func setManitteeId(_ id: String?) {
         self.manitteeId = id
     }
+
 }
