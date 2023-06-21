@@ -26,11 +26,13 @@ final class DetailingViewController: BaseViewController {
     private var manittoNickname: String = ""
     var letterViewController: UIViewController {
         guard let mission = missionContentsLabel.text else { return UIViewController() }
-        let viewController = LetterViewController(roomState: roomType.rawValue,
-                                                  roomId: roomId,
-                                                  mission: mission,
-                                                  missionId: self.missionId,
-                                                  entryPoint: .notification)
+        guard let roomType = LetterView.RoomState(rawValue: self.roomType.rawValue) else { return UIViewController() }
+        let service = LetterService(api: LetterAPI(apiService: APIService()))
+        let viewModel = LetterViewModel(service: service,
+                                        roomId: self.roomId,
+                                        mission: mission,
+                                        missionId: self.missionId)
+        let viewController = LetterViewController(viewModel: viewModel, roomState: roomType, messageType: .received)
         return viewController
     }
 
@@ -141,13 +143,16 @@ final class DetailingViewController: BaseViewController {
         let action = UIAction { [weak self] _ in
             guard let roomType = self?.roomType,
                   let roomId = self?.roomId,
-                  let mission = self?.missionContentsLabel.text
+                  let mission = self?.missionContentsLabel.text,
+                  let missionId = self?.missionId
             else { return }
-            let letterViewController = LetterViewController(roomState: roomType.rawValue,
-                                                            roomId: roomId,
-                                                            mission: mission,
-                                                            missionId: self?.missionId ?? "",
-                                                            entryPoint: .detail)
+            guard let roomType = LetterView.RoomState(rawValue: roomType.rawValue) else { return }
+            let service = LetterService(api: LetterAPI(apiService: APIService()))
+            let viewModel = LetterViewModel(service: service,
+                                            roomId: roomId,
+                                            mission: mission,
+                                            missionId: missionId)
+            let letterViewController = LetterViewController(viewModel: viewModel, roomState: roomType, messageType: .sent)
             self?.navigationController?.pushViewController(letterViewController, animated: true)
         }
         button.addAction(action, for: .touchUpInside)
@@ -493,12 +498,14 @@ final class DetailingViewController: BaseViewController {
                           let mission = info.mission?.content,
                           let missionId = info.mission?.id
                     else { return }
-                    let viewController = LetterViewController(roomState: state,
-                                                              roomId: self.roomId,
-                                                              mission: mission,
-                                                              missionId: missionId.description,
-                                                              entryPoint: .notification)
-                    self.navigationController?.pushViewController(viewController, animated: true)
+                    guard let roomType = LetterView.RoomState(rawValue: state) else { return }
+                    let service = LetterService(api: LetterAPI(apiService: APIService()))
+                    let viewModel = LetterViewModel(service: service,
+                                                    roomId: self.roomId,
+                                                    mission: mission,
+                                                    missionId: missionId.description)
+                    let letterViewController = LetterViewController(viewModel: viewModel, roomState: roomType, messageType: .received)
+                    self.navigationController?.pushViewController(letterViewController, animated: true)
                 }
             }
         }

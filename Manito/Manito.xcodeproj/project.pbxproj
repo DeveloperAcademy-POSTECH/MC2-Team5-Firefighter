@@ -664,13 +664,6 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		B5B3C15B2A41D6D500AABD6F /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		B5F31BAE28BE1C7900F61D0F /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -801,7 +794,6 @@
 		B5F524EA28519B4B00614FF7 /* Letter */ = {
 			isa = PBXGroup;
 			children = (
-				B5B3C15B2A41D6D500AABD6F /* Protocols */,
 				B54741DE29A3A4BA00B75BA3 /* Views */,
 				B5B3C1572A41D65400AABD6F /* ViewModels */,
 				B5B3C15A2A41D6A600AABD6F /* Services */,
