@@ -53,7 +53,6 @@ final class LetterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bindViewModel()
-        self.bindUI()
     }
 
     // MARK: - override
@@ -83,7 +82,7 @@ final class LetterViewController: BaseViewController {
                 .eraseToAnyPublisher(),
             segmentControlValueChanged: self.messageTypeSubject,
             refresh: self.refreshSubject,
-            sendLetterButtonDidTap: self.letterView.sendLetterButton.tapPublisher.eraseToAnyPublisher()
+            sendLetterButtonDidTap: self.letterView.sendLetterButton.tapPublisher
         )
 
         return viewModel.transform(from: input)
@@ -140,10 +139,6 @@ final class LetterViewController: BaseViewController {
             })
             .store(in: &self.cancelBag)
     }
-
-    private func bindUI() {
-
-    }
 }
 
 extension LetterViewController {
@@ -155,7 +150,28 @@ extension LetterViewController {
                                 content: item.content,
                                 imageURL: item.imageUrl,
                                 isTodayLetter: item.isToday))
+            self.bindCell(cell, with: item)
         }
+    }
+
+    private func bindCell(_ cell: LetterCollectionViewCell, with item: Message) {
+        cell.reportButtonTapPublisher
+            .withUnretained(self)
+            .sink(receiveValue: { owner, _ in
+//                owner.sendReportMail(userNickname: <#T##String#>, content: <#T##String#>)
+            })
+            .store(in: &self.cancelBag)
+
+        cell.imageViewTapGesturePublisher
+            .withUnretained(self)
+            .sink(receiveValue: { owner, _ in
+                guard let imageUrl = item.imageUrl else { return }
+                let viewController = LetterImageViewController(imageUrl: imageUrl)
+                viewController.modalPresentationStyle = .fullScreen
+                viewController.modalTransitionStyle = .crossDissolve
+                owner.present(viewController, animated: true)
+            })
+            .store(in: &self.cancelBag)
     }
 
     private func showErrorAlert() {
@@ -174,23 +190,9 @@ extension LetterViewController {
 // MARK: - CreateLetterViewControllerDelegate
 extension LetterViewController: CreateLetterViewControllerDelegate {
     func refreshLetterData() {
-        self.letterView.updateLetterType(to: .sent)
+//        self.letterView.updateLetterType(to: .sent)
     }
 }
-
-// MARK: - LetterCollectionViewCellDelegate
-//extension LetterViewController: LetterCollectionViewCellDelegate {
-//    func didTapReportButton(content: String) {
-//        self.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "", content: content)
-//    }
-//
-//    func didTapLetterImageView(imageURL: String) {
-//        let viewController = LetterImageViewController(imageUrl: imageURL)
-//        viewController.modalPresentationStyle = .fullScreen
-//        viewController.modalTransitionStyle = .crossDissolve
-//        self.present(viewController, animated: true)
-//    }
-//}
 
 private extension CollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

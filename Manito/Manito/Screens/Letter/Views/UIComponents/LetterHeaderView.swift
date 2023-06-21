@@ -28,6 +28,12 @@ final class LetterHeaderView: UICollectionReusableView {
         control.backgroundColor = .darkGrey004
         return control
     }()
+
+    // MARK: - property
+
+    var segmentedControlTapPublisher: AnyPublisher<Void, Never> {
+        return self.segmentedControl.tapPublisher
+    }
     
     // MARK: - init
     
@@ -42,10 +48,6 @@ final class LetterHeaderView: UICollectionReusableView {
     }
     
     // MARK: - func
-
-    func tapPublisher() -> AnyPublisher<Void, Never> {
-        return self.segmentedControl.tapPublisher
-    }
 
     func setValue(_ value: Int) {
         self.segmentedControl.selectedSegmentIndex = value

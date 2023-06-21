@@ -109,6 +109,7 @@
 		B5B3C16F2A42B37000AABD6F /* UIViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */; };
 		B5B3C1782A42CE9300AABD6F /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1772A42CE9300AABD6F /* CollectionViewDataSource.swift */; };
 		B5B3C17A2A42EA6700AABD6F /* Publisher+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1792A42EA6700AABD6F /* Publisher+Combine.swift */; };
+		B5B3C1842A42F70C00AABD6F /* UIView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1832A42F70C00AABD6F /* UIView+Combine.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
@@ -294,6 +295,7 @@
 		B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Combine.swift"; sourceTree = "<group>"; };
 		B5B3C1772A42CE9300AABD6F /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSource.swift; sourceTree = "<group>"; };
 		B5B3C1792A42EA6700AABD6F /* Publisher+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Combine.swift"; sourceTree = "<group>"; };
+		B5B3C1832A42F70C00AABD6F /* UIView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Combine.swift"; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewController.swift; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
@@ -851,6 +853,7 @@
 				B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */,
 				B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */,
 				B5B3C1792A42EA6700AABD6F /* Publisher+Combine.swift */,
+				B5B3C1832A42F70C00AABD6F /* UIView+Combine.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1307,6 +1310,7 @@
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				39C957D628799AB900A04A2B /* HTTPMethod.swift in Sources */,
 				391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */,
+				B5B3C1842A42F70C00AABD6F /* UIView+Combine.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
 				7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */,
 				B5B3C15F2A41D6F400AABD6F /* LetterService.swift in Sources */,

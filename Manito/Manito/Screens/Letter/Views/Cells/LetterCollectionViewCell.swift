@@ -5,6 +5,7 @@
 //  Created by SHIN YOON AH on 2022/06/11.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -50,20 +51,15 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
 
     // MARK: - property
 
+    var reportButtonTapPublisher: AnyPublisher<Void, Never> {
+        return self.reportButton.tapPublisher
+    }
+
+    var imageViewTapGesturePublisher: AnyPublisher<Void, Never> {
+        return self.photoImageView.tapGesturePublisher
+    }
+
     private var imageURL: String?
-
-    // MARK: - init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.setupButtonAction()
-        self.setupImageTapGesture()
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     // MARK: - override
 
@@ -108,31 +104,6 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     }
     
     // MARK: - func
-    
-    private func setupButtonAction() {
-        let reportAction = UIAction { [weak self] _ in
-            let content = self?.contentLabel.text ?? "글 내용 없음"
-
-        }
-        self.reportButton.addAction(reportAction, for: .touchUpInside)
-    }
-
-    private func setupImageTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapLetterImageView))
-        self.photoImageView.addGestureRecognizer(tapGesture)
-    }
-
-    private func initializeConfiguration() {
-        self.missionLabel.text = nil
-        self.contentLabel.text = nil
-        self.photoImageView.image = nil
-        self.missionLabel.snp.updateConstraints {
-            $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
-        }
-        self.photoImageView.snp.updateConstraints {
-            $0.height.equalTo(0)
-        }
-    }
 
     func configureCell(_ data: ConfigurationData) {
         if let mission = data.mission {
@@ -151,7 +122,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
             self.contentLabel.text = content
             self.contentLabel.addLabelSpacing()
         }
-        
+
         if let imageURL = data.imageURL {
             self.imageURL = imageURL
             self.photoImageView.loadImageUrl(imageURL)
@@ -164,11 +135,15 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
 //        self.reportButton.isHidden = !data.canReport
     }
 
-    // MARK: - selector
-
-    @objc
-    private func didTapLetterImageView() {
-        guard let imageURL else { return }
-//        self.delegate?.didTapLetterImageView(imageURL: imageURL)
+    private func initializeConfiguration() {
+        self.missionLabel.text = nil
+        self.contentLabel.text = nil
+        self.photoImageView.image = nil
+        self.missionLabel.snp.updateConstraints {
+            $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
+        }
+        self.photoImageView.snp.updateConstraints {
+            $0.height.equalTo(0)
+        }
     }
 }
