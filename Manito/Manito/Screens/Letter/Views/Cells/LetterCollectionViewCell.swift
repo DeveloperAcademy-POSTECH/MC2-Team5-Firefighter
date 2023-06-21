@@ -9,14 +9,9 @@ import UIKit
 
 import SnapKit
 
-protocol LetterCollectionViewCellDelegate: AnyObject {
-    func didTapReportButton(content: String)
-    func didTapLetterImageView(imageURL: String)
-}
-
 final class LetterCollectionViewCell: BaseCollectionViewCell {
 
-    typealias ConfigurationData = (mission: String?, date: String, content: String?, imageURL: String?, isTodayLetter: Bool, canReport: Bool)
+    typealias ConfigurationData = (mission: String?, date: String, content: String?, imageURL: String?, isTodayLetter: Bool)
     
     // MARK: - ui component
     
@@ -56,8 +51,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
 
     private var imageURL: String?
-    private weak var delegate: LetterCollectionViewCellDelegate?
-    
+
     // MARK: - init
     
     override init(frame: CGRect) {
@@ -118,7 +112,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     private func setupButtonAction() {
         let reportAction = UIAction { [weak self] _ in
             let content = self?.contentLabel.text ?? "글 내용 없음"
-            self?.delegate?.didTapReportButton(content: content)
+
         }
         self.reportButton.addAction(reportAction, for: .touchUpInside)
     }
@@ -138,10 +132,6 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         self.photoImageView.snp.updateConstraints {
             $0.height.equalTo(0)
         }
-    }
-
-    func configureDelegation(_ delegate: LetterCollectionViewCellDelegate) {
-        self.delegate = delegate
     }
 
     func configureCell(_ data: ConfigurationData) {
@@ -171,7 +161,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         }
 
         self.missionLabel.textColor = data.isTodayLetter ? .subOrange : .grey003
-        self.reportButton.isHidden = !data.canReport
+//        self.reportButton.isHidden = !data.canReport
     }
 
     // MARK: - selector
@@ -179,6 +169,6 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     @objc
     private func didTapLetterImageView() {
         guard let imageURL else { return }
-        self.delegate?.didTapLetterImageView(imageURL: imageURL)
+//        self.delegate?.didTapLetterImageView(imageURL: imageURL)
     }
 }

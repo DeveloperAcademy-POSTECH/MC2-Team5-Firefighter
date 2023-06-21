@@ -10,42 +10,49 @@ import Foundation
 
 final class LetterViewModel: ViewModelType {
 
+    typealias MessageDetails = (roomId: String, mission: String, missionId: String, manitteId: String)
+
     enum MessageType: Int {
-        case send = 0
+        case sent = 0
         case received = 1
     }
 
     struct Input {
         let viewDidLoad: AnyPublisher<MessageType, Never>
-        let segmentControlValueChanged: CurrentValueSubject<MessageType, Never>
+        let segmentControlValueChanged: PassthroughSubject<MessageType, Never>
         let refresh: PassthroughSubject<Void, Never>
     }
 
     struct Output {
-        let messages: PassthroughSubject<[Message], Never>
+        let messages: PassthroughSubject<[Message], NetworkError>
         let index: PassthroughSubject<Int, Never>
     }
 
     // MARK: - property
 
-    private let messageSubject: PassthroughSubject<[Message], Never> = PassthroughSubject()
+    private let messageSubject: PassthroughSubject<[Message], NetworkError> = PassthroughSubject()
     private let indexSubject: PassthroughSubject<Int, Never> = PassthroughSubject()
 
     private var cancelBag: Set<AnyCancellable> = Set()
 
     private let service: LetterServicable
+    private var messageDetails: MessageDetails
 
     // MARK: - init
 
-    init(service: LetterServicable) {
+    init(service: LetterServicable,
+         roomId: String,
+         mission: String,
+         missionId: String) {
         self.service = service
+        self.messageDetails = MessageDetails(roomId, mission, missionId, "")
     }
 
     // MARK: - Public - func
 
     func transform(from input: Input) -> Output {
         let refreshWithType = input.refresh
-            .map { MessageType.send }
+            .map { MessageType.sent }
 
         Publishers.Merge3(input.viewDidLoad, input.segmentControlValueChanged, refreshWithType)
             .sink(receiveValue: { [weak self] type in
@@ -65,10 +72,10 @@ final class LetterViewModel: ViewModelType {
     }
 
     private func fetchMessages(with type: MessageType) {
-        let roomId = "" // TODO: - roomId 넣기
+        let roomId = self.messageDetails.roomId
 
         switch type {
-        case .send: self.fetchSendMessages(roomId: roomId)
+        case .sent: self.fetchSendMessages(roomId: roomId)
         case .received: self.fetchReceivedMessages(roomId: roomId)
         }
     }
@@ -85,8 +92,9 @@ extension LetterViewModel {
             do {
                 let messages = try await self.service.fetchSendLetter(roomId: roomId)
                 self.messageSubject.send(messages)
-            } catch {
-                self.messageSubject.send([])
+            } catch(let error) {
+                guard let error = error as? NetworkError else { return }
+                self.messageSubject.send(completion: .failure(error))
             }
         }
     }
@@ -96,9 +104,15 @@ extension LetterViewModel {
             do {
                 let messages = try await self.service.fetchReceiveLetter(roomId: roomId)
                 self.messageSubject.send(messages)
-            } catch {
-                self.messageSubject.send([])
+            } catch(let error) {
+                guard let error = error as? NetworkError else { return }
+                self.messageSubject.send(completion: .failure(error))
             }
         }
+    }
+
+    private func setMessageDetail() {
+        guard let manitteeId = self.service.manitteeId else { return }
+        self.messageDetails.manitteId = manitteeId
     }
 }

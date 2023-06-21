@@ -5,54 +5,37 @@
 //  Created by SHIN YOON AH on 2022/06/09.
 //
 
+import Combine
 import UIKit
 
 final class LetterViewController: BaseViewController {
-
-    enum EntryPoint: Int {
-        case detail = 0, notification
-    }
-
-    private enum InternalSize {
-        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2
-        static let cellInset: UIEdgeInsets = UIEdgeInsets(top: 24.0, left: 16.0, bottom: 22.0, right: 16.0)
-        static let imageHeight: CGFloat = 204.0
-    }
 
     // MARK: - ui component
 
     private let letterView: LetterView = LetterView()
 
+    private var dataSource: CollectionViewDataSource<LetterCollectionViewCell, Message>!
+
     // MARK: - property
 
-    private let viewModel: any ViewModelType
+    private let messageTypeSubject: PassthroughSubject<LetterViewModel.MessageType, Never> = PassthroughSubject()
+    private let refreshSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
 
-    private var letterList: [Message] = [] {
-        willSet(list) {
-            self.letterView.updateLetterViewEmptyState(isHidden: !list.isEmpty)
-            self.letterView.reloadCollectionViewData()
-        }
-    }
-    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
-    private var manitteeId: String?
-    private var roomState: String
-    private var roomId: String
-    private var mission: String
-    private var missionId: String
-    private var entryPoint: EntryPoint
-    
+    private var cancelBag: Set<AnyCancellable> = Set()
+
+    private let viewModel: any ViewModelType
+    private var roomState: LetterView.RoomState
+    private var messageType: LetterView.MessageType
+
+
     // MARK: - init
     
-    init(roomState: String,
-         roomId: String,
-         mission: String,
-         missionId: String,
-         entryPoint: EntryPoint) {
+    init(viewModel: any ViewModelType,
+         roomState: LetterView.RoomState,
+         messageType: LetterView.MessageType) {
+        self.viewModel = viewModel
         self.roomState = roomState
-        self.roomId = roomId
-        self.mission = mission
-        self.missionId = missionId
-        self.entryPoint = entryPoint
+        self.messageType = messageType
         super.init()
     }
 
@@ -69,180 +52,144 @@ final class LetterViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureDelegation()
-        self.configureLetterType()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.letterView.configureNavigationController(self)
+        self.bindViewModel()
+        self.bindUI()
     }
 
     // MARK: - override
 
     override func configureUI() {
         super.configureUI()
-        // FIXME: - roomState를 Text말고 Enum으로 관리하도록 수정합니다.
-        if roomState == "PROCESSING" {
-            self.letterView.configureBottomArea()
-        }
+        self.letterView.configureLayout(with: self.roomState)
+        self.letterView.configureNavigationBar(of: self)
     }
 
     // MARK: - func
 
-    private func configureDelegation() {
-        self.letterView.configureDelegation(self)
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+
+        self.bindInputToViewModel()
+        self.bindOutputToViewModel(output)
     }
 
-    private func configureLetterType() {
-        let entryIndex = self.entryPoint.rawValue
-        self.letterView.updateLetterType(to: .init(rawValue: entryIndex) ?? .sent)
+    private func transformedOutput() -> LetterViewModel.Output? {
+        guard let viewModel = self.viewModel as? LetterViewModel else { return nil }
+        let input = LetterViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher
+                .withUnretained(self)
+                .map { owner, _ in owner.messageType.rawValue }
+                .map { LetterViewModel.MessageType(rawValue: $0)! }
+                .eraseToAnyPublisher(),
+            segmentControlValueChanged: self.messageTypeSubject,
+            refresh: self.refreshSubject
+        )
+
+        return viewModel.transform(from: input)
     }
 
-    private func handleResponse(_ response: Result<Letter, NetworkError>) {
-        switch response {
-        case .success(let data):
-            self.manitteeId = data.manittee?.id
-            self.letterList = data.messages
-        case .failure:
-            self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
-                           message: TextLiteral.letterViewControllerErrorDescription)
-        }
+    private func bindInputToViewModel() {
+        self.letterView.headerView.tapPublisher()
+            .withUnretained(self)
+            .sink(receiveValue: { owner, _ in
+                guard let type = LetterViewModel.MessageType(rawValue: owner.messageType.rawValue) else { return }
+                owner.messageTypeSubject.send(type)
+            })
+            .store(in: &self.cancelBag)
     }
-    
-    // MARK: - network
-    
-    
+
+    private func bindOutputToViewModel(_ output: LetterViewModel.Output?) {
+        guard let output = output else { return }
+
+        output.messages
+            .withUnretained(self)
+            .map { owner, items in
+                owner.letterCollectionViewDataSource(items: items)
+            }
+            .catch { _ in return Just(nil)}
+            .withUnretained(self)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { owner, dataSource in
+                guard let dataSource = dataSource else {
+                    owner.showErrorAlert()
+                    return
+                }
+
+                owner.updateList(with: dataSource)
+            })
+            .store(in: &self.cancelBag)
+    }
+
+    private func bindUI() {
+        self.letterView.sendLetterButton.tapPublisher
+            .withUnretained(self)
+            .sink(receiveValue: { owner, _ in
+                // TODO: - create letter viewController 열기
+//                guard let manitteeId else { return }
+//                let viewController = CreateLetterViewController(manitteeId: manitteeId,
+//                                                                roomId: self.roomId,
+//                                                                mission: self.mission,
+//                                                                missionId: self.missionId)
+//                let navigationController = UINavigationController(rootViewController: viewController)
+//                viewController.configureDelegation(self)
+//                self.present(navigationController, animated: true)
+            })
+            .store(in: &cancelBag)
+    }
 }
 
-// MARK: - LetterViewDelegate
-extension LetterViewController: LetterViewDelegate {
-    func presentCreateLetterViewController() {
-        guard let manitteeId else { return }
-        let viewController = CreateLetterViewController(manitteeId: manitteeId,
-                                                        roomId: self.roomId,
-                                                        mission: self.mission,
-                                                        missionId: self.missionId)
-        let navigationController = UINavigationController(rootViewController: viewController)
-        viewController.configureDelegation(self)
-        self.present(navigationController, animated: true)
-    }
-
-    func fetchSentLetter() {
-        self.fetchSendLetter(roomId: self.roomId) { [weak self] response in
-            self?.handleResponse(response)
+extension LetterViewController {
+    private func letterCollectionViewDataSource(items: [Message]) -> CollectionViewDataSource<LetterCollectionViewCell, Message> {
+        return CollectionViewDataSource(identifier: LetterCollectionViewCell.className,
+                                        items: items) { cell, item in
+            cell.configureCell((mission: item.mission,
+                                date: item.date,
+                                content: item.content,
+                                imageURL: item.imageUrl,
+                                isTodayLetter: item.isToday))
         }
     }
 
-    func fetchReceivedLetter() {
-        self.fetchReceivedLetter(roomId: self.roomId) { [weak self] response in
-            self?.handleResponse(response)
-        }
+    private func showErrorAlert() {
+        self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
+                       message: TextLiteral.letterViewControllerErrorDescription)
+    }
+
+    private func updateList(with dataSource: CollectionViewDataSource<LetterCollectionViewCell, Message>) {
+        self.dataSource = dataSource
+        self.letterView.listCollectionView.dataSource = dataSource
+        self.letterView.listCollectionView.reloadData()
     }
 }
 
 // MARK: - CreateLetterViewControllerDelegate
-extension LetterViewController: CreateLetterViewControllerDelegate {
-    func refreshLetterData() {
-        self.letterView.updateLetterType(to: .sent)
-    }
-}
+//extension LetterViewController: CreateLetterViewControllerDelegate {
+//    func refreshLetterData() {
+//        self.letterView.updateLetterType(to: .sent)
+//    }
+//}
 
 // MARK: - LetterCollectionViewCellDelegate
-extension LetterViewController: LetterCollectionViewCellDelegate {
-    func didTapReportButton(content: String) {
-        self.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "", content: content)
-    }
+//extension LetterViewController: LetterCollectionViewCellDelegate {
+//    func didTapReportButton(content: String) {
+//        self.sendReportMail(userNickname: UserDefaultStorage.nickname ?? "", content: content)
+//    }
+//
+//    func didTapLetterImageView(imageURL: String) {
+//        let viewController = LetterImageViewController(imageUrl: imageURL)
+//        viewController.modalPresentationStyle = .fullScreen
+//        viewController.modalTransitionStyle = .crossDissolve
+//        self.present(viewController, animated: true)
+//    }
+//}
 
-    func didTapLetterImageView(imageURL: String) {
-        let viewController = LetterImageViewController(imageUrl: imageURL)
-        viewController.modalPresentationStyle = .fullScreen
-        viewController.modalTransitionStyle = .crossDissolve
-        self.present(viewController, animated: true)
-    }
-}
-
-// MARK: - LetterHeaderViewDelegate
-extension LetterViewController: LetterHeaderViewDelegate {
-    func selectedSegmentIndexDidChange(index: Int) {
-        self.letterView.updateLetterType(to: .init(rawValue: index) ?? .sent)
-    }
-}
-
-// MARK: - UICollectionViewDataSource
-extension LetterViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.letterList.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: LetterCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-        let data = self.letterList[indexPath.item]
-        let canReport = self.letterView.letterType == .received
-        cell.configureCell((mission: data.mission,
-                            date: data.date,
-                            content: data.content,
-                            imageURL: data.imageUrl,
-                            isTodayLetter: data.isToday,
-                            canReport: canReport))
-        cell.configureDelegation(self)
-        return cell
-    }
-    
+private extension CollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: LetterHeaderView.className,
-                for: indexPath
-            ) as? LetterHeaderView else { return UICollectionReusableView() }
-            headerView.configureDelegation(self)
-            return headerView
-        default:
-            return UICollectionReusableView()
-        }
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension LetterViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var heights = [InternalSize.cellInset.top, InternalSize.cellInset.bottom]
-
-        if let content = self.letterList[indexPath.item].content {
-            heights += [self.calculateCellContentViewHeight(by: content)]
-        }
-
-        if let mission = self.letterList[indexPath.item].mission {
-            heights += [self.calculateCellContentViewHeight(by: mission) + 10]
-        } else {
-            let date = self.letterList[indexPath.item].date
-            heights += [self.calculateCellContentViewHeight(by: date) + 5]
-        }
-
-        if self.letterList[indexPath.item].imageUrl != nil {
-            heights += [InternalSize.imageHeight]
-        }
-
-        return CGSize(width: InternalSize.cellWidth, height: heights.reduce(0, +))
-    }
-
-    private func calculateCellContentViewHeight(by text: String) -> CGFloat {
-        let width = UIScreen.main.bounds.size.width - Size.leadingTrailingPadding * 2 - InternalSize.cellInset.left * 2
-        let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: width, height: .greatestFiniteMagnitude)))
-        label.text = text
-        label.font = .font(.regular, ofSize: 15)
-        label.numberOfLines = 0
-        label.addLabelSpacing()
-        label.sizeToFit()
-        return label.frame.height
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-extension LetterViewController: UICollectionViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        self.letterView.scrollViewDidEndDraggingConfiguration()
+        guard let headerView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: LetterHeaderView.className,
+            for: indexPath
+        ) as? LetterHeaderView else { return UICollectionReusableView() }
+        return headerView
     }
 }
