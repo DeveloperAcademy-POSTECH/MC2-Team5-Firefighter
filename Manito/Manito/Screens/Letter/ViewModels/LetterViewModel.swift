@@ -10,7 +10,7 @@ import Foundation
 
 final class LetterViewModel: ViewModelType {
 
-    typealias MessageDetails = (roomId: String, mission: String, missionId: String, manitteId: String)
+    typealias MessageDetails = (roomId: String, mission: String, missionId: String, manitteeId: String)
 
     enum MessageType: Int {
         case sent = 0
@@ -21,11 +21,13 @@ final class LetterViewModel: ViewModelType {
         let viewDidLoad: AnyPublisher<MessageType, Never>
         let segmentControlValueChanged: PassthroughSubject<MessageType, Never>
         let refresh: PassthroughSubject<Void, Never>
+        let sendLetterButtonDidTap: AnyPublisher<Void, Never>
     }
 
     struct Output {
         let messages: PassthroughSubject<[Message], NetworkError>
         let index: PassthroughSubject<Int, Never>
+        let messageDetails: AnyPublisher<MessageDetails, Never>
     }
 
     // MARK: - property
@@ -55,13 +57,22 @@ final class LetterViewModel: ViewModelType {
             .map { MessageType.sent }
 
         Publishers.Merge3(input.viewDidLoad, input.segmentControlValueChanged, refreshWithType)
-            .sink(receiveValue: { [weak self] type in
-                self?.fetchMessages(with: type)
-                self?.sendCurrentIndex(at: type)
+            .withUnretained(self)
+            .sink(receiveValue: { owner, type in
+                owner.fetchMessages(with: type)
+                owner.sendCurrentIndex(at: type)
             })
             .store(in: &self.cancelBag)
 
-        return Output(messages: self.messageSubject, index: self.indexSubject)
+        let messagePublisher = input.sendLetterButtonDidTap
+            .withUnretained(self)
+            .map { owner, _ -> MessageDetails in
+                owner.setMessageDetail()
+                return owner.messageDetails
+            }
+            .eraseToAnyPublisher()
+
+        return Output(messages: self.messageSubject, index: self.indexSubject, messageDetails: messagePublisher)
     }
 
     // MARK: - Private - func
@@ -113,6 +124,6 @@ extension LetterViewModel {
 
     private func setMessageDetail() {
         guard let manitteeId = self.service.manitteeId else { return }
-        self.messageDetails.manitteId = manitteeId
+        self.messageDetails.manitteeId = manitteeId
     }
 }

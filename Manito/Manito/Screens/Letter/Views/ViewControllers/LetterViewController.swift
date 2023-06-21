@@ -82,7 +82,8 @@ final class LetterViewController: BaseViewController {
                 .map { LetterViewModel.MessageType(rawValue: $0)! }
                 .eraseToAnyPublisher(),
             segmentControlValueChanged: self.messageTypeSubject,
-            refresh: self.refreshSubject
+            refresh: self.refreshSubject,
+            sendLetterButtonDidTap: self.letterView.sendLetterButton.tapPublisher.eraseToAnyPublisher()
         )
 
         return viewModel.transform(from: input)
@@ -118,23 +119,30 @@ final class LetterViewController: BaseViewController {
                 owner.updateList(with: dataSource)
             })
             .store(in: &self.cancelBag)
+
+        output.index
+            .withUnretained(self)
+            .sink(receiveValue: { owner, index in
+                owner.letterView.headerView.setValue(index)
+            })
+            .store(in: &self.cancelBag)
+
+        output.messageDetails
+            .withUnretained(self)
+            .sink(receiveValue: { owner, details in
+                let viewController = CreateLetterViewController(manitteeId: details.manitteeId,
+                                                                roomId: details.roomId,
+                                                                mission: details.mission,
+                                                                missionId: details.missionId)
+                let navigationController = UINavigationController(rootViewController: viewController)
+                viewController.configureDelegation(self)
+                owner.present(navigationController, animated: true)
+            })
+            .store(in: &self.cancelBag)
     }
 
     private func bindUI() {
-        self.letterView.sendLetterButton.tapPublisher
-            .withUnretained(self)
-            .sink(receiveValue: { owner, _ in
-                // TODO: - create letter viewController 열기
-//                guard let manitteeId else { return }
-//                let viewController = CreateLetterViewController(manitteeId: manitteeId,
-//                                                                roomId: self.roomId,
-//                                                                mission: self.mission,
-//                                                                missionId: self.missionId)
-//                let navigationController = UINavigationController(rootViewController: viewController)
-//                viewController.configureDelegation(self)
-//                self.present(navigationController, animated: true)
-            })
-            .store(in: &cancelBag)
+
     }
 }
 
@@ -162,12 +170,13 @@ extension LetterViewController {
     }
 }
 
+// TODO: - CreateLetter 부분에서 수정 더 진행해볼 예정
 // MARK: - CreateLetterViewControllerDelegate
-//extension LetterViewController: CreateLetterViewControllerDelegate {
-//    func refreshLetterData() {
-//        self.letterView.updateLetterType(to: .sent)
-//    }
-//}
+extension LetterViewController: CreateLetterViewControllerDelegate {
+    func refreshLetterData() {
+        self.letterView.updateLetterType(to: .sent)
+    }
+}
 
 // MARK: - LetterCollectionViewCellDelegate
 //extension LetterViewController: LetterCollectionViewCellDelegate {
