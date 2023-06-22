@@ -13,14 +13,29 @@ import SnapKit
 final class LetterCollectionViewCell: BaseCollectionViewCell {
 
     typealias ConfigurationData = (mission: String?, date: String, content: String?, imageURL: String?, isTodayLetter: Bool, canReport: Bool?)
+
+    private enum ConstantSize {
+        static let contentSpacing: CGFloat = 10
+        static let wholeSpacingWithImage: CGFloat = 14
+        static let wholeSpacingWithoutImage: CGFloat = 18
+        static let bottomInset: CGFloat = 22
+        static let imageHeight: CGFloat = 204
+    }
     
     // MARK: - ui component
     
-    private let stackView: UIStackView = {
+    private let contentStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.alignment = .center
+        stackView.alignment = .leading
         stackView.axis = .vertical
-        stackView.spacing = 25
+        stackView.spacing = ConstantSize.contentSpacing
+        return stackView
+    }()
+    private let wholeStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .fill
+        stackView.axis = .vertical
+        stackView.spacing = ConstantSize.wholeSpacingWithImage
         return stackView
     }()
     private let missionLabel: UILabel = {
@@ -59,36 +74,23 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         return self.photoImageView.tapGesturePublisher
     }
 
-    private var imageURL: String?
-
     // MARK: - override
-
-    override func prepareForReuse() {
-        self.initializeConfiguration()
-    }
     
     override func setupLayout() {
-        self.contentView.addSubview(self.stackView)
-        self.stackView.addArrangedSubview(self.photoImageView)
-        self.stackView.addArrangedSubview(self.contentLabel)
-        self.stackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        self.contentLabel.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(11)
-        }
-        
-        self.photoImageView.snp.makeConstraints {
-            $0.height.equalTo(0)
+        self.contentView.addSubview(self.wholeStackView)
+        self.wholeStackView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(ConstantSize.bottomInset)
         }
 
-        self.contentView.addSubview(self.missionLabel)
-        self.missionLabel.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(11)
-            $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
+        self.wholeStackView.addArrangedSubview(self.photoImageView)
+        self.wholeStackView.addArrangedSubview(self.contentStackView)
+        self.photoImageView.snp.makeConstraints {
+            $0.height.equalTo(ConstantSize.imageHeight)
         }
+
+        self.contentStackView.addArrangedSubview(self.missionLabel)
+        self.contentStackView.addArrangedSubview(self.contentLabel)
 
         self.contentView.addSubview(self.reportButton)
         self.reportButton.snp.makeConstraints {
@@ -105,17 +107,6 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - func
 
-    private func initializeConfiguration() {
-        self.missionLabel.text = nil
-        self.contentLabel.text = nil
-        self.photoImageView.image = nil
-        self.missionLabel.snp.updateConstraints {
-            $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
-        }
-        self.photoImageView.snp.updateConstraints {
-            $0.height.equalTo(0)
-        }
-    }
 }
 
 // MARK: - Public - func
@@ -133,7 +124,6 @@ extension LetterCollectionViewCell {
         }
 
         if let imageURL = data.imageURL {
-            self.imageURL = imageURL
             self.photoImageView.loadImageUrl(imageURL)
         }
 

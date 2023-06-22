@@ -16,11 +16,17 @@ final class LetterView: UIView {
         static let headerWidth: CGFloat = UIScreen.main.bounds.size.width
         static let headerHeight: CGFloat = 66.0
         static let groupInterItemSpacing: CGFloat = 33.0
-        static let contentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
+        static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
             top: 18.0,
             leading: Size.leadingTrailingPadding,
             bottom: 18.0,
             trailing: Size.leadingTrailingPadding
+        )
+        static let itemContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 0,
+            bottom: 33.0,
+            trailing: 0
         )
         static let headerContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets.zero
     }
@@ -169,17 +175,19 @@ extension LetterView {
                 heightDimension: .estimated(100)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = ConstantSize.itemContentInset
 
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(100)
+                heightDimension: .fractionalWidth(1.0)
             )
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-            group.interItemSpacing = NSCollectionLayoutSpacing.fixed(ConstantSize.groupInterItemSpacing)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            group.contentInsets = .zero
 
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = ConstantSize.contentInset
+            section.contentInsets = ConstantSize.sectionContentInset
             section.boundarySupplementaryItems = self.sectionHeader()
+
             return section
         }
 
