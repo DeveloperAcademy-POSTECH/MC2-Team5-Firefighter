@@ -85,6 +85,7 @@
 		B50B1B3C285AD2B20080992C /* logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = B50B1B3B285AD2B20080992C /* logo.gif */; };
 		B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B40285B048A0080992C /* OpenManittoViewController.swift */; };
 		B50B1B44285B146A0080992C /* OpenManittoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B43285B146A0080992C /* OpenManittoCollectionViewCell.swift */; };
+		B50CEE912A445EB700CF1C76 /* UIScrollView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CEE902A445EB700CF1C76 /* UIScrollView+Combine.swift */; };
 		B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */; };
 		B517C04C28D1FE5F0008BED0 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */; };
 		B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04D28D1FE660008BED0 /* TokenProtocol.swift */; };
@@ -269,6 +270,7 @@
 		B50B1B3B285AD2B20080992C /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = logo.gif; sourceTree = "<group>"; };
 		B50B1B40285B048A0080992C /* OpenManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoViewController.swift; sourceTree = "<group>"; };
 		B50B1B43285B146A0080992C /* OpenManittoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoCollectionViewCell.swift; sourceTree = "<group>"; };
+		B50CEE902A445EB700CF1C76 /* UIScrollView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Combine.swift"; sourceTree = "<group>"; };
 		B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEndPoint.swift; sourceTree = "<group>"; };
 		B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
 		B517C04D28D1FE660008BED0 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
@@ -841,6 +843,7 @@
 				B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */,
 				B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */,
 				B5B3C1832A42F70C00AABD6F /* UIView+Combine.swift */,
+				B50CEE902A445EB700CF1C76 /* UIScrollView+Combine.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1307,6 +1310,7 @@
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				435B17682913E71400212663 /* DetailingViewController.swift in Sources */,
 				B5B3C1632A41DBC400AABD6F /* Servicable.swift in Sources */,
+				B50CEE912A445EB700CF1C76 /* UIScrollView+Combine.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */,
 				D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */,
 				397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */,

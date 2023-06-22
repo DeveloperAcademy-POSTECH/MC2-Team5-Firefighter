@@ -84,10 +84,6 @@ final class GuideView: UIView {
         self.guideLabel.applyColor(to: targetTitle, with: .subOrange)
     }
 
-    private func setupDisappearedConfiguration() {
-        self.guideBoxImageView.isHidden = true
-    }
-
     func setupGuideViewLayout() {
         self.addSubview(self.guideButton)
         self.guideButton.snp.makeConstraints {
@@ -152,12 +148,16 @@ final class GuideView: UIView {
         self.guideBoxImageView.removeFromSuperview()
     }
 
+    func hideGuideView() {
+        self.guideBoxImageView.isHidden = true
+    }
+
     // MARK: - selector
 
     @objc
     func didTapAroundToHideGuideView() {
         if !self.guideButton.isTouchInside {
-            self.setupDisappearedConfiguration()
+            self.hideGuideView()
         }
     }
 }

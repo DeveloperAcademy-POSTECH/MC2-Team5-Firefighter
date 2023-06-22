@@ -5,6 +5,7 @@
 //  Created by SHIN YOON AH on 2023/03/07.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -26,12 +27,12 @@ final class LetterView: UIView {
 
     // MARK: - ui component
 
-    private let guideView: GuideView = GuideView(type: .letter)
     private lazy var bottomView: UIView = {
         let view = UIView()
         view.backgroundColor = .backgroundGrey
         return view
     }()
+    private let guideView: GuideView = GuideView(type: .letter)
 
     lazy var listCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
@@ -60,13 +61,17 @@ final class LetterView: UIView {
         label.addLabelSpacing(lineSpacing: 16)
         return label
     }()
-    var headerView: LetterHeaderView?
+
+    // MARK: - property
+
+    private var cancelBag: Set<AnyCancellable> = Set()
 
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
+        self.bindUI()
     }
 
     @available(*, unavailable)
@@ -123,6 +128,14 @@ extension LetterView {
         }
     }
 
+    private func bindUI() {
+        self.listCollectionView.scrollPublisher
+            .sink(receiveValue: { [weak self] in
+                self?.guideView.hideGuideView()
+            })
+            .store(in: &self.cancelBag)
+    }
+
     private func setupNavigationTitle(in viewController: UIViewController) {
         guard let navigationController = viewController.navigationController else { return }
         viewController.title = TextLiteral.letterViewControllerTitle
@@ -150,7 +163,7 @@ extension LetterView {
 
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(1.0)
+                heightDimension: .estimated(100)
             )
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             group.interItemSpacing = NSCollectionLayoutSpacing.fixed(ConstantSize.groupInterItemSpacing)
