@@ -140,7 +140,8 @@ extension LetterViewModel {
         Task {
             do {
                 let messages = try await self.service.fetchSendLetter(roomId: roomId)
-                self.messageSubject.send(messages)
+                let modifiedMessages = self.messageWithReportState(in: messages)
+                self.messageSubject.send(modifiedMessages)
             } catch(let error) {
                 guard let error = error as? NetworkError else { return }
                 self.messageSubject.send(completion: .failure(error))
@@ -152,7 +153,8 @@ extension LetterViewModel {
         Task {
             do {
                 let messages = try await self.service.fetchReceiveLetter(roomId: roomId)
-                self.messageSubject.send(messages)
+                let modifiedMessages = self.messageWithReportState(in: messages)
+                self.messageSubject.send(modifiedMessages)
             } catch(let error) {
                 guard let error = error as? NetworkError else { return }
                 self.messageSubject.send(completion: .failure(error))
@@ -163,5 +165,18 @@ extension LetterViewModel {
     private func loadMessageDetails() {
         guard let manitteeId = self.service.manitteeId else { return }
         self.messageDetails.manitteeId = manitteeId
+    }
+
+    private func messageWithReportState(in messages: [Message]) -> [Message] {
+        if let messageType = MessageType(rawValue: self.indexSubject.value) {
+            let canReport = messageType == .received
+            return messages.map { item in
+                var item = item
+                item.canReport = canReport
+                return item
+            }
+        }
+
+        return []
     }
 }

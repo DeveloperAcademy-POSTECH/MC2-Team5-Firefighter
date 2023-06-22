@@ -12,7 +12,7 @@ import SnapKit
 
 final class LetterCollectionViewCell: BaseCollectionViewCell {
 
-    typealias ConfigurationData = (mission: String?, date: String, content: String?, imageURL: String?, isTodayLetter: Bool, canReport: Bool)
+    typealias ConfigurationData = (mission: String?, date: String, content: String?, imageURL: String?, isTodayLetter: Bool, canReport: Bool?)
     
     // MARK: - ui component
     
@@ -138,6 +138,6 @@ extension LetterCollectionViewCell {
         }
 
         self.missionLabel.textColor = data.isTodayLetter ? .subOrange : .grey003
-        self.reportButton.isHidden = !data.canReport
+        self.reportButton.isHidden = !(data.canReport ?? false)
     }
 }

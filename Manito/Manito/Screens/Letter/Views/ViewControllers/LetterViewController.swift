@@ -129,9 +129,7 @@ final class LetterViewController: BaseViewController {
         Publishers.CombineLatest(output.roomState, output.index)
             .map { (state: $0, index: $1) }
             .sink(receiveValue: { [weak self] result in
-                self?.updateLetterViewEmptyArea(with: result.index)
                 self?.updateLetterViewBottomArea(with: result.state, result.index)
-                // TODO: - cell report 보이게 안보이게
             })
             .store(in: &self.cancelBag)
     }
@@ -166,7 +164,8 @@ final class LetterViewController: BaseViewController {
             .store(in: &self.cancelBag)
 
         self.viewModelOutput?.index
-            .sink(receiveValue: { index in
+            .sink(receiveValue: { [weak self] index in
+                self?.updateLetterViewEmptyArea(with: index)
                 headerView.setupHeaderSelectedIndex(at: index)
             })
             .store(in: &self.cancelBag)
@@ -215,13 +214,12 @@ extension LetterViewController {
     private func letterCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Message> {
         let letterCellRegistration = UICollectionView.CellRegistration<LetterCollectionViewCell, Message> {
             [weak self] cell, indexPath, item in
-            // TODO: - canReport안에 boolean 값!!
             cell.configureCell((mission: item.mission,
                                 date: item.date,
                                 content: item.content,
                                 imageURL: item.imageUrl,
                                 isTodayLetter: item.isToday,
-                                canReport: true))
+                                canReport: item.canReport))
             self?.bindCell(cell, with: item)
         }
 
