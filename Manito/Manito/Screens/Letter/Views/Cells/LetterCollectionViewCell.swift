@@ -16,8 +16,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
 
     private enum ConstantSize {
         static let contentSpacing: CGFloat = 10
-        static let wholeSpacingWithImage: CGFloat = 14
-        static let wholeSpacingWithoutImage: CGFloat = 18
+        static let wholeSpacing: CGFloat = 14
         static let bottomInset: CGFloat = 22
         static let imageHeight: CGFloat = 204
     }
@@ -26,16 +25,17 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     private let contentStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.alignment = .leading
+        stackView.alignment = .fill
         stackView.axis = .vertical
         stackView.spacing = ConstantSize.contentSpacing
+        stackView.layoutMargins = UIEdgeInsets(top: ConstantSize.wholeSpacing, left: 11, bottom: 0, right: 11)
+        stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     private let wholeStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .fill
         stackView.axis = .vertical
-        stackView.spacing = ConstantSize.wholeSpacingWithImage
         return stackView
     }()
     private let missionLabel: UILabel = {
@@ -121,10 +121,16 @@ extension LetterCollectionViewCell {
         if let content = data.content {
             self.contentLabel.text = content
             self.contentLabel.addLabelSpacing()
+            self.contentLabel.isHidden = false
+        } else {
+            contentLabel.isHidden = true
         }
 
         if let imageURL = data.imageURL {
+            self.photoImageView.isHidden = false
             self.photoImageView.loadImageUrl(imageURL)
+        } else {
+            self.photoImageView.isHidden = true
         }
 
         self.missionLabel.textColor = data.isTodayLetter ? .subOrange : .grey003

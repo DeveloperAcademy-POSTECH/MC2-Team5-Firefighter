@@ -15,18 +15,12 @@ final class LetterView: UIView {
     private enum ConstantSize {
         static let headerWidth: CGFloat = UIScreen.main.bounds.size.width
         static let headerHeight: CGFloat = 66.0
-        static let groupInterItemSpacing: CGFloat = 33.0
+        static let groupInterItemSpacing: NSCollectionLayoutSpacing = NSCollectionLayoutSpacing.fixed(33)
         static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
             top: 18.0,
             leading: Size.leadingTrailingPadding,
             bottom: 18.0,
             trailing: Size.leadingTrailingPadding
-        )
-        static let itemContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 0,
-            bottom: 33.0,
-            trailing: 0
         )
         static let headerContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets.zero
     }
@@ -172,17 +166,16 @@ extension LetterView {
         let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(100)
+                heightDimension: .estimated(500)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = ConstantSize.itemContentInset
 
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .fractionalWidth(1.0)
             )
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            group.contentInsets = .zero
+            group.interItemSpacing = ConstantSize.groupInterItemSpacing
 
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = ConstantSize.sectionContentInset
