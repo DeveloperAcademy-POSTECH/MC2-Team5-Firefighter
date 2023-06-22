@@ -25,7 +25,7 @@ final class LetterViewModel: ViewModelType {
 
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
-        let segmentControlValueChanged: AnyPublisher<MessageType, Never>
+        let segmentControlValueChanged: PassthroughSubject<Int, Never>
         let refresh: PassthroughSubject<Void, Never>
         let sendLetterButtonDidTap: AnyPublisher<Void, Never>
         let reportButtonDidTap: PassthroughSubject<String, Never>
@@ -75,10 +75,14 @@ final class LetterViewModel: ViewModelType {
             .map { [weak self] in self?.messageType }
             .map { $0! }
 
+        let segmentValueType = input.segmentControlValueChanged
+            .map { MessageType(rawValue: $0) }
+            .map { $0! }
+
         let refreshWithType = input.refresh
             .map { MessageType.sent }
 
-        Publishers.Merge3(viewDidLoadType, input.segmentControlValueChanged, refreshWithType)
+        Publishers.Merge3(viewDidLoadType, segmentValueType, refreshWithType)
             .sink(receiveValue: { [weak self] type in
                 self?.fetchMessages(with: type)
                 self?.sendCurrentIndex(at: type)

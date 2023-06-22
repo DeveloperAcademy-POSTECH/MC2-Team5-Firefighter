@@ -23,6 +23,7 @@ final class LetterViewController: BaseViewController {
 
     // MARK: - property
 
+    private let segmentValueSubject: PassthroughSubject<Int, Never> = PassthroughSubject()
     private let reportSubject: PassthroughSubject<String, Never> = PassthroughSubject()
     private let refreshSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
 
@@ -77,13 +78,7 @@ final class LetterViewController: BaseViewController {
         guard let viewModel = self.viewModel as? LetterViewModel else { return nil }
         let input = LetterViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
-            segmentControlValueChanged:
-                self.letterView.headerView.segmentedControlTapPublisher
-                    .map { index -> LetterViewModel.MessageType in
-                        guard let type = LetterViewModel.MessageType(rawValue: index) else { return .sent }
-                        return type
-                    }
-                    .eraseToAnyPublisher(),
+            segmentControlValueChanged: self.segmentValueSubject,
             refresh: self.refreshSubject,
             sendLetterButtonDidTap: self.letterView.sendLetterButton.tapPublisher,
             reportButtonDidTap: self.reportSubject
@@ -164,6 +159,14 @@ final class LetterViewController: BaseViewController {
             })
             .store(in: &self.cancelBag)
     }
+
+    private func bindHeaderView(_ headerView: LetterHeaderView) {
+        headerView.segmentedControlTapPublisher
+            .sink(receiveValue: { [weak self] value in
+                self?.segmentValueSubject.send(value)
+            })
+            .store(in: &self.cancelBag)
+    }
 }
 
 // MARK: - DataSource
@@ -214,6 +217,9 @@ extension LetterViewController {
                 withReuseIdentifier: LetterHeaderView.className,
                 for: indexPath
             ) as? LetterHeaderView else { return UICollectionReusableView() }
+
+            self.bindHeaderView(headerView)
+
             return headerView
         default:
             return nil

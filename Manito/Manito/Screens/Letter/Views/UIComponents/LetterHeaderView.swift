@@ -52,6 +52,10 @@ final class LetterHeaderView: UICollectionReusableView {
     
     // MARK: - func
 
+    func setupHeaderSelectedIndex(at index: Int) {
+        self.segmentedControl.selectedSegmentIndex = index
+    }
+
     private func setupLayout() {
         self.addSubview(self.segmentedControl)
         self.segmentedControl.snp.makeConstraints {
