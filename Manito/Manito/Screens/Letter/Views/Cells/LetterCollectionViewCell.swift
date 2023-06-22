@@ -19,6 +19,12 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         static let wholeSpacing: CGFloat = 14
         static let bottomInset: CGFloat = 22
         static let imageHeight: CGFloat = 204
+        static let stackMargins: UIEdgeInsets = UIEdgeInsets(
+            top: ConstantSize.wholeSpacing,
+            left: 11,
+            bottom: 0,
+            right: 11
+        )
     }
     
     // MARK: - ui component
@@ -28,7 +34,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         stackView.alignment = .fill
         stackView.axis = .vertical
         stackView.spacing = ConstantSize.contentSpacing
-        stackView.layoutMargins = UIEdgeInsets(top: ConstantSize.wholeSpacing, left: 11, bottom: 0, right: 11)
+        stackView.layoutMargins = ConstantSize.stackMargins
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()

@@ -16,17 +16,31 @@ final class LetterView: UIView {
         static let headerWidth: CGFloat = UIScreen.main.bounds.size.width
         static let headerHeight: CGFloat = 66.0
         static let groupInterItemSpacing: CGFloat = 33
+        static let headerContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets.zero
         static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
             top: 18.0,
             leading: Size.leadingTrailingPadding,
             bottom: 18.0,
             trailing: Size.leadingTrailingPadding
         )
-        static let headerContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets.zero
+        static let stackMargins: UIEdgeInsets = UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: 18,
+            right: 0
+        )
     }
 
     // MARK: - ui component
 
+    private let wholeStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 0
+        stackView.alignment = .fill
+        stackView.layoutMargins = ConstantSize.stackMargins
+        return stackView
+    }()
     private lazy var bottomView: UIView = {
         let view = UIView()
         view.backgroundColor = .backgroundGrey
@@ -101,10 +115,12 @@ final class LetterView: UIView {
 
     func showBottomArea() {
         self.bottomView.isHidden = false
+        self.wholeStackView.isLayoutMarginsRelativeArrangement = true
     }
 
     func hideBottomArea() {
         self.bottomView.isHidden = true
+        self.wholeStackView.isLayoutMarginsRelativeArrangement = false
     }
 
     func removeGuideView() {
@@ -114,8 +130,8 @@ final class LetterView: UIView {
 
 extension LetterView {
     private func setupLayout() {
-        self.addSubview(self.listCollectionView)
-        self.listCollectionView.snp.makeConstraints {
+        self.addSubview(self.wholeStackView)
+        self.wholeStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
 
@@ -124,9 +140,9 @@ extension LetterView {
             $0.center.equalToSuperview()
         }
 
-        self.addSubview(self.bottomView)
+        self.wholeStackView.addArrangedSubview(self.listCollectionView)
+        self.wholeStackView.addArrangedSubview(self.bottomView)
         self.bottomView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalTo(self.safeAreaLayoutGuide)
             $0.height.equalTo(73)
         }
 
