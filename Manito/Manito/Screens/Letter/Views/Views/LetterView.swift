@@ -15,7 +15,7 @@ final class LetterView: UIView {
     private enum ConstantSize {
         static let headerWidth: CGFloat = UIScreen.main.bounds.size.width
         static let headerHeight: CGFloat = 66.0
-        static let groupInterItemSpacing: NSCollectionLayoutSpacing = NSCollectionLayoutSpacing.fixed(33)
+        static let groupInterItemSpacing: CGFloat = 33
         static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
             top: 18.0,
             leading: Size.leadingTrailingPadding,
@@ -116,7 +116,7 @@ extension LetterView {
     private func setupLayout() {
         self.addSubview(self.listCollectionView)
         self.listCollectionView.snp.makeConstraints {
-            $0.edges.equalTo(self.safeAreaLayoutGuide)
+            $0.edges.equalToSuperview()
         }
 
         self.addSubview(self.emptyLabel)
@@ -172,14 +172,14 @@ extension LetterView {
 
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalWidth(1.0)
+                heightDimension: .estimated(300)
             )
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            group.interItemSpacing = ConstantSize.groupInterItemSpacing
 
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = ConstantSize.sectionContentInset
             section.boundarySupplementaryItems = self.sectionHeader()
+            section.interGroupSpacing = ConstantSize.groupInterItemSpacing
 
             return section
         }
