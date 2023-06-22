@@ -12,6 +12,7 @@ import SnapKit
 final class LetterView: UIView {
 
     private enum ConstantSize {
+        static let headerWidth: CGFloat = UIScreen.main.bounds.size.width
         static let headerHeight: CGFloat = 66.0
         static let groupInterItemSpacing: CGFloat = 33.0
         static let contentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
@@ -20,12 +21,7 @@ final class LetterView: UIView {
             bottom: 18.0,
             trailing: Size.leadingTrailingPadding
         )
-        static let headerContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: Size.leadingTrailingPadding,
-            bottom: 0,
-            trailing: Size.leadingTrailingPadding
-        )
+        static let headerContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets.zero
     }
 
     // MARK: - ui component
@@ -170,7 +166,7 @@ extension LetterView {
 
     private func sectionHeader() -> [NSCollectionLayoutBoundarySupplementaryItem] {
         let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
+            widthDimension: .absolute(ConstantSize.headerWidth),
             heightDimension: .absolute(ConstantSize.headerHeight)
         )
         let header = NSCollectionLayoutBoundarySupplementaryItem(
