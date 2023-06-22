@@ -18,7 +18,7 @@ struct Manitte: Codable {
     var nickname: String?
 }
 
-struct Message: Codable {
+struct Message: Codable, Hashable {
     var id: Int?
     var content: String?
     var imageUrl: String?

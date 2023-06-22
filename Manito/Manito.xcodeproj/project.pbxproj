@@ -107,7 +107,6 @@
 		B5B3C1632A41DBC400AABD6F /* Servicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1622A41DBC400AABD6F /* Servicable.swift */; };
 		B5B3C1652A427B5800AABD6F /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */; };
 		B5B3C16F2A42B37000AABD6F /* UIViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */; };
-		B5B3C1782A42CE9300AABD6F /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1772A42CE9300AABD6F /* CollectionViewDataSource.swift */; };
 		B5B3C1842A42F70C00AABD6F /* UIView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1832A42F70C00AABD6F /* UIView+Combine.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */; };
@@ -292,7 +291,6 @@
 		B5B3C1622A41DBC400AABD6F /* Servicable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Servicable.swift; sourceTree = "<group>"; };
 		B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Combine.swift"; sourceTree = "<group>"; };
-		B5B3C1772A42CE9300AABD6F /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSource.swift; sourceTree = "<group>"; };
 		B5B3C1832A42F70C00AABD6F /* UIView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Combine.swift"; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewController.swift; sourceTree = "<group>"; };
@@ -915,7 +913,6 @@
 				B5F525282851A2A400614FF7 /* Logger.swift */,
 				B5FEE9DA28C8498A00DEA07E /* ImageCacheManager.swift */,
 				B5FEE9DC28C849B400DEA07E /* UIImageView+Cache.swift */,
-				B5B3C1772A42CE9300AABD6F /* CollectionViewDataSource.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1361,7 +1358,6 @@
 				39C95802287DACC300A04A2B /* RoomEndPoint.swift in Sources */,
 				CB4C77E628C0D4EB007A1AD2 /* MainAPI.swift in Sources */,
 				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
-				B5B3C1782A42CE9300AABD6F /* CollectionViewDataSource.swift in Sources */,
 				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
 				D7C4A1AD2A0DD8FA00C3AE4C /* SettingView.swift in Sources */,
 				39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */,

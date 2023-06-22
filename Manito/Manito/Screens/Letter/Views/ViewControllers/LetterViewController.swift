@@ -10,11 +10,16 @@ import UIKit
 
 final class LetterViewController: BaseViewController {
 
+    enum Section: CaseIterable {
+        case main
+    }
+
     // MARK: - ui component
 
     private let letterView: LetterView = LetterView()
 
-    private var dataSource: CollectionViewDataSource<LetterCollectionViewCell, Message>!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Message>!
+    private var snapShot: NSDiffableDataSourceSnapshot<Section, Message>!
 
     // MARK: - property
 
@@ -45,6 +50,7 @@ final class LetterViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureDataSource()
         self.bindViewModel()
     }
 
@@ -60,7 +66,7 @@ final class LetterViewController: BaseViewController {
         self.letterView.configureNavigationBar(of: self)
     }
 
-    // MARK: - func
+    // MARK: - func - bind
 
     private func bindViewModel() {
         let output = self.transformedOutput()
@@ -90,18 +96,15 @@ final class LetterViewController: BaseViewController {
         guard let output = output else { return }
 
         output.messages
-            .map { [weak self] items in
-                self?.letterCollectionViewDataSource(items: items)
-            }
-            .catch { _ in return Just(nil)}
             .receive(on: RunLoop.main)
-            .sink(receiveValue: { [weak self] dataSource in
-                guard let dataSource = dataSource else {
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .failure(_):
                     self?.showErrorAlert()
-                    return
+                case .finished: return
                 }
-
-                self?.updateList(with: dataSource)
+            }, receiveValue: { [weak self] items in
+                self?.reloadMessageList(items)
                 // TODO: - view layout update(데이터 없으면 empty 멘트)
             })
             .store(in: &self.cancelBag)
@@ -139,22 +142,6 @@ final class LetterViewController: BaseViewController {
             })
             .store(in: &self.cancelBag)
     }
-}
-
-extension LetterViewController {
-    private func letterCollectionViewDataSource(items: [Message]) -> CollectionViewDataSource<LetterCollectionViewCell, Message> {
-        return CollectionViewDataSource(identifier: LetterCollectionViewCell.className,
-                                        items: items) { [weak self] cell, item in
-//            let canReport = self.messageType == .received
-            cell.configureCell((mission: item.mission,
-                                date: item.date,
-                                content: item.content,
-                                imageURL: item.imageUrl,
-                                isTodayLetter: item.isToday,
-                                canReport: true))
-            self?.bindCell(cell, with: item)
-        }
-    }
 
     private func bindCell(_ cell: LetterCollectionViewCell, with item: Message) {
         cell.reportButtonTapPublisher
@@ -177,19 +164,88 @@ extension LetterViewController {
             })
             .store(in: &self.cancelBag)
     }
+}
 
+// MARK: - DataSource
+extension LetterViewController {
+    private func configureDataSource() {
+        self.dataSource = self.letterCollectionViewDataSource()
+        self.dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            return self?.dataSourceSupplementaryView(collectionView: collectionView,
+                                                     kind: kind,
+                                                     indexPath: indexPath)
+        }
+
+        self.configureSnapshot()
+    }
+
+    private func letterCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Message> {
+        let letterCellRegistration = UICollectionView.CellRegistration<LetterCollectionViewCell, Message> {
+            [weak self] cell, indexPath, item in
+            // TODO: - canReport안에 boolean 값!!
+            cell.configureCell((mission: item.mission,
+                                date: item.date,
+                                content: item.content,
+                                imageURL: item.imageUrl,
+                                isTodayLetter: item.isToday,
+                                canReport: true))
+            self?.bindCell(cell, with: item)
+        }
+
+        return UICollectionViewDiffableDataSource(
+            collectionView: self.letterView.listCollectionView,
+            cellProvider: { collectionView, indexPath, item in
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: letterCellRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            }
+        )
+    }
+
+    private func dataSourceSupplementaryView(collectionView: UICollectionView,
+                                             kind: String,
+                                             indexPath: IndexPath) -> UICollectionReusableView? {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: LetterHeaderView.className,
+                for: indexPath
+            ) as? LetterHeaderView else { return UICollectionReusableView() }
+            return headerView
+        default:
+            return nil
+        }
+    }
+}
+
+// MARK: - Snapshot
+extension LetterViewController {
+    private func configureSnapshot() {
+        self.snapShot = NSDiffableDataSourceSnapshot<Section, Message>()
+        self.snapShot.appendSections([.main])
+        self.dataSource.apply(self.snapShot, animatingDifferences: true)
+    }
+
+    private func reloadMessageList(_ items: [Message]) {
+        let previousMessageData = self.snapShot.itemIdentifiers(inSection: .main)
+        self.snapShot.deleteItems(previousMessageData)
+        self.snapShot.appendItems(items, toSection: .main)
+        self.dataSource.apply(self.snapShot, animatingDifferences: true)
+    }
+}
+
+// MARK: - Helper
+extension LetterViewController {
     private func showErrorAlert() {
         self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
                        message: TextLiteral.letterViewControllerErrorDescription)
     }
-
-    private func updateList(with dataSource: CollectionViewDataSource<LetterCollectionViewCell, Message>) {
-        self.dataSource = dataSource
-        self.letterView.listCollectionView.dataSource = dataSource
-        self.letterView.listCollectionView.reloadData()
-    }
 }
 
+// MARK: - CreateLetterViewControllerDelegate
 extension LetterViewController: CreateLetterViewControllerDelegate {
     func refreshLetterData() {
         self.refreshSubject.send(())
