@@ -134,8 +134,8 @@ final class LetterViewController: BaseViewController {
 
     private func bindCell(_ cell: LetterCollectionViewCell, with item: Message) {
         cell.reportButtonTapPublisher
-            .sink(receiveValue: { [weak self] _ in
-                if let content = item.content {
+            .sink(receiveValue: { [weak self] content in
+                if let content {
                     self?.reportSubject.send(content)
                 } else {
                     self?.reportSubject.send("쪽지 내용 없음")

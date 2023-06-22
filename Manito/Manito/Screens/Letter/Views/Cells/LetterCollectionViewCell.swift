@@ -72,8 +72,10 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
 
     // MARK: - property
 
-    var reportButtonTapPublisher: AnyPublisher<Void, Never> {
+    var reportButtonTapPublisher: AnyPublisher<String?, Never> {
         return self.reportButton.tapPublisher
+            .map { [weak self] in self?.contentLabel.text }
+            .eraseToAnyPublisher()
     }
 
     var imageViewTapGesturePublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
