@@ -13,10 +13,19 @@ final class LetterView: UIView {
 
     private enum ConstantSize {
         static let headerHeight: CGFloat = 66.0
-        static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 18.0,
-                                                                left: Size.leadingTrailingPadding,
-                                                                bottom: 18.0,
-                                                                right: Size.leadingTrailingPadding)
+        static let groupInterItemSpacing: CGFloat = 33.0
+        static let contentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
+            top: 18.0,
+            leading: Size.leadingTrailingPadding,
+            bottom: 18.0,
+            trailing: Size.leadingTrailingPadding
+        )
+        static let headerContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: Size.leadingTrailingPadding,
+            bottom: 0,
+            trailing: Size.leadingTrailingPadding
+        )
     }
 
     // MARK: - ui component
@@ -27,20 +36,9 @@ final class LetterView: UIView {
         view.backgroundColor = .backgroundGrey
         return view
     }()
-    private let listCollectionViewFlowLayout: UICollectionViewFlowLayout = {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .vertical
-        flowLayout.estimatedItemSize = CGSize(width: 100, height: 100)
-        flowLayout.sectionInset = ConstantSize.collectionInset
-        flowLayout.minimumLineSpacing = 33
-        flowLayout.sectionHeadersPinToVisibleBounds = true
-        flowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.size.width,
-                                                height: ConstantSize.headerHeight)
-        return flowLayout
-    }()
 
     lazy var listCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.listCollectionViewFlowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(cell: LetterCollectionViewCell.self,
@@ -142,8 +140,46 @@ extension LetterView {
         self.guideView.addGuideButton(in: viewController.navigationItem)
         self.guideView.hideGuideViewWhenTappedAround(in: navigationController, viewController)
     }
+}
 
-//    private func createLayout() -> UICollectionViewLayout {
-//
-//    }
+// MARK: - UICollectionViewLayout
+extension LetterView {
+    private func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(100)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(1.0)
+            )
+            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+            group.interItemSpacing = NSCollectionLayoutSpacing.fixed(ConstantSize.groupInterItemSpacing)
+
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = ConstantSize.contentInset
+            section.boundarySupplementaryItems = self.sectionHeader()
+            return section
+        }
+
+        return layout
+    }
+
+    private func sectionHeader() -> [NSCollectionLayoutBoundarySupplementaryItem] {
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(ConstantSize.headerHeight)
+        )
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        header.contentInsets = ConstantSize.headerContentInset
+        header.pinToVisibleBounds = true
+        return [header]
+    }
 }
