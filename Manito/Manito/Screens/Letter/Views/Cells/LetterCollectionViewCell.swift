@@ -12,7 +12,7 @@ import SnapKit
 
 final class LetterCollectionViewCell: BaseCollectionViewCell {
 
-    typealias ConfigurationData = (mission: String?, date: String, content: String?, imageURL: String?, isTodayLetter: Bool)
+    typealias ConfigurationData = (mission: String?, date: String, content: String?, imageURL: String?, isTodayLetter: Bool, canReport: Bool)
     
     // MARK: - ui component
     
@@ -105,36 +105,6 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - func
 
-    func configureCell(_ data: ConfigurationData) {
-        if let mission = data.mission {
-            self.missionLabel.text = mission
-            self.missionLabel.snp.updateConstraints {
-                $0.bottom.equalTo(self.contentLabel.snp.top).offset(20)
-            }
-        } else {
-            self.missionLabel.text = data.date
-            self.missionLabel.snp.updateConstraints {
-                $0.bottom.equalTo(self.contentLabel.snp.top).offset(5)
-            }
-        }
-
-        if let content = data.content {
-            self.contentLabel.text = content
-            self.contentLabel.addLabelSpacing()
-        }
-
-        if let imageURL = data.imageURL {
-            self.imageURL = imageURL
-            self.photoImageView.loadImageUrl(imageURL)
-            self.photoImageView.snp.updateConstraints {
-                $0.height.equalTo(204)
-            }
-        }
-
-        self.missionLabel.textColor = data.isTodayLetter ? .subOrange : .grey003
-//        self.reportButton.isHidden = !data.canReport
-    }
-
     private func initializeConfiguration() {
         self.missionLabel.text = nil
         self.contentLabel.text = nil
@@ -145,5 +115,29 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         self.photoImageView.snp.updateConstraints {
             $0.height.equalTo(0)
         }
+    }
+}
+
+// MARK: - Public - func
+extension LetterCollectionViewCell {
+    func configureCell(_ data: ConfigurationData) {
+        if let mission = data.mission {
+            self.missionLabel.text = mission
+        } else {
+            self.missionLabel.text = data.date
+        }
+
+        if let content = data.content {
+            self.contentLabel.text = content
+            self.contentLabel.addLabelSpacing()
+        }
+
+        if let imageURL = data.imageURL {
+            self.imageURL = imageURL
+            self.photoImageView.loadImageUrl(imageURL)
+        }
+
+        self.missionLabel.textColor = data.isTodayLetter ? .subOrange : .grey003
+        self.reportButton.isHidden = !data.canReport
     }
 }

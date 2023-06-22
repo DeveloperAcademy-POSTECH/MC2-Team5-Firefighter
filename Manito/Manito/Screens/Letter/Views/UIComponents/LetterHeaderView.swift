@@ -31,8 +31,11 @@ final class LetterHeaderView: UICollectionReusableView {
 
     // MARK: - property
 
-    var segmentedControlTapPublisher: AnyPublisher<Void, Never> {
+    var segmentedControlTapPublisher: AnyPublisher<Int, Never> {
         return self.segmentedControl.tapPublisher
+            .map { [weak self] in self?.segmentedControl.selectedSegmentIndex }
+            .map { $0! }
+            .eraseToAnyPublisher()
     }
     
     // MARK: - init
@@ -49,10 +52,6 @@ final class LetterHeaderView: UICollectionReusableView {
     
     // MARK: - func
 
-    func setValue(_ value: Int) {
-        self.segmentedControl.selectedSegmentIndex = value
-    }
-    
     private func setupLayout() {
         self.addSubview(self.segmentedControl)
         self.segmentedControl.snp.makeConstraints {
@@ -61,7 +60,7 @@ final class LetterHeaderView: UICollectionReusableView {
             $0.height.equalTo(40)
         }
     }
-    
+
     private func configureUI() {
         self.backgroundColor = .backgroundGrey
     }

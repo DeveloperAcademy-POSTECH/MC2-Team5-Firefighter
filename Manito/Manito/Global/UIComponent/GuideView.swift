@@ -84,6 +84,10 @@ final class GuideView: UIView {
         self.guideLabel.applyColor(to: targetTitle, with: .subOrange)
     }
 
+    private func setupDisappearedConfiguration() {
+        self.guideBoxImageView.isHidden = true
+    }
+
     func setupGuideViewLayout() {
         self.addSubview(self.guideButton)
         self.guideButton.snp.makeConstraints {
@@ -142,10 +146,6 @@ final class GuideView: UIView {
         viewControllerTapGesture.cancelsTouchesInView = false
         navigationController.view.addGestureRecognizer(navigationControllerTapGesture)
         viewController.view.addGestureRecognizer(viewControllerTapGesture)
-    }
-
-    func setupDisappearedConfiguration() {
-        self.guideBoxImageView.isHidden = true
     }
 
     // MARK: - selector

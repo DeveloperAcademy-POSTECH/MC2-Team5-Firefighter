@@ -108,7 +108,6 @@
 		B5B3C1652A427B5800AABD6F /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */; };
 		B5B3C16F2A42B37000AABD6F /* UIViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */; };
 		B5B3C1782A42CE9300AABD6F /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1772A42CE9300AABD6F /* CollectionViewDataSource.swift */; };
-		B5B3C17A2A42EA6700AABD6F /* Publisher+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1792A42EA6700AABD6F /* Publisher+Combine.swift */; };
 		B5B3C1842A42F70C00AABD6F /* UIView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1832A42F70C00AABD6F /* UIView+Combine.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */; };
@@ -294,7 +293,6 @@
 		B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Combine.swift"; sourceTree = "<group>"; };
 		B5B3C1772A42CE9300AABD6F /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSource.swift; sourceTree = "<group>"; };
-		B5B3C1792A42EA6700AABD6F /* Publisher+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Combine.swift"; sourceTree = "<group>"; };
 		B5B3C1832A42F70C00AABD6F /* UIView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Combine.swift"; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewController.swift; sourceTree = "<group>"; };
@@ -844,7 +842,6 @@
 				39018F4128C4708A00C78DBA /* UIButton+Extension.swift */,
 				B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */,
 				B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */,
-				B5B3C1792A42EA6700AABD6F /* Publisher+Combine.swift */,
 				B5B3C1832A42F70C00AABD6F /* UIView+Combine.swift */,
 			);
 			path = Extension;
@@ -1270,7 +1267,6 @@
 				7E3058C82854B64D00489E6A /* InputPersonView.swift in Sources */,
 				CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */,
 				39EEF65E28CB3CFE00437654 /* LoginEndPoint.swift in Sources */,
-				B5B3C17A2A42EA6700AABD6F /* Publisher+Combine.swift in Sources */,
 				392EC77E2855C388006918A9 /* SettingButton.swift in Sources */,
 				39C957FC287DAAFA00A04A2B /* DetailWaitEndPoint.swift in Sources */,
 				CB674C2128596A310063A6B7 /* CheckRoomViewController.swift in Sources */,

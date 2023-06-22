@@ -18,8 +18,13 @@ final class LetterViewModel: ViewModelType {
         case received = 1
     }
 
+    enum RoomState: String {
+        case processing = "PROCESSING"
+        case post = "POST"
+    }
+
     struct Input {
-        let viewDidLoad: AnyPublisher<MessageType, Never>
+        let viewDidLoad: AnyPublisher<Void, Never>
         let segmentControlValueChanged: AnyPublisher<MessageType, Never>
         let refresh: PassthroughSubject<Void, Never>
         let sendLetterButtonDidTap: AnyPublisher<Void, Never>
@@ -31,6 +36,7 @@ final class LetterViewModel: ViewModelType {
         let index: PassthroughSubject<Int, Never>
         let messageDetails: AnyPublisher<MessageDetails, Never>
         let reportDetails: AnyPublisher<ReportDetails, Never>
+        let roomState: AnyPublisher<RoomState, Never>
     }
 
     // MARK: - property
@@ -42,48 +48,68 @@ final class LetterViewModel: ViewModelType {
 
     private let service: LetterServicable
     private var messageDetails: MessageDetails
+    private let roomState: RoomState
+    private let messageType: MessageType
 
     // MARK: - init
 
     init(service: LetterServicable,
          roomId: String,
          mission: String,
-         missionId: String) {
+         missionId: String,
+         roomState: String,
+         messageType: MessageType) {
         self.service = service
         self.messageDetails = MessageDetails(roomId, mission, missionId, "")
+        self.roomState = RoomState(rawValue: roomState)!
+        self.messageType = messageType
     }
 
     // MARK: - Public - func
 
     func transform(from input: Input) -> Output {
+        let viewDidLoad = input.viewDidLoad
+            .share()
+
+        let viewDidLoadType = viewDidLoad
+            .map { [weak self] in self?.messageType }
+            .map { $0! }
+
         let refreshWithType = input.refresh
             .map { MessageType.sent }
 
-        Publishers.Merge3(input.viewDidLoad, input.segmentControlValueChanged, refreshWithType)
-            .withUnretained(self)
-            .sink(receiveValue: { owner, type in
-                owner.fetchMessages(with: type)
-                owner.sendCurrentIndex(at: type)
+        Publishers.Merge3(viewDidLoadType, input.segmentControlValueChanged, refreshWithType)
+            .sink(receiveValue: { [weak self] type in
+                self?.fetchMessages(with: type)
+                self?.sendCurrentIndex(at: type)
             })
             .store(in: &self.cancelBag)
 
         let messagePublisher = input.sendLetterButtonDidTap
-            .withUnretained(self)
-            .map { owner, _ -> MessageDetails in
-                owner.loadMessageDetails()
-                return owner.messageDetails
+            .map { [weak self] _ -> MessageDetails in
+                self?.loadMessageDetails()
+                return (self?.messageDetails)!
             }
             .eraseToAnyPublisher()
 
         let reportPublisher = input.reportButtonDidTap
-            .withUnretained(self)
-            .map { owner, content -> ReportDetails in
-                owner.service.loadNickname()
-                return (owner.service.nickname, content)
+            .map { [weak self] content -> ReportDetails in
+                self?.service.loadNickname()
+                return ((self?.service.nickname)!, content)
             }
             .eraseToAnyPublisher()
 
-        return Output(messages: self.messageSubject, index: self.indexSubject, messageDetails: messagePublisher, reportDetails: reportPublisher)
+        let roomStatePublisher = viewDidLoad
+            .map { [weak self] in (self?.roomState)! }
+            .eraseToAnyPublisher()
+
+        return Output(
+            messages: self.messageSubject,
+            index: self.indexSubject,
+            messageDetails: messagePublisher,
+            reportDetails: reportPublisher,
+            roomState: roomStatePublisher
+        )
     }
 
     // MARK: - Private - func

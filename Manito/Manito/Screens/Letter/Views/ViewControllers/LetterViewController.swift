@@ -24,18 +24,11 @@ final class LetterViewController: BaseViewController {
     private var cancelBag: Set<AnyCancellable> = Set()
 
     private let viewModel: any ViewModelType
-    private var roomState: LetterView.RoomState
-    private var messageType: LetterView.MessageType
-
 
     // MARK: - init
     
-    init(viewModel: any ViewModelType,
-         roomState: LetterView.RoomState,
-         messageType: LetterView.MessageType) {
+    init(viewModel: any ViewModelType) {
         self.viewModel = viewModel
-        self.roomState = roomState
-        self.messageType = messageType
         super.init()
     }
 
@@ -59,7 +52,6 @@ final class LetterViewController: BaseViewController {
 
     override func configureUI() {
         super.configureUI()
-        self.letterView.configureLayout(with: self.roomState)
         self.letterView.configureNavigationBar(of: self)
     }
 
@@ -73,17 +65,11 @@ final class LetterViewController: BaseViewController {
     private func transformedOutput() -> LetterViewModel.Output? {
         guard let viewModel = self.viewModel as? LetterViewModel else { return nil }
         let input = LetterViewModel.Input(
-            viewDidLoad:
-                self.viewDidLoadPublisher
-                    .withUnretained(self)
-                    .map { owner, _ in owner.messageType.rawValue }
-                    .map { LetterViewModel.MessageType(rawValue: $0)! }
-                    .eraseToAnyPublisher(),
+            viewDidLoad: self.viewDidLoadPublisher,
             segmentControlValueChanged:
                 self.letterView.headerView.segmentedControlTapPublisher
-                    .withUnretained(self)
-                    .map { owner, _ -> LetterViewModel.MessageType in
-                        guard let type = LetterViewModel.MessageType(rawValue: owner.messageType.rawValue) else { return .sent }
+                    .map { index -> LetterViewModel.MessageType in
+                        guard let type = LetterViewModel.MessageType(rawValue: index) else { return .sent }
                         return type
                     }
                     .eraseToAnyPublisher(),
@@ -99,47 +85,52 @@ final class LetterViewController: BaseViewController {
         guard let output = output else { return }
 
         output.messages
-            .withUnretained(self)
-            .map { owner, items in
-                owner.letterCollectionViewDataSource(items: items)
+            .map { [weak self] items in
+                self?.letterCollectionViewDataSource(items: items)
             }
             .catch { _ in return Just(nil)}
-            .withUnretained(self)
             .receive(on: RunLoop.main)
-            .sink(receiveValue: { owner, dataSource in
+            .sink(receiveValue: { [weak self] dataSource in
                 guard let dataSource = dataSource else {
-                    owner.showErrorAlert()
+                    self?.showErrorAlert()
                     return
                 }
 
-                owner.updateList(with: dataSource)
-            })
-            .store(in: &self.cancelBag)
-
-        output.index
-            .withUnretained(self)
-            .sink(receiveValue: { owner, index in
-                owner.letterView.headerView.setValue(index)
+                self?.updateList(with: dataSource)
+                // TODO: - view layout update(데이터 없으면 empty 멘트)
             })
             .store(in: &self.cancelBag)
 
         output.messageDetails
-            .withUnretained(self)
-            .sink(receiveValue: { owner, details in
+            .sink(receiveValue: { [weak self] details in
+                guard let self = self else { return }
                 let viewController = CreateLetterViewController(manitteeId: details.manitteeId,
                                                                 roomId: details.roomId,
                                                                 mission: details.mission,
                                                                 missionId: details.missionId)
                 let navigationController = UINavigationController(rootViewController: viewController)
                 viewController.configureDelegation(self)
-                owner.present(navigationController, animated: true)
+                self.present(navigationController, animated: true)
             })
             .store(in: &self.cancelBag)
 
         output.reportDetails
-            .withUnretained(self)
-            .sink(receiveValue: { owner, details in
-                owner.sendReportMail(userNickname: details.nickname, content: details.content)
+            .sink(receiveValue: { [weak self] details in
+                self?.sendReportMail(userNickname: details.nickname, content: details.content)
+            })
+            .store(in: &self.cancelBag)
+
+        Publishers.CombineLatest(output.roomState, output.index)
+            .map { (state: $0, index: $1) }
+            .sink(receiveValue: { [weak self] result in
+                switch (result.state, result.index) {
+                case (.processing, 0):
+                    self?.letterView.showBottomArea()
+                default:
+                    self?.letterView.hideBottomArea()
+                }
+                // TODO: - cell report 보이게 안보이게
+                // TODO: - Empty Label Text
             })
             .store(in: &self.cancelBag)
     }
@@ -148,36 +139,36 @@ final class LetterViewController: BaseViewController {
 extension LetterViewController {
     private func letterCollectionViewDataSource(items: [Message]) -> CollectionViewDataSource<LetterCollectionViewCell, Message> {
         return CollectionViewDataSource(identifier: LetterCollectionViewCell.className,
-                                        items: items) { cell, item in
+                                        items: items) { [weak self] cell, item in
+//            let canReport = self.messageType == .received
             cell.configureCell((mission: item.mission,
                                 date: item.date,
                                 content: item.content,
                                 imageURL: item.imageUrl,
-                                isTodayLetter: item.isToday))
-            self.bindCell(cell, with: item)
+                                isTodayLetter: item.isToday,
+                                canReport: true))
+            self?.bindCell(cell, with: item)
         }
     }
 
     private func bindCell(_ cell: LetterCollectionViewCell, with item: Message) {
         cell.reportButtonTapPublisher
-            .withUnretained(self)
-            .sink(receiveValue: { owner, _ in
+            .sink(receiveValue: { [weak self] _ in
                 if let content = item.content {
-                    owner.reportSubject.send(content)
+                    self?.reportSubject.send(content)
                 } else {
-                    owner.reportSubject.send("쪽지 내용 없음")
+                    self?.reportSubject.send("쪽지 내용 없음")
                 }
             })
             .store(in: &self.cancelBag)
 
         cell.imageViewTapGesturePublisher
-            .withUnretained(self)
-            .sink(receiveValue: { owner, _ in
+            .sink(receiveValue: { [weak self] _ in
                 guard let imageUrl = item.imageUrl else { return }
                 let viewController = LetterImageViewController(imageUrl: imageUrl)
                 viewController.modalPresentationStyle = .fullScreen
                 viewController.modalTransitionStyle = .crossDissolve
-                owner.present(viewController, animated: true)
+                self?.present(viewController, animated: true)
             })
             .store(in: &self.cancelBag)
     }
@@ -197,16 +188,5 @@ extension LetterViewController {
 extension LetterViewController: CreateLetterViewControllerDelegate {
     func refreshLetterData() {
         self.refreshSubject.send(())
-    }
-}
-
-private extension CollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let headerView = collectionView.dequeueReusableSupplementaryView(
-            ofKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: LetterHeaderView.className,
-            for: indexPath
-        ) as? LetterHeaderView else { return UICollectionReusableView() }
-        return headerView
     }
 }
