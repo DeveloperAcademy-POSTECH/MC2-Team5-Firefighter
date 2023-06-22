@@ -33,7 +33,7 @@ final class LetterViewModel: ViewModelType {
 
     struct Output {
         let messages: PassthroughSubject<[Message], NetworkError>
-        let index: PassthroughSubject<Int, Never>
+        let index: CurrentValueSubject<Int, Never>
         let messageDetails: AnyPublisher<MessageDetails, Never>
         let reportDetails: AnyPublisher<ReportDetails, Never>
         let roomState: AnyPublisher<RoomState, Never>
@@ -42,7 +42,7 @@ final class LetterViewModel: ViewModelType {
     // MARK: - property
 
     private let messageSubject: PassthroughSubject<[Message], NetworkError> = PassthroughSubject()
-    private let indexSubject: PassthroughSubject<Int, Never> = PassthroughSubject()
+    private lazy var indexSubject: CurrentValueSubject<Int, Never> = CurrentValueSubject(self.messageType.rawValue)
 
     private var cancelBag: Set<AnyCancellable> = Set()
 
@@ -68,10 +68,7 @@ final class LetterViewModel: ViewModelType {
     // MARK: - Public - func
 
     func transform(from input: Input) -> Output {
-        let viewDidLoad = input.viewDidLoad
-            .share()
-
-        let viewDidLoadType = viewDidLoad
+        let viewDidLoadType = input.viewDidLoad
             .map { [weak self] in self?.messageType }
             .map { $0! }
 
@@ -103,7 +100,7 @@ final class LetterViewModel: ViewModelType {
             }
             .eraseToAnyPublisher()
 
-        let roomStatePublisher = viewDidLoad
+        let roomStatePublisher = input.viewDidLoad
             .map { [weak self] in (self?.roomState)! }
             .eraseToAnyPublisher()
 

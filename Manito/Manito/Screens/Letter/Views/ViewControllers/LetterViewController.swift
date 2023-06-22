@@ -29,6 +29,8 @@ final class LetterViewController: BaseViewController {
 
     private var cancelBag: Set<AnyCancellable> = Set()
 
+    private var viewModelOutput: LetterViewModel.Output?
+
     private let viewModel: any ViewModelType
 
     // MARK: - init
@@ -71,6 +73,7 @@ final class LetterViewController: BaseViewController {
 
     private func bindViewModel() {
         let output = self.transformedOutput()
+        self.viewModelOutput = output
         self.bindOutputToViewModel(output)
     }
 
@@ -166,6 +169,12 @@ final class LetterViewController: BaseViewController {
                 self?.segmentValueSubject.send(value)
             })
             .store(in: &self.cancelBag)
+
+        self.viewModelOutput?.index
+            .sink(receiveValue: { index in
+                headerView.setupHeaderSelectedIndex(at: index)
+            })
+            .store(in: &self.cancelBag)
     }
 }
 
@@ -217,9 +226,7 @@ extension LetterViewController {
                 withReuseIdentifier: LetterHeaderView.className,
                 for: indexPath
             ) as? LetterHeaderView else { return UICollectionReusableView() }
-
             self.bindHeaderView(headerView)
-
             return headerView
         default:
             return nil

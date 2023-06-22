@@ -66,7 +66,7 @@ final class LetterView: UIView {
         label.addLabelSpacing(lineSpacing: 16)
         return label
     }()
-    let headerView: LetterHeaderView = LetterHeaderView()
+    var headerView: LetterHeaderView?
 
     // MARK: - init
 
