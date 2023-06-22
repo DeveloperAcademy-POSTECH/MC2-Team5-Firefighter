@@ -122,10 +122,6 @@ final class LetterView: UIView {
         self.bottomView.isHidden = true
         self.wholeStackView.isLayoutMarginsRelativeArrangement = false
     }
-
-    func removeGuideView() {
-        self.guideView.removeGuideView()
-    }
 }
 
 extension LetterView {
@@ -173,6 +169,10 @@ extension LetterView {
         self.guideView.setupGuideViewLayout(in: navigationController)
         self.guideView.addGuideButton(in: viewController.navigationItem)
         self.guideView.hideGuideViewWhenTappedAround(in: navigationController, viewController)
+    }
+
+    private func removeGuideView() {
+        self.guideView.removeGuideView()
     }
 }
 
