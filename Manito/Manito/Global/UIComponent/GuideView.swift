@@ -148,6 +148,10 @@ final class GuideView: UIView {
         viewController.view.addGestureRecognizer(viewControllerTapGesture)
     }
 
+    func removeGuideView() {
+        self.guideBoxImageView.removeFromSuperview()
+    }
+
     // MARK: - selector
 
     @objc

@@ -68,6 +68,8 @@ final class LetterView: UIView {
     }()
     let headerView: LetterHeaderView = LetterHeaderView()
 
+    // MARK: - init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
@@ -97,8 +99,8 @@ final class LetterView: UIView {
         self.bottomView.isHidden = true
     }
 
-    func updateLetterView() {
-//        self.updateEmptyLabel(to: type.emptyText)
+    func removeGuideView() {
+        self.guideView.removeGuideView()
     }
 }
 
@@ -139,10 +141,6 @@ extension LetterView {
         self.guideView.setupGuideViewLayout(in: navigationController)
         self.guideView.addGuideButton(in: viewController.navigationItem)
         self.guideView.hideGuideViewWhenTappedAround(in: navigationController, viewController)
-    }
-
-    private func removeGuideView() {
-        self.guideView.removeFromSuperview()
     }
 
 //    private func createLayout() -> UICollectionViewLayout {

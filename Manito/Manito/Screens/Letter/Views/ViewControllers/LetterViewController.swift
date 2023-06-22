@@ -48,6 +48,11 @@ final class LetterViewController: BaseViewController {
         self.bindViewModel()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.letterView.removeGuideView()
+    }
+
     // MARK: - override
 
     override func configureUI() {
