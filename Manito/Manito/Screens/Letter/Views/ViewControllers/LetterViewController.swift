@@ -103,7 +103,7 @@ final class LetterViewController: BaseViewController {
                 }
             }, receiveValue: { [weak self] items in
                 self?.reloadMessageList(items)
-                // TODO: - view layout update(데이터 없으면 empty 멘트)
+                self?.letterView.updateEmptyArea(with: items)
             })
             .store(in: &self.cancelBag)
 
@@ -129,14 +129,9 @@ final class LetterViewController: BaseViewController {
         Publishers.CombineLatest(output.roomState, output.index)
             .map { (state: $0, index: $1) }
             .sink(receiveValue: { [weak self] result in
-                switch (result.state, result.index) {
-                case (.processing, 0):
-                    self?.letterView.showBottomArea()
-                default:
-                    self?.letterView.hideBottomArea()
-                }
+                self?.updateLetterViewEmptyArea(with: result.index)
+                self?.updateLetterViewBottomArea(with: result.state, result.index)
                 // TODO: - cell report 보이게 안보이게
-                // TODO: - Empty Label Text
             })
             .store(in: &self.cancelBag)
     }
@@ -175,6 +170,32 @@ final class LetterViewController: BaseViewController {
                 headerView.setupHeaderSelectedIndex(at: index)
             })
             .store(in: &self.cancelBag)
+    }
+}
+
+// MARK: - Helper
+extension LetterViewController {
+    private func showErrorAlert() {
+        self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
+                       message: TextLiteral.letterViewControllerErrorDescription)
+    }
+
+    private func updateLetterViewEmptyArea(with index: Int) {
+        switch index {
+        case 0:
+            self.letterView.updateEmptyArea(with: TextLiteral.letterViewControllerEmptyViewTo)
+        default:
+            self.letterView.updateEmptyArea(with: TextLiteral.letterViewControllerEmptyViewFrom)
+        }
+    }
+
+    private func updateLetterViewBottomArea(with state: LetterViewModel.RoomState, _ index: Int) {
+        switch (state, index) {
+        case (.processing, 0):
+            self.letterView.showBottomArea()
+        default:
+            self.letterView.hideBottomArea()
+        }
     }
 }
 
@@ -247,14 +268,6 @@ extension LetterViewController {
         self.snapShot.deleteItems(previousMessageData)
         self.snapShot.appendItems(items, toSection: .main)
         self.dataSource.apply(self.snapShot, animatingDifferences: true)
-    }
-}
-
-// MARK: - Helper
-extension LetterViewController {
-    private func showErrorAlert() {
-        self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
-                       message: TextLiteral.letterViewControllerErrorDescription)
     }
 }
 

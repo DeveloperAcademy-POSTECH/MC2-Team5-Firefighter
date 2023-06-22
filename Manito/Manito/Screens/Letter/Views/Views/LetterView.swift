@@ -57,8 +57,8 @@ final class LetterView: UIView {
         label.text = TextLiteral.letterViewControllerEmptyViewTo
         label.isHidden = true
         label.textColor = .grey003
-        label.textAlignment = .center
         label.addLabelSpacing(lineSpacing: 16)
+        label.textAlignment = .center
         return label
     }()
 
@@ -88,6 +88,15 @@ final class LetterView: UIView {
     func configureNavigationBar(of viewController: UIViewController) {
         self.setupNavigationTitle(in: viewController)
         self.setupGuideView(in: viewController)
+    }
+
+    func updateEmptyArea(with items: [Message]) {
+        let isEmpty = items.isEmpty
+        self.emptyLabel.isHidden = !isEmpty
+    }
+
+    func updateEmptyArea(with text: String) {
+        self.emptyLabel.text = text
     }
 
     func showBottomArea() {
