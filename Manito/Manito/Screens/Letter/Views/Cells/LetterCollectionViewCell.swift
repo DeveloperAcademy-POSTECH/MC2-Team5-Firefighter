@@ -70,8 +70,18 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         return self.reportButton.tapPublisher
     }
 
-    var imageViewTapGesturePublisher: AnyPublisher<Void, Never> {
-        return self.photoImageView.tapGesturePublisher
+    var imageViewTapGesturePublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+
+    // MARK: - init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setupImageGesture()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - override
@@ -107,6 +117,17 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - func
 
+    private func setupImageGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapImage))
+        self.photoImageView.addGestureRecognizer(tapGesture)
+    }
+
+    // MARK: - selector
+
+    @objc
+    private func didTapImage() {
+        self.imageViewTapGesturePublisher.send(())
+    }
 }
 
 // MARK: - Public - func
