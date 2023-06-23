@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-protocol LetterServicable: Servicable {
+protocol LetterServicable {
     var manitteeId: String? { get set }
     var nickname: String { get set }
 

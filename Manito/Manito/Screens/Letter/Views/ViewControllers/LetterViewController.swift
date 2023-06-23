@@ -78,7 +78,7 @@ final class LetterViewController: BaseViewController {
             viewDidLoad: self.viewDidLoadPublisher,
             segmentControlValueChanged: self.segmentValueSubject,
             refresh: self.refreshSubject,
-            sendLetterButtonDidTap: self.letterView.sendLetterButton.tapPublisher,
+            sendLetterButtonDidTap: self.letterView.sendButtonTapPublisher,
             reportButtonDidTap: self.reportSubject
         )
 
@@ -219,7 +219,7 @@ extension LetterViewController {
         }
 
         return UICollectionViewDiffableDataSource(
-            collectionView: self.letterView.listCollectionView,
+            collectionView: self.letterView.collectionView(),
             cellProvider: { collectionView, indexPath, item in
                 return collectionView.dequeueConfiguredReusableCell(
                     using: letterCellRegistration,

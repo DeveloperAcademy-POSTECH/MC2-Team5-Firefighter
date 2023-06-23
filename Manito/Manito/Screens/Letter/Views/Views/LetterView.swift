@@ -33,6 +33,7 @@ final class LetterView: UIView {
 
     // MARK: - ui component
 
+    private let guideView: GuideView = GuideView(type: .letter)
     private let wholeStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -46,25 +47,12 @@ final class LetterView: UIView {
         view.backgroundColor = .backgroundGrey
         return view
     }()
-    private let guideView: GuideView = GuideView(type: .letter)
-
-    lazy var listCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
-        collectionView.backgroundColor = .clear
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(cell: LetterCollectionViewCell.self,
-                                forCellWithReuseIdentifier: LetterCollectionViewCell.className)
-        collectionView.register(LetterHeaderView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: LetterHeaderView.className)
-        return collectionView
-    }()
-    lazy var sendLetterButton: UIButton = {
+    private lazy var sendLetterButton: UIButton = {
         let button = MainButton()
         button.title = TextLiteral.sendLetterViewSendLetterButton
         return button
     }()
-    let emptyLabel: UILabel = {
+    private let emptyLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
         label.font = .font(.regular, ofSize: 16)
@@ -75,8 +63,23 @@ final class LetterView: UIView {
         label.textAlignment = .center
         return label
     }()
+    private lazy var listCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(cell: LetterCollectionViewCell.self,
+                                forCellWithReuseIdentifier: LetterCollectionViewCell.className)
+        collectionView.register(LetterHeaderView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: LetterHeaderView.className)
+        return collectionView
+    }()
 
     // MARK: - property
+
+    var sendButtonTapPublisher: AnyPublisher<Void, Never> {
+        return self.sendLetterButton.tapPublisher
+    }
 
     private var cancelBag: Set<AnyCancellable> = Set()
 
@@ -121,6 +124,10 @@ final class LetterView: UIView {
     func hideBottomArea() {
         self.bottomView.isHidden = true
         self.wholeStackView.isLayoutMarginsRelativeArrangement = false
+    }
+
+    func collectionView() -> UICollectionView {
+        return self.listCollectionView
     }
 }
 
