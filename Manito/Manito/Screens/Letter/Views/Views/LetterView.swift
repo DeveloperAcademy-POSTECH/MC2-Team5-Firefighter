@@ -42,12 +42,12 @@ final class LetterView: UIView {
         stackView.layoutMargins = ConstantSize.stackMargins
         return stackView
     }()
-    private lazy var bottomView: UIView = {
+    private let bottomView: UIView = {
         let view = UIView()
         view.backgroundColor = .backgroundGrey
         return view
     }()
-    private lazy var sendLetterButton: UIButton = {
+    private let sendLetterButton: UIButton = {
         let button = MainButton()
         button.title = TextLiteral.sendLetterViewSendLetterButton
         return button
@@ -96,10 +96,6 @@ final class LetterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        self.removeGuideView()
-    }
-
     // MARK: - func
 
     func configureNavigationBar(of viewController: UIViewController) {
@@ -124,6 +120,10 @@ final class LetterView: UIView {
     func hideBottomArea() {
         self.bottomView.isHidden = true
         self.wholeStackView.isLayoutMarginsRelativeArrangement = false
+    }
+
+    func removeGuideView() {
+        self.guideView.removeGuideView()
     }
 
     func collectionView() -> UICollectionView {
@@ -176,10 +176,6 @@ extension LetterView {
         self.guideView.setupGuideViewLayout(in: navigationController)
         self.guideView.addGuideButton(in: viewController.navigationItem)
         self.guideView.hideGuideViewWhenTappedAround(in: navigationController, viewController)
-    }
-
-    private func removeGuideView() {
-        self.guideView.removeGuideView()
     }
 }
 

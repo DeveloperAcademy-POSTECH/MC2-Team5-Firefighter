@@ -57,11 +57,14 @@ final class LetterViewController: BaseViewController {
         self.bindViewModel()
     }
 
-    // MARK: - override
-
-    override func configureUI() {
-        super.configureUI()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.letterView.configureNavigationBar(of: self)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.letterView.removeGuideView()
     }
 
     // MARK: - func - bind
