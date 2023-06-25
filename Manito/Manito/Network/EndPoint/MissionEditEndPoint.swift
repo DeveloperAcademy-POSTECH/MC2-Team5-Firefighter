@@ -12,7 +12,7 @@ enum MissionEditEndPoint: URLRepresentable {
     var path: String {
         switch self {
         case .patchEditMission(let roomId, _):
-            return "/missions/\(roomId)"
+            return "/\(roomId)/individual-mission"
         }
     }
 }

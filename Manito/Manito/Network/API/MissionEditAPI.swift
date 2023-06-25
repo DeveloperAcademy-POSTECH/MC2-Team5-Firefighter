@@ -14,7 +14,7 @@ struct MissionEditAPI: MissionEditProtocol {
         self.apiService = apiService
     }
     
-    func patchEditMission(roomId: String, body: MissionDTO) async throws -> String? {
+    func patchEditMission(roomId: String, body: MissionDTO) async throws -> MissionDTO? {
         let request = MissionEditEndPoint
             .patchEditMission(roomId: roomId, body: body)
             .createRequest()

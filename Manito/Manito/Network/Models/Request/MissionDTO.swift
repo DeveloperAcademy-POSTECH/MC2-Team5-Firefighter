@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct MissionDTO: Encodable {
+struct MissionDTO: Codable {
     let mission: String
 }
