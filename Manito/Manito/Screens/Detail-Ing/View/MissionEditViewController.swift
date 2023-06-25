@@ -127,16 +127,17 @@ final class MissionEditViewController: BaseViewController {
                               okTitle: TextLiteral.change,
                               okStyle: .default,
                               okAction: { [weak self] _ in
-            // FIXME: - API 연결 후 작업해야함
-            self?.patchEditMission { result in
+            guard let missionText = self?.missionTextField.text else { return }
+            self?.patchEditMission(mission: missionText) { result in
                 switch result {
                 case .success(let mission):
-                    print(mission)
+                    DispatchQueue.main.async {
+                        self?.dismiss(animated: true)
+                    }
                 case .failure:
                     print("error")
                 }
             }
-            self?.dismiss(animated: true)
         })
     }
     
@@ -163,13 +164,18 @@ final class MissionEditViewController: BaseViewController {
     
     // MARK: - network
     
-    private func patchEditMission(completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
-        print("roomId", self.roomId)
-//        Task {
-//            do {
-//                let data = try await self.missionEditService.patchEditMission(roomId: self.roomId, body: MissionDTO(mission: "테스트"))
-//            }
-//        }
+    private func patchEditMission(mission: String, completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
+        Task {
+            do {
+                let data = try await self.missionEditService.patchEditMission(roomId: self.roomId,
+                                                                              body: MissionDTO(mission: mission))
+                if let data {
+                    completionHandler(.success(data.mission))
+                } else {
+                    completionHandler(.failure(.unknownError))
+                }
+            }
+        }
     }
 }
 
