@@ -12,7 +12,7 @@ enum URLLiteral {
     // MARK: - server url
     
     static let developmentUrl: String = "http://43.200.81.247:8080"
-    static let productionUrl: String = "https://dev.aenitto.shop"
+    static let productionUrl: String = "https://ckyeon.store"
     
     // MARK: - notion url
     
