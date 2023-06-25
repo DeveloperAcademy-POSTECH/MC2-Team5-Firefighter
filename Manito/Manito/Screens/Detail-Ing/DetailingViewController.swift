@@ -87,8 +87,8 @@ final class DetailingViewController: BaseViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    private func presentEditMissionView(mission: String) {
-        let viewController = MissionEditViewController(mission: mission)
+    private func presentEditMissionView(mission: String, roomId: String) {
+        let viewController = MissionEditViewController(mission: mission, roomId: roomId)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .overCurrentContext
         self.present(viewController, animated: true)
@@ -196,7 +196,8 @@ extension DetailingViewController: DetailingDelegate {
     func editMissionButtonDidTap(mission: String) {
         typealias AlertAction = ((UIAlertAction) -> ())
         let editMissionAction: AlertAction = { [weak self] _ in
-            self?.presentEditMissionView(mission: mission)
+            guard let roomId = self?.roomId else { return }
+            self?.presentEditMissionView(mission: mission, roomId: roomId)
         }
         let resetAction: AlertAction = { [weak self] _ in
             self?.resetMission()

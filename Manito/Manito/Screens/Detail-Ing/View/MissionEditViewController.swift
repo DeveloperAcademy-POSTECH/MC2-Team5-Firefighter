@@ -14,6 +14,8 @@ final class MissionEditViewController: BaseViewController {
     // MARK: - property
     
     let mission: String
+    let roomId: String
+    private let missionEditService: MissionEditAPI = MissionEditAPI(apiService: APIService())
     
     // MARK: - component
     
@@ -55,8 +57,9 @@ final class MissionEditViewController: BaseViewController {
     
     // MARK: - init
     
-    init(mission: String) {
+    init(mission: String, roomId: String) {
         self.mission = mission
+        self.roomId = roomId
         super.init()
     }
     
@@ -125,6 +128,14 @@ final class MissionEditViewController: BaseViewController {
                               okStyle: .default,
                               okAction: { [weak self] _ in
             // FIXME: - API 연결 후 작업해야함
+            self?.patchEditMission { result in
+                switch result {
+                case .success(let mission):
+                    print(mission)
+                case .failure:
+                    print("error")
+                }
+            }
             self?.dismiss(animated: true)
         })
     }
@@ -148,6 +159,17 @@ final class MissionEditViewController: BaseViewController {
         UIView.animate(withDuration: 0.2, animations: {
             self.backgroundView.transform = .identity
         })
+    }
+    
+    // MARK: - network
+    
+    private func patchEditMission(completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
+        print("roomId", self.roomId)
+//        Task {
+//            do {
+//                let data = try await self.missionEditService.patchEditMission(roomId: self.roomId, body: MissionDTO(mission: "테스트"))
+//            }
+//        }
     }
 }
 
