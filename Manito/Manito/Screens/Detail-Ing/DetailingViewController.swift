@@ -91,6 +91,7 @@ final class DetailingViewController: BaseViewController {
         let viewController = MissionEditViewController(mission: mission, roomId: roomId)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .overCurrentContext
+        viewController.setDelegate(self)
         self.present(viewController, animated: true)
     }
     
@@ -263,5 +264,11 @@ extension DetailingViewController: DetailingDelegate {
     
     func didNotShowManitteeView(manitteeName: String) {
         self.openManittee(manitteeName: manitteeName)
+    }
+}
+
+extension DetailingViewController: MissionEditDelegate {
+    func didChangeMission(mission: String) {
+        self.detailingView.updateMission(mission: mission)
     }
 }

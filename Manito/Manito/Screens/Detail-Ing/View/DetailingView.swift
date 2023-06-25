@@ -452,6 +452,10 @@ final class DetailingView: UIView {
         }
     }
     
+    func updateMission(mission: String) {
+        self.missionContentsLabel.text = mission
+    }
+    
     private func setupExitButton(admin: Bool) {
         if admin {
             let menu = UIMenu(options: [], children: [

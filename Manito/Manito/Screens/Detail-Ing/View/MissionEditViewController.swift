@@ -9,6 +9,10 @@ import UIKit
 
 import SnapKit
 
+protocol MissionEditDelegate: AnyObject {
+    func didChangeMission(mission: String)
+}
+
 final class MissionEditViewController: BaseViewController {
     
     // MARK: - property
@@ -16,6 +20,7 @@ final class MissionEditViewController: BaseViewController {
     let mission: String
     let roomId: String
     private let missionEditService: MissionEditAPI = MissionEditAPI(apiService: APIService())
+    private weak var delegate: MissionEditDelegate?
     
     // MARK: - component
     
@@ -107,6 +112,10 @@ final class MissionEditViewController: BaseViewController {
     
     // MARK: - func
     
+    func setDelegate(_ delegate: DetailingViewController) {
+        self.delegate = delegate
+    }
+    
     private func setupGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissViewController))
         self.view.addGestureRecognizer(tapGesture)
@@ -132,6 +141,7 @@ final class MissionEditViewController: BaseViewController {
                 switch result {
                 case .success(let mission):
                     DispatchQueue.main.async {
+                        self?.delegate?.didChangeMission(mission: mission)
                         self?.dismiss(animated: true)
                     }
                 case .failure:
