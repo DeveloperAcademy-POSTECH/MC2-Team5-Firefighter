@@ -8,5 +8,6 @@
 import Foundation
 
 protocol MissionEditProtocol {
-    func patchEditMission(roomId: String, body: MissionDTO) async throws -> MissionDTO? 
+    func patchEditMission(roomId: String, body: MissionDTO) async throws -> MissionDTO?
+    func fetchResetMission(roomId: String) async throws -> MissionDTO?
 }

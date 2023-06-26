@@ -9,10 +9,15 @@ import Foundation
 
 enum MissionEditEndPoint: URLRepresentable {
     case patchEditMission(roomId: String, body: MissionDTO)
+    case getResetMission(roomId: String)
+    
     var path: String {
         switch self {
         case .patchEditMission(let roomId, _):
             return "/\(roomId)/individual-mission"
+            
+        case .getResetMission(let roomId):
+            return "/\(roomId)/individual-mission/restore"
         }
     }
 }
@@ -26,6 +31,9 @@ extension MissionEditEndPoint: EndPointable {
         switch self {
         case .patchEditMission:
             return .patch
+            
+        case .getResetMission:
+            return .get
         }
     }
     
@@ -33,6 +41,9 @@ extension MissionEditEndPoint: EndPointable {
         switch self {
         case .patchEditMission(_, let body):
             return body.encode()
+            
+        case .getResetMission:
+            return nil
         }
     }
     
@@ -40,6 +51,9 @@ extension MissionEditEndPoint: EndPointable {
         switch self {
         case .patchEditMission(let roomId, let body):
             return self[.patchEditMission(roomId: roomId, body: body)]
+            
+        case .getResetMission(let roomId):
+            return self[.getResetMission(roomId: roomId)]
         }
     }
     
