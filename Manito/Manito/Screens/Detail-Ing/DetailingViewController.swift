@@ -15,6 +15,7 @@ final class DetailingViewController: BaseViewController {
     
     private let detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
     private let detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
+    private let missionEditService: MissionEditAPI = MissionEditAPI(apiService: APIService())
     private let roomId: String
     private var missionId: String = ""
     
@@ -100,8 +101,16 @@ final class DetailingViewController: BaseViewController {
                               message: TextLiteral.detailIngViewControllerResetMissionAlertMessage,
                               okTitle: TextLiteral.detailIngViewControllerResetMissionAlertOkTitle,
                               okStyle: .default,
-                              okAction: { _ in
-            // FIXME: - API 연결
+                              okAction: { [weak self] _ in
+            guard let roomId = self?.roomId else { return }
+            self?.requestResetMission(roomId: roomId) { result in
+                switch result {
+                case .success(let mission):
+                    self?.detailingView.updateMission(mission: mission)
+                case .failure:
+                    self?.makeAlert(title: "에러")
+                }
+            }
         })
     }
     
@@ -188,6 +197,21 @@ final class DetailingViewController: BaseViewController {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
                 print("client Error: \(String(describing: message))")
+            }
+        }
+    }
+    
+    private func requestResetMission(roomId: String, completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
+        Task {
+            do {
+                let data = try await self.missionEditService.fetchResetMission(roomId: roomId)
+                if let mission = data {
+                    completionHandler(.success(mission.mission))
+                }
+            } catch NetworkError.serverError {
+                completionHandler(.failure(.serverError))
+            } catch NetworkError.clientError(let message) {
+                completionHandler(.failure(.clientError(message: message)))
             }
         }
     }
