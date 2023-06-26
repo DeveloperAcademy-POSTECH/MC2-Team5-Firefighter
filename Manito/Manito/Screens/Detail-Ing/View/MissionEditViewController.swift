@@ -184,6 +184,10 @@ final class MissionEditViewController: BaseViewController {
                 } else {
                     completionHandler(.failure(.unknownError))
                 }
+            } catch NetworkError.serverError {
+                completionHandler(.failure(.serverError))
+            } catch NetworkError.clientError(let message) {
+                completionHandler(.failure(.clientError(message: message)))
             }
         }
     }
