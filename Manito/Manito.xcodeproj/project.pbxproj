@@ -526,7 +526,6 @@
 			isa = PBXGroup;
 			children = (
 				39EE956C2A401ED400AF6857 /* DetailingView.swift */,
-				39EE956E2A404A3800AF6857 /* MissionEditViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -759,6 +758,7 @@
 				435B17672913E71400212663 /* DetailingViewController.swift */,
 				33BDF5612856E03800564211 /* FriendListViewController.swift */,
 				333BF669285864CE0039F77F /* MemoryViewController.swift */,
+				39EE956E2A404A3800AF6857 /* MissionEditViewController.swift */,
 			);
 			path = "Detail-Ing";
 			sourceTree = "<group>";
