@@ -92,7 +92,7 @@ final class LetterViewController: BaseViewController {
         guard let output = output else { return }
 
         output.messages
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .failure(_):
