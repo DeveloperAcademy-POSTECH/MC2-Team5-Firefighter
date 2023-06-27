@@ -205,7 +205,7 @@ final class DetailingViewController: BaseViewController {
     private func requestResetMission(roomId: String, completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
         Task {
             do {
-                let data = try await self.missionEditService.fetchResetMission(roomId: roomId)
+                let data = try await self.detailIngService.fetchResetMission(roomId: roomId)
                 if let mission = data {
                     completionHandler(.success(mission.mission))
                 }

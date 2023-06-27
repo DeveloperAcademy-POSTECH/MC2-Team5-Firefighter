@@ -27,4 +27,11 @@ struct DetailIngAPI: DetailStartingProtocol {
             .createRequest()
         return try await apiService.request(request)
     }
+    
+    func fetchResetMission(roomId: String) async throws -> MissionDTO? {
+        let request = DetailIngEndPoint
+            .getResetMission(roomId: roomId)
+            .createRequest()
+        return try await apiService.request(request)
+    }
 }
