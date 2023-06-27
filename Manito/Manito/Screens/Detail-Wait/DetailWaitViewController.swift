@@ -49,6 +49,7 @@ final class DetailWaitViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNotificationCenter()
         self.configureDelegation()
         self.configureNavigationController()
         self.fetchRoomInformationAtViewModel()
@@ -127,6 +128,10 @@ final class DetailWaitViewController: BaseViewController {
                 self?.showStartDatePassedAlert(isAdmin: value)
             })
             .store(in: &self.cancellable)
+    }
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
     }
     
     private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
@@ -214,6 +219,28 @@ final class DetailWaitViewController: BaseViewController {
             self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                            message: TextLiteral.detailWaitViewControllerPastAlertMessage)
         }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func didTapEnterButton() {
+        guard let roomInfo = self.detailWaitViewModel.roomInformation.value,
+              let title = roomInfo.roomInformation?.title,
+              let capacity = roomInfo.roomInformation?.capacity,
+              let startDate = roomInfo.roomInformation?.startDate,
+              let endDate = roomInfo.roomInformation?.endDate,
+              let invitationCode = roomInfo.invitation?.code
+        else { return }
+        let roomDto = RoomDTO(title: title,
+                              capacity: capacity,
+                              startDate: startDate,
+                              endDate: endDate)
+        let viewController = InvitedCodeViewController(roomInfo: roomDto,
+                                                       code: invitationCode)
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        self.present(viewController, animated: true)
     }
 }
 
