@@ -69,12 +69,10 @@ final class LetterViewModel: ViewModelType {
 
     func transform(from input: Input) -> Output {
         let viewDidLoadType = input.viewDidLoad
-            .map { [weak self] in self?.messageType }
-            .map { $0! }
+            .compactMap { [weak self] in self?.messageType }
 
         let segmentValueType = input.segmentControlValueChanged
-            .map { MessageType(rawValue: $0) }
-            .map { $0! }
+            .compactMap { MessageType(rawValue: $0) }
 
         let refreshWithType = input.refresh
             .map { MessageType.sent }
@@ -101,7 +99,7 @@ final class LetterViewModel: ViewModelType {
             .eraseToAnyPublisher()
 
         let roomStatePublisher = input.viewDidLoad
-            .map { [weak self] in (self?.roomState)! }
+            .compactMap { [weak self] in self?.roomState }
             .eraseToAnyPublisher()
 
         return Output(
