@@ -145,7 +145,8 @@ final class MissionEditViewController: BaseViewController {
                         self?.dismiss(animated: true)
                     }
                 case .failure:
-                    print("error")
+                    self?.makeAlert(title: TextLiteral.missionEditViewControllerChangeMissionErrorAlertTitle,
+                                    message: TextLiteral.missionEditViewControllerChangeMissionErrorAlertMessage)
                 }
             }
         })

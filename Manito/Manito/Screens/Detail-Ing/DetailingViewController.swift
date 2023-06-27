@@ -108,7 +108,8 @@ final class DetailingViewController: BaseViewController {
                 case .success(let mission):
                     self?.detailingView.updateMission(mission: mission)
                 case .failure:
-                    self?.makeAlert(title: "에러")
+                    self?.makeAlert(title: TextLiteral.detailIngViewControllerResetMissionErrorAlertOkTitle,
+                                    message: TextLiteral.detailIngViewControllerResetMissionErrorAlertOkMessage)
                 }
             }
         })
