@@ -15,7 +15,6 @@ final class DetailingViewController: BaseViewController {
     
     private let detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
     private let detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
-    private let missionEditService: MissionEditAPI = MissionEditAPI(apiService: APIService())
     private let roomId: String
     private var missionId: String = ""
     
@@ -105,8 +104,8 @@ final class DetailingViewController: BaseViewController {
             guard let roomId = self?.roomId else { return }
             self?.requestResetMission(roomId: roomId) { result in
                 switch result {
-                case .success(let mission):
-                    self?.detailingView.updateMission(mission: mission)
+                case .success():
+                    self?.requestRoomInformation()
                 case .failure:
                     self?.makeAlert(title: TextLiteral.detailIngViewControllerResetMissionErrorAlertOkTitle,
                                     message: TextLiteral.detailIngViewControllerResetMissionErrorAlertOkMessage)
@@ -202,12 +201,12 @@ final class DetailingViewController: BaseViewController {
         }
     }
     
-    private func requestResetMission(roomId: String, completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
+    private func requestResetMission(roomId: String, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
                 let data = try await self.detailIngService.fetchResetMission(roomId: roomId)
-                if let mission = data {
-                    completionHandler(.success(mission.mission))
+                if let _ = data {
+                    completionHandler(.success(()))
                 }
             } catch NetworkError.serverError {
                 completionHandler(.failure(.serverError))
@@ -293,7 +292,7 @@ extension DetailingViewController: DetailingDelegate {
 }
 
 extension DetailingViewController: MissionEditDelegate {
-    func didChangeMission(mission: String) {
-        self.detailingView.updateMission(mission: mission)
+    func didChangeMission() {
+        self.requestRoomInformation()
     }
 }

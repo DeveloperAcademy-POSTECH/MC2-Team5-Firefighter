@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol MissionEditDelegate: AnyObject {
-    func didChangeMission(mission: String)
+    func didChangeMission()
 }
 
 final class MissionEditViewController: BaseViewController {
@@ -139,9 +139,9 @@ final class MissionEditViewController: BaseViewController {
             guard let missionText = self?.missionTextField.text else { return }
             self?.patchEditMission(mission: missionText) { result in
                 switch result {
-                case .success(let mission):
+                case .success():
                     DispatchQueue.main.async {
-                        self?.delegate?.didChangeMission(mission: mission)
+                        self?.delegate?.didChangeMission()
                         self?.dismiss(animated: true)
                     }
                 case .failure:
@@ -175,13 +175,13 @@ final class MissionEditViewController: BaseViewController {
     
     // MARK: - network
     
-    private func patchEditMission(mission: String, completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
+    private func patchEditMission(mission: String, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
                 let data = try await self.missionEditService.patchEditMission(roomId: self.roomId,
                                                                               body: MissionDTO(mission: mission))
-                if let data {
-                    completionHandler(.success(data.mission))
+                if let _ = data {
+                    completionHandler(.success(()))
                 } else {
                     completionHandler(.failure(.unknownError))
                 }
