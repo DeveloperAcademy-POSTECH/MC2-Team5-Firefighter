@@ -10,6 +10,7 @@ import Foundation
 enum DetailIngEndPoint: URLRepresentable {
     case requestWithFriend(roomId: String)
     case requestStartingRoomInfo(roomId: String)
+    case getResetMission(roomId: String)
 
     var path: String {
         switch self {
@@ -17,6 +18,8 @@ enum DetailIngEndPoint: URLRepresentable {
             return "/rooms/\(roomId)/participants"
         case .requestStartingRoomInfo(let roomId):
             return "/rooms/\(roomId)"
+        case .getResetMission(let roomId):
+            return "/\(roomId)/individual-mission/restore"
         }
     }
 }
@@ -32,6 +35,8 @@ extension DetailIngEndPoint: EndPointable {
             return .get
         case .requestStartingRoomInfo:
             return .get
+        case .getResetMission:
+            return .get
         }
     }
 
@@ -40,6 +45,8 @@ extension DetailIngEndPoint: EndPointable {
         case .requestWithFriend:
             return nil
         case .requestStartingRoomInfo:
+            return nil
+        case .getResetMission:
             return nil
         }
     }
@@ -50,6 +57,8 @@ extension DetailIngEndPoint: EndPointable {
             return self[.requestWithFriend(roomId: roomId)]
         case .requestStartingRoomInfo(let roomId):
             return self[.requestStartingRoomInfo(roomId: roomId)]
+        case .getResetMission(let roomId):
+            return self[.getResetMission(roomId: roomId)]
         }
     }
     

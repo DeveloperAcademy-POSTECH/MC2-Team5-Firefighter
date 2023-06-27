@@ -366,8 +366,7 @@ final class DetailingView: UIView {
         self.addSubview(self.manittoOpenButtonShadowView)
         self.manittoOpenButtonShadowView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalToSuperview().inset(7)
-            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(50)
             $0.height.equalTo(60)
         }
         
@@ -451,6 +450,10 @@ final class DetailingView: UIView {
                 self.setupExitButton(admin: admin)
             }
         }
+    }
+    
+    func updateMission(mission: String) {
+        self.missionContentsLabel.text = mission
     }
     
     private func setupExitButton(admin: Bool) {

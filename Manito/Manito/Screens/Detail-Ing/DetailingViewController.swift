@@ -87,10 +87,11 @@ final class DetailingViewController: BaseViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    private func presentEditMissionView(mission: String) {
-        let viewController = MissionEditViewController(mission: mission)
+    private func presentEditMissionView(mission: String, roomId: String) {
+        let viewController = MissionEditViewController(mission: mission, roomId: roomId)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .overCurrentContext
+        viewController.setDelegate(self)
         self.present(viewController, animated: true)
     }
     
@@ -99,8 +100,17 @@ final class DetailingViewController: BaseViewController {
                               message: TextLiteral.detailIngViewControllerResetMissionAlertMessage,
                               okTitle: TextLiteral.detailIngViewControllerResetMissionAlertOkTitle,
                               okStyle: .default,
-                              okAction: { _ in
-            // FIXME: - API 연결
+                              okAction: { [weak self] _ in
+            guard let roomId = self?.roomId else { return }
+            self?.requestResetMission(roomId: roomId) { result in
+                switch result {
+                case .success():
+                    self?.requestRoomInformation()
+                case .failure:
+                    self?.makeAlert(title: TextLiteral.detailIngViewControllerResetMissionErrorAlertOkTitle,
+                                    message: TextLiteral.detailIngViewControllerResetMissionErrorAlertOkMessage)
+                }
+            }
         })
     }
     
@@ -190,13 +200,29 @@ final class DetailingViewController: BaseViewController {
             }
         }
     }
+    
+    private func requestResetMission(roomId: String, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
+        Task {
+            do {
+                let data = try await self.detailIngService.fetchResetMission(roomId: roomId)
+                if let _ = data {
+                    completionHandler(.success(()))
+                }
+            } catch NetworkError.serverError {
+                completionHandler(.failure(.serverError))
+            } catch NetworkError.clientError(let message) {
+                completionHandler(.failure(.clientError(message: message)))
+            }
+        }
+    }
 }
 
 extension DetailingViewController: DetailingDelegate {
     func editMissionButtonDidTap(mission: String) {
         typealias AlertAction = ((UIAlertAction) -> ())
         let editMissionAction: AlertAction = { [weak self] _ in
-            self?.presentEditMissionView(mission: mission)
+            guard let roomId = self?.roomId else { return }
+            self?.presentEditMissionView(mission: mission, roomId: roomId)
         }
         let resetAction: AlertAction = { [weak self] _ in
             self?.resetMission()
@@ -262,5 +288,11 @@ extension DetailingViewController: DetailingDelegate {
     
     func didNotShowManitteeView(manitteeName: String) {
         self.openManittee(manitteeName: manitteeName)
+    }
+}
+
+extension DetailingViewController: MissionEditDelegate {
+    func didChangeMission() {
+        self.requestRoomInformation()
     }
 }

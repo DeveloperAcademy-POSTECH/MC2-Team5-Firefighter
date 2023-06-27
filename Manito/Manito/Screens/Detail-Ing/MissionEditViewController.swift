@@ -9,11 +9,18 @@ import UIKit
 
 import SnapKit
 
+protocol MissionEditDelegate: AnyObject {
+    func didChangeMission()
+}
+
 final class MissionEditViewController: BaseViewController {
     
     // MARK: - property
     
     let mission: String
+    let roomId: String
+    private let missionEditService: MissionEditAPI = MissionEditAPI(apiService: APIService())
+    private weak var delegate: MissionEditDelegate?
     
     // MARK: - component
     
@@ -55,8 +62,9 @@ final class MissionEditViewController: BaseViewController {
     
     // MARK: - init
     
-    init(mission: String) {
+    init(mission: String, roomId: String) {
         self.mission = mission
+        self.roomId = roomId
         super.init()
     }
     
@@ -104,6 +112,10 @@ final class MissionEditViewController: BaseViewController {
     
     // MARK: - func
     
+    func setDelegate(_ delegate: DetailingViewController) {
+        self.delegate = delegate
+    }
+    
     private func setupGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissViewController))
         self.view.addGestureRecognizer(tapGesture)
@@ -124,8 +136,19 @@ final class MissionEditViewController: BaseViewController {
                               okTitle: TextLiteral.change,
                               okStyle: .default,
                               okAction: { [weak self] _ in
-            // FIXME: - API 연결 후 작업해야함
-            self?.dismiss(animated: true)
+            guard let missionText = self?.missionTextField.text else { return }
+            self?.patchEditMission(mission: missionText) { result in
+                switch result {
+                case .success():
+                    DispatchQueue.main.async {
+                        self?.delegate?.didChangeMission()
+                        self?.dismiss(animated: true)
+                    }
+                case .failure:
+                    self?.makeAlert(title: TextLiteral.missionEditViewControllerChangeMissionErrorAlertTitle,
+                                    message: TextLiteral.missionEditViewControllerChangeMissionErrorAlertMessage)
+                }
+            }
         })
     }
     
@@ -148,6 +171,26 @@ final class MissionEditViewController: BaseViewController {
         UIView.animate(withDuration: 0.2, animations: {
             self.backgroundView.transform = .identity
         })
+    }
+    
+    // MARK: - network
+    
+    private func patchEditMission(mission: String, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
+        Task {
+            do {
+                let data = try await self.missionEditService.patchEditMission(roomId: self.roomId,
+                                                                              body: MissionDTO(mission: mission))
+                if let _ = data {
+                    completionHandler(.success(()))
+                } else {
+                    completionHandler(.failure(.unknownError))
+                }
+            } catch NetworkError.serverError {
+                completionHandler(.failure(.serverError))
+            } catch NetworkError.clientError(let message) {
+                completionHandler(.failure(.clientError(message: message)))
+            }
+        }
     }
 }
 
