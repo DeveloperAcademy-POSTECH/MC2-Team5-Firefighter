@@ -10,12 +10,12 @@ import Foundation
 
 final class DetailWaitViewModel {
     
-    enum EditMode: Int {
-        case date = 0
-        case information = 1
-    }
+//    enum EditMode: Int {
+//        case date = 0
+//        case information = 1
+//    }
     
-    typealias EditRoomInformation = (roomInformation: Room, mode: EditMode)
+    typealias EditRoomInformation = (roomInformation: Room, mode: DetailEditView.EditMode)
     
     // MARK: - property
     
@@ -27,7 +27,7 @@ final class DetailWaitViewModel {
     private let manitteeNicknameSubject = PassthroughSubject<String, NetworkError>()
     private let deleteRoomSubject = PassthroughSubject<Void, NetworkError>()
     private let leaveRoomSubject = PassthroughSubject<Void, NetworkError>()
-    
+    // ??? subject가 두갠데..? 머지
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let codeCopyButtonDidTap: AnyPublisher<Void, Never>
@@ -113,6 +113,10 @@ final class DetailWaitViewModel {
     
     // MARK: - func
     
+    func makeRoomInformation() -> Room {
+        return self.roomInformationSubject.value
+    }
+    
     private func makeCode() -> String {
         let roomInformation = self.roomInformationSubject.value
         guard let code = roomInformation.invitation?.code else { return "" }
@@ -121,7 +125,7 @@ final class DetailWaitViewModel {
     
     private func makeEditRoomInformation() -> EditRoomInformation {
         let roomInformation = self.roomInformationSubject.value
-        let editMode: EditMode = .information
+        let editMode: DetailEditView.EditMode = .information
         return (roomInformation, editMode)
     }
     
