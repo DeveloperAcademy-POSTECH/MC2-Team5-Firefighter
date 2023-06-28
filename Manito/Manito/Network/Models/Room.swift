@@ -75,6 +75,18 @@ struct Room: Decodable {
     }
 }
 
+extension Room {
+    static let emptyRoom = Room(
+            roomInformation: nil,
+            participants: nil,
+            manittee: nil,
+            manitto: nil,
+            invitation: nil,
+            mission: nil,
+            admin: nil,
+            messages: nil)
+}
+
 struct Friend: Decodable {
     let colorIndex: Int?
     let name: String?

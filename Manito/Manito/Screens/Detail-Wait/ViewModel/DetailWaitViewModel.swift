@@ -10,47 +10,97 @@ import Foundation
 
 final class DetailWaitViewModel {
     
+    enum EditMode: Int {
+        case date = 0
+        case information = 1
+    }
+    
+    typealias EditRoomInformation = (roomInformation: Room, mode: EditMode)
+    
     // MARK: - property
     
     let roomIndex: Int
     private let detailWaitService: DetailWaitAPI
-    var roomInformation = CurrentValueSubject<Room?, Never>(nil)
-    lazy var editMenuButtonDidTap = PassthroughSubject<Void, Never>()
-    lazy var deleteMenuButtonDidTap = PassthroughSubject<Void, Never>()
-    lazy var leaveMenuButtonDidTap = PassthroughSubject<Void, Never>()
-    var didPassedStartDate = PassthroughSubject<Bool, Never>()
+    private var cancellable = Set<AnyCancellable>()
+    
+    private let roomInformationSubject = CurrentValueSubject<Room, NetworkError>(Room.emptyRoom)
+    private let manitteeNicknameSubject = PassthroughSubject<String, NetworkError>()
+    private let deleteRoomSubject = PassthroughSubject<Void, NetworkError>()
+    private let leaveRoomSubject = PassthroughSubject<Void, NetworkError>()
     
     struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
         let codeCopyButtonDidTap: AnyPublisher<Void, Never>
         let startButtonDidTap: AnyPublisher<Void, Never>
+        let editMenuButtonDidTap: AnyPublisher<Void, Never>
+        let deleteMenuButtonDidTap: AnyPublisher<Void, Never>
+        let leaveMenuButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
-        let roomInformationDidUpdate: AnyPublisher<Room?, Never>
-        let showToast: AnyPublisher<String, Never>
-        let startManitto: AnyPublisher<Void, Never>
-        let presentEditView: AnyPublisher<Void, Never>
-        let deleteRoom: AnyPublisher<Void, Never>
-        let leaveRoom: AnyPublisher<Void, Never>
-        let showStartDatePassedAlert: AnyPublisher<Bool, Never>
+        let roomInformation: CurrentValueSubject<Room, NetworkError>
+        let code: AnyPublisher<String, Never>
+        let manitteeNickname: PassthroughSubject<String, NetworkError>
+        let editRoomInformation: AnyPublisher<EditRoomInformation, Never>
+        let deleteRoom: PassthroughSubject<Void, NetworkError>
+        let leaveRoom: PassthroughSubject<Void, NetworkError>
+        let passedStartDate: AnyPublisher<Bool, Never>
     }
     
     func transform(_ input: Input) -> Output {
-        let showToastOutput = input.codeCopyButtonDidTap
-            .compactMap { self.roomInformation.value?.invitation?.code }
+        input.viewDidLoad
+            .sink(receiveValue: { [weak self] _ in
+                self?.requestWaitRoomInfo()
+            })
+            .store(in: &self.cancellable)
+        
+        let codeOutput = input.codeCopyButtonDidTap
+            .map { [weak self] _ -> String in
+                guard let self else { return "" }
+                return self.makeCode()
+            }
             .eraseToAnyPublisher()
         
-        let startManittoOutput = input.startButtonDidTap
-            .throttle(for: 1, scheduler: DispatchQueue.main, latest: false)
+        input.startButtonDidTap
+            .sink(receiveValue: { [weak self] _ in
+                self?.requestStartManitto()
+            })
+            .store(in: &self.cancellable)
+        
+        let editRoomInformationOutput = input.editMenuButtonDidTap
+            .map { [weak self] _ -> EditRoomInformation in
+                guard let self else { return (Room.emptyRoom, .information) }
+                return self.makeEditRoomInformation()
+            }
+            .eraseToAnyPublisher()
+        
+        input.deleteMenuButtonDidTap
+            .sink(receiveValue: { [weak self] _ in
+                self?.requestDeleteRoom()
+            })
+            .store(in: &self.cancellable)
+        
+        input.leaveMenuButtonDidTap
+            .sink(receiveValue: { [weak self] _ in
+                self?.requestDeleteLeaveRoom()
+            })
+            .store(in: &self.cancellable)
+        
+        let passedStartDateOutput = input.viewDidLoad
+            .map { [weak self] _ -> Bool in
+                guard let self else { return false }
+                return self.makeIsAdmin()
+            }
             .eraseToAnyPublisher()
                 
-        return Output(roomInformationDidUpdate: self.roomInformation.eraseToAnyPublisher(),
-                      showToast: showToastOutput,
-                      startManitto: startManittoOutput,
-                      presentEditView: self.editMenuButtonDidTap.eraseToAnyPublisher(),
-                      deleteRoom: self.deleteMenuButtonDidTap.eraseToAnyPublisher(),
-                      leaveRoom: self.leaveMenuButtonDidTap.eraseToAnyPublisher(),
-                      showStartDatePassedAlert: self.didPassedStartDate.eraseToAnyPublisher()
+        return Output(
+            roomInformation: self.roomInformationSubject,
+            code: codeOutput,
+            manitteeNickname: self.manitteeNicknameSubject,
+            editRoomInformation: editRoomInformationOutput,
+            deleteRoom: self.deleteRoomSubject,
+            leaveRoom: self.leaveRoomSubject,
+            passedStartDate: passedStartDateOutput
         )
     }
     
@@ -63,79 +113,100 @@ final class DetailWaitViewModel {
     
     // MARK: - func
     
-    func fetchRoomInformation() {
-        requestWaitRoomInfo { [weak self] result in
-            switch result {
-            case .success(let roominformation):
-                self?.roomInformation.send(roominformation)
-            case .failure(let error):
-                print(error)
-            }
-        }
+    private func makeCode() -> String {
+        let roomInformation = self.roomInformationSubject.value
+        guard let code = roomInformation.invitation?.code else { return "" }
+        return code
     }
+    
+    private func makeEditRoomInformation() -> EditRoomInformation {
+        let roomInformation = self.roomInformationSubject.value
+        let editMode: EditMode = .information
+        return (roomInformation, editMode)
+    }
+    
+    private func makeIsAdmin() -> Bool {
+        let roomInformation = self.roomInformationSubject.value
+        guard let isAdmin = roomInformation.admin else { return false }
+        return isAdmin
+    }
+    
+//    func fetchRoomInformation() {
+//        requestWaitRoomInfo { [weak self] result in
+//            switch result {
+//            case .success(let roominformation):
+//                self?.roomInformation.send(roominformation)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
     
     // MARK: - network
     
-    private func requestWaitRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
+    private func requestWaitRoomInfo() {
         Task {
             do {
                 let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
                 if let roomInformation = data {
-                    completionHandler(.success(roomInformation))
+                    self.roomInformationSubject.send(roomInformation)
                 }
             } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
+                self.roomInformationSubject.send(completion: .failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
+                self.roomInformationSubject.send(completion: .failure(.clientError(message: message)))
             }
         }
     }
     
-    func requestStartManitto(completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
+    private func requestStartManitto() {
         Task {
             do {
                 let data = try await self.detailWaitService.startManitto(roomId: self.roomIndex.description)
                 if let manittee = data {
                     guard let nickname = manittee.nickname else { return }
-                    completionHandler(.success(nickname))
+                    self.manitteeNicknameSubject.send(nickname)
                 }
             } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
+                self.manitteeNicknameSubject.send(completion: .failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
+                self.manitteeNicknameSubject.send(completion: .failure(.clientError(message: message)))
             }
         }
     }
     
-    func requestDeleteRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
+    func requestDeleteRoom() {
         Task {
             do {
                 let statusCode = try await self.detailWaitService.deleteRoom(roomId: self.roomIndex.description)
                 switch statusCode {
-                case 200..<300: completionHandler(.success(()))
+                case 200..<300:
+                    self.deleteRoomSubject.send(())
                 default:
-                    completionHandler(.failure(.unknownError))
+                    self.deleteRoomSubject.send(completion: .failure(.unknownError))
                 }
             } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
+                self.deleteRoomSubject.send(completion: .failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
+                self.deleteRoomSubject.send(completion: .failure(.clientError(message: message)))
             }
         }
     }
     
-    func requestDeleteLeaveRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
+    func requestDeleteLeaveRoom() {
         Task {
             do {
                 let statusCode = try await self.detailWaitService.deleteLeaveRoom(roomId: self.roomIndex.description)
                 switch statusCode {
-                case 200..<300: completionHandler(.success(()))
-                default: completionHandler(.failure(.unknownError))
+                case 200..<300:
+                    self.leaveRoomSubject.send(())
+                default:
+                    self.leaveRoomSubject.send(completion: .failure(.unknownError))
                 }
             } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
+                self.leaveRoomSubject.send(completion: .failure(.serverError))
             } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
+                self.leaveRoomSubject.send(completion: .failure(.clientError(message: message)))
             }
         }
     }

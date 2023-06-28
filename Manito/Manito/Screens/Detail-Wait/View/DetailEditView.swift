@@ -16,9 +16,9 @@ protocol DetailEditDelegate: AnyObject {
 
 final class DetailEditView: UIView {
     
-    enum EditMode {
-        case date
-        case information
+    enum EditMode: Int {
+        case date = 0
+        case information = 1
     }
     
     // MARK: - ui component
