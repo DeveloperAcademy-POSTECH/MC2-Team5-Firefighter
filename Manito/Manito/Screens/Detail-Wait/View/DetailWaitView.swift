@@ -115,6 +115,7 @@ final class DetailWaitView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
+        self.setupCopyButton()
     }
     
     @available(*, unavailable)
@@ -173,7 +174,7 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private func setupCopyButton(_ invitationCode: String) {
+    private func setupCopyButton() {
         let action = UIAction { [weak self] _ in
             self?.delegate?.codeCopyButtonDidTap()
         }
