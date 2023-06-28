@@ -23,7 +23,7 @@ final class DetailWaitViewController: BaseViewController {
     // MARK: - property
     
 //    private let editMenuButtonSubject: PassthroughSubject<Void, Never>
-//    private let deleteMenuButtonSubject: PassthroughSubject<Void, Never>
+    private let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
 //    private let leaveMenuButtonSubject: PassthroughSubject<Void, Never>
     private var cancellable = Set<AnyCancellable>()
     private let detailWaitViewModel: DetailWaitViewModel
@@ -56,6 +56,7 @@ final class DetailWaitViewController: BaseViewController {
 //        self.configureDelegation()
         self.configureNavigationController()
         self.bindViewModel()
+        self.setupBind()
 //        self.fetchRoomInformationAtViewModel()
 //        self.setupBindings()
     }
@@ -86,7 +87,7 @@ final class DetailWaitViewController: BaseViewController {
             codeCopyButtonDidTap: self.detailWaitView.copyButton.tapPublisher,
             startButtonDidTap: self.detailWaitView.startButton.tapPublisher,
             editMenuButtonDidTap: self.detailWaitView.editMenuButtonSubject.eraseToAnyPublisher(),
-            deleteMenuButtonDidTap: self.detailWaitView.deleteMenuButtonSubject.eraseToAnyPublisher(),
+            deleteMenuButtonDidTap: self.deleteMenuButtonSubject.eraseToAnyPublisher(),
             leaveMenuButtonDidTap: self.detailWaitView.leaveMenuButtonSubject.eraseToAnyPublisher())
         return self.detailWaitViewModel.transform(input)
     }
@@ -142,7 +143,7 @@ final class DetailWaitViewController: BaseViewController {
                     self?.makeAlert(title: "오류 발생")
                 }
             }, receiveValue: { [weak self] _ in
-                self?.deleteRoom()
+                self?.navigationController?.popViewController(animated: true)
             })
             .store(in: &self.cancellable)
         
@@ -163,6 +164,14 @@ final class DetailWaitViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] isAdmin in
                 self?.showStartDatePassedAlert(isAdmin: isAdmin)
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    private func setupBind() {
+        detailWaitView.deleteMenuButtonSubject
+            .sink(receiveValue: { [weak self] _ in
+                self?.deleteRoom()
             })
             .store(in: &self.cancellable)
     }
@@ -277,8 +286,9 @@ final class DetailWaitViewController: BaseViewController {
                               message: TextLiteral.datailWaitViewControllerDeleteMessage,
                               okTitle: TextLiteral.delete,
                               okAction: { [weak self] _ in
+            self?.deleteMenuButtonSubject.send(())
 //            self?.detailWaitView.deleteMenuButtonSubject.send(())
-            self?.detailWaitViewModel.requestDeleteRoom()
+//            self?.detailWaitViewModel.requestDeleteRoom()
 //            self?.detailWaitViewModel.requestDeleteRoom() { result in
 //                DispatchQueue.main.async {
 //                    switch result {
