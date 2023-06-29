@@ -104,7 +104,7 @@ final class DetailWaitView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
-        self.setupCopyButton()
+//        self.setupCopyButton()
     }
     
     @available(*, unavailable)
@@ -163,12 +163,12 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private func setupCopyButton() {
-        let action = UIAction { [weak self] _ in
-            self?.delegate?.codeCopyButtonDidTap()
-        }
-        self.copyButton.addAction(action, for: .touchUpInside)
-    }
+//    private func setupCopyButton() {
+//        let action = UIAction { [weak self] _ in
+//            self?.delegate?.codeCopyButtonDidTap()
+//        }
+//        self.copyButton.addAction(action, for: .touchUpInside)
+//    }
     
     private func setupTitleViewData(title: String, state: String, dateRange: String) {
         self.titleView.setStartState(state: state)

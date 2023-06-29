@@ -59,7 +59,6 @@ final class DetailWaitViewController: BaseViewController {
         self.setupBind()
 //        self.fetchRoomInformationAtViewModel()
 //        self.setupBindings()
-        self.setupNotificationCenter()
     }
     
     // MARK: - func
@@ -68,9 +67,9 @@ final class DetailWaitViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
     }
     
-    private func configureDelegation() {
-        self.detailWaitView.configureDelegation(self)
-    }
+//    private func configureDelegation() {
+//        self.detailWaitView.configureDelegation(self)
+//    }
     
     private func configureNavigationController() {
         guard let navigationController = self.navigationController else { return }
@@ -239,10 +238,6 @@ final class DetailWaitViewController: BaseViewController {
 //            })
 //            .store(in: &self.cancellable)
 //    }
-    
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
-    }
     
 //    private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
 //        guard let roominformation = self.detailWaitViewModel.roomInformation.value else { return }
