@@ -16,6 +16,7 @@ final class DetailWaitViewModel {
 //    }
     
     typealias EditRoomInformation = (roomInformation: Room, mode: DetailEditView.EditMode)
+    typealias PassedStartDateAndIsOwner = (passStartDate: Bool, isOwner: Bool)
     
     // MARK: - property
     
@@ -44,7 +45,7 @@ final class DetailWaitViewModel {
         let editRoomInformation: AnyPublisher<EditRoomInformation, Never>
         let deleteRoom: PassthroughSubject<Void, NetworkError>
         let leaveRoom: PassthroughSubject<Void, NetworkError>
-        let passedStartDate: AnyPublisher<Bool, Never>
+        let passedStartDate: AnyPublisher<PassedStartDateAndIsOwner, Never>
     }
     
     func transform(_ input: Input) -> Output {
@@ -87,8 +88,9 @@ final class DetailWaitViewModel {
             .store(in: &self.cancellable)
         
         let passedStartDateOutput = input.viewDidLoad
-            .map { [weak self] _ -> Bool in
-                guard let self else { return false }
+            .delay(for: 0.5, scheduler: DispatchQueue.main)
+            .map { [weak self] _ -> PassedStartDateAndIsOwner in
+                guard let self else { return (false, false) }
                 return self.makeIsAdmin()
             }
             .eraseToAnyPublisher()
@@ -129,10 +131,12 @@ final class DetailWaitViewModel {
         return (roomInformation, editMode)
     }
     
-    private func makeIsAdmin() -> Bool {
+    private func makeIsAdmin() -> PassedStartDateAndIsOwner {
         let roomInformation = self.roomInformationSubject.value
-        guard let isAdmin = roomInformation.admin else { return false }
-        return isAdmin
+        guard let isAdmin = roomInformation.admin,
+            let isPassStartDate = roomInformation.roomInformation?.isStartDatePast else { return (false, false) }
+        
+        return (isPassStartDate, isAdmin)
     }
     
 //    func fetchRoomInformation() {

@@ -166,8 +166,8 @@ final class DetailWaitViewController: BaseViewController {
         
         output.passedStartDate
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] isAdmin in
-                self?.showStartDatePassedAlert(isAdmin: isAdmin)
+            .sink(receiveValue: { [weak self] (isPassedStartDate, isAdmin) in
+                self?.showStartDatePassedAlert(isPassedStartDate: isPassedStartDate, isAdmin: isAdmin)
             })
             .store(in: &self.cancellable)
     }
@@ -323,15 +323,17 @@ final class DetailWaitViewController: BaseViewController {
         })
     }
     
-    private func showStartDatePassedAlert(isAdmin: Bool) {
+    private func showStartDatePassedAlert(isPassedStartDate: Bool, isAdmin: Bool) {
         if isAdmin {
-            self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-                           message: TextLiteral.detailWaitViewControllerPastAdminAlertMessage,
-                           okAction: { [weak self] _ in
-                guard let roomInformation = self?.detailWaitViewModel.makeRoomInformation() else { return }
-                self?.showDetailEditViewController(roomInformation: roomInformation, mode: .date)
-                //                self?.presentDetailEditViewController(isOnlyDateEdit: true) }
+            if isPassedStartDate {
+                self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                               message: TextLiteral.detailWaitViewControllerPastAdminAlertMessage,
+                               okAction: { [weak self] _ in
+                    guard let roomInformation = self?.detailWaitViewModel.makeRoomInformation() else { return }
+                    self?.showDetailEditViewController(roomInformation: roomInformation, mode: .date)
+                    //                self?.presentDetailEditViewController(isOnlyDateEdit: true) }
                 })
+            }
         } else {
             self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                            message: TextLiteral.detailWaitViewControllerPastAlertMessage)

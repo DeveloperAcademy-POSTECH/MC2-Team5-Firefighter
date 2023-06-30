@@ -213,7 +213,7 @@ final class DetailWaitView: UIView {
         switch type {
         case .admin:
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
-//                self?.editMenuButtonSubject.send(())
+                self?.editMenuButtonSubject.send(())
 //                self?.delegate?.editButtonDidTap()
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
                 self?.deleteMenuButtonSubject.send(())
