@@ -9,6 +9,10 @@ import UIKit
 
 import SnapKit
 
+protocol DetailWaitViewControllerDelegate: AnyObject {
+    func didTappedChangeButton()
+}
+
 final class DetailWaitViewController: BaseViewController {
     
     // MARK: - ui component
@@ -48,31 +52,24 @@ final class DetailWaitViewController: BaseViewController {
         self.fetchRoomData()
         self.configureDelegation()
         self.configureNavigationController()
+        self.setupNotificationCenter()
     }
     
     // MARK: - func
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
+    }
     
     private func configureDelegation() {
         self.detailWaitView.configureDelegation(self)
     }
     
     private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
-        guard let room = self.roomInformation,
-              let index = room.roomInformation?.id,
-              let title = room.roomInformation?.title,
-              let currentUserCount = room.participants?.count,
-              let capacity = room.roomInformation?.capacity else { return }
+        guard let room = self.roomInformation else { return }
         let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
-                                                      roomIndex: index,
-                                                      title: title)
-        
-        guard let startDate = room.roomInformation?.dateRange.startDate,
-              let endDate = room.roomInformation?.dateRange.endDate else { return }
-        
-        viewController.startDateText = startDate
-        viewController.endDateText = endDate
-        viewController.currentUserCount = currentUserCount
-        viewController.sliderValue = capacity
+                                                      room: room)
+        viewController.detailWaitDelegate = self
         self.present(viewController, animated: true)
     }
     
@@ -106,6 +103,27 @@ final class DetailWaitViewController: BaseViewController {
                                 message: TextLiteral.detailWaitViewControllerLoadDataMessage)
             }
         }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func didTapEnterButton() {
+        guard let room = self.roomInformation,
+              let code = room.invitation?.code,
+              let title = room.roomInformation?.title,
+              let capacity = room.roomInformation?.capacity,
+              let startDate = room.roomInformation?.startDate,
+              let endDate = room.roomInformation?.endDate
+        else { return }
+        let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: title,
+                                                             capacity: capacity,
+                                                             startDate: startDate,
+                                                             endDate: endDate),
+                                                       code: code)
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        self.present(viewController, animated: true)
     }
     
     // MARK: - network
@@ -244,5 +262,13 @@ extension DetailWaitViewController: DetailWaitViewDelegate {
             self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
                            message: TextLiteral.detailWaitViewControllerPastAlertMessage)
         }
+    }
+}
+
+extension DetailWaitViewController: DetailWaitViewControllerDelegate {
+    func didTappedChangeButton() {
+        self.fetchRoomData()
+        ToastView.showToast(message: "방 정보 수정 완료",
+                            controller: self)
     }
 }

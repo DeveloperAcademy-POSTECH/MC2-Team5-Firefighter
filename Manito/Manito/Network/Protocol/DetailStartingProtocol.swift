@@ -10,4 +10,5 @@ import Foundation
 protocol DetailStartingProtocol {
     func requestStartingRoomInfo(roomId: String) async throws -> Room?
     func requestWithFriends(roomId: String) async throws -> FriendList?
+    func fetchResetMission(roomId: String) async throws -> MissionDTO?
 }
