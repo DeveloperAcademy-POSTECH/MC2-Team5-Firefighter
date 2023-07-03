@@ -160,7 +160,6 @@ final class DetailWaitView: UIView {
     private func setupRelatedViews(of userStatus: Bool, _ isStart: Bool) {
         self.showStartButtonForAdmin(userStatus)
         self.setExitButtonMenu(userStatus)
-        self.showAlertWhenPastDate(userStatus, isStart: isStart)
         self.setupTitleViewGesture(userStatus)
     }
 
@@ -207,12 +206,6 @@ final class DetailWaitView: UIView {
         }
         let menu = UIMenu(children: children)
         self.moreButton.menu = menu
-    }
-    
-    private func showAlertWhenPastDate(_ isAdmin: Bool, isStart: Bool) {
-        if !isStart {
-//            self.delegate?.didPassStartDate(isAdmin: isAdmin)
-        }
     }
     
     private func setupTitleViewGesture(_ isAdmin: Bool) {
