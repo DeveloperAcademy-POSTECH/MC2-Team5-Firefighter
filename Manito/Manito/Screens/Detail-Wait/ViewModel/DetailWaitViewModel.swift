@@ -139,16 +139,9 @@ final class DetailWaitViewModel {
         return (isPassStartDate, isAdmin)
     }
     
-//    func fetchRoomInformation() {
-//        requestWaitRoomInfo { [weak self] result in
-//            switch result {
-//            case .success(let roominformation):
-//                self?.roomInformation.send(roominformation)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
+    func setRoomInformation(room: Room) {
+        self.roomInformationSubject.send(room)
+    }
     
     // MARK: - network
     
