@@ -10,13 +10,6 @@ import UIKit
 
 import SnapKit
 
-//protocol DetailWaitViewDelegate: AnyObject {
-//    func editButtonDidTap()
-//    func deleteButtonDidTap()
-//    func leaveButtonDidTap()
-//    func didPassStartDate(isAdmin: Bool)
-//}
-
 final class DetailWaitView: UIView {
     private enum UserStatus {
         case admin
@@ -37,7 +30,6 @@ final class DetailWaitView: UIView {
         }
     }
     
-    // UIMenu에 관한 Subject를 여기에 만들어야하나?
     let editMenuButtonSubject = PassthroughSubject<Void, Never>()
     let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
@@ -97,14 +89,11 @@ final class DetailWaitView: UIView {
         }
     }
     
-//    private weak var delegate: DetailWaitViewDelegate?
-    
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
-//        self.setupCopyButton()
     }
     
     @available(*, unavailable)
@@ -163,13 +152,6 @@ final class DetailWaitView: UIView {
         }
     }
     
-//    private func setupCopyButton() {
-//        let action = UIAction { [weak self] _ in
-//            self?.delegate?.codeCopyButtonDidTap()
-//        }
-//        self.copyButton.addAction(action, for: .touchUpInside)
-//    }
-    
     private func setupTitleViewData(title: String, state: String, dateRange: String) {
         self.titleView.setStartState(state: state)
         self.titleView.setupLabelData(title: title, dateRange: dateRange)
@@ -214,16 +196,13 @@ final class DetailWaitView: UIView {
         case .admin:
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
                 self?.editMenuButtonSubject.send(())
-//                self?.delegate?.editButtonDidTap()
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
                 self?.deleteMenuButtonSubject.send(())
-//                self?.delegate?.deleteButtonDidTap()
             })
             ]
         case .member:
             children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
                 self?.leaveMenuButtonSubject.send(())
-//                self?.delegate?.leaveButtonDidTap()
             })]
         }
         let menu = UIMenu(children: children)
@@ -242,10 +221,6 @@ final class DetailWaitView: UIView {
             self.titleView.addGestureRecognizer(tapGesture)
         }
     }
-    
-//    func configureDelegation(_ delegate: DetailWaitViewDelegate) {
-//        self.delegate = delegate
-//    }
     
     func configureNavigationItem(_ navigationController: UINavigationController) {
         let navigationItem = navigationController.topViewController?.navigationItem
@@ -277,7 +252,6 @@ final class DetailWaitView: UIView {
     @objc
     private func presentEditViewController() {
         self.editMenuButtonSubject.send(())
-//        self.delegate?.editButtonDidTap()
     }
 }
 
