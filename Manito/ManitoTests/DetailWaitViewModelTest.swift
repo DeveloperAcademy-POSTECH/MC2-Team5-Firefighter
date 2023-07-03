@@ -13,7 +13,16 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     private let viewModel = DetailWaitViewModel(roomIndex: 1, detailWaitService: DetailWaitAPI(apiService: APIService()))
     
-    func testExistFetchRoomInformation() {
-        let _ = viewModel.fetchRoomInformation()
+    func testMakeRoomInformation() {
+        // given
+        let testRoom = Room.testRoom
+        self.viewModel.setRoomInformation(room: testRoom)
+        
+        // then
+        let room = self.viewModel.makeRoomInformation()
+        
+        // when
+        // FIXME: - Room 구조체 Equatable 프로토콜 채택 해야함.
+        XCTAssertEqual(testRoom.roomInformation?.title, room.roomInformation?.title)
     }
 }
