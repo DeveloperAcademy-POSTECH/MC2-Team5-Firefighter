@@ -24,6 +24,7 @@ final class DetailWaitViewController: BaseViewController {
     
     private let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
+    private let changeButtonSubject = PassthroughSubject<Void, Never>()
     private var cancellable = Set<AnyCancellable>()
     private let detailWaitViewModel: DetailWaitViewModel
     
@@ -80,7 +81,8 @@ final class DetailWaitViewController: BaseViewController {
             startButtonDidTap: self.detailWaitView.startButton.tapPublisher,
             editMenuButtonDidTap: self.detailWaitView.editMenuButtonSubject.eraseToAnyPublisher(),
             deleteMenuButtonDidTap: self.deleteMenuButtonSubject.eraseToAnyPublisher(),
-            leaveMenuButtonDidTap: self.leaveMenuButtonSubject.eraseToAnyPublisher())
+            leaveMenuButtonDidTap: self.leaveMenuButtonSubject.eraseToAnyPublisher(),
+            changeButtonDidTap: self.changeButtonSubject.eraseToAnyPublisher())
         return self.detailWaitViewModel.transform(input)
     }
     
@@ -253,8 +255,7 @@ final class DetailWaitViewController: BaseViewController {
 
 extension DetailWaitViewController: DetailWaitViewControllerDelegate {
     func didTappedChangeButton() {
-        // TODO: 여긴 뭐가 들어가야할까...??
-//        self.detailWaitViewModel.fetchRoomInformation()
+        self.changeButtonSubject.send()
         ToastView.showToast(message: "방 정보 수정 완료",
                             controller: self)
     }

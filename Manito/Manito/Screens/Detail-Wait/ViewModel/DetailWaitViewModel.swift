@@ -10,11 +10,6 @@ import Foundation
 
 final class DetailWaitViewModel {
     
-//    enum EditMode: Int {
-//        case date = 0
-//        case information = 1
-//    }
-    
     typealias EditRoomInformation = (roomInformation: Room, mode: DetailEditView.EditMode)
     typealias PassedStartDateAndIsOwner = (passStartDate: Bool, isOwner: Bool)
     
@@ -28,7 +23,8 @@ final class DetailWaitViewModel {
     private let manitteeNicknameSubject = PassthroughSubject<String, NetworkError>()
     private let deleteRoomSubject = PassthroughSubject<Void, NetworkError>()
     private let leaveRoomSubject = PassthroughSubject<Void, NetworkError>()
-    // ??? subject가 두갠데..? 머지
+    private let changeButtonSubject = PassthroughSubject<Void, NetworkError>()
+    
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let codeCopyButtonDidTap: AnyPublisher<Void, Never>
@@ -36,6 +32,7 @@ final class DetailWaitViewModel {
         let editMenuButtonDidTap: AnyPublisher<Void, Never>
         let deleteMenuButtonDidTap: AnyPublisher<Void, Never>
         let leaveMenuButtonDidTap: AnyPublisher<Void, Never>
+        let changeButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
@@ -94,6 +91,12 @@ final class DetailWaitViewModel {
                 return self.makeIsAdmin()
             }
             .eraseToAnyPublisher()
+        
+        input.changeButtonDidTap
+            .sink(receiveValue: { [weak self] _ in
+                self?.requestWaitRoomInfo()
+            })
+            .store(in: &self.cancellable)
                 
         return Output(
             roomInformation: self.roomInformationSubject,
