@@ -75,6 +75,11 @@ final class CreateRoomViewController: BaseViewController {
         self.setInputViewIsHidden()
         self.setupAction()
     }
+    // FIXME: 플로우 연결 하면서 변경 될 예정
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
     
     // MARK: - override
     

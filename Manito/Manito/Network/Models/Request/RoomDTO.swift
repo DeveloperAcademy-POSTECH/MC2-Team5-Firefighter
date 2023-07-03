@@ -20,5 +20,9 @@ struct RoomDTO: Encodable {
 }
 
 struct MemberDTO: Encodable {
-    var colorIdx: Int
+    var colorIndex: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case colorIndex = "colorIdx"
+    }
 }

@@ -79,39 +79,27 @@ final class SettingView: UIView {
     
     func configureModels() {
         self.options.append(Option(title: TextLiteral.settingViewControllerChangeNickNameTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.delegate?.changNicknameButtonDidTap()
-            }
+            self?.delegate?.changNicknameButtonDidTap()
         }))
         
         self.options.append(Option(title: TextLiteral.settingViewControllerPersonalInfomationTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.delegate?.personalInfomationButtonDidTap()
-            }
+            self?.delegate?.personalInfomationButtonDidTap()
         }))
         
         self.options.append(Option(title: TextLiteral.settingViewControllerTermsOfServiceTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.delegate?.termsOfServiceButtonDidTap()
-            }
+            self?.delegate?.termsOfServiceButtonDidTap()
         }))
         
         self.options.append(Option(title: TextLiteral.settingViewControllerDeveloperInfoTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.delegate?.developerInfoButtonDidTap()
-            }
+            self?.delegate?.developerInfoButtonDidTap()
         }))
         
         self.options.append(Option(title: TextLiteral.settingViewControllerHelpTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.delegate?.helpButtonDidTap()
-            }
+            self?.delegate?.helpButtonDidTap()
         }))
         
         self.options.append(Option(title: TextLiteral.settingViewControllerLogoutTitle, handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.delegate?.logoutButtonDidTap()
-            }
+            self?.delegate?.logoutButtonDidTap()
         }))
     }
     
