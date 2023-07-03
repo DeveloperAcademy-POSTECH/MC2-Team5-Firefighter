@@ -85,6 +85,17 @@ extension Room {
             mission: nil,
             admin: nil,
             messages: nil)
+    
+    static let testRoom = Room(
+        roomInformation: RoomInfo.testRoomInfo,
+        participants: Participants.testParticipants,
+        manittee: Manittee.testManittee,
+        manitto: Manitto.testManitto,
+        invitation: Invitation.testInvitation,
+        didViewRoulette: false,
+        mission: Mission.testMission,
+        admin: false,
+        messages: Message1.testMessage)
 }
 
 struct Friend: Decodable {
@@ -106,9 +117,27 @@ struct Participants: Decodable {
     }
 }
 
-// MARK: - Member
+extension Participants {
+    static let testParticipants = Participants(
+        count: 5,
+        members: User.testUserList)
+}
+
+// MARK: - User
 struct User: Decodable {
     let id, nickname: String?
+}
+
+extension User {
+    static let testUser = User(
+        id: "100", nickname: "유저1")
+    static let testUserList = [
+        User(id: "100", nickname: "유저1"),
+        User(id: "200", nickname: "유저2"),
+        User(id: "300", nickname: "유저3"),
+        User(id: "400", nickname: "유저4"),
+        User(id: "500", nickname: "유저5")
+    ]
 }
 
 // MARK: - Room
@@ -157,23 +186,58 @@ struct RoomInfo: Decodable {
     }
 }
 
+extension RoomInfo {
+    static let testRoomInfo = RoomInfo(
+        id: 1,
+        capacity: 5,
+        title: "테스트타이틀",
+        startDate: "2023.01.01",
+        endDate: "2023.01.05",
+        state: "PRE")
+}
+
+// MARK: - Mission
 struct Mission: Codable {
     let id: Int?
     let content: String?
 }
 
+extension Mission {
+    static let testMission = Mission(id: 1, content: "테스트미션")
+}
+
+// MARK: - Invitation
 struct Invitation: Decodable {
     let code: String?
 }
 
+extension Invitation {
+    static let testInvitation = Invitation(code: "ABCDEF")
+}
+
+// MARK: - Message1
 struct Message1: Decodable {
     let count: Int?
 }
 
+extension Message1 {
+    static let testMessage = Message1(count: 3)
+}
+
+// MARK: - Manittee
 struct Manittee: Decodable {
     let nickname: String?
 }
 
+extension Manittee {
+    static let testManittee = Manittee(nickname: "테스트마니띠")
+}
+
+// MARK: - Manitto
 struct Manitto: Decodable {
     let nickname: String?
+}
+
+extension Manitto {
+    static let testManitto = Manitto(nickname: "테스트마니또")
 }
