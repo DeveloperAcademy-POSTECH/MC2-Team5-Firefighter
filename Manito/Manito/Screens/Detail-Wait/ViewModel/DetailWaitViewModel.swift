@@ -16,7 +16,7 @@ final class DetailWaitViewModel {
     // MARK: - property
     
     let roomIndex: Int
-    private let detailWaitService: DetailWaitAPI
+    private let detailWaitService: DetailWaitServicable
     private var cancellable = Set<AnyCancellable>()
     
     private let roomInformationSubject = CurrentValueSubject<Room, NetworkError>(Room.emptyRoom)
@@ -48,7 +48,8 @@ final class DetailWaitViewModel {
     func transform(_ input: Input) -> Output {
         input.viewDidLoad
             .sink(receiveValue: { [weak self] _ in
-                self?.requestWaitRoomInfo()
+                guard let roomId = self?.roomIndex.description else { return }
+                self?.requestWaitRoomInfo(roomId: roomId)
             })
             .store(in: &self.cancellable)
         
@@ -61,7 +62,8 @@ final class DetailWaitViewModel {
         
         input.startButtonDidTap
             .sink(receiveValue: { [weak self] _ in
-                self?.requestStartManitto()
+                guard let roomId = self?.roomIndex.description else { return }
+                self?.requestStartManitto(roomId: roomId)
             })
             .store(in: &self.cancellable)
         
@@ -74,13 +76,15 @@ final class DetailWaitViewModel {
         
         input.deleteMenuButtonDidTap
             .sink(receiveValue: { [weak self] _ in
-                self?.requestDeleteRoom()
+                guard let roomId = self?.roomIndex.description else { return }
+                self?.requestDeleteRoom(roomId: roomId)
             })
             .store(in: &self.cancellable)
         
         input.leaveMenuButtonDidTap
             .sink(receiveValue: { [weak self] _ in
-                self?.requestDeleteLeaveRoom()
+                guard let roomId = self?.roomIndex.description else { return }
+                self?.requestDeleteLeaveRoom(roomId: roomId)
             })
             .store(in: &self.cancellable)
         
@@ -94,7 +98,8 @@ final class DetailWaitViewModel {
         
         input.changeButtonDidTap
             .sink(receiveValue: { [weak self] _ in
-                self?.requestWaitRoomInfo()
+                guard let roomId = self?.roomIndex.description else { return }
+                self?.requestWaitRoomInfo(roomId: roomId)
             })
             .store(in: &self.cancellable)
                 
@@ -111,7 +116,7 @@ final class DetailWaitViewModel {
     
     // MARK: - init
     
-    init(roomIndex: Int, detailWaitService: DetailWaitAPI) {
+    init(roomIndex: Int, detailWaitService: DetailWaitServicable) {
         self.roomIndex = roomIndex
         self.detailWaitService = detailWaitService
     }
@@ -148,69 +153,61 @@ final class DetailWaitViewModel {
     
     // MARK: - network
     
-    private func requestWaitRoomInfo() {
+    private func requestWaitRoomInfo(roomId: String) {
         Task {
             do {
-                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
-                if let roomInformation = data {
-                    self.roomInformationSubject.send(roomInformation)
-                }
-            } catch NetworkError.serverError {
-                self.roomInformationSubject.send(completion: .failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                self.roomInformationSubject.send(completion: .failure(.clientError(message: message)))
+                let room = try await self.detailWaitService.fetchWaitingRoomInfo(roomId: roomId)
+                self.roomInformationSubject.send(room)
+            } catch(let error) {
+                guard let error = error as? NetworkError else { return }
+                self.roomInformationSubject.send(completion: .failure(error))
             }
         }
     }
     
-    private func requestStartManitto() {
+    private func requestStartManitto(roomId: String) {
         Task {
             do {
-                let data = try await self.detailWaitService.startManitto(roomId: self.roomIndex.description)
-                if let manittee = data {
-                    guard let nickname = manittee.nickname else { return }
-                    self.manitteeNicknameSubject.send(nickname)
-                }
-            } catch NetworkError.serverError {
-                self.manitteeNicknameSubject.send(completion: .failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                self.manitteeNicknameSubject.send(completion: .failure(.clientError(message: message)))
+                let manittee = try await self.detailWaitService.patchStartManitto(roomId: roomId)
+                guard let nickname = manittee.nickname else { return }
+                self.manitteeNicknameSubject.send(nickname)
+            } catch(let error) {
+                guard let error = error as? NetworkError else { return }
+                self.manitteeNicknameSubject.send(completion: .failure(error))
             }
         }
     }
     
-    func requestDeleteRoom() {
+    func requestDeleteRoom(roomId: String) {
         Task {
             do {
-                let statusCode = try await self.detailWaitService.deleteRoom(roomId: self.roomIndex.description)
+                let statusCode = try await self.detailWaitService.deleteRoom(roomId: roomId)
                 switch statusCode {
                 case 200..<300:
                     self.deleteRoomSubject.send(())
-                default:
+                default :
                     self.deleteRoomSubject.send(completion: .failure(.unknownError))
                 }
-            } catch NetworkError.serverError {
-                self.deleteRoomSubject.send(completion: .failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                self.deleteRoomSubject.send(completion: .failure(.clientError(message: message)))
+            } catch(let error) {
+                guard let error = error as? NetworkError else { return }
+                self.deleteRoomSubject.send(completion: .failure(error))
             }
         }
     }
     
-    func requestDeleteLeaveRoom() {
+    func requestDeleteLeaveRoom(roomId: String) {
         Task {
             do {
-                let statusCode = try await self.detailWaitService.deleteLeaveRoom(roomId: self.roomIndex.description)
+                let statusCode = try await self.detailWaitService.deleteLeaveRoom(roomId: roomId)
                 switch statusCode {
                 case 200..<300:
                     self.leaveRoomSubject.send(())
                 default:
                     self.leaveRoomSubject.send(completion: .failure(.unknownError))
                 }
-            } catch NetworkError.serverError {
-                self.leaveRoomSubject.send(completion: .failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                self.leaveRoomSubject.send(completion: .failure(.clientError(message: message)))
+            } catch(let error) {
+                guard let error = error as? NetworkError else { return }
+                self.leaveRoomSubject.send(completion: .failure(error))
             }
         }
     }
