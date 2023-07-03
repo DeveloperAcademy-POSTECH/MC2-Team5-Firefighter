@@ -16,6 +16,7 @@ protocol SettingViewDelegate: AnyObject {
     func developerInfoButtonDidTap()
     func helpButtonDidTap()
     func logoutButtonDidTap()
+    func withdrawalButtonDidTap()
 }
 
 final class SettingView: UIView {
@@ -37,6 +38,12 @@ final class SettingView: UIView {
         tableView.dataSource = self
         return tableView
     }()
+    private let withdrawalButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(TextLiteral.settingViewControllerWithdrawalTitle, for: .normal)
+        button.titleLabel?.font = .font(.regular, ofSize: 15)
+        return button
+    }()
     
     private let imageRow: ImageRowView = ImageRowView()
     
@@ -50,6 +57,7 @@ final class SettingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
+        self.setupButtonAction()
         self.configureModels()
     }
     
@@ -73,11 +81,25 @@ final class SettingView: UIView {
             $0.top.equalTo(self.imageRow.snp.bottom)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(50)
+        }
+        
+        self.addSubview(self.withdrawalButton)
+        self.withdrawalButton.snp.makeConstraints {
+            $0.top.equalTo(self.tableView.snp.bottom)
+            $0.centerX.equalToSuperview()
         }
     }
     
-    func configureModels() {
+    private func setupButtonAction() {
+        let withdrawalButtonDidTap = UIAction { [weak self] _ in
+            self?.delegate?.withdrawalButtonDidTap()
+        }
+        
+        self.withdrawalButton.addAction(withdrawalButtonDidTap, for: .touchUpInside)
+    }
+    
+    private func configureModels() {
         self.options.append(Option(title: TextLiteral.settingViewControllerChangeNickNameTitle, handler: { [weak self] in
             self?.delegate?.changNicknameButtonDidTap()
         }))
