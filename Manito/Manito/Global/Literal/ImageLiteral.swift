@@ -22,6 +22,7 @@ enum ImageLiterals {
     static var icMissionInfo: UIImage { .load(name: "ic_missionInfo")}
     static var icRight: UIImage { .load(name: "ic_right")}
     static var icSave: UIImage { .load(name: "ic_save")}
+    static var icPencil: UIImage { .load(name: "ic_pencil") }
     
     // MARK: - button
     

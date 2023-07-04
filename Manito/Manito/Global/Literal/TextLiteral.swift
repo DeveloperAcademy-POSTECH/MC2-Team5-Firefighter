@@ -161,6 +161,14 @@ enum TextLiteral {
     static let detailIngViewControllerDoneExitAlertMessage: String = "나간 방은 다시 들어올 수 없어요"
     static let detailIngViewControllerDoneExitAlertAdmin: String = "방장이 방을 삭제하면\n 참여자들의 방도 삭제됩니다"
     static let detailIngViewControllerDetailInformatioin: String = "진행 정보"
+    static let detailIngViewControllerMissionEditTitle: String = "개별 미션 설정"
+    static let detailIngViewControllerSelfEditMissionTitle: String = "개별 미션 직접 설정"
+    static let detailIngViewControllerResetMissionTitle: String = "기본 미션으로 변경"
+    static let detailIngViewControllerResetMissionAlertTitle: String = "개별 미션을 되돌리시겠습니까?"
+    static let detailIngViewControllerResetMissionAlertMessage: String = "기존에 주어지는 기본 미션으로 재설정됩니다."
+    static let detailIngViewControllerResetMissionAlertOkTitle: String = "되돌리기"
+    static let detailIngViewControllerResetMissionErrorAlertOkTitle: String = "오류 발생"
+    static let detailIngViewControllerResetMissionErrorAlertOkMessage: String = "미션을 되돌릴 수 없습니다.\n다시 시도해주세요."
     
     // MARK: - CalendarView
     static let calendarViewAlertMaxTitle: String = "최대 선택 기간을 넘었어요"
@@ -217,4 +225,10 @@ enum TextLiteral {
     
     // MARK: - InvitedCodeViewController
     static let invitedCodeViewCOntroller: String = "글자를 탭하여 코드를 복사하세요"
+    
+    // MARK: - MissionEditViewController
+    static let missionEditViewControllerChangeMissionAlertTitle: String = "개별 미션을 수정하시겠습니까?"
+    static let missionEditViewControllerChangeMissionAlertMessage: String = "기본 미션으로 변경을 통해\n되돌릴 수 있습니다."
+    static let missionEditViewControllerChangeMissionErrorAlertTitle: String = "오류 발생"
+    static let missionEditViewControllerChangeMissionErrorAlertMessage: String = "개별 미션을 수정 할 수 없습니다.\n다시 시도해주세요."
 }

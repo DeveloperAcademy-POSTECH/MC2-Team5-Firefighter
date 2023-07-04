@@ -52,9 +52,14 @@ final class DetailWaitViewController: BaseViewController {
         self.fetchRoomData()
         self.configureDelegation()
         self.configureNavigationController()
+        self.setupNotificationCenter()
     }
     
     // MARK: - func
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
+    }
     
     private func configureDelegation() {
         self.detailWaitView.configureDelegation(self)
@@ -98,6 +103,27 @@ final class DetailWaitViewController: BaseViewController {
                                 message: TextLiteral.detailWaitViewControllerLoadDataMessage)
             }
         }
+    }
+    
+    // MARK: - selector
+    
+    @objc
+    private func didTapEnterButton() {
+        guard let room = self.roomInformation,
+              let code = room.invitation?.code,
+              let title = room.roomInformation?.title,
+              let capacity = room.roomInformation?.capacity,
+              let startDate = room.roomInformation?.startDate,
+              let endDate = room.roomInformation?.endDate
+        else { return }
+        let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: title,
+                                                             capacity: capacity,
+                                                             startDate: startDate,
+                                                             endDate: endDate),
+                                                       code: code)
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        self.present(viewController, animated: true)
     }
     
     // MARK: - network
