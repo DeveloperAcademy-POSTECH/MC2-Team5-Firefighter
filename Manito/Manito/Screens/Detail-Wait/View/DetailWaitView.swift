@@ -30,6 +30,8 @@ final class DetailWaitView: UIView {
         }
     }
     
+    var copyButtonPublisher: AnyPublisher<Void, Never>
+    var startButtonPublisher: AnyPublisher<Void, Never>
     let editMenuButtonSubject = PassthroughSubject<Void, Never>()
     let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
@@ -60,7 +62,7 @@ final class DetailWaitView: UIView {
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
-    let copyButton: UIButton = {
+    private let copyButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(TextLiteral.copyCode, for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
@@ -76,7 +78,7 @@ final class DetailWaitView: UIView {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
-    let startButton: MainButton = MainButton()
+    private let startButton: MainButton = MainButton()
     
     // MARK: - property
     
@@ -92,6 +94,8 @@ final class DetailWaitView: UIView {
     // MARK: - init
     
     override init(frame: CGRect) {
+        self.copyButtonPublisher = self.copyButton.tapPublisher
+        self.startButtonPublisher = self.startButton.tapPublisher
         super.init(frame: frame)
         self.setupLayout()
     }

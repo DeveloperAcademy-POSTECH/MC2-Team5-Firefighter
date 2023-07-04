@@ -77,8 +77,8 @@ final class DetailWaitViewController: BaseViewController {
     private func transformedOutput() -> DetailWaitViewModel.Output {
         let input = DetailWaitViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
-            codeCopyButtonDidTap: self.detailWaitView.copyButton.tapPublisher,
-            startButtonDidTap: self.detailWaitView.startButton.tapPublisher,
+            codeCopyButtonDidTap: self.detailWaitView.copyButtonPublisher,
+            startButtonDidTap: self.detailWaitView.startButtonPublisher,
             editMenuButtonDidTap: self.detailWaitView.editMenuButtonSubject.eraseToAnyPublisher(),
             deleteMenuButtonDidTap: self.deleteMenuButtonSubject.eraseToAnyPublisher(),
             leaveMenuButtonDidTap: self.leaveMenuButtonSubject.eraseToAnyPublisher(),
