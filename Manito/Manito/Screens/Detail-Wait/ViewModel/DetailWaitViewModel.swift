@@ -178,7 +178,7 @@ final class DetailWaitViewModel {
         }
     }
     
-    func requestDeleteRoom(roomId: String) {
+    private func requestDeleteRoom(roomId: String) {
         Task {
             do {
                 let statusCode = try await self.detailWaitService.deleteRoom(roomId: roomId)
@@ -195,7 +195,7 @@ final class DetailWaitViewModel {
         }
     }
     
-    func requestDeleteLeaveRoom(roomId: String) {
+    private func requestDeleteLeaveRoom(roomId: String) {
         Task {
             do {
                 let statusCode = try await self.detailWaitService.deleteLeaveRoom(roomId: roomId)
