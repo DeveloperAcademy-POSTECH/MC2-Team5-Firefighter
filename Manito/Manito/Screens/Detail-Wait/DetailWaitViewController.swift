@@ -30,8 +30,8 @@ final class DetailWaitViewController: BaseViewController {
     
     // MARK: - init
     
-    init(roomIndex: Int) {
-        self.detailWaitViewModel = DetailWaitViewModel(roomIndex: roomIndex, detailWaitService: DetailWaitService(api: DetailWaitAPI(apiService: APIService())))
+    init(viewModel: DetailWaitViewModel) {
+        self.detailWaitViewModel = viewModel
         super.init()
     }
     
