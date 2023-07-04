@@ -47,6 +47,7 @@ enum TextLiteral {
     static let settingViewControllerDeveloperInfoTitle: String = "개발자 정보"
     static let settingViewControllerHelpTitle: String = "문의하기"
     static let settingViewControllerLogoutTitle: String = "로그아웃"
+    static let settingViewControllerWithdrawalTitle: String = "서비스 탈퇴"
     
     // MARK: - CreateNickNameViewController
     static let createNickNameViewControllerTitle: String = "닉네임 설정"

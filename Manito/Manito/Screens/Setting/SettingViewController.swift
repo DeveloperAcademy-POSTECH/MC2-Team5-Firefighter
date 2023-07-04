@@ -84,4 +84,8 @@ extension SettingViewController: SettingViewDelegate {
             sceneDelegate.logout()
         })
     }
+    
+    func withdrawalButtonDidTap() {
+        //FIXME: api 연결 예정
+    }
 }
