@@ -30,8 +30,8 @@ final class DetailWaitView: UIView {
         }
     }
     
-    var copyButtonPublisher: AnyPublisher<Void, Never>
-    var startButtonPublisher: AnyPublisher<Void, Never>
+    lazy var copyButtonPublisher: AnyPublisher<Void, Never> = self.copyButton.tapPublisher
+    lazy var startButtonPublisher: AnyPublisher<Void, Never> = self.startButton.tapPublisher
     let editMenuButtonSubject = PassthroughSubject<Void, Never>()
     let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
@@ -94,8 +94,6 @@ final class DetailWaitView: UIView {
     // MARK: - init
     
     override init(frame: CGRect) {
-        self.copyButtonPublisher = self.copyButton.tapPublisher
-        self.startButtonPublisher = self.startButton.tapPublisher
         super.init(frame: frame)
         self.setupLayout()
     }
