@@ -42,6 +42,7 @@ final class SettingView: UIView {
         let button = UIButton()
         button.setTitle(TextLiteral.settingViewControllerWithdrawalTitle, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 15)
+        button.setUnderLine()
         return button
     }()
     
