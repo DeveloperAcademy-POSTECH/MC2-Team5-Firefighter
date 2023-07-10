@@ -66,8 +66,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         let room = self.viewModel.makeRoomInformation()
         
         // when
-        // FIXME: - Room 구조체 Equatable 프로토콜 채택 해야함.
-        XCTAssertEqual(testRoom.roomInformation?.title, room.roomInformation?.title)
+        XCTAssertEqual(testRoom, room)
     }
     
     func testTransferInvitationCode() {
@@ -133,9 +132,37 @@ final class DetailWaitViewModelTest: XCTestCase {
         wait(for: [exception], timeout: 2)
         XCTAssertEqual(testManittee, checkNickname)
     }
+    
+    func testTransferEditRoom() {
+        // given
+        let exception = XCTestExpectation(description: "editButton test")
+        var checkRoom = Room.emptyRoom
+        var checkMode: DetailEditView.EditMode = .date
+        // when
+        output.editRoomInformation
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    XCTFail("fail")
+                }
+            }, receiveValue: { (room, mode) in
+                checkRoom = room
+                checkMode = mode
+                exception.fulfill()
+            })
+            .store(in: &self.cancellable)
+        // then
+        self.testEditMenuButtonDidTapSubject.send(())
+        wait(for: [exception], timeout: 2)
+        XCTAssertEqual(checkMode, .information)
+        XCTAssertEqual(checkRoom, Room.testRoom)
+    }
 }
 
 final class MockDetailWaitService: DetailWaitServicable {
+    // FIXME: - network mocking 만들어야함.
     func fetchWaitingRoomInfo(roomId: String) async throws -> Manito.Room {
         let room = Room(roomInformation: RoomInfo(id: 10, capacity: 10, title: "목타이틀", startDate: "", endDate: "", state: ""),
                         participants: Participants.testParticipants,
