@@ -24,7 +24,7 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        self.viewModel = DetailWaitViewModel(roomIndex: 1, detailWaitService: MockDetailWaitService())
+        self.viewModel = DetailWaitViewModel(roomIndex: 0, detailWaitService: MockDetailWaitService())
         self.cancellable = Set<AnyCancellable>()
         self.testViewDidLoadSubject = PassthroughSubject<Void, Never>()
         self.testCodeCopyButtonDidTapSubject = PassthroughSubject<Void, Never>()
@@ -158,6 +158,30 @@ final class DetailWaitViewModelTest: XCTestCase {
         wait(for: [exception], timeout: 2)
         XCTAssertEqual(checkMode, .information)
         XCTAssertEqual(checkRoom, Room.testRoom)
+    }
+    
+    func testTransferDeleteRoom() {
+        // given
+        let exception = XCTestExpectation(description: "deleteButton test")
+        var testBool = false
+        // when
+        output.deleteRoom
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    XCTFail("fail")
+                }
+            }, receiveValue: { _ in
+                testBool = true
+                exception.fulfill()
+            })
+            .store(in: &self.cancellable)
+        // then
+        self.testDeleteMenuButtonDidTapSubject.send(())
+        wait(for: [exception], timeout: 2)
+        XCTAssertTrue(testBool)
     }
 }
 
