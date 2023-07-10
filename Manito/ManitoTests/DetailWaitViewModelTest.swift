@@ -72,30 +72,28 @@ final class DetailWaitViewModelTest: XCTestCase {
     func testTransferInvitationCode() {
         // given
         let checkCode = "ABCDEF"
+        var testCode = ""
+        
         // when
-        output.code
+        self.output.code
             .sink { code in
-                XCTAssertEqual(code, checkCode)
+                testCode = code
             }
             .store(in: &self.cancellable)
+        self.testCodeCopyButtonDidTapSubject.send(())
+        
         // then
-        testCodeCopyButtonDidTapSubject.send(())
+        XCTAssertEqual(checkCode, testCode)
     }
     
     func testTransferRoomInformation() {
         // given
-        let checkRoom = Room(roomInformation: RoomInfo(id: 10, capacity: 10, title: "목타이틀", startDate: "", endDate: "", state: ""),
-                        participants: Participants.testParticipants,
-                        manittee: Manittee.testManittee,
-                        manitto: Manitto.testManitto,
-                        invitation: Invitation.testInvitation,
-                        mission: Mission.testMission,
-                        admin: true,
-                        messages: Message1.testMessage)
-        let expectation = XCTestExpectation(description: "async test")
+        let checkRoom = mockRoom
+        let expectation = XCTestExpectation(description: "roomInformation test")
         var testRoom = Room.emptyRoom
+        
         // when
-        output.roomInformation
+        self.output.roomInformation
             .sink(receiveCompletion: { result in
                 switch result {
                 case .failure:
@@ -108,8 +106,9 @@ final class DetailWaitViewModelTest: XCTestCase {
                 expectation.fulfill()
             })
             .store(in: &self.cancellable)
-        // then
         self.testViewDidLoadSubject.send(())
+        
+        // then
         wait(for: [expectation], timeout: 2)
         XCTAssertEqual(checkRoom, testRoom)
     }
@@ -119,8 +118,9 @@ final class DetailWaitViewModelTest: XCTestCase {
         let checkNickname = "테스트마니띠"
         let expectation = XCTestExpectation(description: "startButton test")
         var testNickname = ""
+        
         // when
-        output.manitteeNickname
+        self.output.manitteeNickname
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:
@@ -133,19 +133,23 @@ final class DetailWaitViewModelTest: XCTestCase {
                 expectation.fulfill()
             })
             .store(in: &self.cancellable)
-        // then
         self.testStartButtonDidTapSubject.send(())
+        
+        // then
         wait(for: [expectation], timeout: 2)
-        XCTAssertEqual(testNickname, checkNickname)
+        XCTAssertEqual(checkNickname, testNickname)
     }
     
     func testTransferEditRoom() {
         // given
+        let checkRoom = Room.testRoom
+        let checkMode: DetailEditView.EditMode = .information
+        let expectation = XCTestExpectation(description: "editButton test")
         var testRoom = Room.emptyRoom
         var testMode: DetailEditView.EditMode = .date
-        let expectation = XCTestExpectation(description: "editButton test")
+        
         // when
-        output.editRoomInformation
+        self.output.editRoomInformation
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:
@@ -159,19 +163,21 @@ final class DetailWaitViewModelTest: XCTestCase {
                 expectation.fulfill()
             })
             .store(in: &self.cancellable)
-        // then
         self.testEditMenuButtonDidTapSubject.send(())
+        
+        // then
         wait(for: [expectation], timeout: 2)
-        XCTAssertEqual(testMode, .information)
-        XCTAssertEqual(testRoom, Room.testRoom)
+        XCTAssertEqual(checkRoom, testRoom)
+        XCTAssertEqual(checkMode, testMode)
     }
     
     func testTransferDeleteRoom() {
         // given
         let expectation = XCTestExpectation(description: "deleteButton test")
         var testBool = false
+        
         // when
-        output.deleteRoom
+        self.output.deleteRoom
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:
@@ -184,8 +190,9 @@ final class DetailWaitViewModelTest: XCTestCase {
                 expectation.fulfill()
             })
             .store(in: &self.cancellable)
-        // then
         self.testDeleteMenuButtonDidTapSubject.send(())
+        
+        // then
         wait(for: [expectation], timeout: 2)
         XCTAssertTrue(testBool)
     }
@@ -194,8 +201,9 @@ final class DetailWaitViewModelTest: XCTestCase {
         // given
         let expectation = XCTestExpectation(description: "leaveButton test")
         var testBool = false
+        
         // when
-        output.leaveRoom
+        self.output.leaveRoom
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:
@@ -208,8 +216,9 @@ final class DetailWaitViewModelTest: XCTestCase {
                 expectation.fulfill()
             })
             .store(in: &self.cancellable)
-        // then
         self.testLeaveMenuButtonDidTapSubject.send(())
+        
+        // then
         wait(for: [expectation], timeout: 2)
         XCTAssertTrue(testBool)
     }
@@ -219,13 +228,15 @@ final class DetailWaitViewModelTest: XCTestCase {
         let checkRoom = mockRoom
         let expectation = XCTestExpectation(description: "changeButton test")
         var testRoom = Room.emptyRoom
+        
         // when
-        testChangeButtonDidTapSubject.send(())
+        self.testChangeButtonDidTapSubject.send(())
+        
         // then
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
             testRoom = self.viewModel.makeRoomInformation()
-            XCTAssertEqual(checkRoom, testRoom)
             expectation.fulfill()
+            XCTAssertEqual(checkRoom, testRoom)
         }
     }
     
@@ -234,8 +245,10 @@ final class DetailWaitViewModelTest: XCTestCase {
         let checkRoom = mockRoom
         let expectation = XCTestExpectation(description: "viewDidLoad test")
         var testRoom = Room.emptyRoom
+        
         // when
-        testViewDidLoadSubject.send()
+        self.testViewDidLoadSubject.send()
+        
         // then
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             testRoom = self.viewModel.makeRoomInformation()
