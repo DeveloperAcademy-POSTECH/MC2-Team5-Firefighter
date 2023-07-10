@@ -213,6 +213,28 @@ final class DetailWaitViewModelTest: XCTestCase {
         wait(for: [exception], timeout: 2)
         XCTAssertTrue(testBool)
     }
+    
+    func testTransferChnageButtonDidTap() {
+        // given
+        let checkRoom = Room(roomInformation: RoomInfo(id: 10, capacity: 10, title: "목타이틀", startDate: "", endDate: "", state: ""),
+                             participants: Participants.testParticipants,
+                             manittee: Manittee.testManittee,
+                             manitto: Manitto.testManitto,
+                             invitation: Invitation.testInvitation,
+                             mission: Mission.testMission,
+                             admin: true,
+                             messages: Message1.testMessage)
+        let exception = XCTestExpectation(description: "leaveButton test")
+        var testRoom = Room.emptyRoom
+        // when
+        testChangeButtonDidTapSubject.send(())
+        // then
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            testRoom = self.viewModel.makeRoomInformation()
+            XCTAssertEqual(checkRoom, testRoom)
+            exception.fulfill()
+        }
+    }
 }
 
 final class MockDetailWaitService: DetailWaitServicable {
