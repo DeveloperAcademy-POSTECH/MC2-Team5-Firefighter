@@ -108,6 +108,31 @@ final class DetailWaitViewModelTest: XCTestCase {
         wait(for: [exception], timeout: 2)
         XCTAssertEqual(checkTitle, testTitle)
     }
+    
+    func testTranferStartButton() {
+        // given
+        let testManittee = "테스트마니띠"
+        let exception = XCTestExpectation(description: "startButton test")
+        var checkNickname = ""
+        // when
+        output.manitteeNickname
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    XCTFail("fail")
+                }
+            }, receiveValue: { nickname in
+                checkNickname = nickname
+                exception.fulfill()
+            })
+            .store(in: &self.cancellable)
+        // then
+        self.testStartButtonDidTapSubject.send(())
+        wait(for: [exception], timeout: 2)
+        XCTAssertEqual(testManittee, checkNickname)
+    }
 }
 
 final class MockDetailWaitService: DetailWaitServicable {
