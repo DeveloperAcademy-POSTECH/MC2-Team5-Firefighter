@@ -183,6 +183,30 @@ final class DetailWaitViewModelTest: XCTestCase {
         wait(for: [exception], timeout: 2)
         XCTAssertTrue(testBool)
     }
+    
+    func testTransferLeaveRoom() {
+        // given
+        let exception = XCTestExpectation(description: "leaveButton test")
+        var testBool = false
+        // when
+        output.leaveRoom
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    XCTFail("fail")
+                }
+            }, receiveValue: { _ in
+                testBool = true
+                exception.fulfill()
+            })
+            .store(in: &self.cancellable)
+        // then
+        self.testLeaveMenuButtonDidTapSubject.send(())
+        wait(for: [exception], timeout: 2)
+        XCTAssertTrue(testBool)
+    }
 }
 
 final class MockDetailWaitService: DetailWaitServicable {
