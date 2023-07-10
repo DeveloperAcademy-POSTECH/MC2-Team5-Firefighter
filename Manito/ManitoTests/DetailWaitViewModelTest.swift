@@ -59,14 +59,14 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     func testMakeRoomInformation() {
         // given
-        let testRoom = Room.testRoom
-        self.viewModel.setRoomInformation(room: testRoom)
+        let checkRoom = Room.testRoom
+        self.viewModel.setRoomInformation(room: checkRoom)
         
         // then
-        let room = self.viewModel.makeRoomInformation()
+        let testRoom = self.viewModel.makeRoomInformation()
         
         // when
-        XCTAssertEqual(testRoom, room)
+        XCTAssertEqual(checkRoom, testRoom)
     }
     
     func testTransferInvitationCode() {
@@ -84,9 +84,16 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     func testTransferRoomInformation() {
         // given
-        let testTitle = "목타이틀"
+        let checkRoom = Room(roomInformation: RoomInfo(id: 10, capacity: 10, title: "목타이틀", startDate: "", endDate: "", state: ""),
+                        participants: Participants.testParticipants,
+                        manittee: Manittee.testManittee,
+                        manitto: Manitto.testManitto,
+                        invitation: Invitation.testInvitation,
+                        mission: Mission.testMission,
+                        admin: true,
+                        messages: Message1.testMessage)
         let exception = XCTestExpectation(description: "async test")
-        var checkTitle = ""
+        var testRoom = Room.emptyRoom
         // when
         output.roomInformation
             .sink(receiveCompletion: { result in
@@ -97,22 +104,21 @@ final class DetailWaitViewModelTest: XCTestCase {
                     break
                 }
             }, receiveValue: { room in
-                guard let title = room.roomInformation?.title else { return }
-                checkTitle = title
+                testRoom = room
                 exception.fulfill()
             })
             .store(in: &self.cancellable)
         // then
         self.testViewDidLoadSubject.send(())
         wait(for: [exception], timeout: 2)
-        XCTAssertEqual(checkTitle, testTitle)
+        XCTAssertEqual(checkRoom, testRoom)
     }
     
     func testTranferStartButton() {
         // given
-        let testManittee = "테스트마니띠"
+        let checkNickname = "테스트마니띠"
         let exception = XCTestExpectation(description: "startButton test")
-        var checkNickname = ""
+        var testNickname = ""
         // when
         output.manitteeNickname
             .sink(receiveCompletion: { result in
@@ -123,21 +129,21 @@ final class DetailWaitViewModelTest: XCTestCase {
                     XCTFail("fail")
                 }
             }, receiveValue: { nickname in
-                checkNickname = nickname
+                testNickname = nickname
                 exception.fulfill()
             })
             .store(in: &self.cancellable)
         // then
         self.testStartButtonDidTapSubject.send(())
         wait(for: [exception], timeout: 2)
-        XCTAssertEqual(testManittee, checkNickname)
+        XCTAssertEqual(testNickname, checkNickname)
     }
     
     func testTransferEditRoom() {
         // given
+        var testRoom = Room.emptyRoom
+        var testMode: DetailEditView.EditMode = .date
         let exception = XCTestExpectation(description: "editButton test")
-        var checkRoom = Room.emptyRoom
-        var checkMode: DetailEditView.EditMode = .date
         // when
         output.editRoomInformation
             .sink(receiveCompletion: { result in
@@ -148,16 +154,16 @@ final class DetailWaitViewModelTest: XCTestCase {
                     XCTFail("fail")
                 }
             }, receiveValue: { (room, mode) in
-                checkRoom = room
-                checkMode = mode
+                testRoom = room
+                testMode = mode
                 exception.fulfill()
             })
             .store(in: &self.cancellable)
         // then
         self.testEditMenuButtonDidTapSubject.send(())
         wait(for: [exception], timeout: 2)
-        XCTAssertEqual(checkMode, .information)
-        XCTAssertEqual(checkRoom, Room.testRoom)
+        XCTAssertEqual(testMode, .information)
+        XCTAssertEqual(testRoom, Room.testRoom)
     }
     
     func testTransferDeleteRoom() {
