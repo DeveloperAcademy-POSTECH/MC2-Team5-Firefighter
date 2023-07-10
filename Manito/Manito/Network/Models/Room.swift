@@ -11,7 +11,7 @@ struct ParticipatingRooms: Decodable {
     let participatingRooms: [ParticipatingRoom]?
 }
 
-struct ParticipatingRoom: Decodable {
+struct ParticipatingRoom: Decodable, Equatable {
     let id: Int?
     let title: String?
     var state: String?
@@ -19,7 +19,19 @@ struct ParticipatingRoom: Decodable {
     let startDate, endDate: String?
 }
 
-struct Room: Decodable {
+struct Room: Decodable, Equatable {
+    static func == (lhs: Room, rhs: Room) -> Bool {
+        return lhs.roomInformation == rhs.roomInformation &&
+        lhs.participants == rhs.participants &&
+        lhs.manittee == rhs.manittee &&
+        lhs.manitto == rhs.manitto &&
+        lhs.invitation == rhs.invitation &&
+        lhs.didViewRoulette == rhs.didViewRoulette &&
+        lhs.mission == rhs.mission &&
+        lhs.admin == rhs.admin &&
+        lhs.messages == rhs.messages
+    }
+    
     let roomInformation: RoomInfo?
     let participants: Participants?
     let manittee: Manittee?
@@ -104,7 +116,7 @@ struct Friend: Decodable {
 }
 
 // MARK: - Participants
-struct Participants: Decodable {
+struct Participants: Decodable, Equatable {
     let count: Int?
     let members: [User]?
     
@@ -124,7 +136,7 @@ extension Participants {
 }
 
 // MARK: - User
-struct User: Decodable {
+struct User: Decodable, Equatable {
     let id, nickname: String?
 }
 
@@ -141,7 +153,7 @@ extension User {
 }
 
 // MARK: - Room
-struct RoomInfo: Decodable {
+struct RoomInfo: Decodable, Equatable {
     let id, capacity: Int?
     let title, startDate, endDate, state: String?
     
@@ -197,7 +209,7 @@ extension RoomInfo {
 }
 
 // MARK: - Mission
-struct Mission: Codable {
+struct Mission: Codable, Equatable {
     let id: Int?
     let content: String?
 }
@@ -207,7 +219,7 @@ extension Mission {
 }
 
 // MARK: - Invitation
-struct Invitation: Decodable {
+struct Invitation: Decodable, Equatable {
     let code: String?
 }
 
@@ -216,7 +228,7 @@ extension Invitation {
 }
 
 // MARK: - Message1
-struct Message1: Decodable {
+struct Message1: Decodable, Equatable {
     let count: Int?
 }
 
@@ -225,7 +237,7 @@ extension Message1 {
 }
 
 // MARK: - Manittee
-struct Manittee: Decodable {
+struct Manittee: Decodable, Equatable {
     let nickname: String?
 }
 
@@ -234,7 +246,7 @@ extension Manittee {
 }
 
 // MARK: - Manitto
-struct Manitto: Decodable {
+struct Manitto: Decodable, Equatable {
     let nickname: String?
 }
 
