@@ -11,21 +11,28 @@ import XCTest
 
 
 final class DetailWaitViewModelTest: XCTestCase {
-    
-    private let viewModel = DetailWaitViewModel(roomIndex: 1, detailWaitService: DetailWaitService(api: DetailWaitAPI(apiService: APIService())))
-    private var cancellable = Set<AnyCancellable>()
-    private let testViewDidLoadSubject = PassthroughSubject<Void, Never>()
-    private let testCodeCopyButtonDidTapSubject = PassthroughSubject<Void, Never>()
-    private let testStartButtonDidTapSubject = PassthroughSubject<Void, Never>()
-    private let testEditMenuButtonDidTapSubject = PassthroughSubject<Void, Never>()
-    private let testDeleteMenuButtonDidTapSubject = PassthroughSubject<Void, Never>()
-    private let testLeaveMenuButtonDidTapSubject = PassthroughSubject<Void, Never>()
-    private let testChangeButtonDidTapSubject = PassthroughSubject<Void, Never>()
+    private var viewModel: DetailWaitViewModel!
+    private var cancellable: Set<AnyCancellable>!
+    private var testViewDidLoadSubject: PassthroughSubject<Void, Never>!
+    private var testCodeCopyButtonDidTapSubject: PassthroughSubject<Void, Never>!
+    private var testStartButtonDidTapSubject: PassthroughSubject<Void, Never>!
+    private var testEditMenuButtonDidTapSubject: PassthroughSubject<Void, Never>!
+    private var testDeleteMenuButtonDidTapSubject: PassthroughSubject<Void, Never>!
+    private var testLeaveMenuButtonDidTapSubject: PassthroughSubject<Void, Never>!
+    private var testChangeButtonDidTapSubject: PassthroughSubject<Void, Never>!
     private var output: DetailWaitViewModel.Output!
     
     override func setUp() {
         super.setUp()
-        self.viewModel.setRoomInformation(room: Room.testRoom)
+        self.viewModel = DetailWaitViewModel(roomIndex: 1, detailWaitService: MockDetailWaitService())
+        self.cancellable = Set<AnyCancellable>()
+        self.testViewDidLoadSubject = PassthroughSubject<Void, Never>()
+        self.testCodeCopyButtonDidTapSubject = PassthroughSubject<Void, Never>()
+        self.testStartButtonDidTapSubject = PassthroughSubject<Void, Never>()
+        self.testEditMenuButtonDidTapSubject = PassthroughSubject<Void, Never>()
+        self.testDeleteMenuButtonDidTapSubject = PassthroughSubject<Void, Never>()
+        self.testLeaveMenuButtonDidTapSubject = PassthroughSubject<Void, Never>()
+        self.testChangeButtonDidTapSubject = PassthroughSubject<Void, Never>()
         let input = DetailWaitViewModel.Input(
             viewDidLoad: testViewDidLoadSubject.eraseToAnyPublisher(),
             codeCopyButtonDidTap: testCodeCopyButtonDidTapSubject.eraseToAnyPublisher(),
@@ -35,6 +42,19 @@ final class DetailWaitViewModelTest: XCTestCase {
             leaveMenuButtonDidTap: testLeaveMenuButtonDidTapSubject.eraseToAnyPublisher(),
             changeButtonDidTap: testChangeButtonDidTapSubject.eraseToAnyPublisher())
         self.output = self.viewModel.transform(input)
+        self.viewModel.setRoomInformation(room: Room.testRoom)
+    }
+    
+    override func tearDown() {
+        self.viewModel = nil
+        self.cancellable = nil
+        self.testViewDidLoadSubject = nil
+        self.testCodeCopyButtonDidTapSubject = nil
+        self.testStartButtonDidTapSubject = nil
+        self.testEditMenuButtonDidTapSubject = nil
+        self.testDeleteMenuButtonDidTapSubject = nil
+        self.testLeaveMenuButtonDidTapSubject = nil
+        self.testChangeButtonDidTapSubject = nil
     }
     
     func testMakeRoomInformation() {
@@ -61,5 +81,57 @@ final class DetailWaitViewModelTest: XCTestCase {
             .store(in: &self.cancellable)
         // then
         testCodeCopyButtonDidTapSubject.send(())
+    }
+    
+    func testTransferRoomInformation() {
+        // given
+        let testTitle = "목타이틀"
+        let exception = XCTestExpectation(description: "async test")
+        var checkTitle = ""
+        // when
+        output.roomInformation
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .failure:
+                    break
+                case .finished:
+                    break
+                }
+            }, receiveValue: { room in
+                guard let title = room.roomInformation?.title else { return }
+                checkTitle = title
+                exception.fulfill()
+            })
+            .store(in: &self.cancellable)
+        // then
+        self.testViewDidLoadSubject.send(())
+        wait(for: [exception], timeout: 2)
+        XCTAssertEqual(checkTitle, testTitle)
+    }
+}
+
+final class MockDetailWaitService: DetailWaitServicable {
+    func fetchWaitingRoomInfo(roomId: String) async throws -> Manito.Room {
+        let room = Room(roomInformation: RoomInfo(id: 10, capacity: 10, title: "목타이틀", startDate: "", endDate: "", state: ""),
+                        participants: Participants.testParticipants,
+                        manittee: Manittee.testManittee,
+                        manitto: Manitto.testManitto,
+                        invitation: Invitation.testInvitation,
+                        mission: Mission.testMission,
+                        admin: true,
+                        messages: Message1.testMessage)
+        return room
+    }
+    
+    func patchStartManitto(roomId: String) async throws -> Manito.Manittee {
+        return Manittee.testManittee
+    }
+    
+    func deleteRoom(roomId: String) async throws -> Int {
+        return 200
+    }
+    
+    func deleteLeaveRoom(roomId: String) async throws -> Int {
+        return 200
     }
 }
