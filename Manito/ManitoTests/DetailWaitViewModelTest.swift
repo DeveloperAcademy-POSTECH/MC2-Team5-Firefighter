@@ -92,7 +92,7 @@ final class DetailWaitViewModelTest: XCTestCase {
                         mission: Mission.testMission,
                         admin: true,
                         messages: Message1.testMessage)
-        let exception = XCTestExpectation(description: "async test")
+        let expectation = XCTestExpectation(description: "async test")
         var testRoom = Room.emptyRoom
         // when
         output.roomInformation
@@ -105,19 +105,19 @@ final class DetailWaitViewModelTest: XCTestCase {
                 }
             }, receiveValue: { room in
                 testRoom = room
-                exception.fulfill()
+                expectation.fulfill()
             })
             .store(in: &self.cancellable)
         // then
         self.testViewDidLoadSubject.send(())
-        wait(for: [exception], timeout: 2)
+        wait(for: [expectation], timeout: 2)
         XCTAssertEqual(checkRoom, testRoom)
     }
     
     func testTranferStartButton() {
         // given
         let checkNickname = "테스트마니띠"
-        let exception = XCTestExpectation(description: "startButton test")
+        let expectation = XCTestExpectation(description: "startButton test")
         var testNickname = ""
         // when
         output.manitteeNickname
@@ -130,12 +130,12 @@ final class DetailWaitViewModelTest: XCTestCase {
                 }
             }, receiveValue: { nickname in
                 testNickname = nickname
-                exception.fulfill()
+                expectation.fulfill()
             })
             .store(in: &self.cancellable)
         // then
         self.testStartButtonDidTapSubject.send(())
-        wait(for: [exception], timeout: 2)
+        wait(for: [expectation], timeout: 2)
         XCTAssertEqual(testNickname, checkNickname)
     }
     
@@ -143,7 +143,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         // given
         var testRoom = Room.emptyRoom
         var testMode: DetailEditView.EditMode = .date
-        let exception = XCTestExpectation(description: "editButton test")
+        let expectation = XCTestExpectation(description: "editButton test")
         // when
         output.editRoomInformation
             .sink(receiveCompletion: { result in
@@ -156,19 +156,19 @@ final class DetailWaitViewModelTest: XCTestCase {
             }, receiveValue: { (room, mode) in
                 testRoom = room
                 testMode = mode
-                exception.fulfill()
+                expectation.fulfill()
             })
             .store(in: &self.cancellable)
         // then
         self.testEditMenuButtonDidTapSubject.send(())
-        wait(for: [exception], timeout: 2)
+        wait(for: [expectation], timeout: 2)
         XCTAssertEqual(testMode, .information)
         XCTAssertEqual(testRoom, Room.testRoom)
     }
     
     func testTransferDeleteRoom() {
         // given
-        let exception = XCTestExpectation(description: "deleteButton test")
+        let expectation = XCTestExpectation(description: "deleteButton test")
         var testBool = false
         // when
         output.deleteRoom
@@ -181,18 +181,18 @@ final class DetailWaitViewModelTest: XCTestCase {
                 }
             }, receiveValue: { _ in
                 testBool = true
-                exception.fulfill()
+                expectation.fulfill()
             })
             .store(in: &self.cancellable)
         // then
         self.testDeleteMenuButtonDidTapSubject.send(())
-        wait(for: [exception], timeout: 2)
+        wait(for: [expectation], timeout: 2)
         XCTAssertTrue(testBool)
     }
     
     func testTransferLeaveRoom() {
         // given
-        let exception = XCTestExpectation(description: "leaveButton test")
+        let expectation = XCTestExpectation(description: "leaveButton test")
         var testBool = false
         // when
         output.leaveRoom
@@ -200,24 +200,24 @@ final class DetailWaitViewModelTest: XCTestCase {
                 switch result {
                 case .finished:
                     break
-                case .failure(let error):
+                case .failure:
                     XCTFail("fail")
                 }
             }, receiveValue: { _ in
                 testBool = true
-                exception.fulfill()
+                expectation.fulfill()
             })
             .store(in: &self.cancellable)
         // then
         self.testLeaveMenuButtonDidTapSubject.send(())
-        wait(for: [exception], timeout: 2)
+        wait(for: [expectation], timeout: 2)
         XCTAssertTrue(testBool)
     }
     
     func testTransferChnageButtonDidTap() {
         // given
         let checkRoom = mockRoom
-        let exception = XCTestExpectation(description: "changeButton test")
+        let expectation = XCTestExpectation(description: "changeButton test")
         var testRoom = Room.emptyRoom
         // when
         testChangeButtonDidTapSubject.send(())
@@ -225,7 +225,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
             testRoom = self.viewModel.makeRoomInformation()
             XCTAssertEqual(checkRoom, testRoom)
-            exception.fulfill()
+            expectation.fulfill()
         }
     }
     
