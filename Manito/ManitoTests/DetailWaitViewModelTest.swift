@@ -200,7 +200,7 @@ final class DetailWaitViewModelTest: XCTestCase {
                 switch result {
                 case .finished:
                     break
-                case .failure:
+                case .failure(let error):
                     XCTFail("fail")
                 }
             }, receiveValue: { _ in
@@ -216,7 +216,38 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     func testTransferChnageButtonDidTap() {
         // given
-        let checkRoom = Room(roomInformation: RoomInfo(id: 10, capacity: 10, title: "목타이틀", startDate: "", endDate: "", state: ""),
+        let checkRoom = mockRoom
+        let exception = XCTestExpectation(description: "changeButton test")
+        var testRoom = Room.emptyRoom
+        // when
+        testChangeButtonDidTapSubject.send(())
+        // then
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
+            testRoom = self.viewModel.makeRoomInformation()
+            XCTAssertEqual(checkRoom, testRoom)
+            exception.fulfill()
+        }
+    }
+    
+    func testTransferViewDidLoad() {
+        // given
+        let checkRoom = mockRoom
+        let expectation = XCTestExpectation(description: "viewDidLoad test")
+        var testRoom = Room.emptyRoom
+        // when
+        testViewDidLoadSubject.send()
+        // then
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            testRoom = self.viewModel.makeRoomInformation()
+            expectation.fulfill()
+            XCTAssertEqual(checkRoom, testRoom)
+        }
+    }
+}
+
+extension DetailWaitViewModelTest {
+    var mockRoom: Room {
+        return Room(roomInformation: RoomInfo(id: 10, capacity: 10, title: "목타이틀", startDate: "", endDate: "", state: ""),
                              participants: Participants.testParticipants,
                              manittee: Manittee.testManittee,
                              manitto: Manitto.testManitto,
@@ -224,16 +255,6 @@ final class DetailWaitViewModelTest: XCTestCase {
                              mission: Mission.testMission,
                              admin: true,
                              messages: Message1.testMessage)
-        let exception = XCTestExpectation(description: "leaveButton test")
-        var testRoom = Room.emptyRoom
-        // when
-        testChangeButtonDidTapSubject.send(())
-        // then
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            testRoom = self.viewModel.makeRoomInformation()
-            XCTAssertEqual(checkRoom, testRoom)
-            exception.fulfill()
-        }
     }
 }
 
