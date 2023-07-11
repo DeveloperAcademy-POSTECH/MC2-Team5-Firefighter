@@ -12,6 +12,7 @@ import XCTest
 
 final class DetailWaitViewModelTest: XCTestCase {
     private var viewModel: DetailWaitViewModel!
+    private var service: MockDetailWaitService!
     private var cancellable: Set<AnyCancellable>!
     private var testViewDidLoadSubject: PassthroughSubject<Void, Never>!
     private var testCodeCopyButtonDidTapSubject: PassthroughSubject<Void, Never>!
@@ -24,7 +25,8 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        self.viewModel = DetailWaitViewModel(roomIndex: 0, detailWaitService: MockDetailWaitService())
+        self.service = MockDetailWaitService()
+        self.viewModel = DetailWaitViewModel(roomIndex: 0, detailWaitService: self.service)
         self.cancellable = Set<AnyCancellable>()
         self.testViewDidLoadSubject = PassthroughSubject<Void, Never>()
         self.testCodeCopyButtonDidTapSubject = PassthroughSubject<Void, Never>()
@@ -46,6 +48,7 @@ final class DetailWaitViewModelTest: XCTestCase {
     }
     
     override func tearDown() {
+        super.tearDown()
         self.viewModel = nil
         self.cancellable = nil
         self.testViewDidLoadSubject = nil
@@ -233,11 +236,12 @@ final class DetailWaitViewModelTest: XCTestCase {
         self.testChangeButtonDidTapSubject.send(())
         
         // then
-        DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             testRoom = self.viewModel.makeRoomInformation()
             expectation.fulfill()
-            XCTAssertEqual(checkRoom, testRoom)
         }
+        wait(for: [expectation], timeout: 2)
+        XCTAssertEqual(checkRoom, testRoom)
     }
     
     func testTransferViewDidLoad() {
@@ -253,8 +257,9 @@ final class DetailWaitViewModelTest: XCTestCase {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             testRoom = self.viewModel.makeRoomInformation()
             expectation.fulfill()
-            XCTAssertEqual(checkRoom, testRoom)
         }
+        wait(for: [expectation], timeout: 2)
+        XCTAssertEqual(checkRoom, testRoom)
     }
 }
 
