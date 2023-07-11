@@ -118,7 +118,7 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     func testTranferStartButton() {
         // given
-        let checkNickname = "테스트마니띠123"
+        let checkNickname = "테스트마니띠"
         let expectation = XCTestExpectation(description: "startButton test")
         var testNickname = ""
         
