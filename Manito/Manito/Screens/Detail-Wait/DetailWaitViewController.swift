@@ -47,7 +47,7 @@ final class DetailWaitViewController: BaseViewController {
     // MARK: - life cycle
     
     override func loadView() {
-        self.view = self.detailWaitView
+        self.view = self.detailWaitView1
     }
     
     override func viewDidLoad() {
