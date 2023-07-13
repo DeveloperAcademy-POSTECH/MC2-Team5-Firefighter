@@ -163,13 +163,13 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     private func setupBind() {
-        detailWaitView.deleteMenuButtonSubject
+        self.detailWaitView.deleteMenuButtonSubject
             .sink(receiveValue: { [weak self] _ in
                 self?.deleteRoom()
             })
             .store(in: &self.cancellable)
         
-        detailWaitView.leaveMenuButtonSubject
+        self.detailWaitView.leaveMenuButtonSubject
             .sink(receiveValue: { [weak self] _ in
                 self?.leaveRoom()
             })
