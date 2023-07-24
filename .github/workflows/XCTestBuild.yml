@@ -1,0 +1,19 @@
+# This workflow will build a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: XCTestCI
+on:
+  push:
+    branches: [ develop, main ]
+  pull_request:
+    branches: [ develop, release, hotfix, feature, main ]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Firefighter Build Tests
+      run: |
+        xcodebuild clean test -project ./Manito/Manito.xcodeproj -scheme Manito -destination "platform=iOS Simulator,name=iPhone 13,OS=latest"
+        xcpretty --color --simple
