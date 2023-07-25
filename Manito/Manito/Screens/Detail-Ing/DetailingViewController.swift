@@ -149,16 +149,19 @@ final class DetailingViewController: BaseViewController {
             do {
                 let data = try await detailIngService.requestStartingRoomInfo(roomId: self.roomId)
                 if let info = data {
-                    guard let state = info.roomInformation?.state,
-                          let mission = info.mission?.content,
+                    guard let mission = info.mission?.content,
                           let missionId = info.mission?.id
                     else { return }
-                    let viewController = LetterViewController(roomState: state,
-                                                              roomId: self.roomId,
-                                                              mission: mission,
-                                                              missionId: missionId.description,
-                                                              entryPoint: .notification)
-                    self.navigationController?.pushViewController(viewController, animated: true)
+                    // FIXME: - RoomType를 View에서 바로 빼오지 않고 다른 방식으로 구현해야 합니다.
+                    let service = LetterService(api: LetterAPI(apiService: APIService()))
+                    let viewModel = LetterViewModel(service: service,
+                                                    roomId: self.roomId,
+                                                    mission: mission,
+                                                    missionId: missionId.description,
+                                                    roomState: self.detailingView.roomType.rawValue,
+                                                    messageType: .received)
+                    let letterViewController = LetterViewController(viewModel: viewModel)
+                    self.navigationController?.pushViewController(letterViewController, animated: true)
                 }
             }
         }
@@ -244,12 +247,16 @@ extension DetailingViewController: DetailingDelegate {
     func letterBoxDidTap(type: String,
                          mission: String,
                          missionId: String) {
-          let letterViewController = LetterViewController(roomState: type,
-                                                          roomId: self.roomId,
-                                                          mission: mission,
-                                                          missionId: missionId,
-                                                          entryPoint: .detail)
-          self.navigationController?.pushViewController(letterViewController, animated: true)
+        // FIXME: - RoomType를 View에서 바로 빼오지 않고 다른 방식으로 구현해야 합니다.
+        let service = LetterService(api: LetterAPI(apiService: APIService()))
+        let viewModel = LetterViewModel(service: service,
+                                        roomId: self.roomId,
+                                        mission: mission,
+                                        missionId: missionId.description,
+                                        roomState: self.detailingView.roomType.rawValue,
+                                        messageType: .sent)
+        let letterViewController = LetterViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(letterViewController, animated: true)
     }
     
     func manittoMemoryButtonDidTap() {

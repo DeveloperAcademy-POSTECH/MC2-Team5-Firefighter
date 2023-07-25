@@ -144,7 +144,11 @@ final class GuideView: UIView {
         viewController.view.addGestureRecognizer(viewControllerTapGesture)
     }
 
-    func setupDisappearedConfiguration() {
+    func removeGuideView() {
+        self.guideBoxImageView.removeFromSuperview()
+    }
+
+    func hideGuideView() {
         self.guideBoxImageView.isHidden = true
     }
 
@@ -153,7 +157,7 @@ final class GuideView: UIView {
     @objc
     func didTapAroundToHideGuideView() {
         if !self.guideButton.isTouchInside {
-            self.setupDisappearedConfiguration()
+            self.hideGuideView()
         }
     }
 }

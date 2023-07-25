@@ -145,7 +145,7 @@ struct RoomInfo: Decodable {
     }
 }
 
-struct Mission: Codable {
+struct Mission: Codable, Hashable {
     let id: Int?
     let content: String?
 }
