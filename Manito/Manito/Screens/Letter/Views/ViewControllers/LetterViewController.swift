@@ -100,8 +100,7 @@ final class LetterViewController: BaseViewController {
                 case .finished: return
                 }
             }, receiveValue: { [weak self] items in
-                self?.reloadMessageList(items)
-                self?.letterView.updateEmptyArea(with: items)
+                self?.handleMessageList(items)
             })
             .store(in: &self.cancelBag)
 
@@ -175,6 +174,16 @@ extension LetterViewController {
     private func showErrorAlert() {
         self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
                        message: TextLiteral.letterViewControllerErrorDescription)
+    }
+
+    private func handleMessageList(_ messages: [Message]?) {
+        guard let messages else {
+            self.showErrorAlert()
+            return
+        }
+
+        self.reloadMessageList(messages)
+        self.letterView.updateEmptyArea(with: messages)
     }
 
     private func updateLetterViewEmptyArea(with index: Int) {
