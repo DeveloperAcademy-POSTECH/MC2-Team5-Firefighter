@@ -75,7 +75,6 @@ final class LetterViewModel: ViewModelType {
             .map { MessageType.sent }
 
         let mergePublisher = Publishers.Merge3(viewDidLoadType, segmentValueType, refreshWithType)
-            .share()
 
         let messagesPublisher = mergePublisher
             .asyncMap { [weak self] type in
