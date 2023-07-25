@@ -92,6 +92,7 @@
 		B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B40285B048A0080992C /* OpenManittoViewController.swift */; };
 		B50B1B44285B146A0080992C /* OpenManittoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1B43285B146A0080992C /* OpenManittoCollectionViewCell.swift */; };
 		B50CEE912A445EB700CF1C76 /* UIScrollView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CEE902A445EB700CF1C76 /* UIScrollView+Combine.swift */; };
+		B50CEEC02A6FF82600CF1C76 /* Publisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CEEBF2A6FF82600CF1C76 /* Publisher+Extension.swift */; };
 		B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */; };
 		B517C04C28D1FE5F0008BED0 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */; };
 		B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04D28D1FE660008BED0 /* TokenProtocol.swift */; };
@@ -282,6 +283,7 @@
 		B50B1B40285B048A0080992C /* OpenManittoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoViewController.swift; sourceTree = "<group>"; };
 		B50B1B43285B146A0080992C /* OpenManittoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoCollectionViewCell.swift; sourceTree = "<group>"; };
 		B50CEE902A445EB700CF1C76 /* UIScrollView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Combine.swift"; sourceTree = "<group>"; };
+		B50CEEBF2A6FF82600CF1C76 /* Publisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extension.swift"; sourceTree = "<group>"; };
 		B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEndPoint.swift; sourceTree = "<group>"; };
 		B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
 		B517C04D28D1FE660008BED0 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
@@ -867,6 +869,7 @@
 				B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */,
 				B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */,
 				B50CEE902A445EB700CF1C76 /* UIScrollView+Combine.swift */,
+				B50CEEBF2A6FF82600CF1C76 /* Publisher+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1346,6 +1349,7 @@
 				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
 				39C957F6287D9ED000A04A2B /* NetworkRequest.swift in Sources */,
+				B50CEEC02A6FF82600CF1C76 /* Publisher+Extension.swift in Sources */,
 				39EEF65C28CB3CD600437654 /* LoginAPI.swift in Sources */,
 				B5B3C1612A41D79E00AABD6F /* ViewModelType.swift in Sources */,
 				D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */,
