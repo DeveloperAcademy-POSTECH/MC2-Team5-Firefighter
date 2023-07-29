@@ -209,7 +209,7 @@ extension RoomInfo {
 }
 
 // MARK: - Mission
-struct Mission: Codable, Equatable {
+struct Mission: Codable, Equatable, Hashable {
     let id: Int?
     let content: String?
 }
