@@ -24,7 +24,7 @@ protocol DetailingDelegate: AnyObject {
 
 final class DetailingView: UIView {
     
-    private enum RoomType: String {
+    enum RoomType: String {
         case PROCESSING
         case POST
     }
@@ -34,7 +34,8 @@ final class DetailingView: UIView {
     private var isTappedManittee: Bool = false
     private var missionId: String = ""
     private var manittoNickname: String = ""
-    private var roomType: RoomType = .PROCESSING
+    // FIXME: - roomType 상태를 View에서 가지고 있으면 안될 거 같습니다. 나중에 리팩토링하실 때 이 부분 신경써주세요!
+    var roomType: RoomType = .PROCESSING
     private weak var delegate: DetailingDelegate?
     
     // MARK: - component

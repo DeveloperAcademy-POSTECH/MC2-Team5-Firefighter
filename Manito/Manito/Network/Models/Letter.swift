@@ -18,12 +18,13 @@ struct Manitte: Codable {
     var nickname: String?
 }
 
-struct Message: Codable {
-    var id: Int?
-    var content: String?
-    var imageUrl: String?
-    var createdDate: String?
-    var missionInfo: Mission?
+struct Message: Codable, Hashable {
+    let id: Int?
+    let content: String?
+    let imageUrl: String?
+    let createdDate: String?
+    let missionInfo: Mission?
+    var canReport: Bool?
 
     var isToday: Bool {
         return Date().letterDateToString == createdDate
