@@ -11,6 +11,8 @@
 		333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF669285864CE0039F77F /* MemoryViewController.swift */; };
 		33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDF5612856E03800564211 /* FriendListViewController.swift */; };
 		39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39018F4128C4708A00C78DBA /* UIButton+Extension.swift */; };
+		3915D54B2A7516A2002D6C25 /* URLInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3915D54A2A7516A2002D6C25 /* URLInfo.plist */; };
+		3915D54D2A7516E9002D6C25 /* URLInfo+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915D54C2A7516E9002D6C25 /* URLInfo+Extension.swift */; };
 		391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391612D729E9231B004AE982 /* DetailWaitView.swift */; };
 		391B3003286198C200421F1D /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391B3002286198C200421F1D /* Size.swift */; };
 		392EC77E2855C388006918A9 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC77D2855C388006918A9 /* SettingButton.swift */; };
@@ -205,6 +207,8 @@
 		333BF669285864CE0039F77F /* MemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
 		33BDF5612856E03800564211 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		39018F4128C4708A00C78DBA /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		3915D54A2A7516A2002D6C25 /* URLInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = URLInfo.plist; sourceTree = "<group>"; };
+		3915D54C2A7516E9002D6C25 /* URLInfo+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLInfo+Extension.swift"; sourceTree = "<group>"; };
 		391612D729E9231B004AE982 /* DetailWaitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitView.swift; sourceTree = "<group>"; };
 		391B3002286198C200421F1D /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		392EC77D2855C388006918A9 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
@@ -867,6 +871,7 @@
 				B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */,
 				B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */,
 				B50CEE902A445EB700CF1C76 /* UIScrollView+Combine.swift */,
+				3915D54C2A7516E9002D6C25 /* URLInfo+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -909,6 +914,7 @@
 				CB7B23A728C4ECA8004A4CF3 /* Character.swift */,
 				7E15F67D28B35B3D00441305 /* TextLiteral.swift */,
 				D777D2C828C7780E008655BD /* URLLiteral.swift */,
+				3915D54A2A7516A2002D6C25 /* URLInfo.plist */,
 			);
 			path = Literal;
 			sourceTree = "<group>";
@@ -1245,6 +1251,7 @@
 				39FFE33628F45E44008442EE /* GoogleService-Info.plist in Resources */,
 				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
 				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
+				3915D54B2A7516A2002D6C25 /* URLInfo.plist in Resources */,
 				B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */,
 				B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */,
 				B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */,
@@ -1393,6 +1400,7 @@
 				D7C4A1AD2A0DD8FA00C3AE4C /* SettingView.swift in Sources */,
 				39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */,
 				D7C4A1B02A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift in Sources */,
+				3915D54D2A7516E9002D6C25 /* URLInfo+Extension.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
