@@ -17,7 +17,6 @@
 		392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */; };
 		395B5BC22A25E20000CE1420 /* DetailWaitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */; };
 		395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */; };
-		395B5BD62A34A3C200CE1420 /* UIControl+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BD52A34A3C200CE1420 /* UIControl+Extension.swift */; };
 		397A241028BA494100454E4F /* APIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F0287D984900A04A2B /* APIEnvironment.swift */; };
 		397A241428BA516B00454E4F /* DetailWaitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241328BA516B00454E4F /* DetailWaitAPI.swift */; };
 		397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241728BA51B400454E4F /* DetailWaitProtocol.swift */; };
@@ -215,7 +214,6 @@
 		392EC7802855D17D006918A9 /* DetailWaitTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitTitleView.swift; sourceTree = "<group>"; };
 		395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModel.swift; sourceTree = "<group>"; };
 		395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModelTest.swift; sourceTree = "<group>"; };
-		395B5BD52A34A3C200CE1420 /* UIControl+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Extension.swift"; sourceTree = "<group>"; };
 		397A241328BA516B00454E4F /* DetailWaitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitAPI.swift; sourceTree = "<group>"; };
 		397A241728BA51B400454E4F /* DetailWaitProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitProtocol.swift; sourceTree = "<group>"; };
 		397A241928BA532A00454E4F /* FriendList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendList.swift; sourceTree = "<group>"; };
@@ -891,7 +889,6 @@
 				39C957CF2879521400A04A2B /* String+Extension.swift */,
 				39C957D12879523200A04A2B /* Date+Extension.swift */,
 				39018F4128C4708A00C78DBA /* UIButton+Extension.swift */,
-				395B5BD52A34A3C200CE1420 /* UIControl+Extension.swift */,
 				B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */,
 				B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */,
 				B50CEE902A445EB700CF1C76 /* UIScrollView+Combine.swift */,
@@ -1302,7 +1299,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */,
-				395B5BD62A34A3C200CE1420 /* UIControl+Extension.swift in Sources */,
 				39A938912A48504200EC2CF2 /* MissionEditEndPoint.swift in Sources */,
 				CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */,
 				333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */,

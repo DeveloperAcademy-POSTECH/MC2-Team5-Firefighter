@@ -260,13 +260,3 @@ extension DetailWaitViewController: DetailWaitViewControllerDelegate {
                             controller: self)
     }
 }
-
-// FIXME: - 듀나 PR 합쳐지면서 삭제 예정
-extension UIViewController {
-    var viewDidLoadPublisher: AnyPublisher<Void, Never> {
-        let selector = #selector(UIViewController.viewDidLoad)
-        return Just(selector)
-            .map { _ in Void() }
-            .eraseToAnyPublisher()
-    }
-}
