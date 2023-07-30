@@ -297,6 +297,7 @@
 		B5706BE029ADC20A0093D198 /* CreateLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterView.swift; sourceTree = "<group>"; };
 		B5706BF329B710FC0093D198 /* LetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterView.swift; sourceTree = "<group>"; };
 		B5706BF529B9D4650093D198 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
+		B57CB2EF2A7631AF00474042 /* MTNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MTNetwork; path = "../../../../공부중/URLSession-Example/URLSession_Example/Package/MTNetwork"; sourceTree = "<group>"; };
 		B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoView.swift; sourceTree = "<group>"; };
 		B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupView.swift; sourceTree = "<group>"; };
 		B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeView.swift; sourceTree = "<group>"; };
@@ -639,6 +640,14 @@
 			path = Letter;
 			sourceTree = "<group>";
 		};
+		B57CB2ED2A7630BD00474042 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				B57CB2EF2A7631AF00474042 /* MTNetwork */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		B5AE11EE29D1E38D00F86FF8 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -701,6 +710,7 @@
 				B55BCEB528D99F8600AF7E45 /* Settings.bundle */,
 				B5F524CD28519AA000614FF7 /* Manito */,
 				398B1CBA2A12415C00DEFCEC /* ManitoTests */,
+				B57CB2ED2A7630BD00474042 /* Packages */,
 				B5F524CC28519AA000614FF7 /* Products */,
 				398B1CC82A13597600DEFCEC /* Frameworks */,
 			);
