@@ -32,17 +32,14 @@ final class LetterViewModel: ViewModelType {
     }
 
     struct Output {
-        let messages: PassthroughSubject<[Message], NetworkError>
-        let index: CurrentValueSubject<Int, Never>
+        let messages: AnyPublisher<[Message]?, Error>
+        let index: AnyPublisher<Int, Never>
         let messageDetails: AnyPublisher<MessageDetails, Never>
         let reportDetails: AnyPublisher<ReportDetails, Never>
         let roomState: AnyPublisher<RoomState, Never>
     }
 
     // MARK: - property
-
-    private let messageSubject: PassthroughSubject<[Message], NetworkError> = PassthroughSubject()
-    private lazy var indexSubject: CurrentValueSubject<Int, Never> = CurrentValueSubject(self.messageType.rawValue)
 
     private var cancelBag: Set<AnyCancellable> = Set()
 
@@ -77,14 +74,21 @@ final class LetterViewModel: ViewModelType {
         let refreshWithType = input.refresh
             .map { MessageType.sent }
 
-        Publishers.Merge3(viewDidLoadType, segmentValueType, refreshWithType)
-            .sink(receiveValue: { [weak self] type in
-                self?.fetchMessages(with: type)
-                self?.sendCurrentIndex(at: type)
-            })
-            .store(in: &self.cancelBag)
+        let mergePublisher = Publishers.Merge3(viewDidLoadType, segmentValueType, refreshWithType)
 
-        let messagePublisher = input.sendLetterButtonDidTap
+        let messagesPublisher = mergePublisher
+            .asyncMap { [weak self] type in
+                try await self?.fetchMessages(with: type)
+            }
+            .eraseToAnyPublisher()
+
+        let currentIndexPublisher = mergePublisher
+            .compactMap { [weak self] type in
+                self?.sendCurrentIndex(at: type)
+            }
+            .eraseToAnyPublisher()
+
+        let messageDetailsPublisher = input.sendLetterButtonDidTap
             .map { [weak self] _ -> MessageDetails in
                 self?.loadMessageDetails()
                 return (self?.messageDetails)!
@@ -103,9 +107,9 @@ final class LetterViewModel: ViewModelType {
             .eraseToAnyPublisher()
 
         return Output(
-            messages: self.messageSubject,
-            index: self.indexSubject,
-            messageDetails: messagePublisher,
+            messages: messagesPublisher,
+            index: currentIndexPublisher,
+            messageDetails: messageDetailsPublisher,
             reportDetails: reportPublisher,
             roomState: roomStatePublisher
         )
@@ -113,17 +117,19 @@ final class LetterViewModel: ViewModelType {
 
     // MARK: - Private - func
 
-    private func sendCurrentIndex(at type: MessageType) {
+    private func sendCurrentIndex(at type: MessageType) -> Int {
         let currentIndex = self.currentIndex(at: type)
-        self.indexSubject.send(currentIndex)
+        return currentIndex
     }
 
-    private func fetchMessages(with type: MessageType) {
+    private func fetchMessages(with type: MessageType) async throws -> [Message] {
         let roomId = self.messageDetails.roomId
 
         switch type {
-        case .sent: self.fetchSendMessages(roomId: roomId)
-        case .received: self.fetchReceivedMessages(roomId: roomId)
+        case .sent:
+            return try await self.fetchSendMessages(roomId: roomId, type: type)
+        case .received:
+            return try await self.fetchReceivedMessages(roomId: roomId, type: type)
         }
     }
 }
@@ -134,30 +140,14 @@ extension LetterViewModel {
         return type.rawValue
     }
 
-    private func fetchSendMessages(roomId: String) {
-        Task {
-            do {
-                let messages = try await self.service.fetchSendLetter(roomId: roomId)
-                let modifiedMessages = self.messageWithReportState(in: messages)
-                self.messageSubject.send(modifiedMessages)
-            } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.messageSubject.send(completion: .failure(error))
-            }
-        }
+    private func fetchSendMessages(roomId: String, type: MessageType) async throws -> [Message] {
+        let messages = try await self.service.fetchSendLetter(roomId: roomId)
+        return self.insertReportState(type, in: messages)
     }
 
-    private func fetchReceivedMessages(roomId: String) {
-        Task {
-            do {
-                let messages = try await self.service.fetchReceiveLetter(roomId: roomId)
-                let modifiedMessages = self.messageWithReportState(in: messages)
-                self.messageSubject.send(modifiedMessages)
-            } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.messageSubject.send(completion: .failure(error))
-            }
-        }
+    private func fetchReceivedMessages(roomId: String, type: MessageType) async throws -> [Message] {
+        let messages = try await self.service.fetchReceiveLetter(roomId: roomId)
+        return self.insertReportState(type, in: messages)
     }
 
     private func loadMessageDetails() {
@@ -165,16 +155,11 @@ extension LetterViewModel {
         self.messageDetails.manitteeId = manitteeId
     }
 
-    private func messageWithReportState(in messages: [Message]) -> [Message] {
-        if let messageType = MessageType(rawValue: self.indexSubject.value) {
-            let canReport = messageType == .received
-            return messages.map { item in
-                var item = item
-                item.canReport = canReport
-                return item
-            }
+    private func insertReportState(_ type: MessageType, in messages: [Message]) -> [Message] {
+        return messages.map { item in
+            var item = item
+            item.canReport = (type == .received)
+            return item
         }
-
-        return []
     }
 }
