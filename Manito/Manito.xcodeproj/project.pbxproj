@@ -101,6 +101,7 @@
 		B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */; };
 		B517C04C28D1FE5F0008BED0 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */; };
 		B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04D28D1FE660008BED0 /* TokenProtocol.swift */; };
+		B53AD35E2A763CC400B83B33 /* MTNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = B53AD35D2A763CC400B83B33 /* MTNetwork */; };
 		B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */; };
 		B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741E929A494E200B75BA3 /* LetterImageError.swift */; };
 		B55B482229C3723B00CFFDAD /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55B482129C3723B00CFFDAD /* URLRepresentable.swift */; };
@@ -307,6 +308,7 @@
 		B5706BE029ADC20A0093D198 /* CreateLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterView.swift; sourceTree = "<group>"; };
 		B5706BF329B710FC0093D198 /* LetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterView.swift; sourceTree = "<group>"; };
 		B5706BF529B9D4650093D198 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
+		B57CB3032A763C1600474042 /* MTNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MTNetwork; sourceTree = "<group>"; };
 		B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoView.swift; sourceTree = "<group>"; };
 		B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupView.swift; sourceTree = "<group>"; };
 		B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeView.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */,
 				B50B1B0428596C900080992C /* SnapKit in Frameworks */,
 				B50B1B0728596CB10080992C /* FSCalendar in Frameworks */,
+				B53AD35E2A763CC400B83B33 /* MTNetwork in Frameworks */,
 				B50B1B33285AC0970080992C /* Gifu in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -666,6 +669,14 @@
 			path = Letter;
 			sourceTree = "<group>";
 		};
+		B57CB3022A763BB200474042 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				B57CB3032A763C1600474042 /* MTNetwork */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		B5AE11EE29D1E38D00F86FF8 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -728,6 +739,7 @@
 				B55BCEB528D99F8600AF7E45 /* Settings.bundle */,
 				B5F524CD28519AA000614FF7 /* Manito */,
 				398B1CBA2A12415C00DEFCEC /* ManitoTests */,
+				B57CB3022A763BB200474042 /* Packages */,
 				B5F524CC28519AA000614FF7 /* Products */,
 				398B1CC82A13597600DEFCEC /* Frameworks */,
 			);
@@ -1212,6 +1224,7 @@
 				B50B1B32285AC0970080992C /* Gifu */,
 				CB6637E72959CBC60050BD04 /* SkeletonView */,
 				39FFE33328F457AF008442EE /* FirebaseMessaging */,
+				B53AD35D2A763CC400B83B33 /* MTNetwork */,
 			);
 			productName = Manito;
 			productReference = B5F524CB28519AA000614FF7 /* Manito.app */;
@@ -1847,6 +1860,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B50B1B31285AC0970080992C /* XCRemoteSwiftPackageReference "Gifu" */;
 			productName = Gifu;
+		};
+		B53AD35D2A763CC400B83B33 /* MTNetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MTNetwork;
 		};
 		CB6637E72959CBC60050BD04 /* SkeletonView */ = {
 			isa = XCSwiftPackageProductDependency;
