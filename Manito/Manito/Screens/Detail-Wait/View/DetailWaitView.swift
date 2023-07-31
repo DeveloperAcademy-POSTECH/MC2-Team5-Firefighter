@@ -5,38 +5,15 @@
 //  Created by Mingwan Choi on 2023/04/14.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 
-protocol DetailWaitViewDelegate: AnyObject {
-    func startButtonDidTap()
-    func editButtonDidTap(isOnlyDateEdit: Bool)
-    func deleteButtonDidTap(title: String, message: String, okTitle: String)
-    func leaveButtonDidTap(title: String, message: String, okTitle: String)
-    func codeCopyButtonDidTap()
-    func didPassStartDate(isAdmin: Bool)
-}
-
 final class DetailWaitView: UIView {
-    private enum UserStatus: CaseIterable {
+    private enum UserStatus {
         case admin
         case member
-        
-        var alertText: (title: String,
-                        message: String,
-                        okTitle: String) {
-            switch self {
-            case .admin:
-                return (title: TextLiteral.datailWaitViewControllerDeleteTitle,
-                        message: TextLiteral.datailWaitViewControllerDeleteMessage,
-                        okTitle: TextLiteral.delete)
-            case .member:
-                return (title: TextLiteral.datailWaitViewControllerExitTitle,
-                        message: TextLiteral.datailWaitViewControllerExitMessage,
-                        okTitle: TextLiteral.leave)
-            }
-        }
     }
     
     private enum ButtonText: String {
@@ -52,6 +29,12 @@ final class DetailWaitView: UIView {
             }
         }
     }
+    
+    lazy var copyButtonPublisher: AnyPublisher<Void, Never> = self.copyButton.tapPublisher
+    lazy var startButtonPublisher: AnyPublisher<Void, Never> = self.startButton.tapPublisher
+    let editMenuButtonSubject = PassthroughSubject<Void, Never>()
+    let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
+    let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
     
     // MARK: - ui component
     
@@ -108,14 +91,11 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private weak var delegate: DetailWaitViewDelegate?
-    
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
-        self.setupCopyButton()
     }
     
     @available(*, unavailable)
@@ -174,13 +154,6 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private func setupCopyButton() {
-        let action = UIAction { [weak self] _ in
-            self?.delegate?.codeCopyButtonDidTap()
-        }
-        self.copyButton.addAction(action, for: .touchUpInside)
-    }
-    
     private func setupTitleViewData(title: String, state: String, dateRange: String) {
         self.titleView.setStartState(state: state)
         self.titleView.setupLabelData(title: title, dateRange: dateRange)
@@ -189,7 +162,6 @@ final class DetailWaitView: UIView {
     private func setupRelatedViews(of userStatus: Bool, _ isStart: Bool) {
         self.showStartButtonForAdmin(userStatus)
         self.setExitButtonMenu(userStatus)
-        self.showAlertWhenPastDate(userStatus, isStart: isStart)
         self.setupTitleViewGesture(userStatus)
     }
 
@@ -213,17 +185,9 @@ final class DetailWaitView: UIView {
     }
     
     private func configureStartButton(_ canStart: Bool) {
-        if canStart {
-            self.startButton.title = ButtonText.start.status
-            self.startButton.isDisabled = false
-            let action = UIAction { [weak self] _ in
-                self?.delegate?.startButtonDidTap()
-            }
-            self.startButton.addAction(action, for: .touchUpInside)
-        } else {
-            self.startButton.title = ButtonText.waiting.status
-            self.startButton.isDisabled = true
-        }
+        let type: ButtonText = canStart ? .start : .waiting
+        self.startButton.title = type.status
+        self.startButton.isDisabled = !canStart
     }
     
     private func setExitButtonMenu(_ isAdmin: Bool) {
@@ -232,29 +196,18 @@ final class DetailWaitView: UIView {
         switch type {
         case .admin:
             children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
-                self?.delegate?.editButtonDidTap(isOnlyDateEdit: false)
+                self?.editMenuButtonSubject.send(())
             }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
-                self?.delegate?.deleteButtonDidTap(title: UserStatus.admin.alertText.title,
-                                           message: UserStatus.admin.alertText.message,
-                                           okTitle: UserStatus.admin.alertText.okTitle)
+                self?.deleteMenuButtonSubject.send(())
             })
             ]
         case .member:
             children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
-                self?.delegate?.leaveButtonDidTap(title: UserStatus.member.alertText.title,
-                                          message: UserStatus.member.alertText.message,
-                                          okTitle: UserStatus.member.alertText.okTitle
-                )
+                self?.leaveMenuButtonSubject.send(())
             })]
         }
         let menu = UIMenu(children: children)
         self.moreButton.menu = menu
-    }
-    
-    private func showAlertWhenPastDate(_ isAdmin: Bool, isStart: Bool) {
-        if !isStart {
-            self.delegate?.didPassStartDate(isAdmin: isAdmin)
-        }
     }
     
     private func setupTitleViewGesture(_ isAdmin: Bool) {
@@ -262,10 +215,6 @@ final class DetailWaitView: UIView {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.presentEditViewController))
             self.titleView.addGestureRecognizer(tapGesture)
         }
-    }
-    
-    func configureDelegation(_ delegate: DetailWaitViewDelegate) {
-        self.delegate = delegate
     }
     
     func configureNavigationItem(_ navigationController: UINavigationController) {
@@ -297,7 +246,7 @@ final class DetailWaitView: UIView {
     
     @objc
     private func presentEditViewController() {
-        self.delegate?.editButtonDidTap(isOnlyDateEdit: false)
+        self.editMenuButtonSubject.send(())
     }
 }
 

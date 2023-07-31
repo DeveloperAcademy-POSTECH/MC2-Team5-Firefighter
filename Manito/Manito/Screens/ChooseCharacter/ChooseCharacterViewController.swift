@@ -95,7 +95,8 @@ final class ChooseCharacterViewController: BaseViewController {
     private func pushDetailWaitViewController(status: Status, roomId: Int) {
         guard let navigationController = self.presentingViewController as? UINavigationController else { return }
         
-        let viewController = DetailWaitViewController(roomIndex: roomId)
+        let viewController = DetailWaitViewController(viewModel: DetailWaitViewModel(roomIndex: roomId,
+                                                                                     detailWaitService: DetailWaitService(api: DetailWaitAPI(apiService: APIService()))))
         
         switch status {
         case .createRoom:

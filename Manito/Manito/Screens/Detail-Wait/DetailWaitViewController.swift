@@ -5,6 +5,7 @@
 //  Created by Mingwan Choi on 2023/04/15.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -21,14 +22,16 @@ final class DetailWaitViewController: BaseViewController {
     
     // MARK: - property
     
-    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-    private let roomIndex: Int
-    private var roomInformation: Room?
+    private let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
+    private let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
+    private let changeButtonSubject = PassthroughSubject<Void, Never>()
+    private var cancellable = Set<AnyCancellable>()
+    private let detailWaitViewModel: DetailWaitViewModel
     
     // MARK: - init
     
-    init(roomIndex: Int) {
-        self.roomIndex = roomIndex
+    init(viewModel: DetailWaitViewModel) {
+        self.detailWaitViewModel = viewModel
         super.init()
     }
     
@@ -49,10 +52,10 @@ final class DetailWaitViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetchRoomData()
-        self.configureDelegation()
-        self.configureNavigationController()
         self.setupNotificationCenter()
+        self.configureNavigationController()
+        self.bindViewModel()
+        self.setupBind()
     }
     
     // MARK: - func
@@ -61,47 +64,169 @@ final class DetailWaitViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
     }
     
-    private func configureDelegation() {
-        self.detailWaitView.configureDelegation(self)
-    }
-    
-    private func presentDetailEditViewController(isOnlyDateEdit: Bool) {
-        guard let room = self.roomInformation else { return }
-        let viewController = DetailEditViewController(editMode: isOnlyDateEdit ? .date : .information,
-                                                      room: room)
-        viewController.detailWaitDelegate = self
-        self.present(viewController, animated: true)
-    }
-    
-    private func checkStartDateIsPast(_ startDate: String) -> Bool {
-        guard let startDate = startDate.stringToDate else { return false }
-        return startDate.isPast
-    }
-    
-    private func presentSelectManittoViewController(nickname: String) {
-        guard let roomId = self.roomInformation?.roomInformation?.id?.description else { return }
-        let viewController = SelectManitteeViewController(roomId: roomId, manitteeNickname: nickname)
-        viewController.modalTransitionStyle = .crossDissolve
-        viewController.modalPresentationStyle = .fullScreen
-        self.present(viewController, animated: true)
-    }
-    
     private func configureNavigationController() {
         guard let navigationController = self.navigationController else { return }
         self.detailWaitView.configureNavigationItem(navigationController)
     }
     
-    private func fetchRoomData() {
-        self.requestWaitRoomInfo() { [weak self] result in
-            switch result {
-            case .success(let room):
-                DispatchQueue.main.async {
-                    self?.detailWaitView.updateDetailWaitView(room: room)
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transformedOutput() -> DetailWaitViewModel.Output {
+        let input = DetailWaitViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            codeCopyButtonDidTap: self.detailWaitView.copyButtonPublisher,
+            startButtonDidTap: self.detailWaitView.startButtonPublisher,
+            editMenuButtonDidTap: self.detailWaitView.editMenuButtonSubject.eraseToAnyPublisher(),
+            deleteMenuButtonDidTap: self.deleteMenuButtonSubject.eraseToAnyPublisher(),
+            leaveMenuButtonDidTap: self.leaveMenuButtonSubject.eraseToAnyPublisher(),
+            changeButtonDidTap: self.changeButtonSubject.eraseToAnyPublisher())
+        return self.detailWaitViewModel.transform(input)
+    }
+    
+    private func bindOutputToViewModel(_ output: DetailWaitViewModel.Output) {
+        output.roomInformation
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: "에러 발생")
                 }
-            case .failure:
-                self?.makeAlert(title: TextLiteral.errorAlertTitle,
-                                message: TextLiteral.detailWaitViewControllerLoadDataMessage)
+            }, receiveValue: { [weak self] room in
+                self?.detailWaitView.updateDetailWaitView(room: room)
+            })
+            .store(in: &self.cancellable)
+        
+        output.code
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] code in
+                self?.showToastView(code: code)
+            })
+            .store(in: &self.cancellable)
+        
+        output.manitteeNickname
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: "에러 발생")
+                }
+            }, receiveValue: { [weak self] nickname in
+                self?.presentSelectManittoViewController(nickname: nickname)
+            })
+            .store(in: &self.cancellable)
+        
+        output.editRoomInformation
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] editInformation in
+                self?.showDetailEditViewController(roomInformation: editInformation.roomInformation,
+                                                   mode: editInformation.mode)
+            })
+            .store(in: &self.cancellable)
+        
+        output.deleteRoom
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: "오류 발생")
+                }
+            }, receiveValue: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .store(in: &self.cancellable)
+        
+        output.leaveRoom
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: "오류 발생")
+                }
+            }, receiveValue: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .store(in: &self.cancellable)
+        
+        output.passedStartDate
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (isPassedStartDate, isAdmin) in
+                self?.showStartDatePassedAlert(isPassedStartDate: isPassedStartDate, isAdmin: isAdmin)
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    private func setupBind() {
+        self.detailWaitView.deleteMenuButtonSubject
+            .sink(receiveValue: { [weak self] _ in
+                self?.deleteRoom()
+            })
+            .store(in: &self.cancellable)
+        
+        self.detailWaitView.leaveMenuButtonSubject
+            .sink(receiveValue: { [weak self] _ in
+                self?.leaveRoom()
+            })
+            .store(in: &self.cancellable)
+    }
+        
+    private func showDetailEditViewController(roomInformation: Room, mode: DetailEditView.EditMode) {
+        let viewController = DetailEditViewController(editMode: mode, room: roomInformation)
+        viewController.detailWaitDelegate = self
+        self.present(viewController, animated: true)
+    }
+    
+    private func presentSelectManittoViewController(nickname: String) {
+        let roomIndex = self.detailWaitViewModel.roomIndex.description
+        let viewController = SelectManitteeViewController(roomId: roomIndex, manitteeNickname: nickname)
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .fullScreen
+        self.present(viewController, animated: true)
+    }
+    
+    private func showToastView(code: String) {
+        ToastView.showToast(code: code,
+                            message: TextLiteral.detailWaitViewControllerCopyCode,
+                            controller: self)
+    }
+    
+    private func deleteRoom() {
+        self.makeRequestAlert(title: TextLiteral.datailWaitViewControllerDeleteTitle,
+                              message: TextLiteral.datailWaitViewControllerDeleteMessage,
+                              okTitle: TextLiteral.delete,
+                              okAction: { [weak self] _ in
+            self?.deleteMenuButtonSubject.send(())
+        })
+    }
+    
+    private func leaveRoom() {
+        self.makeRequestAlert(title: TextLiteral.datailWaitViewControllerExitTitle,
+                              message: TextLiteral.datailWaitViewControllerExitMessage,
+                              okTitle: TextLiteral.leave,
+                              okAction: { [weak self] _ in
+            self?.leaveMenuButtonSubject.send(())
+        })
+    }
+    
+    private func showStartDatePassedAlert(isPassedStartDate: Bool, isAdmin: Bool) {
+        if isAdmin {
+            if isPassedStartDate {
+                self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                               message: TextLiteral.detailWaitViewControllerPastAdminAlertMessage,
+                               okAction: { [weak self] _ in
+                    guard let roomInformation = self?.detailWaitViewModel.makeRoomInformation() else { return }
+                    self?.showDetailEditViewController(roomInformation: roomInformation, mode: .date)
+                })
             }
+        } else {
+            self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
+                           message: TextLiteral.detailWaitViewControllerPastAlertMessage)
         }
     }
     
@@ -109,165 +234,28 @@ final class DetailWaitViewController: BaseViewController {
     
     @objc
     private func didTapEnterButton() {
-        guard let room = self.roomInformation,
-              let code = room.invitation?.code,
-              let title = room.roomInformation?.title,
-              let capacity = room.roomInformation?.capacity,
-              let startDate = room.roomInformation?.startDate,
-              let endDate = room.roomInformation?.endDate
+        let roomInfo = self.detailWaitViewModel.makeRoomInformation()
+        guard let title = roomInfo.roomInformation?.title,
+              let capacity = roomInfo.roomInformation?.capacity,
+              let startDate = roomInfo.roomInformation?.startDate,
+              let endDate = roomInfo.roomInformation?.endDate,
+              let invitationCode = roomInfo.invitation?.code
         else { return }
-        let viewController = InvitedCodeViewController(roomInfo: RoomDTO(title: title,
-                                                             capacity: capacity,
-                                                             startDate: startDate,
-                                                             endDate: endDate),
-                                                       code: code)
+        let roomDto = RoomDTO(title: title,
+                              capacity: capacity,
+                              startDate: startDate,
+                              endDate: endDate)
+        let viewController = InvitedCodeViewController(roomInfo: roomDto,
+                                                       code: invitationCode)
         viewController.modalPresentationStyle = .overCurrentContext
         viewController.modalTransitionStyle = .crossDissolve
         self.present(viewController, animated: true)
-    }
-    
-    // MARK: - network
-    
-    private func requestWaitRoomInfo(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let data = try await self.detailWaitService.getWaitingRoomInfo(roomId: self.roomIndex.description)
-                if let roomInfo = data {
-                    self.roomInformation = roomInfo
-                    completionHandler(.success(roomInfo))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
-    
-    private func requestStartManitto(completionHandler: @escaping ((Result<String, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let data = try await self.detailWaitService.startManitto(roomId: self.roomIndex.description)
-                if let manittee = data {
-                    guard let nickname = manittee.nickname else { return }
-                    completionHandler(.success(nickname))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
-    
-    private func requestDeleteRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let statusCode = try await self.detailWaitService.deleteRoom(roomId: self.roomIndex.description)
-                switch statusCode {
-                case 200..<300: completionHandler(.success(()))
-                default:
-                    completionHandler(.failure(.unknownError))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
-    
-    private func requestDeleteLeaveRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let statusCode = try await self.detailWaitService.deleteLeaveRoom(roomId: self.roomIndex.description)
-                switch statusCode {
-                case 200..<300: completionHandler(.success(()))
-                default: completionHandler(.failure(.unknownError))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
-}
-
-extension DetailWaitViewController: DetailWaitViewDelegate {
-    func startButtonDidTap() {
-        self.requestStartManitto() { [weak self] result in
-            switch result {
-            case .success(let nickname):
-                self?.presentSelectManittoViewController(nickname: nickname)
-            case .failure:
-                self?.makeAlert(title: TextLiteral.errorAlertTitle,
-                                message: TextLiteral.detailWaitViewControllerStartErrorMessage)
-            }
-        }
-    }
-    
-    func editButtonDidTap(isOnlyDateEdit: Bool) {
-        self.presentDetailEditViewController(isOnlyDateEdit: isOnlyDateEdit)
-    }
-    
-    func deleteButtonDidTap(title: String, message: String, okTitle: String) {
-        self.makeRequestAlert(title: title,
-                              message: message,
-                              okTitle: okTitle,
-                              okAction: { [weak self] _ in
-            self?.requestDeleteRoom() { result in
-                switch result {
-                case .success:
-                    self?.navigationController?.popViewController(animated: true)
-                case .failure:
-                    self?.makeAlert(title: TextLiteral.errorAlertTitle,
-                                    message: TextLiteral.detailWaitViewControllerDeleteErrorMessage)
-                }
-            }
-        })
-    }
-    
-    func leaveButtonDidTap(title: String, message: String, okTitle: String) {
-        self.makeRequestAlert(title: title,
-                              message: message,
-                              okAction: { [weak self] _ in
-            self?.requestDeleteLeaveRoom() { result in
-                switch result {
-                case .success:
-                    self?.navigationController?.popViewController(animated: true)
-                case .failure:
-                    self?.makeAlert(title: TextLiteral.errorAlertTitle,
-                                    message: TextLiteral.detailWaitViewControllerLeaveErrorMessage)
-                }
-            }
-        })
-    }
-    
-    func codeCopyButtonDidTap() {
-        guard let invitationCode = self.roomInformation?.invitation?.code else { return }
-        ToastView.showToast(code: invitationCode,
-                            message: TextLiteral.detailWaitViewControllerCopyCode,
-                            controller: self)
-    }
-    
-    func didPassStartDate(isAdmin: Bool) {
-        if isAdmin {
-            self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-                           message: TextLiteral.detailWaitViewControllerPastAdminAlertMessage,
-                           okAction: { [weak self] _ in
-                self?.presentDetailEditViewController(isOnlyDateEdit: true) }
-            )
-        } else {
-            self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-                           message: TextLiteral.detailWaitViewControllerPastAlertMessage)
-        }
     }
 }
 
 extension DetailWaitViewController: DetailWaitViewControllerDelegate {
     func didTappedChangeButton() {
-        self.fetchRoomData()
+        self.changeButtonSubject.send()
         ToastView.showToast(message: "방 정보 수정 완료",
                             controller: self)
     }

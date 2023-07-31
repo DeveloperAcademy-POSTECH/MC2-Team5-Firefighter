@@ -11,7 +11,7 @@ struct ParticipatingRooms: Decodable {
     let participatingRooms: [ParticipatingRoom]?
 }
 
-struct ParticipatingRoom: Decodable {
+struct ParticipatingRoom: Decodable, Equatable {
     let id: Int?
     let title: String?
     var state: String?
@@ -19,7 +19,19 @@ struct ParticipatingRoom: Decodable {
     let startDate, endDate: String?
 }
 
-struct Room: Decodable {
+struct Room: Decodable, Equatable {
+    static func == (lhs: Room, rhs: Room) -> Bool {
+        return lhs.roomInformation == rhs.roomInformation &&
+        lhs.participants == rhs.participants &&
+        lhs.manittee == rhs.manittee &&
+        lhs.manitto == rhs.manitto &&
+        lhs.invitation == rhs.invitation &&
+        lhs.didViewRoulette == rhs.didViewRoulette &&
+        lhs.mission == rhs.mission &&
+        lhs.admin == rhs.admin &&
+        lhs.messages == rhs.messages
+    }
+    
     let roomInformation: RoomInfo?
     let participants: Participants?
     let manittee: Manittee?
@@ -75,13 +87,36 @@ struct Room: Decodable {
     }
 }
 
+extension Room {
+    static let emptyRoom = Room(
+            roomInformation: nil,
+            participants: nil,
+            manittee: nil,
+            manitto: nil,
+            invitation: nil,
+            mission: nil,
+            admin: nil,
+            messages: nil)
+    
+    static let testRoom = Room(
+        roomInformation: RoomInfo.testRoomInfo,
+        participants: Participants.testParticipants,
+        manittee: Manittee.testManittee,
+        manitto: Manitto.testManitto,
+        invitation: Invitation.testInvitation,
+        didViewRoulette: false,
+        mission: Mission.testMission,
+        admin: false,
+        messages: Message1.testMessage)
+}
+
 struct Friend: Decodable {
     let colorIndex: Int?
     let name: String?
 }
 
 // MARK: - Participants
-struct Participants: Decodable {
+struct Participants: Decodable, Equatable {
     let count: Int?
     let members: [User]?
     
@@ -94,13 +129,31 @@ struct Participants: Decodable {
     }
 }
 
-// MARK: - Member
-struct User: Decodable {
+extension Participants {
+    static let testParticipants = Participants(
+        count: 5,
+        members: User.testUserList)
+}
+
+// MARK: - User
+struct User: Decodable, Equatable {
     let id, nickname: String?
 }
 
+extension User {
+    static let testUser = User(
+        id: "100", nickname: "유저1")
+    static let testUserList = [
+        User(id: "100", nickname: "유저1"),
+        User(id: "200", nickname: "유저2"),
+        User(id: "300", nickname: "유저3"),
+        User(id: "400", nickname: "유저4"),
+        User(id: "500", nickname: "유저5")
+    ]
+}
+
 // MARK: - Room
-struct RoomInfo: Decodable {
+struct RoomInfo: Decodable, Equatable {
     let id, capacity: Int?
     let title, startDate, endDate, state: String?
     
@@ -145,23 +198,58 @@ struct RoomInfo: Decodable {
     }
 }
 
-struct Mission: Codable, Hashable {
+extension RoomInfo {
+    static let testRoomInfo = RoomInfo(
+        id: 1,
+        capacity: 5,
+        title: "테스트타이틀",
+        startDate: "2023.01.01",
+        endDate: "2023.01.05",
+        state: "PRE")
+}
+
+// MARK: - Mission
+struct Mission: Codable, Equatable, Hashable {
     let id: Int?
     let content: String?
 }
 
-struct Invitation: Decodable {
+extension Mission {
+    static let testMission = Mission(id: 1, content: "테스트미션")
+}
+
+// MARK: - Invitation
+struct Invitation: Decodable, Equatable {
     let code: String?
 }
 
-struct Message1: Decodable {
+extension Invitation {
+    static let testInvitation = Invitation(code: "ABCDEF")
+}
+
+// MARK: - Message1
+struct Message1: Decodable, Equatable {
     let count: Int?
 }
 
-struct Manittee: Decodable {
+extension Message1 {
+    static let testMessage = Message1(count: 3)
+}
+
+// MARK: - Manittee
+struct Manittee: Decodable, Equatable {
     let nickname: String?
 }
 
-struct Manitto: Decodable {
+extension Manittee {
+    static let testManittee = Manittee(nickname: "테스트마니띠")
+}
+
+// MARK: - Manitto
+struct Manitto: Decodable, Equatable {
     let nickname: String?
+}
+
+extension Manitto {
+    static let testManitto = Manitto(nickname: "테스트마니또")
 }

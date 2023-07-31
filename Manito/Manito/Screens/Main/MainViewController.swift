@@ -278,11 +278,14 @@ final class MainViewController: BaseViewController {
         }
     }
 
+    // FIXME: - roomIndex가 현재 item으로 설정되어 있고, index가 roomIndex로 설정되어있음. KTBQ2B
     private func pushDetailView(status: RoomStatus, roomIndex: Int, index: Int? = nil) {
         switch status {
         case .waiting:
             guard let index = index else { return }
-            let viewController = DetailWaitViewController(roomIndex: index)
+            let viewController = DetailWaitViewController(viewModel: DetailWaitViewModel(roomIndex: index,
+                                                                                         detailWaitService: DetailWaitService(api: DetailWaitAPI(apiService: APIService()))))
+            
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
             guard let roomId = rooms?[roomIndex].id?.description
