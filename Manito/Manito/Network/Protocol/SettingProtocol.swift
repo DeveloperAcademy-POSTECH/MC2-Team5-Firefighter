@@ -9,4 +9,5 @@ import Foundation
 
 protocol SettingProtocol {
     func putChangeNickname(body: NicknameDTO) async throws -> String?
+    func deleteMember() async throws -> Int
 }

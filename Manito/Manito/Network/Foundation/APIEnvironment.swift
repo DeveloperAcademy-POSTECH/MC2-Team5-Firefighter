@@ -13,7 +13,7 @@ enum APIEnvironment: String {
     case none = ""
 
     static func baseURL(_ version: Self = v1) -> String {
-        return URLLiteral.productionUrl + "/api\(version.rawValue)"
+        return URLLiteral.developmentUrl + "/api\(version.rawValue)"
     }
     
     static let boundary: String = "com.TeamFirefighter.Manito"

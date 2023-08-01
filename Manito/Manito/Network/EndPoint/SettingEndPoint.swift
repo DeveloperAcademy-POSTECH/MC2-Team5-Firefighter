@@ -9,11 +9,14 @@ import Foundation
 
 enum SettingEndPoint: URLRepresentable {
     case editUserInfo(nickNameDto: NicknameDTO)
+    case deleteMember
 
     var path: String {
         switch self {
         case .editUserInfo:
             return "/members/nickname"
+        case .deleteMember:
+            return "/members"
         }
     }
 }
@@ -27,6 +30,8 @@ extension SettingEndPoint: EndPointable {
         switch self {
         case .editUserInfo:
             return .put
+        case .deleteMember:
+            return .delete
         }
     }
 
@@ -35,6 +40,8 @@ extension SettingEndPoint: EndPointable {
         case .editUserInfo(let setting):
             let body = setting
             return body.encode()
+        case .deleteMember:
+            return nil
         }
     }
 
@@ -42,6 +49,8 @@ extension SettingEndPoint: EndPointable {
         switch self {
         case .editUserInfo(let nicknameDTO):
             return self[.editUserInfo(nickNameDto: nicknameDTO)]
+        case .deleteMember:
+            return self[.deleteMember]
         }
     }
     

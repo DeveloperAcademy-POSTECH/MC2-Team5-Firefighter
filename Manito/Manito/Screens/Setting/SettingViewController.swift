@@ -15,6 +15,8 @@ final class SettingViewController: BaseViewController {
     
     private let settingView: SettingView = SettingView()
     
+    private let settingService: SettingAPI = SettingAPI(apiService: APIService())
+    
     // MARK: - init
     
     deinit {
@@ -46,8 +48,27 @@ final class SettingViewController: BaseViewController {
     private func configureNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = false
     }
+    
+    private func requestDeleteMember(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
+        Task {
+            do {
+                let statusCode = try await settingService.deleteMember()
+                switch statusCode {
+                case 200..<300: completionHandler(.success(()))
+                default:
+                    print(statusCode)
+                    completionHandler(.failure(.unknownError))
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
 }
-
 
 // MARK: - Extensions
 
@@ -86,6 +107,13 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func withdrawalButtonDidTap() {
-        //FIXME: api 연결 예정
+        self.requestDeleteMember() { [weak self] result in
+            switch result {
+            case .success:
+                self?.navigationController?.popViewController(animated: true)
+            case .failure:
+                print("error")
+            }
+        }
     }
 }

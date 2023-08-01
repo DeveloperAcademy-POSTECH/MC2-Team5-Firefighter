@@ -20,4 +20,11 @@ struct SettingAPI: SettingProtocol {
             .createRequest()
         return try await apiService.request(request)
     }
+    
+    func deleteMember() async throws -> Int {
+        let request = SettingEndPoint
+            .deleteMember
+            .createRequest()
+        return try await apiService.request(request)
+    }
 }
