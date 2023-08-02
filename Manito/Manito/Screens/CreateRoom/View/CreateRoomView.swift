@@ -17,10 +17,7 @@ protocol CreateRoomViewDelegate: AnyObject {
 final class CreateRoomView: UIView {
     
     private enum CreateRoomStep: Int {
-             case inputTitle = 0
-             case inputParticipants = 1
-             case inputDate = 2
-             case checkRoom = 3
+             case inputTitle = 0, inputParticipants, inputDate, checkRoom
     }
     
     // MARK: - ui component
@@ -61,9 +58,14 @@ final class CreateRoomView: UIView {
     
     private var title: String = ""
     private var participants: Int = 0
-    private var roomStep: CreateRoomStep = .inputTitle
     private var roomInfo: RoomDTO?
     private weak var delegate: CreateRoomViewDelegate?
+    private var roomStep: CreateRoomStep? = .inputTitle {
+        willSet(step) {
+            guard let stepIndex = step?.rawValue else { return }
+            self.manageStepView(step: stepIndex)
+        }
+    }
     
     // MARK: - init
     
@@ -71,6 +73,7 @@ final class CreateRoomView: UIView {
         super.init(frame: frame)
         self.setupLayout()
         self.setupAction()
+        self.detectStartableStatus()
     }
     
     @available(*, unavailable)
@@ -131,19 +134,14 @@ final class CreateRoomView: UIView {
         self.closeButton.addAction(closeAction, for: .touchUpInside)
         
         let nextAction = UIAction { [weak self] _ in
-//            self?.didTapNextButton()
+            self?.moveToNextStep()
         }
         self.nextButton.addAction(nextAction, for: .touchUpInside)
         
         let backAction = UIAction { [weak self] _ in
-//            self?.didTapBackButton()
+            self?.moveToPreviousStep()
         }
         self.backButton.addAction(backAction, for: .touchUpInside)
-    }
-    
-    private func changePreviousRoomIndex() {
-        self.roomStep = CreateRoomStep.init(rawValue: self.roomStep.rawValue - 1)!
-        
     }
     
     private func setupNotificationCenter() {
@@ -157,6 +155,32 @@ final class CreateRoomView: UIView {
                                                object: nil)
     }
     
+    private func moveToNextStep() {
+        guard let stepIndex = self.roomStep?.rawValue,
+              let nextStepIndex = CreateRoomStep(rawValue: stepIndex + 1) else { return }
+        self.roomStep = nextStepIndex
+    }
+    
+    private func moveToPreviousStep() {
+        guard let stepIndex = self.roomStep?.rawValue,
+              let previousStepIndex = CreateRoomStep(rawValue: stepIndex - 1) else { return }
+        self.roomStep = previousStepIndex
+    }
+    
+    private func detectStartableStatus() {
+        self.roomTitleView.changeNextButtonEnableStatus = { [weak self] isEnabled in
+            self?.nextButton.isDisabled = !isEnabled
+        }
+        
+        self.roomDateView.calendarView.changeButtonState = { [weak self] isEnabled in
+            self?.nextButton.isDisabled = !isEnabled
+        }
+    }
+    
+    private func setupHiddenStepView(at step: Int) {
+        
+    }
+    
     func configureDelegate(_ delegate: CreateRoomViewDelegate) {
         self.delegate = delegate
     }
@@ -165,6 +189,10 @@ final class CreateRoomView: UIView {
         if !self.nextButton.isTouchInside {
             self.endEditing(true)
         }
+    }
+    
+    func manageStepView(step: Int) {
+        
     }
     
     // MARK: - selector
