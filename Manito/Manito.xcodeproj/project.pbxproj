@@ -181,6 +181,7 @@
 		CBA4D7A42856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */; };
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
 		CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */; };
+		D70220232A7A22EC0024BACD /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70220222A7A22EC0024BACD /* CreateRoomView.swift */; };
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
 		D739C36328C7B69D00161117 /* SettingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36228C7B69D00161117 /* SettingProtocol.swift */; };
@@ -379,6 +380,7 @@
 		CBA4D7A32856CE9F0018BDC2 /* CreateRoomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
 		CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewCell.swift; sourceTree = "<group>"; };
+		D70220222A7A22EC0024BACD /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
 		D739C36228C7B69D00161117 /* SettingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingProtocol.swift; sourceTree = "<group>"; };
@@ -805,6 +807,7 @@
 		B5F524E528519ACA00614FF7 /* CreateRoom */ = {
 			isa = PBXGroup;
 			children = (
+				D70220212A7A22DC0024BACD /* View */,
 				7E3058C42854B45300489E6A /* UIComponent */,
 				B5F525052851A05500614FF7 /* CreateRoomViewController.swift */,
 			);
@@ -1133,6 +1136,14 @@
 				CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		D70220212A7A22DC0024BACD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D70220222A7A22EC0024BACD /* CreateRoomView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		D724AF5B287088110003F280 /* Setting */ = {
@@ -1480,6 +1491,7 @@
 				CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */,
 				B5FEE9DD28C849B400DEA07E /* UIImageView+Cache.swift in Sources */,
 				CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */,
+				D70220232A7A22EC0024BACD /* CreateRoomView.swift in Sources */,
 				B5AE11F429D32EE700F86FF8 /* SelectManitteeView.swift in Sources */,
 				397A241428BA516B00454E4F /* DetailWaitAPI.swift in Sources */,
 				39A938932A4852CA00EC2CF2 /* MissionDTO.swift in Sources */,
