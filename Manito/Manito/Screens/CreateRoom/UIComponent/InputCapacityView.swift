@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class InputParticipantsView: UIView {
+final class InputCapacityView: UIView {
     
     // MARK: - ui component
     

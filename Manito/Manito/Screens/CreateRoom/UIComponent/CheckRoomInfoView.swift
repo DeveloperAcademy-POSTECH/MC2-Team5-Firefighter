@@ -44,12 +44,12 @@ final class CheckRoomInfoView: UIView {
             self.dateLabel.text = newValue
         }
     }
-    var name: String = "" {
+    var title: String = "" {
         willSet {
             self.nameLabel.text = newValue
         }
     }
-    var participants: Int = 0 {
+    var capacity: Int = 0 {
         willSet {
             self.personLabel.text = "\(newValue.description)" + TextLiteral.per
         }

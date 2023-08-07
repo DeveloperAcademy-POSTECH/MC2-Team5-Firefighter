@@ -17,7 +17,7 @@ protocol CreateRoomViewDelegate: AnyObject {
 final class CreateRoomView: UIView {
     
     private enum CreateRoomStep: Int {
-             case inputTitle = 0, inputParticipants, inputDate, checkRoom, chooseCharacter
+             case inputTitle = 0, inputCapacity, inputDate, checkRoom, chooseCharacter
     }
     
     // MARK: - ui component
@@ -50,7 +50,7 @@ final class CreateRoomView: UIView {
         return button
     }()
     private let roomTitleView: InputTitleView = InputTitleView()
-    private let roomParticipantsView: InputParticipantsView = InputParticipantsView()
+    private let roomCapacityView: InputCapacityView = InputCapacityView()
     private let roomDateView: InputDateView = InputDateView()
     private let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
     private let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
@@ -111,12 +111,12 @@ final class CreateRoomView: UIView {
         }
         
         self.addSubview(self.roomTitleView)
-        self.addSubview(self.roomParticipantsView)
+        self.addSubview(self.roomCapacityView)
         self.addSubview(self.roomDateView)
         self.addSubview(self.roomInfoView)
         self.addSubview(self.characterCollectionView)
         
-        [self.roomTitleView, self.roomParticipantsView, self.roomDateView, self.roomInfoView, self.characterCollectionView]
+        [self.roomTitleView, self.roomCapacityView, self.roomDateView, self.roomInfoView, self.characterCollectionView]
             .forEach {
                 $0.snp.makeConstraints {
                     $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
@@ -181,7 +181,7 @@ final class CreateRoomView: UIView {
     
     private func setupHiddenStepView(at step: Int) {
         self.roomTitleView.isHidden = !(step == 0)
-        self.roomParticipantsView.isHidden = !(step == 1)
+        self.roomCapacityView.isHidden = !(step == 1)
         self.roomDateView.isHidden = !(step == 2)
         self.roomInfoView.isHidden = !(step == 3)
         self.characterCollectionView.isHidden = !(step == 4)
@@ -192,18 +192,18 @@ final class CreateRoomView: UIView {
     }
     
     private func setupRoomTitleViewAnimation() {
-        self.roomParticipantsView.fadeOut()
+        self.roomCapacityView.fadeOut()
         self.roomTitleView.fadeIn()
     }
     
-    private func setupRoomParticipatesViewAnimation() {
+    private func setupRoomCapacityViewAnimation() {
         self.roomTitleView.fadeOut()
-        self.roomParticipantsView.fadeIn()
+        self.roomCapacityView.fadeIn()
         self.roomDateView.fadeOut()
     }
     
     private func setupRoomDateViewAnimation() {
-        self.roomParticipantsView.fadeOut()
+        self.roomCapacityView.fadeOut()
         self.roomDateView.fadeIn()
         self.roomInfoView.fadeOut()
     }
@@ -224,7 +224,7 @@ final class CreateRoomView: UIView {
         case 0:
             self.setupTitle()
         case 1:
-            self.setupParticipates()
+            self.setupCapacity()
             self.disabledNextButton()
         case 2:
             self.setupDate()
@@ -233,8 +233,8 @@ final class CreateRoomView: UIView {
         case 4:
             let colorIndex = self.characterCollectionView.characterIndex
             self.delegate?.requestCreateRoom(roomInfo: RoomInfo(id: nil,
-                                                                capacity: self.roomInfoView.participants,
-                                                                title: self.roomInfoView.name,
+                                                                capacity: self.roomInfoView.capacity,
+                                                                title: self.roomInfoView.title,
                                                                 startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
                                                                 endDate: "20\(self.roomDateView.calendarView.getTempEndDate())",
                                                                 state: nil),
@@ -246,12 +246,12 @@ final class CreateRoomView: UIView {
     
     private func setupTitle() {
         guard let title = self.roomTitleView.roomsNameTextField.text else { return }
-        self.roomInfoView.name = title
+        self.roomInfoView.title = title
     }
     
-    private func setupParticipates() {
-        let participates = Int(self.roomParticipantsView.personSlider.value)
-        self.roomInfoView.participants = participates
+    private func setupCapacity() {
+        let capacity = Int(self.roomCapacityView.personSlider.value)
+        self.roomInfoView.capacity = capacity
     }
     
     private func disabledNextButton() {
@@ -286,7 +286,7 @@ final class CreateRoomView: UIView {
         case 0:
             self.setupRoomTitleViewAnimation()
         case 1:
-            self.setupRoomParticipatesViewAnimation()
+            self.setupRoomCapacityViewAnimation()
         case 2:
             self.setupRoomDateViewAnimation()
         case 3:

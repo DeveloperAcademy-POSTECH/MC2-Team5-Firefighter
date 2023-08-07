@@ -11,8 +11,6 @@ import SnapKit
 
 final class CreateRoomViewController: BaseViewController {
     
-
-    
     // MARK: - ui component
     
     private lazy var createRoomView: CreateRoomView = CreateRoomView()
