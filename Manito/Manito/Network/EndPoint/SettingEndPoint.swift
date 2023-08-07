@@ -55,15 +55,23 @@ extension SettingEndPoint: EndPointable {
     }
     
     func createRequest() -> NetworkRequest {
-        var headers: [String: String] = [:]
-        headers["Content-Type"] = "application/json"
-        headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
-        
-        return NetworkRequest(url: self.url,
-                              headers: headers,
-                              reqBody: self.requestBody,
-                              reqTimeout: self.requestTimeOut,
-                              httpMethod: self.httpMethod
-        )
+        switch self {
+        case .editUserInfo(_):
+            var headers: [String: String] = [:]
+            headers["Content-Type"] = "application/json"
+            headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
+            
+            return NetworkRequest(url: self.url,
+                                  headers: headers,
+                                  reqBody: self.requestBody,
+                                  reqTimeout: self.requestTimeOut,
+                                  httpMethod: self.httpMethod
+            )
+        case .deleteMember:
+            return NetworkRequest(url: self.url,
+                                  reqBody: self.requestBody,
+                                  reqTimeout: self.requestTimeOut,
+                                  httpMethod: self.httpMethod)
+        }
     }
 }

@@ -107,12 +107,14 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func withdrawalButtonDidTap() {
-        self.requestDeleteMember() { [weak self] result in
-            switch result {
-            case .success:
-                self?.navigationController?.popViewController(animated: true)
-            case .failure:
-                print("error")
+        self.makeRequestAlert(title: "경고", message: "회원탈퇴 시 지금까지 내용이 전부 삭제됩니다. \n 탈퇴 하시겠습니까?", okTitle: "탈퇴") { [weak self] _ in
+            self?.requestDeleteMember() { [weak self] result in
+                switch result {
+                case .success:
+                    self?.navigationController?.popViewController(animated: true)
+                case .failure:
+                    print("error")
+                }
             }
         }
     }
