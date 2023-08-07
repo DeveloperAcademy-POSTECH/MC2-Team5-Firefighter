@@ -19,7 +19,7 @@ final class CreateRoomViewController: BaseViewController {
     
     // MARK: - property
     
-
+    private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
     
     // MARK: - init
     
@@ -60,6 +60,37 @@ final class CreateRoomViewController: BaseViewController {
     private func configureDelegation() {
         self.createRoomView.configureDelegate(self)
     }
+    
+    private func pushDetailWaitViewController(roomId: Int) {
+        guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+        
+        let viewController = DetailWaitViewController(viewModel: DetailWaitViewModel(roomIndex: roomId,
+                                                                                     detailWaitService: DetailWaitService(api: DetailWaitAPI(apiService: APIService()))))
+        
+        navigationController.popViewController(animated: true)
+        navigationController.pushViewController(viewController, animated: false)
+        
+        self.dismiss(animated: true) {
+            NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
+        }
+    }
+    
+    // MARK: - network
+    
+    private func requestCreateRoom(room: CreateRoomDTO) {
+        Task {
+            do {
+                guard let roomId = try await self.roomService.postCreateRoom(body: room) else { return }
+                self.pushDetailWaitViewController(roomId: roomId)
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
 }
 
 extension CreateRoomViewController: CreateRoomViewDelegate {
@@ -67,10 +98,15 @@ extension CreateRoomViewController: CreateRoomViewDelegate {
         self.dismiss(animated: true)
     }
     
-    func pushChooseCharacterViewController(roomInfo: RoomDTO?) {
-        let viewController = ChooseCharacterViewController(statusMode: .createRoom, roomId: nil)
-        viewController.roomInfo = roomInfo
-        
-        self.navigationController?.pushViewController(viewController, animated: true)
+    func requestCreateRoom(roomInfo: RoomInfo, colorIndex: Int) {
+        guard let roomTitle = roomInfo.title,
+              let roomCapacity = roomInfo.capacity,
+              let roomStartDate = roomInfo.startDate,
+              let roomEndDate = roomInfo.endDate else { return }
+        self.requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomTitle,
+                                                                 capacity: roomCapacity,
+                                                                 startDate: roomStartDate,
+                                                                 endDate: roomEndDate),
+                                                   member: MemberDTO(colorIndex: colorIndex)))
     }
 }

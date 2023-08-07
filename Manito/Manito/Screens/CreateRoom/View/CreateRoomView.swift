@@ -11,13 +11,13 @@ import SnapKit
 
 protocol CreateRoomViewDelegate: AnyObject {
     func didTapCloseButton()
-    func pushChooseCharacterViewController(roomInfo: RoomDTO?)
+    func requestCreateRoom(roomInfo: RoomInfo, colorIndex: Int)
 }
 
 final class CreateRoomView: UIView {
     
     private enum CreateRoomStep: Int {
-             case inputTitle = 0, inputParticipants, inputDate, checkRoom
+             case inputTitle = 0, inputParticipants, inputDate, checkRoom, chooseCharacter
     }
     
     // MARK: - ui component
@@ -53,10 +53,11 @@ final class CreateRoomView: UIView {
     private let roomParticipantsView: InputParticipantsView = InputParticipantsView()
     private let roomDateView: InputDateView = InputDateView()
     private let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
+    private let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
     
     // MARK: - property
     
-    private var roomInfo: RoomDTO?
+    private var roomInfo: RoomInfo?
     private weak var delegate: CreateRoomViewDelegate?
     private var roomStep: CreateRoomStep? = .inputTitle {
         willSet(step) {
@@ -113,8 +114,9 @@ final class CreateRoomView: UIView {
         self.addSubview(self.roomParticipantsView)
         self.addSubview(self.roomDateView)
         self.addSubview(self.roomInfoView)
+        self.addSubview(self.characterCollectionView)
         
-        [self.roomTitleView, self.roomParticipantsView, self.roomDateView, self.roomInfoView]
+        [self.roomTitleView, self.roomParticipantsView, self.roomDateView, self.roomInfoView, self.characterCollectionView]
             .forEach {
                 $0.snp.makeConstraints {
                     $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
@@ -182,10 +184,11 @@ final class CreateRoomView: UIView {
         self.roomParticipantsView.isHidden = !(step == 1)
         self.roomDateView.isHidden = !(step == 2)
         self.roomInfoView.isHidden = !(step == 3)
+        self.characterCollectionView.isHidden = !(step == 4)
     }
     
     private func setupHiddenBackButton(at step: Int) {
-        self.backButton.isHidden = !(step == 1 || step == 2 || step == 3)
+        self.backButton.isHidden = !(step == 1 || step == 2 || step == 3 || step == 4)
     }
     
     private func setupRoomTitleViewAnimation() {
@@ -208,6 +211,12 @@ final class CreateRoomView: UIView {
     private func setupRoomDataCheckViewAnimation() {
         self.roomDateView.fadeOut()
         self.roomInfoView.fadeIn()
+        self.characterCollectionView.fadeOut()
+    }
+    
+    private func setupChooseCharacterViewAnimation() {
+        self.roomInfoView.fadeOut()
+        self.characterCollectionView.fadeIn()
     }
     
     private func runActionAtStep(at step: Int) {
@@ -220,7 +229,16 @@ final class CreateRoomView: UIView {
         case 2:
             self.setupDate()
         case 3:
-            print("")
+               break
+        case 4:
+            let colorIndex = self.characterCollectionView.characterIndex
+            self.delegate?.requestCreateRoom(roomInfo: RoomInfo(id: nil,
+                                                                capacity: self.roomInfoView.participants,
+                                                                title: self.roomInfoView.name,
+                                                                startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
+                                                                endDate: "20\(self.roomDateView.calendarView.getTempEndDate())",
+                                                                state: nil),
+                                             colorIndex: colorIndex)
         default:
             break
         }
@@ -235,16 +253,16 @@ final class CreateRoomView: UIView {
         let participates = Int(self.roomParticipantsView.personSlider.value)
         self.roomInfoView.participants = participates
     }
+    
+    private func disabledNextButton() {
+        self.nextButton.isDisabled = true
+    }
 
     private func setupDate() {
         let startDate = self.roomDateView.calendarView.getTempStartDate()
         let endDate = self.roomDateView.calendarView.getTempEndDate()
         let roomDateRange = "\(startDate) ~ \(endDate)"
         self.roomInfoView.dateRange = roomDateRange
-    }
-    
-    private func disabledNextButton() {
-        self.nextButton.isDisabled = true
     }
     
     private func configureUI() {
@@ -273,6 +291,8 @@ final class CreateRoomView: UIView {
             self.setupRoomDateViewAnimation()
         case 3:
             self.setupRoomDataCheckViewAnimation()
+        case 4:
+            self.setupChooseCharacterViewAnimation()
         default:
             break
         }
