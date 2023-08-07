@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class CheckRoomView: UIView {
+final class CheckRoomInfoView: UIView {
 
     // MARK: - ui component
     

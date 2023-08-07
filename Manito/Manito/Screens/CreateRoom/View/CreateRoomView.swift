@@ -52,12 +52,10 @@ final class CreateRoomView: UIView {
     private let roomTitleView: InputTitleView = InputTitleView()
     private let roomParticipantsView: InputParticipantsView = InputParticipantsView()
     private let roomDateView: InputDateView = InputDateView()
-    private let roomDataCheckView: CheckRoomView = CheckRoomView()
+    private let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
     
     // MARK: - property
     
-    private var title: String = ""
-    private var participants: Int = 0
     private var roomInfo: RoomDTO?
     private weak var delegate: CreateRoomViewDelegate?
     private var roomStep: CreateRoomStep? = .inputTitle {
@@ -74,6 +72,7 @@ final class CreateRoomView: UIView {
         self.setupLayout()
         self.setupAction()
         self.detectStartableStatus()
+        self.configureUI()
     }
     
     @available(*, unavailable)
@@ -113,9 +112,9 @@ final class CreateRoomView: UIView {
         self.addSubview(self.roomTitleView)
         self.addSubview(self.roomParticipantsView)
         self.addSubview(self.roomDateView)
-        self.addSubview(self.roomDataCheckView)
+        self.addSubview(self.roomInfoView)
         
-        [self.roomTitleView, self.roomParticipantsView, self.roomDateView, self.roomDataCheckView]
+        [self.roomTitleView, self.roomParticipantsView, self.roomDateView, self.roomInfoView]
             .forEach {
                 $0.snp.makeConstraints {
                     $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
@@ -134,6 +133,7 @@ final class CreateRoomView: UIView {
         self.closeButton.addAction(closeAction, for: .touchUpInside)
         
         let nextAction = UIAction { [weak self] _ in
+            self?.runActionAtStep(at: self?.roomStep?.rawValue ?? 0)
             self?.moveToNextStep()
         }
         self.nextButton.addAction(nextAction, for: .touchUpInside)
@@ -178,7 +178,77 @@ final class CreateRoomView: UIView {
     }
     
     private func setupHiddenStepView(at step: Int) {
-        
+        self.roomTitleView.isHidden = !(step == 0)
+        self.roomParticipantsView.isHidden = !(step == 1)
+        self.roomDateView.isHidden = !(step == 2)
+        self.roomInfoView.isHidden = !(step == 3)
+    }
+    
+    private func setupHiddenBackButton(at step: Int) {
+        self.backButton.isHidden = !(step == 1 || step == 2 || step == 3)
+    }
+    
+    private func setupRoomTitleViewAnimation() {
+        self.roomParticipantsView.fadeOut()
+        self.roomTitleView.fadeIn()
+    }
+    
+    private func setupRoomParticipatesViewAnimation() {
+        self.roomTitleView.fadeOut()
+        self.roomParticipantsView.fadeIn()
+        self.roomDateView.fadeOut()
+    }
+    
+    private func setupRoomDateViewAnimation() {
+        self.roomParticipantsView.fadeOut()
+        self.roomDateView.fadeIn()
+        self.roomInfoView.fadeOut()
+    }
+    
+    private func setupRoomDataCheckViewAnimation() {
+        self.roomDateView.fadeOut()
+        self.roomInfoView.fadeIn()
+    }
+    
+    private func runActionAtStep(at step: Int) {
+        switch step {
+        case 0:
+            self.setupTitle()
+        case 1:
+            self.setupParticipates()
+            self.disabledNextButton()
+        case 2:
+            self.setupDate()
+        case 3:
+            print("")
+        default:
+            break
+        }
+    }
+    
+    private func setupTitle() {
+        guard let title = self.roomTitleView.roomsNameTextField.text else { return }
+        self.roomInfoView.name = title
+    }
+    
+    private func setupParticipates() {
+        let participates = Int(self.roomParticipantsView.personSlider.value)
+        self.roomInfoView.participants = participates
+    }
+
+    private func setupDate() {
+        let startDate = self.roomDateView.calendarView.getTempStartDate()
+        let endDate = self.roomDateView.calendarView.getTempEndDate()
+        let roomDateRange = "\(startDate) ~ \(endDate)"
+        self.roomInfoView.dateRange = roomDateRange
+    }
+    
+    private func disabledNextButton() {
+        self.nextButton.isDisabled = true
+    }
+    
+    private func configureUI() {
+        self.roomStep = .inputTitle
     }
     
     func configureDelegate(_ delegate: CreateRoomViewDelegate) {
@@ -192,7 +262,20 @@ final class CreateRoomView: UIView {
     }
     
     func manageStepView(step: Int) {
-        
+        self.setupHiddenStepView(at: step)
+        self.setupHiddenBackButton(at: step)
+        switch step {
+        case 0:
+            self.setupRoomTitleViewAnimation()
+        case 1:
+            self.setupRoomParticipatesViewAnimation()
+        case 2:
+            self.setupRoomDateViewAnimation()
+        case 3:
+            self.setupRoomDataCheckViewAnimation()
+        default:
+            break
+        }
     }
     
     // MARK: - selector
