@@ -13,7 +13,7 @@ final class CreateRoomViewController: BaseViewController {
     
     // MARK: - ui component
     
-    private lazy var createRoomView: CreateRoomView = CreateRoomView()
+    private let createRoomView: CreateRoomView = CreateRoomView()
     
     // MARK: - property
     
