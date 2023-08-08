@@ -72,6 +72,7 @@ final class CreateRoomView: UIView {
         super.init(frame: frame)
         self.setupLayout()
         self.setupAction()
+        self.setupNotificationCenter()
         self.detectStartableStatus()
         self.configureUI()
     }
@@ -223,6 +224,7 @@ final class CreateRoomView: UIView {
         switch step {
         case 0:
             self.setupTitle()
+            self.endEditing(true)
         case 1:
             self.setupCapacity()
             self.disabledNextButton()
