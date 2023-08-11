@@ -17,7 +17,7 @@ protocol CreateRoomViewDelegate: AnyObject {
 final class CreateRoomView: UIView {
     
     private enum CreateRoomStep: Int {
-             case inputTitle = 0, inputCapacity, inputDate, checkRoom, chooseCharacter
+         case inputTitle = 0, inputCapacity, inputDate, checkRoom, chooseCharacter
     }
     
     // MARK: - ui component

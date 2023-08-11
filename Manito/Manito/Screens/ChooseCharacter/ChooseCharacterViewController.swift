@@ -68,10 +68,6 @@ final class ChooseCharacterViewController: BaseViewController {
         self.chooseCharacterView.configureNavigationItem(navigationController)
     }
     
-    private func didTapEnterButton(characterIndex: Int) {
-        self.requestJoinRoom(characterIndex: characterIndex)
-    }
-    
     private func pushDetailWaitViewController(roomId: Int) {
         guard let navigationController = self.presentingViewController as? UINavigationController else { return }
         
@@ -121,6 +117,6 @@ extension ChooseCharacterViewController: ChooseCharacterViewDelegate {
     }
     
     func joinButtonDidTap(characterIndex: Int) {
-        self.didTapEnterButton(characterIndex: characterIndex)
+        self.requestJoinRoom(characterIndex: characterIndex)
     }
 }
