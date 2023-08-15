@@ -298,6 +298,8 @@
 		B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEndPoint.swift; sourceTree = "<group>"; };
 		B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
 		B517C04D28D1FE660008BED0 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
+		B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
+		B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageView.swift; sourceTree = "<group>"; };
 		B54741E929A494E200B75BA3 /* LetterImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageError.swift; sourceTree = "<group>"; };
 		B55B482129C3723B00CFFDAD /* URLRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRepresentable.swift; sourceTree = "<group>"; };
@@ -634,6 +636,31 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		B53AD40F2A8BC69700B83B33 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				B53AD4112A8BC6A400B83B33 /* Dev */,
+				B53AD4102A8BC69E00B83B33 /* Prod */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		B53AD4102A8BC69E00B83B33 /* Prod */ = {
+			isa = PBXGroup;
+			children = (
+				B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */,
+			);
+			path = Prod;
+			sourceTree = "<group>";
+		};
+		B53AD4112A8BC6A400B83B33 /* Dev */ = {
+			isa = PBXGroup;
+			children = (
+				B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */,
+			);
+			path = Dev;
+			sourceTree = "<group>";
+		};
 		B54741DE29A3A4BA00B75BA3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -737,6 +764,7 @@
 			isa = PBXGroup;
 			children = (
 				B55BCEB528D99F8600AF7E45 /* Settings.bundle */,
+				B53AD40F2A8BC69700B83B33 /* Configuration */,
 				B5F524CD28519AA000614FF7 /* Manito */,
 				398B1CBA2A12415C00DEFCEC /* ManitoTests */,
 				B57CB3022A763BB200474042 /* Packages */,
