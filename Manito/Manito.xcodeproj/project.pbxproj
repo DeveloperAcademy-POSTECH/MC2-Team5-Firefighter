@@ -1545,8 +1545,9 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		398B1CBF2A12415C00DEFCEC /* Debug */ = {
+		398B1CBF2A12415C00DEFCEC /* Dev */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1566,10 +1567,11 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Manito.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Manito";
 			};
-			name = Debug;
+			name = Dev;
 		};
-		398B1CC02A12415C00DEFCEC /* Release */ = {
+		398B1CC02A12415C00DEFCEC /* Prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1589,10 +1591,11 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Manito.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Manito";
 			};
-			name = Release;
+			name = Prod;
 		};
-		B5F524DD28519AA100614FF7 /* Debug */ = {
+		B5F524DD28519AA100614FF7 /* Dev */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1650,10 +1653,11 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = Debug;
+			name = Dev;
 		};
-		B5F524DE28519AA100614FF7 /* Release */ = {
+		B5F524DE28519AA100614FF7 /* Prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1705,10 +1709,11 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = Prod;
 		};
-		B5F524E028519AA100614FF7 /* Debug */ = {
+		B5F524E028519AA100614FF7 /* Dev */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1743,10 +1748,11 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = Debug;
+			name = Dev;
 		};
-		B5F524E128519AA100614FF7 /* Release */ = {
+		B5F524E128519AA100614FF7 /* Prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1781,7 +1787,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = Release;
+			name = Prod;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1789,29 +1795,29 @@
 		398B1CC12A12415C00DEFCEC /* Build configuration list for PBXNativeTarget "ManitoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				398B1CBF2A12415C00DEFCEC /* Debug */,
-				398B1CC02A12415C00DEFCEC /* Release */,
+				398B1CBF2A12415C00DEFCEC /* Dev */,
+				398B1CC02A12415C00DEFCEC /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Prod;
 		};
 		B5F524C628519AA000614FF7 /* Build configuration list for PBXProject "Manito" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B5F524DD28519AA100614FF7 /* Debug */,
-				B5F524DE28519AA100614FF7 /* Release */,
+				B5F524DD28519AA100614FF7 /* Dev */,
+				B5F524DE28519AA100614FF7 /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Prod;
 		};
 		B5F524DF28519AA100614FF7 /* Build configuration list for PBXNativeTarget "Manito" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B5F524E028519AA100614FF7 /* Debug */,
-				B5F524E128519AA100614FF7 /* Release */,
+				B5F524E028519AA100614FF7 /* Dev */,
+				B5F524E128519AA100614FF7 /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Prod;
 		};
 /* End XCConfigurationList section */
 
