@@ -1241,6 +1241,7 @@
 				B5F524C728519AA000614FF7 /* Sources */,
 				B5F524C828519AA000614FF7 /* Frameworks */,
 				B5F524C928519AA000614FF7 /* Resources */,
+				B53AD41E2A8C892800B83B33 /* GoogleService-Info.plist */,
 			);
 			buildRules = (
 			);
@@ -1334,6 +1335,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B53AD41E2A8C892800B83B33 /* GoogleService-Info.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "GoogleService-Info.plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/${PRODUCT_NAME}.app/GoogleService-Info.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\ncase \"${CONFIGURATION}\" in\n  \"Dev\" )\ncp -r \"$SRCROOT/Configuration/Dev/GoogleService-Info-Dev.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n  \"Prod\" )\ncp -r \"$SRCROOT/Configuration/Prod/GoogleService-Info-Prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n*)\n;;\nesac\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		398B1CB52A12415B00DEFCEC /* Sources */ = {
