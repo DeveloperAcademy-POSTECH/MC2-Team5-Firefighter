@@ -71,7 +71,6 @@
 		39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F1C12D28D756E600585B83 /* LetterImageViewController.swift */; };
 		39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FFE32728EEFFFE008442EE /* MoreButton.swift */; };
 		39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 39FFE33328F457AF008442EE /* FirebaseMessaging */; };
-		39FFE33628F45E44008442EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39FFE33528F45E44008442EE /* GoogleService-Info.plist */; };
 		435B17682913E71400212663 /* DetailingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B17672913E71400212663 /* DetailingViewController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
@@ -271,7 +270,7 @@
 		39EEF65F28CB3D6200437654 /* LoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDTO.swift; sourceTree = "<group>"; };
 		39F1C12D28D756E600585B83 /* LetterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageViewController.swift; sourceTree = "<group>"; };
 		39FFE32728EEFFFE008442EE /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
-		39FFE33528F45E44008442EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		39FFE33528F45E44008442EE /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
 		435B17672913E71400212663 /* DetailingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailingViewController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
@@ -300,6 +299,7 @@
 		B517C04D28D1FE660008BED0 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
 		B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
+		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageView.swift; sourceTree = "<group>"; };
 		B54741E929A494E200B75BA3 /* LetterImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageError.swift; sourceTree = "<group>"; };
 		B55B482129C3723B00CFFDAD /* URLRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRepresentable.swift; sourceTree = "<group>"; };
@@ -649,6 +649,7 @@
 			isa = PBXGroup;
 			children = (
 				B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */,
+				39FFE33528F45E44008442EE /* GoogleService-Info-Prod.plist */,
 			);
 			path = Prod;
 			sourceTree = "<group>";
@@ -657,6 +658,7 @@
 			isa = PBXGroup;
 			children = (
 				B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */,
+				B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */,
 			);
 			path = Dev;
 			sourceTree = "<group>";
@@ -949,7 +951,6 @@
 			children = (
 				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
 				B5F524DC28519AA100614FF7 /* Info.plist */,
-				39FFE33528F45E44008442EE /* GoogleService-Info.plist */,
 				B5F524CE28519AA000614FF7 /* AppDelegate.swift */,
 				B5F524D028519AA000614FF7 /* SceneDelegate.swift */,
 			);
@@ -1317,7 +1318,6 @@
 			files = (
 				CB2F0FCB28A5468C005F04C8 /* gifMa.gif in Resources */,
 				CB2F0FCD28A5468C005F04C8 /* gifNi.gif in Resources */,
-				39FFE33628F45E44008442EE /* GoogleService-Info.plist in Resources */,
 				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
 				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
 				3915D54B2A7516A2002D6C25 /* URLInfo.plist in Resources */,
