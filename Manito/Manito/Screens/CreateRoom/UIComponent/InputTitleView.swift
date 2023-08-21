@@ -96,7 +96,7 @@ final class InputTitleView: UIView {
         }
     }
     
-    func getTextFieldContent() -> String {
+    func textFieldText() -> String {
         guard let text = self.roomsNameTextField.text else { return "" }
         return text
     }

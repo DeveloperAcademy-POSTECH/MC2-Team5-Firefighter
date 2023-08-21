@@ -120,7 +120,7 @@ final class InputCapacityView: UIView {
         }
     }
     
-    func getSliderValue() -> Int {
+    func sliderValue() -> Int {
         let value = Int(self.personSlider.value)
         return value
     }

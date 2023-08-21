@@ -136,7 +136,7 @@ final class CreateRoomView: UIView {
         
         let nextAction = UIAction { [weak self] _ in
             guard let currentStep = self?.roomStep else { return }
-            guard let nextStep = self?.moveToNextStep(currentStep: currentStep) else { return }
+            guard let nextStep = self?.moveToNextStep(from: currentStep) else { return }
             
             self?.runActionAtStep(at: currentStep)
             self?.roomStep = nextStep
@@ -145,7 +145,7 @@ final class CreateRoomView: UIView {
         
         let backAction = UIAction { [weak self] _ in
             guard let currentStep = self?.roomStep else { return }
-            guard let previousStep = self?.moveToPreviousStep(currentStep: currentStep) else { return }
+            guard let previousStep = self?.moveToPreviousStep(from: currentStep) else { return }
             self?.roomStep = previousStep
         }
         self.backButton.addAction(backAction, for: .touchUpInside)
@@ -162,12 +162,12 @@ final class CreateRoomView: UIView {
                                                object: nil)
     }
     
-    private func moveToNextStep(currentStep: CreateRoomStep) -> CreateRoomStep {
-        return currentStep.nextStep()
+    private func moveToNextStep(from step: CreateRoomStep) -> CreateRoomStep {
+        return step.next()
     }
     
-    private func moveToPreviousStep(currentStep: CreateRoomStep) -> CreateRoomStep {
-        return currentStep.previousStep()
+    private func moveToPreviousStep(from step: CreateRoomStep) -> CreateRoomStep {
+        return step.previous()
     }
     
     private func detectStartableStatus() {
@@ -180,7 +180,7 @@ final class CreateRoomView: UIView {
         }
     }
     
-    private func setupHiddenStepView(at step: CreateRoomStep) {
+    private func updateHiddenStepView(at step: CreateRoomStep) {
         self.roomTitleView.isHidden = !(step == .inputTitle)
         self.roomCapacityView.isHidden = !(step == .inputCapacity)
         self.roomDateView.isHidden = !(step == .inputDate)
@@ -188,34 +188,34 @@ final class CreateRoomView: UIView {
         self.characterCollectionView.isHidden = !(step == .chooseCharacter)
     }
     
-    private func setupHiddenBackButton(at step: CreateRoomStep) {
+    private func updateHiddenBackButton(at step: CreateRoomStep) {
         self.backButton.isHidden = !(step == .inputCapacity || step == .inputDate || step == .checkRoom || step == .chooseCharacter)
     }
     
-    private func setupRoomTitleViewAnimation() {
+    private func updateRoomTitleViewAnimation() {
         self.roomCapacityView.fadeOut()
         self.roomTitleView.fadeIn()
     }
     
-    private func setupRoomCapacityViewAnimation() {
+    private func updateRoomCapacityViewAnimation() {
         self.roomTitleView.fadeOut()
         self.roomCapacityView.fadeIn()
         self.roomDateView.fadeOut()
     }
     
-    private func setupRoomDateViewAnimation() {
+    private func updateRoomDateViewAnimation() {
         self.roomCapacityView.fadeOut()
         self.roomDateView.fadeIn()
         self.roomInfoView.fadeOut()
     }
     
-    private func setupRoomDataCheckViewAnimation() {
+    private func updateRoomDataCheckViewAnimation() {
         self.roomDateView.fadeOut()
         self.roomInfoView.fadeIn()
         self.characterCollectionView.fadeOut()
     }
     
-    private func setupChooseCharacterViewAnimation() {
+    private func updateChooseCharacterViewAnimation() {
         self.roomInfoView.fadeOut()
         self.characterCollectionView.fadeIn()
     }
@@ -223,20 +223,20 @@ final class CreateRoomView: UIView {
     private func runActionAtStep(at step: CreateRoomStep) {
         switch step {
         case .inputTitle:
-            self.setupTitle()
+            self.updateRoomTitle()
             self.endEditing(true)
         case .inputCapacity:
-            self.setupCapacity()
+            self.updateRoomCapacity()
             self.disabledNextButton()
         case .inputDate:
-            self.setupDate()
+            self.updateRoomDate()
         case .checkRoom:
                break
         case .chooseCharacter:
-            let colorIndex = self.characterCollectionView.getCharacterIndex()
+            let colorIndex = self.characterCollectionView.selectedCharacterIndex()
             self.delegate?.requestCreateRoom(roomInfo: RoomInfo(id: nil,
-                                                                capacity: self.roomInfoView.getCapacity(),
-                                                                title: self.roomInfoView.getTitle(),
+                                                                capacity: self.roomInfoView.roomCapacity(),
+                                                                title: self.roomInfoView.roomTitle(),
                                                                 startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
                                                                 endDate: "20\(self.roomDateView.calendarView.getTempEndDate())",
                                                                 state: nil),
@@ -244,25 +244,25 @@ final class CreateRoomView: UIView {
         }
     }
     
-    private func setupTitle() {
-        let title = self.roomTitleView.getTextFieldContent()
-        self.roomInfoView.setupTitle(title: title)
+    private func updateRoomTitle() {
+        let title = self.roomTitleView.textFieldText()
+        self.roomInfoView.updateRoomTitle(title: title)
     }
     
-    private func setupCapacity() {
-        let capacity = self.roomCapacityView.getSliderValue()
-        self.roomInfoView.setupCapacity(capacity: capacity)
+    private func updateRoomCapacity() {
+        let capacity = self.roomCapacityView.sliderValue()
+        self.roomInfoView.updateRoomCapacity(capacity: capacity)
     }
     
     private func disabledNextButton() {
         self.nextButton.isDisabled = true
     }
 
-    private func setupDate() {
+    private func updateRoomDate() {
         let startDate = self.roomDateView.calendarView.getTempStartDate()
         let endDate = self.roomDateView.calendarView.getTempEndDate()
         let roomDateRange = "\(startDate) ~ \(endDate)"
-        self.roomInfoView.setupDateRange(range: roomDateRange)
+        self.roomInfoView.updateRoomDateRange(range: roomDateRange)
     }
     
     private func configureUI() {
@@ -280,19 +280,19 @@ final class CreateRoomView: UIView {
     }
     
     private func manageStepView(step: CreateRoomStep) {
-        self.setupHiddenStepView(at: step)
-        self.setupHiddenBackButton(at: step)
+        self.updateHiddenStepView(at: step)
+        self.updateHiddenBackButton(at: step)
         switch step {
         case .inputTitle:
-            self.setupRoomTitleViewAnimation()
+            self.updateRoomTitleViewAnimation()
         case .inputCapacity:
-            self.setupRoomCapacityViewAnimation()
+            self.updateRoomCapacityViewAnimation()
         case .inputDate:
-            self.setupRoomDateViewAnimation()
+            self.updateRoomDateViewAnimation()
         case .checkRoom:
-            self.setupRoomDataCheckViewAnimation()
+            self.updateRoomDataCheckViewAnimation()
         case .chooseCharacter:
-            self.setupChooseCharacterViewAnimation()
+            self.updateChooseCharacterViewAnimation()
         }
     }
     
@@ -316,7 +316,7 @@ final class CreateRoomView: UIView {
 }
 
 private extension CreateRoomView.CreateRoomStep {
-    func nextStep() -> Self {
+    func next() -> Self {
         switch self {
         case .inputTitle:
             return .inputCapacity
@@ -331,7 +331,7 @@ private extension CreateRoomView.CreateRoomStep {
         }
     }
     
-    func previousStep() -> Self {
+    func previous() -> Self {
         switch self {
         case .inputTitle:
             return .inputTitle

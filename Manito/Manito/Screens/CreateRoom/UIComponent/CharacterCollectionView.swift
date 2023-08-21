@@ -68,7 +68,7 @@ final class CharacterCollectionView: UIView {
         }
     }
     
-    func getCharacterIndex() -> Int {
+    func selectedCharacterIndex() -> Int {
         return self.characterIndex
     }
 }
