@@ -15,21 +15,23 @@ final class CreateRoomViewModel {
     private var cancellable = Set<AnyCancellable>()
     
     struct Input {
-        let textFieldValueChanged: PassthroughSubject<String, Never>
+        let textFieldText: AnyPublisher<String, Never>
     }
     
     struct Output {
-        let title: AnyPublisher<String, Never>
+        let textCount: AnyPublisher<Int, Never>
     }
     
     func transform(_ input: Input) -> Output {
-        
-        let title = input.textFieldValueChanged
+        let textCount = input.textFieldText
+            .map { text in
+                return text.count
+            }
             .eraseToAnyPublisher()
         
-        
-        return Output(title: title)
+        return Output(textCount: textCount)
     }
+    
     // MARK: - init
     
     

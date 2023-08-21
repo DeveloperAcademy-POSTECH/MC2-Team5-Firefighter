@@ -5,6 +5,7 @@
 //  Created by LeeSungHo on 2022/06/11.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -41,8 +42,9 @@ final class InputTitleView: UIView {
     
     // MARK: - property
     
-    var changeNextButtonEnableStatus: ((Bool) -> ())?
     private var maxLength: Int = 8
+    var changeNextButtonEnableStatus: ((Bool) -> ())?
+    let textFieldPublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init
     
@@ -72,7 +74,7 @@ final class InputTitleView: UIView {
         }
     }
     
-    private func setCounter(count: Int) {
+    func setCounter(count: Int) {
         if count <= maxLength {
             self.roomsTextLimitLabel.text = "\(count)/\(self.maxLength)"
         } else {
@@ -106,7 +108,7 @@ extension InputTitleView: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        self.setCounter(count: textField.text?.count ?? 0)
+        self.textFieldPublisher.send(textField.text ?? "")
         self.checkMaxLength(textField: self.roomsNameTextField, maxLength: self.maxLength)
         
         let hasText = textField.hasText

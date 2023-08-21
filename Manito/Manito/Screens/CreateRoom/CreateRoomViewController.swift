@@ -5,6 +5,7 @@
 //  Created by SHIN YOON AH on 2022/06/09.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -18,6 +19,9 @@ final class CreateRoomViewController: BaseViewController {
     // MARK: - property
     
     private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
+    
+    private var cancellable = Set<AnyCancellable>()
+    private let createRoomViewModel: CreateRoomViewModel = CreateRoomViewModel()
     
     // MARK: - init
     
@@ -34,6 +38,7 @@ final class CreateRoomViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
+        self.bindViewModel()
     }
     
     // FIXME: 플로우 연결 하면서 변경 될 예정
@@ -71,6 +76,26 @@ final class CreateRoomViewController: BaseViewController {
         self.dismiss(animated: true) {
             NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
         }
+    }
+    
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transformedOutput() -> CreateRoomViewModel.Output {
+        let input = CreateRoomViewModel.Input(
+            textFieldText: self.createRoomView.roomTitleView.textFieldPublisher.eraseToAnyPublisher())
+        return self.createRoomViewModel.transform(input)
+    }
+    
+    private func bindOutputToViewModel(_ output: CreateRoomViewModel.Output) {
+        output.textCount
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] count in
+                self?.createRoomView.roomTitleView.setCounter(count: count)
+            })
+            .store(in: &cancellable)
     }
     
     // MARK: - network

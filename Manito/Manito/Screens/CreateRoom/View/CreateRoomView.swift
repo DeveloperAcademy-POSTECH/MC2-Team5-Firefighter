@@ -49,7 +49,7 @@ final class CreateRoomView: UIView {
         button.isHidden = true
         return button
     }()
-    private let roomTitleView: InputTitleView = InputTitleView()
+    let roomTitleView: InputTitleView = InputTitleView()
     private let roomCapacityView: InputCapacityView = InputCapacityView()
     private let roomDateView: InputDateView = InputDateView()
     private let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
