@@ -37,7 +37,7 @@ final class InputCapacityView: UIView {
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
-    lazy var personSlider: UISlider = {
+    private lazy var personSlider: UISlider = {
         let slider = UISlider()
         slider.value = 1
         slider.minimumValue = 4
@@ -118,6 +118,11 @@ final class InputCapacityView: UIView {
             $0.trailing.equalTo(self.maxLabel.snp.leading).offset(-5)
             $0.leading.equalTo(self.minLabel.snp.trailing).offset(5)
         }
+    }
+    
+    func getSliderValue() -> Int {
+        let value = Int(self.personSlider.value)
+        return value
     }
     
     // MARK: - selector

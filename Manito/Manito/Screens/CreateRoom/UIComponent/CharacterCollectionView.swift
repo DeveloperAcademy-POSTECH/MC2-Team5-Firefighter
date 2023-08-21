@@ -45,7 +45,7 @@ final class CharacterCollectionView: UIView {
     
     // MARK: - property
     
-    var characterIndex: Int = 0
+    private var characterIndex: Int = 0
     
     // MARK: - init
     
@@ -66,6 +66,10 @@ final class CharacterCollectionView: UIView {
         self.manittoCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+    
+    func getCharacterIndex() -> Int {
+        return self.characterIndex
     }
 }
 

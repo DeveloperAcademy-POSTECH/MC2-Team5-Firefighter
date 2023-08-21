@@ -233,10 +233,10 @@ final class CreateRoomView: UIView {
         case .checkRoom:
                break
         case .chooseCharacter:
-            let colorIndex = self.characterCollectionView.characterIndex
+            let colorIndex = self.characterCollectionView.getCharacterIndex()
             self.delegate?.requestCreateRoom(roomInfo: RoomInfo(id: nil,
-                                                                capacity: self.roomInfoView.capacity,
-                                                                title: self.roomInfoView.title,
+                                                                capacity: self.roomInfoView.getCapacity(),
+                                                                title: self.roomInfoView.getTitle(),
                                                                 startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
                                                                 endDate: "20\(self.roomDateView.calendarView.getTempEndDate())",
                                                                 state: nil),
@@ -245,13 +245,13 @@ final class CreateRoomView: UIView {
     }
     
     private func setupTitle() {
-        guard let title = self.roomTitleView.roomsNameTextField.text else { return }
-        self.roomInfoView.title = title
+        let title = self.roomTitleView.getTextFieldContent()
+        self.roomInfoView.setupTitle(title: title)
     }
     
     private func setupCapacity() {
-        let capacity = Int(self.roomCapacityView.personSlider.value)
-        self.roomInfoView.capacity = capacity
+        let capacity = self.roomCapacityView.getSliderValue()
+        self.roomInfoView.setupCapacity(capacity: capacity)
     }
     
     private func disabledNextButton() {
@@ -262,7 +262,7 @@ final class CreateRoomView: UIView {
         let startDate = self.roomDateView.calendarView.getTempStartDate()
         let endDate = self.roomDateView.calendarView.getTempEndDate()
         let roomDateRange = "\(startDate) ~ \(endDate)"
-        self.roomInfoView.dateRange = roomDateRange
+        self.roomInfoView.setupDateRange(range: roomDateRange)
     }
     
     private func configureUI() {

@@ -13,7 +13,7 @@ final class InputTitleView: UIView {
     
     // MARK: - ui component
     
-    lazy var roomsNameTextField: UITextField = {
+    private lazy var roomsNameTextField: UITextField = {
         let textField = UITextField()
         let attributes = [
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
@@ -92,6 +92,11 @@ final class InputTitleView: UIView {
                 }
             }
         }
+    }
+    
+    func getTextFieldContent() -> String {
+        guard let text = self.roomsNameTextField.text else { return "" }
+        return text
     }
 }
 
