@@ -15,7 +15,7 @@ final class CreateRoomViewModel {
     private var cancellable = Set<AnyCancellable>()
     
     struct Input {
-        let textFieldText: AnyPublisher<String, Never>
+        let textFieldTextDidChanged: AnyPublisher<String, Never>
         let sliderValueDidChanged: AnyPublisher<Int, Never>
     }
     
@@ -25,7 +25,7 @@ final class CreateRoomViewModel {
     }
     
     func transform(_ input: Input) -> Output {
-        let textCount = input.textFieldText
+        let textCount = input.textFieldTextDidChanged
             .map { text in
                 return text.count
             }

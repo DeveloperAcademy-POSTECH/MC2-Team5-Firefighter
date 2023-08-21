@@ -85,7 +85,7 @@ final class CreateRoomViewController: BaseViewController {
     
     private func transformedOutput() -> CreateRoomViewModel.Output {
         let input = CreateRoomViewModel.Input(
-            textFieldText: self.createRoomView.roomTitleView.textFieldPublisher.eraseToAnyPublisher(),
+            textFieldTextDidChanged: self.createRoomView.roomTitleView.textFieldPublisher.eraseToAnyPublisher(),
             sliderValueDidChanged: self.createRoomView.roomCapacityView.sliderPublisher.eraseToAnyPublisher())
         return self.createRoomViewModel.transform(input)
     }
