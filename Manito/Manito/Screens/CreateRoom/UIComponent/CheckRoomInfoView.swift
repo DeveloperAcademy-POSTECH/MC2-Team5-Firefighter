@@ -39,17 +39,17 @@ final class CheckRoomInfoView: UIView {
     
     // MARK: - property
     
-    var dateRange = "" {
+    private var dateRange = "" {
         willSet {
             self.dateLabel.text = newValue
         }
     }
-    var title: String = "" {
+    private var title: String = "" {
         willSet {
             self.nameLabel.text = newValue
         }
     }
-    var capacity: Int = 0 {
+    private var capacity: Int = 0 {
         willSet {
             self.personLabel.text = "\(newValue.description)" + TextLiteral.per
         }
@@ -59,7 +59,7 @@ final class CheckRoomInfoView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setLayout()
+        self.setupLayout()
     }
     
     @available(*, unavailable)
@@ -69,7 +69,7 @@ final class CheckRoomInfoView: UIView {
     
     // MARK: - func
     
-    private func setLayout() {
+    private func setupLayout() {
         self.addSubview(self.nameLabel)
         self.nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
@@ -94,5 +94,25 @@ final class CheckRoomInfoView: UIView {
             $0.trailing.equalTo(self.personLabel.snp.leading)
             $0.width.height.equalTo(60)
         }
+    }
+    
+    func setupTitle(title: String) {
+        self.title = title
+    }
+    
+    func getTitle() -> String {
+        return self.title
+    }
+    
+    func setupCapacity(capacity: Int) {
+        self.capacity = capacity
+    }
+    
+    func getCapacity() -> Int {
+        return self.capacity
+    }
+    
+    func setupDateRange(range: String) {
+        self.dateRange = range
     }
 }

@@ -1108,6 +1108,7 @@
 		CBA15C91285CE1880051EDE2 /* ChooseCharacter */ = {
 			isa = PBXGroup;
 			children = (
+				D7B83FD32A92F55200BFD8FF /* View */,
 				CBA15C92285CE18F0051EDE2 /* UIComponent */,
 				CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */,
 			);
@@ -1118,7 +1119,6 @@
 			isa = PBXGroup;
 			children = (
 				CB21C33828C4C10200128D25 /* CharacterCollectionViewCell.swift */,
-				D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1184,6 +1184,14 @@
 				D724AF5E28708D830003F280 /* ImageRowView.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		D7B83FD32A92F55200BFD8FF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		D79E9D882A826D7900C031F0 /* ViewModel */ = {

@@ -19,7 +19,6 @@ final class ChooseCharacterViewController: BaseViewController {
     
     private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
     private let roomId: Int?
-    private var roomInfo: RoomDTO?
     
     // MARK: - init
     
@@ -66,10 +65,6 @@ final class ChooseCharacterViewController: BaseViewController {
     private func configureNavigationController() {
         guard let navigationController = self.navigationController else { return }
         self.chooseCharacterView.configureNavigationItem(navigationController)
-    }
-    
-    private func didTapEnterButton(characterIndex: Int) {
-        self.requestJoinRoom(characterIndex: characterIndex)
     }
     
     private func pushDetailWaitViewController(roomId: Int) {
@@ -121,6 +116,6 @@ extension ChooseCharacterViewController: ChooseCharacterViewDelegate {
     }
     
     func joinButtonDidTap(characterIndex: Int) {
-        self.didTapEnterButton(characterIndex: characterIndex)
+        self.requestJoinRoom(characterIndex: characterIndex)
     }
 }

@@ -37,7 +37,7 @@ final class InputCapacityView: UIView {
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
-    lazy var personSlider: UISlider = {
+    private lazy var personSlider: UISlider = {
         let slider = UISlider()
         slider.value = 1
         slider.minimumValue = 4
@@ -64,7 +64,7 @@ final class InputCapacityView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setLayout()
+        self.setupLayout()
     }
     
     @available(*, unavailable)
@@ -74,7 +74,7 @@ final class InputCapacityView: UIView {
     
     // MARK: - func
     
-    private func setLayout() {
+    private func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -118,6 +118,11 @@ final class InputCapacityView: UIView {
             $0.trailing.equalTo(self.maxLabel.snp.leading).offset(-5)
             $0.leading.equalTo(self.minLabel.snp.trailing).offset(5)
         }
+    }
+    
+    func getSliderValue() -> Int {
+        let value = Int(self.personSlider.value)
+        return value
     }
     
     // MARK: - selector
