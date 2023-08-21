@@ -96,23 +96,23 @@ final class CheckRoomInfoView: UIView {
         }
     }
     
-    func setupTitle(title: String) {
+    func updateRoomTitle(title: String) {
         self.title = title
     }
     
-    func getTitle() -> String {
+    func roomTitle() -> String {
         return self.title
     }
     
-    func setupCapacity(capacity: Int) {
+    func updateRoomCapacity(capacity: Int) {
         self.capacity = capacity
     }
     
-    func getCapacity() -> Int {
+    func roomCapacity() -> Int {
         return self.capacity
     }
     
-    func setupDateRange(range: String) {
+    func updateRoomDateRange(range: String) {
         self.dateRange = range
     }
 }
