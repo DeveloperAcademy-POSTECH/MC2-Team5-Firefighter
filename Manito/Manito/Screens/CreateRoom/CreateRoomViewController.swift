@@ -85,7 +85,8 @@ final class CreateRoomViewController: BaseViewController {
     
     private func transformedOutput() -> CreateRoomViewModel.Output {
         let input = CreateRoomViewModel.Input(
-            textFieldText: self.createRoomView.roomTitleView.textFieldPublisher.eraseToAnyPublisher())
+            textFieldText: self.createRoomView.roomTitleView.textFieldPublisher.eraseToAnyPublisher(),
+            sliderValueDidChanged: self.createRoomView.roomCapacityView.sliderPublisher.eraseToAnyPublisher())
         return self.createRoomViewModel.transform(input)
     }
     
@@ -94,6 +95,14 @@ final class CreateRoomViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] count in
                 self?.createRoomView.roomTitleView.setCounter(count: count)
+            })
+            .store(in: &cancellable)
+        
+        output.capacity
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] capacity in
+                self?.createRoomView.roomCapacityView.updateCapacity(capacity: capacity)
+                
             })
             .store(in: &cancellable)
     }

@@ -50,7 +50,7 @@ final class CreateRoomView: UIView {
         return button
     }()
     let roomTitleView: InputTitleView = InputTitleView()
-    private let roomCapacityView: InputCapacityView = InputCapacityView()
+    let roomCapacityView: InputCapacityView = InputCapacityView()
     private let roomDateView: InputDateView = InputDateView()
     private let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
     private let characterCollectionView: CharacterCollectionView = CharacterCollectionView()

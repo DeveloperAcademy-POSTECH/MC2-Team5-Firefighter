@@ -16,10 +16,12 @@ final class CreateRoomViewModel {
     
     struct Input {
         let textFieldText: AnyPublisher<String, Never>
+        let sliderValueDidChanged: AnyPublisher<Int, Never>
     }
     
     struct Output {
         let textCount: AnyPublisher<Int, Never>
+        let capacity: AnyPublisher<Int, Never>
     }
     
     func transform(_ input: Input) -> Output {
@@ -29,7 +31,14 @@ final class CreateRoomViewModel {
             }
             .eraseToAnyPublisher()
         
-        return Output(textCount: textCount)
+        let capacity = input.sliderValueDidChanged
+            .map { value in
+                return Int(value)
+            }
+            .eraseToAnyPublisher()
+        
+        return Output(textCount: textCount,
+                      capacity: capacity)
     }
     
     // MARK: - init
