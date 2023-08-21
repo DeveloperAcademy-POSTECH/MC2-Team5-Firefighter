@@ -136,7 +136,7 @@ final class CreateRoomView: UIView {
         
         let nextAction = UIAction { [weak self] _ in
             guard let currentStep = self?.roomStep else { return }
-            guard let nextStep = self?.moveToNextStep(currentStep: currentStep) else { return }
+            guard let nextStep = self?.moveToNextStep(from: currentStep) else { return }
             
             self?.runActionAtStep(at: currentStep)
             self?.roomStep = nextStep
@@ -145,7 +145,7 @@ final class CreateRoomView: UIView {
         
         let backAction = UIAction { [weak self] _ in
             guard let currentStep = self?.roomStep else { return }
-            guard let previousStep = self?.moveToPreviousStep(currentStep: currentStep) else { return }
+            guard let previousStep = self?.moveToPreviousStep(from: currentStep) else { return }
             self?.roomStep = previousStep
         }
         self.backButton.addAction(backAction, for: .touchUpInside)
@@ -162,12 +162,12 @@ final class CreateRoomView: UIView {
                                                object: nil)
     }
     
-    private func moveToNextStep(currentStep: CreateRoomStep) -> CreateRoomStep {
-        return currentStep.nextStep()
+    private func moveToNextStep(from step: CreateRoomStep) -> CreateRoomStep {
+        return step.next()
     }
     
-    private func moveToPreviousStep(currentStep: CreateRoomStep) -> CreateRoomStep {
-        return currentStep.previousStep()
+    private func moveToPreviousStep(from step: CreateRoomStep) -> CreateRoomStep {
+        return step.previous()
     }
     
     private func detectStartableStatus() {
@@ -316,7 +316,7 @@ final class CreateRoomView: UIView {
 }
 
 private extension CreateRoomView.CreateRoomStep {
-    func nextStep() -> Self {
+    func next() -> Self {
         switch self {
         case .inputTitle:
             return .inputCapacity
@@ -331,7 +331,7 @@ private extension CreateRoomView.CreateRoomStep {
         }
     }
     
-    func previousStep() -> Self {
+    func previous() -> Self {
         switch self {
         case .inputTitle:
             return .inputTitle
