@@ -19,7 +19,6 @@ final class ChooseCharacterViewController: BaseViewController {
     
     private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
     private let roomId: Int?
-    private var roomInfo: RoomDTO?
     
     // MARK: - init
     
