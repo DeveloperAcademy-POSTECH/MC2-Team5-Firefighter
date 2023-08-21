@@ -59,7 +59,7 @@ final class CheckRoomInfoView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setLayout()
+        self.setupLayout()
     }
     
     @available(*, unavailable)
@@ -69,7 +69,7 @@ final class CheckRoomInfoView: UIView {
     
     // MARK: - func
     
-    private func setLayout() {
+    private func setupLayout() {
         self.addSubview(self.nameLabel)
         self.nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
