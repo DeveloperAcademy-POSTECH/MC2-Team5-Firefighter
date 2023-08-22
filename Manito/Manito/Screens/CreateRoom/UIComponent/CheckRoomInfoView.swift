@@ -44,12 +44,12 @@ final class CheckRoomInfoView: UIView {
             self.dateLabel.text = newValue
         }
     }
-    private var title: String = "" {
+    private(set) var title: String = "" {
         willSet {
             self.nameLabel.text = newValue
         }
     }
-    private var capacity: Int = 0 {
+    private(set) var capacity: Int = 0 {
         willSet {
             self.personLabel.text = "\(newValue.description)" + TextLiteral.per
         }
@@ -100,16 +100,8 @@ final class CheckRoomInfoView: UIView {
         self.title = title
     }
     
-    func roomTitle() -> String {
-        return self.title
-    }
-    
     func updateRoomCapacity(capacity: Int) {
         self.capacity = capacity
-    }
-    
-    func roomCapacity() -> Int {
-        return self.capacity
     }
     
     func updateRoomDateRange(range: String) {
