@@ -233,10 +233,10 @@ final class CreateRoomView: UIView {
         case .checkRoom:
                break
         case .chooseCharacter:
-            let colorIndex = self.characterCollectionView.selectedCharacterIndex()
+            let colorIndex = self.characterCollectionView.characterIndex
             self.delegate?.requestCreateRoom(roomInfo: RoomInfo(id: nil,
-                                                                capacity: self.roomInfoView.roomCapacity(),
-                                                                title: self.roomInfoView.roomTitle(),
+                                                                capacity: self.roomInfoView.capacity,
+                                                                title: self.roomInfoView.title,
                                                                 startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
                                                                 endDate: "20\(self.roomDateView.calendarView.getTempEndDate())",
                                                                 state: nil),
