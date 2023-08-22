@@ -93,6 +93,6 @@ extension ParticipateRoomViewController: ParticipateRoomViewDelegate {
     }
     
     func observeNextNotification(roomId: Int) {
-        self.navigationController?.pushViewController(ChooseCharacterViewController(statusMode: .enterRoom, roomId: roomId), animated: true)
+        self.navigationController?.pushViewController(ChooseCharacterViewController(roomId: roomId), animated: true)
     }
 }
