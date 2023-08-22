@@ -17,11 +17,13 @@ final class CreateRoomViewModel {
     struct Input {
         let textFieldTextDidChanged: AnyPublisher<String, Never>
         let sliderValueDidChanged: AnyPublisher<Int, Never>
+        let nextButtonDidTap: AnyPublisher<CreateRoomStep, Never>
     }
     
     struct Output {
         let textCount: AnyPublisher<Int, Never>
         let capacity: AnyPublisher<Int, Never>
+        let currentStep: AnyPublisher<CreateRoomStep, Never>
     }
     
     func transform(_ input: Input) -> Output {
@@ -37,8 +39,15 @@ final class CreateRoomViewModel {
             }
             .eraseToAnyPublisher()
         
+        let step = input.nextButtonDidTap
+            .map { currentStep -> CreateRoomStep in
+                return currentStep
+            }
+            .eraseToAnyPublisher()
+        
         return Output(textCount: textCount,
-                      capacity: capacity)
+                      capacity: capacity,
+                      currentStep: step)
     }
     
     // MARK: - init

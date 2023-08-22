@@ -5,6 +5,7 @@
 //  Created by 이성호 on 2023/08/02.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -16,9 +17,9 @@ protocol CreateRoomViewDelegate: AnyObject {
 
 final class CreateRoomView: UIView {
     
-    fileprivate enum CreateRoomStep {
-         case inputTitle, inputCapacity, inputDate, checkRoom, chooseCharacter
-    }
+//    fileprivate enum CreateRoomStep {
+//         case inputTitle, inputCapacity, inputDate, checkRoom, chooseCharacter
+//    }
     
     // MARK: - ui component
     
@@ -54,6 +55,8 @@ final class CreateRoomView: UIView {
     private let roomDateView: InputDateView = InputDateView()
     private let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
     private let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
+    
+    let nextButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
     
     // MARK: - property
     
@@ -136,10 +139,11 @@ final class CreateRoomView: UIView {
         
         let nextAction = UIAction { [weak self] _ in
             guard let currentStep = self?.roomStep else { return }
-            guard let nextStep = self?.moveToNextStep(from: currentStep) else { return }
-            
-            self?.runActionAtStep(at: currentStep)
-            self?.roomStep = nextStep
+//            guard let nextStep = self?.moveToNextStep(from: currentStep) else { return }
+//            
+//            self?.runActionAtStep(at: currentStep)
+//            self?.roomStep = nextStep
+            self?.nextButtonDidTapPublisher.send(currentStep)
         }
         self.nextButton.addAction(nextAction, for: .touchUpInside)
         
@@ -279,6 +283,13 @@ final class CreateRoomView: UIView {
         }
     }
     
+    func nextButtonDidTap(step: CreateRoomStep) {
+        let nextStep = self.moveToNextStep(from: step)
+        
+        self.runActionAtStep(at: step)
+        self.roomStep = nextStep
+    }
+    
     private func manageStepView(step: CreateRoomStep) {
         self.updateHiddenStepView(at: step)
         self.updateHiddenBackButton(at: step)
@@ -315,7 +326,41 @@ final class CreateRoomView: UIView {
     }
 }
 
-private extension CreateRoomView.CreateRoomStep {
+//private extension CreateRoomView.CreateRoomStep {
+//    func next() -> Self {
+//        switch self {
+//        case .inputTitle:
+//            return .inputCapacity
+//        case .inputCapacity:
+//            return .inputDate
+//        case .inputDate:
+//            return .checkRoom
+//        case .checkRoom:
+//            return .chooseCharacter
+//        case .chooseCharacter:
+//            return .chooseCharacter
+//        }
+//    }
+//
+//    func previous() -> Self {
+//        switch self {
+//        case .inputTitle:
+//            return .inputTitle
+//        case .inputCapacity:
+//            return .inputTitle
+//        case .inputDate:
+//            return .inputCapacity
+//        case .checkRoom:
+//            return .inputDate
+//        case .chooseCharacter:
+//            return .checkRoom
+//        }
+//    }
+//}
+
+enum CreateRoomStep {
+    case inputTitle, inputCapacity, inputDate, checkRoom, chooseCharacter
+    
     func next() -> Self {
         switch self {
         case .inputTitle:
@@ -346,3 +391,4 @@ private extension CreateRoomView.CreateRoomStep {
         }
     }
 }
+
