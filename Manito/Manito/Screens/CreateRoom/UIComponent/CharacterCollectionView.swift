@@ -45,7 +45,7 @@ final class CharacterCollectionView: UIView {
     
     // MARK: - property
     
-    var characterIndex: Int = 0
+    private(set) var characterIndex: Int = 0
     
     // MARK: - init
     

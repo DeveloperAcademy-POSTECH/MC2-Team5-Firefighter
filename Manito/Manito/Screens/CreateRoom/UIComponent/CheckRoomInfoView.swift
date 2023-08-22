@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class CheckRoomView: UIView {
+final class CheckRoomInfoView: UIView {
 
     // MARK: - ui component
     
@@ -39,17 +39,17 @@ final class CheckRoomView: UIView {
     
     // MARK: - property
     
-    var dateRange = "" {
+    private var dateRange = "" {
         willSet {
             self.dateLabel.text = newValue
         }
     }
-    var name: String = "" {
+    private(set) var title: String = "" {
         willSet {
             self.nameLabel.text = newValue
         }
     }
-    var participants: Int = 0 {
+    private(set) var capacity: Int = 0 {
         willSet {
             self.personLabel.text = "\(newValue.description)" + TextLiteral.per
         }
@@ -59,7 +59,7 @@ final class CheckRoomView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setLayout()
+        self.setupLayout()
     }
     
     @available(*, unavailable)
@@ -69,7 +69,7 @@ final class CheckRoomView: UIView {
     
     // MARK: - func
     
-    private func setLayout() {
+    private func setupLayout() {
         self.addSubview(self.nameLabel)
         self.nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
@@ -94,5 +94,17 @@ final class CheckRoomView: UIView {
             $0.trailing.equalTo(self.personLabel.snp.leading)
             $0.width.height.equalTo(60)
         }
+    }
+    
+    func updateRoomTitle(title: String) {
+        self.title = title
+    }
+    
+    func updateRoomCapacity(capacity: Int) {
+        self.capacity = capacity
+    }
+    
+    func updateRoomDateRange(range: String) {
+        self.dateRange = range
     }
 }

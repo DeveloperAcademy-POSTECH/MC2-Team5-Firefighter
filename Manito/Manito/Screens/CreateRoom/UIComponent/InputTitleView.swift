@@ -9,11 +9,11 @@ import UIKit
 
 import SnapKit
 
-final class InputNameView: UIView {
+final class InputTitleView: UIView {
     
     // MARK: - ui component
     
-    lazy var roomsNameTextField: UITextField = {
+    private lazy var roomsNameTextField: UITextField = {
         let textField = UITextField()
         let attributes = [
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
@@ -93,9 +93,14 @@ final class InputNameView: UIView {
             }
         }
     }
+    
+    func textFieldText() -> String {
+        guard let text = self.roomsNameTextField.text else { return "" }
+        return text
+    }
 }
 
-extension InputNameView: UITextFieldDelegate {
+extension InputTitleView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }

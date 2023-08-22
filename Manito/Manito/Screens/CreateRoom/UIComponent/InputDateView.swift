@@ -32,7 +32,7 @@ final class InputDateView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setLayout()
+        self.setupLayout()
     }
     
     @available(*, unavailable)
@@ -42,7 +42,7 @@ final class InputDateView: UIView {
     
     // MARK: - func
     
-    private func setLayout() {
+    private func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
