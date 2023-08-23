@@ -632,6 +632,23 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		B53A35B22A9630FE00B720BC /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B53A35B32A96310700B720BC /* UserDefaultService */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		B53A35B32A96310700B720BC /* UserDefaultService */ = {
+			isa = PBXGroup;
+			children = (
+				B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */,
+				B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */,
+			);
+			path = UserDefaultService;
+			sourceTree = "<group>";
+		};
 		B53AD40F2A8BC69700B83B33 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -749,15 +766,6 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		B5F31BAE28BE1C7900F61D0F /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-				B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */,
-				B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */,
-			);
-			path = Storage;
-			sourceTree = "<group>";
-		};
 		B5F524C228519AA000614FF7 = {
 			isa = PBXGroup;
 			children = (
@@ -786,6 +794,7 @@
 				B5F525462855D00B00614FF7 /* Network */,
 				B5F524E328519AC300614FF7 /* Screens */,
 				B5F524E428519AC600614FF7 /* Global */,
+				B53A35B22A9630FE00B720BC /* Service */,
 			);
 			path = Manito;
 			sourceTree = "<group>";
@@ -1034,11 +1043,10 @@
 		B5F525462855D00B00614FF7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				B5F31BAE28BE1C7900F61D0F /* Storage */,
+				39C957D328799A8200A04A2B /* Foundation */,
 				397A241528BA519200454E4F /* Protocol */,
 				397A241128BA513E00454E4F /* API */,
 				39C957EA287AE45900A04A2B /* EndPoint */,
-				39C957D328799A8200A04A2B /* Foundation */,
 				B5F525472855D01200614FF7 /* Models */,
 			);
 			path = Network;
