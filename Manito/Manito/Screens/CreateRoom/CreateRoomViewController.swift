@@ -21,9 +21,19 @@ final class CreateRoomViewController: BaseViewController {
     private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
     
     private var cancellable = Set<AnyCancellable>()
-    private let createRoomViewModel: CreateRoomViewModel = CreateRoomViewModel()
+    private let createRoomViewModel: CreateRoomViewModel
     
     // MARK: - init
+    
+    init(viewModel: CreateRoomViewModel) {
+        self.createRoomViewModel = viewModel
+        super.init()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     deinit {
         print("\(#file) is dead")
@@ -87,15 +97,17 @@ final class CreateRoomViewController: BaseViewController {
         let input = CreateRoomViewModel.Input(
             textFieldTextDidChanged: self.createRoomView.roomTitleView.textFieldPublisher.eraseToAnyPublisher(),
             sliderValueDidChanged: self.createRoomView.roomCapacityView.sliderPublisher.eraseToAnyPublisher(),
+            calendarDateDidTap: self.createRoomView.calendarDidTapPublisher.eraseToAnyPublisher(),
             nextButtonDidTap: self.createRoomView.nextButtonDidTapPublisher.eraseToAnyPublisher())
-        return self.createRoomViewModel.transform(input)
+        return self.createRoomViewModel.transform(from: input)
     }
     
     private func bindOutputToViewModel(_ output: CreateRoomViewModel.Output) {
-        output.textCount
+        output.title
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] count in
-                self?.createRoomView.roomTitleView.setCounter(count: count)
+            .sink(receiveValue: { [weak self] title in
+                self?.createRoomView.roomTitleView.setCounter(count: title.count)
+                self?.createRoomView.roomInfoView.updateRoomTitle(title: title)
             })
             .store(in: &cancellable)
         
@@ -103,7 +115,15 @@ final class CreateRoomViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] capacity in
                 self?.createRoomView.roomCapacityView.updateCapacity(capacity: capacity)
+                self?.createRoomView.roomInfoView.updateRoomCapacity(capacity: capacity)
                 
+            })
+            .store(in: &cancellable)
+        
+        output.date
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] range in
+                self?.createRoomView.roomInfoView.updateRoomDateRange(range: range)
             })
             .store(in: &cancellable)
         

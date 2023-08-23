@@ -52,10 +52,11 @@ final class CreateRoomView: UIView {
     }()
     let roomTitleView: InputTitleView = InputTitleView()
     let roomCapacityView: InputCapacityView = InputCapacityView()
-    private let roomDateView: InputDateView = InputDateView()
-    private let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
-    private let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
+    let roomDateView: InputDateView = InputDateView()
+    let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
+    let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
     
+    let calendarDidTapPublisher = PassthroughSubject<String, Never>()
     let nextButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
     
     // MARK: - property
@@ -227,24 +228,23 @@ final class CreateRoomView: UIView {
     private func runActionAtStep(at step: CreateRoomStep) {
         switch step {
         case .inputTitle:
-            self.updateRoomTitle()
             self.endEditing(true)
         case .inputCapacity:
-            self.updateRoomCapacity()
             self.disabledNextButton()
         case .inputDate:
-            self.updateRoomDate()
+            self.sendDateRangeSubject()
         case .checkRoom:
                break
         case .chooseCharacter:
-            let colorIndex = self.characterCollectionView.characterIndex
-            self.delegate?.requestCreateRoom(roomInfo: RoomInfo(id: nil,
-                                                                capacity: self.roomInfoView.capacity,
-                                                                title: self.roomInfoView.title,
-                                                                startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
-                                                                endDate: "20\(self.roomDateView.calendarView.getTempEndDate())",
-                                                                state: nil),
-                                             colorIndex: colorIndex)
+//            let colorIndex = self.characterCollectionView.characterIndex
+//            self.delegate?.requestCreateRoom(roomInfo: RoomInfo(id: nil,
+//                                                                capacity: self.roomInfoView.capacity,
+//                                                                title: self.roomInfoView.title,
+//                                                                startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
+//                                                                endDate: "20\(self.roomDateView.calendarView.getTempEndDate())",
+//                                                                state: nil),
+//                                             colorIndex: colorIndex)
+            break
         }
     }
     
@@ -261,12 +261,12 @@ final class CreateRoomView: UIView {
     private func disabledNextButton() {
         self.nextButton.isDisabled = true
     }
-
-    private func updateRoomDate() {
+    
+    private func sendDateRangeSubject() {
         let startDate = self.roomDateView.calendarView.getTempStartDate()
         let endDate = self.roomDateView.calendarView.getTempEndDate()
         let roomDateRange = "\(startDate) ~ \(endDate)"
-        self.roomInfoView.updateRoomDateRange(range: roomDateRange)
+        self.calendarDidTapPublisher.send(roomDateRange)
     }
     
     private func configureUI() {
