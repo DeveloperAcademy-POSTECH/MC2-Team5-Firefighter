@@ -637,6 +637,14 @@
 			path = UserDefaultService;
 			sourceTree = "<group>";
 		};
+		B53A35B82A9640EB00B720BC /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				B5F525462855D00B00614FF7 /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		B53AD40F2A8BC69700B83B33 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -779,7 +787,7 @@
 		B5F524CD28519AA000614FF7 /* Manito */ = {
 			isa = PBXGroup;
 			children = (
-				B5F525462855D00B00614FF7 /* Network */,
+				B53A35B82A9640EB00B720BC /* Data */,
 				B5F524E328519AC300614FF7 /* Screens */,
 				B5F524E428519AC600614FF7 /* Global */,
 				B53A35B22A9630FE00B720BC /* Service */,
