@@ -8,15 +8,7 @@
 import Foundation
 
 enum URLLiteral {
-    
-    // MARK: - server url
 
-    #if DEV
-    static let baseURL = Bundle.main.developmentURL
-    #elseif PROD
-    static let baseURL = Bundle.main.productionURL
-    #endif
-    
     // MARK: - notion url
     
     static let personalInfomationUrl: String = "https://torpid-spy-8e4.notion.site/767e80eea1734539aead3b814016b361"
