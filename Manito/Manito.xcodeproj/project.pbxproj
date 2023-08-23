@@ -100,6 +100,7 @@
 		B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */; };
 		B517C04C28D1FE5F0008BED0 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */; };
 		B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04D28D1FE660008BED0 /* TokenProtocol.swift */; };
+		B53A35AD2A962E9C00B720BC /* MTNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = B53A35AC2A962E9C00B720BC /* MTNetwork */; };
 		B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */; };
 		B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741E929A494E200B75BA3 /* LetterImageError.swift */; };
 		B55B482229C3723B00CFFDAD /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55B482129C3723B00CFFDAD /* URLRepresentable.swift */; };
@@ -118,8 +119,6 @@
 		B5B3C1612A41D79E00AABD6F /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1602A41D79E00AABD6F /* ViewModelType.swift */; };
 		B5B3C1652A427B5800AABD6F /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */; };
 		B5B3C16F2A42B37000AABD6F /* UIViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */; };
-		B5B6E4C42A962B2C0082FC7B /* MTNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5B6E4C32A962B0A0082FC7B /* MTNetwork.framework */; };
-		B5B6E4C52A962B2C0082FC7B /* MTNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B5B6E4C32A962B0A0082FC7B /* MTNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+Extension.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
@@ -206,13 +205,6 @@
 			remoteGlobalIDString = B5F524CA28519AA000614FF7;
 			remoteInfo = Manito;
 		};
-		B5B6E4C22A962B0A0082FC7B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B5B6E4BE2A962B0A0082FC7B /* MTNetwork.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B5B6E4B22A962AB00082FC7B;
-			remoteInfo = MTNetwork;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -222,7 +214,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B5B6E4C52A962B2C0082FC7B /* MTNetwork.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,7 +333,6 @@
 		B5B3C1602A41D79E00AABD6F /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Combine.swift"; sourceTree = "<group>"; };
-		B5B6E4BE2A962B0A0082FC7B /* MTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MTNetwork.xcodeproj; path = MTNetwork/MTNetwork.xcodeproj; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewController.swift; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
@@ -440,7 +430,7 @@
 				39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */,
 				B50B1B0428596C900080992C /* SnapKit in Frameworks */,
 				B50B1B0728596CB10080992C /* FSCalendar in Frameworks */,
-				B5B6E4C42A962B2C0082FC7B /* MTNetwork.framework in Frameworks */,
+				B53A35AD2A962E9C00B720BC /* MTNetwork in Frameworks */,
 				B50B1B33285AC0970080992C /* Gifu in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -778,22 +768,6 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		B5B6E4A72A9629D60082FC7B /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				B5B6E4BE2A962B0A0082FC7B /* MTNetwork.xcodeproj */,
-			);
-			path = Modules;
-			sourceTree = "<group>";
-		};
-		B5B6E4BF2A962B0A0082FC7B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B5B6E4C32A962B0A0082FC7B /* MTNetwork.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		B5F31BAE28BE1C7900F61D0F /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -810,7 +784,6 @@
 				B53AD40F2A8BC69700B83B33 /* Configuration */,
 				B5F524CD28519AA000614FF7 /* Manito */,
 				398B1CBA2A12415C00DEFCEC /* ManitoTests */,
-				B5B6E4A72A9629D60082FC7B /* Modules */,
 				B57CB3022A763BB200474042 /* Packages */,
 				B5F524CC28519AA000614FF7 /* Products */,
 				398B1CC82A13597600DEFCEC /* Frameworks */,
@@ -1314,6 +1287,7 @@
 				B50B1B32285AC0970080992C /* Gifu */,
 				CB6637E72959CBC60050BD04 /* SkeletonView */,
 				39FFE33328F457AF008442EE /* FirebaseMessaging */,
+				B53A35AC2A962E9C00B720BC /* MTNetwork */,
 			);
 			productName = Manito;
 			productReference = B5F524CB28519AA000614FF7 /* Manito.app */;
@@ -1356,12 +1330,6 @@
 			);
 			productRefGroup = B5F524CC28519AA000614FF7 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = B5B6E4BF2A962B0A0082FC7B /* Products */;
-					ProjectRef = B5B6E4BE2A962B0A0082FC7B /* MTNetwork.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				B5F524CA28519AA000614FF7 /* Manito */,
@@ -1369,16 +1337,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		B5B6E4C32A962B0A0082FC7B /* MTNetwork.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MTNetwork.framework;
-			remoteRef = B5B6E4C22A962B0A0082FC7B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		398B1CB72A12415B00DEFCEC /* Resources */ = {
@@ -1995,6 +1953,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B50B1B31285AC0970080992C /* XCRemoteSwiftPackageReference "Gifu" */;
 			productName = Gifu;
+		};
+		B53A35AC2A962E9C00B720BC /* MTNetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MTNetwork;
 		};
 		CB6637E72959CBC60050BD04 /* SkeletonView */ = {
 			isa = XCSwiftPackageProductDependency;
