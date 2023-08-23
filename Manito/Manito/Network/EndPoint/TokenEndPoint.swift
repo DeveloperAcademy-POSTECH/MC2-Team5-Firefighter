@@ -7,54 +7,52 @@
 
 import Foundation
 
-enum TokenEndPoint: URLRepresentable {
+import MTNetwork
+
+enum TokenEndPoint {
     case patchRefreshToken(body: Token)
+}
+
+extension TokenEndPoint: Requestable {
+    var baseURL: URL {
+        return APIEnvironment.baseURL
+    }
 
     var path: String {
         switch self {
         case .patchRefreshToken:
-            return "/auth/reissue"
+            return "/v1/auth/reissue"
         }
     }
-}
 
-extension TokenEndPoint: EndPointable {
-    var requestTimeOut: Float {
-        return 20
-    }
-
-    var httpMethod: HTTPMethod {
+    var method: HTTPMethod {
         switch self {
         case .patchRefreshToken:
             return .patch
         }
     }
 
-    var requestBody: Data? {
+    var task: HTTPTask {
         switch self {
         case .patchRefreshToken(let body):
             let body = ["accessToken": body.accessToken,
                         "refreshToken": body.refreshToken]
-            return body.encode()
+            return .requestJSONEncodable(body)
         }
     }
 
-    var url: String {
-        switch self {
-        case .patchRefreshToken(let body):
-            return self[.patchRefreshToken(body: body)]
-        }
+    var headers: HTTPHeaders {
+        let headers: [HTTPHeader] = [
+            HTTPHeader.contentType("application/json"),
+        ]
+        return HTTPHeaders(headers)
     }
 
-    func createRequest() -> NetworkRequest {
-        var headers: [String: String] = [:]
-        headers["Content-Type"] = "application/json"
+    var requestTimeout: Float {
+        return 10
+    }
 
-        return NetworkRequest(url: self.url,
-                              headers: headers,
-                              reqBody: self.requestBody,
-                              reqTimeout: self.requestTimeOut,
-                              httpMethod: self.httpMethod
-        )
+    var sampleData: Data? {
+        return nil
     }
 }

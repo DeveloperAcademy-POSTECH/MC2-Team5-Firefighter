@@ -7,26 +7,28 @@
 
 import Foundation
 
-enum MainEndPoint: URLRepresentable {
+import MTNetwork
+
+enum MainEndPoint {
     case fetchCommonMission
     case fetchManittoList
+}
+
+extension MainEndPoint: Requestable {
+    var baseURL: URL {
+        return APIEnvironment.baseURL
+    }
 
     var path: String {
         switch self {
         case .fetchCommonMission:
-            return "/missions/common"
+            return "/v1/missions/common"
         case .fetchManittoList:
-            return "/rooms"
+            return "/v1/rooms"
         }
     }
-}
 
-extension MainEndPoint: EndPointable {
-    var requestTimeOut: Float {
-        return 20
-    }
-
-    var httpMethod: HTTPMethod {
+    var method: HTTPMethod {
         switch self {
         case .fetchCommonMission:
             return .get
@@ -35,34 +37,28 @@ extension MainEndPoint: EndPointable {
         }
     }
 
-    var requestBody: Data? {
+    var task: HTTPTask {
         switch self {
         case .fetchCommonMission:
-            return nil
+            return .requestPlain
         case .fetchManittoList:
-            return nil
+            return .requestPlain
         }
     }
 
-    var url: String {
-        switch self {
-        case .fetchCommonMission:
-            return self[.fetchCommonMission]
-        case .fetchManittoList:
-            return self[.fetchManittoList]
-        }
+    var headers: HTTPHeaders {
+        let headers: [HTTPHeader] = [
+            HTTPHeader.contentType("application/json"),
+            HTTPHeader.authorization(bearerToken: UserDefaultStorage.accessToken)
+        ]
+        return HTTPHeaders(headers)
     }
     
-    func createRequest() -> NetworkRequest {
-        var headers: [String: String] = [:]
-        headers["Content-Type"] = "application/json"
-        headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
-        
-        return NetworkRequest(url: self.url,
-                              headers: headers,
-                              reqBody: self.requestBody,
-                              reqTimeout: self.requestTimeOut,
-                              httpMethod: self.httpMethod
-        )
+    var requestTimeout: Float {
+        return 10
+    }
+
+    var sampleData: Data? {
+        return nil
     }
 }

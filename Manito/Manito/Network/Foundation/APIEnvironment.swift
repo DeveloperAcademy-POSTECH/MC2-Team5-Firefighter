@@ -9,8 +9,8 @@ import Foundation
 
 enum APIEnvironment {
     #if DEV
-    static let baseURL = Bundle.main.developmentURL
+    static let baseURL: URL = URL(string: Bundle.main.developmentURL)!
     #elseif PROD
-    static let baseURL = Bundle.main.productionURL
+    static let baseURL: URL = URL(string: Bundle.main.productionURL)!
     #endif
 }

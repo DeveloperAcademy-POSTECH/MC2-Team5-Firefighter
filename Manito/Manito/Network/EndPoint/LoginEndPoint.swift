@@ -7,52 +7,50 @@
 
 import Foundation
 
-enum LoginEndPoint: URLRepresentable {
-    case dispatchAppleLogin(body: LoginDTO)
+import MTNetwork
+
+enum LoginEndPoint {
+    case dispatchAppleLogin(loginDTO: LoginDTO)
+}
+
+extension LoginEndPoint: Requestable {
+    var baseURL: URL {
+        return APIEnvironment.baseURL
+    }
 
     var path: String {
         switch self {
         case .dispatchAppleLogin:
-            return "/login"
+            return "/v2/login"
         }
     }
-}
 
-extension LoginEndPoint: EndPointable {
-    var requestTimeOut: Float {
-        return 20
-    }
-
-    var httpMethod: HTTPMethod {
+    var method: HTTPMethod {
         switch self {
         case .dispatchAppleLogin:
             return .post
         }
     }
 
-    var requestBody: Data? {
+    var task: HTTPTask {
         switch self {
         case .dispatchAppleLogin(let body):
-            return body.encode()
+            return .requestJSONEncodable(body)
         }
     }
 
-    var url: String {
-        switch self {
-        case .dispatchAppleLogin(let loginDTO):
-            return self[.dispatchAppleLogin(body: loginDTO), .v2]
-        }
+    var headers: HTTPHeaders {
+        let headers: [HTTPHeader] = [
+            HTTPHeader.contentType("application/json"),
+        ]
+        return HTTPHeaders(headers)
     }
 
-    func createRequest() -> NetworkRequest {
-        var headers: [String: String] = [:]
-        headers["Content-Type"] = "application/json"
+    var requestTimeout: Float {
+        return 10
+    }
 
-        return NetworkRequest(url: self.url,
-                              headers: headers,
-                              reqBody: self.requestBody,
-                              reqTimeout: self.requestTimeOut,
-                              httpMethod: self.httpMethod
-        )
+    var sampleData: Data? {
+        return nil
     }
 }

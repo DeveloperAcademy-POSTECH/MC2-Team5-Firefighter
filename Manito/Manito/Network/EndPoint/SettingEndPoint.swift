@@ -7,54 +7,51 @@
 
 import Foundation
 
-enum SettingEndPoint: URLRepresentable {
-    case editUserInfo(nickNameDto: NicknameDTO)
+import MTNetwork
+
+enum SettingEndPoint {
+    case putUserInfo(nicknameDTO: NicknameDTO)
+}
+
+extension SettingEndPoint: Requestable {
+    var baseURL: URL {
+        return APIEnvironment.baseURL
+    }
 
     var path: String {
         switch self {
-        case .editUserInfo:
-            return "/members/nickname"
+        case .putUserInfo:
+            return "/v1/members/nickname"
         }
     }
-}
 
-extension SettingEndPoint: EndPointable {
-    var requestTimeOut: Float {
-        return 20
-    }
-
-    var httpMethod: HTTPMethod {
+    var method: HTTPMethod {
         switch self {
-        case .editUserInfo:
+        case .putUserInfo:
             return .put
         }
     }
 
-    var requestBody: Data? {
+    var task: HTTPTask {
         switch self {
-        case .editUserInfo(let setting):
-            let body = setting
-            return body.encode()
-        }
-    }
-
-    var url: String {
-        switch self {
-        case .editUserInfo(let nicknameDTO):
-            return self[.editUserInfo(nickNameDto: nicknameDTO)]
+        case .putUserInfo(let nicknameDTO):
+            return .requestJSONEncodable(nicknameDTO)
         }
     }
     
-    func createRequest() -> NetworkRequest {
-        var headers: [String: String] = [:]
-        headers["Content-Type"] = "application/json"
-        headers["authorization"] = "Bearer \(UserDefaultStorage.accessToken)"
-        
-        return NetworkRequest(url: self.url,
-                              headers: headers,
-                              reqBody: self.requestBody,
-                              reqTimeout: self.requestTimeOut,
-                              httpMethod: self.httpMethod
-        )
+    var headers: HTTPHeaders {
+        let headers: [HTTPHeader] = [
+            HTTPHeader.contentType("application/json"),
+            HTTPHeader.authorization(bearerToken: UserDefaultStorage.accessToken)
+        ]
+        return HTTPHeaders(headers)
+    }
+
+    var requestTimeout: Float {
+        return 10
+    }
+
+    var sampleData: Data? {
+        return nil
     }
 }
