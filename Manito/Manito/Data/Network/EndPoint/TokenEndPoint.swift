@@ -10,7 +10,7 @@ import Foundation
 import MTNetwork
 
 enum TokenEndPoint {
-    case patchRefreshToken(token: Token)
+    case patchRefreshToken(token: TokenDTO)
 }
 
 extension TokenEndPoint: Requestable {

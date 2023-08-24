@@ -10,14 +10,14 @@ import Foundation
 import MTNetwork
 
 protocol TokenRepository {
-    func patchRefreshToken(token: Token) async throws -> Token?
+    func patchRefreshToken(token: TokenDTO) async throws -> TokenDTO
 }
 
 final class TokenRepositoryImpl: TokenRepository {
 
     private var provider = Provider<TokenEndPoint>()
 
-    func patchRefreshToken(token: Token) async throws -> Token? {
+    func patchRefreshToken(token: TokenDTO) async throws -> TokenDTO {
         let response = try await self.provider
             .request(.patchRefreshToken(token: token))
         return try response.decode()
