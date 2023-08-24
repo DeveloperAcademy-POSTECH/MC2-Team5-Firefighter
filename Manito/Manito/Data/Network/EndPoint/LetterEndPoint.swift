@@ -10,7 +10,7 @@ import Foundation
 import MTNetwork
 
 enum LetterEndPoint {
-    case dispatchLetter(roomId: String, image: Data?, letter: LetterDTO, missionId: String)
+    case dispatchLetter(roomId: String, image: Data?, letter: LetterRequestDTO, missionId: String)
     case fetchSendLetter(roomId: String)
     case fetchReceiveLetter(roomId: String)
 }
