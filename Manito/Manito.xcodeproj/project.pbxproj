@@ -85,6 +85,7 @@
 		B53A35CC2A96F99D00B720BC /* SettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CB2A96F99D00B720BC /* SettingRepository.swift */; };
 		B53A35CE2A96FA7A00B720BC /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CD2A96FA7A00B720BC /* LoginRepository.swift */; };
 		B53A35D02A97194D00B720BC /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CF2A97194D00B720BC /* TokenRepository.swift */; };
+		B53A35D42A97266D00B720BC /* RoomDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35D32A97266D00B720BC /* RoomDTO.swift */; };
 		B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */; };
 		B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741E929A494E200B75BA3 /* LetterImageError.swift */; };
 		B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */; };
@@ -271,6 +272,7 @@
 		B53A35CB2A96F99D00B720BC /* SettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRepository.swift; sourceTree = "<group>"; };
 		B53A35CD2A96FA7A00B720BC /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		B53A35CF2A97194D00B720BC /* TokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepository.swift; sourceTree = "<group>"; };
+		B53A35D32A97266D00B720BC /* RoomDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDTO.swift; sourceTree = "<group>"; };
 		B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
@@ -580,6 +582,7 @@
 		B53A35B82A9640EB00B720BC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				B53A35D12A971E4200B720BC /* DTO */,
 				B53A35BE2A96F1F900B720BC /* Repository */,
 				B5F525462855D00B00614FF7 /* Network */,
 			);
@@ -598,6 +601,22 @@
 				B53A35CF2A97194D00B720BC /* TokenRepository.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		B53A35D12A971E4200B720BC /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				B53A35D22A97265F00B720BC /* Request */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		B53A35D22A97265F00B720BC /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				B53A35D32A97266D00B720BC /* RoomDTO.swift */,
+			);
+			path = Request;
 			sourceTree = "<group>";
 		};
 		B53AD40F2A8BC69700B83B33 /* Configuration */ = {
@@ -1442,6 +1461,7 @@
 				B5E1F2AE285B2917006D880B /* Int+Extension.swift in Sources */,
 				D7C4A1AD2A0DD8FA00C3AE4C /* SettingView.swift in Sources */,
 				39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */,
+				B53A35D42A97266D00B720BC /* RoomDTO.swift in Sources */,
 				B53A35B72A963F2100B720BC /* DetailRoomEndPoint.swift in Sources */,
 				D7C4A1B02A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift in Sources */,
 				3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */,
