@@ -176,7 +176,7 @@ final class DetailWaitViewController: BaseViewController {
             .store(in: &self.cancellable)
     }
         
-    private func showDetailEditViewController(roomInformation: Room, mode: DetailEditView.EditMode) {
+    private func showDetailEditViewController(roomInformation: RoomInfo, mode: DetailEditView.EditMode) {
         let viewController = DetailEditViewController(editMode: mode, room: roomInformation)
         viewController.detailWaitDelegate = self
         self.present(viewController, animated: true)

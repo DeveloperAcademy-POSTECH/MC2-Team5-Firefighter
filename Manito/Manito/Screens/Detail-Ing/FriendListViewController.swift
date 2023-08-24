@@ -8,12 +8,12 @@
 import UIKit
 
 final class FriendListViewController: BaseViewController {
-    var friendArray: [Member] = [] {
+    var friendArray: [MemberInfoDTO] = [] {
         didSet {
             friendListCollectionView.reloadData()
         }
     }
-    var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+    var detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
     
     var roomIndex: Int = 0
     
@@ -51,10 +51,8 @@ final class FriendListViewController: BaseViewController {
     private func requestWithFriends() {
         Task {
             do {
-                let data = try await detailIngService.requestWithFriends(roomId: "\(roomIndex)")
-                if let list = data {
-                    friendArray = list.members ?? []
-                }
+                let data = try await self.detailRoomRepository.fetchWithFriend(roomId: "\(roomIndex)")
+                friendArray = data.members ?? []
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
