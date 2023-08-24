@@ -15,5 +15,5 @@ jobs:
 
     - name: Firefighter Build Tests
       run: |
-        xcodebuild clean test -project ./Manito/Manito.xcodeproj -scheme Manito-Prod -destination "platform=iOS Simulator,name=iPhone 13,OS=latest"
+        xcodebuild clean test -project ./Manito/Manito.xcodeproj -scheme Manito-Dev -destination "platform=iOS Simulator,name=iPhone 13,OS=latest"
         xcpretty --color --simple
