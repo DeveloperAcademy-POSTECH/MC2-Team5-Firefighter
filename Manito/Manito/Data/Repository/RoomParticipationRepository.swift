@@ -11,7 +11,7 @@ import MTNetwork
 
 protocol RoomParticipationRepository {
     func dispatchCreateRoom(room: CreatedRoomRequestDTO) async throws -> Int
-    func dispatchVerifyCode(code: String) async throws -> InvitationCodeDTO
+    func dispatchVerifyCode(code: String) async throws -> ParticipatedRoomInfoDTO
     func dispatchJoinRoom(roomId: String, member: MemberInfoRequestDTO) async throws -> Int
 }
 
@@ -25,7 +25,7 @@ final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
         return response.statusCode
     }
 
-    func dispatchVerifyCode(code: String) async throws -> InvitationCodeDTO {
+    func dispatchVerifyCode(code: String) async throws -> ParticipatedRoomInfoDTO {
         let response = try await self.provider
             .request(.dispatchVerifyCode(code: code))
         return try response.decode()

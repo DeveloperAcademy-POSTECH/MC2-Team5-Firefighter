@@ -40,7 +40,7 @@ struct InvitationCodeDTO: Decodable {
     let code: String?
 }
 
-struct IndividualMissionDTO: Decodable {
+struct IndividualMissionDTO: Decodable, Hashable {
     let id: Int?
     let content: String?
 }

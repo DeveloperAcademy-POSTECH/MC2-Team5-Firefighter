@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MessageListItem {
+struct MessageListItem: Hashable {
     let id: Int
     let content: String
     let imageUrl: String

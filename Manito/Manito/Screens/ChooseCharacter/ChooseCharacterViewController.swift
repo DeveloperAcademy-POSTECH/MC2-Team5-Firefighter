@@ -17,7 +17,7 @@ final class ChooseCharacterViewController: BaseViewController {
     
     // MARK: - property
     
-    private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
+    private let roomParticipationRepository: RoomParticipationRepository = RoomParticipationRepositoryImpl()
     private let roomId: Int?
     
     // MARK: - init
@@ -69,9 +69,8 @@ final class ChooseCharacterViewController: BaseViewController {
     
     private func pushDetailWaitViewController(roomId: Int) {
         guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-        
-        let viewController = DetailWaitViewController(viewModel: DetailWaitViewModel(roomIndex: roomId,
-                                                                                     detailWaitService: DetailWaitService(api: DetailWaitAPI(apiService: APIService()))))
+        let viewModel = DetailWaitViewModel(roomIndex: roomId, detailWaitService: DetailWaitService(api: DetailRoomRepositoryImpl()))
+        let viewController = DetailWaitViewController(viewModel: viewModel)
         self.dismiss(animated: true) {
             navigationController.pushViewController(viewController, animated: true)
         }
@@ -89,8 +88,8 @@ final class ChooseCharacterViewController: BaseViewController {
         Task {
             do {
                 guard let roomId = self.roomId else { return }
-                let status = try await self.roomService.dispatchJoinRoom(roodId: roomId.description,
-                                                                         dto: MemberDTO(colorIndex: characterIndex))
+                let status = try await self.roomParticipationRepository.dispatchJoinRoom(roomId: roomId.description,
+                                                                                         member: MemberInfoRequestDTO(colorIndex: characterIndex))
                 if status == 201 {
                     self.pushDetailWaitViewController(roomId: roomId)
                 }

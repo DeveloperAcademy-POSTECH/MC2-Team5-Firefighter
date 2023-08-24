@@ -18,8 +18,8 @@ final class LetterViewController: BaseViewController {
 
     private let letterView: LetterView = LetterView()
 
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Message>!
-    private var snapShot: NSDiffableDataSourceSnapshot<Section, Message>!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, MessageListItem>!
+    private var snapShot: NSDiffableDataSourceSnapshot<Section, MessageListItem>!
 
     // MARK: - property
 
@@ -131,7 +131,7 @@ final class LetterViewController: BaseViewController {
             .store(in: &self.cancelBag)
     }
 
-    private func bindCell(_ cell: LetterCollectionViewCell, with item: Message) {
+    private func bindCell(_ cell: LetterCollectionViewCell, with item: MessageListItem) {
         cell.reportButtonTapPublisher
             .sink(receiveValue: { [weak self] content in
                 if let content {
@@ -144,8 +144,7 @@ final class LetterViewController: BaseViewController {
 
         cell.imageViewTapGesturePublisher
             .sink(receiveValue: { [weak self] _ in
-                guard let imageUrl = item.imageUrl else { return }
-                let viewController = LetterImageViewController(imageUrl: imageUrl)
+                let viewController = LetterImageViewController(imageUrl: item.imageUrl)
                 viewController.modalPresentationStyle = .fullScreen
                 viewController.modalTransitionStyle = .crossDissolve
                 self?.present(viewController, animated: true)
@@ -176,7 +175,7 @@ extension LetterViewController {
                        message: TextLiteral.letterViewControllerErrorDescription)
     }
 
-    private func handleMessageList(_ messages: [Message]?) {
+    private func handleMessageList(_ messages: [MessageListItem]?) {
         guard let messages else {
             self.showErrorAlert()
             return
@@ -218,8 +217,8 @@ extension LetterViewController {
         self.configureSnapshot()
     }
 
-    private func letterCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Message> {
-        let letterCellRegistration = UICollectionView.CellRegistration<LetterCollectionViewCell, Message> {
+    private func letterCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, MessageListItem> {
+        let letterCellRegistration = UICollectionView.CellRegistration<LetterCollectionViewCell, MessageListItem> {
             [weak self] cell, indexPath, item in
             cell.configureCell((mission: item.mission,
                                 date: item.date,
@@ -263,12 +262,12 @@ extension LetterViewController {
 // MARK: - Snapshot
 extension LetterViewController {
     private func configureSnapshot() {
-        self.snapShot = NSDiffableDataSourceSnapshot<Section, Message>()
+        self.snapShot = NSDiffableDataSourceSnapshot<Section, MessageListItem>()
         self.snapShot.appendSections([.main])
         self.dataSource.apply(self.snapShot, animatingDifferences: true)
     }
 
-    private func reloadMessageList(_ items: [Message]) {
+    private func reloadMessageList(_ items: [MessageListItem]) {
         let previousMessageData = self.snapShot.itemIdentifiers(inSection: .main)
         self.snapShot.deleteItems(previousMessageData)
         self.snapShot.appendItems(items, toSection: .main)
