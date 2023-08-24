@@ -11,10 +11,10 @@ import SnapKit
 
 class InvitedCodeViewController: BaseViewController {
     
-    var roomInfo: RoomDTO
+    var roomInfo: RoomListItemDTO
     var code: String
     
-    init(roomInfo: RoomDTO, code: String){
+    init(roomInfo: RoomListItemDTO, code: String){
         self.roomInfo = roomInfo
         self.code = code
         super.init()

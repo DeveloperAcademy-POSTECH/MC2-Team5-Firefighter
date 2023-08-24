@@ -17,7 +17,7 @@ final class CreateRoomViewController: BaseViewController {
     
     // MARK: - property
     
-    private let roomService: RoomProtocol = RoomAPI(apiService: APIService())
+    private let roomParticipationRepository: RoomParticipationRepository = RoomParticipationRepositoryImpl()
     
     // MARK: - init
     
@@ -61,9 +61,9 @@ final class CreateRoomViewController: BaseViewController {
     
     private func pushDetailWaitViewController(roomId: Int) {
         guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-        
-        let viewController = DetailWaitViewController(viewModel: DetailWaitViewModel(roomIndex: roomId,
-                                                                                     detailWaitService: DetailWaitService(api: DetailWaitAPI(apiService: APIService()))))
+        let viewModel = DetailWaitViewModel(roomIndex: roomId,
+                                            detailWaitService: DetailWaitService(repository: DetailRoomRepositoryImpl()))
+        let viewController = DetailWaitViewController(viewModel: viewModel)
         
         navigationController.popViewController(animated: true)
         navigationController.pushViewController(viewController, animated: false)
@@ -75,10 +75,10 @@ final class CreateRoomViewController: BaseViewController {
     
     // MARK: - network
     
-    private func requestCreateRoom(room: CreateRoomDTO) {
+    private func requestCreateRoom(room: CreatedRoomRequestDTO) {
         Task {
             do {
-                guard let roomId = try await self.roomService.postCreateRoom(body: room) else { return }
+                let roomId = try await self.roomParticipationRepository.dispatchCreateRoom(room: room)
                 self.pushDetailWaitViewController(roomId: roomId)
             } catch NetworkError.serverError {
                 print("server Error")
@@ -96,15 +96,12 @@ extension CreateRoomViewController: CreateRoomViewDelegate {
         self.dismiss(animated: true)
     }
     
-    func requestCreateRoom(roomInfo: RoomInfo, colorIndex: Int) {
-        guard let roomTitle = roomInfo.title,
-              let roomCapacity = roomInfo.capacity,
-              let roomStartDate = roomInfo.startDate,
-              let roomEndDate = roomInfo.endDate else { return }
-        self.requestCreateRoom(room: CreateRoomDTO(room: RoomDTO(title: roomTitle,
-                                                                 capacity: roomCapacity,
-                                                                 startDate: roomStartDate,
-                                                                 endDate: roomEndDate),
-                                                   member: MemberDTO(colorIndex: colorIndex)))
+    func requestCreateRoom(roomInfo: RoomListItem, colorIndex: Int) {
+        let room = CreatedRoomInfoRequestDTO(title: roomInfo.title,
+                                             capacity: roomInfo.capacity,
+                                             startDate: roomInfo.startDate,
+                                             endDate: roomInfo.endDate)
+        let member = MemberInfoRequestDTO(colorIndex: colorIndex)
+        self.requestCreateRoom(room: CreatedRoomRequestDTO(room: room, member: member))
     }
 }
