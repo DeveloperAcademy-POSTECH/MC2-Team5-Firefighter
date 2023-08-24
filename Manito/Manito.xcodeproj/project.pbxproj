@@ -76,8 +76,6 @@
 		B50CEE912A445EB700CF1C76 /* UIScrollView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CEE902A445EB700CF1C76 /* UIScrollView+Combine.swift */; };
 		B50CEEC02A6FF82600CF1C76 /* Publisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CEEBF2A6FF82600CF1C76 /* Publisher+Extension.swift */; };
 		B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */; };
-		B517C04C28D1FE5F0008BED0 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */; };
-		B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517C04D28D1FE660008BED0 /* TokenProtocol.swift */; };
 		B53A35AD2A962E9C00B720BC /* MTNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = B53A35AC2A962E9C00B720BC /* MTNetwork */; };
 		B53A35B72A963F2100B720BC /* DetailRoomEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35B62A963F2100B720BC /* DetailRoomEndPoint.swift */; };
 		B53A35C02A96F21A00B720BC /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35BF2A96F21A00B720BC /* MainRepository.swift */; };
@@ -86,6 +84,7 @@
 		B53A35C82A96F84700B720BC /* LetterRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35C72A96F84700B720BC /* LetterRepository.swift */; };
 		B53A35CC2A96F99D00B720BC /* SettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CB2A96F99D00B720BC /* SettingRepository.swift */; };
 		B53A35CE2A96FA7A00B720BC /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CD2A96FA7A00B720BC /* LoginRepository.swift */; };
+		B53A35D02A97194D00B720BC /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CF2A97194D00B720BC /* TokenRepository.swift */; };
 		B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */; };
 		B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741E929A494E200B75BA3 /* LetterImageError.swift */; };
 		B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */; };
@@ -264,8 +263,6 @@
 		B50CEE902A445EB700CF1C76 /* UIScrollView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Combine.swift"; sourceTree = "<group>"; };
 		B50CEEBF2A6FF82600CF1C76 /* Publisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extension.swift"; sourceTree = "<group>"; };
 		B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEndPoint.swift; sourceTree = "<group>"; };
-		B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
-		B517C04D28D1FE660008BED0 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
 		B53A35B62A963F2100B720BC /* DetailRoomEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoomEndPoint.swift; sourceTree = "<group>"; };
 		B53A35BF2A96F21A00B720BC /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
 		B53A35C32A96F50100B720BC /* DetailRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoomRepository.swift; sourceTree = "<group>"; };
@@ -273,6 +270,7 @@
 		B53A35C72A96F84700B720BC /* LetterRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterRepository.swift; sourceTree = "<group>"; };
 		B53A35CB2A96F99D00B720BC /* SettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRepository.swift; sourceTree = "<group>"; };
 		B53A35CD2A96FA7A00B720BC /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
+		B53A35CF2A97194D00B720BC /* TokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepository.swift; sourceTree = "<group>"; };
 		B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
@@ -425,22 +423,6 @@
 				395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		397A241128BA513E00454E4F /* API */ = {
-			isa = PBXGroup;
-			children = (
-				B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */,
-			);
-			path = API;
-			sourceTree = "<group>";
-		};
-		397A241528BA519200454E4F /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				B517C04D28D1FE660008BED0 /* TokenProtocol.swift */,
-			);
-			path = Protocol;
 			sourceTree = "<group>";
 		};
 		398B1CBA2A12415C00DEFCEC /* ManitoTests */ = {
@@ -613,6 +595,7 @@
 				B53A35C72A96F84700B720BC /* LetterRepository.swift */,
 				B53A35CB2A96F99D00B720BC /* SettingRepository.swift */,
 				B53A35CD2A96FA7A00B720BC /* LoginRepository.swift */,
+				B53A35CF2A97194D00B720BC /* TokenRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1013,8 +996,6 @@
 			children = (
 				39C957D328799A8200A04A2B /* Foundation */,
 				39C957EA287AE45900A04A2B /* EndPoint */,
-				397A241528BA519200454E4F /* Protocol */,
-				397A241128BA513E00454E4F /* API */,
 				B5F525472855D01200614FF7 /* Models */,
 			);
 			path = Network;
@@ -1371,7 +1352,6 @@
 				397A241A28BA532A00454E4F /* FriendList.swift in Sources */,
 				397A241028BA494100454E4F /* APIEnvironment.swift in Sources */,
 				CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */,
-				B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */,
 				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputCapacityView.swift in Sources */,
 				B53A35C62A96F6DB00B720BC /* RoomParticipationRepository.swift in Sources */,
@@ -1434,7 +1414,6 @@
 				CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */,
 				B5706BF429B710FC0093D198 /* LetterView.swift in Sources */,
 				B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */,
-				B517C04C28D1FE5F0008BED0 /* TokenAPI.swift in Sources */,
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
 				CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */,
 				B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */,
@@ -1473,6 +1452,7 @@
 				398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */,
 				B50B1AFD2856C3500080992C /* CreateLetterTextView.swift in Sources */,
 				D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */,
+				B53A35D02A97194D00B720BC /* TokenRepository.swift in Sources */,
 				B5706BF629B9D4650093D198 /* GuideView.swift in Sources */,
 				B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */,
 				CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */,
