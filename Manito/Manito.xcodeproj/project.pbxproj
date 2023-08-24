@@ -24,7 +24,6 @@
 		397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241728BA51B400454E4F /* DetailWaitProtocol.swift */; };
 		397A241A28BA532A00454E4F /* FriendList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241928BA532A00454E4F /* FriendList.swift */; };
 		398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */; };
-		398B1CBC2A12415C00DEFCEC /* ManitoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */; };
 		398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CC92A13597600DEFCEC /* FSCalendar */; };
 		398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CCB2A13599D00DEFCEC /* FirebaseAuth */; };
 		399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */; };
@@ -225,7 +224,6 @@
 		397A241928BA532A00454E4F /* FriendList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendList.swift; sourceTree = "<group>"; };
 		398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
 		398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoTests.swift; sourceTree = "<group>"; };
 		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
 		39A938902A48504200EC2CF2 /* MissionEditEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionEditEndPoint.swift; sourceTree = "<group>"; };
 		39A938922A4852CA00EC2CF2 /* MissionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionDTO.swift; sourceTree = "<group>"; };
@@ -497,7 +495,6 @@
 		398B1CBA2A12415C00DEFCEC /* ManitoTests */ = {
 			isa = PBXGroup;
 			children = (
-				398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */,
 				395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */,
 			);
 			path = ManitoTests;
@@ -1383,7 +1380,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */,
-				398B1CBC2A12415C00DEFCEC /* ManitoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
