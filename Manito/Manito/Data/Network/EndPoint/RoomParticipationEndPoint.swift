@@ -10,9 +10,9 @@ import Foundation
 import MTNetwork
 
 enum RoomParticipationEndPoint {
-    case dispatchCreateRoom(roomInfo: CreateRoomDTO)
+    case dispatchCreateRoom(room: CreatedRoomRequestDTO)
     case dispatchVerifyCode(code: String)
-    case dispatchJoinRoom(roomId: String, roomDTO: MemberDTO)
+    case dispatchJoinRoom(roomId: String, member: MemberInfoRequestDTO)
 }
 
 extension RoomParticipationEndPoint: Requestable {
@@ -44,13 +44,13 @@ extension RoomParticipationEndPoint: Requestable {
 
     var task: HTTPTask {
         switch self {
-        case .dispatchCreateRoom(let roomInfo):
-            return .requestJSONEncodable(roomInfo)
+        case .dispatchCreateRoom(let room):
+            return .requestJSONEncodable(room)
         case .dispatchVerifyCode(let code):
             let body = ["invitationCode": code]
             return .requestJSONEncodable(body)
-        case .dispatchJoinRoom(_, let roomDto):
-            return .requestJSONEncodable(roomDto)
+        case .dispatchJoinRoom(_, let member):
+            return .requestJSONEncodable(member)
         }
     }
 
