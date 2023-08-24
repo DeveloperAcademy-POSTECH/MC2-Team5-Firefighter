@@ -10,21 +10,21 @@ import Foundation
 import MTNetwork
 
 protocol MainRepository {
-    func fetchCommonMission() async throws -> DailyMissionDTO?
-    func fetchManittoList() async throws -> RoomListDTO?
+    func fetchCommonMission() async throws -> DailyMissionDTO
+    func fetchManittoList() async throws -> RoomListDTO
 }
 
 final class MainRepositoryImpl: MainRepository {
 
     private var provider = Provider<MainEndPoint>()
 
-    func fetchCommonMission() async throws -> DailyMissionDTO? {
+    func fetchCommonMission() async throws -> DailyMissionDTO {
         let response = try await self.provider
             .request(.fetchCommonMission)
         return try response.decode()
     }
 
-    func fetchManittoList() async throws -> RoomListDTO? {
+    func fetchManittoList() async throws -> RoomListDTO {
         let response = try await self.provider
             .request(.fetchManittoList)
         return try response.decode()
