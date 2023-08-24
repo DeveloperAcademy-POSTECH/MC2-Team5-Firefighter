@@ -1,0 +1,11 @@
+//
+//  Dev.xcconfig
+//  Manito
+//
+//  Created by SHIN YOON AH on 2023/08/15.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+BUNDLE_DISPLAY_NAME = 애니또테스트
