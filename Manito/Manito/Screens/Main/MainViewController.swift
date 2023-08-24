@@ -98,8 +98,8 @@ final class MainViewController: BaseViewController {
     
     // MARK: - property
     
-    private let mainService: MainProtocol = MainAPI(apiService: APIService())
-    private var rooms: [ParticipatingRoom]?
+    private let mainRepository: MainRepository = MainRepositoryImpl()
+    private var rooms: [RoomListItemDTO]?
     
     // MARK: - init
     
@@ -283,8 +283,9 @@ final class MainViewController: BaseViewController {
         switch status {
         case .waiting:
             guard let index = index else { return }
-            let viewController = DetailWaitViewController(viewModel: DetailWaitViewModel(roomIndex: index,
-                                                                                         detailWaitService: DetailWaitService(api: DetailWaitAPI(apiService: APIService()))))
+            let viewModel = DetailWaitViewModel(roomIndex: index,
+                                                detailWaitService: DetailWaitService(api: DetailRoomRepositoryImpl()))
+            let viewController = DetailWaitViewController(viewModel: viewModel)
             
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
@@ -313,8 +314,8 @@ final class MainViewController: BaseViewController {
     private func requestCommonMission() {
         Task {
             do {
-                let data = try await self.mainService.fetchCommonMission()
-                if let commonMission = data?.mission {
+                let data = try await self.mainRepository.fetchCommonMission()
+                if let commonMission = data.mission {
                     self.commonMissionView.missionLabel.text = commonMission
                 }
             } catch NetworkError.serverError {
@@ -330,13 +331,10 @@ final class MainViewController: BaseViewController {
     private func requestManittoRoomList() {
         Task {
             do {
-                let data = try await self.mainService.fetchManittoList()
-                
-                if let manittoList = data {
-                    self.rooms = manittoList.participatingRooms
-                    self.listCollectionView.reloadData()
-                    self.stopSkeletonView()
-                }
+                let data = try await self.mainRepository.fetchManittoList()
+                self.rooms = data.participatingRooms
+                self.listCollectionView.reloadData()
+                self.stopSkeletonView()
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {

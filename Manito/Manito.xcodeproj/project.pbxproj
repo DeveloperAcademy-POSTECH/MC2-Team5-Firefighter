@@ -102,6 +102,7 @@
 		B5A086002A97496900C8A98D /* MessageListItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085FF2A97496900C8A98D /* MessageListItemDTO.swift */; };
 		B5A086022A974B8100C8A98D /* RoomListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A086012A974B8100C8A98D /* RoomListItem.swift */; };
 		B5A086042A974D2000C8A98D /* ParticipantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A086032A974D2000C8A98D /* ParticipantList.swift */; };
+		B5A086062A977F1700C8A98D /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A086052A977F1700C8A98D /* NetworkError.swift */; };
 		B5AE11F029D1E43B00F86FF8 /* OpenManittoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */; };
 		B5AE11F229D28CB500F86FF8 /* OpenManittoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */; };
 		B5AE11F429D32EE700F86FF8 /* SelectManitteeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */; };
@@ -299,6 +300,7 @@
 		B5A085FF2A97496900C8A98D /* MessageListItemDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListItemDTO.swift; sourceTree = "<group>"; };
 		B5A086012A974B8100C8A98D /* RoomListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomListItem.swift; sourceTree = "<group>"; };
 		B5A086032A974D2000C8A98D /* ParticipantList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantList.swift; sourceTree = "<group>"; };
+		B5A086052A977F1700C8A98D /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoView.swift; sourceTree = "<group>"; };
 		B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupView.swift; sourceTree = "<group>"; };
 		B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeView.swift; sourceTree = "<group>"; };
@@ -477,6 +479,7 @@
 				3915D54A2A7516A2002D6C25 /* Key.plist */,
 				3915D54C2A7516E9002D6C25 /* Key+Extension.swift */,
 				39C957F0287D984900A04A2B /* APIEnvironment.swift */,
+				B5A086052A977F1700C8A98D /* NetworkError.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1439,6 +1442,7 @@
 				B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */,
 				39EE956D2A401ED400AF6857 /* DetailingView.swift in Sources */,
 				39C95808287DB05C00A04A2B /* SettingEndPoint.swift in Sources */,
+				B5A086062A977F1700C8A98D /* NetworkError.swift in Sources */,
 				B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */,
 				435B17682913E71400212663 /* DetailingViewController.swift in Sources */,
 				B50CEE912A445EB700CF1C76 /* UIScrollView+Combine.swift in Sources */,
