@@ -168,7 +168,7 @@
 		D70220232A7A22EC0024BACD /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70220222A7A22EC0024BACD /* CreateRoomView.swift */; };
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
-		D739C36728C7B82500161117 /* NicknameRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameRequestDTO.swift */; };
+		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
 		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* URLLiteral.swift */; };
@@ -366,7 +366,7 @@
 		D70220222A7A22EC0024BACD /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
-		D739C36628C7B82500161117 /* NicknameRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRequestDTO.swift; sourceTree = "<group>"; };
+		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
 		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* URLLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLLiteral.swift; sourceTree = "<group>"; };
@@ -608,6 +608,7 @@
 			isa = PBXGroup;
 			children = (
 				B5A085F52A9733F900C8A98D /* TokenDTO.swift */,
+				D739C36628C7B82500161117 /* NicknameDTO.swift */,
 				B53A35D22A97265F00B720BC /* Request */,
 				B5A085E42A972E5F00C8A98D /* Response */,
 			);
@@ -621,7 +622,6 @@
 				B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */,
 				B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */,
 				B5A085E22A972DDC00C8A98D /* EditedMissionRequestDTO.swift */,
-				D739C36628C7B82500161117 /* NicknameRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1455,7 +1455,7 @@
 				B50CEEC02A6FF82600CF1C76 /* Publisher+Extension.swift in Sources */,
 				B5B3C1612A41D79E00AABD6F /* ViewModelType.swift in Sources */,
 				B53A35C02A96F21A00B720BC /* MainRepository.swift in Sources */,
-				D739C36728C7B82500161117 /* NicknameRequestDTO.swift in Sources */,
+				D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */,
 				B5A085EA2A97309900C8A98D /* MessageListItem.swift in Sources */,
 				B5F5251A2851A12600614FF7 /* BaseViewController.swift in Sources */,
 				B5AE11F029D1E43B00F86FF8 /* OpenManittoView.swift in Sources */,
