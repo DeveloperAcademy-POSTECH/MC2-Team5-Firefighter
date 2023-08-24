@@ -20,17 +20,21 @@ final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
     private var provider = Provider<RoomParticipationEndPoint>()
 
     func dispatchCreateRoom(roomInfo: CreateRoomDTO) async throws -> Int? {
-        let response = try await self.provider.request(.dispatchCreateRoom(roomInfo: roomInfo))
+        let response = try await self.provider
+            .request(.dispatchCreateRoom(roomInfo: roomInfo))
         return try response.decode()
     }
 
     func dispatchVerifyCode(code: String) async throws -> VerificationCode? {
-        let response = try await self.provider.request(.dispatchVerifyCode(code: code))
+        let response = try await self.provider
+            .request(.dispatchVerifyCode(code: code))
         return try response.decode()
     }
 
     func dispatchJoinRoom(roomId: String, roomDTO: MemberDTO) async throws -> Int {
-        let response = try await self.provider.request(.dispatchJoinRoom(roomId: roomId, roomDTO: roomDTO))
+        let response = try await self.provider
+            .request(.dispatchJoinRoom(roomId: roomId,
+                                       roomDTO: roomDTO))
         return try response.decode()
     }
 }

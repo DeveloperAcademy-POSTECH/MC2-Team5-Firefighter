@@ -18,7 +18,8 @@ final class LoginRepositoryImpl: LoginRepository {
     private var provider = Provider<LoginEndPoint>()
 
     func dispatchAppleLogin(loginDTO: LoginDTO) async throws -> Login? {
-        let response = try await self.provider.request(.dispatchAppleLogin(loginDTO: loginDTO))
+        let response = try await self.provider
+            .request(.dispatchAppleLogin(loginDTO: loginDTO))
         return try response.decode()
     }
 }

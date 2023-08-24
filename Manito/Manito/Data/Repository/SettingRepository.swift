@@ -18,7 +18,8 @@ final class SettingRepositoryImpl: SettingRepository {
     private var provider = Provider<SettingEndPoint>()
 
     func putUserInfo(nickname: NicknameDTO) async throws -> String? {
-        let response = try await self.provider.request(.putUserInfo(nickname: nickname))
+        let response = try await self.provider
+            .request(.putUserInfo(nickname: nickname))
         return try response.decode()
     }
 }

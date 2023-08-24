@@ -19,12 +19,14 @@ final class MainRepositoryImpl: MainRepository {
     private var provider = Provider<MainEndPoint>()
 
     func fetchCommonMission() async throws -> DailyMission? {
-        let response = try await self.provider.request(.fetchCommonMission)
+        let response = try await self.provider
+            .request(.fetchCommonMission)
         return try response.decode()
     }
 
     func fetchManittoList() async throws -> ParticipatingRooms? {
-        let response = try await self.provider.request(.fetchManittoList)
+        let response = try await self.provider
+            .request(.fetchManittoList)
         return try response.decode()
     }
 }
