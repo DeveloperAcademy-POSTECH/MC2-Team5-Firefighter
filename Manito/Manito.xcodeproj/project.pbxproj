@@ -85,6 +85,7 @@
 		B53A35C02A96F21A00B720BC /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35BF2A96F21A00B720BC /* MainRepository.swift */; };
 		B53A35C42A96F50100B720BC /* DetailRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35C32A96F50100B720BC /* DetailRoomRepository.swift */; };
 		B53A35C62A96F6DB00B720BC /* RoomParticipationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35C52A96F6DB00B720BC /* RoomParticipationRepository.swift */; };
+		B53A35C82A96F84700B720BC /* LetterRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35C72A96F84700B720BC /* LetterRepository.swift */; };
 		B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */; };
 		B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741E929A494E200B75BA3 /* LetterImageError.swift */; };
 		B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */; };
@@ -107,8 +108,6 @@
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
 		B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */; };
 		B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */; };
-		B5F31C5228BFA64F00F61D0F /* LetterAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C5128BFA64F00F61D0F /* LetterAPI.swift */; };
-		B5F31C5428BFA70100F61D0F /* LetterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C5328BFA70100F61D0F /* LetterProtocol.swift */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
 		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
@@ -275,6 +274,7 @@
 		B53A35BF2A96F21A00B720BC /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
 		B53A35C32A96F50100B720BC /* DetailRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoomRepository.swift; sourceTree = "<group>"; };
 		B53A35C52A96F6DB00B720BC /* RoomParticipationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomParticipationRepository.swift; sourceTree = "<group>"; };
+		B53A35C72A96F84700B720BC /* LetterRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterRepository.swift; sourceTree = "<group>"; };
 		B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
@@ -301,8 +301,6 @@
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LetterViewController+MailCompose.swift"; sourceTree = "<group>"; };
-		B5F31C5128BFA64F00F61D0F /* LetterAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterAPI.swift; sourceTree = "<group>"; };
-		B5F31C5328BFA70100F61D0F /* LetterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterProtocol.swift; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -436,7 +434,6 @@
 		397A241128BA513E00454E4F /* API */ = {
 			isa = PBXGroup;
 			children = (
-				B5F31C5128BFA64F00F61D0F /* LetterAPI.swift */,
 				39EEF65B28CB3CD600437654 /* LoginAPI.swift */,
 				D739C36428C7B75400161117 /* SettingAPI.swift */,
 				B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */,
@@ -447,7 +444,6 @@
 		397A241528BA519200454E4F /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				B5F31C5328BFA70100F61D0F /* LetterProtocol.swift */,
 				39EEF65528CB3BB200437654 /* LoginProtocol.swift */,
 				D739C36228C7B69D00161117 /* SettingProtocol.swift */,
 				B517C04D28D1FE660008BED0 /* TokenProtocol.swift */,
@@ -622,6 +618,7 @@
 				B53A35BF2A96F21A00B720BC /* MainRepository.swift */,
 				B53A35C32A96F50100B720BC /* DetailRoomRepository.swift */,
 				B53A35C52A96F6DB00B720BC /* RoomParticipationRepository.swift */,
+				B53A35C72A96F84700B720BC /* LetterRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1398,6 +1395,7 @@
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
 				7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
+				B53A35C82A96F84700B720BC /* LetterRepository.swift in Sources */,
 				39EE956F2A404A3800AF6857 /* MissionEditViewController.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
 				D7C4A1AB2A0D1AA400C3AE4C /* ParticipateRoomView.swift in Sources */,
@@ -1447,7 +1445,6 @@
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
 				CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */,
 				B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */,
-				B5F31C5228BFA64F00F61D0F /* LetterAPI.swift in Sources */,
 				D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */,
 				391B3003286198C200421F1D /* Size.swift in Sources */,
 				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
@@ -1462,7 +1459,6 @@
 				B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */,
 				B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
-				B5F31C5428BFA70100F61D0F /* LetterProtocol.swift in Sources */,
 				D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */,
 				B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */,
 				B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */,

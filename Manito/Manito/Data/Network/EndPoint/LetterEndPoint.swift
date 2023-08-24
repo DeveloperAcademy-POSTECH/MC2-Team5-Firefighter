@@ -13,7 +13,6 @@ enum LetterEndPoint {
     case dispatchLetter(roomId: String, image: Data?, letter: LetterDTO, missionId: String)
     case fetchSendLetter(roomId: String)
     case fetchReceiveLetter(roomId: String)
-    case patchReadMessage(roomId: String, status: String)
 }
 
 extension LetterEndPoint: Requestable {
@@ -29,8 +28,6 @@ extension LetterEndPoint: Requestable {
             return "/v2/rooms/\(roomId)/messages-sent"
         case .fetchReceiveLetter(let roomId):
             return "/v2/rooms/\(roomId)/messages-received"
-        case .patchReadMessage(let roomId, _):
-            return "/v1/rooms/\(roomId)/messages/status"
         }
     }
 
@@ -42,8 +39,6 @@ extension LetterEndPoint: Requestable {
             return .get
         case .fetchReceiveLetter:
             return .get
-        case .patchReadMessage:
-            return .patch
         }
     }
 
@@ -68,9 +63,6 @@ extension LetterEndPoint: Requestable {
             return .requestPlain
         case .fetchReceiveLetter:
             return .requestPlain
-        case .patchReadMessage(_, let status):
-            let body = ["status": status]
-            return .requestJSONEncodable(body)
         }
     }
 
