@@ -61,9 +61,7 @@
 		7E3058C82854B64D00489E6A /* InputCapacityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C72854B64D00489E6A /* InputCapacityView.swift */; };
 		7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C92854B7A900489E6A /* InputDateView.swift */; };
 		7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7542B22923744300D725CB /* ToastPopupView.swift */; };
-		7E77DB0428BF9A6700E95D4B /* RoomProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */; };
 		7E77DB0628BF9C0600E95D4B /* VerificationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0528BF9C0600E95D4B /* VerificationCode.swift */; };
-		7E77DB0828BF9D2400E95D4B /* RoomAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */; };
 		7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */; };
 		7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */; };
 		B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */; };
@@ -86,6 +84,7 @@
 		B53A35B72A963F2100B720BC /* DetailRoomEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35B62A963F2100B720BC /* DetailRoomEndPoint.swift */; };
 		B53A35C02A96F21A00B720BC /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35BF2A96F21A00B720BC /* MainRepository.swift */; };
 		B53A35C42A96F50100B720BC /* DetailRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35C32A96F50100B720BC /* DetailRoomRepository.swift */; };
+		B53A35C62A96F6DB00B720BC /* RoomParticipationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35C52A96F6DB00B720BC /* RoomParticipationRepository.swift */; };
 		B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */; };
 		B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741E929A494E200B75BA3 /* LetterImageError.swift */; };
 		B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */; };
@@ -256,9 +255,7 @@
 		7E3058C72854B64D00489E6A /* InputCapacityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCapacityView.swift; sourceTree = "<group>"; };
 		7E3058C92854B7A900489E6A /* InputDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDateView.swift; sourceTree = "<group>"; };
 		7E7542B22923744300D725CB /* ToastPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPopupView.swift; sourceTree = "<group>"; };
-		7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomProtocol.swift; sourceTree = "<group>"; };
 		7E77DB0528BF9C0600E95D4B /* VerificationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCode.swift; sourceTree = "<group>"; };
-		7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAPI.swift; sourceTree = "<group>"; };
 		7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNickNameViewController.swift; sourceTree = "<group>"; };
 		7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewTableCell.swift; sourceTree = "<group>"; };
 		B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterViewController.swift; sourceTree = "<group>"; };
@@ -277,6 +274,7 @@
 		B53A35B62A963F2100B720BC /* DetailRoomEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoomEndPoint.swift; sourceTree = "<group>"; };
 		B53A35BF2A96F21A00B720BC /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
 		B53A35C32A96F50100B720BC /* DetailRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoomRepository.swift; sourceTree = "<group>"; };
+		B53A35C52A96F6DB00B720BC /* RoomParticipationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomParticipationRepository.swift; sourceTree = "<group>"; };
 		B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
@@ -438,7 +436,6 @@
 		397A241128BA513E00454E4F /* API */ = {
 			isa = PBXGroup;
 			children = (
-				7E77DB0728BF9D2400E95D4B /* RoomAPI.swift */,
 				B5F31C5128BFA64F00F61D0F /* LetterAPI.swift */,
 				39EEF65B28CB3CD600437654 /* LoginAPI.swift */,
 				D739C36428C7B75400161117 /* SettingAPI.swift */,
@@ -450,7 +447,6 @@
 		397A241528BA519200454E4F /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				7E77DB0328BF9A6700E95D4B /* RoomProtocol.swift */,
 				B5F31C5328BFA70100F61D0F /* LetterProtocol.swift */,
 				39EEF65528CB3BB200437654 /* LoginProtocol.swift */,
 				D739C36228C7B69D00161117 /* SettingProtocol.swift */,
@@ -625,6 +621,7 @@
 			children = (
 				B53A35BF2A96F21A00B720BC /* MainRepository.swift */,
 				B53A35C32A96F50100B720BC /* DetailRoomRepository.swift */,
+				B53A35C52A96F6DB00B720BC /* RoomParticipationRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1386,6 +1383,7 @@
 				B517C04E28D1FE660008BED0 /* TokenProtocol.swift in Sources */,
 				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputCapacityView.swift in Sources */,
+				B53A35C62A96F6DB00B720BC /* RoomParticipationRepository.swift in Sources */,
 				CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */,
 				39EEF65E28CB3CFE00437654 /* LoginEndPoint.swift in Sources */,
 				392EC77E2855C388006918A9 /* SettingButton.swift in Sources */,
@@ -1413,7 +1411,6 @@
 				CB21C33928C4C10200128D25 /* CharacterCollectionViewCell.swift in Sources */,
 				39EEF65A28CB3C7B00437654 /* Token.swift in Sources */,
 				39C95804287DAD3000A04A2B /* LetterEndPoint.swift in Sources */,
-				7E77DB0828BF9D2400E95D4B /* RoomAPI.swift in Sources */,
 				B50B1B44285B146A0080992C /* OpenManittoCollectionViewCell.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */,
@@ -1454,7 +1451,6 @@
 				D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */,
 				391B3003286198C200421F1D /* Size.swift in Sources */,
 				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
-				7E77DB0428BF9A6700E95D4B /* RoomProtocol.swift in Sources */,
 				D739C36328C7B69D00161117 /* SettingProtocol.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
 				39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */,

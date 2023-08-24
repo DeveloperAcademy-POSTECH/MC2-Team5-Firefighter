@@ -12,7 +12,7 @@ import MTNetwork
 enum RoomParticipationEndPoint {
     case dispatchCreateRoom(roomInfo: CreateRoomDTO)
     case dispatchVerifyCode(code: String)
-    case dispatchJoinRoom(roomId: String, roomDto: MemberDTO)
+    case dispatchJoinRoom(roomId: String, roomDTO: MemberDTO)
 }
 
 extension RoomParticipationEndPoint: Requestable {
