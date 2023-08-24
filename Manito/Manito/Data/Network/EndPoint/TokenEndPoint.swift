@@ -35,8 +35,6 @@ extension TokenEndPoint: Requestable {
     var task: HTTPTask {
         switch self {
         case .patchRefreshToken(let token):
-            let token = ["accessToken": token.accessToken,
-                        "refreshToken": token.refreshToken]
             return .requestJSONEncodable(token)
         }
     }

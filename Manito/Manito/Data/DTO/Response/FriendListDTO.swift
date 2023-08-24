@@ -1,18 +1,18 @@
 //
-//  FriendList.swift
+//  FriendListDTO.swift
 //  Manito
 //
-//  Created by Mingwan Choi on 2022/08/27.
+//  Created by SHIN YOON AH on 2023/08/24.
 //
 
 import Foundation
 
-struct FriendList: Decodable {
+struct FriendListDTO: Decodable {
     let count: Int?
-    let members: [Member]?
+    let members: [MemberInfoDTO]?
 }
 
-struct Member: Decodable {
+struct MemberInfoDTO: Decodable {
     let nickname: String?
     let colorIndex: Int?
 

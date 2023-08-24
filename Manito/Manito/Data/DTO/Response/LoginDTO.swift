@@ -1,13 +1,13 @@
 //
-//  Login.swift
+//  LoginDTO.swift
 //  Manito
 //
-//  Created by Mingwan Choi on 2022/09/09.
+//  Created by SHIN YOON AH on 2023/08/24.
 //
 
 import Foundation
 
-struct Login: Decodable {
+struct LoginDTO: Decodable {
     let accessToken: String?
     let refreshToken: String?
     let nickname: String?
