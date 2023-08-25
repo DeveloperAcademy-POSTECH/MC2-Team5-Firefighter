@@ -22,7 +22,9 @@ final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
     func dispatchCreateRoom(room: CreatedRoomRequestDTO) async throws -> Int {
         let response = try await self.provider
             .request(.dispatchCreateRoom(room: room))
-        return response.statusCode
+        let location = response.response?.allHeaderFields["Location"] as? String
+        let roomId = Int(location?.split(separator: "/").last ?? "-1") ?? -1
+        return roomId
     }
 
     func dispatchVerifyCode(code: String) async throws -> ParticipatedRoomInfoDTO {

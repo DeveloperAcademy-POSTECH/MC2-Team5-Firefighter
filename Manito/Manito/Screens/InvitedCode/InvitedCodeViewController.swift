@@ -48,14 +48,14 @@ class InvitedCodeViewController: BaseViewController {
     private lazy var roomDateLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
-        label.text = "\(roomInfo.startDate) ~ \(roomInfo.endDate)"
+        label.text = "\(roomInfo.startDate ?? "") ~ \(roomInfo.endDate ?? "")"
         return label
     }()
     private let roomImage = UIImageView(image: ImageLiterals.imgCharacterBrown)
     private lazy var roomPersonLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
-        label.text = "X \(roomInfo.capacity)인"
+        label.text = "X \(roomInfo.capacity ?? 0)인"
         return label
     }()
     private lazy var roomPersonView: UIView = {
