@@ -69,7 +69,7 @@ final class ChooseCharacterViewController: BaseViewController {
     
     private func pushDetailWaitViewController(roomId: Int) {
         guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-        let viewModel = DetailWaitViewModel(roomIndex: roomId, detailWaitService: DetailWaitService(api: DetailRoomRepositoryImpl()))
+        let viewModel = DetailWaitViewModel(roomIndex: roomId, detailWaitService: DetailWaitService(repository: DetailRoomRepositoryImpl()))
         let viewController = DetailWaitViewController(viewModel: viewModel)
         self.dismiss(animated: true) {
             navigationController.pushViewController(viewController, animated: true)

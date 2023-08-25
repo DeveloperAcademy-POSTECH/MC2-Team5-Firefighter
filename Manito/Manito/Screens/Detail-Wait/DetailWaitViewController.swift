@@ -235,17 +235,19 @@ final class DetailWaitViewController: BaseViewController {
     @objc
     private func didTapEnterButton() {
         let roomInfo = self.detailWaitViewModel.makeRoomInformation()
-        guard let title = roomInfo.roomInformation?.title,
-              let capacity = roomInfo.roomInformation?.capacity,
-              let startDate = roomInfo.roomInformation?.startDate,
-              let endDate = roomInfo.roomInformation?.endDate,
-              let invitationCode = roomInfo.invitation?.code
-        else { return }
-        let roomDto = RoomDTO(title: title,
-                              capacity: capacity,
-                              startDate: startDate,
-                              endDate: endDate)
-        let viewController = InvitedCodeViewController(roomInfo: roomDto,
+        let title = roomInfo.roomInformation.title
+        let capacity = roomInfo.roomInformation.capacity
+        let startDate = roomInfo.roomInformation.startDate
+        let endDate = roomInfo.roomInformation.endDate
+        guard let invitationCode = roomInfo.invitation.code else { return }
+        let roomDTO = RoomListItemDTO(id: nil,
+                                      title: title,
+                                      state: nil,
+                                      participatingCount: nil,
+                                      capacity: capacity,
+                                      startDate: startDate,
+                                      endDate: endDate)
+        let viewController = InvitedCodeViewController(roomInfo: roomDTO,
                                                        code: invitationCode)
         viewController.modalPresentationStyle = .overCurrentContext
         viewController.modalTransitionStyle = .crossDissolve
