@@ -36,7 +36,7 @@ extension RoomInfoDTO {
         let roomInformation = self.roomInformation?.toRoomListItem()
         let participants = self.participants?.toParticipantList()
         return RoomInfo(roomInformation: roomInformation!,
-                        participants: participants!,
+                        participants: participants ?? ParticipantList(count: 0, members: []),
                         manittee: self.manittee ?? UserInfoDTO(id: "", nickname: ""),
                         manitto: self.manitto,
                         invitation: self.invitation ?? InvitationCodeDTO(code: ""),
