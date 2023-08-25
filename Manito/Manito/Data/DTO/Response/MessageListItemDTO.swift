@@ -18,10 +18,10 @@ struct MessageListItemDTO: Decodable {
 extension MessageListItemDTO {
     func toMessageListItem(canReport: Bool) -> MessageListItem {
         return MessageListItem(id: self.id ?? 0,
-                               content: self.content ?? "",
-                               imageUrl: self.imageUrl ?? "",
+                               content: self.content,
+                               imageUrl: self.imageUrl,
                                createdDate: self.createdDate ?? "",
-                               missionInfo: self.missionInfo ?? IndividualMissionDTO(id: 0, content: ""),
+                               missionInfo: self.missionInfo,
                                canReport: canReport)
     }
 }

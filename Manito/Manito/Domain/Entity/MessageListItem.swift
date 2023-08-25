@@ -9,10 +9,10 @@ import Foundation
 
 struct MessageListItem: Hashable {
     let id: Int
-    let content: String
-    let imageUrl: String
+    let content: String?
+    let imageUrl: String?
     let createdDate: String
-    let missionInfo: IndividualMissionDTO
+    let missionInfo: IndividualMissionDTO?
     let canReport: Bool
 
     var isToday: Bool {
@@ -24,7 +24,7 @@ struct MessageListItem: Hashable {
     }
 
     var mission: String? {
-        guard let mission = missionInfo.content else { return nil }
+        guard let mission = missionInfo?.content else { return nil }
 
         return "\(date)의 개별미션\n[\(mission)]"
     }

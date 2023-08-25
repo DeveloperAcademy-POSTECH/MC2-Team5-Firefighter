@@ -144,7 +144,8 @@ final class LetterViewController: BaseViewController {
 
         cell.imageViewTapGesturePublisher
             .sink(receiveValue: { [weak self] _ in
-                let viewController = LetterImageViewController(imageUrl: item.imageUrl)
+                guard let imageUrl = item.imageUrl else { return }
+                let viewController = LetterImageViewController(imageUrl: imageUrl)
                 viewController.modalPresentationStyle = .fullScreen
                 viewController.modalTransitionStyle = .crossDissolve
                 self?.present(viewController, animated: true)
