@@ -21,4 +21,8 @@ struct CreatedRoomInfoRequestDTO: Encodable {
 
 struct MemberInfoRequestDTO: Encodable {
     let colorIndex: Int
+
+    enum CodingKeys: String, CodingKey {
+        case colorIndex = "colorIdx"
+    }
 }
