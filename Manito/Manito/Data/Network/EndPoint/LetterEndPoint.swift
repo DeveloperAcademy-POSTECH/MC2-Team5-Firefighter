@@ -49,13 +49,13 @@ extension LetterEndPoint: Requestable {
             if let image {
                 let imageData = MultipartFormData(provider: .data(image),
                                                   name: "image",
-                                                  filename: "\(arc4random()).jpeg",
+                                                  filename: "\(arc4random())",
                                                   mimeType: "image/jpeg")
                 multipartData.append(imageData)
             }
-            let parameters: [String: String?] = ["manitteeId": letter.manitteeId,
-                                                 "messageContent": letter.messageContent,
-                                                 "missionId": missionId]
+            let parameters: [String: Any] = ["manitteeId": letter.manitteeId,
+                                             "messageContent": letter.messageContent ?? "",
+                                             "missionId": missionId]
             let parametersData = MultipartFormData(provider: .parameter(parameters))
             multipartData.append(parametersData)
             return .uploadMultipart(multipartData)
