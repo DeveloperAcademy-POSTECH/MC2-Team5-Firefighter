@@ -5,6 +5,7 @@
 //  Created by 이성호 on 2023/05/10.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -44,8 +45,9 @@ final class CharacterCollectionView: UIView {
     }()
     
     // MARK: - property
-    
+    // FIXME: characterIndex 삭제예정
     private(set) var characterIndex: Int = 0
+    let characterIndexTapPublisher = PassthroughSubject<Int, Never>()
     
     // MARK: - init
     
@@ -91,6 +93,6 @@ extension CharacterCollectionView: UICollectionViewDataSource {
 
 extension CharacterCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.characterIndex = indexPath.item
+        self.characterIndexTapPublisher.send(indexPath.item)
     }
 }

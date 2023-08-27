@@ -43,8 +43,7 @@ final class InputTitleView: UIView {
     // MARK: - property
     
     private var maxLength: Int = 8
-    var changeNextButtonEnableStatus: ((Bool) -> ())?
-    let textFieldPublisher = PassthroughSubject<String, Never>()
+    let textFieldPublisher = CurrentValueSubject<String, Never>("")
     
     // MARK: - init
     
@@ -74,31 +73,22 @@ final class InputTitleView: UIView {
         }
     }
     
-    func setCounter(count: Int) {
-        if count <= maxLength {
-            self.roomsTextLimitLabel.text = "\(count)/\(self.maxLength)"
-        } else {
-            self.roomsTextLimitLabel.text = "\(self.maxLength)/\(self.maxLength)"
-        }
-    }
-    
-    private func checkMaxLength(textField: UITextField, maxLength: Int) {
-        if let text = textField.text {
-            if text.count > maxLength {
-                let endIndex = text.index(text.startIndex, offsetBy: maxLength)
-                let fixedText = text[text.startIndex..<endIndex]
-                textField.text = fixedText + " "
-                
-                DispatchQueue.main.async {
-                    self.roomsNameTextField.text = String(fixedText)
-                }
+    func updateTextFieldText(maxLength: Int) {
+        guard let text = self.roomsNameTextField.text else { return }
+        let endIndex = text.index(text.startIndex, offsetBy: maxLength)
+        let fixedText = text[text.startIndex..<endIndex]
+            DispatchQueue.main.async {
+                self.roomsNameTextField.text = String(fixedText)
             }
-        }
     }
     
-    func textFieldText() -> String {
-        guard let text = self.roomsNameTextField.text else { return "" }
-        return text
+    func updateTitleCount(count: Int, maxLength: Int) {
+        if count > maxLength {
+            self.roomsTextLimitLabel.text = "\(maxLength)/\(maxLength)"
+        }
+        else {
+            self.roomsTextLimitLabel.text = "\(count)/\(maxLength)"
+        }
     }
 }
 
@@ -109,9 +99,5 @@ extension InputTitleView: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         self.textFieldPublisher.send(textField.text ?? "")
-        self.checkMaxLength(textField: self.roomsNameTextField, maxLength: self.maxLength)
-        
-        let hasText = textField.hasText
-        self.changeNextButtonEnableStatus?(hasText)
     }
 }

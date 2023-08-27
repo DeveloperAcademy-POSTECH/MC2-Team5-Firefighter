@@ -12,14 +12,9 @@ import SnapKit
 
 protocol CreateRoomViewDelegate: AnyObject {
     func didTapCloseButton()
-    func requestCreateRoom(roomInfo: RoomInfo, colorIndex: Int)
 }
 
 final class CreateRoomView: UIView {
-    
-//    fileprivate enum CreateRoomStep {
-//         case inputTitle, inputCapacity, inputDate, checkRoom, chooseCharacter
-//    }
     
     // MARK: - ui component
     
@@ -56,12 +51,10 @@ final class CreateRoomView: UIView {
     let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
     let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
     
-    let calendarDidTapPublisher = PassthroughSubject<String, Never>()
     let nextButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
     
     // MARK: - property
     
-    private var roomInfo: RoomInfo?
     private weak var delegate: CreateRoomViewDelegate?
     private var roomStep: CreateRoomStep = .inputTitle {
         willSet(step) {
@@ -76,7 +69,6 @@ final class CreateRoomView: UIView {
         self.setupLayout()
         self.setupAction()
         self.setupNotificationCenter()
-        self.detectStartableStatus()
         self.configureUI()
     }
     
@@ -140,10 +132,6 @@ final class CreateRoomView: UIView {
         
         let nextAction = UIAction { [weak self] _ in
             guard let currentStep = self?.roomStep else { return }
-//            guard let nextStep = self?.moveToNextStep(from: currentStep) else { return }
-//            
-//            self?.runActionAtStep(at: currentStep)
-//            self?.roomStep = nextStep
             self?.nextButtonDidTapPublisher.send(currentStep)
         }
         self.nextButton.addAction(nextAction, for: .touchUpInside)
@@ -173,16 +161,6 @@ final class CreateRoomView: UIView {
     
     private func moveToPreviousStep(from step: CreateRoomStep) -> CreateRoomStep {
         return step.previous()
-    }
-    
-    private func detectStartableStatus() {
-        self.roomTitleView.changeNextButtonEnableStatus = { [weak self] isEnabled in
-            self?.nextButton.isDisabled = !isEnabled
-        }
-        
-        self.roomDateView.calendarView.changeButtonState = { [weak self] isEnabled in
-            self?.nextButton.isDisabled = !isEnabled
-        }
     }
     
     private func updateHiddenStepView(at step: CreateRoomStep) {
@@ -230,43 +208,18 @@ final class CreateRoomView: UIView {
         case .inputTitle:
             self.endEditing(true)
         case .inputCapacity:
-            self.disabledNextButton()
+            break
         case .inputDate:
-            self.sendDateRangeSubject()
+            break
         case .checkRoom:
                break
         case .chooseCharacter:
-//            let colorIndex = self.characterCollectionView.characterIndex
-//            self.delegate?.requestCreateRoom(roomInfo: RoomInfo(id: nil,
-//                                                                capacity: self.roomInfoView.capacity,
-//                                                                title: self.roomInfoView.title,
-//                                                                startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
-//                                                                endDate: "20\(self.roomDateView.calendarView.getTempEndDate())",
-//                                                                state: nil),
-//                                             colorIndex: colorIndex)
             break
         }
     }
     
-    private func updateRoomTitle() {
-        let title = self.roomTitleView.textFieldText()
-        self.roomInfoView.updateRoomTitle(title: title)
-    }
-    
-    private func updateRoomCapacity() {
-        let capacity = self.roomCapacityView.sliderValue()
-        self.roomInfoView.updateRoomCapacity(capacity: capacity)
-    }
-    
-    private func disabledNextButton() {
-        self.nextButton.isDisabled = true
-    }
-    
-    private func sendDateRangeSubject() {
-        let startDate = self.roomDateView.calendarView.getTempStartDate()
-        let endDate = self.roomDateView.calendarView.getTempEndDate()
-        let roomDateRange = "\(startDate) ~ \(endDate)"
-        self.calendarDidTapPublisher.send(roomDateRange)
+    private func nextButton(isEnable: Bool) {
+        self.nextButton.isDisabled = !isEnable
     }
     
     private func configureUI() {
@@ -284,10 +237,14 @@ final class CreateRoomView: UIView {
     }
     
     func nextButtonDidTap(step: CreateRoomStep) {
-        let nextStep = self.moveToNextStep(from: step)
-        
         self.runActionAtStep(at: step)
+        
+        let nextStep = self.moveToNextStep(from: step)
         self.roomStep = nextStep
+    }
+    
+    func toggleNextButton(isEnable: Bool) {
+        self.nextButton.isDisabled = !isEnable
     }
     
     private func manageStepView(step: CreateRoomStep) {
@@ -298,6 +255,7 @@ final class CreateRoomView: UIView {
             self.updateRoomTitleViewAnimation()
         case .inputCapacity:
             self.updateRoomCapacityViewAnimation()
+            self.nextButton(isEnable: true)
         case .inputDate:
             self.updateRoomDateViewAnimation()
         case .checkRoom:
@@ -325,38 +283,6 @@ final class CreateRoomView: UIView {
         })
     }
 }
-
-//private extension CreateRoomView.CreateRoomStep {
-//    func next() -> Self {
-//        switch self {
-//        case .inputTitle:
-//            return .inputCapacity
-//        case .inputCapacity:
-//            return .inputDate
-//        case .inputDate:
-//            return .checkRoom
-//        case .checkRoom:
-//            return .chooseCharacter
-//        case .chooseCharacter:
-//            return .chooseCharacter
-//        }
-//    }
-//
-//    func previous() -> Self {
-//        switch self {
-//        case .inputTitle:
-//            return .inputTitle
-//        case .inputCapacity:
-//            return .inputTitle
-//        case .inputDate:
-//            return .inputCapacity
-//        case .checkRoom:
-//            return .inputDate
-//        case .chooseCharacter:
-//            return .checkRoom
-//        }
-//    }
-//}
 
 enum CreateRoomStep {
     case inputTitle, inputCapacity, inputDate, checkRoom, chooseCharacter

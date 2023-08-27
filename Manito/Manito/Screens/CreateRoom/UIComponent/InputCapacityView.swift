@@ -123,11 +123,6 @@ final class InputCapacityView: UIView {
         }
     }
     
-    func sliderValue() -> Int {
-        let value = Int(self.personSlider.value)
-        return value
-    }
-    
     func updateCapacity(capacity: Int) {
         self.personLabel.text = TextLiteral.x + " \(capacity)인"
     }

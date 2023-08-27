@@ -37,24 +37,6 @@ final class CheckRoomInfoView: UIView {
         return label
     }()
     
-    // MARK: - property
-    
-    private var dateRange = "" {
-        willSet {
-            self.dateLabel.text = newValue
-        }
-    }
-    private(set) var title: String = "" {
-        willSet {
-            self.nameLabel.text = newValue
-        }
-    }
-    private(set) var capacity: Int = 0 {
-        willSet {
-            self.personLabel.text = "\(newValue.description)" + TextLiteral.per
-        }
-    }
-    
     // MARK: - init
     
     override init(frame: CGRect) {
@@ -97,14 +79,14 @@ final class CheckRoomInfoView: UIView {
     }
     
     func updateRoomTitle(title: String) {
-        self.title = title
+        self.nameLabel.text = title
     }
     
     func updateRoomCapacity(capacity: Int) {
-        self.capacity = capacity
+        self.personLabel.text = "\(capacity)" + TextLiteral.per
     }
     
     func updateRoomDateRange(range: String) {
-        self.dateRange = range
+        self.dateLabel.text = range
     }
 }
