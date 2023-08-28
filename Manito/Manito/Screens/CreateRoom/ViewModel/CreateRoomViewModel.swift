@@ -108,12 +108,10 @@ final class CreateRoomViewModel: ViewModelType {
                 guard let self = self else { return step }
                 switch step {
                 case .chooseCharacter:
-                    self.requestCreateRoom(roomInfo: RoomInfo(id: nil,
-                                                              capacity: self.capacitySubject.value,
-                                                              title: self.titleSubject.value,
-                                                              startDate: "20\(self.startDateSubject.value)",
-                                                              endDate: "20\(self.endDateSubject.value)",
-                                                              state: nil))
+                    self.requestCreateRoom(roomInfo: CreatedRoomInfoRequestDTO(title: self.titleSubject.value,
+                                                                               capacity: self.capacitySubject.value,
+                                                                               startDate: self.startDateSubject.value,
+                                                                               endDate: self.endDateSubject.value))
                     return step
                 default:
                     return step
@@ -146,14 +144,14 @@ final class CreateRoomViewModel: ViewModelType {
     
     // MARK: - network
     
-    private func requestCreateRoom(roomInfo: RoomInfo) {
+    private func requestCreateRoom(roomInfo: CreatedRoomInfoRequestDTO) {
         Task {
             do {
-                let roomId = try await self.createRoomService.postCreateRoom(body: CreateRoomDTO(room: RoomDTO(title: roomInfo.title!,
-                                                                                                               capacity: roomInfo.capacity!,
-                                                                                                               startDate: roomInfo.startDate!,
-                                                                                                               endDate: roomInfo.endDate!),
-                                                                                                 member: MemberDTO(colorIndex: self.characterIndexSubject.value)))
+                let roomId = try await self.createRoomService.dispatchCreateRoom(room: CreatedRoomRequestDTO(room: CreatedRoomInfoRequestDTO(title: roomInfo.title,
+                                                                                                                                             capacity: roomInfo.capacity,
+                                                                                                                                             startDate: "20\(roomInfo.startDate)",
+                                                                                                                                             endDate: "20\(roomInfo.endDate)")
+                                                                                                             , member: MemberInfoRequestDTO(colorIndex: self.characterIndexSubject.value)))
                 self.roomIdSubject.send(roomId)
             } catch(let error) {
                 guard let error = error as? NetworkError else { return }

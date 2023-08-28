@@ -7,27 +7,22 @@
 
 import Foundation
 
-protocol CreateRoomSeviceable {
-    func postCreateRoom(body: CreateRoomDTO) async throws -> Int
+protocol CreateRoomSevicable {
+    func dispatchCreateRoom(room: CreatedRoomRequestDTO) async throws -> Int
 }
 
-final class CreateRoomService: CreateRoomSeviceable {
+final class CreateRoomService: CreateRoomSevicable {
     
-    private let api: RoomProtocol
+    private let repository: RoomParticipationRepository
     
-    init(api: RoomProtocol) {
-        self.api = api
+    init(repository: RoomParticipationRepository) {
+        self.repository = repository
     }
     
-    func postCreateRoom(body: CreateRoomDTO) async throws -> Int {
+    func dispatchCreateRoom(room: CreatedRoomRequestDTO) async throws -> Int {
         do {
-            let roomId = try await self.api.postCreateRoom(body: body)
-            if let roomId {
-                return roomId
-            }
-            else {
-                throw NetworkError.serverError
-            }
+            let roomId = try await self.repository.dispatchCreateRoom(room: room)
+            return roomId
         } catch NetworkError.serverError {
             throw NetworkError.serverError
         } catch NetworkError.clientError(let message) {
