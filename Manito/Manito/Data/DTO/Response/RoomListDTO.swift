@@ -20,3 +20,16 @@ struct RoomListItemDTO: Decodable {
     let startDate: String?
     let endDate: String?
 }
+
+extension RoomListItemDTO {
+    func toRoomListItem() -> RoomListItem {
+        return RoomListItem(id: self.id ?? 0,
+                            title: self.title ?? "",
+                            state: self.state ?? "",
+                            participatingCount: self.participatingCount,
+                            capacity: self.capacity ?? 0,
+                            startDate: self.startDate ?? "",
+                            endDate: self.endDate ?? ""
+        )
+    }
+}

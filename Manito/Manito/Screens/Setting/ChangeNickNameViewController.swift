@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 
 class ChangeNickNameViewController: BaseViewController {
-    
-    let settingService: SettingProtocol = SettingAPI(apiService: APIService())
+
+    private let settingRepository: SettingRepository = SettingRepositoryImpl()
     
     private var nickname: String = UserDefaultStorage.nickname
     private var maxLength = 5
@@ -127,7 +127,7 @@ class ChangeNickNameViewController: BaseViewController {
     func requestChangeNickname(nickname: NicknameDTO) {
         Task {
             do {
-                let _ = try await settingService.putChangeNickname(body: nickname)
+                let _ = try await self.settingRepository.putUserInfo(nickname: nickname)
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {

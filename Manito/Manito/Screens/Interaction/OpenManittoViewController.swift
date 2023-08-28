@@ -17,8 +17,8 @@ final class OpenManittoViewController: BaseViewController {
 
     // MARK: - property
 
-    private let openManittoService: DetailIngAPI = DetailIngAPI(apiService: APIService())
-    private var friendsList: FriendList = FriendList(count: 0, members: [])
+    private let detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
+    private var friendsList: FriendListDTO = FriendListDTO(count: 0, members: [])
     private let roomId: String
     private let manittoNickname: String
     
@@ -78,14 +78,12 @@ final class OpenManittoViewController: BaseViewController {
     
     private func fetchFriendList(roomId: String,
                                  manittoNickname: String,
-                                 completionHandler: @escaping (Result<(FriendList, Int), NetworkError>) -> Void) {
+                                 completionHandler: @escaping (Result<(FriendListDTO, Int), NetworkError>) -> Void) {
         Task {
             do {
-                let data = try await self.openManittoService.requestWithFriends(roomId: roomId)
-                if let list = data {
-                    let manittoIndex = list.members?.firstIndex(where: { $0.nickname == manittoNickname }).map { Int($0) } ?? 0
-                    completionHandler(.success((list, manittoIndex)))
-                }
+                let data = try await self.detailRoomRepository.fetchWithFriend(roomId: roomId)
+                let manittoIndex = data.members?.firstIndex(where: { $0.nickname == manittoNickname }).map { Int($0) } ?? 0
+                completionHandler(.success((data, manittoIndex)))
             } catch NetworkError.serverError {
                 completionHandler(.failure(.serverError))
             } catch NetworkError.encodingError {

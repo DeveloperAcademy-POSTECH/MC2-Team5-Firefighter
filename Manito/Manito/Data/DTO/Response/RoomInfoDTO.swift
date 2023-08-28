@@ -31,16 +31,39 @@ struct RoomInfoDTO: Decodable {
     }
 }
 
+extension RoomInfoDTO {
+    func toRoomInfo() -> RoomInfo {
+        let roomInformation = self.roomInformation?.toRoomListItem()
+        let participants = self.participants?.toParticipantList()
+        return RoomInfo(roomInformation: roomInformation!,
+                        participants: participants ?? ParticipantList(count: 0, members: []),
+                        manittee: self.manittee ?? UserInfoDTO(id: "", nickname: ""),
+                        manitto: self.manitto,
+                        invitation: self.invitation ?? InvitationCodeDTO(code: ""),
+                        didViewRoulette: self.didViewRoulette,
+                        mission: self.mission,
+                        admin: self.admin ?? false,
+                        messages: self.messages)
+    }
+}
+
 struct ParticipantListDTO: Decodable {
     let count: Int?
     let members: [UserInfoDTO]?
+}
+
+extension ParticipantListDTO {
+    func toParticipantList() -> ParticipantList {
+        return ParticipantList(count: self.count ?? 0,
+                               members: self.members ?? [])
+    }
 }
 
 struct InvitationCodeDTO: Decodable {
     let code: String?
 }
 
-struct IndividualMissionDTO: Decodable {
+struct IndividualMissionDTO: Decodable, Hashable {
     let id: Int?
     let content: String?
 }

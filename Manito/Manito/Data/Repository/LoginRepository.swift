@@ -10,16 +10,16 @@ import Foundation
 import MTNetwork
 
 protocol LoginRepository {
-    func dispatchAppleLogin(loginDTO: LoginDTO) async throws -> Login?
+    func dispatchAppleLogin(login: LoginRequestDTO) async throws -> LoginDTO
 }
 
 final class LoginRepositoryImpl: LoginRepository {
 
     private var provider = Provider<LoginEndPoint>()
 
-    func dispatchAppleLogin(loginDTO: LoginDTO) async throws -> Login? {
+    func dispatchAppleLogin(login: LoginRequestDTO) async throws -> LoginDTO {
         let response = try await self.provider
-            .request(.dispatchAppleLogin(loginDTO: loginDTO))
+            .request(.dispatchAppleLogin(login: login))
         return try response.decode()
     }
 }

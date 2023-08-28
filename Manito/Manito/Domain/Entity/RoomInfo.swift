@@ -42,4 +42,23 @@ extension RoomInfo {
                             startDate: roomInformation.startDate,
                             endDate: roomInformation.endDate)
     }
+
+    static let emptyRoom: RoomInfo = {
+        let roomList = RoomListItem(id: 0,
+                                    title: "",
+                                    state: "",
+                                    participatingCount: 0,
+                                    capacity: 0,
+                                    startDate: "",
+                                    endDate: "")
+        return RoomInfo(roomInformation: roomList,
+                        participants: ParticipantList(count: 0, members: []),
+                        manittee: UserInfoDTO(id: "", nickname: ""),
+                        manitto: UserInfoDTO(id: "", nickname: ""),
+                        invitation: InvitationCodeDTO(code: ""),
+                        didViewRoulette: false,
+                        mission: nil,
+                        admin: false,
+                        messages: nil)
+    }()
 }

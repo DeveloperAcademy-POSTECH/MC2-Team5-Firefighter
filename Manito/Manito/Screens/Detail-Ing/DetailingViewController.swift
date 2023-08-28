@@ -13,8 +13,7 @@ final class DetailingViewController: BaseViewController {
     
     // MARK: - property
     
-    private let detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
-    private let detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
+    private let detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
     private let roomId: String
     private var missionId: String = ""
     
@@ -118,7 +117,7 @@ final class DetailingViewController: BaseViewController {
         self.fetchRoomInformation() { [weak self] result in
             switch result {
             case .success(let roomInformation):
-                self?.detailingView.updateDetailingView(room: roomInformation)
+                self?.detailingView.updateDetailingView(room: roomInformation.toRoomInfo())
             case .failure:
                 print("error")
             }
@@ -127,13 +126,11 @@ final class DetailingViewController: BaseViewController {
     
     // MARK: - network
    
-    private func fetchRoomInformation(completionHandler: @escaping ((Result<Room, NetworkError>) -> Void)) {
+    private func fetchRoomInformation(completionHandler: @escaping ((Result<RoomInfoDTO, NetworkError>) -> Void)) {
         Task {
             do {
-                let data = try await detailIngService.requestStartingRoomInfo(roomId: roomId)
-                if let info = data {
-                    completionHandler(.success(info))
-                }
+                let data = try await detailRoomRepository.fetchRoomInfo(roomId: roomId)
+                completionHandler(.success(data))
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
@@ -147,22 +144,20 @@ final class DetailingViewController: BaseViewController {
     func pushNavigationAfterRequestRoomInfo() {
         Task {
             do {
-                let data = try await detailIngService.requestStartingRoomInfo(roomId: self.roomId)
-                if let info = data {
-                    guard let mission = info.mission?.content,
-                          let missionId = info.mission?.id
-                    else { return }
-                    // FIXME: - RoomType를 View에서 바로 빼오지 않고 다른 방식으로 구현해야 합니다.
-                    let service = LetterService(api: LetterAPI(apiService: APIService()))
-                    let viewModel = LetterViewModel(service: service,
-                                                    roomId: self.roomId,
-                                                    mission: mission,
-                                                    missionId: missionId.description,
-                                                    roomState: self.detailingView.roomType.rawValue,
-                                                    messageType: .received)
-                    let letterViewController = LetterViewController(viewModel: viewModel)
-                    self.navigationController?.pushViewController(letterViewController, animated: true)
-                }
+                let data = try await self.detailRoomRepository.fetchRoomInfo(roomId: self.roomId)
+                guard let mission = data.mission?.content,
+                      let missionId = data.mission?.id
+                else { return }
+                // FIXME: - RoomType를 View에서 바로 빼오지 않고 다른 방식으로 구현해야 합니다.
+                let service = LetterService(repository: LetterRepositoryImpl())
+                let viewModel = LetterViewModel(service: service,
+                                                roomId: self.roomId,
+                                                mission: mission,
+                                                missionId: missionId.description,
+                                                roomState: self.detailingView.roomType.rawValue,
+                                                messageType: .received)
+                let letterViewController = LetterViewController(viewModel: viewModel)
+                self.navigationController?.pushViewController(letterViewController, animated: true)
             }
         }
     }
@@ -170,7 +165,7 @@ final class DetailingViewController: BaseViewController {
     private func requestExitRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let statusCode = try await detailDoneService.requestExitRoom(roomId: roomId)
+                let statusCode = try await self.detailRoomRepository.deleteLeaveRoom(roomId: roomId)
                 switch statusCode {
                 case 200..<300: completionHandler(.success(()))
                 default: completionHandler(.failure(.unknownError))
@@ -189,7 +184,7 @@ final class DetailingViewController: BaseViewController {
     private func requestDeleteRoom(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let statusCode = try await detailDoneService.requestDeleteRoom(roomId: roomId)
+                let statusCode = try await self.detailRoomRepository.deleteRoom(roomId: roomId)
                 switch statusCode {
                 case 200..<300: completionHandler(.success(()))
                 default: completionHandler(.failure(.unknownError))
@@ -207,10 +202,8 @@ final class DetailingViewController: BaseViewController {
     private func requestResetMission(roomId: String, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let data = try await self.detailIngService.fetchResetMission(roomId: roomId)
-                if let _ = data {
-                    completionHandler(.success(()))
-                }
+                let data = try await self.detailRoomRepository.fetchResetMission(roomId: roomId)
+                completionHandler(.success(()))
             } catch NetworkError.serverError {
                 completionHandler(.failure(.serverError))
             } catch NetworkError.clientError(let message) {
@@ -248,7 +241,7 @@ extension DetailingViewController: DetailingDelegate {
                          mission: String,
                          missionId: String) {
         // FIXME: - RoomType를 View에서 바로 빼오지 않고 다른 방식으로 구현해야 합니다.
-        let service = LetterService(api: LetterAPI(apiService: APIService()))
+        let service = LetterService(repository: LetterRepositoryImpl())
         let viewModel = LetterViewModel(service: service,
                                         roomId: self.roomId,
                                         mission: mission,
