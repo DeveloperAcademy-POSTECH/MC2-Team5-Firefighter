@@ -215,19 +215,26 @@ final class DetailWaitViewController: BaseViewController {
     }
     
     private func showStartDatePassedAlert(isPassedStartDate: Bool, isAdmin: Bool) {
-        if isAdmin {
-            if isPassedStartDate {
-                self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-                               message: TextLiteral.detailWaitViewControllerPastAdminAlertMessage,
-                               okAction: { [weak self] _ in
-                    guard let roomInformation = self?.detailWaitViewModel.makeRoomInformation() else { return }
-                    self?.showDetailEditViewController(roomInformation: roomInformation, mode: .date)
-                })
+        guard isPassedStartDate else { return }
+        self.makeAlert(
+            title: isAdmin
+            ? TextLiteral.detailWaitViewControllerPastAlertTitle
+            : TextLiteral.detailWaitViewControllerPastAlertTitle,
+            message: isAdmin
+            ? TextLiteral.detailWaitViewControllerPastAdminAlertMessage
+            : TextLiteral.detailWaitViewControllerPastAlertMessage,
+            okAction: isAdmin
+            ? { [weak self] _ in
+                guard let roomInformaion = self?.roomInformation() else { return }
+                self?.showDetailEditViewController(roomInformation: roomInformaion, mode: .date)
             }
-        } else {
-            self.makeAlert(title: TextLiteral.detailWaitViewControllerPastAlertTitle,
-                           message: TextLiteral.detailWaitViewControllerPastAlertMessage)
-        }
+            : nil
+        )
+    }
+    
+    private func roomInformation() -> Room {
+        let roomInformaion = self.detailWaitViewModel.makeRoomInformation()
+        return roomInformaion
     }
     
     // MARK: - selector
