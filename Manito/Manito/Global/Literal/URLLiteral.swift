@@ -10,9 +10,12 @@ import Foundation
 enum URLLiteral {
     
     // MARK: - server url
-    
-    static let developmentUrl: String = Bundle.main.developmentURL
-    static let productionUrl: String = Bundle.main.productionURL
+
+    #if DEV
+    static let baseURL = Bundle.main.developmentURL
+    #elseif PROD
+    static let baseURL = Bundle.main.productionURL
+    #endif
     
     // MARK: - notion url
     

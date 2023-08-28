@@ -24,7 +24,6 @@
 		397A241828BA51B400454E4F /* DetailWaitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241728BA51B400454E4F /* DetailWaitProtocol.swift */; };
 		397A241A28BA532A00454E4F /* FriendList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397A241928BA532A00454E4F /* FriendList.swift */; };
 		398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */; };
-		398B1CBC2A12415C00DEFCEC /* ManitoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */; };
 		398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CC92A13597600DEFCEC /* FSCalendar */; };
 		398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CCB2A13599D00DEFCEC /* FirebaseAuth */; };
 		399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */; };
@@ -71,7 +70,6 @@
 		39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F1C12D28D756E600585B83 /* LetterImageViewController.swift */; };
 		39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FFE32728EEFFFE008442EE /* MoreButton.swift */; };
 		39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 39FFE33328F457AF008442EE /* FirebaseMessaging */; };
-		39FFE33628F45E44008442EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39FFE33528F45E44008442EE /* GoogleService-Info.plist */; };
 		435B17682913E71400212663 /* DetailingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B17672913E71400212663 /* DetailingViewController.swift */; };
 		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
@@ -228,7 +226,6 @@
 		397A241928BA532A00454E4F /* FriendList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendList.swift; sourceTree = "<group>"; };
 		398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
 		398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoTests.swift; sourceTree = "<group>"; };
 		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
 		39A938902A48504200EC2CF2 /* MissionEditEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionEditEndPoint.swift; sourceTree = "<group>"; };
 		39A938922A4852CA00EC2CF2 /* MissionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionDTO.swift; sourceTree = "<group>"; };
@@ -274,7 +271,7 @@
 		39EEF65F28CB3D6200437654 /* LoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDTO.swift; sourceTree = "<group>"; };
 		39F1C12D28D756E600585B83 /* LetterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageViewController.swift; sourceTree = "<group>"; };
 		39FFE32728EEFFFE008442EE /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
-		39FFE33528F45E44008442EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		39FFE33528F45E44008442EE /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
 		435B17672913E71400212663 /* DetailingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailingViewController.swift; sourceTree = "<group>"; };
 		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
@@ -301,6 +298,9 @@
 		B517C04928D1F7EC0008BED0 /* TokenEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEndPoint.swift; sourceTree = "<group>"; };
 		B517C04B28D1FE5F0008BED0 /* TokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
 		B517C04D28D1FE660008BED0 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
+		B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
+		B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
+		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageView.swift; sourceTree = "<group>"; };
 		B54741E929A494E200B75BA3 /* LetterImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageError.swift; sourceTree = "<group>"; };
 		B55B482129C3723B00CFFDAD /* URLRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRepresentable.swift; sourceTree = "<group>"; };
@@ -499,7 +499,6 @@
 		398B1CBA2A12415C00DEFCEC /* ManitoTests */ = {
 			isa = PBXGroup;
 			children = (
-				398B1CBB2A12415C00DEFCEC /* ManitoTests.swift */,
 				395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */,
 			);
 			path = ManitoTests;
@@ -640,6 +639,33 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		B53AD40F2A8BC69700B83B33 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				B53AD4112A8BC6A400B83B33 /* Dev */,
+				B53AD4102A8BC69E00B83B33 /* Prod */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		B53AD4102A8BC69E00B83B33 /* Prod */ = {
+			isa = PBXGroup;
+			children = (
+				B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */,
+				39FFE33528F45E44008442EE /* GoogleService-Info-Prod.plist */,
+			);
+			path = Prod;
+			sourceTree = "<group>";
+		};
+		B53AD4112A8BC6A400B83B33 /* Dev */ = {
+			isa = PBXGroup;
+			children = (
+				B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */,
+				B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */,
+			);
+			path = Dev;
+			sourceTree = "<group>";
+		};
 		B54741DE29A3A4BA00B75BA3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -743,6 +769,7 @@
 			isa = PBXGroup;
 			children = (
 				B55BCEB528D99F8600AF7E45 /* Settings.bundle */,
+				B53AD40F2A8BC69700B83B33 /* Configuration */,
 				B5F524CD28519AA000614FF7 /* Manito */,
 				398B1CBA2A12415C00DEFCEC /* ManitoTests */,
 				B57CB3022A763BB200474042 /* Packages */,
@@ -930,7 +957,6 @@
 			children = (
 				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
 				B5F524DC28519AA100614FF7 /* Info.plist */,
-				39FFE33528F45E44008442EE /* GoogleService-Info.plist */,
 				B5F524CE28519AA000614FF7 /* AppDelegate.swift */,
 				B5F524D028519AA000614FF7 /* SceneDelegate.swift */,
 			);
@@ -1253,6 +1279,7 @@
 				B5F524C728519AA000614FF7 /* Sources */,
 				B5F524C828519AA000614FF7 /* Frameworks */,
 				B5F524C928519AA000614FF7 /* Resources */,
+				B53AD41E2A8C892800B83B33 /* GoogleService-Info.plist */,
 			);
 			buildRules = (
 			);
@@ -1330,7 +1357,6 @@
 			files = (
 				CB2F0FCB28A5468C005F04C8 /* gifMa.gif in Resources */,
 				CB2F0FCD28A5468C005F04C8 /* gifNi.gif in Resources */,
-				39FFE33628F45E44008442EE /* GoogleService-Info.plist in Resources */,
 				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
 				7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */,
 				3915D54B2A7516A2002D6C25 /* URLInfo.plist in Resources */,
@@ -1348,13 +1374,34 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B53AD41E2A8C892800B83B33 /* GoogleService-Info.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "GoogleService-Info.plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/${PRODUCT_NAME}.app/GoogleService-Info.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\ncase \"${CONFIGURATION}\" in\n  \"Dev\" )\ncp -r \"$SRCROOT/Configuration/Dev/GoogleService-Info-Dev.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n  \"Prod\" )\ncp -r \"$SRCROOT/Configuration/Prod/GoogleService-Info-Prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n*)\n;;\nesac\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		398B1CB52A12415B00DEFCEC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */,
-				398B1CBC2A12415C00DEFCEC /* ManitoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1561,8 +1608,9 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		398B1CBF2A12415C00DEFCEC /* Debug */ = {
+		398B1CBF2A12415C00DEFCEC /* Dev */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1582,10 +1630,11 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Manito.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Manito";
 			};
-			name = Debug;
+			name = Dev;
 		};
-		398B1CC02A12415C00DEFCEC /* Release */ = {
+		398B1CC02A12415C00DEFCEC /* Prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1605,10 +1654,11 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Manito.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Manito";
 			};
-			name = Release;
+			name = Prod;
 		};
-		B5F524DD28519AA100614FF7 /* Debug */ = {
+		B5F524DD28519AA100614FF7 /* Dev */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1666,10 +1716,11 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = Debug;
+			name = Dev;
 		};
-		B5F524DE28519AA100614FF7 /* Release */ = {
+		B5F524DE28519AA100614FF7 /* Prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1721,10 +1772,11 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = Prod;
 		};
-		B5F524E028519AA100614FF7 /* Debug */ = {
+		B5F524E028519AA100614FF7 /* Dev */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1736,7 +1788,7 @@
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(BUNDLE_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "'애니또'가 사용자의 앨범에 접근하려고 합니다. 쪽지에 있는 사진을 앨범에 저장하세요.";
@@ -1752,6 +1804,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5.0;
+				OTHER_SWIFT_FLAGS = "-DDEV";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1759,10 +1812,11 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = Debug;
+			name = Dev;
 		};
-		B5F524E128519AA100614FF7 /* Release */ = {
+		B5F524E128519AA100614FF7 /* Prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1774,7 +1828,7 @@
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "애니또";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(BUNDLE_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "'애니또'가 사용자의 앨범에 접근하려고 합니다. 쪽지에 있는 사진을 앨범에 저장하세요.";
@@ -1790,6 +1844,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5.0;
+				OTHER_SWIFT_FLAGS = "-DPROD";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1797,7 +1852,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = Release;
+			name = Prod;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1805,29 +1860,29 @@
 		398B1CC12A12415C00DEFCEC /* Build configuration list for PBXNativeTarget "ManitoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				398B1CBF2A12415C00DEFCEC /* Debug */,
-				398B1CC02A12415C00DEFCEC /* Release */,
+				398B1CBF2A12415C00DEFCEC /* Dev */,
+				398B1CC02A12415C00DEFCEC /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Prod;
 		};
 		B5F524C628519AA000614FF7 /* Build configuration list for PBXProject "Manito" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B5F524DD28519AA100614FF7 /* Debug */,
-				B5F524DE28519AA100614FF7 /* Release */,
+				B5F524DD28519AA100614FF7 /* Dev */,
+				B5F524DE28519AA100614FF7 /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Prod;
 		};
 		B5F524DF28519AA100614FF7 /* Build configuration list for PBXNativeTarget "Manito" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B5F524E028519AA100614FF7 /* Debug */,
-				B5F524E128519AA100614FF7 /* Release */,
+				B5F524E028519AA100614FF7 /* Dev */,
+				B5F524E128519AA100614FF7 /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Prod;
 		};
 /* End XCConfigurationList section */
 
