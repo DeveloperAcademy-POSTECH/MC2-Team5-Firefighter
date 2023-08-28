@@ -101,13 +101,8 @@ final class CreateRoomViewController: BaseViewController {
         output.title
             .sink(receiveValue: { [weak self] title in
                 self?.createRoomView.roomInfoView.updateRoomTitle(title: title)
+                self?.createRoomView.roomTitleView.updateTitleCount(count: title.count, maxLength: self?.createRoomViewModel.maxCount ?? 0)
             })
-            .store(in: &self.cancellable)
-        
-        output.titleCount
-            .sink { [weak self] titleCount in
-                self?.createRoomView.roomTitleView.updateTitleCount(count: titleCount, maxLength: self?.createRoomViewModel.maxCount ?? 0)
-            }
             .store(in: &self.cancellable)
         
         output.isOverMaxCount

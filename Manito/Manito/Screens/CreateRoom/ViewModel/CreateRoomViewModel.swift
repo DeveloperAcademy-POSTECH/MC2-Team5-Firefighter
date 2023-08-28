@@ -36,7 +36,6 @@ final class CreateRoomViewModel: ViewModelType {
     
     struct Output {
         let title: CurrentValueSubject<String, Never>
-        let titleCount: AnyPublisher<Int, Never>
         let isOverMaxCount: AnyPublisher<Bool, Never>
         let isEnabled: AnyPublisher<Bool, Never>
         let capacity: CurrentValueSubject<Int, Never>
@@ -46,10 +45,6 @@ final class CreateRoomViewModel: ViewModelType {
     }
     
     func transform(from input: Input) -> Output {
-        let titleCount = input.textFieldTextDidChanged
-            .map { $0.count }
-            .eraseToAnyPublisher()
-        
         let isOverMaxCount = input.textFieldTextDidChanged
             .map { [weak self] text -> Bool in
                 return self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
@@ -120,7 +115,6 @@ final class CreateRoomViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         return Output(title: self.titleSubject,
-                      titleCount: titleCount,
                       isOverMaxCount: isOverMaxCount,
                       isEnabled: isEnabled,
                       capacity: self.capacitySubject,
