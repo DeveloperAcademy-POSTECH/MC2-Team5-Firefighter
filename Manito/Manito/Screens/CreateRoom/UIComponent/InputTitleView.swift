@@ -43,7 +43,7 @@ final class InputTitleView: UIView {
     // MARK: - property
     
     private var maxLength: Int = 8
-    let textFieldPublisher = CurrentValueSubject<String, Never>("")
+    let textFieldPublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init
     

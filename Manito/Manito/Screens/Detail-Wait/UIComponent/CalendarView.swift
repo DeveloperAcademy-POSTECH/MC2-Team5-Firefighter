@@ -76,8 +76,8 @@ final class CalendarView: UIView {
     var isFirstTap: Bool = false
     private weak var delegate: CalendarDelegate?
     
-    let startDateTapPublisher = CurrentValueSubject<String, Never>("")
-    let endDateTapPublisher = CurrentValueSubject<String, Never>("")
+    let startDateTapPublisher = PassthroughSubject<String, Never>()
+    let endDateTapPublisher = PassthroughSubject<String, Never>()
 
     // MARK: - init
 
