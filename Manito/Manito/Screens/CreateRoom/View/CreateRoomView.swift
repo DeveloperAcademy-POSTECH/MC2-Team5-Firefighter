@@ -199,6 +199,8 @@ final class CreateRoomView: UIView {
         switch step {
         case .inputTitle:
             self.endEditing(true)
+        case .inputCapacity:
+            self.nextButton(isEnable: false)
         default:
             break
         }
