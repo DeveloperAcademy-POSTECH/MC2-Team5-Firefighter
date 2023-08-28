@@ -1,13 +1,13 @@
 //
-//  Token.swift
+//  TokenDTO.swift
 //  Manito
 //
-//  Created by Mingwan Choi on 2022/09/09.
+//  Created by SHIN YOON AH on 2023/08/24.
 //
 
 import Foundation
 
-struct Token: Codable {
+struct TokenDTO: Codable {
     let accessToken: String?
     let refreshToken: String?
 }

@@ -10,14 +10,14 @@ import Foundation
 import MTNetwork
 
 protocol SettingRepository {
-    func putUserInfo(nickname: NicknameDTO) async throws -> String?
+    func putUserInfo(nickname: NicknameDTO) async throws -> NicknameDTO
 }
 
 final class SettingRepositoryImpl: SettingRepository {
 
     private var provider = Provider<SettingEndPoint>()
 
-    func putUserInfo(nickname: NicknameDTO) async throws -> String? {
+    func putUserInfo(nickname: NicknameDTO) async throws -> NicknameDTO {
         let response = try await self.provider
             .request(.putUserInfo(nickname: nickname))
         return try response.decode()

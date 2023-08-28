@@ -1,13 +1,13 @@
 //
-//  VerificationCode.swift
+//  ParticipatedRoomInfoDTO.swift
 //  Manito
 //
-//  Created by LeeSungHo on 2022/08/31.
+//  Created by SHIN YOON AH on 2023/08/24.
 //
 
 import Foundation
 
-struct VerificationCode: Decodable {
+struct ParticipatedRoomInfoDTO: Decodable {
     let id: Int?
     let title: String?
     let capacity: Int?

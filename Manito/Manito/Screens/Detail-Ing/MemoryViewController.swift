@@ -88,14 +88,14 @@ final class MemoryViewController: BaseViewController {
         return view
     }()
     
-    private var detailDoneService: DetailDoneAPI = DetailDoneAPI(apiService: APIService())
+    private var detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
     private var memoryType: MemoryType = .manittee {
         willSet {
             setupData(with: newValue)
             self.memoryCollectionView.reloadData()
         }
     }
-    private var memory: Memory?
+    private var memory: MemoryDTO?
     private var roomId: String
     
     // MARK: - init
@@ -244,12 +244,10 @@ final class MemoryViewController: BaseViewController {
     private func requestMemory(roomId: String) {
         Task {
             do {
-                let data = try await detailDoneService.requestMemory(roomId: roomId)
-                if let memory = data {
-                    self.memory = memory
-                    self.setupData(with: .manittee)
-                    self.memoryCollectionView.reloadData()
-                }
+                let data = try await self.detailRoomRepository.fetchMemory(roomId: roomId)
+                self.memory = data
+                self.setupData(with: .manittee)
+                self.memoryCollectionView.reloadData()
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {

@@ -11,7 +11,7 @@ import SnapKit
 
 class CheckRoomViewController: BaseViewController {
     var roomId: Int?
-    var verification: VerificationCode?
+    var roomInfo: ParticipatedRoomInfoDTO?
     
     // MARK: - Property
     
@@ -117,10 +117,10 @@ class CheckRoomViewController: BaseViewController {
     // MARK: - func
     
     private func setupViewController() {
-        guard let title = verification?.title,
-              let startDate = verification?.startDate,
-              let endDate = verification?.endDate,
-              let capacity = verification?.capacity else { return }
+        guard let title = roomInfo?.title,
+              let startDate = roomInfo?.startDate,
+              let endDate = roomInfo?.endDate,
+              let capacity = roomInfo?.capacity else { return }
         roomInfoView.roomLabel.text = title
         roomInfoView.dateLabel.text = "\(startDate) ~ \(endDate)"
         roomInfoView.peopleInfoView.peopleLabel.text = "X \(capacity)인"

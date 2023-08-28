@@ -18,13 +18,13 @@ final class DetailEditViewController: BaseViewController {
     // MARK: - property
     
     private let editMode: DetailEditView.EditMode
-    private let detailWaitService: DetailWaitAPI = DetailWaitAPI(apiService: APIService())
-    private let room: Room
+    private let detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
+    private let room: RoomInfo
     weak var detailWaitDelegate: DetailWaitViewControllerDelegate?
     
     // MARK: - init
     
-    init(editMode: DetailEditView.EditMode, room: Room) {
+    init(editMode: DetailEditView.EditMode, room: RoomInfo) {
         self.detailEditView = DetailEditView(editMode: editMode)
         self.editMode = editMode
         self.room = room
@@ -71,13 +71,13 @@ final class DetailEditViewController: BaseViewController {
     }
     
     private func setupCalendarDateRange() {
-        guard let startDate = self.room.roomInformation?.startDate,
-              let endDate = self.room.roomInformation?.endDate else { return }
+        let startDate = self.room.roomInformation.startDate
+        let endDate = self.room.roomInformation.endDate
         self.detailEditView.setupDateRange(from: startDate, to: endDate)
     }
     
     private func setupMemberSliderValue() {
-        guard let capacity = self.room.roomInformation?.capacity else { return }
+        let capacity = self.room.roomInformation.capacity
         self.detailEditView.setupSliderValue(capacity)
     }
     
@@ -102,12 +102,12 @@ final class DetailEditViewController: BaseViewController {
     
     // MARK: - network
     
-    private func putRoomInfo(roomDto: RoomDTO, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
-        guard let roomIndex = self.room.roomInformation?.id else { return }
+    private func putRoomInfo(roomDTO: CreatedRoomInfoRequestDTO, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
+        let roomIndex = self.room.roomInformation.id
         Task {
             do {
-                let status = try await self.detailWaitService.editRoomInfo(roomId: roomIndex.description,
-                                                                           roomInfo: roomDto)
+                let status = try await self.detailRoomRepository.putRoomInfo(roomId: roomIndex.description,
+                                                                             roomInfo: roomDTO)
                 switch status {
                 case 200..<300:
                     completionHandler(.success(()))
@@ -135,14 +135,14 @@ extension DetailEditViewController: DetailEditDelegate {
     }
     
     func changeButtonDidTap(capacity: Int, from startDate: String, to endDate: String) {
-        guard let roomTitle = self.room.roomInformation?.title,
-              let currentUserCount = self.room.participants?.count else { return }
-        let dto = RoomDTO(title: roomTitle,
-                          capacity: capacity,
-                          startDate: "20\(startDate)",
-                          endDate: "20\(endDate)")
+        let roomTitle = self.room.roomInformation.title
+        let currentUserCount = self.room.participants.count
+        let dto = CreatedRoomInfoRequestDTO(title: roomTitle,
+                                            capacity: capacity,
+                                            startDate: "20\(startDate)",
+                                            endDate: "20\(endDate)")
         if currentUserCount <= capacity {
-            self.putRoomInfo(roomDto: dto) { [weak self] result in
+            self.putRoomInfo(roomDTO: dto) { [weak self] result in
                 switch result {
                 case .success:
                     self?.detailWaitDelegate?.didTappedChangeButton()

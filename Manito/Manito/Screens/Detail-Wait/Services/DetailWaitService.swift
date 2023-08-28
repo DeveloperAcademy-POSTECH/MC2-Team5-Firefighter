@@ -8,28 +8,24 @@
 import Foundation
 
 protocol DetailWaitServicable {
-    func fetchWaitingRoomInfo(roomId: String) async throws -> Room
-    func patchStartManitto(roomId: String) async throws -> Manittee
+    func fetchWaitingRoomInfo(roomId: String) async throws -> RoomInfoDTO
+    func patchStartManitto(roomId: String) async throws -> UserInfoDTO
     func deleteRoom(roomId: String) async throws -> Int
     func deleteLeaveRoom(roomId: String) async throws -> Int
 }
 
 final class DetailWaitService: DetailWaitServicable {
     
-    private let api: DetailWaitProtocol
+    private let repository: DetailRoomRepository
     
-    init(api: DetailWaitProtocol) {
-        self.api = api
+    init(repository: DetailRoomRepository) {
+        self.repository = repository
     }
     
-    func fetchWaitingRoomInfo(roomId: String) async throws -> Room {
+    func fetchWaitingRoomInfo(roomId: String) async throws -> RoomInfoDTO {
         do {
-            let roomData = try await self.api.getWaitingRoomInfo(roomId: roomId)
-            if let roomData {
-                return roomData
-            } else {
-                throw NetworkError.serverError
-            }
+            let roomData = try await self.repository.fetchRoomInfo(roomId: roomId)
+            return roomData
         } catch NetworkError.serverError {
             throw NetworkError.serverError
         } catch NetworkError.clientError(let message) {
@@ -37,14 +33,10 @@ final class DetailWaitService: DetailWaitServicable {
         }
     }
     
-    func patchStartManitto(roomId: String) async throws -> Manittee {
+    func patchStartManitto(roomId: String) async throws -> UserInfoDTO {
         do {
-            let manitteeData = try await self.api.startManitto(roomId: roomId)
-            if let manitteeData {
-                return manitteeData
-            } else {
-                throw NetworkError.serverError
-            }
+            let manitteeData = try await self.repository.patchStartManitto(roomId: roomId)
+            return manitteeData
         } catch NetworkError.serverError {
             throw NetworkError.serverError
         } catch NetworkError.clientError(let message) {
@@ -54,7 +46,7 @@ final class DetailWaitService: DetailWaitServicable {
     
     func deleteRoom(roomId: String) async throws -> Int {
         do {
-            let statusCode = try await self.api.deleteRoom(roomId: roomId)
+            let statusCode = try await self.repository.deleteRoom(roomId: roomId)
             return statusCode
         } catch NetworkError.serverError {
             throw NetworkError.serverError
@@ -65,7 +57,7 @@ final class DetailWaitService: DetailWaitServicable {
     
     func deleteLeaveRoom(roomId: String) async throws -> Int {
         do {
-            let statusCode = try await self.api.deleteLeaveRoom(roomId: roomId)
+            let statusCode = try await self.repository.deleteLeaveRoom(roomId: roomId)
             return statusCode
         } catch NetworkError.serverError {
             throw NetworkError.serverError

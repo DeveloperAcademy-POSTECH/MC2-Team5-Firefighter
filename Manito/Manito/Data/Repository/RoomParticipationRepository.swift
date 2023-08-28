@@ -10,31 +10,33 @@ import Foundation
 import MTNetwork
 
 protocol RoomParticipationRepository {
-    func dispatchCreateRoom(roomInfo: CreateRoomDTO) async throws -> Int?
-    func dispatchVerifyCode(code: String) async throws -> VerificationCode?
-    func dispatchJoinRoom(roomId: String, roomDTO: MemberDTO) async throws -> Int
+    func dispatchCreateRoom(room: CreatedRoomRequestDTO) async throws -> Int
+    func dispatchVerifyCode(code: String) async throws -> ParticipatedRoomInfoDTO
+    func dispatchJoinRoom(roomId: String, member: MemberInfoRequestDTO) async throws -> Int
 }
 
 final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
 
     private var provider = Provider<RoomParticipationEndPoint>()
 
-    func dispatchCreateRoom(roomInfo: CreateRoomDTO) async throws -> Int? {
+    func dispatchCreateRoom(room: CreatedRoomRequestDTO) async throws -> Int {
         let response = try await self.provider
-            .request(.dispatchCreateRoom(roomInfo: roomInfo))
-        return try response.decode()
+            .request(.dispatchCreateRoom(room: room))
+        let location = response.response?.allHeaderFields["Location"] as? String
+        let roomId = Int(location?.split(separator: "/").last ?? "-1") ?? -1
+        return roomId
     }
 
-    func dispatchVerifyCode(code: String) async throws -> VerificationCode? {
+    func dispatchVerifyCode(code: String) async throws -> ParticipatedRoomInfoDTO {
         let response = try await self.provider
             .request(.dispatchVerifyCode(code: code))
         return try response.decode()
     }
 
-    func dispatchJoinRoom(roomId: String, roomDTO: MemberDTO) async throws -> Int {
+    func dispatchJoinRoom(roomId: String, member: MemberInfoRequestDTO) async throws -> Int {
         let response = try await self.provider
             .request(.dispatchJoinRoom(roomId: roomId,
-                                       roomDTO: roomDTO))
-        return try response.decode()
+                                       member: member))
+        return response.statusCode
     }
 }
