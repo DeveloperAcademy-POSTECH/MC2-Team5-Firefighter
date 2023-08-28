@@ -696,6 +696,73 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
+		B58CA2FC2A9CC29A00977592 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				B58CA3052A9CC37000977592 /* Scene */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		B58CA3052A9CC37000977592 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				B58CA3062A9CC37B00977592 /* LetterScene */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		B58CA3062A9CC37B00977592 /* LetterScene */ = {
+			isa = PBXGroup;
+			children = (
+				B58CA3082A9CC3B300977592 /* View */,
+				B58CA3072A9CC39700977592 /* ViewController */,
+				B58CA30A2A9CC41600977592 /* ViewModel */,
+			);
+			path = LetterScene;
+			sourceTree = "<group>";
+		};
+		B58CA3072A9CC39700977592 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B5F5250D2851A07700614FF7 /* LetterViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		B58CA3082A9CC3B300977592 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B58CA3092A9CC3D700977592 /* UIComponent */,
+				B5706BF329B710FC0093D198 /* LetterView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B58CA3092A9CC3D700977592 /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				B5F5253428547F1900614FF7 /* LetterHeaderView.swift */,
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		B58CA30A2A9CC41600977592 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B5B3C15C2A41D6EB00AABD6F /* LetterViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B58CA30B2A9CC43600977592 /* Usecase */ = {
+			isa = PBXGroup;
+			children = (
+				B5B3C15E2A41D6F400AABD6F /* LetterService.swift */,
+			);
+			path = Usecase;
+			sourceTree = "<group>";
+		};
 		B5A085E42A972E5F00C8A98D /* Response */ = {
 			isa = PBXGroup;
 			children = (
@@ -716,6 +783,7 @@
 		B5A085E72A97302900C8A98D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				B58CA30B2A9CC43600977592 /* Usecase */,
 				B5A085E82A97303900C8A98D /* Entity */,
 			);
 			path = Domain;
@@ -742,18 +810,9 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		B5B3C1572A41D65400AABD6F /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				B5B3C15C2A41D6EB00AABD6F /* LetterViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		B5B3C1582A41D67F00AABD6F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B5706BF329B710FC0093D198 /* LetterView.swift */,
 				B5706BE029ADC20A0093D198 /* CreateLetterView.swift */,
 				B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */,
 			);
@@ -763,20 +822,11 @@
 		B5B3C1592A41D69500AABD6F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				B5F5250D2851A07700614FF7 /* LetterViewController.swift */,
 				B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */,
 				B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */,
 				39F1C12D28D756E600585B83 /* LetterImageViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		B5B3C15A2A41D6A600AABD6F /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				B5B3C15E2A41D6F400AABD6F /* LetterService.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		B5F524C228519AA000614FF7 = {
@@ -804,6 +854,7 @@
 		B5F524CD28519AA000614FF7 /* Manito */ = {
 			isa = PBXGroup;
 			children = (
+				B58CA2FC2A9CC29A00977592 /* Presentation */,
 				B5A085E72A97302900C8A98D /* Domain */,
 				B53A35B82A9640EB00B720BC /* Data */,
 				B5F524E328519AC300614FF7 /* Screens */,
@@ -910,8 +961,6 @@
 			isa = PBXGroup;
 			children = (
 				B54741DE29A3A4BA00B75BA3 /* Views */,
-				B5B3C1572A41D65400AABD6F /* ViewModels */,
-				B5B3C15A2A41D6A600AABD6F /* Services */,
 			);
 			path = Letter;
 			sourceTree = "<group>";
@@ -1046,7 +1095,6 @@
 		B5F5253328547EE000614FF7 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
-				B5F5253428547F1900614FF7 /* LetterHeaderView.swift */,
 				B50B1AFA2856B5180080992C /* IndividualMissionView.swift */,
 				B50B1AFC2856C3500080992C /* CreateLetterTextView.swift */,
 				B50B1AFE2856D3820080992C /* CreateLetterPhotoView.swift */,
