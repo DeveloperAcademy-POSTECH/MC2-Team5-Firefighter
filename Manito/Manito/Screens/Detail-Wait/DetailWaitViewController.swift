@@ -225,16 +225,11 @@ final class DetailWaitViewController: BaseViewController {
             : TextLiteral.detailWaitViewControllerPastAlertMessage,
             okAction: isAdmin
             ? { [weak self] _ in
-                guard let roomInformaion = self?.roomInformation() else { return }
+                guard let roomInformaion = self?.detailWaitViewModel.makeRoomInformation() else { return }
                 self?.showDetailEditViewController(roomInformation: roomInformaion, mode: .date)
             }
             : nil
         )
-    }
-    
-    private func roomInformation() -> Room {
-        let roomInformaion = self.detailWaitViewModel.makeRoomInformation()
-        return roomInformaion
     }
     
     // MARK: - selector
