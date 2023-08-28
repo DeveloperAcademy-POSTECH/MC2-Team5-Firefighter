@@ -199,13 +199,7 @@ final class CreateRoomView: UIView {
         switch step {
         case .inputTitle:
             self.endEditing(true)
-        case .inputCapacity:
-            break
-        case .inputDate:
-            break
-        case .checkRoom:
-               break
-        case .chooseCharacter:
+        default:
             break
         }
     }
