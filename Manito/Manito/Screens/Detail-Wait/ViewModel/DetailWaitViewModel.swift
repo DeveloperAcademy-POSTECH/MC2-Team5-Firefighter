@@ -10,7 +10,7 @@ import Foundation
 
 final class DetailWaitViewModel {
     
-    typealias EditRoomInformation = (roomInformation: Room, mode: DetailEditView.EditMode)
+    typealias EditRoomInformation = (roomInformation: RoomInfo, mode: DetailEditView.EditMode)
     typealias PassedStartDateAndIsOwner = (passStartDate: Bool, isOwner: Bool)
     
     // MARK: - property
@@ -19,7 +19,7 @@ final class DetailWaitViewModel {
     private let detailWaitService: DetailWaitServicable
     private var cancellable = Set<AnyCancellable>()
     
-    private let roomInformationSubject = CurrentValueSubject<Room, NetworkError>(Room.emptyRoom)
+    private let roomInformationSubject = CurrentValueSubject<RoomInfo, NetworkError>(RoomInfo.emptyRoom)
     private let manitteeNicknameSubject = PassthroughSubject<String, NetworkError>()
     private let deleteRoomSubject = PassthroughSubject<Void, NetworkError>()
     private let leaveRoomSubject = PassthroughSubject<Void, NetworkError>()
@@ -36,7 +36,7 @@ final class DetailWaitViewModel {
     }
     
     struct Output {
-        let roomInformation: CurrentValueSubject<Room, NetworkError>
+        let roomInformation: CurrentValueSubject<RoomInfo, NetworkError>
         let code: AnyPublisher<String, Never>
         let manitteeNickname: PassthroughSubject<String, NetworkError>
         let editRoomInformation: AnyPublisher<EditRoomInformation, Never>
@@ -69,7 +69,7 @@ final class DetailWaitViewModel {
         
         let editRoomInformationOutput = input.editMenuButtonDidTap
             .map { [weak self] _ -> EditRoomInformation in
-                guard let self else { return (Room.emptyRoom, .information) }
+                guard let self else { return (RoomInfo.emptyRoom, .information) }
                 return self.makeEditRoomInformation()
             }
             .eraseToAnyPublisher()
@@ -123,13 +123,13 @@ final class DetailWaitViewModel {
     
     // MARK: - func
     
-    func makeRoomInformation() -> Room {
+    func makeRoomInformation() -> RoomInfo {
         return self.roomInformationSubject.value
     }
     
     private func makeCode() -> String {
         let roomInformation = self.roomInformationSubject.value
-        guard let code = roomInformation.invitation?.code else { return "" }
+        guard let code = roomInformation.invitation.code else { return "" }
         return code
     }
     
@@ -141,13 +141,11 @@ final class DetailWaitViewModel {
     
     private func makeIsAdmin() -> PassedStartDateAndIsOwner {
         let roomInformation = self.roomInformationSubject.value
-        guard let isPassStartDate = roomInformation.roomInformation?.isStartDatePast,
-              let isAdmin = roomInformation.admin else { return (false, false) }
         
-        return (isPassStartDate, isAdmin)
+        return (roomInformation.roomInformation.isStartDatePast, roomInformation.admin)
     }
     
-    func setRoomInformation(room: Room) {
+    func setRoomInformation(room: RoomInfo) {
         self.roomInformationSubject.send(room)
     }
     
@@ -157,7 +155,7 @@ final class DetailWaitViewModel {
         Task {
             do {
                 let room = try await self.detailWaitService.fetchWaitingRoomInfo(roomId: roomId)
-                self.roomInformationSubject.send(room)
+                self.roomInformationSubject.send(room.toRoomInfo())
             } catch(let error) {
                 guard let error = error as? NetworkError else { return }
                 self.roomInformationSubject.send(completion: .failure(error))

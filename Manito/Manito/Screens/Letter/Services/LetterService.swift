@@ -12,8 +12,8 @@ protocol LetterServicable {
     var manitteeId: String? { get set }
     var nickname: String { get set }
 
-    func fetchSendLetter(roomId: String) async throws -> [Message]
-    func fetchReceiveLetter(roomId: String) async throws -> [Message]
+    func fetchSendLetter(roomId: String) async throws -> [MessageListItemDTO]
+    func fetchReceiveLetter(roomId: String) async throws -> [MessageListItemDTO]
     func loadNickname()
 }
 
@@ -24,26 +24,21 @@ final class LetterService: LetterServicable {
     @Published var manitteeId: String?
     @Published var nickname: String = ""
 
-    private let api: LetterProtocol
+    private let repository: LetterRepository
 
     // MARK: - init
 
-    init(api: LetterProtocol) {
-        self.api = api
+    init(repository: LetterRepository) {
+        self.repository = repository
     }
 
     // MARK: - Public - func
 
-    func fetchSendLetter(roomId: String) async throws -> [Message] {
+    func fetchSendLetter(roomId: String) async throws -> [MessageListItemDTO] {
         do {
-            let letterData = try await self.api.fetchSendLetter(roomId: roomId)
-            if let letterData {
-                self.setManitteeId(letterData.manittee?.id)
-
-                return letterData.messages
-            } else {
-                throw NetworkError.serverError
-            }
+            let letterData = try await self.repository.fetchSendLetter(roomId: roomId)
+            self.setManitteeId(letterData.manittee?.id)
+            return letterData.messages
         } catch NetworkError.serverError {
             throw NetworkError.serverError
         } catch NetworkError.clientError(let message) {
@@ -51,16 +46,11 @@ final class LetterService: LetterServicable {
         }
     }
 
-    func fetchReceiveLetter(roomId: String) async throws -> [Message] {
+    func fetchReceiveLetter(roomId: String) async throws -> [MessageListItemDTO] {
         do {
-            let letterData = try await self.api.fetchReceiveLetter(roomId: roomId)
-            if let letterData {
-                self.setManitteeId(letterData.manittee?.id)
-
-                return letterData.messages
-            } else {
-                throw NetworkError.serverError
-            }
+            let letterData = try await self.repository.fetchReceiveLetter(roomId: roomId)
+            self.setManitteeId(letterData.manittee?.id)
+            return letterData.messages
         } catch NetworkError.serverError {
             throw NetworkError.serverError
         } catch NetworkError.clientError(let message) {

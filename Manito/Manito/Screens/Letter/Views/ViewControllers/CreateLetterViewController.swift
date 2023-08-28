@@ -21,7 +21,7 @@ final class CreateLetterViewController: BaseViewController {
     
     // MARK: - property
 
-    private let letterSevice: LetterAPI = LetterAPI(apiService: APIService())
+    private let letterRepository: LetterRepository = LetterRepositoryImpl()
     private let mission: String
     private let manitteeId: String
     private let roomId: String
@@ -83,12 +83,15 @@ final class CreateLetterViewController: BaseViewController {
     
     // MARK: - network
 
-    private func dispatchLetter(with letterDTO: LetterDTO,
+    private func dispatchLetter(with letterDTO: LetterRequestDTO,
                                 _ jpegData: Data? = nil,
                                 completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let statusCode = try await self.letterSevice.dispatchLetter(roomId: self.roomId, image: jpegData, letter: letterDTO, missionId: self.missionId)
+                let statusCode = try await self.letterRepository.dispatchLetter(roomId: self.roomId,
+                                                                                image: jpegData,
+                                                                                letter: letterDTO,
+                                                                                missionId: self.missionId)
                 switch statusCode {
                 case 200..<300: completionHandler(.success(()))
                 default: completionHandler(.failure(.unknownError))
@@ -120,7 +123,7 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
 
     func sendLetterToManittee(with content: String?, _ image: UIImage?) {
         let jpegData = image?.jpegData(compressionQuality: 0.3)
-        let letterDTO = LetterDTO(manitteeId: self.manitteeId, messageContent: content)
+        let letterDTO = LetterRequestDTO(manitteeId: self.manitteeId, messageContent: content)
 
         self.createLetterView.sending = true
         self.dispatchLetter(with: letterDTO, jpegData) { [weak self] response in
