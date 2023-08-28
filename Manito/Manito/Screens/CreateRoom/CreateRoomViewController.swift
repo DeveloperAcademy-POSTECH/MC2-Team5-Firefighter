@@ -20,6 +20,7 @@ final class CreateRoomViewController: BaseViewController {
     
     private var cancellable = Set<AnyCancellable>()
     private let createRoomViewModel: CreateRoomViewModel
+    private let roomParticipationRepository: RoomParticipationRepository = RoomParticipationRepositoryImpl()
     
     // MARK: - init
     
@@ -68,9 +69,9 @@ final class CreateRoomViewController: BaseViewController {
     
     private func pushDetailWaitViewController(roomId: Int) {
         guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-        
-        let viewController = DetailWaitViewController(viewModel: DetailWaitViewModel(roomIndex: roomId,
-                                                                                     detailWaitService: DetailWaitService(api: DetailWaitAPI(apiService: APIService()))))
+        let viewModel = DetailWaitViewModel(roomIndex: roomId,
+                                            detailWaitService: DetailWaitService(repository: DetailRoomRepositoryImpl()))
+        let viewController = DetailWaitViewController(viewModel: viewModel)
         
         navigationController.popViewController(animated: true)
         navigationController.pushViewController(viewController, animated: false)

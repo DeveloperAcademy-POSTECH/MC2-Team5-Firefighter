@@ -19,7 +19,7 @@ final class MissionEditViewController: BaseViewController {
     
     let mission: String
     let roomId: String
-    private let missionEditService: MissionEditAPI = MissionEditAPI(apiService: APIService())
+    private let detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
     private weak var delegate: MissionEditDelegate?
     
     // MARK: - component
@@ -178,13 +178,9 @@ final class MissionEditViewController: BaseViewController {
     private func patchEditMission(mission: String, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let data = try await self.missionEditService.patchEditMission(roomId: self.roomId,
-                                                                              body: MissionDTO(mission: mission))
-                if let _ = data {
-                    completionHandler(.success(()))
-                } else {
-                    completionHandler(.failure(.unknownError))
-                }
+                let data = try await self.detailRoomRepository.patchEditMission(roomId: roomId,
+                                                                                mission: EditedMissionRequestDTO(mission: mission))
+                completionHandler(.success(()))
             } catch NetworkError.serverError {
                 completionHandler(.failure(.serverError))
             } catch NetworkError.clientError(let message) {

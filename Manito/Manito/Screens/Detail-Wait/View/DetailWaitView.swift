@@ -82,7 +82,7 @@ final class DetailWaitView: UIView {
     
     // MARK: - property
     
-    private var userArray: [User] = [] {
+    private var userArray: [UserInfoDTO] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.listTableView.reloadData()
@@ -224,19 +224,13 @@ final class DetailWaitView: UIView {
         navigationItem?.rightBarButtonItem = moreButton
     }
     
-    func updateDetailWaitView(room: Room) {
-        guard let title = room.roomInformation?.title,
-              let state = room.roomInformation?.state,
-              let dateRange = room.roomInformation?.dateRangeText,
-              let users = room.participants?.members,
-              let isStart = room.roomInformation?.isStart,
-              let admin = room.admin
-        else { return }
-        
-        self.userArray = users
+    func updateDetailWaitView(room: RoomInfo) {
+        self.userArray = room.participants.members
 
-        self.setupTitleViewData(title: title, state: state, dateRange: dateRange)
-        self.setupRelatedViews(of: admin, isStart)
+        self.setupTitleViewData(title: room.roomInformation.title,
+                                state: room.roomInformation.state,
+                                dateRange: room.roomInformation.dateRangeText)
+        self.setupRelatedViews(of: room.admin, room.roomInformation.isStart)
 
         self.configureStartButton(room.canStart)
         self.configureUserCountLabel(userCount: room.userCount)
