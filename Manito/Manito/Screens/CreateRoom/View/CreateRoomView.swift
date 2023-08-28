@@ -52,6 +52,7 @@ final class CreateRoomView: UIView {
     let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
     
     let nextButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
+    let backButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
     
     // MARK: - property
     
@@ -138,8 +139,7 @@ final class CreateRoomView: UIView {
         
         let backAction = UIAction { [weak self] _ in
             guard let currentStep = self?.roomStep else { return }
-            guard let previousStep = self?.moveToPreviousStep(from: currentStep) else { return }
-            self?.roomStep = previousStep
+            self?.backButtonDidTapPublisher.send(currentStep)
         }
         self.backButton.addAction(backAction, for: .touchUpInside)
     }
@@ -153,14 +153,6 @@ final class CreateRoomView: UIView {
                                                selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
-    }
-    
-    private func moveToNextStep(from step: CreateRoomStep) -> CreateRoomStep {
-        return step.next()
-    }
-    
-    private func moveToPreviousStep(from step: CreateRoomStep) -> CreateRoomStep {
-        return step.previous()
     }
     
     private func updateHiddenStepView(at step: CreateRoomStep) {
@@ -236,10 +228,12 @@ final class CreateRoomView: UIView {
         }
     }
     
-    func nextButtonDidTap(step: CreateRoomStep) {
-        self.runActionAtStep(at: step)
-        
-        let nextStep = self.moveToNextStep(from: step)
+    func backButtonDidTap(previousStep: CreateRoomStep) {
+        self.roomStep = previousStep
+    }
+    
+    func nextButtonDidTap(currentStep: CreateRoomStep, nextStep: CreateRoomStep) {
+        self.runActionAtStep(at: currentStep)
         self.roomStep = nextStep
     }
     

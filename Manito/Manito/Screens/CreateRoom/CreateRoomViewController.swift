@@ -92,7 +92,8 @@ final class CreateRoomViewController: BaseViewController {
                                               startDateDidTap: self.createRoomView.roomDateView.calendarView.startDateTapPublisher.eraseToAnyPublisher(),
                                               endDateDidTap: self.createRoomView.roomDateView.calendarView.endDateTapPublisher.eraseToAnyPublisher(),
                                               characterIndexDidTap: self.createRoomView.characterCollectionView.characterIndexTapPublisher.eraseToAnyPublisher(),
-                                              nextButtonDidTap: self.createRoomView.nextButtonDidTapPublisher.eraseToAnyPublisher())
+                                              nextButtonDidTap: self.createRoomView.nextButtonDidTapPublisher.eraseToAnyPublisher(),
+                                              backButtonDidTap: self.createRoomView.backButtonDidTapPublisher.eraseToAnyPublisher())
         return self.createRoomViewModel.transform(from: input)
     }
     
@@ -113,12 +114,6 @@ final class CreateRoomViewController: BaseViewController {
             })
             .store(in: &self.cancellable)
         
-        output.isEnabled
-            .sink(receiveValue: { [weak self] isEnable in
-                self?.createRoomView.toggleNextButton(isEnable: isEnable)
-            })
-            .store(in: &self.cancellable)
-        
         output.capacity
             .sink(receiveValue: { [weak self] capacity in
                 self?.createRoomView.roomCapacityView.updateCapacity(capacity: capacity)
@@ -132,9 +127,21 @@ final class CreateRoomViewController: BaseViewController {
             })
             .store(in: &self.cancellable)
         
+        output.isEnabled
+            .sink(receiveValue: { [weak self] isEnable in
+                self?.createRoomView.toggleNextButton(isEnable: isEnable)
+            })
+            .store(in: &self.cancellable)
+        
         output.currentStep
-            .sink(receiveValue: { [weak self] currentStep in
-                self?.createRoomView.nextButtonDidTap(step: currentStep)
+            .sink(receiveValue: { [weak self] step in
+                self?.createRoomView.nextButtonDidTap(currentStep: step.0, nextStep: step.1)
+            })
+            .store(in: &self.cancellable)
+        
+        output.previousStep
+            .sink(receiveValue: { [weak self] step in
+                self?.createRoomView.backButtonDidTap(previousStep: step)
             })
             .store(in: &self.cancellable)
         

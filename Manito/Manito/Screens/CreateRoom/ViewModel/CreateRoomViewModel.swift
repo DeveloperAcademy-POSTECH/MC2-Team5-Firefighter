@@ -10,6 +10,8 @@ import Foundation
 
 final class CreateRoomViewModel: ViewModelType {
     
+    typealias CurrentNextStep = (current: CreateRoomStep, next: CreateRoomStep)
+    
     // MARK: - property
     
     let maxCount: Int = 8
@@ -32,31 +34,33 @@ final class CreateRoomViewModel: ViewModelType {
         let endDateDidTap: AnyPublisher<String, Never>
         let characterIndexDidTap: AnyPublisher<Int, Never>
         let nextButtonDidTap: AnyPublisher<CreateRoomStep, Never>
+        let backButtonDidTap: AnyPublisher<CreateRoomStep, Never>
     }
     
     struct Output {
         let title: CurrentValueSubject<String, Never>
         let isOverMaxCount: AnyPublisher<Bool, Never>
-        let isEnabled: AnyPublisher<Bool, Never>
         let capacity: CurrentValueSubject<Int, Never>
         let dateRange: PassthroughSubject<String, Never>
-        let currentStep: AnyPublisher<CreateRoomStep, Never>
+        let isEnabled: AnyPublisher<Bool, Never>
+        let currentStep: AnyPublisher<CurrentNextStep, Never>
+        let previousStep: AnyPublisher<CreateRoomStep, Never>
         let roomId: PassthroughSubject<Int, NetworkError>
     }
     
     func transform(from input: Input) -> Output {
-        let isOverMaxCount = input.textFieldTextDidChanged
-            .map { [weak self] text -> Bool in
-                return self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
-            }
-            .eraseToAnyPublisher()
-        
         input.textFieldTextDidChanged
             .sink(receiveValue: { [weak self] title in
                 self?.titleSubject.send(title)
             })
             .store(in: &self.cancellable)
         
+        let isOverMaxCount = input.textFieldTextDidChanged
+            .map { [weak self] text -> Bool in
+                return self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
+            }
+            .eraseToAnyPublisher()
+    
         input.sliderValueDidChanged
             .sink(receiveValue: { [weak self] capacity in
                 self?.capacitySubject.send(capacity)
@@ -99,27 +103,44 @@ final class CreateRoomViewModel: ViewModelType {
             .store(in: &self.cancellable)
         
         let currentStep = input.nextButtonDidTap
-            .map { [weak self] step -> CreateRoomStep in
-                guard let self = self else { return step }
+            .map { [weak self] step -> CurrentNextStep in
+                guard let self = self else { return (step, step.next()) }
                 switch step {
                 case .chooseCharacter:
                     self.requestCreateRoom(roomInfo: CreatedRoomInfoRequestDTO(title: self.titleSubject.value,
                                                                                capacity: self.capacitySubject.value,
                                                                                startDate: self.startDateSubject.value,
                                                                                endDate: self.endDateSubject.value))
-                    return step
+                    return (step, step.next())
                 default:
-                    return step
+                    return (step, step.next())
+                }
+            }
+            .eraseToAnyPublisher()
+        
+        let previousStep = input.backButtonDidTap
+            .map { step -> CreateRoomStep in
+                switch step {
+                case .inputTitle:
+                    return .inputTitle
+                case .inputCapacity:
+                    return .inputTitle
+                case .inputDate:
+                    return .inputCapacity
+                case .checkRoom:
+                    return .inputDate
+                case .chooseCharacter:
+                    return .checkRoom
                 }
             }
             .eraseToAnyPublisher()
         
         return Output(title: self.titleSubject,
                       isOverMaxCount: isOverMaxCount,
-                      isEnabled: isEnabled,
                       capacity: self.capacitySubject,
                       dateRange: self.dateRangeSubject,
-                      currentStep: currentStep,
+                      isEnabled: isEnabled,
+                      currentStep: currentStep, previousStep: previousStep,
                       roomId: self.roomIdSubject)
     }
     
