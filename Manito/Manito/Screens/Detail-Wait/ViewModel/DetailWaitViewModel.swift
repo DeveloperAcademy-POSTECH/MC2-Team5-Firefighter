@@ -141,8 +141,8 @@ final class DetailWaitViewModel {
     
     private func makeIsAdmin() -> PassedStartDateAndIsOwner {
         let roomInformation = self.roomInformationSubject.value
-        guard let isAdmin = roomInformation.admin,
-            let isPassStartDate = roomInformation.roomInformation?.isStartDatePast else { return (false, false) }
+        guard let isPassStartDate = roomInformation.roomInformation?.isStartDatePast,
+              let isAdmin = roomInformation.admin else { return (false, false) }
         
         return (isPassStartDate, isAdmin)
     }
