@@ -20,7 +20,6 @@ final class CreateRoomViewController: BaseViewController {
     
     private var cancellable = Set<AnyCancellable>()
     private let createRoomViewModel: CreateRoomViewModel
-    private let roomParticipationRepository: RoomParticipationRepository = RoomParticipationRepositoryImpl()
     
     // MARK: - init
     
