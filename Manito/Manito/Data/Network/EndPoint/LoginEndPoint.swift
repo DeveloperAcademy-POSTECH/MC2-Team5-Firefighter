@@ -10,7 +10,7 @@ import Foundation
 import MTNetwork
 
 enum LoginEndPoint {
-    case dispatchAppleLogin(loginDTO: LoginDTO)
+    case dispatchAppleLogin(login: LoginRequestDTO)
 }
 
 extension LoginEndPoint: Requestable {

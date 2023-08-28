@@ -10,7 +10,7 @@ import Foundation
 import MTNetwork
 
 enum TokenEndPoint {
-    case patchRefreshToken(body: Token)
+    case patchRefreshToken(token: TokenDTO)
 }
 
 extension TokenEndPoint: Requestable {
@@ -34,10 +34,8 @@ extension TokenEndPoint: Requestable {
 
     var task: HTTPTask {
         switch self {
-        case .patchRefreshToken(let body):
-            let body = ["accessToken": body.accessToken,
-                        "refreshToken": body.refreshToken]
-            return .requestJSONEncodable(body)
+        case .patchRefreshToken(let token):
+            return .requestJSONEncodable(token)
         }
     }
 

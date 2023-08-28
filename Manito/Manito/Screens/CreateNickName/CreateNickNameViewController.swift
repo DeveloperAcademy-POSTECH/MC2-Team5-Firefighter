@@ -11,7 +11,7 @@ import SnapKit
 
 class CreateNickNameViewController: BaseViewController {
     
-    let settingService: SettingProtocol = SettingAPI(apiService: APIService())
+    private let settingRepository: SettingRepository = SettingRepositoryImpl()
     
     private var nickname: String = ""
     private let maxLength = 5
@@ -73,13 +73,11 @@ class CreateNickNameViewController: BaseViewController {
     }
     
     // MARK: - API
-    func requestNickname(setting: NicknameDTO) {
+    func requestNickname(nickname: NicknameDTO) {
         Task {
             do {
-                let data = try await settingService.putChangeNickname(body: setting)
-                if let nickname = data {
-                    UserDefaultHandler.setNickname(nickname: nickname)
-                }
+                let data = try await self.settingRepository.putUserInfo(nickname: nickname)
+                UserDefaultHandler.setNickname(nickname: data.nickname)
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
@@ -123,7 +121,7 @@ class CreateNickNameViewController: BaseViewController {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
             UserData.setValue(nickname, forKey: .nickname)
-            requestNickname(setting: NicknameDTO(nickname: nickname))
+            requestNickname(nickname: NicknameDTO(nickname: nickname))
             presentMainViewController()
         }
     }

@@ -15,8 +15,8 @@ enum DetailRoomEndPoint {
     case fetchResetMission(roomId: String)
     case fetchMemory(roomId: String)
     case patchStartManitto(roomId: String)
-    case patchEditMission(roomId: String, body: MissionDTO)
-    case putRoomInfo(roomId: String, roomInfo: RoomDTO)
+    case patchEditMission(roomId: String, mission: EditedMissionRequestDTO)
+    case putRoomInfo(roomId: String, roomInfo: CreatedRoomInfoRequestDTO)
     case deleteRoom(roomId: String)
     case deleteLeaveRoom(roomId: String)
 }
@@ -84,14 +84,10 @@ extension DetailRoomEndPoint: Requestable {
             return .requestPlain
         case .patchStartManitto:
             return .requestPlain
-        case .patchEditMission(_, let body):
-            return .requestJSONEncodable(body)
+        case .patchEditMission(_, let mission):
+            return .requestJSONEncodable(mission)
         case .putRoomInfo(_, let roomInfo):
-            let body = ["title": roomInfo.title,
-                        "capacity": roomInfo.capacity.description,
-                        "startDate": roomInfo.startDate,
-                        "endDate": roomInfo.endDate]
-            return .requestJSONEncodable(body)
+            return .requestJSONEncodable(roomInfo)
         case .deleteRoom:
             return .requestPlain
         case .deleteLeaveRoom:

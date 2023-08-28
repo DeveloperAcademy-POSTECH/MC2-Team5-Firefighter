@@ -10,7 +10,7 @@ import Foundation
 import MTNetwork
 
 enum SettingEndPoint {
-    case putUserInfo(nicknameDTO: NicknameDTO)
+    case putUserInfo(nickname: NicknameDTO)
 }
 
 extension SettingEndPoint: Requestable {
@@ -34,8 +34,8 @@ extension SettingEndPoint: Requestable {
 
     var task: HTTPTask {
         switch self {
-        case .putUserInfo(let nicknameDTO):
-            return .requestJSONEncodable(nicknameDTO)
+        case .putUserInfo(let nickname):
+            return .requestJSONEncodable(nickname)
         }
     }
     
