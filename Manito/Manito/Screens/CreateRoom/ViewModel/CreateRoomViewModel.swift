@@ -43,7 +43,7 @@ final class CreateRoomViewModel: ViewModelType {
         let capacity: CurrentValueSubject<Int, Never>
         let dateRange: PassthroughSubject<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
-        let currentStep: AnyPublisher<CurrentNextStep, Never>
+        let currentNextStep: AnyPublisher<CurrentNextStep, Never>
         let previousStep: AnyPublisher<CreateRoomStep, Never>
         let roomId: PassthroughSubject<Int, NetworkError>
     }
@@ -121,7 +121,7 @@ final class CreateRoomViewModel: ViewModelType {
                       capacity: self.capacitySubject,
                       dateRange: self.dateRangeSubject,
                       isEnabled: isEnabled,
-                      currentStep: currentStep, previousStep: previousStep,
+                      currentNextStep: currentStep, previousStep: previousStep,
                       roomId: self.roomIdSubject)
     }
     

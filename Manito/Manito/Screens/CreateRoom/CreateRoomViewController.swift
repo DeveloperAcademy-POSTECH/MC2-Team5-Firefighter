@@ -132,7 +132,7 @@ final class CreateRoomViewController: BaseViewController {
             })
             .store(in: &self.cancellable)
         
-        output.currentStep
+        output.currentNextStep
             .sink(receiveValue: { [weak self] step in
                 self?.createRoomView.nextButtonDidTap(currentStep: step.0, nextStep: step.1)
             })
