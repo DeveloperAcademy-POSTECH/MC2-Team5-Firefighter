@@ -105,33 +105,14 @@ final class CreateRoomViewModel: ViewModelType {
         let currentStep = input.nextButtonDidTap
             .map { [weak self] step -> CurrentNextStep in
                 guard let self = self else { return (step, step.next()) }
-                switch step {
-                case .chooseCharacter:
-                    self.requestCreateRoom(roomInfo: CreatedRoomInfoRequestDTO(title: self.titleSubject.value,
-                                                                               capacity: self.capacitySubject.value,
-                                                                               startDate: self.startDateSubject.value,
-                                                                               endDate: self.endDateSubject.value))
-                    return (step, step.next())
-                default:
-                    return (step, step.next())
-                }
+                return self.runActionByStep(step: step)
             }
             .eraseToAnyPublisher()
         
         let previousStep = input.backButtonDidTap
-            .map { step -> CreateRoomStep in
-                switch step {
-                case .inputTitle:
-                    return .inputTitle
-                case .inputCapacity:
-                    return .inputTitle
-                case .inputDate:
-                    return .inputCapacity
-                case .checkRoom:
-                    return .inputDate
-                case .chooseCharacter:
-                    return .checkRoom
-                }
+            .map { [weak self] step -> CreateRoomStep in
+                guard let self = self else { return step }
+                return self.previous(step: step)
             }
             .eraseToAnyPublisher()
         
@@ -155,6 +136,34 @@ final class CreateRoomViewModel: ViewModelType {
     private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
         if titleCount > maxCount { return true }
         else { return false }
+    }
+    
+    private func runActionByStep(step: CreateRoomStep) -> CurrentNextStep {
+        switch step {
+        case .chooseCharacter:
+            self.requestCreateRoom(roomInfo: CreatedRoomInfoRequestDTO(title: self.titleSubject.value,
+                                                                       capacity: self.capacitySubject.value,
+                                                                       startDate: self.startDateSubject.value,
+                                                                       endDate: self.endDateSubject.value))
+            return (step, step.next())
+        default:
+            return (step, step.next())
+        }
+    }
+    
+    private func previous(step: CreateRoomStep) -> CreateRoomStep {
+        switch step {
+        case .inputTitle:
+            return .inputTitle
+        case .inputCapacity:
+            return .inputTitle
+        case .inputDate:
+            return .inputCapacity
+        case .checkRoom:
+            return .inputDate
+        case .chooseCharacter:
+            return .checkRoom
+        }
     }
     
     // MARK: - network
