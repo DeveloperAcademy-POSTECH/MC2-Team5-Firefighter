@@ -102,7 +102,7 @@ final class CreateRoomViewModel: ViewModelType {
             })
             .store(in: &self.cancellable)
         
-        let currentStep = input.nextButtonDidTap
+        let currentNextStep = input.nextButtonDidTap
             .map { [weak self] step -> CurrentNextStep in
                 guard let self = self else { return (step, step.next()) }
                 return self.runActionByStep(step: step)
@@ -121,7 +121,7 @@ final class CreateRoomViewModel: ViewModelType {
                       capacity: self.capacitySubject,
                       dateRange: self.dateRangeSubject,
                       isEnabled: isEnabled,
-                      currentNextStep: currentStep, previousStep: previousStep,
+                      currentNextStep: currentNextStep, previousStep: previousStep,
                       roomId: self.roomIdSubject)
     }
     
