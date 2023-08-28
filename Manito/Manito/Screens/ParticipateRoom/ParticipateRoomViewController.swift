@@ -17,7 +17,7 @@ final class ParticipateRoomViewController: BaseViewController {
     
     // MARK: - property
     
-    private let checkRoomInfoService: RoomProtocol = RoomAPI(apiService: APIService())
+    private let roomParticipationRepository: RoomParticipationRepository = RoomParticipationRepositoryImpl()
     
     // MARK: - init
     
@@ -59,18 +59,15 @@ final class ParticipateRoomViewController: BaseViewController {
     private func dispatchInviteCode(_ code : String) {
         Task {
             do {
-                let data = try await self.checkRoomInfoService
-                    .dispatchVerification(body: code)
-                if let info = data {
-                    guard let id = info.id else { return }
-                    let viewController = CheckRoomViewController()
-                    viewController.modalPresentationStyle = .overFullScreen
-                    viewController.modalTransitionStyle = .crossDissolve
-                    viewController.verification = info
-                    viewController.roomId = id
-                    
-                    self.present(viewController, animated: true)
-                }
+                let data = try await self.roomParticipationRepository.dispatchVerifyCode(code: code)
+                guard let id = data.id else { return }
+                let viewController = CheckRoomViewController()
+                viewController.modalPresentationStyle = .overFullScreen
+                viewController.modalTransitionStyle = .crossDissolve
+                viewController.roomInfo = data
+                viewController.roomId = id
+
+                self.present(viewController, animated: true)
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {

@@ -20,7 +20,7 @@ class BaseViewController: UIViewController {
         return button
     }()
     
-    private let tokenService: TokenAPI = TokenAPI(apiService: APIService())
+    private let tokenRepository: TokenRepository = TokenRepositoryImpl()
     
     // MARK: - init
     

@@ -11,7 +11,7 @@ import SnapKit
 
 protocol CreateRoomViewDelegate: AnyObject {
     func didTapCloseButton()
-    func requestCreateRoom(roomInfo: RoomInfo, colorIndex: Int)
+    func requestCreateRoom(roomInfo: RoomListItem, colorIndex: Int)
 }
 
 final class CreateRoomView: UIView {
@@ -234,12 +234,14 @@ final class CreateRoomView: UIView {
                break
         case .chooseCharacter:
             let colorIndex = self.characterCollectionView.characterIndex
-            self.delegate?.requestCreateRoom(roomInfo: RoomInfo(id: nil,
-                                                                capacity: self.roomInfoView.capacity,
-                                                                title: self.roomInfoView.title,
-                                                                startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
-                                                                endDate: "20\(self.roomDateView.calendarView.getTempEndDate())",
-                                                                state: nil),
+            let roomInfo = RoomListItem(id: 0,
+                                        title: self.roomInfoView.title,
+                                        state: "",
+                                        participatingCount: 0,
+                                        capacity: self.roomInfoView.capacity,
+                                        startDate: "20\(self.roomDateView.calendarView.getTempStartDate())",
+                                        endDate: "20\(self.roomDateView.calendarView.getTempEndDate())")
+            self.delegate?.requestCreateRoom(roomInfo: roomInfo,
                                              colorIndex: colorIndex)
         }
     }
