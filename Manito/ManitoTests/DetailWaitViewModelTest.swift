@@ -30,6 +30,43 @@ final class DetailWaitViewModelTest: XCTestCase {
         self.cancellable = nil
     }
     
+    func testMakeCode() {
+        // given
+        let checkCode = "ABCDEF"
+        
+        // when
+        let code = self.viewModel.makeCode(roomInformation: RoomInfo.testRoom)
+        
+        // then
+        XCTAssertEqual(checkCode, code)
+    }
+    
+    func testMakeEditRoomInformation() {
+        // given
+        let checkRoom = RoomInfo.testRoom
+        let checkEditMode: DetailEditView.EditMode = .information
+        
+        // when
+        let editRoomInformation = self.viewModel.makeEditRoomInformation(roomInformation: checkRoom)
+        
+        // then
+        XCTAssertEqual(checkRoom, editRoomInformation.roomInformation)
+        XCTAssertEqual(checkEditMode, editRoomInformation.mode)
+    }
+    
+    func testMakeIsAdmin() {
+        // given
+        let checkIsStartDatePast = true
+        let checkIsAdmin = false
+        
+        // when
+        let passedStartDateAndIsOwner = self.viewModel.makeIsAdmin(roomInformation: RoomInfo.testRoom)
+        
+        // then
+        XCTAssertEqual(checkIsStartDatePast, passedStartDateAndIsOwner.passStartDate)
+        XCTAssertEqual(checkIsAdmin, passedStartDateAndIsOwner.isOwner)
+    }
+    
     func testMakeRoomInformation() {
         // given
         let checkRoom = RoomInfo.testRoom
