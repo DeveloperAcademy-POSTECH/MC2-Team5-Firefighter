@@ -114,7 +114,7 @@ extension SettingViewController: SettingViewDelegate {
                             as? SceneDelegate else { return }
                     sceneDelgate.moveToLoginViewController()
                 case .failure:
-                    print("error")
+                    self?.makeAlert(title: "실패", message: "회원탈퇴에 실패했습니다. 다시 시도하여주십시오.")
                 }
             }
         }
