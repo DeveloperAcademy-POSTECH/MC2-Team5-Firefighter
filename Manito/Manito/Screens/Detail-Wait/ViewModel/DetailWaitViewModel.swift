@@ -33,6 +33,22 @@ final class DetailWaitViewModel {
         let deleteMenuButtonDidTap: AnyPublisher<Void, Never>
         let leaveMenuButtonDidTap: AnyPublisher<Void, Never>
         let changeButtonDidTap: AnyPublisher<Void, Never>
+        
+        init(viewDidLoad: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
+             codeCopyButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
+             startButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
+             editMenuButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
+             deleteMenuButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
+             leaveMenuButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
+             changeButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher()) {
+            self.viewDidLoad = viewDidLoad
+            self.codeCopyButtonDidTap = codeCopyButtonDidTap
+            self.startButtonDidTap = startButtonDidTap
+            self.editMenuButtonDidTap = editMenuButtonDidTap
+            self.deleteMenuButtonDidTap = deleteMenuButtonDidTap
+            self.leaveMenuButtonDidTap = leaveMenuButtonDidTap
+            self.changeButtonDidTap = changeButtonDidTap
+        }
     }
     
     struct Output {
@@ -56,7 +72,7 @@ final class DetailWaitViewModel {
         let codeOutput = input.codeCopyButtonDidTap
             .map { [weak self] _ -> String in
                 guard let self else { return "" }
-                return self.makeCode()
+                return self.makeCode(roomInformation: self.roomInformationSubject.value)
             }
             .eraseToAnyPublisher()
         
@@ -70,7 +86,7 @@ final class DetailWaitViewModel {
         let editRoomInformationOutput = input.editMenuButtonDidTap
             .map { [weak self] _ -> EditRoomInformation in
                 guard let self else { return (RoomInfo.emptyRoom, .information) }
-                return self.makeEditRoomInformation()
+                return self.makeEditRoomInformation(roomInformation: self.roomInformationSubject.value)
             }
             .eraseToAnyPublisher()
         
@@ -92,7 +108,7 @@ final class DetailWaitViewModel {
             .delay(for: 0.5, scheduler: DispatchQueue.main)
             .map { [weak self] _ -> PassedStartDateAndIsOwner in
                 guard let self else { return (false, false) }
-                return self.makeIsAdmin()
+                return self.makeIsAdmin(roomInformation: self.roomInformationSubject.value)
             }
             .eraseToAnyPublisher()
         
@@ -127,20 +143,17 @@ final class DetailWaitViewModel {
         return self.roomInformationSubject.value
     }
     
-    private func makeCode() -> String {
-        let roomInformation = self.roomInformationSubject.value
+    private func makeCode(roomInformation: RoomInfo) -> String {
         guard let code = roomInformation.invitation.code else { return "" }
         return code
     }
     
-    private func makeEditRoomInformation() -> EditRoomInformation {
-        let roomInformation = self.roomInformationSubject.value
+    private func makeEditRoomInformation(roomInformation: RoomInfo) -> EditRoomInformation {
         let editMode: DetailEditView.EditMode = .information
         return (roomInformation, editMode)
     }
     
-    private func makeIsAdmin() -> PassedStartDateAndIsOwner {
-        let roomInformation = self.roomInformationSubject.value
+    private func makeIsAdmin(roomInformation: RoomInfo) -> PassedStartDateAndIsOwner {
         
         return (roomInformation.roomInformation.isStartDatePast, roomInformation.admin)
     }
