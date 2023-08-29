@@ -143,17 +143,17 @@ final class DetailWaitViewModel {
         return self.roomInformationSubject.value
     }
     
-    private func makeCode(roomInformation: RoomInfo) -> String {
+    func makeCode(roomInformation: RoomInfo) -> String {
         guard let code = roomInformation.invitation.code else { return "" }
         return code
     }
     
-    private func makeEditRoomInformation(roomInformation: RoomInfo) -> EditRoomInformation {
+    func makeEditRoomInformation(roomInformation: RoomInfo) -> EditRoomInformation {
         let editMode: DetailEditView.EditMode = .information
         return (roomInformation, editMode)
     }
     
-    private func makeIsAdmin(roomInformation: RoomInfo) -> PassedStartDateAndIsOwner {
+    func makeIsAdmin(roomInformation: RoomInfo) -> PassedStartDateAndIsOwner {
         
         return (roomInformation.roomInformation.isStartDatePast, roomInformation.admin)
     }
