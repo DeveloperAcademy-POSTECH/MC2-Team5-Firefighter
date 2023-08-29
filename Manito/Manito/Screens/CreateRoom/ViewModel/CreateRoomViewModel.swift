@@ -174,8 +174,8 @@ final class CreateRoomViewModel: ViewModelType {
                 let roomId = try await self.createRoomService.dispatchCreateRoom(room: CreatedRoomRequestDTO(room: CreatedRoomInfoRequestDTO(title: roomInfo.title,
                                                                                                                                              capacity: roomInfo.capacity,
                                                                                                                                              startDate: "20\(roomInfo.startDate)",
-                                                                                                                                             endDate: "20\(roomInfo.endDate)")
-                                                                                                             , member: MemberInfoRequestDTO(colorIndex: self.characterIndexSubject.value)))
+                                                                                                                                             endDate: "20\(roomInfo.endDate)"),
+                                                                                                             member: MemberInfoRequestDTO(colorIndex: self.characterIndexSubject.value)))
                 self.roomIdSubject.send(roomId)
             } catch(let error) {
                 guard let error = error as? NetworkError else { return }
