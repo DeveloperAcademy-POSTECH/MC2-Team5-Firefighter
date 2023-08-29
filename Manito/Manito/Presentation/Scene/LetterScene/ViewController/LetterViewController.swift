@@ -183,7 +183,7 @@ extension LetterViewController {
         }
 
         self.reloadMessageList(messages)
-        self.letterView.updateEmptyArea(with: messages)
+        self.letterView.updateEmptyAreaStatus(to: !messages.isEmpty)
     }
 
     private func updateLetterViewEmptyArea(with index: Int) {

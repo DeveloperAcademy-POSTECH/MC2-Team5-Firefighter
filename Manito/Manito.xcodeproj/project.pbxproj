@@ -658,7 +658,6 @@
 			children = (
 				B5B3C1592A41D69500AABD6F /* ViewControllers */,
 				B5B3C1582A41D67F00AABD6F /* Views */,
-				B5F5253228547CAF00614FF7 /* Cells */,
 				B5F5253328547EE000614FF7 /* UIComponents */,
 			);
 			path = Views;
@@ -733,6 +732,7 @@
 		B58CA3082A9CC3B300977592 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B58CA3192A9D992F00977592 /* Cell */,
 				B58CA3092A9CC3D700977592 /* UIComponent */,
 				B5706BF329B710FC0093D198 /* LetterView.swift */,
 			);
@@ -769,6 +769,14 @@
 				B5B3C15E2A41D6F400AABD6F /* LetterUsecase.swift */,
 			);
 			path = LetterScene;
+			sourceTree = "<group>";
+		};
+		B58CA3192A9D992F00977592 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		B5A085E42A972E5F00C8A98D /* Response */ = {
@@ -1090,14 +1098,6 @@
 				B5FEE9DC28C849B400DEA07E /* UIImageView+Cache.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		B5F5253228547CAF00614FF7 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		B5F5253328547EE000614FF7 /* UIComponents */ = {
