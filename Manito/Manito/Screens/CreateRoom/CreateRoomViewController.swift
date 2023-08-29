@@ -105,11 +105,9 @@ final class CreateRoomViewController: BaseViewController {
             })
             .store(in: &self.cancellable)
         
-        output.isOverMaxCount
-            .sink(receiveValue: { [weak self] isOverMaxCount in
-                if isOverMaxCount {
-                    self?.createRoomView.roomTitleView.updateTextFieldText(maxLength: self?.createRoomViewModel.maxCount ?? 0)
-                }
+        output.fixedTitleByMaxCount
+            .sink(receiveValue: { [weak self] fixedTitle in
+                self?.createRoomView.roomTitleView.updateTextFieldText(fixedTitle: fixedTitle)
             })
             .store(in: &self.cancellable)
         

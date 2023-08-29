@@ -39,7 +39,7 @@ final class CreateRoomViewModel: ViewModelType {
     
     struct Output {
         let title: CurrentValueSubject<String, Never>
-        let isOverMaxCount: AnyPublisher<Bool, Never>
+        let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let capacity: CurrentValueSubject<Int, Never>
         let dateRange: PassthroughSubject<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
@@ -49,18 +49,22 @@ final class CreateRoomViewModel: ViewModelType {
     }
     
     func transform(from input: Input) -> Output {
-        input.textFieldTextDidChanged
-            .sink(receiveValue: { [weak self] title in
-                self?.titleSubject.send(title)
-            })
-            .store(in: &self.cancellable)
-        
-        let isOverMaxCount = input.textFieldTextDidChanged
-            .map { [weak self] text -> Bool in
-                return self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
+        let fixedTitle = input.textFieldTextDidChanged
+            .map { [weak self] text -> String in
+                let isOverMaxCount = self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
+                
+                if isOverMaxCount {
+                    let endIndex = text.index(text.startIndex, offsetBy: self?.maxCount ?? 0)
+                    let fixedText = text[text.startIndex..<endIndex]
+                    self?.titleSubject.send(String(fixedText))
+                    return String(fixedText)
+                }
+                
+                self?.titleSubject.send(text)
+                return text
             }
             .eraseToAnyPublisher()
-    
+        
         input.sliderValueDidChanged
             .sink(receiveValue: { [weak self] capacity in
                 self?.capacitySubject.send(capacity)
@@ -117,7 +121,7 @@ final class CreateRoomViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         return Output(title: self.titleSubject,
-                      isOverMaxCount: isOverMaxCount,
+                      fixedTitleByMaxCount: fixedTitle,
                       capacity: self.capacitySubject,
                       dateRange: self.dateRangeSubject,
                       isEnabled: isEnabled,

@@ -73,13 +73,10 @@ final class InputTitleView: UIView {
         }
     }
     
-    func updateTextFieldText(maxLength: Int) {
-        guard let text = self.roomsNameTextField.text else { return }
-        let endIndex = text.index(text.startIndex, offsetBy: maxLength)
-        let fixedText = text[text.startIndex..<endIndex]
-            DispatchQueue.main.async {
-                self.roomsNameTextField.text = String(fixedText)
-            }
+    func updateTextFieldText(fixedTitle: String) {
+        DispatchQueue.main.async {
+            self.roomsNameTextField.text = String(fixedTitle)
+        }
     }
     
     func updateTitleCount(count: Int, maxLength: Int) {
