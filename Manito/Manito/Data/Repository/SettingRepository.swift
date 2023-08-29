@@ -26,7 +26,7 @@ final class SettingRepositoryImpl: SettingRepository {
     
     func deleteMember() async throws -> Int {
         let response = try await self.provider
-            .request(.deleteMember)
+            .request(.deleteUser)
         return response.statusCode
     }
 }
