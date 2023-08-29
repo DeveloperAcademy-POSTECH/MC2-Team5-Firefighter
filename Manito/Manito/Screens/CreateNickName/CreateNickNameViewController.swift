@@ -68,8 +68,9 @@ class CreateNickNameViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDelegation()
-        setupNotificationCenter()
+        self.setupDelegation()
+        self.setupNotificationCenter()
+        self.configureNavigationBar()
     }
     
     // MARK: - API
@@ -115,12 +116,17 @@ class CreateNickNameViewController: BaseViewController {
         }
     }
     
+    private func configureNavigationBar() {
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     // MARK: - Seletors
     
     @objc private func didTapDoneButton() {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
             UserData.setValue(nickname, forKey: .nickname)
+            UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
             requestNickname(nickname: NicknameDTO(nickname: nickname))
             presentMainViewController()
         }

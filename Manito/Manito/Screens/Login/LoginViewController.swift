@@ -106,9 +106,11 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                             UserDefaultHandler.setAccessToken(accessToken: data.accessToken ?? "")
                             UserDefaultHandler.setRefreshToken(refreshToken: data.refreshToken ?? "")
 
-                            guard data.nickname != nil else {
-                                self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
-                                return
+                            if let isNewMember = data.isNewMember {
+                                if isNewMember {
+                                    self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
+                                    return
+                                }
                             }
 
                             UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
