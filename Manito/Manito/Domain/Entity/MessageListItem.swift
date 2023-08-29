@@ -32,14 +32,10 @@ struct MessageListItem: Hashable {
     var isToday: Bool {
         return Date().letterDateToString == createdDate
     }
-    /// 쪽지의 날짜를 반환(당일이라면 "오늘" 반환)
-    var date: String {
-        return self.isToday ? "오늘" : createdDate
-    }
-    /// 쪽지에 해당하는 개별 미션 반환(없으면 nil 반환)
-    var mission: String? {
-        guard let mission = missionInfo?.content else { return nil }
-
+    /// 쪽지에 해당하는 개별 미션 반환(없으면 날짜 반환)
+    var mission: String {
+        let date = self.isToday ? "오늘" : createdDate
+        guard let mission = missionInfo?.content else { return date }
         return "\(date)의 개별미션\n[\(mission)]"
     }
 }

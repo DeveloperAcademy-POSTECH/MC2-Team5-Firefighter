@@ -222,7 +222,6 @@ extension LetterViewController {
         let letterCellRegistration = UICollectionView.CellRegistration<LetterCollectionViewCell, MessageListItem> {
             [weak self] cell, indexPath, item in
             cell.configureCell((mission: item.mission,
-                                date: item.date,
                                 content: item.content,
                                 imageURL: item.imageUrl,
                                 isTodayLetter: item.isToday,
