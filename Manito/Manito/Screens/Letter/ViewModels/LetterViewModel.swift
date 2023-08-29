@@ -32,7 +32,7 @@ final class LetterViewModel: ViewModelType {
     }
 
     struct Output {
-        let messages: AnyPublisher<[Message]?, Error>
+        let messages: AnyPublisher<[MessageListItem]?, Error>
         let index: AnyPublisher<Int, Never>
         let messageDetails: AnyPublisher<MessageDetails, Never>
         let reportDetails: AnyPublisher<ReportDetails, Never>
@@ -122,7 +122,7 @@ final class LetterViewModel: ViewModelType {
         return currentIndex
     }
 
-    private func fetchMessages(with type: MessageType) async throws -> [Message] {
+    private func fetchMessages(with type: MessageType) async throws -> [MessageListItem] {
         let roomId = self.messageDetails.roomId
 
         switch type {
@@ -140,12 +140,12 @@ extension LetterViewModel {
         return type.rawValue
     }
 
-    private func fetchSendMessages(roomId: String, type: MessageType) async throws -> [Message] {
+    private func fetchSendMessages(roomId: String, type: MessageType) async throws -> [MessageListItem] {
         let messages = try await self.service.fetchSendLetter(roomId: roomId)
         return self.insertReportState(type, in: messages)
     }
 
-    private func fetchReceivedMessages(roomId: String, type: MessageType) async throws -> [Message] {
+    private func fetchReceivedMessages(roomId: String, type: MessageType) async throws -> [MessageListItem] {
         let messages = try await self.service.fetchReceiveLetter(roomId: roomId)
         return self.insertReportState(type, in: messages)
     }
@@ -155,11 +155,7 @@ extension LetterViewModel {
         self.messageDetails.manitteeId = manitteeId
     }
 
-    private func insertReportState(_ type: MessageType, in messages: [Message]) -> [Message] {
-        return messages.map { item in
-            var item = item
-            item.canReport = (type == .received)
-            return item
-        }
+    private func insertReportState(_ type: MessageType, in messages: [MessageListItemDTO]) -> [MessageListItem] {
+        return messages.map { $0.toMessageListItem(canReport: (type == .received)) }
     }
 }

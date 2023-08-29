@@ -33,8 +33,7 @@ final class LetterHeaderView: UICollectionReusableView {
 
     var segmentedControlTapPublisher: AnyPublisher<Int, Never> {
         return self.segmentedControl.tapPublisher
-            .map { [weak self] in self?.segmentedControl.selectedSegmentIndex }
-            .map { $0! }
+            .compactMap { [weak self] in self?.segmentedControl.selectedSegmentIndex }
             .eraseToAnyPublisher()
     }
     

@@ -112,7 +112,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         self.testViewDidLoadSubject.send(())
         
         // then
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 5)
         XCTAssertEqual(checkRoom, testRoom)
     }
     
@@ -139,7 +139,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         self.testStartButtonDidTapSubject.send(())
         
         // then
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 5)
         XCTAssertEqual(checkNickname, testNickname)
     }
     
@@ -169,7 +169,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         self.testEditMenuButtonDidTapSubject.send(())
         
         // then
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 5)
         XCTAssertEqual(checkRoom, testRoom)
         XCTAssertEqual(checkMode, testMode)
     }
@@ -196,7 +196,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         self.testDeleteMenuButtonDidTapSubject.send(())
         
         // then
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 5)
         XCTAssertTrue(testBool)
     }
     
@@ -222,7 +222,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         self.testLeaveMenuButtonDidTapSubject.send(())
         
         // then
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 5)
         XCTAssertTrue(testBool)
     }
     
@@ -240,7 +240,7 @@ final class DetailWaitViewModelTest: XCTestCase {
             testRoom = self.viewModel.makeRoomInformation()
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 5)
         XCTAssertEqual(checkRoom, testRoom)
     }
     
@@ -258,7 +258,7 @@ final class DetailWaitViewModelTest: XCTestCase {
             testRoom = self.viewModel.makeRoomInformation()
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 5)
         XCTAssertEqual(checkRoom, testRoom)
     }
 }

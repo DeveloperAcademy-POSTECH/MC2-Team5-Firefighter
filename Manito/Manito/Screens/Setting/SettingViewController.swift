@@ -15,7 +15,7 @@ final class SettingViewController: BaseViewController {
     
     private let settingView: SettingView = SettingView()
     
-    private let settingService: SettingAPI = SettingAPI(apiService: APIService())
+    private let settingRepository: SettingRepository = SettingRepositoryImpl()
     
     // MARK: - init
     
@@ -52,12 +52,10 @@ final class SettingViewController: BaseViewController {
     private func requestDeleteMember(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
         Task {
             do {
-                let statusCode = try await settingService.deleteMember()
+                let statusCode = try await self.settingRepository.deleteMember()
                 switch statusCode {
                 case 200..<300: completionHandler(.success(()))
-                default:
-                    print(statusCode)
-                    completionHandler(.failure(.unknownError))
+                default: completionHandler(.failure(.unknownError))
                 }
             } catch NetworkError.serverError {
                 print("server Error")
@@ -108,10 +106,13 @@ extension SettingViewController: SettingViewDelegate {
     
     func withdrawalButtonDidTap() {
         self.makeRequestAlert(title: "경고", message: "회원탈퇴 시 지금까지 내용이 전부 삭제됩니다. \n 탈퇴 하시겠습니까?", okTitle: "탈퇴") { [weak self] _ in
-            self?.requestDeleteMember() { [weak self] result in
+            self?.requestDeleteMember() { result in
                 switch result {
                 case .success:
-                    self?.navigationController?.popViewController(animated: true)
+                    UserDefaultHandler.clearAllDataExcludingFcmToken()
+                    guard let sceneDelgate = UIApplication.shared.connectedScenes.first?.delegate
+                            as? SceneDelegate else { return }
+                    sceneDelgate.logout()
                 case .failure:
                     print("error")
                 }

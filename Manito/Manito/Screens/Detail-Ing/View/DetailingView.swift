@@ -417,23 +417,15 @@ final class DetailingView: UIView {
         navigationItem?.rightBarButtonItem = exitButton
     }
     
-    func updateDetailingView(room: Room) {
-        guard let state = room.roomInformation?.state,
-              let title = room.roomInformation?.title,
-              let startDate = room.roomInformation?.startDate,
-              let endDate = room.roomInformation?.endDate,
-              let manittee = room.manittee?.nickname,
-              let admin = room.admin,
-              let badgeCount = room.messages?.count
-        else { return }
-        self.roomType = RoomType.init(rawValue: state) ?? .PROCESSING
+    func updateDetailingView(room: RoomInfo) {
+        self.roomType = RoomType.init(rawValue: room.roomInformation.state) ?? .PROCESSING
         self.missionId = room.mission?.id?.description ?? ""
         DispatchQueue.main.async {
-            self.titleLabel.text = title
-            self.periodLabel.text = "\(startDate.subStringToDate()) ~ \(endDate.subStringToDate())"
-            self.manitteeAnimationLabel.text = manittee
-            self.setupBadge(count: badgeCount)
-            self.updateMissionEditButton(admin, type: self.roomType)
+            self.titleLabel.text = room.roomInformation.title
+            self.periodLabel.text = "\(room.roomInformation.startDate.subStringToDate()) ~ \(room.roomInformation.endDate.subStringToDate())"
+            self.manitteeAnimationLabel.text = room.manittee.nickname
+            self.setupBadge(count: room.messages?.count ?? 0)
+            self.updateMissionEditButton(room.admin, type: self.roomType)
             if self.roomType == .PROCESSING {
                 self.setupProcessingUI()
                 guard let missionContent = room.mission?.content,
@@ -442,13 +434,13 @@ final class DetailingView: UIView {
                 else { return }
                 self.missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
                 self.manittoNickname = manittoNickname
-                if !didView && !admin {
-                    self.delegate?.didNotShowManitteeView(manitteeName: manittee)
+                if !didView && !room.admin {
+                    self.delegate?.didNotShowManitteeView(manitteeName: room.manittee.nickname ?? "")
                 }
-                self.setupManittoOpenButton(date: endDate)
+                self.setupManittoOpenButton(date: room.roomInformation.endDate)
             } else {
                 self.setupPostUI()
-                self.setupExitButton(admin: admin)
+                self.setupExitButton(admin: room.admin)
             }
         }
     }

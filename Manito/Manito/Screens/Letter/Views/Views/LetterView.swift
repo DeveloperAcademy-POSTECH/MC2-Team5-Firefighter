@@ -103,7 +103,7 @@ final class LetterView: UIView {
         self.setupGuideView(in: viewController)
     }
 
-    func updateEmptyArea(with items: [Message]) {
+    func updateEmptyArea(with items: [MessageListItem]) {
         let isEmpty = items.isEmpty
         self.emptyLabel.isHidden = !isEmpty
     }
@@ -182,7 +182,7 @@ extension LetterView {
 // MARK: - UICollectionViewLayout
 extension LetterView {
     private func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { [weak self] index, environment -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .estimated(500)
@@ -197,7 +197,7 @@ extension LetterView {
 
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = ConstantSize.sectionContentInset
-            section.boundarySupplementaryItems = self.sectionHeader()
+            section.boundarySupplementaryItems = self?.sectionHeader() ?? []
             section.interGroupSpacing = ConstantSize.groupInterItemSpacing
 
             return section
