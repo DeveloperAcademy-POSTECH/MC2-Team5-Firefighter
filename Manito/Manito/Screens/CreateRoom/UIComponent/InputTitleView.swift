@@ -5,6 +5,7 @@
 //  Created by LeeSungHo on 2022/06/11.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -41,8 +42,8 @@ final class InputTitleView: UIView {
     
     // MARK: - property
     
-    var changeNextButtonEnableStatus: ((Bool) -> ())?
     private var maxLength: Int = 8
+    let textFieldPublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init
     
@@ -72,31 +73,19 @@ final class InputTitleView: UIView {
         }
     }
     
-    private func setCounter(count: Int) {
-        if count <= maxLength {
-            self.roomsTextLimitLabel.text = "\(count)/\(self.maxLength)"
-        } else {
-            self.roomsTextLimitLabel.text = "\(self.maxLength)/\(self.maxLength)"
+    func updateTextFieldText(fixedTitle: String) {
+        DispatchQueue.main.async {
+            self.roomsNameTextField.text = String(fixedTitle)
         }
     }
     
-    private func checkMaxLength(textField: UITextField, maxLength: Int) {
-        if let text = textField.text {
-            if text.count > maxLength {
-                let endIndex = text.index(text.startIndex, offsetBy: maxLength)
-                let fixedText = text[text.startIndex..<endIndex]
-                textField.text = fixedText + " "
-                
-                DispatchQueue.main.async {
-                    self.roomsNameTextField.text = String(fixedText)
-                }
-            }
+    func updateTitleCount(count: Int, maxLength: Int) {
+        if count > maxLength {
+            self.roomsTextLimitLabel.text = "\(maxLength)/\(maxLength)"
         }
-    }
-    
-    func textFieldText() -> String {
-        guard let text = self.roomsNameTextField.text else { return "" }
-        return text
+        else {
+            self.roomsTextLimitLabel.text = "\(count)/\(maxLength)"
+        }
     }
 }
 
@@ -106,10 +95,6 @@ extension InputTitleView: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        self.setCounter(count: textField.text?.count ?? 0)
-        self.checkMaxLength(textField: self.roomsNameTextField, maxLength: self.maxLength)
-        
-        let hasText = textField.hasText
-        self.changeNextButtonEnableStatus?(hasText)
+        self.textFieldPublisher.send(textField.text ?? "")
     }
 }
