@@ -96,7 +96,7 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func logoutButtonDidTap() {
-        self.makeRequestAlert(title: "로그아웃 하시겠습니까?", message: "", okTitle: "확인", cancelTitle: "취소", okAction: { _ in
+        self.makeRequestAlert(title: TextLiteral.settingViewControllerLogoutAlertTitle, message: "", okTitle: TextLiteral.confirm, cancelTitle: TextLiteral.cancel, okAction: { _ in
             UserDefaultHandler.clearAllDataExcludingFcmToken()
             guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
                     as? SceneDelegate else { return }
@@ -105,7 +105,7 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func withdrawalButtonDidTap() {
-        self.makeRequestAlert(title: "경고", message: "회원탈퇴 시 지금까지 내용이 전부 삭제됩니다. \n 탈퇴 하시겠습니까?", okTitle: "탈퇴") { [weak self] _ in
+        self.makeRequestAlert(title: TextLiteral.alert, message: TextLiteral.settingViewControllerWithdrawalMessage, okTitle: TextLiteral.settingViewControllerWithdrawal) { [weak self] _ in
             self?.requestDeleteMember() { result in
                 switch result {
                 case .success:
@@ -114,7 +114,7 @@ extension SettingViewController: SettingViewDelegate {
                             as? SceneDelegate else { return }
                     sceneDelgate.moveToLoginViewController()
                 case .failure:
-                    self?.makeAlert(title: "실패", message: "회원탈퇴에 실패했습니다. 다시 시도하여주십시오.")
+                    self?.makeAlert(title: TextLiteral.fail, message: TextLiteral.settingViewControllerFailMessage)
                 }
             }
         }
