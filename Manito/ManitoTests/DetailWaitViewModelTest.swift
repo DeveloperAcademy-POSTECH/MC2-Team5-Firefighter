@@ -44,7 +44,7 @@ final class DetailWaitViewModelTest: XCTestCase {
             leaveMenuButtonDidTap: testLeaveMenuButtonDidTapSubject.eraseToAnyPublisher(),
             changeButtonDidTap: testChangeButtonDidTapSubject.eraseToAnyPublisher())
         self.output = self.viewModel.transform(input)
-        self.viewModel.setRoomInformation(room: Room.testRoom)
+        self.viewModel.setRoomInformation(room: RoomInfo.testRoom)
     }
     
     override func tearDown() {
@@ -62,7 +62,7 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     func testMakeRoomInformation() {
         // given
-        let checkRoom = Room.testRoom
+        let checkRoom = RoomInfo.testRoom
         self.viewModel.setRoomInformation(room: checkRoom)
         
         // then
@@ -93,7 +93,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         // given
         let checkRoom = mockRoom
         let expectation = XCTestExpectation(description: "roomInformation test")
-        var testRoom = Room.emptyRoom
+        var testRoom = RoomInfo.emptyRoom
         
         // when
         self.output.roomInformation
@@ -145,10 +145,10 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     func testTransferEditRoom() {
         // given
-        let checkRoom = Room.testRoom
+        let checkRoom = RoomInfo.testRoom
         let checkMode: DetailEditView.EditMode = .information
         let expectation = XCTestExpectation(description: "editButton test")
-        var testRoom = Room.emptyRoom
+        var testRoom = RoomInfo.emptyRoom
         var testMode: DetailEditView.EditMode = .date
         
         // when
@@ -230,7 +230,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         // given
         let checkRoom = mockRoom
         let expectation = XCTestExpectation(description: "changeButton test")
-        var testRoom = Room.emptyRoom
+        var testRoom = RoomInfo.emptyRoom
         
         // when
         self.testChangeButtonDidTapSubject.send(())
@@ -248,7 +248,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         // given
         let checkRoom = mockRoom
         let expectation = XCTestExpectation(description: "viewDidLoad test")
-        var testRoom = Room.emptyRoom
+        var testRoom = RoomInfo.emptyRoom
         
         // when
         self.testViewDidLoadSubject.send()
@@ -264,34 +264,38 @@ final class DetailWaitViewModelTest: XCTestCase {
 }
 
 extension DetailWaitViewModelTest {
-    var mockRoom: Room {
-        return Room(roomInformation: RoomInfo(id: 10, capacity: 10, title: "목타이틀", startDate: "", endDate: "", state: ""),
-                             participants: Participants.testParticipants,
-                             manittee: Manittee.testManittee,
-                             manitto: Manitto.testManitto,
-                             invitation: Invitation.testInvitation,
-                             mission: Mission.testMission,
-                             admin: true,
-                             messages: Message1.testMessage)
+    var mockRoom: RoomInfo {
+        return RoomInfo(
+            roomInformation: RoomListItem(id: 10, title: "목타이틀", state: "", participatingCount: 10, capacity: 10, startDate: "", endDate: ""),
+            participants: ParticipantList.testParticipantList,
+            manittee: UserInfoDTO.testUserManitto,
+            manitto: UserInfoDTO.testUserManitto,
+            invitation: InvitationCodeDTO.testInvitationCodeDTO,
+            didViewRoulette: false,
+            mission: IndividualMissionDTO.testIndividualMissionDTO,
+            admin: false,
+            messages: MessageInfo.testMessageInfo)
     }
 }
 
 final class MockDetailWaitService: DetailWaitServicable {
     // FIXME: - network mocking 만들어야함.
-    func fetchWaitingRoomInfo(roomId: String) async throws -> Manito.Room {
-        let room = Room(roomInformation: RoomInfo(id: 10, capacity: 10, title: "목타이틀", startDate: "", endDate: "", state: ""),
-                        participants: Participants.testParticipants,
-                        manittee: Manittee.testManittee,
-                        manitto: Manitto.testManitto,
-                        invitation: Invitation.testInvitation,
-                        mission: Mission.testMission,
-                        admin: true,
-                        messages: Message1.testMessage)
+    func fetchWaitingRoomInfo(roomId: String) async throws -> Manito.RoomInfoDTO {
+        let room = RoomInfoDTO(
+            roomInformation: RoomListItemDTO(id: 10, title: "목타이틀", state: "", participatingCount: 5, capacity: 10, startDate: "", endDate: ""),
+            participants: ParticipantListDTO(count: 5, members: UserInfoDTO.testUserList),
+            manittee: UserInfoDTO.testUserManitto,
+            manitto: UserInfoDTO.testUserManitto,
+            invitation: InvitationCodeDTO.testInvitationCodeDTO,
+            didViewRoulette: false,
+            mission: IndividualMissionDTO.testIndividualMissionDTO,
+            admin: false,
+            messages: MessageInfo.testMessageInfo)
         return room
     }
     
-    func patchStartManitto(roomId: String) async throws -> Manito.Manittee {
-        return Manittee.testManittee
+    func patchStartManitto(roomId: String) async throws -> Manito.UserInfoDTO {
+        return UserInfoDTO.testUserManitto
     }
     
     func deleteRoom(roomId: String) async throws -> Int {
