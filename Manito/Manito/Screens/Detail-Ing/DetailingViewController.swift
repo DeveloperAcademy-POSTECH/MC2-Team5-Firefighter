@@ -149,8 +149,8 @@ final class DetailingViewController: BaseViewController {
                       let missionId = data.mission?.id
                 else { return }
                 // FIXME: - RoomType를 View에서 바로 빼오지 않고 다른 방식으로 구현해야 합니다.
-                let service = LetterService(repository: LetterRepositoryImpl())
-                let viewModel = LetterViewModel(service: service,
+                let usecase = LetterUsecaseImpl(repository: LetterRepositoryImpl())
+                let viewModel = LetterViewModel(usecase: usecase,
                                                 roomId: self.roomId,
                                                 mission: mission,
                                                 missionId: missionId.description,
@@ -241,8 +241,8 @@ extension DetailingViewController: DetailingDelegate {
                          mission: String,
                          missionId: String) {
         // FIXME: - RoomType를 View에서 바로 빼오지 않고 다른 방식으로 구현해야 합니다.
-        let service = LetterService(repository: LetterRepositoryImpl())
-        let viewModel = LetterViewModel(service: service,
+        let usecase = LetterUsecaseImpl(repository: LetterRepositoryImpl())
+        let viewModel = LetterViewModel(usecase: usecase,
                                         roomId: self.roomId,
                                         mission: mission,
                                         missionId: missionId.description,
