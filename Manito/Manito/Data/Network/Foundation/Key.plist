@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>Development URL</key>
-	<string>https://ckyeon.store/api</string>
+	<string>Development URL을 입력해주세요.</string>
 	<key>Production URL</key>
-	<string>https://dev.aenitto.shop/api</string>
+	<string>Production URL을 입력해주세요.</string>
 </dict>
 </plist>

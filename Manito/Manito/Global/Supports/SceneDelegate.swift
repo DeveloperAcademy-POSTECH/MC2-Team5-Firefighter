@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func logout() {
+    func moveToLoginViewController() {
         let viewController = UINavigationController(rootViewController: LoginViewController())
         viewController.navigationController?.navigationBar.isHidden = true
         window?.rootViewController = viewController

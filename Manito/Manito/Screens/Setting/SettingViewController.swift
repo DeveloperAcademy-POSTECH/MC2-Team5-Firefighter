@@ -100,7 +100,7 @@ extension SettingViewController: SettingViewDelegate {
             UserDefaultHandler.clearAllDataExcludingFcmToken()
             guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
                     as? SceneDelegate else { return }
-            sceneDelegate.logout()
+            sceneDelegate.moveToLoginViewController()
         })
     }
     
@@ -112,7 +112,7 @@ extension SettingViewController: SettingViewDelegate {
                     UserDefaultHandler.clearAllDataExcludingFcmToken()
                     guard let sceneDelgate = UIApplication.shared.connectedScenes.first?.delegate
                             as? SceneDelegate else { return }
-                    sceneDelgate.logout()
+                    sceneDelgate.moveToLoginViewController()
                 case .failure:
                     print("error")
                 }
