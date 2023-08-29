@@ -63,8 +63,7 @@ extension RoomInfo {
     }()
 }
 
-#if DEBUG
-extension RoomInfo {
+extension RoomInfo: Equatable {
     static let testRoom = RoomInfo(
         roomInformation: RoomListItem.testRoomListItem,
         participants: ParticipantList.testParticipantList,
@@ -77,4 +76,3 @@ extension RoomInfo {
         messages: MessageInfo.testMessageInfo
     )
 }
-#endif

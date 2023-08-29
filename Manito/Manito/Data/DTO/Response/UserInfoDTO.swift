@@ -12,8 +12,7 @@ struct UserInfoDTO: Decodable {
     let nickname: String?
 }
 
-#if DEBUG
-extension UserInfoDTO {
+extension UserInfoDTO: Equatable {
     static let testUserManittee = UserInfoDTO(id: "1", nickname: "테스트마니띠")
     static let testUserManitto = UserInfoDTO(id: "2", nickname: "테스트마니또")
     
@@ -25,4 +24,3 @@ extension UserInfoDTO {
         UserInfoDTO(id: "500", nickname: "유저5")
     ]
 }
-#endif

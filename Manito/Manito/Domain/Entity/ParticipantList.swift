@@ -18,11 +18,9 @@ extension ParticipantList {
     }
 }
 
-#if DEBUG
-extension ParticipantList {
+extension ParticipantList: Equatable {
     static let testParticipantList = ParticipantList(
         count: 5,
         members: UserInfoDTO.testUserList
     )
 }
-#endif

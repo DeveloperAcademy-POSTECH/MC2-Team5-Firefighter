@@ -54,16 +54,14 @@ extension RoomListItem {
     }
 }
 
-#if DEBUG
-extension RoomListItem {
+extension RoomListItem: Equatable {
     static let testRoomListItem = RoomListItem(
         id: 1,
         title: "테스트타이틀",
         state: "PRE",
-        participatingCount: 10,
+        participatingCount: 5,
         capacity: 5,
         startDate: "2023.01.01",
         endDate: "2023.01.05"
     )
 }
-#endif
