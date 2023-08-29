@@ -667,25 +667,25 @@
 		B54741E529A4945100B75BA3 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				B54741E629A4945A00B75BA3 /* Screens */,
+				B54741E629A4945A00B75BA3 /* Presentation */,
 			);
 			path = Error;
 			sourceTree = "<group>";
 		};
-		B54741E629A4945A00B75BA3 /* Screens */ = {
+		B54741E629A4945A00B75BA3 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				B54741E729A4947C00B75BA3 /* Letter */,
+				B54741E729A4947C00B75BA3 /* LetterScene */,
 			);
-			path = Screens;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
-		B54741E729A4947C00B75BA3 /* Letter */ = {
+		B54741E729A4947C00B75BA3 /* LetterScene */ = {
 			isa = PBXGroup;
 			children = (
 				B54741E929A494E200B75BA3 /* LetterImageError.swift */,
 			);
-			path = Letter;
+			path = LetterScene;
 			sourceTree = "<group>";
 		};
 		B57CB3022A763BB200474042 /* Packages */ = {
