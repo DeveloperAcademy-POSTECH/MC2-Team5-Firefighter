@@ -17,3 +17,12 @@ extension ParticipantList {
         return members.map { $0.nickname ?? "" }
     }
 }
+
+#if DEBUG
+extension ParticipantList {
+    static let testParticipantList = ParticipantList(
+        count: 5,
+        members: UserInfoDTO.testUserList
+    )
+}
+#endif

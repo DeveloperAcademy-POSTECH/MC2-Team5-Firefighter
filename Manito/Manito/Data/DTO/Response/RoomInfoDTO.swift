@@ -63,11 +63,29 @@ struct InvitationCodeDTO: Decodable {
     let code: String?
 }
 
+#if DEBUG
+extension InvitationCodeDTO {
+    static let testInvitationCodeDTO = InvitationCodeDTO(code: "ABCDEF")
+}
+#endif
+
 struct IndividualMissionDTO: Decodable, Hashable {
     let id: Int?
     let content: String?
 }
 
+#if DEBUG
+extension IndividualMissionDTO {
+    static let testIndividualMissionDTO = IndividualMissionDTO(id: 1, content: "테스트미션")
+}
+#endif
+
 struct MessageInfo: Decodable {
     let count: Int?
 }
+
+#if DEBUG
+extension MessageInfo {
+    static let testMessageInfo = MessageInfo(count: 3)
+}
+#endif

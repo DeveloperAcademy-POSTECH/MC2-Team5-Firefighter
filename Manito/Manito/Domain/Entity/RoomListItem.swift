@@ -53,3 +53,17 @@ extension RoomListItem {
         return (startDate, endDate)
     }
 }
+
+#if DEBUG
+extension RoomListItem {
+    static let testRoomListItem = RoomListItem(
+        id: 1,
+        title: "테스트타이틀",
+        state: "PRE",
+        participatingCount: 10,
+        capacity: 5,
+        startDate: "2023.01.01",
+        endDate: "2023.01.05"
+    )
+}
+#endif

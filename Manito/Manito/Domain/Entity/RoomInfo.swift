@@ -62,3 +62,19 @@ extension RoomInfo {
                         messages: nil)
     }()
 }
+
+#if DEBUG
+extension RoomInfo {
+    static let testRoom = RoomInfo(
+        roomInformation: RoomListItem.testRoomListItem,
+        participants: ParticipantList.testParticipantList,
+        manittee: UserInfoDTO.testUserManitto,
+        manitto: UserInfoDTO.testUserManitto,
+        invitation: InvitationCodeDTO.testInvitationCodeDTO,
+        didViewRoulette: false,
+        mission: IndividualMissionDTO.testIndividualMissionDTO,
+        admin: false,
+        messages: MessageInfo.testMessageInfo
+    )
+}
+#endif
