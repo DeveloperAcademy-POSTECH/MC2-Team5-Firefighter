@@ -36,6 +36,8 @@ enum TextLiteral {
     static let next: String = "다음"
     static let previous: String = "이전"
     static let errorAlertTitle: String = "오류 발생"
+    static let alert: String = "경고"
+    static let fail: String = "실패"
     
     // MARK: - SettingDeveloperInfo
     static let settingDeveloperInfoTitle: String = "개발자 정보"
@@ -48,6 +50,10 @@ enum TextLiteral {
     static let settingViewControllerHelpTitle: String = "문의하기"
     static let settingViewControllerLogoutTitle: String = "로그아웃"
     static let settingViewControllerWithdrawalTitle: String = "서비스 탈퇴"
+    static let settingViewControllerLogoutAlertTitle: String = "로그아웃 하시겠습니까?"
+    static let settingViewControllerWithdrawalMessage: String = "서비스 탈퇴 시 지금까지 내용이 전부 삭제됩니다. \n 탈퇴 하시겠습니까?"
+    static let settingViewControllerWithdrawal: String = "탈퇴"
+    static let settingViewControllerFailMessage: String = "서비스 탈퇴에 실패했습니다. 다시 시도해주세요."
     
     // MARK: - CreateNickNameViewController
     static let createNickNameViewControllerTitle: String = "닉네임 설정"

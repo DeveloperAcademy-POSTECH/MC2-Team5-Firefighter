@@ -34,8 +34,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func logout() {
-        window?.rootViewController = LoginViewController()
+    func moveToLoginViewController() {
+        let viewController = UINavigationController(rootViewController: LoginViewController())
+        window?.rootViewController = viewController
     }
     
     func changeRootViewWithLetterView(roomId: Int) {

@@ -11,6 +11,7 @@ import MTNetwork
 
 enum SettingEndPoint {
     case putUserInfo(nickname: NicknameDTO)
+    case deleteUser
 }
 
 extension SettingEndPoint: Requestable {
@@ -22,6 +23,8 @@ extension SettingEndPoint: Requestable {
         switch self {
         case .putUserInfo:
             return "/v1/members/nickname"
+        case .deleteUser:
+            return "/v1/members"
         }
     }
 
@@ -29,6 +32,8 @@ extension SettingEndPoint: Requestable {
         switch self {
         case .putUserInfo:
             return .put
+        case .deleteUser:
+            return .delete
         }
     }
 
@@ -36,6 +41,8 @@ extension SettingEndPoint: Requestable {
         switch self {
         case .putUserInfo(let nickname):
             return .requestJSONEncodable(nickname)
+        case .deleteUser:
+            return .requestPlain
         }
     }
     
