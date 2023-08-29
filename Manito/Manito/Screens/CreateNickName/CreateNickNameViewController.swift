@@ -68,8 +68,8 @@ class CreateNickNameViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDelegation()
-        setupNotificationCenter()
+        self.setupDelegation()
+        self.setupNotificationCenter()
     }
     
     // MARK: - API
@@ -121,6 +121,7 @@ class CreateNickNameViewController: BaseViewController {
         if let text = roomsNameTextField.text, !text.isEmpty {
             nickname = text
             UserData.setValue(nickname, forKey: .nickname)
+            UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
             requestNickname(nickname: NicknameDTO(nickname: nickname))
             presentMainViewController()
         }

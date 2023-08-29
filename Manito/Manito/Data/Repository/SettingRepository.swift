@@ -11,6 +11,7 @@ import MTNetwork
 
 protocol SettingRepository {
     func putUserInfo(nickname: NicknameDTO) async throws -> NicknameDTO
+    func deleteMember() async throws -> Int
 }
 
 final class SettingRepositoryImpl: SettingRepository {
@@ -21,5 +22,11 @@ final class SettingRepositoryImpl: SettingRepository {
         let response = try await self.provider
             .request(.putUserInfo(nickname: nickname))
         return try response.decode()
+    }
+    
+    func deleteMember() async throws -> Int {
+        let response = try await self.provider
+            .request(.deleteUser)
+        return response.statusCode
     }
 }
