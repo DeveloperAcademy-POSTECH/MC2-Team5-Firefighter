@@ -37,6 +37,7 @@ final class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLoginButton()
+        self.configureNavigationBar()
     }
 
     // MARK: - override
@@ -65,6 +66,10 @@ final class LoginViewController: BaseViewController {
     }
     
     // MARK: - func
+    
+    private func configureNavigationBar() {
+        self.navigationController?.navigationBar.isHidden = true
+    }
     
     private func setupLoginButton() {
         let action = UIAction { [weak self] _ in

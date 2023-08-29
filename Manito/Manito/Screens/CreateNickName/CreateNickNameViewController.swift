@@ -70,7 +70,6 @@ class CreateNickNameViewController: BaseViewController {
         super.viewDidLoad()
         self.setupDelegation()
         self.setupNotificationCenter()
-        self.configureNavigationBar()
     }
     
     // MARK: - API
@@ -114,10 +113,6 @@ class CreateNickNameViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
             $0.centerX.equalToSuperview()
         }
-    }
-    
-    private func configureNavigationBar() {
-        self.navigationController?.navigationBar.isHidden = true
     }
     
     // MARK: - Seletors
