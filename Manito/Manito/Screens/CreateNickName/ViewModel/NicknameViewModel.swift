@@ -97,10 +97,14 @@ final class NicknameViewModel {
     private func requestCreateNickname(nickname: NicknameDTO) {
         Task {
             do {
-                let data = try await self.nicknameService.putUserInfo(nickname: nickname)
-                print(data)
-                UserDefaultHandler.setNickname(nickname: data.nickname)
-                self.doneButtonSubject.send()
+                let statusCode = try await self.nicknameService.putUserInfo(nickname: nickname)
+                switch statusCode {
+                case 200..<300:
+                    UserDefaultHandler.setNickname(nickname: nickname.nickname)
+                    self.doneButtonSubject.send()
+                default:
+                    self.doneButtonSubject.send(completion: .failure(.unknownError))
+                }
             } catch(let error) {
                 guard let error = error as? NetworkError else { return }
                 self.doneButtonSubject.send(completion: .failure(error))

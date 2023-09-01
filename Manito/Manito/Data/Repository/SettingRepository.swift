@@ -10,7 +10,7 @@ import Foundation
 import MTNetwork
 
 protocol SettingRepository {
-    func putUserInfo(nickname: NicknameDTO) async throws -> NicknameDTO
+    func putUserInfo(nickname: NicknameDTO) async throws -> Int
     func deleteMember() async throws -> Int
 }
 
@@ -18,10 +18,10 @@ final class SettingRepositoryImpl: SettingRepository {
 
     private var provider = Provider<SettingEndPoint>()
 
-    func putUserInfo(nickname: NicknameDTO) async throws -> NicknameDTO {
+    func putUserInfo(nickname: NicknameDTO) async throws -> Int {
         let response = try await self.provider
             .request(.putUserInfo(nickname: nickname))
-        return try response.decode()
+        return response.statusCode
     }
     
     func deleteMember() async throws -> Int {

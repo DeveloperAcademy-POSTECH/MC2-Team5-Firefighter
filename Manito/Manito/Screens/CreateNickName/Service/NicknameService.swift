@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NicknameServicable {
-    func putUserInfo(nickname: NicknameDTO) async throws -> NicknameDTO
+    func putUserInfo(nickname: NicknameDTO) async throws -> Int
 }
 
 final class NicknameService: NicknameServicable {
@@ -19,10 +19,10 @@ final class NicknameService: NicknameServicable {
         self.repository = repository
     }
     
-    func putUserInfo(nickname: NicknameDTO) async throws -> NicknameDTO {
+    func putUserInfo(nickname: NicknameDTO) async throws -> Int {
         do {
-            let data = try await self.repository.putUserInfo(nickname: nickname)
-            return data
+            let statusCode = try await self.repository.putUserInfo(nickname: nickname)
+            return statusCode
         } catch NetworkError.serverError {
             throw NetworkError.serverError
         } catch NetworkError.clientError(let message) {
