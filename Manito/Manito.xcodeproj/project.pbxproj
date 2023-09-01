@@ -169,6 +169,8 @@
 		D71939532AA1C84900A73D6C /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939522AA1C84900A73D6C /* SettingService.swift */; };
 		D71939552AA1C85300A73D6C /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939542AA1C85300A73D6C /* SettingViewModel.swift */; };
 		D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939582AA2343E00A73D6C /* NicknameView.swift */; };
+		D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */; };
+		D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939602AA23F3B00A73D6C /* NicknameService.swift */; };
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
@@ -372,6 +374,8 @@
 		D71939522AA1C84900A73D6C /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
 		D71939542AA1C85300A73D6C /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		D71939582AA2343E00A73D6C /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
+		D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
+		D71939602AA23F3B00A73D6C /* NicknameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameService.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
@@ -516,8 +520,10 @@
 		7E0C5C342855B1EF00F698D1 /* CreateNickName */ = {
 			isa = PBXGroup;
 			children = (
-				7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */,
-				D71939582AA2343E00A73D6C /* NicknameView.swift */,
+				D719395A2AA23EF200A73D6C /* Service */,
+				D719395B2AA23EFC00A73D6C /* ViewModel */,
+				D719395C2AA23F0400A73D6C /* View */,
+				D719395D2AA23F0900A73D6C /* ViewControllers */,
 			);
 			path = CreateNickName;
 			sourceTree = "<group>";
@@ -1216,6 +1222,38 @@
 			path = ChangeNickname;
 			sourceTree = "<group>";
 		};
+		D719395A2AA23EF200A73D6C /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D71939602AA23F3B00A73D6C /* NicknameService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		D719395B2AA23EFC00A73D6C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D719395C2AA23F0400A73D6C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D71939582AA2343E00A73D6C /* NicknameView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D719395D2AA23F0900A73D6C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		D724AF5B287088110003F280 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
@@ -1514,6 +1552,7 @@
 				D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */,
 				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
+				D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */,
 				39BDDCC42A52BB4A005E0A71 /* DetailWaitService.swift in Sources */,
 				B5A086022A974B8100C8A98D /* RoomListItem.swift in Sources */,
 				B53A35CC2A96F99D00B720BC /* SettingRepository.swift in Sources */,
@@ -1588,6 +1627,7 @@
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
 				B53A35C42A96F50100B720BC /* DetailRoomRepository.swift in Sources */,
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
+				D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */,
 				CB7B23A828C4ECA8004A4CF3 /* Character.swift in Sources */,
 				B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */,
 				B5A085EC2A97314800C8A98D /* ParticipatedRoomInfoDTO.swift in Sources */,
