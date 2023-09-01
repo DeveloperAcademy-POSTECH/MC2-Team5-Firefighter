@@ -71,7 +71,6 @@ final class SettingViewController: BaseViewController {
     
     private func transformedOutput() -> SettingViewModel.Output {
         let input = SettingViewModel.Input(withdrawalButtonDidTap: self.settingView.withdrawalButtonPublisher.eraseToAnyPublisher())
-        
         return viewModel.transform(from: input)
     }
     
@@ -84,13 +83,17 @@ final class SettingViewController: BaseViewController {
                 case .failure(_):
                     self?.makeAlert(title: TextLiteral.fail, message: TextLiteral.settingViewControllerFailMessage)
                 }
-            } receiveValue: { _ in
-                UserDefaultHandler.clearAllDataExcludingFcmToken()
-                guard let sceneDelgate = UIApplication.shared.connectedScenes.first?.delegate
-                        as? SceneDelegate else { return }
-                sceneDelgate.moveToLoginViewController()
+            } receiveValue: { [weak self] _ in
+                self?.deleteUser()
             }
             .store(in: &self.cancellable)
+    }
+    
+    private func deleteUser() {
+        UserDefaultHandler.clearAllDataExcludingFcmToken()
+        guard let sceneDelgate = UIApplication.shared.connectedScenes.first?.delegate
+                as? SceneDelegate else { return }
+        sceneDelgate.moveToLoginViewController()
     }
 }
 
