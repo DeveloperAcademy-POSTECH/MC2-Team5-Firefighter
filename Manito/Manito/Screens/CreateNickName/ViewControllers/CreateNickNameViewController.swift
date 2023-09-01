@@ -5,19 +5,31 @@
 //  Created by LeeSungHo on 2022/06/12.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 
 class CreateNickNameViewController: BaseViewController {
     
-    private let settingRepository: SettingRepository = SettingRepositoryImpl()
-    private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.createNickNameViewControllerTitle)
-    
     // MARK: - property
     
+    private let viewModel: NicknameViewModel
+    private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.createNickNameViewControllerTitle)
+    
+    private var cancellable = Set<AnyCancellable>()
     
     // MARK: - init
+    
+    init(viewModel: NicknameViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     deinit {
         print("\(#file) is dead")
@@ -31,22 +43,7 @@ class CreateNickNameViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    // MARK: - API - 옮길예정
-    func requestNickname(nickname: NicknameDTO) {
-        Task {
-            do {
-                let data = try await self.settingRepository.putUserInfo(nickname: nickname)
-                UserDefaultHandler.setNickname(nickname: data.nickname)
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(message)")
-            }
-        }
+        self.bindViewModel()
     }
     
     // MARK: - override
@@ -54,16 +51,6 @@ class CreateNickNameViewController: BaseViewController {
     override func configureUI() {
         super.configureUI()
     }
-    
-//    @objc private func didTapDoneButton() {
-//        if let text = roomsNameTextField.text, !text.isEmpty {
-//            nickname = text
-//            UserData.setValue(nickname, forKey: .nickname)
-//            UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
-//            requestNickname(nickname: NicknameDTO(nickname: nickname))
-//            presentMainViewController()
-//        }
-//    }
     
     private func presentMainViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -79,4 +66,47 @@ class CreateNickNameViewController: BaseViewController {
     
     // MARK: - func
     
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transformedOutput() -> NicknameViewModel.Output {
+        let input = NicknameViewModel.Input(textFieldDidChanged: self.nicknameView.textFieldPublisher.eraseToAnyPublisher(),
+                                            doneButtonDidTap: self.nicknameView.doneButtonTapPublisher.eraseToAnyPublisher())
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: NicknameViewModel.Output) {
+        output.title
+            .sink { [weak self] text in
+                self?.nicknameView.updateTextCount(count: text.count, maxLength: self?.viewModel.maxCount ?? 0)
+            }
+            .store(in: &self.cancellable)
+        
+        output.fixedTitleByMaxCount
+            .sink { [weak self] fixedTitle in
+                self?.nicknameView.updateTextFieldText(fixedText: fixedTitle)
+            }
+            .store(in: &self.cancellable)
+        
+        output.isEnabled
+            .sink { [weak self] isEnabled in
+                self?.nicknameView.toggleDoneButton(isEnabled: isEnabled)
+            }
+            .store(in: &self.cancellable)
+
+        output.doneButton
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: TextLiteral.fail, message: "실패")
+                }
+            } receiveValue: { [weak self] _ in
+                self?.presentMainViewController()
+            }
+            .store(in: &self.cancellable)
+    }
 }

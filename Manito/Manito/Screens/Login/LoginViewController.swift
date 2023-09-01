@@ -113,7 +113,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
 
                             if let isNewMember = data.isNewMember {
                                 if isNewMember {
-                                    self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
+                                    self.navigationController?.pushViewController(CreateNickNameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
                                     return
                                 }
                             }

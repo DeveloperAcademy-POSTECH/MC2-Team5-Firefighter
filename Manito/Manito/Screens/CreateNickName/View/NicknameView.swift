@@ -5,6 +5,7 @@
 //  Created by 이성호 on 2023/09/02.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -57,6 +58,8 @@ final class NicknameView: UIView {
     
     private let title: String
     private let maxLength = 5
+    lazy var doneButtonTapPublisher = self.doneButton.tapPublisher
+    let textFieldPublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init
     
@@ -111,6 +114,25 @@ final class NicknameView: UIView {
         }
     }
     
+    func updateTextFieldText(fixedText: String) {
+        DispatchQueue.main.async {
+            self.nicknameTextField.text = String(fixedText)
+        }
+    }
+    
+    func updateTextCount(count: Int, maxLength: Int) {
+        if count > maxLength {
+            self.textLimitLabel.text = "\(maxLength)/\(maxLength)"
+        }
+        else {
+            self.textLimitLabel.text = "\(count)/\(maxLength)"
+        }
+    }
+    
+    func toggleDoneButton(isEnabled: Bool) {
+        self.doneButton.isDisabled = !isEnabled
+    }
+    
     // MARK: - selector
     
     @objc private func keyboardWillShow(notification:NSNotification) {
@@ -135,10 +157,6 @@ extension NicknameView: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        //        setCounter(count: textField.text?.count ?? 0)
-        //        checkMaxLength(textField: roomsNameTextField, maxLength: maxLength)
-        //
-        //        let hasText = roomsNameTextField.hasText
-        //        doneButton.isDisabled = !hasText
+        self.textFieldPublisher.send(textField.text ?? "")
     }
 }
