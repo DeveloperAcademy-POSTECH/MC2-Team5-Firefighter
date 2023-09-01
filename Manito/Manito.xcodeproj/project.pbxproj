@@ -166,6 +166,8 @@
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
 		CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */; };
 		D70220232A7A22EC0024BACD /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70220222A7A22EC0024BACD /* CreateRoomView.swift */; };
+		D71939532AA1C84900A73D6C /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939522AA1C84900A73D6C /* SettingService.swift */; };
+		D71939552AA1C85300A73D6C /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939542AA1C85300A73D6C /* SettingViewModel.swift */; };
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
@@ -366,6 +368,8 @@
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
 		CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewCell.swift; sourceTree = "<group>"; };
 		D70220222A7A22EC0024BACD /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
+		D71939522AA1C84900A73D6C /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
+		D71939542AA1C85300A73D6C /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
@@ -1175,15 +1179,41 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		D724AF5B287088110003F280 /* Setting */ = {
+		D71939502AA1C82100A73D6C /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				D7C4A1AE2A0E51F500C3AE4C /* View */,
-				D75ECB6E28A5EDC400A5B271 /* Component */,
-				D75ECB6D28A5EDBC00A5B271 /* Cell */,
+				D71939522AA1C84900A73D6C /* SettingService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		D71939512AA1C82F00A73D6C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D71939542AA1C85300A73D6C /* SettingViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D71939562AA1C86600A73D6C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
 				D724AF5C287088310003F280 /* SettingViewController.swift */,
 				D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */,
 				7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D724AF5B287088110003F280 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				D71939502AA1C82100A73D6C /* Service */,
+				D71939512AA1C82F00A73D6C /* ViewModel */,
+				D7C4A1AE2A0E51F500C3AE4C /* View */,
+				D75ECB6E28A5EDC400A5B271 /* UIComponent */,
+				D75ECB6D28A5EDBC00A5B271 /* Cell */,
+				D71939562AA1C86600A73D6C /* ViewControllers */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -1204,12 +1234,12 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		D75ECB6E28A5EDC400A5B271 /* Component */ = {
+		D75ECB6E28A5EDC400A5B271 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				D724AF5E28708D830003F280 /* ImageRowView.swift */,
 			);
-			path = Component;
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		D79E9D882A826D7900C031F0 /* ViewModel */ = {
@@ -1504,6 +1534,7 @@
 				B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
 				D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */,
+				D71939532AA1C84900A73D6C /* SettingService.swift in Sources */,
 				B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */,
 				B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */,
 				CB9592B52855D52700847751 /* CommonMissionView.swift in Sources */,
@@ -1521,6 +1552,7 @@
 				3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */,
 				B5A085EE2A9731F000C8A98D /* DailyMissionDTO.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
+				D71939552AA1C85300A73D6C /* SettingViewModel.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F5251C2851A19A00614FF7 /* BaseCollectionViewCell.swift in Sources */,
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
