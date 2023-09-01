@@ -828,6 +828,7 @@
 				D724AF5B287088110003F280 /* Setting */,
 				B50B1B28285AB7550080992C /* Splash */,
 				39C957CC2876E2BE00A04A2B /* Login */,
+				D71939572AA1C9A000A73D6C /* ChangeNickname */,
 				7E0C5C342855B1EF00F698D1 /* CreateNickName */,
 				B5F524E628519B0A00614FF7 /* Main */,
 				B50B1B3F285B047C0080992C /* Interaction */,
@@ -1200,9 +1201,16 @@
 			children = (
 				D724AF5C287088310003F280 /* SettingViewController.swift */,
 				D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */,
-				7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D71939572AA1C9A000A73D6C /* ChangeNickname */ = {
+			isa = PBXGroup;
+			children = (
+				7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */,
+			);
+			path = ChangeNickname;
 			sourceTree = "<group>";
 		};
 		D724AF5B287088110003F280 /* Setting */ = {
