@@ -5,6 +5,7 @@
 //  Created by 이성호 on 2023/05/12.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -52,6 +53,8 @@ final class SettingView: UIView {
     
     private var options: [Option] = []
     private weak var delegate: SettingViewDelegate?
+    
+    let withdrawalButtonPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
     

@@ -5,6 +5,7 @@
 //  Created by 이성호 on 2022/07/02.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -15,9 +16,22 @@ final class SettingViewController: BaseViewController {
     
     private let settingView: SettingView = SettingView()
     
-    private let settingRepository: SettingRepository = SettingRepositoryImpl()
+    // MARK: - property
+    
+    private var cancellable = Set<AnyCancellable>()
+    private let viewModel: SettingViewModel
     
     // MARK: - init
+    
+    init(viewModel: SettingViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     deinit {
         print("\(#file) is dead")
@@ -32,6 +46,7 @@ final class SettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
+        self.bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,22 +64,33 @@ final class SettingViewController: BaseViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = false
     }
     
-    private func requestDeleteMember(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let statusCode = try await self.settingRepository.deleteMember()
-                switch statusCode {
-                case 200..<300: completionHandler(.success(()))
-                default: completionHandler(.failure(.unknownError))
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transformedOutput() -> SettingViewModel.Output {
+        let input = SettingViewModel.Input(withdrawalButtonDidTap: self.settingView.withdrawalButtonPublisher.eraseToAnyPublisher())
+        
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: SettingViewModel.Output) {
+        output.deleteUser
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: TextLiteral.fail, message: TextLiteral.settingViewControllerFailMessage)
                 }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
+            } receiveValue: { _ in
+                UserDefaultHandler.clearAllDataExcludingFcmToken()
+                guard let sceneDelgate = UIApplication.shared.connectedScenes.first?.delegate
+                        as? SceneDelegate else { return }
+                sceneDelgate.moveToLoginViewController()
             }
-        }
+            .store(in: &self.cancellable)
     }
 }
 
@@ -106,17 +132,7 @@ extension SettingViewController: SettingViewDelegate {
     
     func withdrawalButtonDidTap() {
         self.makeRequestAlert(title: TextLiteral.alert, message: TextLiteral.settingViewControllerWithdrawalMessage, okTitle: TextLiteral.settingViewControllerWithdrawal) { [weak self] _ in
-            self?.requestDeleteMember() { result in
-                switch result {
-                case .success:
-                    UserDefaultHandler.clearAllDataExcludingFcmToken()
-                    guard let sceneDelgate = UIApplication.shared.connectedScenes.first?.delegate
-                            as? SceneDelegate else { return }
-                    sceneDelgate.moveToLoginViewController()
-                case .failure:
-                    self?.makeAlert(title: TextLiteral.fail, message: TextLiteral.settingViewControllerFailMessage)
-                }
-            }
+            self?.settingView.withdrawalButtonPublisher.send()
         }
     }
 }
