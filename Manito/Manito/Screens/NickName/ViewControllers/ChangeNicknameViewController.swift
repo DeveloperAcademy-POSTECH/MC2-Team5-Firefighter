@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-class ChangeNicknameViewController: BaseViewController {
+final class ChangeNicknameViewController: BaseViewController {
     
     // MARK: - property
     
