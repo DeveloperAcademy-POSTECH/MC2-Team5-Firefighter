@@ -125,12 +125,7 @@ final class NicknameView: UIView {
     }
     
     func updateTextCount(count: Int, maxLength: Int) {
-        if count > maxLength {
-            self.textLimitLabel.text = "\(maxLength)/\(maxLength)"
-        }
-        else {
-            self.textLimitLabel.text = "\(count)/\(maxLength)"
-        }
+        self.textLimitLabel.text = "\(count)/\(maxLength)"
     }
     
     func toggleDoneButton(isEnabled: Bool) {

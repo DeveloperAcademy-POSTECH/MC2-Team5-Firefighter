@@ -80,12 +80,7 @@ final class InputTitleView: UIView {
     }
     
     func updateTitleCount(count: Int, maxLength: Int) {
-        if count > maxLength {
-            self.roomsTextLimitLabel.text = "\(maxLength)/\(maxLength)"
-        }
-        else {
-            self.roomsTextLimitLabel.text = "\(count)/\(maxLength)"
-        }
+        self.roomsTextLimitLabel.text = "\(count)/\(maxLength)"
     }
 }
 
