@@ -12,7 +12,7 @@ struct RoomInfo {
     let participants: ParticipantList
     let manittee: UserInfo
     let manitto: UserInfo?
-    let invitation: InvitationCodeDTO
+    let invitation: InvitationCode
     let didViewRoulette: Bool?
     let mission: IndividualMissionDTO?
     let admin: Bool
@@ -55,7 +55,7 @@ extension RoomInfo {
                         participants: ParticipantList(count: 0, members: []),
                         manittee: UserInfo(id: "", nickname: ""),
                         manitto: UserInfo(id: "", nickname: ""),
-                        invitation: InvitationCodeDTO(code: ""),
+                        invitation: InvitationCode(code: ""),
                         didViewRoulette: false,
                         mission: nil,
                         admin: false,
@@ -69,7 +69,7 @@ extension RoomInfo: Equatable {
         participants: ParticipantList.testParticipantList,
         manittee: UserInfo.testUserManitto,
         manitto: UserInfo.testUserManitto,
-        invitation: InvitationCodeDTO.testInvitationCodeDTO,
+        invitation: InvitationCode.testInvitationCode,
         didViewRoulette: false,
         mission: IndividualMissionDTO.testIndividualMissionDTO,
         admin: false,

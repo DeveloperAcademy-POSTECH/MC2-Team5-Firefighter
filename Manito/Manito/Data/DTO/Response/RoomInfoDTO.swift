@@ -35,11 +35,14 @@ extension RoomInfoDTO {
     func toRoomInfo() -> RoomInfo {
         let roomInformation = self.roomInformation?.toRoomListItem()
         let participants = self.participants?.toParticipantList()
+        let manitteeUserInfo = self.manittee?.toUserInfo()
+        let manittoUserInfo = self.manitto?.toUserInfo()
+        let invitation = self.invitation?.toInvitationCode()
         return RoomInfo(roomInformation: roomInformation!,
                         participants: participants ?? ParticipantList(count: 0, members: []),
-                        manittee: self.manittee?.toUserInfo() ?? UserInfo(id: "", nickname: ""),
-                        manitto: self.manitto?.toUserInfo(),
-                        invitation: self.invitation ?? InvitationCodeDTO(code: ""),
+                        manittee: manitteeUserInfo ?? UserInfo(id: "", nickname: ""),
+                        manitto: manittoUserInfo,
+                        invitation: invitation ?? InvitationCode(code: ""),
                         didViewRoulette: self.didViewRoulette,
                         mission: self.mission,
                         admin: self.admin ?? false,
@@ -63,8 +66,10 @@ struct InvitationCodeDTO: Decodable {
     let code: String?
 }
 
-extension InvitationCodeDTO: Equatable {
-    static let testInvitationCodeDTO = InvitationCodeDTO(code: "ABCDEF")
+extension InvitationCodeDTO {
+    func toInvitationCode() -> InvitationCode {
+        return InvitationCode(code: self.code ?? "")
+    }
 }
 
 struct IndividualMissionDTO: Decodable, Hashable {

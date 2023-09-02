@@ -8,8 +8,8 @@
 import Foundation
 
 struct UserInfo: Decodable {
-    let id: String?
-    let nickname: String?
+    let id: String
+    let nickname: String
 }
 
 extension UserInfo: Equatable {

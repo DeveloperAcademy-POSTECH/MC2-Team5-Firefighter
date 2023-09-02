@@ -144,8 +144,7 @@ final class DetailWaitViewModel {
     }
     
     func makeCode(roomInformation: RoomInfo) -> String {
-        guard let code = roomInformation.invitation.code else { return "" }
-        return code
+        return roomInformation.invitation.code
     }
     
     func makeEditRoomInformation(roomInformation: RoomInfo) -> EditRoomInformation {

@@ -14,6 +14,6 @@ struct UserInfoDTO: Decodable {
 
 extension UserInfoDTO {
     func toUserInfo() -> UserInfo {
-        return UserInfo(id: self.id, nickname: self.nickname)
+        return UserInfo(id: self.id ?? "" , nickname: self.nickname ?? "")
     }
 }
