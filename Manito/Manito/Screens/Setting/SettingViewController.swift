@@ -15,6 +15,8 @@ final class SettingViewController: BaseViewController {
     
     private let settingView: SettingView = SettingView()
     
+    private let settingRepository: SettingRepository = SettingRepositoryImpl()
+    
     // MARK: - init
     
     deinit {
@@ -46,8 +48,25 @@ final class SettingViewController: BaseViewController {
     private func configureNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = false
     }
+    
+    private func requestDeleteMember(completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
+        Task {
+            do {
+                let statusCode = try await self.settingRepository.deleteMember()
+                switch statusCode {
+                case 200..<300: completionHandler(.success(()))
+                default: completionHandler(.failure(.unknownError))
+                }
+            } catch NetworkError.serverError {
+                print("server Error")
+            } catch NetworkError.encodingError {
+                print("encoding Error")
+            } catch NetworkError.clientError(let message) {
+                print("client Error: \(String(describing: message))")
+            }
+        }
+    }
 }
-
 
 // MARK: - Extensions
 
@@ -77,15 +96,27 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func logoutButtonDidTap() {
-        self.makeRequestAlert(title: "로그아웃 하시겠습니까?", message: "", okTitle: "확인", cancelTitle: "취소", okAction: { _ in
+        self.makeRequestAlert(title: TextLiteral.settingViewControllerLogoutAlertTitle, message: "", okTitle: TextLiteral.confirm, cancelTitle: TextLiteral.cancel, okAction: { _ in
             UserDefaultHandler.clearAllDataExcludingFcmToken()
             guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
                     as? SceneDelegate else { return }
-            sceneDelegate.logout()
+            sceneDelegate.moveToLoginViewController()
         })
     }
     
     func withdrawalButtonDidTap() {
-        //FIXME: api 연결 예정
+        self.makeRequestAlert(title: TextLiteral.alert, message: TextLiteral.settingViewControllerWithdrawalMessage, okTitle: TextLiteral.settingViewControllerWithdrawal) { [weak self] _ in
+            self?.requestDeleteMember() { result in
+                switch result {
+                case .success:
+                    UserDefaultHandler.clearAllDataExcludingFcmToken()
+                    guard let sceneDelgate = UIApplication.shared.connectedScenes.first?.delegate
+                            as? SceneDelegate else { return }
+                    sceneDelgate.moveToLoginViewController()
+                case .failure:
+                    self?.makeAlert(title: TextLiteral.fail, message: TextLiteral.settingViewControllerFailMessage)
+                }
+            }
+        }
     }
 }

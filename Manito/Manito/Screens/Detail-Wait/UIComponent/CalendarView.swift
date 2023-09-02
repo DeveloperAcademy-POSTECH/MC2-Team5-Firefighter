@@ -5,6 +5,7 @@
 //  Created by Mingwan Choi on 2022/06/16.
 //
 
+import Combine
 import UIKit
 
 import FSCalendar
@@ -74,6 +75,9 @@ final class CalendarView: UIView {
     private var tempEndDateText: String = ""
     var isFirstTap: Bool = false
     private weak var delegate: CalendarDelegate?
+    
+    let startDateTapPublisher = PassthroughSubject<String, Never>()
+    let endDateTapPublisher = PassthroughSubject<String, Never>()
 
     // MARK: - init
 
@@ -239,6 +243,8 @@ extension CalendarView: FSCalendarDelegate {
             calendar.reloadData()
         }
         
+        self.startDateTapPublisher.send(self.getTempStartDate())
+        self.endDateTapPublisher.send(self.getTempEndDate())
         self.setupButtonState()
     }
 

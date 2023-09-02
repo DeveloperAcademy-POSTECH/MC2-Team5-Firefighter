@@ -242,7 +242,7 @@ final class MainViewController: BaseViewController {
         let createRoom = UIAlertAction(title: TextLiteral.createRoom,
                                        style: .default,
                                        handler: { [weak self] _ in
-            let createVC = CreateRoomViewController()
+            let createVC = CreateRoomViewController(viewModel: CreateRoomViewModel(createRoomService: CreateRoomService(repository: RoomParticipationRepositoryImpl())))
             let navigationController = UINavigationController(rootViewController: createVC)
             navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {

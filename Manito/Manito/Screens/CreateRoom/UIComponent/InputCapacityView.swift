@@ -5,6 +5,7 @@
 //  Created by LeeSungHo on 2022/06/11.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -59,6 +60,8 @@ final class InputCapacityView: UIView {
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
+    
+    let sliderPublisher = PassthroughSubject<Int, Never>()
     
     // MARK: - init
     
@@ -120,16 +123,15 @@ final class InputCapacityView: UIView {
         }
     }
     
-    func sliderValue() -> Int {
-        let value = Int(self.personSlider.value)
-        return value
+    func updateCapacity(capacity: Int) {
+        self.personLabel.text = TextLiteral.x + " \(capacity)인"
     }
     
     // MARK: - selector
     
     @objc
     private func didSlideSlider(_ slider: UISlider) {
-        let value = slider.value
-        self.personLabel.text = TextLiteral.x + " \(Int(value))인"
+        let value = Int(slider.value)
+        self.sliderPublisher.send(value)
     }
 }
