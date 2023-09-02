@@ -24,18 +24,13 @@ protocol DetailingDelegate: AnyObject {
 
 final class DetailingView: UIView {
     
-    enum RoomType: String {
-        case PROCESSING
-        case POST
-    }
-    
     // MARK: - property
     
     private var isTappedManittee: Bool = false
     private var missionId: String = ""
     private var manittoNickname: String = ""
-    // FIXME: - roomType 상태를 View에서 가지고 있으면 안될 거 같습니다. 나중에 리팩토링하실 때 이 부분 신경써주세요!
-    var roomType: RoomType = .PROCESSING
+    // FIXME: - RoomStatus 상태를 View에서 가지고 있으면 안될 거 같습니다. 나중에 리팩토링하실 때 이 부분 신경써주세요!
+    var roomType: RoomStatus = .PROCESSING
     private weak var delegate: DetailingDelegate?
     
     // MARK: - component
@@ -418,14 +413,14 @@ final class DetailingView: UIView {
     }
     
     func updateDetailingView(room: RoomInfo) {
-        self.roomType = RoomType.init(rawValue: room.roomInformation.state) ?? .PROCESSING
+        self.roomType = room.roomInformation.state
         self.missionId = room.mission?.id?.description ?? ""
         DispatchQueue.main.async {
             self.titleLabel.text = room.roomInformation.title
             self.periodLabel.text = "\(room.roomInformation.startDate.subStringToDate()) ~ \(room.roomInformation.endDate.subStringToDate())"
             self.manitteeAnimationLabel.text = room.manittee.nickname
             self.setupBadge(count: room.messages?.count ?? 0)
-            self.updateMissionEditButton(room.admin, type: self.roomType)
+            self.updateMissionEditButton(room.admin, status: self.roomType)
             if self.roomType == .PROCESSING {
                 self.setupProcessingUI()
                 guard let missionContent = room.mission?.content,
@@ -505,8 +500,8 @@ final class DetailingView: UIView {
         self.manitteeAnimationLabel.alpha = value ? 1 : 0
     }
     
-    private func updateMissionEditButton(_ isAdmin: Bool, type: RoomType) {
-        if type == .POST {
+    private func updateMissionEditButton(_ isAdmin: Bool, status: RoomStatus) {
+        if status == .POST {
             self.pencilButton.isHidden = true
         }
         if !isAdmin {
