@@ -299,13 +299,13 @@ extension DetailWaitViewModelTest {
         return RoomInfo(
             roomInformation: RoomListItem(id: 10, title: "목타이틀", state: "", participatingCount: 10, capacity: 10, startDate: "", endDate: ""),
             participants: ParticipantList.testParticipantList,
-            manittee: UserInfoDTO.testUserManitto,
-            manitto: UserInfoDTO.testUserManitto,
-            invitation: InvitationCodeDTO.testInvitationCodeDTO,
+            manittee: UserInfo.testUserManittee,
+            manitto: UserInfo.testUserManitto,
+            invitation: InvitationCode.testInvitationCode,
             didViewRoulette: false,
-            mission: IndividualMissionDTO.testIndividualMissionDTO,
+            mission: IndividualMission.testIndividualMission,
             admin: false,
-            messages: MessageCountInfoDTO.testMessageInfo)
+            messages: MessageCountInfo.testMessageInfo)
     }
 }
 
@@ -314,19 +314,25 @@ final class MockDetailWaitService: DetailWaitServicable {
     func fetchWaitingRoomInfo(roomId: String) async throws -> Manito.RoomInfoDTO {
         let room = RoomInfoDTO(
             roomInformation: RoomListItemDTO(id: 10, title: "목타이틀", state: "", participatingCount: 10, capacity: 10, startDate: "", endDate: ""),
-            participants: ParticipantListDTO(count: 5, members: UserInfoDTO.testUserList),
-            manittee: UserInfoDTO.testUserManitto,
-            manitto: UserInfoDTO.testUserManitto,
-            invitation: InvitationCodeDTO.testInvitationCodeDTO,
+            participants: ParticipantListDTO(count: 5, members: [
+                UserInfoDTO(id: "100", nickname: "유저1"),
+                UserInfoDTO(id: "200", nickname: "유저2"),
+                UserInfoDTO(id: "300", nickname: "유저3"),
+                UserInfoDTO(id: "400", nickname: "유저4"),
+                UserInfoDTO(id: "500", nickname: "유저5")
+            ]),
+            manittee: UserInfoDTO(id: "1", nickname: "테스트마니띠"),
+            manitto: UserInfoDTO(id: "2", nickname: "테스트마니또"),
+            invitation: InvitationCodeDTO(code: "ABCDEF"),
             didViewRoulette: false,
-            mission: IndividualMissionDTO.testIndividualMissionDTO,
+            mission: IndividualMissionDTO(id: 1, content: "테스트미션"),
             admin: false,
-            messages: MessageCountInfoDTO.testMessageInfo)
+            messages: MessageCountInfoDTO(count: 3))
         return room
     }
     
     func patchStartManitto(roomId: String) async throws -> Manito.UserInfoDTO {
-        return UserInfoDTO.testUserManittee
+        return UserInfoDTO(id: "1", nickname: "테스트마니띠")
     }
     
     func deleteRoom(roomId: String) async throws -> Int {
