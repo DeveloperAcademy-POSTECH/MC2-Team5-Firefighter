@@ -421,6 +421,7 @@ final class DetailingView: UIView {
             self.manitteeAnimationLabel.text = room.manittee.nickname
             self.setupBadge(count: room.messages?.count ?? 0)
             self.updateMissionEditButton(room.admin, status: self.roomType)
+            // FIXME: - RoomStatus 내부에 Badge 설정하는 코드가 추가되어 있습니다. 해당 코드를 사용해서 뱃지 UI를 수정해주세요.
             if self.roomType == .PROCESSING {
                 self.setupProcessingUI()
                 guard let missionContent = room.mission?.content,
