@@ -1,8 +1,8 @@
 //
-//  CreateNickNameViewController.swift
+//  ChangeNickNameViewController.swift
 //  Manito
 //
-//  Created by LeeSungHo on 2022/06/12.
+//  Created by LeeSungHo on 2022/09/05.
 //
 
 import Combine
@@ -10,12 +10,12 @@ import UIKit
 
 import SnapKit
 
-class CreateNickNameViewController: BaseViewController {
+class ChangeNickNameViewController: BaseViewController {
     
     // MARK: - property
     
     private let viewModel: NicknameViewModel
-    private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.createNickNameViewControllerTitle)
+    private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.changeNickNameViewControllerTitle)
     
     private var cancellable = Set<AnyCancellable>()
     
@@ -46,18 +46,12 @@ class CreateNickNameViewController: BaseViewController {
         self.bindViewModel()
     }
     
-    private func presentMainViewController() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
-        viewController.modalPresentationStyle = .fullScreen
-        viewController.modalTransitionStyle = .crossDissolve
-        present(viewController, animated: true)
-    }
+    // MARK: - override
     
     override func endEditingView() {
         self.nicknameView.endEditingView()
     }
-    
+
     // MARK: - func
     
     private func bindViewModel() {
@@ -73,6 +67,12 @@ class CreateNickNameViewController: BaseViewController {
     }
     
     private func bindOutputToViewModel(_ output: NicknameViewModel.Output) {
+        output.nickname
+            .sink { [weak self] nickname in
+                self?.nicknameView.setupNickname(nickname: nickname)
+            }
+            .store(in: &self.cancellable)
+        
         output.title
             .sink { [weak self] text in
                 self?.nicknameView.updateTextCount(count: text.count, maxLength: self?.viewModel.maxCount ?? 0)
@@ -100,7 +100,7 @@ class CreateNickNameViewController: BaseViewController {
                     self?.makeAlert(title: TextLiteral.fail, message: "실패")
                 }
             } receiveValue: { [weak self] _ in
-                self?.presentMainViewController()
+                self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &self.cancellable)
     }

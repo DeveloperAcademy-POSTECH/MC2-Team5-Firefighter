@@ -133,6 +133,10 @@ final class NicknameView: UIView {
         self.doneButton.isDisabled = !isEnabled
     }
     
+    func setupNickname(nickname: String) {
+        self.nicknameTextField.text = nickname
+    }
+    
     // MARK: - selector
     
     @objc private func keyboardWillShow(notification:NSNotification) {

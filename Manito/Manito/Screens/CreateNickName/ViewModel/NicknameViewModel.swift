@@ -21,11 +21,13 @@ final class NicknameViewModel {
     private let doneButtonSubject = PassthroughSubject<Void, NetworkError>()
     
     struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
         let textFieldDidChanged: AnyPublisher<String, Never>
         let doneButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
+        let nickname: AnyPublisher<String, Never>
         let title: AnyPublisher<String, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
@@ -33,6 +35,13 @@ final class NicknameViewModel {
     }
     
     func transform(from input: Input) -> Output {
+        let nickname = input.viewDidLoad
+            .map { _ -> String in
+                let nickname = UserDefaultStorage.nickname
+                return nickname
+            }
+            .eraseToAnyPublisher()
+        
         let title = input.textFieldDidChanged
             .map { [weak self] text -> String in
                 self?.nicknameSubject.send(text)
@@ -66,7 +75,8 @@ final class NicknameViewModel {
             })
             .store(in: &self.cancellable)
         
-        return Output(title: title,
+        return Output(nickname: nickname,
+                      title: title,
                       fixedTitleByMaxCount: fixedTitle,
                       isEnabled: isEnabled,
                       doneButton: self.doneButtonSubject)
