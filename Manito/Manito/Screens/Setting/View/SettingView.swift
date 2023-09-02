@@ -47,7 +47,7 @@ final class SettingView: UIView {
         return button
     }()
     
-    private let imageRow: ImageRowView = ImageRowView()
+    private let imageRow: TopCharacterImageView = TopCharacterImageView()
     
     // MARK: - property
     
