@@ -154,7 +154,7 @@ final class DetailWaitView: UIView {
         }
     }
     
-    private func setupTitleViewData(title: String, state: String, dateRange: String) {
+    private func setupTitleViewData(title: String, state: RoomState, dateRange: String) {
         self.titleView.setStartState(state: state)
         self.titleView.setupLabelData(title: title, dateRange: dateRange)
     }
