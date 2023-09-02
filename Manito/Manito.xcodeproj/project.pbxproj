@@ -15,6 +15,7 @@
 		3904F4FC2AA3729300B6264F /* InvitationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FB2AA3729300B6264F /* InvitationCode.swift */; };
 		3904F4FE2AA3743C00B6264F /* IndividualMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FD2AA3743C00B6264F /* IndividualMission.swift */; };
 		3904F5002AA3754400B6264F /* MessageCountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FF2AA3754400B6264F /* MessageCountInfo.swift */; };
+		3904F5062AA37A3C00B6264F /* MockDetailWaitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F5052AA37A3C00B6264F /* MockDetailWaitService.swift */; };
 		3915D54B2A7516A2002D6C25 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3915D54A2A7516A2002D6C25 /* Key.plist */; };
 		3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915D54C2A7516E9002D6C25 /* Key+Extension.swift */; };
 		391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391612D729E9231B004AE982 /* DetailWaitView.swift */; };
@@ -216,6 +217,7 @@
 		3904F4FB2AA3729300B6264F /* InvitationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationCode.swift; sourceTree = "<group>"; };
 		3904F4FD2AA3743C00B6264F /* IndividualMission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualMission.swift; sourceTree = "<group>"; };
 		3904F4FF2AA3754400B6264F /* MessageCountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountInfo.swift; sourceTree = "<group>"; };
+		3904F5052AA37A3C00B6264F /* MockDetailWaitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailWaitService.swift; sourceTree = "<group>"; };
 		3915D54A2A7516A2002D6C25 /* Key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Key.plist; sourceTree = "<group>"; };
 		3915D54C2A7516E9002D6C25 /* Key+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key+Extension.swift"; sourceTree = "<group>"; };
 		391612D729E9231B004AE982 /* DetailWaitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitView.swift; sourceTree = "<group>"; };
@@ -421,6 +423,39 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		3904F5012AA379CA00B6264F /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				3904F5022AA379F100B6264F /* DetailWait */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		3904F5022AA379F100B6264F /* DetailWait */ = {
+			isa = PBXGroup;
+			children = (
+				3904F5042AA37A2C00B6264F /* Service */,
+				3904F5032AA37A2000B6264F /* ViewModel */,
+			);
+			path = DetailWait;
+			sourceTree = "<group>";
+		};
+		3904F5032AA37A2000B6264F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3904F5042AA37A2C00B6264F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				3904F5052AA37A3C00B6264F /* MockDetailWaitService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		391612D629E92308004AE982 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -450,7 +485,7 @@
 		398B1CBA2A12415C00DEFCEC /* ManitoTests */ = {
 			isa = PBXGroup;
 			children = (
-				395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */,
+				3904F5012AA379CA00B6264F /* Presentation */,
 			);
 			path = ManitoTests;
 			sourceTree = "<group>";
@@ -1390,6 +1425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */,
+				3904F5062AA37A3C00B6264F /* MockDetailWaitService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
