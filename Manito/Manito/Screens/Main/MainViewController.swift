@@ -377,20 +377,9 @@ extension MainViewController: UICollectionViewDataSource {
             cell.roomLabel.text = "\(title)"
             cell.dateLabel.text = "\(startDate) ~ \(endDate)"
             
-            switch roomStatus {
-            case .PRE:
-                cell.roomStateView.stateLabel.text = "대기중"
-                cell.roomStateView.stateLabel.textColor = .darkGrey001
-                cell.roomStateView.backgroundColor = .badgeBeige
-            case .PROCESSING:
-                cell.roomStateView.stateLabel.text = "진행중"
-                cell.roomStateView.stateLabel.textColor = .white
-                cell.roomStateView.backgroundColor = .mainRed
-            case .POST:
-                cell.roomStateView.stateLabel.text = "완료"
-                cell.roomStateView.stateLabel.textColor = .white
-                cell.roomStateView.backgroundColor = .grey002
-            }
+            cell.roomStateView.stateLabel.text = roomStatus.badgeTitle
+            cell.roomStateView.stateLabel.textColor = roomStatus.titleColor
+            cell.roomStateView.backgroundColor = roomStatus.badgeColor
             
             return cell
         }

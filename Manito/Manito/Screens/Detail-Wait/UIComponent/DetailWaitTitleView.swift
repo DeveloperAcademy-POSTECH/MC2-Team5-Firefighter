@@ -10,23 +10,6 @@ import UIKit
 import SnapKit
 
 final class DetailWaitTitleView: UIView {
-    
-    private enum StartStatus: String {
-        case waiting
-        case starting
-        case complete
-        
-        var status: String{
-            switch self {
-            case .waiting:
-                return TextLiteral.waiting
-            case .starting:
-                return TextLiteral.doing
-            case .complete:
-                return TextLiteral.cancel
-            }
-        }
-    }
 
     // MARK: - ui component
 
@@ -39,11 +22,11 @@ final class DetailWaitTitleView: UIView {
 
     private let startStautsLabel: UILabel = {
         let label = UILabel()
-        label.text = StartStatus.waiting.status
-        label.backgroundColor = .badgeBeige
+        label.text = RoomStatus.PRE.badgeTitle
+        label.backgroundColor = RoomStatus.PRE.badgeColor
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 11
-        label.textColor = .darkGrey001
+        label.textColor = RoomStatus.PRE.titleColor
         label.font = .font(.regular, ofSize: 13)
         label.textAlignment = .center
         return label
@@ -119,14 +102,7 @@ final class DetailWaitTitleView: UIView {
     }
     
     func setStartStatus(status: RoomStatus) {
-        switch status {
-        case .PRE:
-            self.startStautsLabel.text = StartStatus.waiting.status
-        case .PROCESSING:
-            self.startStautsLabel.text = StartStatus.starting.status
-        case .POST:
-            self.startStautsLabel.text = StartStatus.complete.status
-        }
+        self.startStautsLabel.text = status.badgeTitle
     }
     
     func setupLabelData(title: String, dateRange: String) {
