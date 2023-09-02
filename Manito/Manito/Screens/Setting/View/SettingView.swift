@@ -55,6 +55,7 @@ final class SettingView: UIView {
     private weak var delegate: SettingViewDelegate?
     
     let withdrawalButtonPublisher = PassthroughSubject<Void, Never>()
+    let logoutButtonPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
     

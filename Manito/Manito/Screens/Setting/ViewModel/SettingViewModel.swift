@@ -16,23 +16,35 @@ final class SettingViewModel {
     private var cancellable = Set<AnyCancellable>()
     
     private let deleteUserSubject = PassthroughSubject<Void, NetworkError>()
+    private let logoutSubject = PassthroughSubject<Void, Never>()
     
     struct Input {
         let withdrawalButtonDidTap: AnyPublisher<Void, Never>
+        let logoutButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
         let deleteUser: PassthroughSubject<Void, NetworkError>
+        let logout: PassthroughSubject<Void, Never>
     }
     
     func transform(from input: Input) -> Output {
         input.withdrawalButtonDidTap
             .sink(receiveValue: { [weak self] _ in
                 self?.requestDeleteUser()
+                UserDefaultHandler.clearAllDataExcludingFcmToken()
             })
             .store(in: &self.cancellable)
         
-        return Output(deleteUser: self.deleteUserSubject)
+        input.logoutButtonDidTap
+            .sink { [weak self] _ in
+                UserDefaultHandler.clearAllDataExcludingFcmToken()
+                self?.logoutSubject.send()
+            }
+            .store(in: &self.cancellable)
+        
+        return Output(deleteUser: self.deleteUserSubject,
+                      logout: self.logoutSubject)
     }
     
     // MARK: - init
