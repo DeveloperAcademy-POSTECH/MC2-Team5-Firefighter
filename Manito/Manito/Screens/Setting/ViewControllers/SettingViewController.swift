@@ -70,7 +70,8 @@ final class SettingViewController: BaseViewController {
     }
     
     private func transformedOutput() -> SettingViewModel.Output {
-        let input = SettingViewModel.Input(withdrawalButtonDidTap: self.settingView.withdrawalButtonPublisher.eraseToAnyPublisher())
+        let input = SettingViewModel.Input(withdrawalButtonDidTap: self.settingView.withdrawalButtonPublisher.eraseToAnyPublisher(),
+                                           logoutButtonDidTap: self.settingView.logoutButtonPublisher.eraseToAnyPublisher())
         return viewModel.transform(from: input)
     }
     
@@ -87,13 +88,25 @@ final class SettingViewController: BaseViewController {
                 self?.deleteUser()
             }
             .store(in: &self.cancellable)
+        
+        output.logout
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.logout()
+            }
+            .store(in: &self.cancellable)
     }
     
     private func deleteUser() {
-        UserDefaultHandler.clearAllDataExcludingFcmToken()
         guard let sceneDelgate = UIApplication.shared.connectedScenes.first?.delegate
                 as? SceneDelegate else { return }
         sceneDelgate.moveToLoginViewController()
+    }
+    
+    private func logout() {
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
+                as? SceneDelegate else { return }
+        sceneDelegate.moveToLoginViewController()
     }
 }
 
@@ -125,11 +138,8 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func logoutButtonDidTap() {
-        self.makeRequestAlert(title: TextLiteral.settingViewControllerLogoutAlertTitle, message: "", okTitle: TextLiteral.confirm, cancelTitle: TextLiteral.cancel, okAction: { _ in
-            UserDefaultHandler.clearAllDataExcludingFcmToken()
-            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
-                    as? SceneDelegate else { return }
-            sceneDelegate.moveToLoginViewController()
+        self.makeRequestAlert(title: TextLiteral.settingViewControllerLogoutAlertTitle, message: "", okTitle: TextLiteral.confirm, cancelTitle: TextLiteral.cancel, okAction: { [weak self] _ in
+            self?.settingView.logoutButtonPublisher.send()
         })
     }
     

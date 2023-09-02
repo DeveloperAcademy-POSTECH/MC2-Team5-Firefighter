@@ -172,7 +172,7 @@
 		D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */; };
 		D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939602AA23F3B00A73D6C /* NicknameService.swift */; };
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
-		D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* ImageRowView.swift */; };
+		D724AF5F28708D830003F280 /* TopCharacterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* TopCharacterImageView.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
 		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
@@ -377,7 +377,7 @@
 		D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		D71939602AA23F3B00A73D6C /* NicknameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameService.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		D724AF5E28708D830003F280 /* ImageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRowView.swift; sourceTree = "<group>"; };
+		D724AF5E28708D830003F280 /* TopCharacterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCharacterImageView.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
 		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
@@ -1278,7 +1278,7 @@
 		D75ECB6E28A5EDC400A5B271 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
-				D724AF5E28708D830003F280 /* ImageRowView.swift */,
+				D724AF5E28708D830003F280 /* TopCharacterImageView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1540,8 +1540,8 @@
 				B5A085F22A9732E800C8A98D /* MemoryDTO.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */,
 				D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */,
+				D724AF5F28708D830003F280 /* TopCharacterImageView.swift in Sources */,
 				7EA25C2728C4FEA800746AEA /* ChangeNicknameViewController.swift in Sources */,
-				D724AF5F28708D830003F280 /* ImageRowView.swift in Sources */,
 				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
 				D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */,
