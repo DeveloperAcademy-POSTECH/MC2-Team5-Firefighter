@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct InvitationCode: Decodable {
+struct InvitationCode {
     let code: String
 }
 

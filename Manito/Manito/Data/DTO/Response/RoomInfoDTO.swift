@@ -39,6 +39,7 @@ extension RoomInfoDTO {
         let manittoUserInfo = self.manitto?.toUserInfo()
         let invitation = self.invitation?.toInvitationCode()
         let mission = self.mission?.toIndividualMission()
+        let messages = self.messages?.toMessageCountInfo()
         return RoomInfo(roomInformation: roomInformation!,
                         participants: participants ?? ParticipantList(count: 0, members: []),
                         manittee: manitteeUserInfo ?? UserInfo(id: "", nickname: ""),
@@ -47,7 +48,7 @@ extension RoomInfoDTO {
                         didViewRoulette: self.didViewRoulette,
                         mission: mission ?? IndividualMission(id: 0, content: ""),
                         admin: self.admin ?? false,
-                        messages: self.messages)
+                        messages: messages ?? MessageCountInfo(count: 0))
     }
 }
 
@@ -89,5 +90,7 @@ struct MessageCountInfoDTO: Decodable {
 }
 
 extension MessageCountInfoDTO: Equatable {
-    static let testMessageInfo = MessageCountInfoDTO(count: 3)
+    func toMessageCountInfo() -> MessageCountInfo {
+        return MessageCountInfo(count: self.count ?? 0)
+    }
 }
