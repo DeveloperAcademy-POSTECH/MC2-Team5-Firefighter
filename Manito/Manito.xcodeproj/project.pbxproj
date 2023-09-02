@@ -11,6 +11,7 @@
 		333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF669285864CE0039F77F /* MemoryViewController.swift */; };
 		33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDF5612856E03800564211 /* FriendListViewController.swift */; };
 		39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39018F4128C4708A00C78DBA /* UIButton+Extension.swift */; };
+		3904F4FA2AA36F4F00B6264F /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4F92AA36F4F00B6264F /* UserInfo.swift */; };
 		3915D54B2A7516A2002D6C25 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3915D54A2A7516A2002D6C25 /* Key.plist */; };
 		3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915D54C2A7516E9002D6C25 /* Key+Extension.swift */; };
 		391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391612D729E9231B004AE982 /* DetailWaitView.swift */; };
@@ -208,6 +209,7 @@
 		333BF669285864CE0039F77F /* MemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
 		33BDF5612856E03800564211 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		39018F4128C4708A00C78DBA /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		3904F4F92AA36F4F00B6264F /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3915D54A2A7516A2002D6C25 /* Key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Key.plist; sourceTree = "<group>"; };
 		3915D54C2A7516E9002D6C25 /* Key+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key+Extension.swift"; sourceTree = "<group>"; };
 		391612D729E9231B004AE982 /* DetailWaitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitView.swift; sourceTree = "<group>"; };
@@ -728,6 +730,7 @@
 				B5A086012A974B8100C8A98D /* RoomListItem.swift */,
 				B5A085FB2A97470400C8A98D /* RoomInfo.swift */,
 				B5A086032A974D2000C8A98D /* ParticipantList.swift */,
+				3904F4F92AA36F4F00B6264F /* UserInfo.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1470,6 +1473,7 @@
 				391B3003286198C200421F1D /* Size.swift in Sources */,
 				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
+				3904F4FA2AA36F4F00B6264F /* UserInfo.swift in Sources */,
 				39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */,
 				B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */,
 				7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */,

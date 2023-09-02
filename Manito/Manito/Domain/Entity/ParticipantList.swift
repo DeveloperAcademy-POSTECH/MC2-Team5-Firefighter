@@ -9,7 +9,7 @@ import Foundation
 
 struct ParticipantList: Decodable {
     let count: Int
-    let members: [UserInfoDTO]
+    let members: [UserInfo]
 }
 
 extension ParticipantList {
@@ -21,6 +21,6 @@ extension ParticipantList {
 extension ParticipantList: Equatable {
     static let testParticipantList = ParticipantList(
         count: 5,
-        members: UserInfoDTO.testUserList
+        members: UserInfo.testUserList
     )
 }

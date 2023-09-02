@@ -37,8 +37,8 @@ extension RoomInfoDTO {
         let participants = self.participants?.toParticipantList()
         return RoomInfo(roomInformation: roomInformation!,
                         participants: participants ?? ParticipantList(count: 0, members: []),
-                        manittee: self.manittee ?? UserInfoDTO(id: "", nickname: ""),
-                        manitto: self.manitto,
+                        manittee: self.manittee?.toUserInfo() ?? UserInfo(id: "", nickname: ""),
+                        manitto: self.manitto?.toUserInfo(),
                         invitation: self.invitation ?? InvitationCodeDTO(code: ""),
                         didViewRoulette: self.didViewRoulette,
                         mission: self.mission,
@@ -55,7 +55,7 @@ struct ParticipantListDTO: Decodable {
 extension ParticipantListDTO {
     func toParticipantList() -> ParticipantList {
         return ParticipantList(count: self.count ?? 0,
-                               members: self.members ?? [])
+                               members: self.members?.compactMap { $0.toUserInfo() } ?? [])
     }
 }
 
