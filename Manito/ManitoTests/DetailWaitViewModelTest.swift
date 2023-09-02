@@ -101,7 +101,7 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     func testTransferRoomInformation() {
         // given
-        let checkRoom = mockRoom
+        let checkRoom = RoomInfo.testRoom
         let expectation = XCTestExpectation(description: "roomInformation test")
         var testRoom = RoomInfo.emptyRoom
         let testViewDidLoadSubject = PassthroughSubject<Void, Never>()
@@ -253,7 +253,7 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     func testTransferChnageButtonDidTap() {
         // given
-        let checkRoom = mockRoom
+        let checkRoom = RoomInfo.testRoom
         let expectation = XCTestExpectation(description: "changeButton test")
         var testRoom = RoomInfo.emptyRoom
         let testChangeButtonDidTapSubject = PassthroughSubject<Void, Never>()
@@ -274,7 +274,7 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     func testTransferViewDidLoad() {
         // given
-        let checkRoom = mockRoom
+        let checkRoom = RoomInfo.testRoom
         let expectation = XCTestExpectation(description: "viewDidLoad test")
         var testRoom = RoomInfo.emptyRoom
         let testViewDidLoadSubject = PassthroughSubject<Void, Never>()
@@ -294,26 +294,11 @@ final class DetailWaitViewModelTest: XCTestCase {
     }
 }
 
-extension DetailWaitViewModelTest {
-    var mockRoom: RoomInfo {
-        return RoomInfo(
-            roomInformation: RoomListItem(id: 10, title: "목타이틀", state: "", participatingCount: 10, capacity: 10, startDate: "", endDate: ""),
-            participants: ParticipantList.testParticipantList,
-            manittee: UserInfo.testUserManittee,
-            manitto: UserInfo.testUserManitto,
-            invitation: InvitationCode.testInvitationCode,
-            didViewRoulette: false,
-            mission: IndividualMission.testIndividualMission,
-            admin: false,
-            messages: MessageCountInfo.testMessageInfo)
-    }
-}
-
 final class MockDetailWaitService: DetailWaitServicable {
     // FIXME: - network mocking 만들어야함.
     func fetchWaitingRoomInfo(roomId: String) async throws -> Manito.RoomInfoDTO {
         let room = RoomInfoDTO(
-            roomInformation: RoomListItemDTO(id: 10, title: "목타이틀", state: "", participatingCount: 10, capacity: 10, startDate: "", endDate: ""),
+            roomInformation: RoomListItemDTO(id: 1, title: "테스트타이틀", state: "PRE", participatingCount: 5, capacity: 5, startDate: "2023.01.01", endDate: "2023.01.05"),
             participants: ParticipantListDTO(count: 5, members: [
                 UserInfoDTO(id: "100", nickname: "유저1"),
                 UserInfoDTO(id: "200", nickname: "유저2"),

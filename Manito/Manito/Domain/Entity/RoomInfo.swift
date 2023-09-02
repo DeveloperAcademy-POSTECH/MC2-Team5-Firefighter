@@ -67,7 +67,7 @@ extension RoomInfo: Equatable {
     static let testRoom = RoomInfo(
         roomInformation: RoomListItem.testRoomListItem,
         participants: ParticipantList.testParticipantList,
-        manittee: UserInfo.testUserManitto,
+        manittee: UserInfo.testUserManittee,
         manitto: UserInfo.testUserManitto,
         invitation: InvitationCode.testInvitationCode,
         didViewRoulette: false,
