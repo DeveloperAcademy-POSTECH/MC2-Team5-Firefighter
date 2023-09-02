@@ -25,7 +25,7 @@ extension RoomListItemDTO {
     func toRoomListItem() -> RoomListItem {
         return RoomListItem(id: self.id ?? 0,
                             title: self.title ?? "",
-                            state: self.state ?? "",
+                            state: self.state ?? "PRE",
                             participatingCount: self.participatingCount,
                             capacity: self.capacity ?? 0,
                             startDate: self.startDate ?? "",
