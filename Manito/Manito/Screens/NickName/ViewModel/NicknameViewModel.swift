@@ -10,6 +10,9 @@ import Foundation
 
 final class NicknameViewModel {
     
+    typealias Counts = (textCount: Int, maxCount: Int)
+    typealias NicknameMaxCount = (nickname: String, maxCount: Int)
+    
     // MARK: - property
     
     let maxCount: Int = 5
@@ -27,25 +30,26 @@ final class NicknameViewModel {
     }
     
     struct Output {
-        let isSetNickname: AnyPublisher<String, Never>
-        let isNewNickname: AnyPublisher<String, Never>
+        let nicknameMaxCount: AnyPublisher<NicknameMaxCount, Never>
+        let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
         let doneButton: PassthroughSubject<Void, NetworkError>
     }
     
     func transform(from input: Input) -> Output {
-        let isSetNickname = input.viewDidLoad
-            .map { _ -> String in
+        let nicknameMaxCount = input.viewDidLoad
+            .map { [weak self] _ -> NicknameMaxCount in
                 let nickname = UserDefaultStorage.nickname
-                return nickname
+                return NicknameMaxCount(nickname, self!.maxCount)
             }
             .eraseToAnyPublisher()
         
-        let isNewNickname = input.textFieldDidChanged
-            .map { [weak self] text -> String in
+        let counts = input.textFieldDidChanged
+            .map { [weak self] text -> Counts in
                 self?.nicknameSubject.send(text)
-                return text
+                
+                return Counts(text.count, self!.maxCount)
             }
             .eraseToAnyPublisher()
         
@@ -75,8 +79,8 @@ final class NicknameViewModel {
             })
             .store(in: &self.cancellable)
         
-        return Output(isSetNickname: isSetNickname,
-                      isNewNickname: isNewNickname,
+        return Output(nicknameMaxCount: nicknameMaxCount,
+                      counts: counts,
                       fixedTitleByMaxCount: fixedTitle,
                       isEnabled: isEnabled,
                       doneButton: self.doneButtonSubject)
