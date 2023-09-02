@@ -12,7 +12,7 @@ struct UserInfo {
     let nickname: String
 }
 
-extension UserInfo: Equatable {
+extension UserInfo: Hashable {
     static let testUserManittee = UserInfo(id: "1", nickname: "테스트마니띠")
     static let testUserManitto = UserInfo(id: "2", nickname: "테스트마니또")
     

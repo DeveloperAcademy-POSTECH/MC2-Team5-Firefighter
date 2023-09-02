@@ -18,7 +18,7 @@ extension ParticipantList {
     }
 }
 
-extension ParticipantList: Equatable {
+extension ParticipantList: Hashable {
     static let testParticipantList = ParticipantList(
         count: 5,
         members: UserInfo.testUserList
