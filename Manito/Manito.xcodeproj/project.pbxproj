@@ -13,6 +13,7 @@
 		39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39018F4128C4708A00C78DBA /* UIButton+Extension.swift */; };
 		3904F4FA2AA36F4F00B6264F /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4F92AA36F4F00B6264F /* UserInfo.swift */; };
 		3904F4FC2AA3729300B6264F /* InvitationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FB2AA3729300B6264F /* InvitationCode.swift */; };
+		3904F4FE2AA3743C00B6264F /* IndividualMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FD2AA3743C00B6264F /* IndividualMission.swift */; };
 		3915D54B2A7516A2002D6C25 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3915D54A2A7516A2002D6C25 /* Key.plist */; };
 		3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915D54C2A7516E9002D6C25 /* Key+Extension.swift */; };
 		391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391612D729E9231B004AE982 /* DetailWaitView.swift */; };
@@ -212,6 +213,7 @@
 		39018F4128C4708A00C78DBA /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		3904F4F92AA36F4F00B6264F /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3904F4FB2AA3729300B6264F /* InvitationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationCode.swift; sourceTree = "<group>"; };
+		3904F4FD2AA3743C00B6264F /* IndividualMission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualMission.swift; sourceTree = "<group>"; };
 		3915D54A2A7516A2002D6C25 /* Key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Key.plist; sourceTree = "<group>"; };
 		3915D54C2A7516E9002D6C25 /* Key+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key+Extension.swift"; sourceTree = "<group>"; };
 		391612D729E9231B004AE982 /* DetailWaitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitView.swift; sourceTree = "<group>"; };
@@ -734,6 +736,7 @@
 				B5A086032A974D2000C8A98D /* ParticipantList.swift */,
 				3904F4F92AA36F4F00B6264F /* UserInfo.swift */,
 				3904F4FB2AA3729300B6264F /* InvitationCode.swift */,
+				3904F4FD2AA3743C00B6264F /* IndividualMission.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1429,6 +1432,7 @@
 				B5A086002A97496900C8A98D /* MessageListItemDTO.swift in Sources */,
 				7E15F67E28B35B3D00441305 /* TextLiteral.swift in Sources */,
 				B5B3C16F2A42B37000AABD6F /* UIViewController+Combine.swift in Sources */,
+				3904F4FE2AA3743C00B6264F /* IndividualMission.swift in Sources */,
 				B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */,
 				B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */,
 				B53A35CE2A96FA7A00B720BC /* LoginRepository.swift in Sources */,
