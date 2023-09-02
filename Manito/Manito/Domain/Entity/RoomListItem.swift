@@ -10,7 +10,7 @@ import Foundation
 struct RoomListItem {
     let id: Int
     let title: String
-    let state: RoomState
+    let state: RoomStatus
     let participatingCount: Int?
     let capacity: Int
     let startDate: String
@@ -31,7 +31,7 @@ struct RoomListItem {
         self.capacity = capacity
         self.startDate = startDate
         self.endDate = endDate
-        self.state = RoomState(rawValue: state) ?? .PRE
+        self.state = RoomStatus(rawValue: state) ?? .PRE
     }
 }
 

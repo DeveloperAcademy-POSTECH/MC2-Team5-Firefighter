@@ -118,8 +118,8 @@ final class DetailWaitTitleView: UIView {
         }
     }
     
-    func setStartState(state: RoomState) {
-        switch state {
+    func setStartStatus(status: RoomStatus) {
+        switch status {
         case .PRE:
             self.startStautsLabel.text = StartStatus.waiting.status
         case .PROCESSING:
