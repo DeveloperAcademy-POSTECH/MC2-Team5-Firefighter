@@ -305,7 +305,7 @@ extension DetailWaitViewModelTest {
             didViewRoulette: false,
             mission: IndividualMissionDTO.testIndividualMissionDTO,
             admin: false,
-            messages: MessageInfo.testMessageInfo)
+            messages: MessageCountInfoDTO.testMessageInfo)
     }
 }
 
@@ -321,7 +321,7 @@ final class MockDetailWaitService: DetailWaitServicable {
             didViewRoulette: false,
             mission: IndividualMissionDTO.testIndividualMissionDTO,
             admin: false,
-            messages: MessageInfo.testMessageInfo)
+            messages: MessageCountInfoDTO.testMessageInfo)
         return room
     }
     

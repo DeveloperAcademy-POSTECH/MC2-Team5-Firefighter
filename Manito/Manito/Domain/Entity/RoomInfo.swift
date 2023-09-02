@@ -16,7 +16,7 @@ struct RoomInfo {
     let didViewRoulette: Bool?
     let mission: IndividualMissionDTO?
     let admin: Bool
-    let messages: MessageInfo?
+    let messages: MessageCountInfoDTO?
 }
 
 extension RoomInfo {
@@ -73,6 +73,6 @@ extension RoomInfo: Equatable {
         didViewRoulette: false,
         mission: IndividualMissionDTO.testIndividualMissionDTO,
         admin: false,
-        messages: MessageInfo.testMessageInfo
+        messages: MessageCountInfoDTO.testMessageInfo
     )
 }

@@ -16,7 +16,7 @@ struct RoomInfoDTO: Decodable {
     let didViewRoulette: Bool?
     let mission: IndividualMissionDTO?
     let admin: Bool?
-    let messages: MessageInfo?
+    let messages: MessageCountInfoDTO?
 
     enum CodingKeys: String, CodingKey {
         case roomInformation = "room"
@@ -76,10 +76,10 @@ extension IndividualMissionDTO: Equatable {
     static let testIndividualMissionDTO = IndividualMissionDTO(id: 1, content: "테스트미션")
 }
 
-struct MessageInfo: Decodable {
+struct MessageCountInfoDTO: Decodable {
     let count: Int?
 }
 
-extension MessageInfo: Equatable {
-    static let testMessageInfo = MessageInfo(count: 3)
+extension MessageCountInfoDTO: Equatable {
+    static let testMessageInfo = MessageCountInfoDTO(count: 3)
 }
