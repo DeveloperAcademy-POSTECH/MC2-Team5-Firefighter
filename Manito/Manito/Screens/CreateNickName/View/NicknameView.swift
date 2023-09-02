@@ -40,9 +40,8 @@ final class NicknameView: UIView {
         textField.delegate = self
         return textField
     }()
-    private lazy var textLimitLabel: UILabel = {
+    private let textLimitLabel: UILabel = {
         let label = UILabel()
-        label.text = "0/\(maxLength)"
         label.font = .font(.regular, ofSize: 20)
         label.textColor = .grey002
         return label
@@ -57,7 +56,6 @@ final class NicknameView: UIView {
     // MARK: - property
     
     private let title: String
-    private let maxLength = 5
     lazy var doneButtonTapPublisher = self.doneButton.tapPublisher
     let textFieldPublisher = PassthroughSubject<String, Never>()
     

@@ -69,6 +69,7 @@ class ChangeNickNameViewController: BaseViewController {
     private func bindOutputToViewModel(_ output: NicknameViewModel.Output) {
         output.nickname
             .sink { [weak self] nickname in
+                self?.nicknameView.updateTextCount(count: nickname.count, maxLength: self?.viewModel.maxCount ?? 0)
                 self?.nicknameView.setupNickname(nickname: nickname)
             }
             .store(in: &self.cancellable)
