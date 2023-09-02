@@ -67,6 +67,7 @@ final class NicknameView: UIView {
         self.title = title
         super.init(frame: .zero)
         self.setupLayout()
+        self.setupNotificationCenter()
     }
     
     @available(*, unavailable)
@@ -79,7 +80,7 @@ final class NicknameView: UIView {
     private func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).inset(66)
+            $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
             $0.leading.equalTo(self.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
         }
         
@@ -106,6 +107,11 @@ final class NicknameView: UIView {
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func configureNavigationItem(_ navigationController: UINavigationController) {
+        navigationController.isNavigationBarHidden = false
+        navigationController.navigationBar.isHidden = false
     }
     
     func endEditingView() {

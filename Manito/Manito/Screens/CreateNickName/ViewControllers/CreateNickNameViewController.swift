@@ -43,6 +43,8 @@ class CreateNickNameViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureNavigationController()
+        self.setupBackButton()
         self.bindViewModel()
     }
     
@@ -58,7 +60,26 @@ class CreateNickNameViewController: BaseViewController {
         self.nicknameView.endEditingView()
     }
     
+    override func removeBarButtonItemOffset(with view: UIView, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
+        let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
+        offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
+        offsetView.addSubview(view)
+        return offsetView
+    }
+    
     // MARK: - func
+    
+    private func configureNavigationController() {
+        guard let navigationController = self.navigationController else { return }
+        self.nicknameView.configureNavigationItem(navigationController)
+    }
+    
+    private func setupBackButton() {
+        let leftOffsetBackButton = removeBarButtonItemOffset(with: UIView(), offsetX: 10)
+        let emptyView = makeBarButtonItem(with: leftOffsetBackButton)
+
+        navigationItem.leftBarButtonItem = emptyView
+    }
     
     private func bindViewModel() {
         let output = self.transformedOutput()
