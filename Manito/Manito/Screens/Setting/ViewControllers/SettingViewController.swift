@@ -138,14 +138,21 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func logoutButtonDidTap() {
-        self.makeRequestAlert(title: TextLiteral.settingViewControllerLogoutAlertTitle, message: "", okTitle: TextLiteral.confirm, cancelTitle: TextLiteral.cancel, okAction: { [weak self] _ in
+        self.makeRequestAlert(title: TextLiteral.settingViewControllerLogoutAlertTitle,
+                              message: "",
+                              okTitle: TextLiteral.confirm,
+                              cancelTitle: TextLiteral.cancel,
+                              okAction: { [weak self] _ in
             self?.settingView.logoutButtonPublisher.send()
         })
     }
     
     func withdrawalButtonDidTap() {
-        self.makeRequestAlert(title: TextLiteral.alert, message: TextLiteral.settingViewControllerWithdrawalMessage, okTitle: TextLiteral.settingViewControllerWithdrawal) { [weak self] _ in
+        self.makeRequestAlert(title: TextLiteral.alert,
+                              message: TextLiteral.settingViewControllerWithdrawalMessage,
+                              okTitle: TextLiteral.settingViewControllerWithdrawal,
+                              okAction: { [weak self] _ in
             self?.settingView.withdrawalButtonPublisher.send()
-        }
+        })
     }
 }
