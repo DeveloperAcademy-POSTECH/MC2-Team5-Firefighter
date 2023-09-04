@@ -10,13 +10,13 @@ import Foundation
 struct RoomInfo {
     let roomInformation: RoomListItem
     let participants: ParticipantList
-    let manittee: UserInfoDTO
-    let manitto: UserInfoDTO?
-    let invitation: InvitationCodeDTO
+    let manittee: UserInfo
+    let manitto: UserInfo?
+    let invitation: InvitationCode
     let didViewRoulette: Bool?
-    let mission: IndividualMissionDTO?
+    let mission: IndividualMission?
     let admin: Bool
-    let messages: MessageInfo?
+    let messages: MessageCountInfo?
 }
 
 extension RoomInfo {
@@ -53,12 +53,26 @@ extension RoomInfo {
                                     endDate: "")
         return RoomInfo(roomInformation: roomList,
                         participants: ParticipantList(count: 0, members: []),
-                        manittee: UserInfoDTO(id: "", nickname: ""),
-                        manitto: UserInfoDTO(id: "", nickname: ""),
-                        invitation: InvitationCodeDTO(code: ""),
+                        manittee: UserInfo(id: "", nickname: ""),
+                        manitto: UserInfo(id: "", nickname: ""),
+                        invitation: InvitationCode(code: ""),
                         didViewRoulette: false,
                         mission: nil,
                         admin: false,
                         messages: nil)
     }()
+}
+
+extension RoomInfo: Equatable {
+    static let testRoom = RoomInfo(
+        roomInformation: RoomListItem.testRoomListItem,
+        participants: ParticipantList.testParticipantList,
+        manittee: UserInfo.testUserManittee,
+        manitto: UserInfo.testUserManitto,
+        invitation: InvitationCode.testInvitationCode,
+        didViewRoulette: false,
+        mission: IndividualMission.testIndividualMission,
+        admin: false,
+        messages: MessageCountInfo.testMessageInfo
+    )
 }

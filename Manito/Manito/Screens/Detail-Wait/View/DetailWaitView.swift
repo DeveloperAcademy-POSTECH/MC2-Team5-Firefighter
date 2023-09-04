@@ -82,7 +82,7 @@ final class DetailWaitView: UIView {
     
     // MARK: - property
     
-    private var userArray: [UserInfoDTO] = [] {
+    private var userArray: [UserInfo] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.listTableView.reloadData()

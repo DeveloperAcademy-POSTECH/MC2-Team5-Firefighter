@@ -12,7 +12,7 @@ import SnapKit
 
 final class LetterCollectionViewCell: BaseCollectionViewCell {
 
-    typealias ConfigurationData = (mission: String?, date: String, content: String?, imageURL: String?, isTodayLetter: Bool, canReport: Bool?)
+    typealias ConfigurationData = (mission: String, content: String?, imageURL: String?, isTodayLetter: Bool, canReport: Bool?)
 
     private enum ConstantSize {
         static let contentSpacing: CGFloat = 10
@@ -141,12 +141,6 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
 // MARK: - Public - func
 extension LetterCollectionViewCell {
     func configureCell(_ data: ConfigurationData) {
-        if let mission = data.mission {
-            self.missionLabel.text = mission
-        } else {
-            self.missionLabel.text = data.date
-        }
-
         if let content = data.content {
             self.contentLabel.text = content
             self.contentLabel.addLabelSpacing()
@@ -162,6 +156,7 @@ extension LetterCollectionViewCell {
             self.photoImageView.isHidden = true
         }
 
+        self.missionLabel.text = data.mission
         self.missionLabel.textColor = data.isTodayLetter ? .subOrange : .grey003
         self.reportButton.isHidden = !(data.canReport ?? false)
     }
