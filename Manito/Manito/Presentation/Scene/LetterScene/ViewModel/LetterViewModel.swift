@@ -43,20 +43,20 @@ final class LetterViewModel: ViewModelType {
 
     private var cancelBag: Set<AnyCancellable> = Set()
 
-    private let service: LetterServicable
+    private let usecase: LetterUsecase
     private var messageDetails: MessageDetails
     private let roomState: RoomState
     private let messageType: MessageType
 
     // MARK: - init
 
-    init(service: LetterServicable,
+    init(usecase: LetterUsecase,
          roomId: String,
          mission: String,
          missionId: String,
          roomState: String,
          messageType: MessageType) {
-        self.service = service
+        self.usecase = usecase
         self.messageDetails = MessageDetails(roomId, mission, missionId, "")
         self.roomState = RoomState(rawValue: roomState)!
         self.messageType = messageType
@@ -97,8 +97,8 @@ final class LetterViewModel: ViewModelType {
 
         let reportPublisher = input.reportButtonDidTap
             .map { [weak self] content -> ReportDetails in
-                self?.service.loadNickname()
-                return ((self?.service.nickname)!, content)
+                self?.usecase.loadNickname()
+                return ((self?.usecase.nickname)!, content)
             }
             .eraseToAnyPublisher()
 
@@ -141,17 +141,17 @@ extension LetterViewModel {
     }
 
     private func fetchSendMessages(roomId: String, type: MessageType) async throws -> [MessageListItem] {
-        let messages = try await self.service.fetchSendLetter(roomId: roomId)
+        let messages = try await self.usecase.fetchSendLetter(roomId: roomId)
         return self.insertReportState(type, in: messages)
     }
 
     private func fetchReceivedMessages(roomId: String, type: MessageType) async throws -> [MessageListItem] {
-        let messages = try await self.service.fetchReceiveLetter(roomId: roomId)
+        let messages = try await self.usecase.fetchReceiveLetter(roomId: roomId)
         return self.insertReportState(type, in: messages)
     }
 
     private func loadMessageDetails() {
-        guard let manitteeId = self.service.manitteeId else { return }
+        guard let manitteeId = self.usecase.manitteeId else { return }
         self.messageDetails.manitteeId = manitteeId
     }
 

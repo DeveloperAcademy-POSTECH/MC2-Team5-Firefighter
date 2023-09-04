@@ -111,7 +111,7 @@
 		B5AE11F229D28CB500F86FF8 /* OpenManittoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */; };
 		B5AE11F429D32EE700F86FF8 /* SelectManitteeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */; };
 		B5B3C15D2A41D6EB00AABD6F /* LetterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C15C2A41D6EB00AABD6F /* LetterViewModel.swift */; };
-		B5B3C15F2A41D6F400AABD6F /* LetterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C15E2A41D6F400AABD6F /* LetterService.swift */; };
+		B5B3C15F2A41D6F400AABD6F /* LetterUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C15E2A41D6F400AABD6F /* LetterUsecase.swift */; };
 		B5B3C1612A41D79E00AABD6F /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1602A41D79E00AABD6F /* ViewModelType.swift */; };
 		B5B3C1652A427B5800AABD6F /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */; };
 		B5B3C16F2A42B37000AABD6F /* UIViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */; };
@@ -315,7 +315,7 @@
 		B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoPopupView.swift; sourceTree = "<group>"; };
 		B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeView.swift; sourceTree = "<group>"; };
 		B5B3C15C2A41D6EB00AABD6F /* LetterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewModel.swift; sourceTree = "<group>"; };
-		B5B3C15E2A41D6F400AABD6F /* LetterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterService.swift; sourceTree = "<group>"; };
+		B5B3C15E2A41D6F400AABD6F /* LetterUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterUsecase.swift; sourceTree = "<group>"; };
 		B5B3C1602A41D79E00AABD6F /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		B5B3C1642A427B5800AABD6F /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		B5B3C16E2A42B37000AABD6F /* UIViewController+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Combine.swift"; sourceTree = "<group>"; };
@@ -705,7 +705,6 @@
 			children = (
 				B5B3C1592A41D69500AABD6F /* ViewControllers */,
 				B5B3C1582A41D67F00AABD6F /* Views */,
-				B5F5253228547CAF00614FF7 /* Cells */,
 				B5F5253328547EE000614FF7 /* UIComponents */,
 			);
 			path = Views;
@@ -714,25 +713,36 @@
 		B54741E529A4945100B75BA3 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				B54741E629A4945A00B75BA3 /* Screens */,
+				B54741E629A4945A00B75BA3 /* Presentation */,
 			);
 			path = Error;
 			sourceTree = "<group>";
 		};
-		B54741E629A4945A00B75BA3 /* Screens */ = {
+		B54741E629A4945A00B75BA3 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				B54741E729A4947C00B75BA3 /* Letter */,
+				B54741E729A4947C00B75BA3 /* LetterScene */,
 			);
-			path = Screens;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
-		B54741E729A4947C00B75BA3 /* Letter */ = {
+		B54741E729A4947C00B75BA3 /* LetterScene */ = {
 			isa = PBXGroup;
 			children = (
 				B54741E929A494E200B75BA3 /* LetterImageError.swift */,
 			);
-			path = Letter;
+			path = LetterScene;
+			sourceTree = "<group>";
+		};
+		B54B72A12AA3616600D60E4B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
+				B5F524DC28519AA100614FF7 /* Info.plist */,
+				B5F524CE28519AA000614FF7 /* AppDelegate.swift */,
+				B5F524D028519AA000614FF7 /* SceneDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		B57CB3022A763BB200474042 /* Packages */ = {
@@ -741,6 +751,90 @@
 				B57CB3032A763C1600474042 /* MTNetwork */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		B58CA2FC2A9CC29A00977592 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				B58CA3052A9CC37000977592 /* Scene */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		B58CA3052A9CC37000977592 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				B58CA3062A9CC37B00977592 /* LetterScene */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		B58CA3062A9CC37B00977592 /* LetterScene */ = {
+			isa = PBXGroup;
+			children = (
+				B58CA3082A9CC3B300977592 /* View */,
+				B58CA3072A9CC39700977592 /* ViewController */,
+				B58CA30A2A9CC41600977592 /* ViewModel */,
+			);
+			path = LetterScene;
+			sourceTree = "<group>";
+		};
+		B58CA3072A9CC39700977592 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B5F5250D2851A07700614FF7 /* LetterViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		B58CA3082A9CC3B300977592 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B58CA3192A9D992F00977592 /* Cell */,
+				B58CA3092A9CC3D700977592 /* UIComponent */,
+				B5706BF329B710FC0093D198 /* LetterView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B58CA3092A9CC3D700977592 /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				B5F5253428547F1900614FF7 /* LetterHeaderView.swift */,
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		B58CA30A2A9CC41600977592 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B5B3C15C2A41D6EB00AABD6F /* LetterViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B58CA30B2A9CC43600977592 /* Usecase */ = {
+			isa = PBXGroup;
+			children = (
+				B58CA3142A9D913600977592 /* LetterScene */,
+			);
+			path = Usecase;
+			sourceTree = "<group>";
+		};
+		B58CA3142A9D913600977592 /* LetterScene */ = {
+			isa = PBXGroup;
+			children = (
+				B5B3C15E2A41D6F400AABD6F /* LetterUsecase.swift */,
+			);
+			path = LetterScene;
+			sourceTree = "<group>";
+		};
+		B58CA3192A9D992F00977592 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		B5A085E42A972E5F00C8A98D /* Response */ = {
@@ -763,6 +857,7 @@
 		B5A085E72A97302900C8A98D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				B58CA30B2A9CC43600977592 /* Usecase */,
 				B5A085E82A97303900C8A98D /* Entity */,
 			);
 			path = Domain;
@@ -793,18 +888,9 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		B5B3C1572A41D65400AABD6F /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				B5B3C15C2A41D6EB00AABD6F /* LetterViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		B5B3C1582A41D67F00AABD6F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B5706BF329B710FC0093D198 /* LetterView.swift */,
 				B5706BE029ADC20A0093D198 /* CreateLetterView.swift */,
 				B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */,
 			);
@@ -814,20 +900,11 @@
 		B5B3C1592A41D69500AABD6F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				B5F5250D2851A07700614FF7 /* LetterViewController.swift */,
 				B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */,
 				B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */,
 				39F1C12D28D756E600585B83 /* LetterImageViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		B5B3C15A2A41D6A600AABD6F /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				B5B3C15E2A41D6F400AABD6F /* LetterService.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		B5F524C228519AA000614FF7 = {
@@ -855,6 +932,8 @@
 		B5F524CD28519AA000614FF7 /* Manito */ = {
 			isa = PBXGroup;
 			children = (
+				B54B72A12AA3616600D60E4B /* App */,
+				B58CA2FC2A9CC29A00977592 /* Presentation */,
 				B5A085E72A97302900C8A98D /* Domain */,
 				B53A35B82A9640EB00B720BC /* Data */,
 				B5F524E328519AC300614FF7 /* Screens */,
@@ -894,7 +973,6 @@
 				B5F524F828519BC700614FF7 /* Literal */,
 				B5F524F728519BC400614FF7 /* Base */,
 				B5F524F628519BC000614FF7 /* Protocol */,
-				B5F524F528519BB700614FF7 /* Supports */,
 				B5F524F428519BB500614FF7 /* Extension */,
 				B5F524F328519BB100614FF7 /* UIComponent */,
 				B5F524F228519BA700614FF7 /* Resource */,
@@ -963,8 +1041,6 @@
 			isa = PBXGroup;
 			children = (
 				B54741DE29A3A4BA00B75BA3 /* Views */,
-				B5B3C1572A41D65400AABD6F /* ViewModels */,
-				B5B3C15A2A41D6A600AABD6F /* Services */,
 			);
 			path = Letter;
 			sourceTree = "<group>";
@@ -1016,17 +1092,6 @@
 				B50CEEBF2A6FF82600CF1C76 /* Publisher+Extension.swift */,
 			);
 			path = Extension;
-			sourceTree = "<group>";
-		};
-		B5F524F528519BB700614FF7 /* Supports */ = {
-			isa = PBXGroup;
-			children = (
-				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
-				B5F524DC28519AA100614FF7 /* Info.plist */,
-				B5F524CE28519AA000614FF7 /* AppDelegate.swift */,
-				B5F524D028519AA000614FF7 /* SceneDelegate.swift */,
-			);
-			path = Supports;
 			sourceTree = "<group>";
 		};
 		B5F524F628519BC000614FF7 /* Protocol */ = {
@@ -1088,18 +1153,9 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		B5F5253228547CAF00614FF7 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				B5F52536285481C800614FF7 /* LetterCollectionViewCell.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
 		B5F5253328547EE000614FF7 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
-				B5F5253428547F1900614FF7 /* LetterHeaderView.swift */,
 				B50B1AFA2856B5180080992C /* IndividualMissionView.swift */,
 				B50B1AFC2856C3500080992C /* CreateLetterTextView.swift */,
 				B50B1AFE2856D3820080992C /* CreateLetterPhotoView.swift */,
@@ -1506,7 +1562,7 @@
 				391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */,
 				B5F525202851A21D00614FF7 /* UIViewController+Extension.swift in Sources */,
 				7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */,
-				B5B3C15F2A41D6F400AABD6F /* LetterService.swift in Sources */,
+				B5B3C15F2A41D6F400AABD6F /* LetterUsecase.swift in Sources */,
 				B5AE11F229D28CB500F86FF8 /* OpenManittoPopupView.swift in Sources */,
 				B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */,
 				39EE956D2A401ED400AF6857 /* DetailingView.swift in Sources */,
@@ -1815,13 +1871,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = Manito/Global/Supports/Manito.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Manito/App/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
+				INFOPLIST_FILE = Manito/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(BUNDLE_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
@@ -1855,14 +1911,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = Manito/Global/Supports/Manito.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Manito/App/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				ENABLE_TESTABILITY = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
+				INFOPLIST_FILE = Manito/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(BUNDLE_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";

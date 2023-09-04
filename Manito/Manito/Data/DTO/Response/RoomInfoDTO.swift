@@ -74,8 +74,11 @@ extension InvitationCodeDTO {
     }
 }
 
+/// 개별 미션에 대한 정보들을 반환하는 데이터 모델 DTO입니다.
 struct IndividualMissionDTO: Decodable, Hashable {
+    /// 개별 미션 identifier
     let id: Int?
+    /// 개별 미션 내용
     let content: String?
 }
 
