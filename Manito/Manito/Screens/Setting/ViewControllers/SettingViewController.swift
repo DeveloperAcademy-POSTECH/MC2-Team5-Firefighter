@@ -98,6 +98,8 @@ final class SettingViewController: BaseViewController {
     }
     
     private func deleteUser() {
+        UserDefaultHandler.clearAllDataExcludingFcmToken()
+        
         guard let sceneDelgate = UIApplication.shared.connectedScenes.first?.delegate
                 as? SceneDelegate else { return }
         sceneDelgate.moveToLoginViewController()
