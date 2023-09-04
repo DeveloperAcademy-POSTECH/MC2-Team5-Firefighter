@@ -7,13 +7,20 @@
 
 import Foundation
 
-struct ParticipantList: Decodable {
+struct ParticipantList {
     let count: Int
-    let members: [UserInfoDTO]
+    let members: [UserInfo]
 }
 
 extension ParticipantList {
     var membersNickname: [String] {
-        return members.map { $0.nickname ?? "" }
+        return members.map { $0.nickname }
     }
+}
+
+extension ParticipantList: Hashable {
+    static let testParticipantList = ParticipantList(
+        count: 5,
+        members: UserInfo.testUserList
+    )
 }

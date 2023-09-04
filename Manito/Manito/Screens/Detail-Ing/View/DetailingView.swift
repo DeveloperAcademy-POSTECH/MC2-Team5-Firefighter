@@ -419,7 +419,7 @@ final class DetailingView: UIView {
     
     func updateDetailingView(room: RoomInfo) {
         self.roomType = RoomType.init(rawValue: room.roomInformation.state) ?? .PROCESSING
-        self.missionId = room.mission?.id?.description ?? ""
+        self.missionId = room.mission?.id.description ?? ""
         DispatchQueue.main.async {
             self.titleLabel.text = room.roomInformation.title
             self.periodLabel.text = "\(room.roomInformation.startDate.subStringToDate()) ~ \(room.roomInformation.endDate.subStringToDate())"

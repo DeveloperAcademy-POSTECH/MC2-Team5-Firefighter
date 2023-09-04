@@ -241,7 +241,7 @@ final class DetailWaitViewController: BaseViewController {
         let capacity = roomInfo.roomInformation.capacity
         let startDate = roomInfo.roomInformation.startDate
         let endDate = roomInfo.roomInformation.endDate
-        guard let invitationCode = roomInfo.invitation.code else { return }
+        let invitationCode = roomInfo.invitation.code
         let roomDTO = RoomListItemDTO(id: nil,
                                       title: title,
                                       state: nil,

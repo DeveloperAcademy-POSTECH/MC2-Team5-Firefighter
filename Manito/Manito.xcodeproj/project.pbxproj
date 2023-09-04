@@ -11,6 +11,11 @@
 		333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF669285864CE0039F77F /* MemoryViewController.swift */; };
 		33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDF5612856E03800564211 /* FriendListViewController.swift */; };
 		39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39018F4128C4708A00C78DBA /* UIButton+Extension.swift */; };
+		3904F4FA2AA36F4F00B6264F /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4F92AA36F4F00B6264F /* UserInfo.swift */; };
+		3904F4FC2AA3729300B6264F /* InvitationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FB2AA3729300B6264F /* InvitationCode.swift */; };
+		3904F4FE2AA3743C00B6264F /* IndividualMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FD2AA3743C00B6264F /* IndividualMission.swift */; };
+		3904F5002AA3754400B6264F /* MessageCountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FF2AA3754400B6264F /* MessageCountInfo.swift */; };
+		3904F5062AA37A3C00B6264F /* MockDetailWaitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F5052AA37A3C00B6264F /* MockDetailWaitService.swift */; };
 		3915D54B2A7516A2002D6C25 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3915D54A2A7516A2002D6C25 /* Key.plist */; };
 		3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915D54C2A7516E9002D6C25 /* Key+Extension.swift */; };
 		391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391612D729E9231B004AE982 /* DetailWaitView.swift */; };
@@ -210,6 +215,11 @@
 		333BF669285864CE0039F77F /* MemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
 		33BDF5612856E03800564211 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		39018F4128C4708A00C78DBA /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		3904F4F92AA36F4F00B6264F /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		3904F4FB2AA3729300B6264F /* InvitationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationCode.swift; sourceTree = "<group>"; };
+		3904F4FD2AA3743C00B6264F /* IndividualMission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualMission.swift; sourceTree = "<group>"; };
+		3904F4FF2AA3754400B6264F /* MessageCountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountInfo.swift; sourceTree = "<group>"; };
+		3904F5052AA37A3C00B6264F /* MockDetailWaitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailWaitService.swift; sourceTree = "<group>"; };
 		3915D54A2A7516A2002D6C25 /* Key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Key.plist; sourceTree = "<group>"; };
 		3915D54C2A7516E9002D6C25 /* Key+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key+Extension.swift"; sourceTree = "<group>"; };
 		391612D729E9231B004AE982 /* DetailWaitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitView.swift; sourceTree = "<group>"; };
@@ -417,6 +427,39 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		3904F5012AA379CA00B6264F /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				3904F5022AA379F100B6264F /* DetailWait */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		3904F5022AA379F100B6264F /* DetailWait */ = {
+			isa = PBXGroup;
+			children = (
+				3904F5042AA37A2C00B6264F /* Service */,
+				3904F5032AA37A2000B6264F /* ViewModel */,
+			);
+			path = DetailWait;
+			sourceTree = "<group>";
+		};
+		3904F5032AA37A2000B6264F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3904F5042AA37A2C00B6264F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				3904F5052AA37A3C00B6264F /* MockDetailWaitService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		391612D629E92308004AE982 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,7 +489,7 @@
 		398B1CBA2A12415C00DEFCEC /* ManitoTests */ = {
 			isa = PBXGroup;
 			children = (
-				395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */,
+				3904F5012AA379CA00B6264F /* Presentation */,
 			);
 			path = ManitoTests;
 			sourceTree = "<group>";
@@ -827,6 +870,10 @@
 				B5A086012A974B8100C8A98D /* RoomListItem.swift */,
 				B5A085FB2A97470400C8A98D /* RoomInfo.swift */,
 				B5A086032A974D2000C8A98D /* ParticipantList.swift */,
+				3904F4F92AA36F4F00B6264F /* UserInfo.swift */,
+				3904F4FB2AA3729300B6264F /* InvitationCode.swift */,
+				3904F4FD2AA3743C00B6264F /* IndividualMission.swift */,
+				3904F4FF2AA3754400B6264F /* MessageCountInfo.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1456,6 +1503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */,
+				3904F5062AA37A3C00B6264F /* MockDetailWaitService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1483,6 +1531,7 @@
 				392EC77E2855C388006918A9 /* SettingButton.swift in Sources */,
 				CB674C2128596A310063A6B7 /* CheckRoomViewController.swift in Sources */,
 				B5A085DF2A972D2A00C8A98D /* LetterRequestDTO.swift in Sources */,
+				3904F5002AA3754400B6264F /* MessageCountInfo.swift in Sources */,
 				39C9580A287DC03500A04A2B /* Encodable+Extension.swift in Sources */,
 				B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */,
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,
@@ -1502,6 +1551,7 @@
 				B5A086002A97496900C8A98D /* MessageListItemDTO.swift in Sources */,
 				7E15F67E28B35B3D00441305 /* TextLiteral.swift in Sources */,
 				B5B3C16F2A42B37000AABD6F /* UIViewController+Combine.swift in Sources */,
+				3904F4FE2AA3743C00B6264F /* IndividualMission.swift in Sources */,
 				B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */,
 				B5F525422855C97900614FF7 /* UILabel+Extension.swift in Sources */,
 				B53A35CE2A96FA7A00B720BC /* LoginRepository.swift in Sources */,
@@ -1550,6 +1600,7 @@
 				391B3003286198C200421F1D /* Size.swift in Sources */,
 				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+Extension.swift in Sources */,
+				3904F4FA2AA36F4F00B6264F /* UserInfo.swift in Sources */,
 				39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */,
 				B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */,
 				7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */,
@@ -1593,6 +1644,7 @@
 				B5A085F82A9744CC00C8A98D /* RoomListDTO.swift in Sources */,
 				B5A085F62A9733F900C8A98D /* TokenDTO.swift in Sources */,
 				B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */,
+				3904F4FC2AA3729300B6264F /* InvitationCode.swift in Sources */,
 				B50B1B2A285AB7650080992C /* SplashViewController.swift in Sources */,
 				B5FEE9DB28C8498A00DEA07E /* ImageCacheManager.swift in Sources */,
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
@@ -1864,6 +1916,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
+				ENABLE_TESTABILITY = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(BUNDLE_DISPLAY_NAME)";
