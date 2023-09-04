@@ -183,7 +183,7 @@ extension LetterViewController {
         }
 
         self.reloadMessageList(messages)
-        self.letterView.updateEmptyArea(with: messages)
+        self.letterView.updateEmptyAreaStatus(to: !messages.isEmpty)
     }
 
     private func updateLetterViewEmptyArea(with index: Int) {
@@ -222,7 +222,6 @@ extension LetterViewController {
         let letterCellRegistration = UICollectionView.CellRegistration<LetterCollectionViewCell, MessageListItem> {
             [weak self] cell, indexPath, item in
             cell.configureCell((mission: item.mission,
-                                date: item.date,
                                 content: item.content,
                                 imageURL: item.imageUrl,
                                 isTodayLetter: item.isToday,
