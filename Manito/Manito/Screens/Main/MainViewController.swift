@@ -267,17 +267,6 @@ final class MainViewController: BaseViewController {
         self.present(alert, animated: true)
     }
 
-    private func presentParticipateRoomViewController() {
-        let storyboard = UIStoryboard(name: "ParticipateRoom", bundle: nil)
-        let participateRoomViewController = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
-
-        participateRoomViewController.modalPresentationStyle = .fullScreen
-        participateRoomViewController.modalTransitionStyle = .crossDissolve
-        DispatchQueue.main.async {
-            self.present(participateRoomViewController, animated: true)
-        }
-    }
-
     // FIXME: - roomIndex가 현재 item으로 설정되어 있고, index가 roomIndex로 설정되어있음. KTBQ2B
     private func pushDetailView(status: RoomStatus, roomIndex: Int, index: Int? = nil) {
         switch status {
