@@ -69,7 +69,7 @@ final class ChangeNicknameViewController: BaseViewController {
     private func bindOutputToViewModel(_ output: NicknameViewModel.Output) {
         output.nickname
             .sink { [weak self] nickname in
-                self?.nicknameView.setupNickname(nickname: nickname)
+                self?.nicknameView.updateNickname(nickname: nickname)
             }
             .store(in: &self.cancellable)
         

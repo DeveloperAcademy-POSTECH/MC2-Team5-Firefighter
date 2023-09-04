@@ -132,7 +132,7 @@ final class NicknameView: UIView {
         self.doneButton.isDisabled = !isEnabled
     }
     
-    func setupNickname(nickname: String) {
+    func updateNickname(nickname: String) {
         self.nicknameTextField.text = nickname
     }
     
