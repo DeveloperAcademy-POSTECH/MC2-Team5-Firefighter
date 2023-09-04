@@ -1,5 +1,5 @@
 //
-//  LetterService.swift
+//  LetterUsecase.swift
 //  Manito
 //
 //  Created by SHIN YOON AH on 2023/06/20.
@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-protocol LetterServicable {
+protocol LetterUsecase {
     var manitteeId: String? { get set }
     var nickname: String { get set }
 
@@ -17,7 +17,7 @@ protocol LetterServicable {
     func loadNickname()
 }
 
-final class LetterService: LetterServicable {
+final class LetterUsecaseImpl: LetterUsecase {
 
     // MARK: - property
 

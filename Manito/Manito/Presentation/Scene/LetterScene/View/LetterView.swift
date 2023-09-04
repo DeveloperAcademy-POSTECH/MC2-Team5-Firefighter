@@ -103,9 +103,8 @@ final class LetterView: UIView {
         self.setupGuideView(in: viewController)
     }
 
-    func updateEmptyArea(with items: [MessageListItem]) {
-        let isEmpty = items.isEmpty
-        self.emptyLabel.isHidden = !isEmpty
+    func updateEmptyAreaStatus(to isHidden: Bool) {
+        self.emptyLabel.isHidden = isHidden
     }
 
     func updateEmptyArea(with text: String) {
