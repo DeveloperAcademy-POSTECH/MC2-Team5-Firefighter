@@ -691,6 +691,17 @@
 			path = LetterScene;
 			sourceTree = "<group>";
 		};
+		B54B72A12AA3616600D60E4B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
+				B5F524DC28519AA100614FF7 /* Info.plist */,
+				B5F524CE28519AA000614FF7 /* AppDelegate.swift */,
+				B5F524D028519AA000614FF7 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		B57CB3022A763BB200474042 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -874,6 +885,7 @@
 		B5F524CD28519AA000614FF7 /* Manito */ = {
 			isa = PBXGroup;
 			children = (
+				B54B72A12AA3616600D60E4B /* App */,
 				B58CA2FC2A9CC29A00977592 /* Presentation */,
 				B5A085E72A97302900C8A98D /* Domain */,
 				B53A35B82A9640EB00B720BC /* Data */,
@@ -914,7 +926,6 @@
 				B5F524F828519BC700614FF7 /* Literal */,
 				B5F524F728519BC400614FF7 /* Base */,
 				B5F524F628519BC000614FF7 /* Protocol */,
-				B5F524F528519BB700614FF7 /* Supports */,
 				B5F524F428519BB500614FF7 /* Extension */,
 				B5F524F328519BB100614FF7 /* UIComponent */,
 				B5F524F228519BA700614FF7 /* Resource */,
@@ -1034,17 +1045,6 @@
 				B50CEEBF2A6FF82600CF1C76 /* Publisher+Extension.swift */,
 			);
 			path = Extension;
-			sourceTree = "<group>";
-		};
-		B5F524F528519BB700614FF7 /* Supports */ = {
-			isa = PBXGroup;
-			children = (
-				39E6321328BDE59C00CFC6C4 /* Manito.entitlements */,
-				B5F524DC28519AA100614FF7 /* Info.plist */,
-				B5F524CE28519AA000614FF7 /* AppDelegate.swift */,
-				B5F524D028519AA000614FF7 /* SceneDelegate.swift */,
-			);
-			path = Supports;
 			sourceTree = "<group>";
 		};
 		B5F524F628519BC000614FF7 /* Protocol */ = {
@@ -1819,13 +1819,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = Manito/Global/Supports/Manito.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Manito/App/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
+				INFOPLIST_FILE = Manito/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(BUNDLE_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
@@ -1859,13 +1859,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = Manito/Global/Supports/Manito.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Manito/App/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Manito/Global/Supports/Info.plist;
+				INFOPLIST_FILE = Manito/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(BUNDLE_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "'마니또'가 마니띠에게 전송할 사진을 위해 사용자의 카메라에 접근하려고 합니다.";
