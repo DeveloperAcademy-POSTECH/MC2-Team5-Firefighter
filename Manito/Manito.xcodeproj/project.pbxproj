@@ -46,14 +46,14 @@
 		39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FFE32728EEFFFE008442EE /* MoreButton.swift */; };
 		39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 39FFE33328F457AF008442EE /* FirebaseMessaging */; };
 		435B17682913E71400212663 /* DetailingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B17672913E71400212663 /* DetailingViewController.swift */; };
-		7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */; };
+		7E0C5C362855B22700F698D1 /* CreateNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C5C352855B22700F698D1 /* CreateNicknameViewController.swift */; };
 		7E0C5C382855B73100F698D1 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C5C372855B73100F698D1 /* Splash.storyboard */; };
 		7E15F67E28B35B3D00441305 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E15F67D28B35B3D00441305 /* TextLiteral.swift */; };
 		7E3058C62854B47F00489E6A /* InputTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C52854B47F00489E6A /* InputTitleView.swift */; };
 		7E3058C82854B64D00489E6A /* InputCapacityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C72854B64D00489E6A /* InputCapacityView.swift */; };
 		7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3058C92854B7A900489E6A /* InputDateView.swift */; };
 		7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7542B22923744300D725CB /* ToastPopupView.swift */; };
-		7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */; };
+		7EA25C2728C4FEA800746AEA /* ChangeNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA25C2628C4FEA800746AEA /* ChangeNicknameViewController.swift */; };
 		7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */; };
 		B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */; };
 		B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AFA2856B5180080992C /* IndividualMissionView.swift */; };
@@ -173,6 +173,9 @@
 		D70220232A7A22EC0024BACD /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70220222A7A22EC0024BACD /* CreateRoomView.swift */; };
 		D71939532AA1C84900A73D6C /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939522AA1C84900A73D6C /* SettingService.swift */; };
 		D71939552AA1C85300A73D6C /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939542AA1C85300A73D6C /* SettingViewModel.swift */; };
+		D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939582AA2343E00A73D6C /* NicknameView.swift */; };
+		D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */; };
+		D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939602AA23F3B00A73D6C /* NicknameService.swift */; };
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* TopCharacterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* TopCharacterImageView.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
@@ -252,14 +255,14 @@
 		39FFE32728EEFFFE008442EE /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
 		39FFE33528F45E44008442EE /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
 		435B17672913E71400212663 /* DetailingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailingViewController.swift; sourceTree = "<group>"; };
-		7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNickNameViewController.swift; sourceTree = "<group>"; };
+		7E0C5C352855B22700F698D1 /* CreateNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameViewController.swift; sourceTree = "<group>"; };
 		7E0C5C372855B73100F698D1 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		7E15F67D28B35B3D00441305 /* TextLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiteral.swift; sourceTree = "<group>"; };
 		7E3058C52854B47F00489E6A /* InputTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTitleView.swift; sourceTree = "<group>"; };
 		7E3058C72854B64D00489E6A /* InputCapacityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCapacityView.swift; sourceTree = "<group>"; };
 		7E3058C92854B7A900489E6A /* InputDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDateView.swift; sourceTree = "<group>"; };
 		7E7542B22923744300D725CB /* ToastPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPopupView.swift; sourceTree = "<group>"; };
-		7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNickNameViewController.swift; sourceTree = "<group>"; };
+		7EA25C2628C4FEA800746AEA /* ChangeNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNicknameViewController.swift; sourceTree = "<group>"; };
 		7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewTableCell.swift; sourceTree = "<group>"; };
 		B50B1AF82856B2C60080992C /* CreateLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLetterViewController.swift; sourceTree = "<group>"; };
 		B50B1AFA2856B5180080992C /* IndividualMissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualMissionView.swift; sourceTree = "<group>"; };
@@ -380,6 +383,9 @@
 		D70220222A7A22EC0024BACD /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
 		D71939522AA1C84900A73D6C /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
 		D71939542AA1C85300A73D6C /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		D71939582AA2343E00A73D6C /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
+		D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
+		D71939602AA23F3B00A73D6C /* NicknameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameService.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* TopCharacterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCharacterImageView.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
@@ -554,12 +560,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		7E0C5C342855B1EF00F698D1 /* CreateNickName */ = {
+		7E0C5C342855B1EF00F698D1 /* NickName */ = {
 			isa = PBXGroup;
 			children = (
-				7E0C5C352855B22700F698D1 /* CreateNickNameViewController.swift */,
+				D719395A2AA23EF200A73D6C /* Service */,
+				D719395B2AA23EFC00A73D6C /* ViewModel */,
+				D719395C2AA23F0400A73D6C /* View */,
+				D719395D2AA23F0900A73D6C /* ViewControllers */,
 			);
-			path = CreateNickName;
+			path = NickName;
 			sourceTree = "<group>";
 		};
 		7E3058C42854B45300489E6A /* UIComponent */ = {
@@ -954,8 +963,7 @@
 				D724AF5B287088110003F280 /* Setting */,
 				B50B1B28285AB7550080992C /* Splash */,
 				39C957CC2876E2BE00A04A2B /* Login */,
-				D71939572AA1C9A000A73D6C /* ChangeNickname */,
-				7E0C5C342855B1EF00F698D1 /* CreateNickName */,
+				7E0C5C342855B1EF00F698D1 /* NickName */,
 				B5F524E628519B0A00614FF7 /* Main */,
 				B50B1B3F285B047C0080992C /* Interaction */,
 				CBA15C91285CE1880051EDE2 /* ChooseCharacter */,
@@ -1308,12 +1316,37 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		D71939572AA1C9A000A73D6C /* ChangeNickname */ = {
+		D719395A2AA23EF200A73D6C /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				7EA25C2628C4FEA800746AEA /* ChangeNickNameViewController.swift */,
+				D71939602AA23F3B00A73D6C /* NicknameService.swift */,
 			);
-			path = ChangeNickname;
+			path = Service;
+			sourceTree = "<group>";
+		};
+		D719395B2AA23EFC00A73D6C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D719395C2AA23F0400A73D6C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D71939582AA2343E00A73D6C /* NicknameView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D719395D2AA23F0900A73D6C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7E0C5C352855B22700F698D1 /* CreateNicknameViewController.swift */,
+				7EA25C2628C4FEA800746AEA /* ChangeNicknameViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		D724AF5B287088110003F280 /* Setting */ = {
@@ -1577,6 +1610,7 @@
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
 				7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */,
+				D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */,
 				B5A085FE2A97493900C8A98D /* UserInfoDTO.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B53A35C82A96F84700B720BC /* LetterRepository.swift in Sources */,
@@ -1612,10 +1646,11 @@
 				B5A085F22A9732E800C8A98D /* MemoryDTO.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */,
 				D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */,
-				7EA25C2728C4FEA800746AEA /* ChangeNickNameViewController.swift in Sources */,
 				D724AF5F28708D830003F280 /* TopCharacterImageView.swift in Sources */,
+				7EA25C2728C4FEA800746AEA /* ChangeNicknameViewController.swift in Sources */,
 				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,
 				B5F5251E2851A1C700614FF7 /* BaseTableViewCell.swift in Sources */,
+				D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */,
 				39BDDCC42A52BB4A005E0A71 /* DetailWaitService.swift in Sources */,
 				B5A086022A974B8100C8A98D /* RoomListItem.swift in Sources */,
 				B53A35CC2A96F99D00B720BC /* SettingRepository.swift in Sources */,
@@ -1641,7 +1676,7 @@
 				3904F4FA2AA36F4F00B6264F /* UserInfo.swift in Sources */,
 				39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */,
 				B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */,
-				7E0C5C362855B22700F698D1 /* CreateNickNameViewController.swift in Sources */,
+				7E0C5C362855B22700F698D1 /* CreateNicknameViewController.swift in Sources */,
 				B5B3C15D2A41D6EB00AABD6F /* LetterViewModel.swift in Sources */,
 				B5A085FC2A97470400C8A98D /* RoomInfo.swift in Sources */,
 				CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */,
@@ -1692,6 +1727,7 @@
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
 				B53A35C42A96F50100B720BC /* DetailRoomRepository.swift in Sources */,
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
+				D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */,
 				CB7B23A828C4ECA8004A4CF3 /* Character.swift in Sources */,
 				B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */,
 				B5A085EC2A97314800C8A98D /* ParticipatedRoomInfoDTO.swift in Sources */,

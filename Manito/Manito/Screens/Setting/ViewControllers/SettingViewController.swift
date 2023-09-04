@@ -116,7 +116,7 @@ final class SettingViewController: BaseViewController {
 
 extension SettingViewController: SettingViewDelegate {
     func changNicknameButtonDidTap() {
-        self.navigationController?.pushViewController(ChangeNickNameViewController(), animated: true)
+        self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
     }
     
     func personalInfomationButtonDidTap() {
