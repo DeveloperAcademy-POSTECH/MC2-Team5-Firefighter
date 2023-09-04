@@ -17,9 +17,20 @@ final class ParticipateRoomViewController: BaseViewController {
     
     // MARK: - property
     
-    private let roomParticipationRepository: RoomParticipationRepository = RoomParticipationRepositoryImpl()
+//    private let roomParticipationRepository: RoomParticipationRepository = RoomParticipationRepositoryImpl()
+    private let viewModel: ParticipateRoomViewModel
     
     // MARK: - init
+    
+    init(viewModel: ParticipateRoomViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     deinit {
         print("\(#file) is dead")
@@ -54,30 +65,44 @@ final class ParticipateRoomViewController: BaseViewController {
         self.participateRoomView.configureNavigationBarItem(navigationController)
     }
     
+    private func bindToViewModel() {
+        let output = self.transfromedOutput()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transfromedOutput() -> ParticipateRoomViewModel.Output {
+        let input = ParticipateRoomViewModel.Input()
+        return self.viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: ParticipateRoomViewModel.Output) {
+        
+    }
+    
     // MARK: - network
     
-    private func dispatchInviteCode(_ code : String) {
-        Task {
-            do {
-                let data = try await self.roomParticipationRepository.dispatchVerifyCode(code: code)
-                guard let id = data.id else { return }
-                let viewController = CheckRoomViewController()
-                viewController.modalPresentationStyle = .overFullScreen
-                viewController.modalTransitionStyle = .crossDissolve
-                viewController.roomInfo = data
-                viewController.roomId = id
-
-                self.present(viewController, animated: true)
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                self.makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage)
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
+//    private func dispatchInviteCode(_ code : String) {
+//        Task {
+//            do {
+//                let data = try await self.roomParticipationRepository.dispatchVerifyCode(code: code)
+//                guard let id = data.id else { return }
+//                let viewController = CheckRoomViewController()
+//                viewController.modalPresentationStyle = .overFullScreen
+//                viewController.modalTransitionStyle = .crossDissolve
+//                viewController.roomInfo = data
+//                viewController.roomId = id
+//
+//                self.present(viewController, animated: true)
+//            } catch NetworkError.serverError {
+//                print("server Error")
+//            } catch NetworkError.encodingError {
+//                print("encoding Error")
+//            } catch NetworkError.clientError(let message) {
+//                self.makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage)
+//                print("client Error: \(String(describing: message))")
+//            }
+//        }
+//    }
 }
 
 extension ParticipateRoomViewController: ParticipateRoomViewDelegate {
@@ -86,7 +111,7 @@ extension ParticipateRoomViewController: ParticipateRoomViewDelegate {
     }
     
     func nextButtonDidTap(code: String) {
-        self.dispatchInviteCode(code)
+//        self.dispatchInviteCode(code)
     }
     
     func observeNextNotification(roomId: Int) {
