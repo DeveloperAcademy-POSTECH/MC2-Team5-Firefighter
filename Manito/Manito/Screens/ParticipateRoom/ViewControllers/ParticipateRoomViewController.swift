@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2022/06/15.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -71,7 +72,9 @@ final class ParticipateRoomViewController: BaseViewController {
     }
     
     private func transfromedOutput() -> ParticipateRoomViewModel.Output {
-        let input = ParticipateRoomViewModel.Input()
+        let input = ParticipateRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
+                                                   textFieldDidChanged: self.participateRoomView.inputInvitedCodeView.textFieldDidChangedPublisher.eraseToAnyPublisher(),
+                                                   nextButtonDidTap: self.participateRoomView.nextButtonTapPublisher)
         return self.viewModel.transform(from: input)
     }
     

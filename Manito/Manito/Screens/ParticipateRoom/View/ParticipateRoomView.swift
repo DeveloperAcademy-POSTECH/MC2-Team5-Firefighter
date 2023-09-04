@@ -5,6 +5,7 @@
 //  Created by 이성호 on 2023/05/11.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -36,10 +37,11 @@ final class ParticipateRoomView: UIView {
         button.isDisabled = true
         return button
     }()
-    private let inputInvitedCodeView: InputInvitedCodeView = InputInvitedCodeView()
+    let inputInvitedCodeView: InputInvitedCodeView = InputInvitedCodeView()
     
     // MARK: - property
-    
+
+    lazy var nextButtonTapPublisher = self.nextButton.tapPublisher
     private weak var delegate: ParticipateRoomViewDelegate?
     
     // MARK: - init

@@ -5,11 +5,14 @@
 //  Created by COBY_PRO on 2022/06/15.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 
 final class InputInvitedCodeView: UIView {
+    
+    let textFieldDidChangedPublisher = PassthroughSubject<String, Never>()
     
     private let maxLength = 6
     
@@ -98,13 +101,14 @@ extension InputInvitedCodeView: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        setCounter(count: textField.text?.count ?? 0)
-        checkMaxLength(textField: roomCodeTextField, maxLength: maxLength)
-        
-        guard let textCount = roomCodeTextField.text?.count else { return }
-        let hasText = textCount >= maxLength
-        changeNextButtonEnableStatus?(hasText)
+//        setCounter(count: textField.text?.count ?? 0)
+//        checkMaxLength(textField: roomCodeTextField, maxLength: maxLength)
+//
+//        guard let textCount = roomCodeTextField.text?.count else { return }
+//        let hasText = textCount >= maxLength
+//        changeNextButtonEnableStatus?(hasText)
         
         textField.text = textField.text?.uppercased()
+        self.textFieldDidChangedPublisher.send(textField.text ?? "")
     }
 }
