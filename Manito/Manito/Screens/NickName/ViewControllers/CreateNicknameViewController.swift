@@ -94,15 +94,9 @@ final class CreateNicknameViewController: BaseViewController {
     }
     
     private func bindOutputToViewModel(_ output: NicknameViewModel.Output) {
-        output.nicknameMaxCount
-            .sink { [weak self] nicknameMaxCount in
-                self?.nicknameView.updateTextCount(count: 0, maxLength: nicknameMaxCount.maxCount)
-            }
-            .store(in: &self.cancellable)
-        
         output.counts
-            .sink { [weak self] counts in
-                self?.nicknameView.updateTextCount(count: counts.textCount, maxLength: counts.maxCount)
+            .sink { [weak self] (textCount, maxCount) in
+                self?.nicknameView.updateTextCount(count: textCount, maxLength: maxCount)
             }
             .store(in: &self.cancellable)
         

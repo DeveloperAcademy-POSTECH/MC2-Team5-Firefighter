@@ -11,7 +11,6 @@ import Foundation
 final class NicknameViewModel {
     
     typealias Counts = (textCount: Int, maxCount: Int)
-    typealias NicknameMaxCount = (nickname: String, maxCount: Int)
     
     // MARK: - property
     
@@ -30,7 +29,7 @@ final class NicknameViewModel {
     }
     
     struct Output {
-        let nicknameMaxCount: AnyPublisher<NicknameMaxCount, Never>
+        let nickname: AnyPublisher<String, Never>
         let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
@@ -38,20 +37,22 @@ final class NicknameViewModel {
     }
     
     func transform(from input: Input) -> Output {
-        let nicknameMaxCount = input.viewDidLoad
-            .map { [weak self] _ -> NicknameMaxCount in
-                let nickname = UserDefaultStorage.nickname
-                return NicknameMaxCount(nickname, self!.maxCount)
-            }
+        let nickname = input.viewDidLoad
+            .map { UserDefaultStorage.nickname }
             .eraseToAnyPublisher()
+
+        let changeTypeCount = input.viewDidLoad
+            .map { [weak self] _ -> Counts in
+                return (UserDefaultStorage.nickname.count, self?.maxCount ?? 0)
+            }
         
-        let counts = input.textFieldDidChanged
+        let createTypeCount = input.textFieldDidChanged
             .map { [weak self] text -> Counts in
                 self?.nicknameSubject.send(text)
-                
-                return Counts(text.count, self!.maxCount)
+                return (text.count, self?.maxCount ?? 0)
             }
-            .eraseToAnyPublisher()
+        
+        let mergeCount = Publishers.Merge(createTypeCount, changeTypeCount).eraseToAnyPublisher()
         
         let fixedTitle = input.textFieldDidChanged
             .map { [weak self] text -> String in
@@ -79,8 +80,8 @@ final class NicknameViewModel {
             })
             .store(in: &self.cancellable)
         
-        return Output(nicknameMaxCount: nicknameMaxCount,
-                      counts: counts,
+        return Output(nickname: nickname,
+                      counts: mergeCount,
                       fixedTitleByMaxCount: fixedTitle,
                       isEnabled: isEnabled,
                       doneButton: self.doneButtonSubject)
