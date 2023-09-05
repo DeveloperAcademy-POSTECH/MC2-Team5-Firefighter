@@ -769,7 +769,7 @@
 		B58CA2FC2A9CC29A00977592 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				B5C7FBE62AA75B9C00862021 /* Base */,
+				B5C7FBE62AA75B9C00862021 /* Common */,
 				B58CA3052A9CC37000977592 /* Scene */,
 			);
 			path = Presentation;
@@ -921,7 +921,15 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		B5C7FBE62AA75B9C00862021 /* Base */ = {
+		B5C7FBE62AA75B9C00862021 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B5C7FBEB2AA75DC700862021 /* Base */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		B5C7FBEB2AA75DC700862021 /* Base */ = {
 			isa = PBXGroup;
 			children = (
 				B5F525192851A12600614FF7 /* BaseViewController.swift */,
