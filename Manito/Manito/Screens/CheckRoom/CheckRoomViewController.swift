@@ -11,7 +11,7 @@ import SnapKit
 
 class CheckRoomViewController: BaseViewController {
     var roomId: Int?
-    var roomInfo: ParticipatedRoomInfoDTO?
+    var roomInfo: ParticipateRoomInfo?
     
     // MARK: - Property
     

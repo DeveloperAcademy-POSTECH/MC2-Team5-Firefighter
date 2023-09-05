@@ -15,7 +15,7 @@ final class ParticipateRoomViewModel: ViewModelType {
     // MARK: - property
     
     private let maxCount: Int = 6
-    private let nextButtonSubject = PassthroughSubject<Void, NetworkError>()
+    private let roomInfoSubject = PassthroughSubject<ParticipateRoomInfo, NetworkError>()
     
     private let participateRoomService: ParticipateRoomService
     private var cancellable = Set<AnyCancellable>()
@@ -23,13 +23,14 @@ final class ParticipateRoomViewModel: ViewModelType {
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let textFieldDidChanged: AnyPublisher<String, Never>
-        let nextButtonDidTap: AnyPublisher<Void, Never>
+        let nextButtonDidTap: AnyPublisher<String, Never>
     }
     
     struct Output {
         let counts: AnyPublisher<Counts, Never>
+        let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
-        let nextButton: PassthroughSubject<Void, NetworkError>
+        let roomInfo: PassthroughSubject<ParticipateRoomInfo, NetworkError>
     }
     
     func transform(from input: Input) -> Output {
@@ -46,22 +47,36 @@ final class ParticipateRoomViewModel: ViewModelType {
         let mergeCount = Publishers.Merge(countViewDidLoadType, countTextFieldDidChangedType)
             .eraseToAnyPublisher()
         
+        let fixedTitle = input.textFieldDidChanged
+            .map { [weak self] text -> String in
+                let isOverMaxCount = self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
+                
+                if isOverMaxCount {
+                    let endIndex = text.index(text.startIndex, offsetBy: self?.maxCount ?? 0)
+                    let fixedText = text[text.startIndex..<endIndex]
+                    return String(fixedText)
+                }
+
+                return text
+            }
+            .eraseToAnyPublisher()
+        
         let isEnabled = input.textFieldDidChanged
             .map { text -> Bool in
-                return !text.isEmpty
+                return text.count == 6
             }
             .eraseToAnyPublisher()
         
         input.nextButtonDidTap
-            .sink(receiveValue: { [weak self] _ in
-                // request
-                print("request API")
+            .sink(receiveValue: { [weak self] code in
+                self?.requestParticipateRoom(code)
             })
             .store(in: &self.cancellable)
         
         return Output(counts: mergeCount,
+                      fixedTitleByMaxCount: fixedTitle,
                       isEnabled: isEnabled,
-                      nextButton: self.nextButtonSubject)
+                      roomInfo: self.roomInfoSubject)
     }
     
     // MARK: - init
@@ -72,7 +87,24 @@ final class ParticipateRoomViewModel: ViewModelType {
     
     // MARK: - func
     
+    private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
+        if titleCount > maxCount { return true }
+        else { return false }
+    }
+    
     
     // MARK: - network
     
+    private func requestParticipateRoom(_ code: String) {
+        Task {
+            do {
+                let data = try await self.participateRoomService.dispatchVerifyCode(code: code)
+                guard let id = data.id else { return }
+                self.roomInfoSubject.send(data.toRoomInfo())
+            } catch(let error) {
+                guard let error = error as? NetworkError else { return }
+                self.roomInfoSubject.send(completion: .failure(error))
+            }
+        }
+    }
 }

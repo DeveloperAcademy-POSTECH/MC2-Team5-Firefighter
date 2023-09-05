@@ -18,8 +18,8 @@ final class ParticipateRoomViewController: BaseViewController {
     
     // MARK: - property
     
-//    private let roomParticipationRepository: RoomParticipationRepository = RoomParticipationRepositoryImpl()
     private let viewModel: ParticipateRoomViewModel
+    private var cancellable = Set<AnyCancellable>()
     
     // MARK: - init
     
@@ -47,6 +47,7 @@ final class ParticipateRoomViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.configureNavigation()
+        self.bindToViewModel()
     }
     
     // MARK: - override
@@ -74,38 +75,53 @@ final class ParticipateRoomViewController: BaseViewController {
     private func transfromedOutput() -> ParticipateRoomViewModel.Output {
         let input = ParticipateRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
                                                    textFieldDidChanged: self.participateRoomView.inputInvitedCodeView.textFieldDidChangedPublisher.eraseToAnyPublisher(),
-                                                   nextButtonDidTap: self.participateRoomView.nextButtonTapPublisher)
+                                                   nextButtonDidTap: self.participateRoomView.nextButtonTapPublisher.eraseToAnyPublisher())
         return self.viewModel.transform(from: input)
     }
     
     private func bindOutputToViewModel(_ output: ParticipateRoomViewModel.Output) {
+        output.counts
+            .sink(receiveValue: { [weak self] (textCount, maxCount) in
+                self?.participateRoomView.inputInvitedCodeView.updateTextCount(count: textCount, maxLength: maxCount)
+            })
+            .store(in: &self.cancellable)
         
+        output.fixedTitleByMaxCount
+            .sink { [weak self] fixedTitle in
+                self?.participateRoomView.inputInvitedCodeView.updateTextFieldText(fixedText: fixedTitle)
+            }
+            .store(in: &self.cancellable)
+        
+        output.isEnabled
+            .sink(receiveValue: { [weak self] isEnable in
+                self?.participateRoomView.toggleDoneButton(isEnabled: isEnable)
+            })
+            .store(in: &self.cancellable)
+        
+        output.roomInfo
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(let error):
+                    // FIXME: 변경
+                    print(error)
+                }
+            } receiveValue: { [weak self] roomInfo in
+                self?.presentCheckView(roomInfo: roomInfo)
+            }
+            .store(in: &self.cancellable)
     }
     
-    // MARK: - network
-    
-//    private func dispatchInviteCode(_ code : String) {
-//        Task {
-//            do {
-//                let data = try await self.roomParticipationRepository.dispatchVerifyCode(code: code)
-//                guard let id = data.id else { return }
-//                let viewController = CheckRoomViewController()
-//                viewController.modalPresentationStyle = .overFullScreen
-//                viewController.modalTransitionStyle = .crossDissolve
-//                viewController.roomInfo = data
-//                viewController.roomId = id
-//
-//                self.present(viewController, animated: true)
-//            } catch NetworkError.serverError {
-//                print("server Error")
-//            } catch NetworkError.encodingError {
-//                print("encoding Error")
-//            } catch NetworkError.clientError(let message) {
-//                self.makeAlert(title: TextLiteral.checkRoomViewControllerErrorAlertTitle, message: TextLiteral.checkRoomViewControllerErrorAlertMessage)
-//                print("client Error: \(String(describing: message))")
-//            }
-//        }
-//    }
+    private func presentCheckView(roomInfo: ParticipateRoomInfo) {
+        let viewController = CheckRoomViewController()
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.roomInfo = roomInfo
+        viewController.roomId = roomInfo.id
+        
+        self.present(viewController, animated: true)
+    }
 }
 
 extension ParticipateRoomViewController: ParticipateRoomViewDelegate {

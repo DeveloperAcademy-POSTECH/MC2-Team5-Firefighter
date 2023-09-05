@@ -15,3 +15,14 @@ struct ParticipatedRoomInfoDTO: Decodable {
     let startDate: String?
     let endDate: String?
 }
+
+extension ParticipatedRoomInfoDTO {
+    func toRoomInfo() -> ParticipateRoomInfo {
+        return ParticipateRoomInfo(id: self.id ?? 0,
+                                   title: self.title ?? "",
+                                   capacity: self.capacity ?? 0,
+                                   participatingCount: self.participatingCount ?? 0,
+                                   startDate: self.startDate ?? "",
+                                   endDate: self.endDate ?? "")
+    }
+}

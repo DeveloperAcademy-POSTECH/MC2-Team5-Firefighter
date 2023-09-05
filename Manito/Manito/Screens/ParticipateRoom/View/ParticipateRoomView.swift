@@ -40,8 +40,8 @@ final class ParticipateRoomView: UIView {
     let inputInvitedCodeView: InputInvitedCodeView = InputInvitedCodeView()
     
     // MARK: - property
-
-    lazy var nextButtonTapPublisher = self.nextButton.tapPublisher
+    
+    let nextButtonTapPublisher = PassthroughSubject<String, Never>()
     private weak var delegate: ParticipateRoomViewDelegate?
     
     // MARK: - init
@@ -51,7 +51,7 @@ final class ParticipateRoomView: UIView {
         self.setupLayout()
         self.setupButtonAction()
         self.setupNotificationCenter()
-        self.detectNextButtonStatus()
+//        self.detectNextButtonStatus()
     }
     
     @available(*, unavailable)
@@ -92,6 +92,7 @@ final class ParticipateRoomView: UIView {
         
         let didTapNextButton = UIAction { [weak self] _ in
             guard let code = self?.inputInvitedCodeView.roomCodeTextField.text else { return }
+            self?.nextButtonTapPublisher.send(code)
             self?.delegate?.nextButtonDidTap(code: code)
         }
         
@@ -105,11 +106,11 @@ final class ParticipateRoomView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func detectNextButtonStatus() {
-        self.inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
-            self?.nextButton.isDisabled = !isEnable
-        }
-    }
+//    private func detectNextButtonStatus() {
+//        self.inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
+//            self?.nextButton.isDisabled = !isEnable
+//        }
+//    }
     
     func configureDelegate(_ delegate: ParticipateRoomViewDelegate) {
         self.delegate = delegate
@@ -128,6 +129,12 @@ final class ParticipateRoomView: UIView {
             self.endEditing(true)
         }
     }
+    
+    func toggleDoneButton(isEnabled: Bool) {
+        self.nextButton.isDisabled = !isEnabled
+    }
+    
+
     
     // MARK: - selector
     

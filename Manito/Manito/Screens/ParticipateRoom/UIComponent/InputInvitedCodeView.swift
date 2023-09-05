@@ -72,25 +72,35 @@ final class InputInvitedCodeView: UIView {
     
     // MARK: - func
     
-    private func setCounter(count: Int) {
-        if count <= maxLength {
-            roomsTextLimit.text = "\(count)/\(maxLength)"
-        } else {
-            roomsTextLimit.text = "\(maxLength)/\(maxLength)"
-        }
+//    private func setCounter(count: Int) {
+//        if count <= maxLength {
+//            roomsTextLimit.text = "\(count)/\(maxLength)"
+//        } else {
+//            roomsTextLimit.text = "\(maxLength)/\(maxLength)"
+//        }
+//    }
+    
+//    private func checkMaxLength(textField: UITextField, maxLength: Int) {
+//        if let text = textField.text {
+//            if text.count > maxLength {
+//                let endIndex = text.index(text.startIndex, offsetBy: maxLength)
+//                let fixedText = text[text.startIndex..<endIndex]
+//                textField.text = fixedText + " "
+//                
+//                DispatchQueue.main.async {
+//                    self.roomCodeTextField.text = String(fixedText)
+//                }
+//            }
+//        }
+//    }
+    
+    func updateTextCount(count: Int, maxLength: Int) {
+        self.roomsTextLimit.text = "\(count)/\(maxLength)"
     }
     
-    private func checkMaxLength(textField: UITextField, maxLength: Int) {
-        if let text = textField.text {
-            if text.count > maxLength {
-                let endIndex = text.index(text.startIndex, offsetBy: maxLength)
-                let fixedText = text[text.startIndex..<endIndex]
-                textField.text = fixedText + " "
-                
-                DispatchQueue.main.async {
-                    self.roomCodeTextField.text = String(fixedText)
-                }
-            }
+    func updateTextFieldText(fixedText: String) {
+        DispatchQueue.main.async {
+            self.roomCodeTextField.text = String(fixedText)
         }
     }
 }

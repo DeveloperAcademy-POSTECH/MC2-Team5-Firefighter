@@ -179,6 +179,7 @@
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* TopCharacterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* TopCharacterImageView.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
+		D7537F612AA70C40005AC78B /* ParticipateRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F602AA70C40005AC78B /* ParticipateRoomInfo.swift */; };
 		D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */; };
 		D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */; };
 		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
@@ -391,6 +392,7 @@
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* TopCharacterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCharacterImageView.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
+		D7537F602AA70C40005AC78B /* ParticipateRoomInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomInfo.swift; sourceTree = "<group>"; };
 		D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomService.swift; sourceTree = "<group>"; };
 		D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewModel.swift; sourceTree = "<group>"; };
 		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
@@ -891,6 +893,7 @@
 				3904F4FB2AA3729300B6264F /* InvitationCode.swift */,
 				3904F4FD2AA3743C00B6264F /* IndividualMission.swift */,
 				3904F4FF2AA3754400B6264F /* MessageCountInfo.swift */,
+				D7537F602AA70C40005AC78B /* ParticipateRoomInfo.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1765,6 +1768,7 @@
 				B5F5253528547F1900614FF7 /* LetterHeaderView.swift in Sources */,
 				B5A085FA2A9745DA00C8A98D /* RoomInfoDTO.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
+				D7537F612AA70C40005AC78B /* ParticipateRoomInfo.swift in Sources */,
 				B53A35C42A96F50100B720BC /* DetailRoomRepository.swift in Sources */,
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
 				D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */,
