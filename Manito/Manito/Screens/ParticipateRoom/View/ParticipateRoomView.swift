@@ -12,7 +12,6 @@ import SnapKit
 
 protocol ParticipateRoomViewDelegate: AnyObject {
     func closeButtonDidTap()
-    func nextButtonDidTap(code: String)
     func observeNextNotification(roomId: Int)
 }
 
@@ -51,7 +50,6 @@ final class ParticipateRoomView: UIView {
         self.setupLayout()
         self.setupButtonAction()
         self.setupNotificationCenter()
-//        self.detectNextButtonStatus()
     }
     
     @available(*, unavailable)
@@ -91,9 +89,8 @@ final class ParticipateRoomView: UIView {
         }
         
         let didTapNextButton = UIAction { [weak self] _ in
-            guard let code = self?.inputInvitedCodeView.roomCodeTextField.text else { return }
+            guard let code = self?.inputInvitedCodeView.code() else { return }
             self?.nextButtonTapPublisher.send(code)
-            self?.delegate?.nextButtonDidTap(code: code)
         }
         
         self.closeButton.addAction(didTapCloseButton, for: .touchUpInside)
@@ -105,12 +102,6 @@ final class ParticipateRoomView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-//    private func detectNextButtonStatus() {
-//        self.inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
-//            self?.nextButton.isDisabled = !isEnable
-//        }
-//    }
     
     func configureDelegate(_ delegate: ParticipateRoomViewDelegate) {
         self.delegate = delegate
@@ -133,8 +124,6 @@ final class ParticipateRoomView: UIView {
     func toggleDoneButton(isEnabled: Bool) {
         self.nextButton.isDisabled = !isEnabled
     }
-    
-
     
     // MARK: - selector
     

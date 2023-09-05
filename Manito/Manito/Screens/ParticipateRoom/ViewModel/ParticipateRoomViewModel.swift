@@ -54,6 +54,7 @@ final class ParticipateRoomViewModel: ViewModelType {
                 if isOverMaxCount {
                     let endIndex = text.index(text.startIndex, offsetBy: self?.maxCount ?? 0)
                     let fixedText = text[text.startIndex..<endIndex]
+                    
                     return String(fixedText)
                 }
 
