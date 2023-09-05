@@ -52,7 +52,7 @@ final class SplashViewController: UIViewController {
     }
 
     private func presentNicknameSettingViewController() {
-        let viewController = CreateNickNameViewController()
+        let viewController = CreateNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl())))
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
         self.present(viewController, animated: true)

@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class ImageRowView: UIView {
+final class TopCharacterImageView: UIView {
     
     // MARK: - Property
     

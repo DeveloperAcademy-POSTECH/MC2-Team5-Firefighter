@@ -414,7 +414,7 @@ final class DetailingView: UIView {
     
     func updateDetailingView(room: RoomInfo) {
         self.roomType = room.roomInformation.state
-        self.missionId = room.mission?.id?.description ?? ""
+        self.missionId = room.mission?.id.description ?? ""
         DispatchQueue.main.async {
             self.titleLabel.text = room.roomInformation.title
             self.periodLabel.text = "\(room.roomInformation.startDate.subStringToDate()) ~ \(room.roomInformation.endDate.subStringToDate())"
@@ -431,7 +431,7 @@ final class DetailingView: UIView {
                 self.missionContentsLabel.attributedText = NSAttributedString(string: missionContent)
                 self.manittoNickname = manittoNickname
                 if !didView && !room.admin {
-                    self.delegate?.didNotShowManitteeView(manitteeName: room.manittee.nickname ?? "")
+                    self.delegate?.didNotShowManitteeView(manitteeName: room.manittee.nickname)
                 }
                 self.setupManittoOpenButton(date: room.roomInformation.endDate)
             } else {

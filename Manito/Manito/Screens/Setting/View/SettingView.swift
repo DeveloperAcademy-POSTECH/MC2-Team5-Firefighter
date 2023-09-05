@@ -5,6 +5,7 @@
 //  Created by 이성호 on 2023/05/12.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -46,12 +47,15 @@ final class SettingView: UIView {
         return button
     }()
     
-    private let imageRow: ImageRowView = ImageRowView()
+    private let imageRow: TopCharacterImageView = TopCharacterImageView()
     
     // MARK: - property
     
     private var options: [Option] = []
     private weak var delegate: SettingViewDelegate?
+    
+    let withdrawalButtonPublisher = PassthroughSubject<Void, Never>()
+    let logoutButtonPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
     
