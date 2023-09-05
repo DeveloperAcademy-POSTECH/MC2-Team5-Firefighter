@@ -769,6 +769,7 @@
 		B58CA2FC2A9CC29A00977592 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				B5C7FBE62AA75B9C00862021 /* Base */,
 				B58CA3052A9CC37000977592 /* Scene */,
 			);
 			path = Presentation;
@@ -920,6 +921,16 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		B5C7FBE62AA75B9C00862021 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				B5F525192851A12600614FF7 /* BaseViewController.swift */,
+				B5F5251B2851A19A00614FF7 /* BaseCollectionViewCell.swift */,
+				B5F5251D2851A1C700614FF7 /* BaseTableViewCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		B5F524C228519AA000614FF7 = {
 			isa = PBXGroup;
 			children = (
@@ -984,7 +995,6 @@
 				B54741E529A4945100B75BA3 /* Error */,
 				B5F525272851A29C00614FF7 /* Utils */,
 				B5F524F828519BC700614FF7 /* Literal */,
-				B5F524F728519BC400614FF7 /* Base */,
 				B5F524F628519BC000614FF7 /* Protocol */,
 				B5F524F428519BB500614FF7 /* Extension */,
 				B5F524F328519BB100614FF7 /* UIComponent */,
@@ -1113,16 +1123,6 @@
 				B5B3C1602A41D79E00AABD6F /* ViewModelType.swift */,
 			);
 			path = Protocol;
-			sourceTree = "<group>";
-		};
-		B5F524F728519BC400614FF7 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				B5F525192851A12600614FF7 /* BaseViewController.swift */,
-				B5F5251B2851A19A00614FF7 /* BaseCollectionViewCell.swift */,
-				B5F5251D2851A1C700614FF7 /* BaseTableViewCell.swift */,
-			);
-			path = Base;
 			sourceTree = "<group>";
 		};
 		B5F524F828519BC700614FF7 /* Literal */ = {
