@@ -13,23 +13,23 @@ final class RoomInfoView: UIView {
     
     // MARK: - property
     
-    let roomLabel: UILabel = {
+    private let roomLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
-    let dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
         return label
     }()    
-    let peopleInfoView = PeopleInfoView()
+    private let peopleInfoView = PeopleInfoView()
 
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -38,22 +38,33 @@ final class RoomInfoView: UIView {
     
     // MARK: - life cycle
     
-    private func render() {        
-        self.addSubview(roomLabel)
-        roomLabel.snp.makeConstraints {
+    private func setupLayout() {        
+        self.addSubview(self.roomLabel)
+        self.roomLabel.snp.makeConstraints {
             $0.top.centerX.equalToSuperview()
         }
         
-        self.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints {
-            $0.top.equalTo(roomLabel.snp.bottom).offset(8)
+        self.addSubview(self.dateLabel)
+        self.dateLabel.snp.makeConstraints {
+            $0.top.equalTo(self.roomLabel.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
         }
         
-        self.addSubview(peopleInfoView)
-        peopleInfoView.snp.makeConstraints {
+        self.addSubview(self.peopleInfoView)
+        self.peopleInfoView.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(10)
             $0.centerX.bottom.equalToSuperview()
         }
+    }
+    
+    func setupRoomInfo(roomInfo: ParticipateRoomInfo) {
+        let title = roomInfo.title
+        let capacity = roomInfo.capacity
+        let startDate = roomInfo.startDate
+        let endDate = roomInfo.endDate
+        
+        self.roomLabel.text = title
+        self.dateLabel.text = "\(startDate) ~ \(endDate)"
+        self.peopleInfoView.peopleLabel.text = "X \(capacity)인"
     }
 }

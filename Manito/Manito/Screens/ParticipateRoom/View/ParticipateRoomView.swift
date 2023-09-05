@@ -143,6 +143,7 @@ final class ParticipateRoomView: UIView {
         })
     }
     
+    // FIXME: 이거 바꾸기
     @objc
     private func didReceiveNextNotification(_ notification: Notification) {
         guard let id = notification.userInfo?["roomId"] as? Int else { return }

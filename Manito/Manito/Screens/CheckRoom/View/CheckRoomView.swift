@@ -1,19 +1,17 @@
 //
-//  CheckRoomViewController.swift
+//  CheckRoomView.swift
 //  Manito
 //
-//  Created by COBY_PRO on 2022/06/15.
+//  Created by 이성호 on 2023/09/05.
 //
 
 import UIKit
 
 import SnapKit
 
-class CheckRoomViewController: BaseViewController {
-    var roomId: Int?
-    var roomInfo: ParticipateRoomInfo?
+final class CheckRoomView: UIView {
     
-    // MARK: - Property
+    // MARK: - ui component
     
     private let roomInfoImageView: UIImageView = {
         let image = UIImageView()
@@ -37,10 +35,10 @@ class CheckRoomViewController: BaseViewController {
         button.backgroundColor = .yellow
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-        let action = UIAction { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-        button.addAction(action, for: .touchUpInside)
+//        let action = UIAction { [weak self] _ in
+//            self?.dismiss(animated: true, completion: nil)
+//        }
+//        button.addAction(action, for: .touchUpInside)
         return button
     }()
     private lazy var yesButton: UIButton = {
@@ -51,78 +49,64 @@ class CheckRoomViewController: BaseViewController {
         button.backgroundColor = .yellow
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-        let action = UIAction { [weak self] _ in
-            guard let id = self?.roomId else { return }
-            self?.dismiss(animated: true, completion: nil)
-            NotificationCenter.default.post(name: .nextNotification, object: nil, userInfo: ["roomId": id])
-        }
-        button.addAction(action, for: .touchUpInside)
+//        let action = UIAction { [weak self] _ in
+//            guard let id = self?.roomId else { return }
+//            self?.dismiss(animated: true, completion: nil)
+//            NotificationCenter.default.post(name: .nextNotification, object: nil, userInfo: ["roomId": id])
+//        }
+//        button.addAction(action, for: .touchUpInside)
         return button
     }()
+    // MARK: - property
     
     // MARK: - init
     
-    deinit {
-        print("\(#file) is dead")
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setupLayout()
     }
     
-    // MARK: - life cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViewController()
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    override func setupLayout() {
-        view.addSubview(roomInfoImageView)
-        roomInfoImageView.snp.makeConstraints {
+    // MARK: - func
+    
+    private func setupLayout() {
+        self.addSubview(self.roomInfoImageView)
+        self.roomInfoImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(roomInfoImageView.snp.width).multipliedBy(1.15)
+            $0.height.equalTo(self.roomInfoImageView.snp.width).multipliedBy(1.15)
         }
         
-        roomInfoImageView.addSubview(roomInfoView)
-        roomInfoView.snp.makeConstraints {
+        self.roomInfoImageView.addSubview(self.roomInfoView)
+        self.roomInfoView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(120)
             $0.leading.trailing.equalToSuperview()
         }
         
-        roomInfoImageView.addSubview(questionLabel)
-        questionLabel.snp.makeConstraints {
-            $0.top.equalTo(roomInfoView.snp.bottom).offset(50)
+        self.roomInfoImageView.addSubview(self.questionLabel)
+        self.questionLabel.snp.makeConstraints {
+            $0.top.equalTo(self.roomInfoView.snp.bottom).offset(50)
             $0.centerX.equalToSuperview()
         }
         
-        roomInfoImageView.addSubview(noButton)
-        noButton.snp.makeConstraints {
-            $0.top.equalTo(questionLabel.snp.bottom).offset(Size.leadingTrailingPadding)
+        self.roomInfoImageView.addSubview(self.noButton)
+        self.noButton.snp.makeConstraints {
+            $0.top.equalTo(self.questionLabel.snp.bottom).offset(Size.leadingTrailingPadding)
             $0.width.equalTo(110)
             $0.height.equalTo(44)
             $0.leading.equalToSuperview().inset(48)
         }
         
-        roomInfoImageView.addSubview(yesButton)
-        yesButton.snp.makeConstraints {
-            $0.top.equalTo(questionLabel.snp.bottom).offset(Size.leadingTrailingPadding)
+        self.roomInfoImageView.addSubview(self.yesButton)
+        self.yesButton.snp.makeConstraints {
+            $0.top.equalTo(self.questionLabel.snp.bottom).offset(Size.leadingTrailingPadding)
             $0.width.equalTo(110)
             $0.height.equalTo(44)
             $0.trailing.equalToSuperview().inset(48)
         }
-    }
-    
-    override func configureUI() {
-        view.backgroundColor = .black.withAlphaComponent(0.7)
-    }
-    
-    // MARK: - func
-    
-    private func setupViewController() {
-        guard let title = roomInfo?.title,
-              let startDate = roomInfo?.startDate,
-              let endDate = roomInfo?.endDate,
-              let capacity = roomInfo?.capacity else { return }
-        roomInfoView.roomLabel.text = title
-        roomInfoView.dateLabel.text = "\(startDate) ~ \(endDate)"
-        roomInfoView.peopleInfoView.peopleLabel.text = "X \(capacity)인"
     }
 }
