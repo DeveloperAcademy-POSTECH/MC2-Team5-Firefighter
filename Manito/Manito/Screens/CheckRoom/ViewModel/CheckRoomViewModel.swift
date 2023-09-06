@@ -14,7 +14,7 @@ final class CheckRoomViewModel: ViewModelType {
 
     private let roomInfo: ParticipateRoomInfo
     
-    private var cancellabe = Set<AnyCancellable>()
+    private var cancellable = Set<AnyCancellable>()
     private let roomInfoSubject = PassthroughSubject<ParticipateRoomInfo, Never>()
     
     struct Input {
@@ -26,12 +26,12 @@ final class CheckRoomViewModel: ViewModelType {
     }
     
     func transform(from input: Input) -> Output {
-        input.viewDidLoad.sink { [weak self] _ in
-            guard let self = self else { return }
-            print("roomInfo: ", self.roomInfo )
-            self.roomInfoSubject.send(self.roomInfo)
-        }
-        .store(in: &self.cancellabe)
+        input.viewDidLoad
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.roomInfoSubject.send(self.roomInfo)
+            }
+            .store(in: &self.cancellable)
         
         return Output(roomInfo: self.roomInfoSubject)
     }
