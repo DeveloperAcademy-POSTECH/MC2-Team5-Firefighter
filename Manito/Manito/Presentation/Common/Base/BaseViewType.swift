@@ -8,5 +8,13 @@
 import UIKit
 
 protocol BaseViewType: UIView {
+    func setupLayout()
+    func configureUI()
+}
 
+extension BaseViewType {
+    func baseInit() {
+        self.setupLayout()
+        self.configureUI()
+    }
 }
