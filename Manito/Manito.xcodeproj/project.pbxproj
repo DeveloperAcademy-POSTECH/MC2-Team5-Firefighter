@@ -886,6 +886,7 @@
 				3904F4FB2AA3729300B6264F /* InvitationCode.swift */,
 				3904F4FD2AA3743C00B6264F /* IndividualMission.swift */,
 				3904F4FF2AA3754400B6264F /* MessageCountInfo.swift */,
+				CB7B23A728C4ECA8004A4CF3 /* Character.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -971,7 +972,6 @@
 			children = (
 				B5F5250028519EFB00614FF7 /* ImageLiteral.swift */,
 				391B3002286198C200421F1D /* Size.swift */,
-				CB7B23A728C4ECA8004A4CF3 /* Character.swift */,
 				7E15F67D28B35B3D00441305 /* TextLiteral.swift */,
 				D777D2C828C7780E008655BD /* URLLiteral.swift */,
 			);
