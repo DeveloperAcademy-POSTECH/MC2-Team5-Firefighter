@@ -159,9 +159,9 @@ final class DetailWaitView: UIView, BaseViewType {
     }
 
     // MARK: - func
-
-    private func setupTitleViewData(title: String, state: String, dateRange: String) {
-        self.titleView.setStartState(state: state)
+    
+    private func setupTitleViewData(title: String, status: RoomStatus, dateRange: String) {
+        self.titleView.setStartStatus(status: status)
         self.titleView.setupLabelData(title: title, dateRange: dateRange)
     }
 
@@ -234,7 +234,7 @@ final class DetailWaitView: UIView, BaseViewType {
         self.userArray = room.participants.members
 
         self.setupTitleViewData(title: room.roomInformation.title,
-                                state: room.roomInformation.state,
+                                status: room.roomInformation.state,
                                 dateRange: room.roomInformation.dateRangeText)
         self.setupRelatedViews(of: room.admin, room.roomInformation.isStart)
 
