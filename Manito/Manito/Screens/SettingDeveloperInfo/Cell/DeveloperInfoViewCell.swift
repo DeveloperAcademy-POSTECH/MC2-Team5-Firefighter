@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class DeveloperInfoViewCell: BaseCollectionViewCell {
+class DeveloperInfoViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - property
     
@@ -37,22 +37,23 @@ class DeveloperInfoViewCell: BaseCollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.baseInit()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - base func
 
-    override func configureUI() {
+    func configureUI() {
         backgroundColor = .grey001.withAlphaComponent(0.1)
         layer.borderWidth = 1
         layer.borderColor = UIColor.white.withAlphaComponent(0.1).cgColor
         layer.cornerRadius = 10
     }
     
-    override func setupLayout() {
+    func setupLayout() {
         addSubview(developerImageView)
         developerImageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(10)
