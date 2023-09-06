@@ -24,7 +24,7 @@ final class PeopleInfoView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -33,15 +33,15 @@ final class PeopleInfoView: UIView {
     
     // MARK: - life cycle
     
-    private func render() {
-        self.addSubview(peopleImageView)
-        peopleImageView.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(self.peopleImageView)
+        self.peopleImageView.snp.makeConstraints {
             $0.leading.top.bottom.equalToSuperview()
             $0.width.height.equalTo(60)
         }
         
-        self.addSubview(peopleLabel)
-        peopleLabel.snp.makeConstraints {
+        self.addSubview(self.peopleLabel)
+        self.peopleLabel.snp.makeConstraints {
             $0.trailing.top.bottom.equalToSuperview()
             $0.leading.equalTo(self.peopleImageView.snp.trailing).offset(5)
         }
