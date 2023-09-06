@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-final class LetterViewModel: ViewModelType {
+final class LetterViewModel: BaseViewModelType {
 
     typealias MessageDetails = (roomId: String, mission: String, missionId: String, manitteeId: String)
     typealias ReportDetails = (nickname: String, content: String)
