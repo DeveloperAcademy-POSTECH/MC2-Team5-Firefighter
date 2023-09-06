@@ -121,6 +121,7 @@
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
 		B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */; };
 		B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */; };
+		B5F3F1062AA3516200FA1A32 /* RoomStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F3F1052AA3516200FA1A32 /* RoomStatus.swift */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
 		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
@@ -329,6 +330,7 @@
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LetterViewController+MailCompose.swift"; sourceTree = "<group>"; };
+		B5F3F1052AA3516200FA1A32 /* RoomStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStatus.swift; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -886,6 +888,7 @@
 				3904F4FB2AA3729300B6264F /* InvitationCode.swift */,
 				3904F4FD2AA3743C00B6264F /* IndividualMission.swift */,
 				3904F4FF2AA3754400B6264F /* MessageCountInfo.swift */,
+				B5F3F1052AA3516200FA1A32 /* RoomStatus.swift */,
 				CB7B23A728C4ECA8004A4CF3 /* Character.swift */,
 			);
 			path = Entity;
@@ -1784,6 +1787,7 @@
 				B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */,
 				B5A085EC2A97314800C8A98D /* ParticipatedRoomInfoDTO.swift in Sources */,
 				D724AF5D287088310003F280 /* SettingViewController.swift in Sources */,
+				B5F3F1062AA3516200FA1A32 /* RoomStatus.swift in Sources */,
 				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
 				39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */,
 				CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */,
