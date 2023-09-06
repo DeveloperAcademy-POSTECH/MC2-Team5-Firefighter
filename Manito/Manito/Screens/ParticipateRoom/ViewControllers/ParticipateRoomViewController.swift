@@ -114,7 +114,7 @@ final class ParticipateRoomViewController: BaseViewController {
     }
     
     private func presentCheckView(roomInfo: ParticipateRoomInfo) {
-        let viewController = CheckRoomViewController(roomInfo: roomInfo)
+        let viewController = CheckRoomViewController(viewModel: CheckRoomViewModel(roomInfo: roomInfo))
         viewController.modalPresentationStyle = .overFullScreen
         viewController.modalTransitionStyle = .crossDissolve
         self.present(viewController, animated: true)

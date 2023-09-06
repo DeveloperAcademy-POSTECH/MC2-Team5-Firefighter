@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2022/06/15.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -16,13 +17,14 @@ final class CheckRoomViewController: BaseViewController {
     private let checkRoomView: CheckRoomView = CheckRoomView()
     
     // MARK: - property
-    
-    private var roomInfo: ParticipateRoomInfo
+
+    private let viewModel: CheckRoomViewModel
+    private var cancellable = Set<AnyCancellable>()
     
     // MARK: - init
     
-    init(roomInfo: ParticipateRoomInfo) {
-        self.roomInfo = roomInfo
+    init(viewModel: CheckRoomViewModel) {
+        self.viewModel = viewModel
         super.init()
     }
     
@@ -43,7 +45,7 @@ final class CheckRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupRoomInfo(roomInfo: roomInfo)
+        self.bindToViewModel()
     }
     
     // MARK: - override
@@ -54,7 +56,23 @@ final class CheckRoomViewController: BaseViewController {
     
     // MARK: - func
     
-    private func setupRoomInfo(roomInfo: ParticipateRoomInfo) {
-        self.checkRoomView.roomInfoView.setupRoomInfo(roomInfo: roomInfo)
+    private func bindToViewModel() {
+        let output = self.transformedOutput()
+        print(output)
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transformedOutput() -> CheckRoomViewModel.Output {
+        let input = CheckRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher)
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: CheckRoomViewModel.Output) {
+        print(output.roomInfo)
+        output.roomInfo
+            .sink(receiveValue: { [weak self] roomInfo in
+                self?.checkRoomView.roomInfoView.setupRoomInfo(roomInfo: roomInfo)
+            })
+            .store(in: &self.cancellable)
     }
 }
