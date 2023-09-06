@@ -45,18 +45,13 @@ final class CheckRoomView: UIView {
         button.backgroundColor = .yellow
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-//        let action = UIAction { [weak self] _ in
-//            guard let id = self?.roomId else { return }
-//            self?.dismiss(animated: true, completion: nil)
-//            NotificationCenter.default.post(name: .nextNotification, object: nil, userInfo: ["roomId": id])
-//        }
-//        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
     // MARK: - property
     
     lazy var noButtonDidTapPublisher = noButton.tapPublisher
+    lazy var yesButtonDidTapPublisher = yesButton.tapPublisher
     
     // MARK: - init
     
