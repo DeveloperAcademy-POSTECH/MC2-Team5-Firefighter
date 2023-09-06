@@ -938,6 +938,7 @@
 				B5F525192851A12600614FF7 /* BaseViewController.swift */,
 				B5C7FBEC2AA7607300862021 /* BaseViewType.swift */,
 				B5C7FBF42AA859E300862021 /* BaseViewControllerType.swift */,
+				B5B3C1602A41D79E00AABD6F /* BaseViewModelType.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1006,7 +1007,6 @@
 				B54741E529A4945100B75BA3 /* Error */,
 				B5F525272851A29C00614FF7 /* Utils */,
 				B5F524F828519BC700614FF7 /* Literal */,
-				B5F524F628519BC000614FF7 /* Protocol */,
 				B5F524F428519BB500614FF7 /* Extension */,
 				B5F524F328519BB100614FF7 /* UIComponent */,
 				B5F524F228519BA700614FF7 /* Resource */,
@@ -1126,14 +1126,6 @@
 				B50CEEBF2A6FF82600CF1C76 /* Publisher+Extension.swift */,
 			);
 			path = Extension;
-			sourceTree = "<group>";
-		};
-		B5F524F628519BC000614FF7 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				B5B3C1602A41D79E00AABD6F /* BaseViewModelType.swift */,
-			);
-			path = Protocol;
 			sourceTree = "<group>";
 		};
 		B5F524F828519BC700614FF7 /* Literal */ = {
