@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 import SnapKit
-//FIXME: 리팩터링 하기
+
 final class CheckRoomViewController: BaseViewController {
     
     // MARK: - ui component
@@ -70,26 +70,8 @@ final class CheckRoomViewController: BaseViewController {
         output.roomInfo
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomInfo in
-                print("here")
                 self?.checkRoomView.roomInfoView.setupRoomInfo(roomInfo: roomInfo)
             })
             .store(in: &self.cancellable)
-//        output.roomInfo
-//            .handleEvents(receiveSubscription: { _ in
-//                print("Subscriber has subscribed to roomInfo publisher")
-//            }, receiveCompletion: { completion in
-//                switch completion {
-//                case .finished:
-//                    print("roomInfo publisher completed normally")
-//                case .failure(let error):
-//                    print("error: \(error)")
-//                }
-//            }, receiveCancel: {
-//                print("has been cancled")
-//            })
-//            .sink(receiveValue: { [weak self] roomInfo in
-//                  print("received roomInfo: \(roomInfo)")
-//            })
-//            .store(in: &self.cancellable)
     }
 }
