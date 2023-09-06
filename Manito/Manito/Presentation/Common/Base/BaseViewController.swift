@@ -20,8 +20,6 @@ class BaseViewController: UIViewController {
         return button
     }()
     
-    private let tokenRepository: TokenRepository = TokenRepositoryImpl()
-    
     // MARK: - init
     
     init() {

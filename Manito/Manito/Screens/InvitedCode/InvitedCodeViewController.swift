@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class InvitedCodeViewController: BaseViewController {
+class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
     
     var roomInfo: RoomListItemDTO
     var code: String
@@ -101,9 +101,16 @@ class InvitedCodeViewController: BaseViewController {
         print("\(#file) is dead")
     }
 
-    // MARK: - configure
+    // MARK: - life cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.baseViewDidLoad()
+    }
+
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         view.addSubview(invitedImageView)
         invitedImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(142)
@@ -153,7 +160,7 @@ class InvitedCodeViewController: BaseViewController {
         }
     }
     
-    override func configureUI() {
-        view.backgroundColor = .black.withAlphaComponent(0.8)
+    func configureUI() {
+        self.view.backgroundColor = .black.withAlphaComponent(0.8)
     }
 }

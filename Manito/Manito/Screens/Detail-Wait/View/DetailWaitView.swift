@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class DetailWaitView: UIView {
+final class DetailWaitView: UIView, BaseViewType {
     private enum UserStatus {
         case admin
         case member
@@ -95,7 +95,7 @@ final class DetailWaitView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
     }
     
     @available(*, unavailable)
@@ -103,9 +103,9 @@ final class DetailWaitView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - base func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.titleView)
         self.titleView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
@@ -153,7 +153,13 @@ final class DetailWaitView: UIView {
             $0.height.equalTo(60)
         }
     }
-    
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - func
+
     private func setupTitleViewData(title: String, state: String, dateRange: String) {
         self.titleView.setStartState(state: state)
         self.titleView.setupLabelData(title: title, dateRange: dateRange)
