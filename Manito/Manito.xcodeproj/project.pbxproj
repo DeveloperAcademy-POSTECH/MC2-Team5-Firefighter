@@ -926,6 +926,7 @@
 			children = (
 				B5C7FC042AA887A400862021 /* Logger */,
 				B5C7FC052AA887CC00862021 /* Extension */,
+				B5C7FC072AA889BD00862021 /* Literal */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -960,6 +961,18 @@
 				B5FEE9DC28C849B400DEA07E /* UIImageView+Cache.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		B5C7FC072AA889BD00862021 /* Literal */ = {
+			isa = PBXGroup;
+			children = (
+				B5F5250028519EFB00614FF7 /* ImageLiteral.swift */,
+				391B3002286198C200421F1D /* Size.swift */,
+				CB7B23A728C4ECA8004A4CF3 /* Character.swift */,
+				7E15F67D28B35B3D00441305 /* TextLiteral.swift */,
+				D777D2C828C7780E008655BD /* URLLiteral.swift */,
+			);
+			path = Literal;
 			sourceTree = "<group>";
 		};
 		B5F524C228519AA000614FF7 = {
@@ -1025,7 +1038,6 @@
 			isa = PBXGroup;
 			children = (
 				B54741E529A4945100B75BA3 /* Error */,
-				B5F524F828519BC700614FF7 /* Literal */,
 				B5F524F728519BC400614FF7 /* Base */,
 				B5F524F628519BC000614FF7 /* Protocol */,
 				B5F524F428519BB500614FF7 /* Extension */,
@@ -1165,18 +1177,6 @@
 				B5F5251D2851A1C700614FF7 /* BaseTableViewCell.swift */,
 			);
 			path = Base;
-			sourceTree = "<group>";
-		};
-		B5F524F828519BC700614FF7 /* Literal */ = {
-			isa = PBXGroup;
-			children = (
-				B5F5250028519EFB00614FF7 /* ImageLiteral.swift */,
-				391B3002286198C200421F1D /* Size.swift */,
-				CB7B23A728C4ECA8004A4CF3 /* Character.swift */,
-				7E15F67D28B35B3D00441305 /* TextLiteral.swift */,
-				D777D2C828C7780E008655BD /* URLLiteral.swift */,
-			);
-			path = Literal;
 			sourceTree = "<group>";
 		};
 		B5F524F928519BD600614FF7 /* Storyboards */ = {
