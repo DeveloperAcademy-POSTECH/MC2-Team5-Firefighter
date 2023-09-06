@@ -18,10 +18,12 @@ final class CheckRoomViewModel: ViewModelType {
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
+        let noButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output{
         let roomInfo: AnyPublisher<ParticipateRoomInfo, Never>
+        let noButtonDidTap: AnyPublisher<Void, Never>
     }
     
     func transform(from input: Input) -> Output {
@@ -29,7 +31,11 @@ final class CheckRoomViewModel: ViewModelType {
             .map { self.roomInfo }
             .eraseToAnyPublisher()
         
-        return Output(roomInfo: roomInfo)
+        let noButtonDidTap = input.noButtonDidTap
+            .eraseToAnyPublisher()
+        
+        return Output(roomInfo: roomInfo,
+                      noButtonDidTap: noButtonDidTap)
     }
     
     // MARK: - init

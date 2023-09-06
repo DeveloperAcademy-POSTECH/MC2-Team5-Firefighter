@@ -35,10 +35,6 @@ final class CheckRoomView: UIView {
         button.backgroundColor = .yellow
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
-//        let action = UIAction { [weak self] _ in
-//            self?.dismiss(animated: true, completion: nil)
-//        }
-//        button.addAction(action, for: .touchUpInside)
         return button
     }()
     private lazy var yesButton: UIButton = {
@@ -57,7 +53,10 @@ final class CheckRoomView: UIView {
 //        button.addAction(action, for: .touchUpInside)
         return button
     }()
+    
     // MARK: - property
+    
+    lazy var noButtonDidTapPublisher = noButton.tapPublisher
     
     // MARK: - init
     

@@ -62,7 +62,8 @@ final class CheckRoomViewController: BaseViewController {
     }
     
     private func transformedOutput() -> CheckRoomViewModel.Output {
-        let input = CheckRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher)
+        let input = CheckRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
+                                             noButtonDidTap: self.checkRoomView.noButtonDidTapPublisher)
         return viewModel.transform(from: input)
     }
     
@@ -71,6 +72,13 @@ final class CheckRoomViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomInfo in
                 self?.checkRoomView.roomInfoView.setupRoomInfo(roomInfo: roomInfo)
+            })
+            .store(in: &self.cancellable)
+        
+        output.noButtonDidTap
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.dismiss(animated: true)
             })
             .store(in: &self.cancellable)
     }
