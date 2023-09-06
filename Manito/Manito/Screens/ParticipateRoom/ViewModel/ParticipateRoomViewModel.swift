@@ -15,7 +15,7 @@ final class ParticipateRoomViewModel: ViewModelType {
     // MARK: - property
     
     private let maxCount: Int = 6
-    private let roomInfoSubject = PassthroughSubject<ParticipateRoomInfo, NetworkError>()
+    private let roomInfoSubject = PassthroughSubject<ParticipateRoomInfo, Error>()
     
     private let participateRoomService: ParticipateRoomService
     private var cancellable = Set<AnyCancellable>()
@@ -30,7 +30,7 @@ final class ParticipateRoomViewModel: ViewModelType {
         let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
-        let roomInfo: PassthroughSubject<ParticipateRoomInfo, NetworkError>
+        let roomInfo: PassthroughSubject<ParticipateRoomInfo, Error>
     }
     
     func transform(from input: Input) -> Output {
@@ -100,10 +100,8 @@ final class ParticipateRoomViewModel: ViewModelType {
         Task {
             do {
                 let data = try await self.participateRoomService.dispatchVerifyCode(code: code)
-                guard let id = data.id else { return }
                 self.roomInfoSubject.send(data.toRoomInfo())
             } catch(let error) {
-                guard let error = error as? NetworkError else { return }
                 self.roomInfoSubject.send(completion: .failure(error))
             }
         }

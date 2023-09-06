@@ -238,4 +238,7 @@ enum TextLiteral {
     static let missionEditViewControllerChangeMissionAlertMessage: String = "기본 미션으로 변경을 통해\n되돌릴 수 있습니다."
     static let missionEditViewControllerChangeMissionErrorAlertTitle: String = "오류 발생"
     static let missionEditViewControllerChangeMissionErrorAlertMessage: String = "개별 미션을 수정 할 수 없습니다.\n다시 시도해주세요."
+    
+    // MARK: - ParticipateRoomViewController
+    static let participateRoomViewControllerInvalidCodeMessage: String = "초대코드가 존재하지 않습니다"
 }

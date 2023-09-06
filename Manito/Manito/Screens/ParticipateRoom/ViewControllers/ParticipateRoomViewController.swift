@@ -103,9 +103,8 @@ final class ParticipateRoomViewController: BaseViewController {
             .sink { [weak self] result in
                 switch result {
                 case .finished: return
-                case .failure(let error):
-                    // FIXME: 변경
-                    print(error)
+                case .failure(_):
+                    self?.makeAlert(title: TextLiteral.participateRoomViewControllerInvalidCodeMessage)
                 }
             } receiveValue: { [weak self] roomInfo in
                 self?.presentCheckView(roomInfo: roomInfo)
