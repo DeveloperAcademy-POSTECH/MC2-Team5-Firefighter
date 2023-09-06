@@ -40,8 +40,6 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLayout()
-        configureUI()
         setupBackButton()
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
@@ -55,14 +53,6 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupInteractivePopGestureRecognizer()
-    }
-    
-    func setupLayout() {
-        // Override Layout
-    }
-    
-    func configureUI() {
-        view.backgroundColor = .backgroundGrey
     }
     
     func setupNavigationBar() {
