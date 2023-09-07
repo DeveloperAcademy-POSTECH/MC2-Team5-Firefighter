@@ -100,7 +100,7 @@ final class ParticipateRoomViewModel: ViewModelType {
         Task {
             do {
                 let data = try await self.participateRoomService.dispatchVerifyCode(code: code)
-                self.roomInfoSubject.send(data.toRoomInfo())
+                self.roomInfoSubject.send(data.toParticipateRoomInfo())
             } catch(let error) {
                 self.roomInfoSubject.send(completion: .failure(error))
             }
