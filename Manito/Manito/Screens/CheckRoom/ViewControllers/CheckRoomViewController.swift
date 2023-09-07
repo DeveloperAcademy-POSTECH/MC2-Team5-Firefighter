@@ -72,7 +72,7 @@ final class CheckRoomViewController: BaseViewController {
         output.roomInfo
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomInfo in
-                self?.checkRoomView.roomInfoView.setupRoomInfo(roomInfo: roomInfo)
+                self?.checkRoomView.roomInfoView.updateRoomInfo(roomInfo: roomInfo)
             })
             .store(in: &self.cancellable)
         
