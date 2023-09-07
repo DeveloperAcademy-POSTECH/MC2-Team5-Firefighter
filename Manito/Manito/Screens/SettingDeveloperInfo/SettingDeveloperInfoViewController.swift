@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class SettingDeveloperInfoViewController: BaseViewController {
+final class SettingDeveloperInfoViewController: BaseViewController, BaseViewControllerType {
     
     // 개발자 정보 데이터
     private let developerData: [[String: Any]] = [
@@ -102,24 +102,39 @@ final class SettingDeveloperInfoViewController: BaseViewController {
     }
 
     // MARK: - life cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.baseViewDidLoad()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupLargeTitle()
     }
 
-    override func setupLayout() {
+    // MARK: - override
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        title = TextLiteral.settingDeveloperInfoTitle
+    }
+
+    // MARK: - base func
+
+    func setupLayout() {
         view.addSubview(listCollectionView)
         listCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
-    
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        title = TextLiteral.settingDeveloperInfoTitle
+
+    func configureUI() {
+        self.view.backgroundColor = .backgroundGrey
     }
+
+    // MARK: - func
     
     private func setupLargeTitle() {
         navigationController?.navigationBar.prefersLargeTitles = true

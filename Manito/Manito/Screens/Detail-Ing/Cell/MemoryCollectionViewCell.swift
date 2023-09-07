@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MemoryCollectionViewCell: BaseCollectionViewCell {
+final class MemoryCollectionViewCell: UICollectionViewCell, BaseViewType {
     var didTappedImage: ((UIImage) -> ())?
     
     // MARK: - properties
@@ -28,8 +28,20 @@ final class MemoryCollectionViewCell: BaseCollectionViewCell {
         label.lineBreakMode = .byCharWrapping
         return label
     }()
+
+    // MARK: - init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.baseInit()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    // MARK: - life cycle
+    // MARK: - override
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -37,9 +49,9 @@ final class MemoryCollectionViewCell: BaseCollectionViewCell {
         contentLabel.text = ""
     }
     
-    // MARK: - func
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         addSubview(photoImageView)
         photoImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -51,7 +63,7 @@ final class MemoryCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    override func configureUI() {
+    func configureUI() {
         backgroundColor = .darkGrey002
         makeBorderLayer(color: .white)
         layer.masksToBounds = true

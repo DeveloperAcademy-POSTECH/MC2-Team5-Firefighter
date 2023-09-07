@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class CheckRoomViewController: BaseViewController {
+class CheckRoomViewController: BaseViewController, BaseViewControllerType {
     var roomId: Int?
     var roomInfo: ParticipatedRoomInfoDTO?
     
@@ -70,10 +70,13 @@ class CheckRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
         setupViewController()
     }
+
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         view.addSubview(roomInfoImageView)
         roomInfoImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -110,8 +113,8 @@ class CheckRoomViewController: BaseViewController {
         }
     }
     
-    override func configureUI() {
-        view.backgroundColor = .black.withAlphaComponent(0.7)
+    func configureUI() {
+        self.view.backgroundColor = .black.withAlphaComponent(0.7)
     }
     
     // MARK: - func

@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class LetterCollectionViewCell: BaseCollectionViewCell {
+final class LetterCollectionViewCell: UICollectionViewCell, BaseViewType {
 
     typealias ConfigurationData = (mission: String, content: String?, imageURL: String?, isTodayLetter: Bool, canReport: Bool?)
 
@@ -84,6 +84,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.baseInit()
         self.setupImageGesture()
     }
 
@@ -92,9 +93,9 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - override
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         self.contentView.addSubview(self.wholeStackView)
         self.wholeStackView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -118,7 +119,7 @@ final class LetterCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    override func configureUI() {
+    func configureUI() {
         self.clipsToBounds = true
         self.makeBorderLayer(color: .white.withAlphaComponent(0.5))
     }

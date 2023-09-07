@@ -13,7 +13,7 @@ protocol MissionEditDelegate: AnyObject {
     func didChangeMission()
 }
 
-final class MissionEditViewController: BaseViewController {
+final class MissionEditViewController: BaseViewController, BaseViewControllerType {
     
     // MARK: - property
     
@@ -77,18 +77,14 @@ final class MissionEditViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
         self.setupGesture()
         self.setupNotificationCenter()
     }
     
-    // MARK: - override
+    // MARK: - base func
     
-    override func configureUI() {
-        super.configureUI()
-        self.view.backgroundColor = .darkGrey001.withAlphaComponent(0.5)
-    }
-    
-    override func setupLayout() {
+    func setupLayout() {
         self.view.addSubview(self.backgroundView)
         self.backgroundView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
@@ -109,7 +105,11 @@ final class MissionEditViewController: BaseViewController {
             $0.trailing.equalTo(self.missionTextField.snp.trailing)
         }
     }
-    
+
+    func configureUI() {
+        self.view.backgroundColor = .darkGrey001.withAlphaComponent(0.5)
+    }
+
     // MARK: - func
     
     func setDelegate(_ delegate: DetailingViewController) {

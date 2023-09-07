@@ -45,22 +45,22 @@ final class CreateRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBarHiddenState()
         self.configureDelegation()
         self.bindViewModel()
     }
     
     // MARK: - override
     
-    override func configureUI() {
-        super.configureUI()
-        self.navigationController?.navigationBar.isHidden = true
-    }
-    
     override func endEditingView() {
         self.createRoomView.endEditingView()
     }
-    
+
     // MARK: - func
+
+    private func setupNavigationBarHiddenState() {
+        self.navigationController?.navigationBar.isHidden = true
+    }
     
     private func configureDelegation() {
         self.createRoomView.configureDelegate(self)
