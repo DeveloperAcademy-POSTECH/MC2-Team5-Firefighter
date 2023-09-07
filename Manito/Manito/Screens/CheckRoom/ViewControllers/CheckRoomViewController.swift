@@ -86,8 +86,10 @@ final class CheckRoomViewController: BaseViewController {
         output.yesButtonDidTap
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomId in
-                self?.dismiss(animated: true, completion: nil)
-                NotificationCenter.default.post(name: .nextNotification, object: nil, userInfo: ["roomId": roomId])
+                guard let presentingViewController = self?.presentingViewController as? UINavigationController else { return }
+                self?.dismiss(animated: true, completion: {
+                    presentingViewController.pushViewController(ChooseCharacterViewController(roomId: roomId), animated: true)
+                })
             })
             .store(in: &self.cancellable)
     }

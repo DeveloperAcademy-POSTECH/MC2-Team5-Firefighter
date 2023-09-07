@@ -124,8 +124,4 @@ extension ParticipateRoomViewController: ParticipateRoomViewDelegate {
     func closeButtonDidTap() {
         self.dismiss(animated: true)
     }
-        
-    func observeNextNotification(roomId: Int) {
-        self.navigationController?.pushViewController(ChooseCharacterViewController(roomId: roomId), animated: true)
-    }
 }

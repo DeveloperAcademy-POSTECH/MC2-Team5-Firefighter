@@ -12,7 +12,6 @@ import SnapKit
 
 protocol ParticipateRoomViewDelegate: AnyObject {
     func closeButtonDidTap()
-    func observeNextNotification(roomId: Int)
 }
 
 final class ParticipateRoomView: UIView {
@@ -98,7 +97,6 @@ final class ParticipateRoomView: UIView {
     }
     
     private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -141,11 +139,5 @@ final class ParticipateRoomView: UIView {
         UIView.animate(withDuration: 0.2, animations: {
             self.nextButton.transform = .identity
         })
-    }
-    
-    @objc
-    private func didReceiveNextNotification(_ notification: Notification) {
-        guard let id = notification.userInfo?["roomId"] as? Int else { return }
-        self.delegate?.observeNextNotification(roomId: id)
     }
 }
