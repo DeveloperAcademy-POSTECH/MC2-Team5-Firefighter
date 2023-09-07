@@ -759,6 +759,35 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		B55469B72AA96FB9004D9FE6 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				B55469BF2AA9704B004D9FE6 /* View */,
+				B55469BC2AA96FE4004D9FE6 /* Button */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		B55469BC2AA96FE4004D9FE6 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				392EC77D2855C388006918A9 /* SettingButton.swift */,
+				B5F5253028545E4C00614FF7 /* BackButton.swift */,
+				B5F5253A2854ABF200614FF7 /* MainButton.swift */,
+				39FFE32728EEFFFE008442EE /* MoreButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		B55469BF2AA9704B004D9FE6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7E7542B22923744300D725CB /* ToastPopupView.swift */,
+				B5706BF529B9D4650093D198 /* GuideView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		B57CB3022A763BB200474042 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -928,6 +957,7 @@
 			isa = PBXGroup;
 			children = (
 				B5C7FBEB2AA75DC700862021 /* Base */,
+				B55469B72AA96FB9004D9FE6 /* Component */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1108,7 +1138,6 @@
 			isa = PBXGroup;
 			children = (
 				B54741E529A4945100B75BA3 /* Error */,
-				B5F524F328519BB100614FF7 /* UIComponent */,
 				B5F524F228519BA700614FF7 /* Resource */,
 			);
 			path = Global;
@@ -1188,19 +1217,6 @@
 				B5F524F928519BD600614FF7 /* Storyboards */,
 			);
 			path = Resource;
-			sourceTree = "<group>";
-		};
-		B5F524F328519BB100614FF7 /* UIComponent */ = {
-			isa = PBXGroup;
-			children = (
-				392EC77D2855C388006918A9 /* SettingButton.swift */,
-				B5F5253028545E4C00614FF7 /* BackButton.swift */,
-				B5F5253A2854ABF200614FF7 /* MainButton.swift */,
-				39FFE32728EEFFFE008442EE /* MoreButton.swift */,
-				7E7542B22923744300D725CB /* ToastPopupView.swift */,
-				B5706BF529B9D4650093D198 /* GuideView.swift */,
-			);
-			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		B5F524F928519BD600614FF7 /* Storyboards */ = {
