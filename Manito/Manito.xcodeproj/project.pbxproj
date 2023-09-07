@@ -788,6 +788,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		B55469C02AA970DF004D9FE6 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				B5F524D728519AA100614FF7 /* Assets.xcassets */,
+				B50B1B36285AC28B0080992C /* GIFs */,
+				B5F5250228519F6A00614FF7 /* Fonts */,
+				B5F524F928519BD600614FF7 /* Storyboards */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		B57CB3022A763BB200474042 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -1108,6 +1119,7 @@
 				B5F524E428519AC600614FF7 /* Global */,
 				B5C7FC022AA886F300862021 /* Util */,
 				B53A35B22A9630FE00B720BC /* Service */,
+				B55469C02AA970DF004D9FE6 /* Resource */,
 			);
 			path = Manito;
 			sourceTree = "<group>";
@@ -1138,7 +1150,6 @@
 			isa = PBXGroup;
 			children = (
 				B54741E529A4945100B75BA3 /* Error */,
-				B5F524F228519BA700614FF7 /* Resource */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -1206,17 +1217,6 @@
 				B54741DE29A3A4BA00B75BA3 /* Views */,
 			);
 			path = Letter;
-			sourceTree = "<group>";
-		};
-		B5F524F228519BA700614FF7 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				B50B1B36285AC28B0080992C /* GIFs */,
-				B5F5250228519F6A00614FF7 /* Fonts */,
-				B5F524D728519AA100614FF7 /* Assets.xcassets */,
-				B5F524F928519BD600614FF7 /* Storyboards */,
-			);
-			path = Resource;
 			sourceTree = "<group>";
 		};
 		B5F524F928519BD600614FF7 /* Storyboards */ = {
