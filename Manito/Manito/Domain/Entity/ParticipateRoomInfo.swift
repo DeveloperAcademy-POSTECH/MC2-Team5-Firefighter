@@ -15,3 +15,12 @@ struct ParticipateRoomInfo {
     let startDate: String
     let endDate: String
 }
+
+extension ParticipateRoomInfo {
+    static let emptyRoom = ParticipateRoomInfo(id: 0,
+                                        title: "",
+                                        capacity: 0,
+                                        participatingCount: 0,
+                                        startDate: "",
+                                        endDate: "")
+}
