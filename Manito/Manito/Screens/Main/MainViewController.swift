@@ -235,7 +235,9 @@ final class MainViewController: BaseViewController {
         let enterRoom = UIAlertAction(title: TextLiteral.enterRoom,
                                       style: .default,
                                       handler: { [weak self] _ in
-            let viewController = ParticipateRoomViewController(viewModel: ParticipateRoomViewModel(participateRoomService: ParticipateRoomService(repository: RoomParticipationRepositoryImpl())))
+            let service = ParticipateRoomService(repository: RoomParticipationRepositoryImpl())
+            let viewModel = ParticipateRoomViewModel(participateRoomService: service)
+            let viewController = ParticipateRoomViewController(viewModel: viewModel)
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
