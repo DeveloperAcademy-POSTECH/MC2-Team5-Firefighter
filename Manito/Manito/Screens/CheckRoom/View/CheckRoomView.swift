@@ -27,7 +27,7 @@ final class CheckRoomView: UIView {
         label.makeShadow(color: .black, opacity: 0.25, offset: CGSize(width: 0, height: 3), radius: 0)
         return label
     }()
-    private lazy var noButton: UIButton = {
+    private let noButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(TextLiteral.checkRoomViewControllerNoButtonLabel, for: .normal)
         button.setTitleColor(.black, for: .normal)
@@ -37,7 +37,7 @@ final class CheckRoomView: UIView {
         button.layer.cornerRadius = 22
         return button
     }()
-    private lazy var yesButton: UIButton = {
+    private let yesButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(TextLiteral.checkRoomViewControllerYesBUttonLabel, for: .normal)
         button.setTitleColor(.black, for: .normal)
