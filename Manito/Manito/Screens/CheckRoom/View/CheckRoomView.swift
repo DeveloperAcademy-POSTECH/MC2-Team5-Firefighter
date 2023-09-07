@@ -20,7 +20,18 @@ final class CheckRoomView: UIView {
         image.isUserInteractionEnabled = true
         return image
     }()
-    let roomInfoView = RoomInfoView()
+//    let roomInfoView = RoomInfoView()
+    private let roomLabel: UILabel = {
+        let label = UILabel()
+        label.font = .font(.regular, ofSize: 34)
+        return label
+    }()
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.font = .font(.regular, ofSize: 18)
+        return label
+    }()
+    private let peopleInfoView = PeopleInfoView()
     private let questionLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.checkRoomViewControllerQuestionLabel
@@ -76,15 +87,36 @@ final class CheckRoomView: UIView {
             $0.height.equalTo(self.roomInfoImageView.snp.width).multipliedBy(1.15)
         }
         
-        self.roomInfoImageView.addSubview(self.roomInfoView)
-        self.roomInfoView.snp.makeConstraints {
+//        self.roomInfoImageView.addSubview(self.roomInfoView)
+//        self.roomInfoView.snp.makeConstraints {
+//            $0.top.equalToSuperview().inset(120)
+//            $0.leading.trailing.equalToSuperview()
+//        }
+        
+        self.roomInfoImageView.addSubview(self.roomLabel)
+        self.roomLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(120)
-            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(35)
+            $0.centerX.equalToSuperview()
+        }
+        
+        self.roomInfoImageView.addSubview(self.dateLabel)
+        self.dateLabel.snp.makeConstraints {
+            $0.top.equalTo(self.roomLabel.snp.bottom).offset(8)
+            $0.height.equalTo(20)
+            $0.centerX.equalToSuperview()
+        }
+        
+        self.roomInfoImageView.addSubview(self.peopleInfoView)
+        self.peopleInfoView.snp.makeConstraints {
+            $0.top.equalTo(dateLabel.snp.bottom).offset(10)
+            $0.height.equalTo(60)
+            $0.centerX.equalToSuperview()
         }
         
         self.roomInfoImageView.addSubview(self.questionLabel)
         self.questionLabel.snp.makeConstraints {
-            $0.top.equalTo(self.roomInfoView.snp.bottom).offset(50)
+            $0.top.equalTo(self.peopleInfoView.snp.bottom).offset(50)
             $0.centerX.equalToSuperview()
         }
         
@@ -103,5 +135,16 @@ final class CheckRoomView: UIView {
             $0.height.equalTo(44)
             $0.trailing.equalToSuperview().inset(48)
         }
+    }
+    
+    func updateRoomInfo(roomInfo: ParticipatedRoomInfo) {
+        let title = roomInfo.title
+        let capacity = roomInfo.capacity
+        let startDate = roomInfo.startDate
+        let endDate = roomInfo.endDate
+        
+        self.roomLabel.text = title
+        self.dateLabel.text = "\(startDate) ~ \(endDate)"
+        self.peopleInfoView.peopleLabel.text = "X \(capacity)인"
     }
 }

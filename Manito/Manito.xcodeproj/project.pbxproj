@@ -157,7 +157,6 @@
 		CB2F0FCC28A5468C005F04C8 /* gifTto.gif in Resources */ = {isa = PBXBuildFile; fileRef = CB2F0FC928A5468C005F04C8 /* gifTto.gif */; };
 		CB2F0FCD28A5468C005F04C8 /* gifNi.gif in Resources */ = {isa = PBXBuildFile; fileRef = CB2F0FCA28A5468C005F04C8 /* gifNi.gif */; };
 		CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB358C0128A564080084D001 /* SettingDeveloperInfoViewController.swift */; };
-		CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */; };
 		CB5AE3E6285AB76800382EA3 /* PeopleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */; };
 		CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */; };
 		CB6637E82959CBC60050BD04 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = CB6637E72959CBC60050BD04 /* SkeletonView */; };
@@ -374,7 +373,6 @@
 		CB2F0FC928A5468C005F04C8 /* gifTto.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifTto.gif; sourceTree = "<group>"; };
 		CB2F0FCA28A5468C005F04C8 /* gifNi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifNi.gif; sourceTree = "<group>"; };
 		CB358C0128A564080084D001 /* SettingDeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoViewController.swift; sourceTree = "<group>"; };
-		CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInfoView.swift; sourceTree = "<group>"; };
 		CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleInfoView.swift; sourceTree = "<group>"; };
 		CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewController.swift; sourceTree = "<group>"; };
 		CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputInvitedCodeView.swift; sourceTree = "<group>"; };
@@ -1202,7 +1200,6 @@
 		CB5AE3E2285AAF2E00382EA3 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
-				CB5AE3E3285AAF7400382EA3 /* RoomInfoView.swift */,
 				CB5AE3E5285AB76800382EA3 /* PeopleInfoView.swift */,
 			);
 			path = UIComponent;
@@ -1814,7 +1811,6 @@
 				B5F3F1062AA3516200FA1A32 /* RoomStatus.swift in Sources */,
 				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
 				39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */,
-				CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */,
 				B5FEE9DD28C849B400DEA07E /* UIImageView+Cache.swift in Sources */,
 				CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */,
 				D70220232A7A22EC0024BACD /* CreateRoomView.swift in Sources */,
