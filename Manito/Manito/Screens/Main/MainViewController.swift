@@ -25,23 +25,6 @@ final class MainViewController: BaseViewController {
         static let commonMissionViewHeight: CGFloat = commonMissionViewWidth * 0.6
     }
     
-    private enum RoomStatus: String {
-        case waiting = "PRE"
-        case starting = "PROCESSING"
-        case end = "POST"
-        
-        var roomStatus: String {
-            switch self {
-            case .waiting:
-                return TextLiteral.waiting
-            case .starting:
-                return TextLiteral.doing
-            case .end:
-                return TextLiteral.done
-            }
-        }
-    }
-    
     // MARK: - ui component
     
     private let backgroundImageView: UIImageView = {
@@ -270,7 +253,7 @@ final class MainViewController: BaseViewController {
     // FIXME: - roomIndex가 현재 item으로 설정되어 있고, index가 roomIndex로 설정되어있음. KTBQ2B
     private func pushDetailView(status: RoomStatus, roomIndex: Int, index: Int? = nil) {
         switch status {
-        case .waiting:
+        case .PRE:
             guard let index = index else { return }
             let viewModel = DetailWaitViewModel(roomIndex: index,
                                                 detailWaitService: DetailWaitService(repository: DetailRoomRepositoryImpl()))
@@ -383,20 +366,9 @@ extension MainViewController: UICollectionViewDataSource {
             cell.roomLabel.text = "\(title)"
             cell.dateLabel.text = "\(startDate) ~ \(endDate)"
             
-            switch roomStatus {
-            case .waiting:
-                cell.roomStateView.stateLabel.text = "대기중"
-                cell.roomStateView.stateLabel.textColor = .darkGrey001
-                cell.roomStateView.backgroundColor = .badgeBeige
-            case .starting:
-                cell.roomStateView.stateLabel.text = "진행중"
-                cell.roomStateView.stateLabel.textColor = .white
-                cell.roomStateView.backgroundColor = .mainRed
-            case .end:
-                cell.roomStateView.stateLabel.text = "완료"
-                cell.roomStateView.stateLabel.textColor = .white
-                cell.roomStateView.backgroundColor = .grey002
-            }
+            cell.roomStateView.stateLabel.text = roomStatus.badgeTitle
+            cell.roomStateView.stateLabel.textColor = roomStatus.titleColor
+            cell.roomStateView.backgroundColor = roomStatus.badgeColor
             
             return cell
         }
@@ -413,7 +385,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
                   let roomStatus = RoomStatus.init(rawValue: state),
                   let id = self.rooms?[indexPath.item - 1].id
             else { return }
-            if roomStatus == .waiting {
+            if roomStatus == .PRE {
                 self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1, index: id)
             } else {
                 self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1)

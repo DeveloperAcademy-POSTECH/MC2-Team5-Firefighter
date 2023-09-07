@@ -36,7 +36,7 @@ extension RoomInfo {
     func toRoomListItem() -> RoomListItem {
         return RoomListItem(id: roomInformation.id,
                             title: roomInformation.title,
-                            state: roomInformation.state,
+                            state: roomInformation.state.rawValue,
                             participatingCount: participants.count,
                             capacity: roomInformation.capacity,
                             startDate: roomInformation.startDate,
