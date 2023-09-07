@@ -27,15 +27,14 @@ final class CheckRoomViewModel: ViewModelType {
     
     func transform(from input: Input) -> Output {
         let roomInfo = input.viewDidLoad
-            .map { [weak self] _ -> ParticipatedRoomInfo in
-                guard let self = self else { return ParticipatedRoomInfo.emptyRoom }
-                return self.roomInfo
+            .compactMap { [weak self] _ -> ParticipatedRoomInfo? in
+                return self?.roomInfo
             }
             .eraseToAnyPublisher()
         
         let yesButtonDidTap = input.yesButtonDidTap
-            .map { [weak self] _ -> Int in
-                return self?.roomInfo.id ?? 0
+            .compactMap { [weak self] _  -> Int? in
+                return self?.roomInfo.id
             }
             .eraseToAnyPublisher()
         

@@ -23,12 +23,3 @@ struct ParticipatedRoomInfo {
     /// 방 종료 날짜
     let endDate: String
 }
-
-extension ParticipatedRoomInfo {
-    static let emptyRoom = ParticipatedRoomInfo(id: 0,
-                                        title: "",
-                                        capacity: 0,
-                                        participatingCount: 0,
-                                        startDate: "",
-                                        endDate: "")
-}
