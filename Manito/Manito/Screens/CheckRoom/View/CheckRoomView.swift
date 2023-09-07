@@ -51,8 +51,8 @@ final class CheckRoomView: UIView {
     
     // MARK: - property
     
-    lazy var noButtonDidTapPublisher = noButton.tapPublisher
-    lazy var yesButtonDidTapPublisher = yesButton.tapPublisher
+    lazy var noButtonDidTapPublisher = self.noButton.tapPublisher
+    lazy var yesButtonDidTapPublisher = self.yesButton.tapPublisher
     
     // MARK: - init
     
