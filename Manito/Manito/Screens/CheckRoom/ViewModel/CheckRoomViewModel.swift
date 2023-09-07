@@ -17,13 +17,11 @@ final class CheckRoomViewModel: ViewModelType {
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
-        let noButtonDidTap: AnyPublisher<Void, Never>
         let yesButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output{
         let roomInfo: AnyPublisher<ParticipatedRoomInfo, Never>
-        let noButtonDidTap: AnyPublisher<Void, Never>
         let yesButtonDidTap: AnyPublisher<Int, Never>
     }
     
@@ -35,9 +33,6 @@ final class CheckRoomViewModel: ViewModelType {
             }
             .eraseToAnyPublisher()
         
-        let noButtonDidTap = input.noButtonDidTap
-            .eraseToAnyPublisher()
-        
         let yesButtonDidTap = input.yesButtonDidTap
             .map { [weak self] _ -> Int in
                 return self?.roomInfo.id ?? 0
@@ -45,7 +40,6 @@ final class CheckRoomViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         return Output(roomInfo: roomInfo,
-                      noButtonDidTap: noButtonDidTap,
                       yesButtonDidTap: yesButtonDidTap)
     }
     
