@@ -27,8 +27,8 @@ struct ParticipatedRoomInfoDTO: Decodable {
 }
 
 extension ParticipatedRoomInfoDTO {
-    func toParticipateRoomInfo() -> ParticipateRoomInfo {
-        return ParticipateRoomInfo(id: self.id ?? 0,
+    func toParticipateRoomInfo() -> ParticipatedRoomInfo {
+        return ParticipatedRoomInfo(id: self.id ?? 0,
                                    title: self.title ?? "",
                                    capacity: self.capacity ?? 0,
                                    participatingCount: self.participatingCount ?? 0,

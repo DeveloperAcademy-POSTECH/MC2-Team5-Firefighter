@@ -12,7 +12,7 @@ final class CheckRoomViewModel: ViewModelType {
     
     // MARK: - property
 
-    private let roomInfo: ParticipateRoomInfo
+    private let roomInfo: ParticipatedRoomInfo
     private var cancellable = Set<AnyCancellable>()
     
     struct Input {
@@ -22,15 +22,15 @@ final class CheckRoomViewModel: ViewModelType {
     }
     
     struct Output{
-        let roomInfo: AnyPublisher<ParticipateRoomInfo, Never>
+        let roomInfo: AnyPublisher<ParticipatedRoomInfo, Never>
         let noButtonDidTap: AnyPublisher<Void, Never>
         let yesButtonDidTap: AnyPublisher<Int, Never>
     }
     
     func transform(from input: Input) -> Output {
         let roomInfo = input.viewDidLoad
-            .map { [weak self] _ -> ParticipateRoomInfo in
-                guard let self = self else { return ParticipateRoomInfo.emptyRoom }
+            .map { [weak self] _ -> ParticipatedRoomInfo in
+                guard let self = self else { return ParticipatedRoomInfo.emptyRoom }
                 return self.roomInfo
             }
             .eraseToAnyPublisher()
@@ -51,7 +51,7 @@ final class CheckRoomViewModel: ViewModelType {
     
     // MARK: - init
     
-    init(roomInfo: ParticipateRoomInfo) {
+    init(roomInfo: ParticipatedRoomInfo) {
         self.roomInfo = roomInfo
     }
     

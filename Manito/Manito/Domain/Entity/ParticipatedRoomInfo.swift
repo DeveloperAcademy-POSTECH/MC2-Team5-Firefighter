@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ParticipateRoomInfo {
+struct ParticipatedRoomInfo {
     let id: Int
     let title: String
     let capacity: Int
@@ -16,8 +16,8 @@ struct ParticipateRoomInfo {
     let endDate: String
 }
 
-extension ParticipateRoomInfo {
-    static let emptyRoom = ParticipateRoomInfo(id: 0,
+extension ParticipatedRoomInfo {
+    static let emptyRoom = ParticipatedRoomInfo(id: 0,
                                         title: "",
                                         capacity: 0,
                                         participatingCount: 0,

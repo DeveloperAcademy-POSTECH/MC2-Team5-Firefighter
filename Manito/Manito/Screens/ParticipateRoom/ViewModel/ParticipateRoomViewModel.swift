@@ -15,7 +15,7 @@ final class ParticipateRoomViewModel: ViewModelType {
     // MARK: - property
     
     private let maxCount: Int = 6
-    private let roomInfoSubject = PassthroughSubject<ParticipateRoomInfo, Error>()
+    private let roomInfoSubject = PassthroughSubject<ParticipatedRoomInfo, Error>()
     
     private let participateRoomService: ParticipateRoomService
     private var cancellable = Set<AnyCancellable>()
@@ -30,7 +30,7 @@ final class ParticipateRoomViewModel: ViewModelType {
         let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
-        let roomInfo: PassthroughSubject<ParticipateRoomInfo, Error>
+        let roomInfo: PassthroughSubject<ParticipatedRoomInfo, Error>
     }
     
     func transform(from input: Input) -> Output {

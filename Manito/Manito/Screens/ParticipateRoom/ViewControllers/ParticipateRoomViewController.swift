@@ -112,7 +112,7 @@ final class ParticipateRoomViewController: BaseViewController {
             .store(in: &self.cancellable)
     }
     
-    private func presentCheckView(roomInfo: ParticipateRoomInfo) {
+    private func presentCheckView(roomInfo: ParticipatedRoomInfo) {
         let viewController = CheckRoomViewController(viewModel: CheckRoomViewModel(roomInfo: roomInfo))
         viewController.modalPresentationStyle = .overFullScreen
         viewController.modalTransitionStyle = .crossDissolve

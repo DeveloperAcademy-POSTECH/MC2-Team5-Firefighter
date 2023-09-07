@@ -58,7 +58,7 @@ final class RoomInfoView: UIView {
         }
     }
     
-    func updateRoomInfo(roomInfo: ParticipateRoomInfo) {
+    func updateRoomInfo(roomInfo: ParticipatedRoomInfo) {
         let title = roomInfo.title
         let capacity = roomInfo.capacity
         let startDate = roomInfo.startDate
