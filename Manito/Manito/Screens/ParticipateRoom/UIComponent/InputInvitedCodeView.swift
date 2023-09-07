@@ -2,7 +2,7 @@
 //  InputInvitedCodeView.swift
 //  Manito
 //
-//  Created by COBY_PRO on 2022/06/15.
+//  Created by 이성호 on 2022/06/15.
 //
 
 import Combine

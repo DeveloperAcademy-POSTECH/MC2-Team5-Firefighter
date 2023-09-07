@@ -2,7 +2,7 @@
 //  ParticipateRoomViewController.swift
 //  Manito
 //
-//  Created by COBY_PRO on 2022/06/15.
+//  Created by 이성호 on 2022/06/15.
 //
 
 import Combine
@@ -113,7 +113,7 @@ final class ParticipateRoomViewController: BaseViewController {
     }
     
     private func presentCheckView(roomInfo: ParticipatedRoomInfo) {
-        let viewController = CheckRoomViewController(viewModel: CheckRoomViewModel(roomInfo: roomInfo))
+        let viewController = ParticipationRoomDetailsViewController(viewModel: ParticipationRoomDetailsViewModel(roomInfo: roomInfo))
         viewController.modalPresentationStyle = .overFullScreen
         viewController.modalTransitionStyle = .crossDissolve
         self.present(viewController, animated: true)

@@ -1,8 +1,8 @@
 //
-//  CheckRoomViewController.swift
+//  ParticipationRoomDetailsViewController.swift
 //  Manito
 //
-//  Created by COBY_PRO on 2022/06/15.
+//  Created by 이성호 on 2022/06/15.
 //
 
 import Combine
@@ -10,20 +10,20 @@ import UIKit
 
 import SnapKit
 
-final class CheckRoomViewController: BaseViewController {
+final class ParticipationRoomDetailsViewController: BaseViewController {
     
     // MARK: - ui component
     
-    private let checkRoomView: CheckRoomView = CheckRoomView()
+    private let checkRoomView: ParticipationRoomDetails = ParticipationRoomDetails()
     
     // MARK: - property
 
-    private let viewModel: CheckRoomViewModel
+    private let viewModel: ParticipationRoomDetailsViewModel
     private var cancellable = Set<AnyCancellable>()
     
     // MARK: - init
     
-    init(viewModel: CheckRoomViewModel) {
+    init(viewModel: ParticipationRoomDetailsViewModel) {
         self.viewModel = viewModel
         super.init()
     }
@@ -61,13 +61,13 @@ final class CheckRoomViewController: BaseViewController {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> CheckRoomViewModel.Output {
-        let input = CheckRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
+    private func transformedOutput() -> ParticipationRoomDetailsViewModel.Output {
+        let input = ParticipationRoomDetailsViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
                                              yesButtonDidTap: self.checkRoomView.yesButtonDidTapPublisher)
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: CheckRoomViewModel.Output) {
+    private func bindOutputToViewModel(_ output: ParticipationRoomDetailsViewModel.Output) {
         output.roomInfo
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomInfo in

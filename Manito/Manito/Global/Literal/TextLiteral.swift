@@ -96,7 +96,7 @@ enum TextLiteral {
     static let chooseCharacterViewControllerTitleLabel: String = "캐릭터 선택"
     static let chooseCharacterViewControllerSubTitleLabel: String = "당신만의 캐릭터를 정해주세요"
     
-    // MARK: - CheckRoomViewController
+    // MARK: - ParticipationRoomDetailsViewController
     static let checkRoomViewControllerQuestionLabel: String = "이 방으로 입장할까요?"
     static let checkRoomViewControllerNoButtonLabel: String = "NO"
     static let checkRoomViewControllerYesBUttonLabel: String = "YES"

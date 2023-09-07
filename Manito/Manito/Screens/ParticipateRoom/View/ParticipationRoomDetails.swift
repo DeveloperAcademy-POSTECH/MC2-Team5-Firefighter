@@ -1,5 +1,5 @@
 //
-//  CheckRoomView.swift
+//  ParticipationRoomDetails.swift
 //  Manito
 //
 //  Created by 이성호 on 2023/09/05.
@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class CheckRoomView: UIView {
+final class ParticipationRoomDetails: UIView {
     
     // MARK: - ui component
     

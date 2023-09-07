@@ -160,7 +160,7 @@
 		CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */; };
 		CB6637E82959CBC60050BD04 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = CB6637E72959CBC60050BD04 /* SkeletonView */; };
 		CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */; };
-		CB674C2128596A310063A6B7 /* CheckRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C2028596A310063A6B7 /* CheckRoomViewController.swift */; };
+		CB674C2128596A310063A6B7 /* ParticipationRoomDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C2028596A310063A6B7 /* ParticipationRoomDetailsViewController.swift */; };
 		CB7B23A828C4ECA8004A4CF3 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7B23A728C4ECA8004A4CF3 /* Character.swift */; };
 		CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */; };
 		CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */; };
@@ -179,8 +179,8 @@
 		D724AF5F28708D830003F280 /* TopCharacterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* TopCharacterImageView.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
 		D7537F612AA70C40005AC78B /* ParticipatedRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F602AA70C40005AC78B /* ParticipatedRoomInfo.swift */; };
-		D7537F672AA75AFB005AC78B /* CheckRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F662AA75AFB005AC78B /* CheckRoomView.swift */; };
-		D7537F692AA76DD0005AC78B /* CheckRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F682AA76DD0005AC78B /* CheckRoomViewModel.swift */; };
+		D7537F672AA75AFB005AC78B /* ParticipationRoomDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F662AA75AFB005AC78B /* ParticipationRoomDetails.swift */; };
+		D7537F692AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F682AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift */; };
 		D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */; };
 		D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */; };
 		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
@@ -374,7 +374,7 @@
 		CB358C0128A564080084D001 /* SettingDeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoViewController.swift; sourceTree = "<group>"; };
 		CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewController.swift; sourceTree = "<group>"; };
 		CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputInvitedCodeView.swift; sourceTree = "<group>"; };
-		CB674C2028596A310063A6B7 /* CheckRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomViewController.swift; sourceTree = "<group>"; };
+		CB674C2028596A310063A6B7 /* ParticipationRoomDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationRoomDetailsViewController.swift; sourceTree = "<group>"; };
 		CB7B23A728C4ECA8004A4CF3 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoHeaderView.swift; sourceTree = "<group>"; };
 		CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomCollectionCell.swift; sourceTree = "<group>"; };
@@ -393,8 +393,8 @@
 		D724AF5E28708D830003F280 /* TopCharacterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCharacterImageView.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
 		D7537F602AA70C40005AC78B /* ParticipatedRoomInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatedRoomInfo.swift; sourceTree = "<group>"; };
-		D7537F662AA75AFB005AC78B /* CheckRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomView.swift; sourceTree = "<group>"; };
-		D7537F682AA76DD0005AC78B /* CheckRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomViewModel.swift; sourceTree = "<group>"; };
+		D7537F662AA75AFB005AC78B /* ParticipationRoomDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationRoomDetails.swift; sourceTree = "<group>"; };
+		D7537F682AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationRoomDetailsViewModel.swift; sourceTree = "<group>"; };
 		D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomService.swift; sourceTree = "<group>"; };
 		D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewModel.swift; sourceTree = "<group>"; };
 		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
@@ -978,7 +978,6 @@
 				B50B1B3F285B047C0080992C /* Interaction */,
 				CBA15C91285CE1880051EDE2 /* ChooseCharacter */,
 				CB637A3828595BE400FF1240 /* ParticipateRoom */,
-				CB674C1F285969F10063A6B7 /* CheckRoom */,
 				B5F524EA28519B4B00614FF7 /* Letter */,
 				B5F524E928519B3F00614FF7 /* Detail-Ing */,
 				B5F524E828519B2F00614FF7 /* Detail-Wait */,
@@ -1215,16 +1214,6 @@
 			path = UIComponent;
 			sourceTree = "<group>";
 		};
-		CB674C1F285969F10063A6B7 /* CheckRoom */ = {
-			isa = PBXGroup;
-			children = (
-				D7537F642AA75A9F005AC78B /* ViewModel */,
-				D7537F632AA75A9A005AC78B /* View */,
-				D7537F622AA75A91005AC78B /* ViewControllers */,
-			);
-			path = CheckRoom;
-			sourceTree = "<group>";
-		};
 		CB85DE1D28A76F1A00399109 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
@@ -1366,30 +1355,6 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
-		D7537F622AA75A91005AC78B /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				CB674C2028596A310063A6B7 /* CheckRoomViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		D7537F632AA75A9A005AC78B /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D7537F662AA75AFB005AC78B /* CheckRoomView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		D7537F642AA75A9F005AC78B /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D7537F682AA76DD0005AC78B /* CheckRoomViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		D75DEEC02AA6127100BD3AC7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -1402,6 +1367,7 @@
 			isa = PBXGroup;
 			children = (
 				D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */,
+				D7537F682AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1410,6 +1376,7 @@
 			isa = PBXGroup;
 			children = (
 				D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */,
+				D7537F662AA75AFB005AC78B /* ParticipationRoomDetails.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1418,6 +1385,7 @@
 			isa = PBXGroup;
 			children = (
 				CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */,
+				CB674C2028596A310063A6B7 /* ParticipationRoomDetailsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1660,14 +1628,14 @@
 				CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */,
 				39EEF65E28CB3CFE00437654 /* LoginEndPoint.swift in Sources */,
 				392EC77E2855C388006918A9 /* SettingButton.swift in Sources */,
-				CB674C2128596A310063A6B7 /* CheckRoomViewController.swift in Sources */,
+				CB674C2128596A310063A6B7 /* ParticipationRoomDetailsViewController.swift in Sources */,
 				B5A085DF2A972D2A00C8A98D /* LetterRequestDTO.swift in Sources */,
 				3904F5002AA3754400B6264F /* MessageCountInfo.swift in Sources */,
 				39C9580A287DC03500A04A2B /* Encodable+Extension.swift in Sources */,
-				D7537F692AA76DD0005AC78B /* CheckRoomViewModel.swift in Sources */,
+				D7537F692AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift in Sources */,
 				B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */,
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,
-				D7537F672AA75AFB005AC78B /* CheckRoomView.swift in Sources */,
+				D7537F672AA75AFB005AC78B /* ParticipationRoomDetails.swift in Sources */,
 				7E3058C62854B47F00489E6A /* InputTitleView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
