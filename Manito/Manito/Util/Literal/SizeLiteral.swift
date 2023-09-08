@@ -1,5 +1,5 @@
 //
-//  ValueLiteral.swift
+//  SizeLiteral.swift
 //  Manito
 //
 //  Created by Mingwan Choi on 2022/06/21.
