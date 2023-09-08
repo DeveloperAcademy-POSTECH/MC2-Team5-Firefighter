@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MemoryViewController: BaseViewController {
+final class MemoryViewController: BaseViewController, BaseViewControllerType {
     
     private enum MemoryType: Int {
         case manittee = 0
@@ -115,8 +115,27 @@ final class MemoryViewController: BaseViewController {
     }
     
     // MARK: - life cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.baseViewDidLoad()
+    }
+
+    // MARK: - override
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        let shareButton = makeBarButtonItem(with: shareButton)
+
+        navigationItem.rightBarButtonItem = shareButton
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .automatic
+        title = TextLiteral.memoryViewControllerTitleLabel
+    }
+
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         view.addSubview(segmentControl)
         segmentControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
@@ -178,22 +197,12 @@ final class MemoryViewController: BaseViewController {
             $0.width.height.equalTo(90)
         }
     }
-    
-    override func configureUI() {
-        super.configureUI()
-        setupAction()
+
+    func configureUI() {
+        self.view.backgroundColor = .backgroundGrey
+        self.setupAction()
     }
-    
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        let shareButton = makeBarButtonItem(with: shareButton)
-        
-        navigationItem.rightBarButtonItem = shareButton
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.largeTitleDisplayMode = .automatic
-        title = TextLiteral.memoryViewControllerTitleLabel
-    }
-    
+
     // MARK: - func
     
     private func setupAction() {

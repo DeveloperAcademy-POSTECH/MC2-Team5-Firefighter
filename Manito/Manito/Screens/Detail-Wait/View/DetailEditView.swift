@@ -14,7 +14,7 @@ protocol DetailEditDelegate: AnyObject {
     func changeButtonDidTap(capacity: Int, from startDate: String, to endDate: String)
 }
 
-final class DetailEditView: UIView {
+final class DetailEditView: UIView, BaseViewType {
     
     enum EditMode {
         case date
@@ -120,9 +120,7 @@ final class DetailEditView: UIView {
     init(editMode: EditMode) {
         self.editMode = editMode
         super.init(frame: .zero)
-        self.setupLayout()
-        self.setupCancleButton()
-        self.setupChangeButton()
+        self.baseInit()
     }
     
     @available(*, unavailable)
@@ -130,9 +128,9 @@ final class DetailEditView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - base func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.cancelButton)
         self.cancelButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
@@ -185,7 +183,15 @@ final class DetailEditView: UIView {
             self.setupMemberSlider()
         }
     }
-    
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+        self.setupCancleButton()
+        self.setupChangeButton()
+    }
+
+    // MARK: - func
+
     private func setupEditMembersLayout() {
         self.addSubview(self.numberOfParticipantsTitleLabel)
         self.numberOfParticipantsTitleLabel.snp.makeConstraints {

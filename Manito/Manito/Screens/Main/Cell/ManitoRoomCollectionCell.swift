@@ -10,7 +10,7 @@ import UIKit
 import SkeletonView
 import SnapKit
 
-final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
+final class ManitoRoomCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     private enum RoomStatus: String {
         case PRE = "대기중"
@@ -45,10 +45,22 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
         return label
     }()    
     lazy var roomStateView: RoomStateView = RoomStateView()
+
+    // MARK: - init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.baseInit()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    // MARK: - override
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         self.contentView.addSubview(self.imageView)
         self.imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(9)
@@ -83,7 +95,7 @@ final class ManitoRoomCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    override func configureUI() {
+    func configureUI() {
         self.backgroundColor = .darkGrey002.withAlphaComponent(0.8)
         self.makeBorderLayer(color: UIColor.white.withAlphaComponent(0.5))
         

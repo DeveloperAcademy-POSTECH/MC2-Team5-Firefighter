@@ -31,11 +31,11 @@ final class LetterViewController: BaseViewController {
 
     private var viewModelOutput: LetterViewModel.Output?
 
-    private let viewModel: any ViewModelType
+    private let viewModel: any BaseViewModelType
 
     // MARK: - init
     
-    init(viewModel: any ViewModelType) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init()
     }

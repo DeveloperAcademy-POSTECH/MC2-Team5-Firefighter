@@ -52,19 +52,17 @@ final class CreateLetterViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureUI()
         self.configureDelegation()
         self.configureNavigationController()
     }
 
-    // MARK: - override
+    // MARK: - func
 
-    override func configureUI() {
-        super.configureUI()
+    private func configureUI() {
         self.createLetterView.configureMission(self.mission)
         self.createLetterView.configureViewController(self)
     }
-
-    // MARK: - func
 
     private func configureDelegation() {
         self.createLetterView.configureDelegation(self)
