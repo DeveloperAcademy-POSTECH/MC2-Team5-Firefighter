@@ -15,7 +15,7 @@ protocol ChooseCharacterViewDelegate: AnyObject {
     func joinButtonDidTap(characterIndex: Int)
 }
 
-final class ChooseCharacterView: UIView {
+final class ChooseCharacterView: UIView, BaseViewType {
     
     // MARK: - ui component
     
@@ -57,7 +57,7 @@ final class ChooseCharacterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
         self.setupButtonAction()
     }
     
@@ -66,9 +66,9 @@ final class ChooseCharacterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - base func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
@@ -95,6 +95,12 @@ final class ChooseCharacterView: UIView {
             $0.bottom.equalTo(self.joinButton.snp.top)
         }
     }
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - func
     
     private func setupButtonAction() {
         let didTapBackButton = UIAction { [weak self] _ in

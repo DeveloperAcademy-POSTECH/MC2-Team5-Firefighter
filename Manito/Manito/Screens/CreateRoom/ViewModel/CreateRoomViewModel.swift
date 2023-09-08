@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-final class CreateRoomViewModel: ViewModelType {
+final class CreateRoomViewModel: BaseViewModelType {
     
     typealias CurrentNextStep = (current: CreateRoomStep, next: CreateRoomStep)
     

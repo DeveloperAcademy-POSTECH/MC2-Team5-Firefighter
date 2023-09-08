@@ -48,17 +48,15 @@ final class SelectManitteeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupStepType()
         self.configureDelegation()
     }
 
-    // MARK: - override
+    // MARK: - func
 
-    override func configureUI() {
-        super.configureUI()
+    private func setupStepType() {
         self.stepType = .showJoystick
     }
-
-    // MARK: - func
 
     private func configureDelegation() {
         self.selectManitteeView.configureDelegation(self)

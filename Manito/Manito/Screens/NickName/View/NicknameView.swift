@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class NicknameView: UIView {
+final class NicknameView: UIView, BaseViewType {
     
     // MARK: - ui components
     
@@ -64,7 +64,7 @@ final class NicknameView: UIView {
     init(title: String) {
         self.title = title
         super.init(frame: .zero)
-        self.setupLayout()
+        self.baseInit()
         self.setupNotificationCenter()
     }
     
@@ -73,9 +73,9 @@ final class NicknameView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - base func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
@@ -101,6 +101,12 @@ final class NicknameView: UIView {
             $0.centerX.equalToSuperview()
         }
     }
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - func
     
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)

@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class LetterView: UIView {
+final class LetterView: UIView, BaseViewType {
 
     private enum ConstantSize {
         static let headerWidth: CGFloat = UIScreen.main.bounds.size.width
@@ -87,7 +87,7 @@ final class LetterView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
         self.bindUI()
     }
 
@@ -131,7 +131,8 @@ final class LetterView: UIView {
 }
 
 extension LetterView {
-    private func setupLayout() {
+    // MARK: - base func
+    func setupLayout() {
         self.addSubview(self.wholeStackView)
         self.wholeStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -154,6 +155,12 @@ extension LetterView {
             $0.centerX.equalToSuperview()
         }
     }
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - private func
 
     private func bindUI() {
         self.listCollectionView.scrollPublisher

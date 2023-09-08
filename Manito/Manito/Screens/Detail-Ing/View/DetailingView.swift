@@ -22,7 +22,7 @@ protocol DetailingDelegate: AnyObject {
     func didNotShowManitteeView(manitteeName: String)
 }
 
-final class DetailingView: UIView {
+final class DetailingView: UIView, BaseViewType {
     
     // MARK: - property
     
@@ -226,7 +226,7 @@ final class DetailingView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
     }
     
     @available(*, unavailable)
@@ -234,9 +234,9 @@ final class DetailingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - base func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(100)
@@ -400,6 +400,12 @@ final class DetailingView: UIView {
             $0.width.height.equalTo(44)
         }
     }
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - func
     
     func configureDelegation(_ delegate: DetailingDelegate) {
         self.delegate = delegate

@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class LoginViewController: BaseViewController {
+final class LoginViewController: BaseViewController, BaseViewControllerType {
 
     // MARK: - ui component
 
@@ -36,13 +36,14 @@ final class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
         self.setupLoginButton()
         self.configureNavigationBar()
     }
 
-    // MARK: - override
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         self.view.addSubview(self.logoImageView)
         self.logoImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -63,6 +64,10 @@ final class LoginViewController: BaseViewController {
             $0.height.equalTo(50)
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
         }
+    }
+
+    func configureUI() {
+        self.view.backgroundColor = .backgroundGrey
     }
     
     // MARK: - func

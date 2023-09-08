@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class CharacterCollectionViewCell: BaseCollectionViewCell {
+final class CharacterCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - ui component
     
@@ -23,10 +23,22 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
     
     private var characterBackgroundColor: UIColor?
+
+    // MARK: - init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.baseInit()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    // MARK: - override
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         self.contentView.addSubview(self.characterImageView)
         self.characterImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -34,7 +46,7 @@ final class CharacterCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    override func configureUI() {
+    func configureUI() {
         self.makeBorderLayer(color: .white)
         layer.cornerRadius = self.frame.size.width / 2
     }

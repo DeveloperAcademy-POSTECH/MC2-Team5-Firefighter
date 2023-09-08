@@ -14,7 +14,7 @@ protocol LetterImageViewDelegate: AnyObject {
     func closeButtonTapped()
 }
 
-final class LetterImageView: UIView {
+final class LetterImageView: UIView, BaseViewType {
 
     // MARK: - ui component
 
@@ -56,7 +56,7 @@ final class LetterImageView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
         self.setupAction()
         self.setupImagePinchGesture()
     }
@@ -66,9 +66,9 @@ final class LetterImageView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - func
+    // MARK: - base func
 
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.scrollView)
         self.scrollView.addSubview(self.imageView)
 
@@ -85,6 +85,12 @@ final class LetterImageView: UIView {
             $0.trailing.equalTo(self.safeAreaLayoutGuide).inset(17)
         }
     }
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - func
 
     private func setupAction() {
         let downloadAction = UIAction { [weak self] _ in
