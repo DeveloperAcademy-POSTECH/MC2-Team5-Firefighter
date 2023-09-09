@@ -21,11 +21,6 @@ extension String {
         formatter.locale = Locale(identifier: "ko_KR")
         return formatter.date(from: self)
     }
-    
-    func subStringToDate() -> String {
-        let startIdx: String.Index = self.index(self.startIndex, offsetBy: 2)
-        return String(self[startIdx...])
-    }
 
     func toDate(format: String) -> Date? {
         let formatter = DateFormatter()
