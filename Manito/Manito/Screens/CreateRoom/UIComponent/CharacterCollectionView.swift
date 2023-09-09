@@ -45,9 +45,8 @@ final class CharacterCollectionView: UIView {
     }()
     
     // MARK: - property
-    // FIXME: characterIndex 삭제예정
-    private(set) var characterIndex: Int = 0
-    let characterIndexTapPublisher = PassthroughSubject<Int, Never>()
+    
+    let characterIndexTapPublisher = CurrentValueSubject<Int, Never>(0)
     
     // MARK: - init
     
