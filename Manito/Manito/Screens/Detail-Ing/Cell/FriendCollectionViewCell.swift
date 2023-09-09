@@ -27,7 +27,7 @@ class FriendCollectionViewCell: UICollectionViewCell {
     }
     
     func setFriendImage(index: Int) {
-        friendListBackView.backgroundColor = Character.allCases[index].color
-        friendListImageView.image = Character.allCases[index].image
+        friendListBackView.backgroundColor = DefaultCharacterType.allCases[index].backgroundColor
+        friendListImageView.image = DefaultCharacterType.allCases[index].image
     }
 }

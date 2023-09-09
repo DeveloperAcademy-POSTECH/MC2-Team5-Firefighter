@@ -1,5 +1,5 @@
 //
-//  Character.swift
+//  DefaultCharacterType.swift
 //  Manito
 //
 //  Created by COBY_PRO on 2022/09/04.
@@ -7,59 +7,63 @@
 
 import UIKit
 
-enum Character: CaseIterable {
-    case imgCharacterPink
-    case imgCharacterBrown
-    case imgCharacterBlue
-    case imgCharacterRed
-    case imgCharacterOrange
-    case imgCharacterYellow
-    case imgCharacterLightGreen
-    case imgCharacterHeavyPink
-    case imgCharacterPurple
+///
+/// 기본 캐릭터를 세팅할 때 사용되는 `enum`
+///
+
+enum DefaultCharacterType: CaseIterable {
+    case pink
+    case brown
+    case blue
+    case red
+    case orange
+    case yellow
+    case lightGreen
+    case heavyPink
+    case purple
     
-    var color: UIColor {
+    var backgroundColor: UIColor {
         switch self {
-        case .imgCharacterPink:
+        case .pink:
             return UIColor.characterYellow
-        case .imgCharacterBrown:
+        case .brown:
             return UIColor.characterRed
-        case .imgCharacterBlue:
+        case .blue:
             return UIColor.characterOrange
-        case .imgCharacterRed:
+        case .red:
             return UIColor.characterBlue
-        case .imgCharacterOrange:
+        case .orange:
             return UIColor.characterLightGreen
-        case .imgCharacterYellow:
+        case .yellow:
             return UIColor.characterPurple
-        case .imgCharacterLightGreen:
+        case .lightGreen:
             return UIColor.characterGreen
-        case .imgCharacterHeavyPink:
+        case .heavyPink:
             return UIColor.backgroundGrey
-        case .imgCharacterPurple:
+        case .purple:
             return UIColor.characterPink
         }
     }
 
     var image: UIImage {
         switch self {
-        case .imgCharacterPink:
+        case .pink:
             return ImageLiterals.imgCharacterPink
-        case .imgCharacterBrown:
+        case .brown:
             return ImageLiterals.imgCharacterBrown
-        case .imgCharacterBlue:
+        case .blue:
             return ImageLiterals.imgCharacterBlue
-        case .imgCharacterRed:
+        case .red:
             return ImageLiterals.imgCharacterRed
-        case .imgCharacterOrange:
+        case .orange:
             return ImageLiterals.imgCharacterOrange
-        case .imgCharacterYellow:
+        case .yellow:
             return ImageLiterals.imgCharacterYellow
-        case .imgCharacterLightGreen:
+        case .lightGreen:
             return ImageLiterals.imgCharacterLightGreen
-        case .imgCharacterHeavyPink:
+        case .heavyPink:
             return ImageLiterals.imgCharacterHeavyPink
-        case .imgCharacterPurple:
+        case .purple:
             return ImageLiterals.imgCharacterPurple
         }
     }
