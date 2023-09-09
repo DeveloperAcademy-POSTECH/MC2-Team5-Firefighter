@@ -65,8 +65,8 @@ extension RoomListItem {
 
     var dateRange: (startDate: String, endDate: String) {
         let fiveDaysInterval: TimeInterval = 86400 * 4
-        let startDate: String = self.isStartDatePast ? Date().dateToString : self.startDate
-        let endDate: String = self.isStartDatePast ? (Date() + fiveDaysInterval).dateToString : self.endDate
+        let startDate: String = self.isStartDatePast ? Date().toDefaultString : self.startDate
+        let endDate: String = self.isStartDatePast ? (Date() + fiveDaysInterval).toDefaultString : self.endDate
         return (startDate, endDate)
     }
 }

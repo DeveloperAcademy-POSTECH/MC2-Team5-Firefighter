@@ -497,7 +497,7 @@ final class DetailingView: UIView, BaseViewType {
     
     private func setupManittoOpenButton(date: String) {
         guard let endDate = date.toFullDate else { return }
-        self.manittoOpenButtonShadowView.isHidden = !(endDate.isOpenManitto)
+        self.manittoOpenButtonShadowView.isHidden = !(endDate.canOpenManitto)
     }
     
     private func toggledManitteeAnimation(_ value: Bool) {
@@ -537,5 +537,19 @@ final class DetailingView: UIView, BaseViewType {
                 }
             }
         }
+    }
+}
+
+private extension Date {
+    var isPastOpeningTime: Bool {
+        let now = Date()
+        let nineHoursTimeInterval: TimeInterval = 32400
+        let dateAddNineHours = self + nineHoursTimeInterval
+        let distance = dateAddNineHours.distance(to: now)
+        return distance > 0 && distance < 54000
+    }
+
+    var canOpenManitto: Bool {
+        return self.isToday && self.isPastOpeningTime
     }
 }

@@ -272,8 +272,8 @@ final class DetailEditView: UIView, BaseViewType {
         guard let startDate = startDateString.toDefaultDate else { return }
         if startDate.isPast {
             let fiveDaysInterval: TimeInterval = 86400 * 4
-            self.calendarView.startDateText = Date().dateToString
-            self.calendarView.endDateText = (Date() + fiveDaysInterval).dateToString
+            self.calendarView.startDateText = Date().toDefaultString
+            self.calendarView.endDateText = (Date() + fiveDaysInterval).toDefaultString
         } else {
             self.calendarView.startDateText = startDateString
             self.calendarView.endDateText = endDateString
