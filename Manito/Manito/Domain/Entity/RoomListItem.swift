@@ -37,11 +37,11 @@ struct RoomListItem {
 
 extension RoomListItem {
     var dateRangeText: String {
-        return startDate + " ~ " + endDate
+        return self.startDate + " ~ " + self.endDate
     }
 
     var isAlreadyPastDate: Bool {
-        if let date = startDate.stringToDate {
+        if let date = self.startDate.toDefaultDate {
             return date.distance(to: Date()) > 86400
         } else {
             return false
@@ -49,7 +49,7 @@ extension RoomListItem {
     }
 
     var isStart: Bool {
-        if let date = startDate.stringToDate {
+        if let date = self.startDate.toDefaultDate {
             let isStartDate = date.distance(to: Date()) < 86400
             let isPast = date.distance(to: Date()) > 86400
             return !isPast && isStartDate
@@ -59,15 +59,14 @@ extension RoomListItem {
     }
 
     var isStartDatePast: Bool {
-        guard let startDate = self.startDate.stringToDate else { return true }
+        guard let startDate = self.startDate.toDefaultDate else { return true }
         return startDate.isPast
     }
 
     var dateRange: (startDate: String, endDate: String) {
         let fiveDaysInterval: TimeInterval = 86400 * 4
-        let startDate: String = isStartDatePast ? Date().dateToString : self.startDate
-        let endDate: String = isStartDatePast ? (Date() + fiveDaysInterval).dateToString : self.endDate
-
+        let startDate: String = self.isStartDatePast ? Date().dateToString : self.startDate
+        let endDate: String = self.isStartDatePast ? (Date() + fiveDaysInterval).dateToString : self.endDate
         return (startDate, endDate)
     }
 }

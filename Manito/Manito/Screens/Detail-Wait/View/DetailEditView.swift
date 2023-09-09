@@ -269,7 +269,7 @@ final class DetailEditView: UIView, BaseViewType {
     }
     
     func setupDateRange(from startDateString: String, to endDateString: String) {
-        guard let startDate = startDateString.stringToDate else { return }
+        guard let startDate = startDateString.toDefaultDate else { return }
         if startDate.isPast {
             let fiveDaysInterval: TimeInterval = 86400 * 4
             self.calendarView.startDateText = Date().dateToString

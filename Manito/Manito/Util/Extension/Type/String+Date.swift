@@ -8,9 +8,17 @@
 import Foundation
 
 extension String {
-    var stringToDate: Date? {
+    var toDefaultDate: Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yy.MM.dd"
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter.date(from: self)
+    }
+    
+    var toFullDate: Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd"
+        formatter.locale = Locale(identifier: "ko_KR")
         return formatter.date(from: self)
     }
     
@@ -18,13 +26,11 @@ extension String {
         let startIdx: String.Index = self.index(self.startIndex, offsetBy: 2)
         return String(self[startIdx...])
     }
-    
-    func stringToDateYYYY() -> Date? {
+
+    func toDate(format: String) -> Date? {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd"
-        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = format
         formatter.locale = Locale(identifier: "ko_KR")
-        let date = formatter.date(from: self)
-        return date
+        return formatter.date(from: self)
     }
 }

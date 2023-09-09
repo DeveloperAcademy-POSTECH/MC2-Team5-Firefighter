@@ -496,7 +496,7 @@ final class DetailingView: UIView, BaseViewType {
     }
     
     private func setupManittoOpenButton(date: String) {
-        guard let endDate = date.stringToDateYYYY() else { return }
+        guard let endDate = date.toFullDate else { return }
         self.manittoOpenButtonShadowView.isHidden = !(endDate.isOpenManitto)
     }
     

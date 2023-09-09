@@ -154,8 +154,8 @@ final class CalendarView: UIView {
     }
 
     func setupDateRange() {
-        guard let startDate = self.startDateText.stringToDate else { return }
-        guard let endDate = self.endDateText.stringToDate else { return }
+        guard let startDate = self.startDateText.toDefaultDate else { return }
+        guard let endDate = self.endDateText.toDefaultDate else { return }
         self.setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 
