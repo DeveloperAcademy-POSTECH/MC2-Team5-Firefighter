@@ -83,6 +83,7 @@
 		B55469B32AA96F2C004D9FE6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B12AA96F2C004D9FE6 /* BaseViewController.swift */; };
 		B55469B42AA96F2C004D9FE6 /* BaseViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */; };
 		B55469B62AA96F54004D9FE6 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B52AA96F54004D9FE6 /* Character.swift */; };
+		B55469EB2AAC3B5F004D9FE6 /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469EA2AAC3B5F004D9FE6 /* UIView+Animation.swift */; };
 		B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */; };
 		B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEB528D99F8600AF7E45 /* Settings.bundle */; };
 		B55BCEC628F5AFB200AF7E45 /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEC528F5AFB200AF7E45 /* capsule.gif */; };
@@ -291,6 +292,7 @@
 		B55469B12AA96F2C004D9FE6 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewModelType.swift; sourceTree = "<group>"; };
 		B55469B52AA96F54004D9FE6 /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		B55469EA2AAC3B5F004D9FE6 /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		B55BCEB528D99F8600AF7E45 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B55BCEC528F5AFB200AF7E45 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
@@ -1050,6 +1052,7 @@
 				B5FEE9DC28C849B400DEA07E /* UIImageView+Cache.swift */,
 				B5F525232851A25400614FF7 /* UICollectionView+Extension.swift */,
 				B5F5253C2854B8CB00614FF7 /* UIView+Extension.swift */,
+				B55469EA2AAC3B5F004D9FE6 /* UIView+Animation.swift */,
 				B5F525412855C97900614FF7 /* UILabel+Extension.swift */,
 				39018F4128C4708A00C78DBA /* UIButton+Extension.swift */,
 			);
@@ -1664,11 +1667,9 @@
 				7E3058C62854B47F00489E6A /* InputTitleView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
-				B55469DF2AAAD82D004D9FE6 /* BaseViewController.swift in Sources */,
 				7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */,
 				D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */,
 				B5A085FE2A97493900C8A98D /* UserInfoDTO.swift in Sources */,
-				B55469E12AAAD84F004D9FE6 /* Character.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B55469B62AA96F54004D9FE6 /* Character.swift in Sources */,
 				B53A35C82A96F84700B720BC /* LetterRepository.swift in Sources */,
@@ -1757,6 +1758,7 @@
 				B55469B42AA96F2C004D9FE6 /* BaseViewModelType.swift in Sources */,
 				39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */,
 				B53A35D42A97266D00B720BC /* CreatedRoomRequestDTO.swift in Sources */,
+				B55469EB2AAC3B5F004D9FE6 /* UIView+Animation.swift in Sources */,
 				B53A35B72A963F2100B720BC /* DetailRoomEndPoint.swift in Sources */,
 				D7C4A1B02A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift in Sources */,
 				3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */,
@@ -1795,7 +1797,6 @@
 				CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */,
 				B5FEE9DD28C849B400DEA07E /* UIImageView+Cache.swift in Sources */,
 				CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */,
-				B55469DE2AAAD82D004D9FE6 /* BaseViewModelType.swift in Sources */,
 				D70220232A7A22EC0024BACD /* CreateRoomView.swift in Sources */,
 				B5AE11F429D32EE700F86FF8 /* SelectManitteeView.swift in Sources */,
 				B5A085E12A972D7900C8A98D /* LoginRequestDTO.swift in Sources */,
