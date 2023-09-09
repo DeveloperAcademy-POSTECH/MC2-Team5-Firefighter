@@ -24,47 +24,29 @@ enum DefaultCharacterType: CaseIterable {
     
     var backgroundColor: UIColor {
         switch self {
-        case .pink:
-            return UIColor.characterYellow
-        case .brown:
-            return UIColor.characterRed
-        case .blue:
-            return UIColor.characterOrange
-        case .red:
-            return UIColor.characterBlue
-        case .orange:
-            return UIColor.characterLightGreen
-        case .yellow:
-            return UIColor.characterPurple
-        case .lightGreen:
-            return UIColor.characterGreen
-        case .heavyPink:
-            return UIColor.backgroundGrey
-        case .purple:
-            return UIColor.characterPink
+        case .pink: return UIColor.characterYellow
+        case .brown: return UIColor.characterRed
+        case .blue: return UIColor.characterOrange
+        case .red: return UIColor.characterBlue
+        case .orange: return UIColor.characterLightGreen
+        case .yellow: return UIColor.characterPurple
+        case .lightGreen: return UIColor.characterGreen
+        case .heavyPink: return UIColor.backgroundGrey
+        case .purple: return UIColor.characterPink
         }
     }
 
     var image: UIImage {
         switch self {
-        case .pink:
-            return ImageLiterals.imgCharacterPink
-        case .brown:
-            return ImageLiterals.imgCharacterBrown
-        case .blue:
-            return ImageLiterals.imgCharacterBlue
-        case .red:
-            return ImageLiterals.imgCharacterRed
-        case .orange:
-            return ImageLiterals.imgCharacterOrange
-        case .yellow:
-            return ImageLiterals.imgCharacterYellow
-        case .lightGreen:
-            return ImageLiterals.imgCharacterLightGreen
-        case .heavyPink:
-            return ImageLiterals.imgCharacterHeavyPink
-        case .purple:
-            return ImageLiterals.imgCharacterPurple
+        case .pink: return ImageLiterals.imgCharacterPink
+        case .brown: return ImageLiterals.imgCharacterBrown
+        case .blue: return ImageLiterals.imgCharacterBlue
+        case .red: return ImageLiterals.imgCharacterRed
+        case .orange: return ImageLiterals.imgCharacterOrange
+        case .yellow: return ImageLiterals.imgCharacterYellow
+        case .lightGreen: return ImageLiterals.imgCharacterLightGreen
+        case .heavyPink: return ImageLiterals.imgCharacterHeavyPink
+        case .purple: return ImageLiterals.imgCharacterPurple
         }
     }
 }
