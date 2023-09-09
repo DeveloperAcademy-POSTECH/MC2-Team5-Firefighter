@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIView {
+    // FIXME: - CalendarView, CreateLetterPhotoView 내부에서 삭제한 후 제거 예정
     var viewController: UIViewController? {
         if let nextResponder = self.next as? UIViewController {
             return nextResponder
