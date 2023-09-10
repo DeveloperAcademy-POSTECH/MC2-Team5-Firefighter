@@ -18,11 +18,6 @@ final class LetterViewModel: BaseViewModelType {
         case received = 1
     }
 
-    enum RoomState: String {
-        case processing = "PROCESSING"
-        case post = "POST"
-    }
-
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let segmentControlValueChanged: PassthroughSubject<Int, Never>
@@ -36,7 +31,7 @@ final class LetterViewModel: BaseViewModelType {
         let index: AnyPublisher<Int, Never>
         let messageDetails: AnyPublisher<MessageDetails, Never>
         let reportDetails: AnyPublisher<ReportDetails, Never>
-        let roomState: AnyPublisher<RoomState, Never>
+        let roomStatus: AnyPublisher<RoomStatus, Never>
     }
 
     // MARK: - property
@@ -45,7 +40,7 @@ final class LetterViewModel: BaseViewModelType {
 
     private let usecase: LetterUsecase
     private var messageDetails: MessageDetails
-    private let roomState: RoomState
+    private let roomStatus: RoomStatus
     private let messageType: MessageType
 
     // MARK: - init
@@ -54,11 +49,11 @@ final class LetterViewModel: BaseViewModelType {
          roomId: String,
          mission: String,
          missionId: String,
-         roomState: String,
+         roomStatus: RoomStatus,
          messageType: MessageType) {
         self.usecase = usecase
         self.messageDetails = MessageDetails(roomId, mission, missionId, "")
-        self.roomState = RoomState(rawValue: roomState)!
+        self.roomStatus = roomStatus
         self.messageType = messageType
     }
 
@@ -102,8 +97,8 @@ final class LetterViewModel: BaseViewModelType {
             }
             .eraseToAnyPublisher()
 
-        let roomStatePublisher = input.viewDidLoad
-            .compactMap { [weak self] in self?.roomState }
+        let roomStatusPublisher = input.viewDidLoad
+            .compactMap { [weak self] in self?.roomStatus }
             .eraseToAnyPublisher()
 
         return Output(
@@ -111,7 +106,7 @@ final class LetterViewModel: BaseViewModelType {
             index: currentIndexPublisher,
             messageDetails: messageDetailsPublisher,
             reportDetails: reportPublisher,
-            roomState: roomStatePublisher
+            roomStatus: roomStatusPublisher
         )
     }
 
