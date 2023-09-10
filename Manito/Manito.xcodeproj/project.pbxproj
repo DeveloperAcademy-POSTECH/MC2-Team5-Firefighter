@@ -132,7 +132,6 @@
 		B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524FC28519EEC00614FF7 /* UIColor+Extension.swift */; };
 		B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524FE28519EF300614FF7 /* UIFont+Extension.swift */; };
 		B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5250028519EFB00614FF7 /* ImageLiteral.swift */; };
-		B5F5250428519F7A00614FF7 /* DungGeunMo.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5F5250328519F7A00614FF7 /* DungGeunMo.otf */; };
 		B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525052851A05500614FF7 /* CreateRoomViewController.swift */; };
 		B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */; };
 		B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525092851A06700614FF7 /* DetailWaitViewController.swift */; };
@@ -345,7 +344,6 @@
 		B5F524FC28519EEC00614FF7 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		B5F524FE28519EF300614FF7 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		B5F5250028519EFB00614FF7 /* ImageLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiteral.swift; sourceTree = "<group>"; };
-		B5F5250328519F7A00614FF7 /* DungGeunMo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.otf; sourceTree = "<group>"; };
 		B5F525052851A05500614FF7 /* CreateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewController.swift; sourceTree = "<group>"; };
 		B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedCodeViewController.swift; sourceTree = "<group>"; };
 		B5F525092851A06700614FF7 /* DetailWaitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewController.swift; sourceTree = "<group>"; };
@@ -751,7 +749,6 @@
 			isa = PBXGroup;
 			children = (
 				B5F524D728519AA100614FF7 /* Assets.xcassets */,
-				B5F5250228519F6A00614FF7 /* Fonts */,
 				B5F524F928519BD600614FF7 /* Storyboards */,
 			);
 			path = Resource;
@@ -1213,14 +1210,6 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
-		B5F5250228519F6A00614FF7 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				B5F5250328519F7A00614FF7 /* DungGeunMo.otf */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
 		B5F5253328547EE000614FF7 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
@@ -1604,7 +1593,6 @@
 				B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */,
 				B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */,
 				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
-				B5F5250428519F7A00614FF7 /* DungGeunMo.otf in Resources */,
 				B5F524D628519AA000614FF7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
