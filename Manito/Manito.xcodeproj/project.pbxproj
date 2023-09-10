@@ -129,8 +129,6 @@
 		B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D728519AA100614FF7 /* Assets.xcassets */; };
 		B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D928519AA100614FF7 /* LaunchScreen.storyboard */; };
 		B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524FA28519C2A00614FF7 /* MainViewController.swift */; };
-		B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524FC28519EEC00614FF7 /* UIColor+Extension.swift */; };
-		B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524FE28519EF300614FF7 /* UIFont+Extension.swift */; };
 		B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5250028519EFB00614FF7 /* ImageLiteral.swift */; };
 		B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525052851A05500614FF7 /* CreateRoomViewController.swift */; };
 		B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */; };
@@ -341,8 +339,6 @@
 		B5F524DA28519AA100614FF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5F524DC28519AA100614FF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5F524FA28519C2A00614FF7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		B5F524FC28519EEC00614FF7 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		B5F524FE28519EF300614FF7 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		B5F5250028519EFB00614FF7 /* ImageLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiteral.swift; sourceTree = "<group>"; };
 		B5F525052851A05500614FF7 /* CreateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewController.swift; sourceTree = "<group>"; };
 		B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedCodeViewController.swift; sourceTree = "<group>"; };
@@ -1011,8 +1007,6 @@
 		B5C7FC062AA887E100862021 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				B5F524FC28519EEC00614FF7 /* UIColor+Extension.swift */,
-				B5F524FE28519EF300614FF7 /* UIFont+Extension.swift */,
 				B5C7FC082AA88ABB00862021 /* UIViewController */,
 				B5C7FC092AA88AC800862021 /* UIView */,
 			);
@@ -1719,7 +1713,6 @@
 				B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */,
 				B5A085E32A972DDC00C8A98D /* EditedMissionRequestDTO.swift in Sources */,
 				CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */,
-				B5F524FF28519EF300614FF7 /* UIFont+Extension.swift in Sources */,
 				D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */,
 				D7B83FD62A95A48700BFD8FF /* CreateRoomService.swift in Sources */,
 				391B3003286198C200421F1D /* SizeLiteral.swift in Sources */,
@@ -1746,7 +1739,6 @@
 				D7C4A1A72A0B2EB000C3AE4C /* CharacterCollectionView.swift in Sources */,
 				39C95802287DACC300A04A2B /* RoomParticipationEndPoint.swift in Sources */,
 				395B5BC22A25E20000CE1420 /* DetailWaitViewModel.swift in Sources */,
-				B5F524FD28519EEC00614FF7 /* UIColor+Extension.swift in Sources */,
 				B5E1F2AE285B2917006D880B /* Int+RandomNumber.swift in Sources */,
 				D7C4A1AD2A0DD8FA00C3AE4C /* SettingView.swift in Sources */,
 				B55469B42AA96F2C004D9FE6 /* BaseViewModelType.swift in Sources */,
