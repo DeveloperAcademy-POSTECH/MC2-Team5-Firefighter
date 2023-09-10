@@ -200,6 +200,13 @@
 			remoteGlobalIDString = B5F524CA28519AA000614FF7;
 			remoteInfo = Manito;
 		};
+		B5546A292AADD638004D9FE6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5546A252AADD638004D9FE6 /* MTResource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B5546A1B2AADD618004D9FE6;
+			remoteInfo = MTResource;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -291,6 +298,7 @@
 		B55469B12AA96F2C004D9FE6 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewModelType.swift; sourceTree = "<group>"; };
 		B55469B52AA96F54004D9FE6 /* DefaultCharacterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultCharacterType.swift; sourceTree = "<group>"; };
+		B5546A252AADD638004D9FE6 /* MTResource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MTResource.xcodeproj; path = MTResource/MTResource.xcodeproj; sourceTree = "<group>"; };
 		B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		B55BCEB528D99F8600AF7E45 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B55BCEC528F5AFB200AF7E45 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
@@ -791,6 +799,22 @@
 			path = LetterScene;
 			sourceTree = "<group>";
 		};
+		B5546A102AADD5F2004D9FE6 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				B5546A252AADD638004D9FE6 /* MTResource.xcodeproj */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		B5546A262AADD638004D9FE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B5546A2A2AADD638004D9FE6 /* MTResource.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		B57CB3022A763BB200474042 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -1087,6 +1111,7 @@
 				B5F524CD28519AA000614FF7 /* Manito */,
 				398B1CBA2A12415C00DEFCEC /* ManitoTests */,
 				B57CB3022A763BB200474042 /* Packages */,
+				B5546A102AADD5F2004D9FE6 /* Modules */,
 				B5F524CC28519AA000614FF7 /* Products */,
 				398B1CC82A13597600DEFCEC /* Frameworks */,
 			);
@@ -1563,6 +1588,12 @@
 			);
 			productRefGroup = B5F524CC28519AA000614FF7 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B5546A262AADD638004D9FE6 /* Products */;
+					ProjectRef = B5546A252AADD638004D9FE6 /* MTResource.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B5F524CA28519AA000614FF7 /* Manito */,
@@ -1570,6 +1601,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B5546A2A2AADD638004D9FE6 /* MTResource.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MTResource.framework;
+			remoteRef = B5546A292AADD638004D9FE6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		398B1CB72A12415B00DEFCEC /* Resources */ = {
