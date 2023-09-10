@@ -123,7 +123,7 @@ final class LetterViewController: BaseViewController {
             })
             .store(in: &self.cancelBag)
 
-        Publishers.CombineLatest(output.roomState, output.index)
+        Publishers.CombineLatest(output.roomStatus, output.index)
             .map { (state: $0, index: $1) }
             .sink(receiveValue: { [weak self] result in
                 self?.updateLetterViewBottomArea(with: result.state, result.index)
@@ -195,9 +195,9 @@ extension LetterViewController {
         }
     }
 
-    private func updateLetterViewBottomArea(with state: LetterViewModel.RoomState, _ index: Int) {
+    private func updateLetterViewBottomArea(with state: RoomStatus, _ index: Int) {
         switch (state, index) {
-        case (.processing, 0):
+        case (.PROCESSING, 0):
             self.letterView.showBottomArea()
         default:
             self.letterView.hideBottomArea()
