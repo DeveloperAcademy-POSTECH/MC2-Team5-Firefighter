@@ -8,6 +8,8 @@
 import Combine
 import Foundation
 
+import MTNetwork
+
 protocol LetterUsecase {
     var manitteeId: String? { get set }
     var nickname: String { get set }
@@ -39,10 +41,8 @@ final class LetterUsecaseImpl: LetterUsecase {
             let letterData = try await self.repository.fetchSendLetter(roomId: roomId)
             self.setManitteeId(letterData.manittee?.id)
             return letterData.messages
-        } catch NetworkError.serverError {
-            throw NetworkError.serverError
-        } catch NetworkError.clientError(let message) {
-            throw NetworkError.clientError(message: message)
+        } catch {
+            throw LetterUsecaseError.failedToFetchLetter
         }
     }
 
@@ -51,10 +51,8 @@ final class LetterUsecaseImpl: LetterUsecase {
             let letterData = try await self.repository.fetchReceiveLetter(roomId: roomId)
             self.setManitteeId(letterData.manittee?.id)
             return letterData.messages
-        } catch NetworkError.serverError {
-            throw NetworkError.serverError
-        } catch NetworkError.clientError(let message) {
-            throw NetworkError.clientError(message: message)
+        } catch {
+            throw LetterUsecaseError.failedToFetchLetter
         }
     }
 
