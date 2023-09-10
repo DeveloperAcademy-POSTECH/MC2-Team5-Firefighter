@@ -129,7 +129,6 @@
 		B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D728519AA100614FF7 /* Assets.xcassets */; };
 		B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D928519AA100614FF7 /* LaunchScreen.storyboard */; };
 		B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524FA28519C2A00614FF7 /* MainViewController.swift */; };
-		B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5250028519EFB00614FF7 /* ImageLiteral.swift */; };
 		B5F525062851A05500614FF7 /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525052851A05500614FF7 /* CreateRoomViewController.swift */; };
 		B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */; };
 		B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525092851A06700614FF7 /* DetailWaitViewController.swift */; };
@@ -339,7 +338,6 @@
 		B5F524DA28519AA100614FF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5F524DC28519AA100614FF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5F524FA28519C2A00614FF7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		B5F5250028519EFB00614FF7 /* ImageLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiteral.swift; sourceTree = "<group>"; };
 		B5F525052851A05500614FF7 /* CreateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewController.swift; sourceTree = "<group>"; };
 		B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedCodeViewController.swift; sourceTree = "<group>"; };
 		B5F525092851A06700614FF7 /* DetailWaitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewController.swift; sourceTree = "<group>"; };
@@ -1016,7 +1014,6 @@
 		B5C7FC072AA889BD00862021 /* Literal */ = {
 			isa = PBXGroup;
 			children = (
-				B5F5250028519EFB00614FF7 /* ImageLiteral.swift */,
 				391B3002286198C200421F1D /* SizeLiteral.swift */,
 				7E15F67D28B35B3D00441305 /* TextLiteral.swift */,
 				D777D2C828C7780E008655BD /* URLLiteral.swift */,
@@ -1653,7 +1650,6 @@
 				B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */,
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,
 				7E3058C62854B47F00489E6A /* InputTitleView.swift in Sources */,
-				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
 				7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */,
 				D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */,
