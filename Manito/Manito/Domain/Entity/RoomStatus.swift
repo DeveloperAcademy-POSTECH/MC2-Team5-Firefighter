@@ -8,7 +8,7 @@
 import UIKit
 
 ///
-/// 방 상태에 대한 정보들을 반환하는 Enum 데이터 입니다.
+/// 방 상태에 대한 정보들을 반환하는 `enum`
 ///
 
 enum RoomStatus: String {

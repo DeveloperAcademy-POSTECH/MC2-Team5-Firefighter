@@ -49,8 +49,8 @@ final class OpenManittoCollectionViewCell: UICollectionViewCell, BaseViewType {
     // MARK: - func
     
     func configureCell(colorIndex: Int) {
-        self.characterImageView.image = Character.allCases[colorIndex].image
-        self.contentView.backgroundColor = Character.allCases[colorIndex].color
+        self.characterImageView.image = DefaultCharacterType.allCases[colorIndex].image
+        self.contentView.backgroundColor = DefaultCharacterType.allCases[colorIndex].backgroundColor
         self.contentView.alpha = 0.5
     }
     
