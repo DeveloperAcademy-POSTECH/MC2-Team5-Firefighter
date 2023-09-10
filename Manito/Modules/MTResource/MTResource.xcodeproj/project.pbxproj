@@ -18,6 +18,7 @@
 		B5546A432AADF609004D9FE6 /* DungGeunMo.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5546A422AADF609004D9FE6 /* DungGeunMo.otf */; };
 		B5546A462AADF6B3004D9FE6 /* ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A452AADF6B3004D9FE6 /* ColorSet.swift */; };
 		B5546A482AADF7ED004D9FE6 /* FontSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A472AADF7ED004D9FE6 /* FontSet.swift */; };
+		B5546A4A2AADF8BF004D9FE6 /* ImageSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A492AADF8BF004D9FE6 /* ImageSet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		B5546A422AADF609004D9FE6 /* DungGeunMo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.otf; sourceTree = "<group>"; };
 		B5546A452AADF6B3004D9FE6 /* ColorSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSet.swift; sourceTree = "<group>"; };
 		B5546A472AADF7ED004D9FE6 /* FontSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSet.swift; sourceTree = "<group>"; };
+		B5546A492AADF8BF004D9FE6 /* ImageSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				B5546A1E2AADD618004D9FE6 /* MTResource.h */,
 				B5546A452AADF6B3004D9FE6 /* ColorSet.swift */,
 				B5546A472AADF7ED004D9FE6 /* FontSet.swift */,
+				B5546A492AADF8BF004D9FE6 /* ImageSet.swift */,
 				B5546A2F2AADD72F004D9FE6 /* Resource */,
 			);
 			path = MTResource;
@@ -192,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5546A4A2AADF8BF004D9FE6 /* ImageSet.swift in Sources */,
 				B5546A462AADF6B3004D9FE6 /* ColorSet.swift in Sources */,
 				B5546A482AADF7ED004D9FE6 /* FontSet.swift in Sources */,
 			);
