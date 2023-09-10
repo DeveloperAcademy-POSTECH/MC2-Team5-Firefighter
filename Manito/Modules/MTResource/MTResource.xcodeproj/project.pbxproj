@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		B5546A1F2AADD618004D9FE6 /* MTResource.h in Headers */ = {isa = PBXBuildFile; fileRef = B5546A1E2AADD618004D9FE6 /* MTResource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B5546A312AADD7CA004D9FE6 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5546A302AADD7CA004D9FE6 /* Image.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B5546A1B2AADD618004D9FE6 /* MTResource.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MTResource.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5546A1E2AADD618004D9FE6 /* MTResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTResource.h; sourceTree = "<group>"; };
+		B5546A302AADD7CA004D9FE6 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,8 +48,17 @@
 			isa = PBXGroup;
 			children = (
 				B5546A1E2AADD618004D9FE6 /* MTResource.h */,
+				B5546A2F2AADD72F004D9FE6 /* Resource */,
 			);
 			path = MTResource;
+			sourceTree = "<group>";
+		};
+		B5546A2F2AADD72F004D9FE6 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				B5546A302AADD7CA004D9FE6 /* Image.xcassets */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +130,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5546A312AADD7CA004D9FE6 /* Image.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
