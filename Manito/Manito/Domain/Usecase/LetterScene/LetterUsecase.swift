@@ -8,8 +8,6 @@
 import Combine
 import Foundation
 
-import MTNetwork
-
 protocol LetterUsecase {
     var manitteeId: String? { get set }
     var nickname: String { get set }
