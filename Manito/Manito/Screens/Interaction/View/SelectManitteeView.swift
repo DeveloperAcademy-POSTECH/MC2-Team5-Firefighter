@@ -8,6 +8,7 @@
 import UIKit
 
 import Gifu
+import MTResource
 import SnapKit
 
 protocol SelectManitteeViewDelegate: AnyObject {
@@ -126,12 +127,12 @@ final class SelectManitteeView: UIView, BaseViewType {
     }
 
     private func setupShowJoystickConfiguration() {
-        self.joystickImageView.animate(withGIFNamed: ImageLiterals.gifJoystick)
+        self.joystickImageView.animate(withGIFNamed: GIFSet.joystick)
     }
 
     private func setupShowCapsuleConfiguration() {
         self.joystickImageView.stopAnimatingGIF()
-        self.openCapsuleImageView.animate(withGIFNamed: ImageLiterals.gifCapsule, loopCount: 1, animationBlock: { [weak self] in
+        self.openCapsuleImageView.animate(withGIFNamed: GIFSet.capsule, loopCount: 1, animationBlock: { [weak self] in
             self?.delegate?.moveToNextStep()
         })
     }

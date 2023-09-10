@@ -13,7 +13,7 @@ final class PeopleInfoView: UIView {
     
     // MARK: - property
     
-    private let peopleImageView = UIImageView(image: ImageLiterals.imgNi)    
+    private let peopleImageView = UIImageView(image: UIImage.Image.ni)    
     let peopleLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)

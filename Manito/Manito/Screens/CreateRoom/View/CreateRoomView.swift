@@ -26,7 +26,7 @@ final class CreateRoomView: UIView, BaseViewType {
     }()
     private let closeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(ImageLiterals.btnXmark, for: .normal)
+        button.setImage(UIImage.Button.xmark, for: .normal)
         button.tintColor = .grey001
         return button
     }()
@@ -38,7 +38,7 @@ final class CreateRoomView: UIView, BaseViewType {
     }()
     private let backButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icBack, for: .normal)
+        button.setImage(UIImage.Button.back, for: .normal)
         button.setTitle(" " + TextLiteral.previous, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white

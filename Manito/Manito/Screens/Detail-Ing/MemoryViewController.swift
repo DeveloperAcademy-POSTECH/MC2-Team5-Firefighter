@@ -37,7 +37,7 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
     
     private let shareButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icInsta, for: .normal)
+        button.setImage(UIImage.Icon.insta, for: .normal)
         return button
     }()
     private lazy var segmentControl: UISegmentedControl = {
@@ -78,8 +78,8 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
         collectionView.register(MemoryCollectionViewCell.self, forCellWithReuseIdentifier: MemoryCollectionViewCell.className)
         return collectionView
     }()
-    private let manittoTopImageView = UIImageView(image: ImageLiterals.imgCharacters)
-    private let manittoBottomImageView = UIImageView(image: ImageLiterals.imgCharacters)
+    private let manittoTopImageView = UIImageView(image: UIImage.Image.characters)
+    private let manittoBottomImageView = UIImageView(image: UIImage.Image.characters)
     private let characterImageView = UIImageView()
     private let characterBackView: UIView = {
         let view = UIView()

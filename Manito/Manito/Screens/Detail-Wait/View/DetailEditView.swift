@@ -92,7 +92,7 @@ final class DetailEditView: UIView, BaseViewType {
         slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001
         slider.isContinuous = true
-        slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
+        slider.setThumbImage(UIImage.Image.sliderThumb, for: .normal)
         return slider
     }()
     private lazy var numberOfParticipantsLabel: UILabel = {
