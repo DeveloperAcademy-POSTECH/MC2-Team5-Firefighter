@@ -95,8 +95,8 @@ final class LetterViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
-                case .failure(_):
-                    self?.showErrorAlert()
+                case .failure(let error):
+                    self?.showErrorAlert(error.localizedDescription)
                 case .finished: return
                 }
             }, receiveValue: { [weak self] items in
@@ -171,17 +171,12 @@ final class LetterViewController: BaseViewController {
 
 // MARK: - Helper
 extension LetterViewController {
-    private func showErrorAlert() {
+    private func showErrorAlert(_ message: String) {
         self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
-                       message: TextLiteral.letterViewControllerErrorDescription)
+                       message: message)
     }
 
-    private func handleMessageList(_ messages: [MessageListItem]?) {
-        guard let messages else {
-            self.showErrorAlert()
-            return
-        }
-
+    private func handleMessageList(_ messages: [MessageListItem]) {
         self.reloadMessageList(messages)
         self.letterView.updateEmptyAreaStatus(to: !messages.isEmpty)
     }

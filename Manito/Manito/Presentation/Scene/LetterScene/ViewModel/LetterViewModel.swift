@@ -27,7 +27,7 @@ final class LetterViewModel: BaseViewModelType {
     }
 
     struct Output {
-        let messages: AnyPublisher<[MessageListItem]?, Error>
+        let messages: AnyPublisher<[MessageListItem], Error>
         let index: AnyPublisher<Int, Never>
         let messageDetails: AnyPublisher<MessageDetails, Never>
         let reportDetails: AnyPublisher<ReportDetails, Never>
@@ -75,6 +75,7 @@ final class LetterViewModel: BaseViewModelType {
             .asyncMap { [weak self] type in
                 try await self?.fetchMessages(with: type)
             }
+            .tryCompactMap({ $0 })
             .eraseToAnyPublisher()
 
         let currentIndexPublisher = mergePublisher
