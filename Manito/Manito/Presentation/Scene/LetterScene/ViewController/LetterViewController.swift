@@ -93,14 +93,13 @@ final class LetterViewController: BaseViewController {
 
         output.messages
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] completion in
-                switch completion {
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let items):
+                    self?.handleMessageList(items)
                 case .failure(let error):
                     self?.showErrorAlert(error.localizedDescription)
-                case .finished: return
                 }
-            }, receiveValue: { [weak self] items in
-                self?.handleMessageList(items)
             })
             .store(in: &self.cancelBag)
 

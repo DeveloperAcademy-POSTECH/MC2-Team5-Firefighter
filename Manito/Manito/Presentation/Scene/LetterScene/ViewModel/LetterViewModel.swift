@@ -27,7 +27,7 @@ final class LetterViewModel: BaseViewModelType {
     }
 
     struct Output {
-        let messages: AnyPublisher<[MessageListItem], Error>
+        let messages: AnyPublisher<Result<[MessageListItem], Error>, Never>
         let index: AnyPublisher<Int, Never>
         let messageDetails: AnyPublisher<MessageDetails, Never>
         let reportDetails: AnyPublisher<ReportDetails, Never>
@@ -72,10 +72,14 @@ final class LetterViewModel: BaseViewModelType {
         let mergePublisher = Publishers.Merge3(viewDidLoadType, segmentValueType, refreshWithType)
 
         let messagesPublisher = mergePublisher
-            .asyncMap { [weak self] type in
-                try await self?.fetchMessages(with: type)
+            .asyncMap { [weak self] type -> Result<[MessageListItem], Error> in
+                do {
+                    let messages = try await self?.fetchMessages(with: type)
+                    return .success(messages ?? [])
+                } catch (let error) {
+                    return .failure(error)
+                }
             }
-            .tryCompactMap({ $0 })
             .eraseToAnyPublisher()
 
         let currentIndexPublisher = mergePublisher
