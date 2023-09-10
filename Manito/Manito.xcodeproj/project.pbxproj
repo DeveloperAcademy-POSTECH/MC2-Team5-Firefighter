@@ -82,6 +82,8 @@
 		B55469B32AA96F2C004D9FE6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B12AA96F2C004D9FE6 /* BaseViewController.swift */; };
 		B55469B42AA96F2C004D9FE6 /* BaseViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */; };
 		B55469B62AA96F54004D9FE6 /* DefaultCharacterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B52AA96F54004D9FE6 /* DefaultCharacterType.swift */; };
+		B5546A4B2AADFE5C004D9FE6 /* MTResource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5546A2A2AADD638004D9FE6 /* MTResource.framework */; };
+		B5546A4C2AADFE5C004D9FE6 /* MTResource.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B5546A2A2AADD638004D9FE6 /* MTResource.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */; };
 		B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEB528D99F8600AF7E45 /* Settings.bundle */; };
 		B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BE029ADC20A0093D198 /* CreateLetterView.swift */; };
@@ -206,6 +208,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B5546A4C2AADFE5C004D9FE6 /* MTResource.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +413,7 @@
 				B50B1B0728596CB10080992C /* FSCalendar in Frameworks */,
 				B53A35AD2A962E9C00B720BC /* MTNetwork in Frameworks */,
 				B50B1B33285AC0970080992C /* Gifu in Frameworks */,
+				B5546A4B2AADFE5C004D9FE6 /* MTResource.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

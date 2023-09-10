@@ -7,73 +7,64 @@
 
 import UIKit
 
-public enum ImageSet {
+public extension UIImage {
 
-    public enum Icon {
-        static var list: UIImage { .load(name: "btnList") }
-        static var manitti: UIImage { .load(name: "btnManiTti") }
-        static var newRoom: UIImage { .load(name: "btnNewRoom") }
-        static var insta: UIImage { .load(name: "ic_insta")}
-        static var report: UIImage { .load(name: "ic_report")}
-        static var more: UIImage { .load(name: "ic_more")}
-        static var letterMissionInfo: UIImage { .load(name: "ic_letterInfo")}
-        static var missionInfo: UIImage { .load(name: "ic_missionInfo")}
-        static var right: UIImage { .load(name: "ic_right")}
-        static var save: UIImage { .load(name: "ic_save")}
-        static var pencil: UIImage { .load(name: "ic_pencil") }
+    enum Icon {
+        public static var list: UIImage { .load(name: "btnList") }
+        public static var manitti: UIImage { .load(name: "btnManiTti") }
+        public static var newRoom: UIImage { .load(name: "btnNewRoom") }
+        public static var insta: UIImage { .load(name: "ic_insta")}
+        public static var report: UIImage { .load(name: "ic_report")}
+        public static var more: UIImage { .load(name: "ic_more")}
+        public static var letterMissionInfo: UIImage { .load(name: "ic_letterInfo")}
+        public static var missionInfo: UIImage { .load(name: "ic_missionInfo")}
+        public static var right: UIImage { .load(name: "ic_right")}
+        public static var save: UIImage { .load(name: "ic_save")}
+        public static var pencil: UIImage { .load(name: "ic_pencil") }
     }
 
-    public enum Button {
-        static var back: UIImage { .load(name: "ic_back") }
-        static var xmark: UIImage { .load(name: "ic_exit") }
-        static var setting: UIImage { .load(name: "ic_setting") }
-        static var camera: UIImage { .load(name: "ic_camera") }
+    enum Button {
+        public static var back: UIImage { .load(name: "ic_back") }
+        public static var xmark: UIImage { .load(name: "ic_exit") }
+        public static var setting: UIImage { .load(name: "ic_setting") }
+        public static var camera: UIImage { .load(name: "ic_camera") }
     }
 
-    public enum Image {
-        static var appIcon: UIImage { .load(name: "imgAppIcon")}
-        static var logo: UIImage { .load(name: "imgLogo") }
-        static var textLogo: UIImage { .load(name: "imgTextLogo")}
-        static var background: UIImage { .load(name: "imgBackground") }
-        static var devBackground: UIImage { .load(name: "imgDevBackground") }
-        static var star: UIImage { .load(name: "imgStar") }
-        static var sliderThumb: UIImage { .load(name: "btnSliderThumb") }
-        static var characters: UIImage { .load(name: "img_characters") }
-        static var codeBackground: UIImage { .load(name: "imgCodeBackground") }
-        static var commonMisson: UIImage { .load(name: "imgCommonMisson") }
-        static var enterRoom: UIImage { .load(name: "imgEnterRoom") }
-        static var guideBox: UIImage { .load(name: "img_guideBox") }
-        static var ma: UIImage { .load(name: "imgMa") }
-        static var ni: UIImage { .load(name: "imgNi") }
-        static var tto: UIImage { .load(name: "imgTto") }
-        static var chemi: UIImage { .load(name: "imgMaChemi") }
-        static var coby: UIImage { .load(name: "imgMaCoby") }
-        static var duna: UIImage { .load(name: "imgMaDuna") }
-        static var dinner: UIImage { .load(name: "imgMaDinner") }
-        static var hoya: UIImage { .load(name: "imgMaHoya") }
-        static var livvy: UIImage { .load(name: "imgMaLivvy") }
-        static var daon: UIImage { .load(name: "imgMaDaon") }
-        static var leo: UIImage { .load(name: "imgMaLeo") }
-        static var characterPink: UIImage { .load(name: "imgCharacterPink") }
-        static var characterBrown: UIImage { .load(name: "imgCharacterBrown") }
-        static var characterBlue: UIImage { .load(name: "imgCharacterBlue") }
-        static var characterRed: UIImage { .load(name: "imgCharacterRed") }
-        static var characterOrange: UIImage { .load(name: "imgCharacterOrange") }
-        static var characterYellow: UIImage { .load(name: "imgCharacterYellow") }
-        static var characterLightGreen: UIImage { .load(name: "imgCharacterLightGreen") }
-        static var characterHeavyPink: UIImage { .load(name: "imgCharacterHeavyPink") }
-        static var characterPurple: UIImage { .load(name: "imgCharacterPurple") }
+    enum Image {
+        public static var appIcon: UIImage { .load(name: "imgAppIcon")}
+        public static var logo: UIImage { .load(name: "imgLogo") }
+        public static var textLogo: UIImage { .load(name: "imgTextLogo")}
+        public static var background: UIImage { .load(name: "imgBackground") }
+        public static var devBackground: UIImage { .load(name: "imgDevBackground") }
+        public static var star: UIImage { .load(name: "imgStar") }
+        public static var sliderThumb: UIImage { .load(name: "btnSliderThumb") }
+        public static var characters: UIImage { .load(name: "img_characters") }
+        public static var codeBackground: UIImage { .load(name: "imgCodeBackground") }
+        public static var commonMisson: UIImage { .load(name: "imgCommonMisson") }
+        public static var enterRoom: UIImage { .load(name: "imgEnterRoom") }
+        public static var guideBox: UIImage { .load(name: "img_guideBox") }
+        public static var ma: UIImage { .load(name: "imgMa") }
+        public static var ni: UIImage { .load(name: "imgNi") }
+        public static var tto: UIImage { .load(name: "imgTto") }
+        public static var chemi: UIImage { .load(name: "imgMaChemi") }
+        public static var coby: UIImage { .load(name: "imgMaCoby") }
+        public static var duna: UIImage { .load(name: "imgMaDuna") }
+        public static var dinner: UIImage { .load(name: "imgMaDinner") }
+        public static var hoya: UIImage { .load(name: "imgMaHoya") }
+        public static var livvy: UIImage { .load(name: "imgMaLivvy") }
+        public static var daon: UIImage { .load(name: "imgMaDaon") }
+        public static var leo: UIImage { .load(name: "imgMaLeo") }
+        public static var characterPink: UIImage { .load(name: "imgCharacterPink") }
+        public static var characterBrown: UIImage { .load(name: "imgCharacterBrown") }
+        public static var characterBlue: UIImage { .load(name: "imgCharacterBlue") }
+        public static var characterRed: UIImage { .load(name: "imgCharacterRed") }
+        public static var characterOrange: UIImage { .load(name: "imgCharacterOrange") }
+        public static var characterYellow: UIImage { .load(name: "imgCharacterYellow") }
+        public static var characterLightGreen: UIImage { .load(name: "imgCharacterLightGreen") }
+        public static var characterHeavyPink: UIImage { .load(name: "imgCharacterHeavyPink") }
+        public static var characterPurple: UIImage { .load(name: "imgCharacterPurple") }
     }
-
-    public enum Gif {
-        static var logo = "logo"
-        static var joystick = "joystick"
-        static var capsule = "capsule"
-        static var ma = "gifMa"
-        static var ni = "gifNi"
-        static var tto = "gifTto"
-    }
-
+    
 }
 
 public extension UIImage {
