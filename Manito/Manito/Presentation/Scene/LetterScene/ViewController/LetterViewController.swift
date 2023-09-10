@@ -99,6 +99,7 @@ final class LetterViewController: BaseViewController {
                     self?.handleMessageList(items)
                 case .failure(let error):
                     self?.showErrorAlert(error.localizedDescription)
+                    self?.handleMessageList([])
                 }
             })
             .store(in: &self.cancelBag)
