@@ -121,6 +121,7 @@
 		B5C7FC0E2AA88B3500862021 /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C7FC0D2AA88B3500862021 /* UIViewController+Keyboard.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+RandomNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+RandomNumber.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */; };
+		B5E850302AAEE4CF00652AC3 /* GIFSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E8502F2AAEE4CF00652AC3 /* GIFSet.swift */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
 		B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */; };
 		B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */; };
@@ -329,6 +330,7 @@
 		B5C7FC0D2AA88B3500862021 /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+RandomNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+RandomNumber.swift"; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewController.swift; sourceTree = "<group>"; };
+		B5E8502F2AAEE4CF00652AC3 /* GIFSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFSet.swift; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LetterViewController+MailCompose.swift"; sourceTree = "<group>"; };
@@ -1018,6 +1020,7 @@
 		B5C7FC072AA889BD00862021 /* Literal */ = {
 			isa = PBXGroup;
 			children = (
+				B5E8502F2AAEE4CF00652AC3 /* GIFSet.swift */,
 				391B3002286198C200421F1D /* SizeLiteral.swift */,
 				7E15F67D28B35B3D00441305 /* TextLiteral.swift */,
 				D777D2C828C7780E008655BD /* URLLiteral.swift */,
@@ -1649,6 +1652,7 @@
 				39EEF65E28CB3CFE00437654 /* LoginEndPoint.swift in Sources */,
 				392EC77E2855C388006918A9 /* SettingButton.swift in Sources */,
 				CB674C2128596A310063A6B7 /* CheckRoomViewController.swift in Sources */,
+				B5E850302AAEE4CF00652AC3 /* GIFSet.swift in Sources */,
 				B5A085DF2A972D2A00C8A98D /* LetterRequestDTO.swift in Sources */,
 				3904F5002AA3754400B6264F /* MessageCountInfo.swift in Sources */,
 				B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */,

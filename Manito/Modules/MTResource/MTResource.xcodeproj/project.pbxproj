@@ -19,7 +19,6 @@
 		B5546A462AADF6B3004D9FE6 /* ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A452AADF6B3004D9FE6 /* ColorSet.swift */; };
 		B5546A482AADF7ED004D9FE6 /* FontSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A472AADF7ED004D9FE6 /* FontSet.swift */; };
 		B5546A4A2AADF8BF004D9FE6 /* ImageSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A492AADF8BF004D9FE6 /* ImageSet.swift */; };
-		B5546A4E2AAE0265004D9FE6 /* GIFSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A4D2AAE0265004D9FE6 /* GIFSet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +35,6 @@
 		B5546A452AADF6B3004D9FE6 /* ColorSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSet.swift; sourceTree = "<group>"; };
 		B5546A472AADF7ED004D9FE6 /* FontSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSet.swift; sourceTree = "<group>"; };
 		B5546A492AADF8BF004D9FE6 /* ImageSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSet.swift; sourceTree = "<group>"; };
-		B5546A4D2AAE0265004D9FE6 /* GIFSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFSet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +71,6 @@
 				B5546A452AADF6B3004D9FE6 /* ColorSet.swift */,
 				B5546A472AADF7ED004D9FE6 /* FontSet.swift */,
 				B5546A492AADF8BF004D9FE6 /* ImageSet.swift */,
-				B5546A4D2AAE0265004D9FE6 /* GIFSet.swift */,
 				B5546A2F2AADD72F004D9FE6 /* Resource */,
 			);
 			path = MTResource;
@@ -199,7 +196,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5546A4A2AADF8BF004D9FE6 /* ImageSet.swift in Sources */,
-				B5546A4E2AAE0265004D9FE6 /* GIFSet.swift in Sources */,
 				B5546A462AADF6B3004D9FE6 /* ColorSet.swift in Sources */,
 				B5546A482AADF7ED004D9FE6 /* FontSet.swift in Sources */,
 			);
