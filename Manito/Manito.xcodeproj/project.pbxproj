@@ -1664,11 +1664,9 @@
 				7E3058C62854B47F00489E6A /* InputTitleView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
-				B55469DF2AAAD82D004D9FE6 /* BaseViewController.swift in Sources */,
 				7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */,
 				D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */,
 				B5A085FE2A97493900C8A98D /* UserInfoDTO.swift in Sources */,
-				B55469E12AAAD84F004D9FE6 /* Character.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B55469B62AA96F54004D9FE6 /* Character.swift in Sources */,
 				B53A35C82A96F84700B720BC /* LetterRepository.swift in Sources */,
@@ -1795,7 +1793,6 @@
 				CB5AE3E4285AAF7400382EA3 /* RoomInfoView.swift in Sources */,
 				B5FEE9DD28C849B400DEA07E /* UIImageView+Cache.swift in Sources */,
 				CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */,
-				B55469DE2AAAD82D004D9FE6 /* BaseViewModelType.swift in Sources */,
 				D70220232A7A22EC0024BACD /* CreateRoomView.swift in Sources */,
 				B5AE11F429D32EE700F86FF8 /* SelectManitteeView.swift in Sources */,
 				B5A085E12A972D7900C8A98D /* LoginRequestDTO.swift in Sources */,
@@ -2009,7 +2006,7 @@
 				CODE_SIGN_ENTITLEMENTS = Manito/App/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Manito/App/Info.plist;
@@ -2028,7 +2025,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_SWIFT_FLAGS = "-DDEV";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2049,7 +2046,7 @@
 				CODE_SIGN_ENTITLEMENTS = Manito/App/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				ENABLE_TESTABILITY = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2069,7 +2066,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_SWIFT_FLAGS = "-DPROD";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
