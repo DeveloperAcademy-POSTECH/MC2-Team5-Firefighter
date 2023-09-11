@@ -69,7 +69,8 @@ public extension UIImage {
 
 public extension UIImage {
     static func load(name: String) -> UIImage {
-        guard let image = UIImage(named: name, in: nil, compatibleWith: nil) else {
+        let bundle = BundleToken.bundle
+        guard let image = UIImage(named: name, in: bundle, compatibleWith: nil) else {
             return UIImage()
         }
         image.accessibilityIdentifier = name

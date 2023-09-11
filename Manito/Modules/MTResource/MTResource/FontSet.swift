@@ -34,9 +34,3 @@ public extension UIFont {
         return UIFont(name: style.rawValue, size: size)!
     }
 }
-
-private final class BundleToken {
-    static var bundle: Bundle {
-        return Bundle(for: BundleToken.self)
-    }
-}
