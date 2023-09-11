@@ -9,12 +9,6 @@
 /* Begin PBXBuildFile section */
 		B5546A1F2AADD618004D9FE6 /* MTResource.h in Headers */ = {isa = PBXBuildFile; fileRef = B5546A1E2AADD618004D9FE6 /* MTResource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B5546A312AADD7CA004D9FE6 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5546A302AADD7CA004D9FE6 /* Image.xcassets */; };
-		B5546A3B2AADF5B1004D9FE6 /* capsule.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5546A352AADF5B1004D9FE6 /* capsule.gif */; };
-		B5546A3C2AADF5B1004D9FE6 /* logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5546A362AADF5B1004D9FE6 /* logo.gif */; };
-		B5546A3D2AADF5B1004D9FE6 /* gifTto.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5546A372AADF5B1004D9FE6 /* gifTto.gif */; };
-		B5546A3E2AADF5B1004D9FE6 /* joystick.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5546A382AADF5B1004D9FE6 /* joystick.gif */; };
-		B5546A3F2AADF5B1004D9FE6 /* gifMa.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5546A392AADF5B1004D9FE6 /* gifMa.gif */; };
-		B5546A402AADF5B1004D9FE6 /* gifNi.gif in Resources */ = {isa = PBXBuildFile; fileRef = B5546A3A2AADF5B1004D9FE6 /* gifNi.gif */; };
 		B5546A432AADF609004D9FE6 /* DungGeunMo.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5546A422AADF609004D9FE6 /* DungGeunMo.otf */; };
 		B5546A462AADF6B3004D9FE6 /* ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A452AADF6B3004D9FE6 /* ColorSet.swift */; };
 		B5546A482AADF7ED004D9FE6 /* FontSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A472AADF7ED004D9FE6 /* FontSet.swift */; };
@@ -25,12 +19,6 @@
 		B5546A1B2AADD618004D9FE6 /* MTResource.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MTResource.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5546A1E2AADD618004D9FE6 /* MTResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTResource.h; sourceTree = "<group>"; };
 		B5546A302AADD7CA004D9FE6 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
-		B5546A352AADF5B1004D9FE6 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
-		B5546A362AADF5B1004D9FE6 /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = logo.gif; sourceTree = "<group>"; };
-		B5546A372AADF5B1004D9FE6 /* gifTto.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifTto.gif; sourceTree = "<group>"; };
-		B5546A382AADF5B1004D9FE6 /* joystick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = joystick.gif; sourceTree = "<group>"; };
-		B5546A392AADF5B1004D9FE6 /* gifMa.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifMa.gif; sourceTree = "<group>"; };
-		B5546A3A2AADF5B1004D9FE6 /* gifNi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifNi.gif; sourceTree = "<group>"; };
 		B5546A422AADF609004D9FE6 /* DungGeunMo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.otf; sourceTree = "<group>"; };
 		B5546A452AADF6B3004D9FE6 /* ColorSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSet.swift; sourceTree = "<group>"; };
 		B5546A472AADF7ED004D9FE6 /* FontSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSet.swift; sourceTree = "<group>"; };
@@ -80,23 +68,9 @@
 			isa = PBXGroup;
 			children = (
 				B5546A302AADD7CA004D9FE6 /* Image.xcassets */,
-				B5546A342AADF59E004D9FE6 /* Gifs */,
 				B5546A412AADF5F7004D9FE6 /* Fonts */,
 			);
 			path = Resource;
-			sourceTree = "<group>";
-		};
-		B5546A342AADF59E004D9FE6 /* Gifs */ = {
-			isa = PBXGroup;
-			children = (
-				B5546A352AADF5B1004D9FE6 /* capsule.gif */,
-				B5546A382AADF5B1004D9FE6 /* joystick.gif */,
-				B5546A362AADF5B1004D9FE6 /* logo.gif */,
-				B5546A392AADF5B1004D9FE6 /* gifMa.gif */,
-				B5546A3A2AADF5B1004D9FE6 /* gifNi.gif */,
-				B5546A372AADF5B1004D9FE6 /* gifTto.gif */,
-			);
-			path = Gifs;
 			sourceTree = "<group>";
 		};
 		B5546A412AADF5F7004D9FE6 /* Fonts */ = {
@@ -177,14 +151,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5546A402AADF5B1004D9FE6 /* gifNi.gif in Resources */,
-				B5546A3B2AADF5B1004D9FE6 /* capsule.gif in Resources */,
-				B5546A3F2AADF5B1004D9FE6 /* gifMa.gif in Resources */,
-				B5546A3E2AADF5B1004D9FE6 /* joystick.gif in Resources */,
-				B5546A3C2AADF5B1004D9FE6 /* logo.gif in Resources */,
 				B5546A312AADD7CA004D9FE6 /* Image.xcassets in Resources */,
 				B5546A432AADF609004D9FE6 /* DungGeunMo.otf in Resources */,
-				B5546A3D2AADF5B1004D9FE6 /* gifTto.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
