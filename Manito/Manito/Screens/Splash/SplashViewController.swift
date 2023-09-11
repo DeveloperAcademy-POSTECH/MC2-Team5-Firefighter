@@ -8,7 +8,6 @@
 import UIKit
 
 import Gifu
-import MTResource
 
 final class SplashViewController: UIViewController, BaseViewControllerType {
     

@@ -8,7 +8,6 @@
 import UIKit
 
 import Gifu
-import MTResource
 import SkeletonView
 import SnapKit
 
