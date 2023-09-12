@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class ParticipationRoomDetails: UIView {
+final class ParticipationRoomDetailsView: UIView {
     
     // MARK: - ui component
     

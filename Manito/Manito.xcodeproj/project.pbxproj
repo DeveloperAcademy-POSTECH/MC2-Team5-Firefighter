@@ -179,7 +179,7 @@
 		D724AF5F28708D830003F280 /* TopCharacterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* TopCharacterImageView.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
 		D7537F612AA70C40005AC78B /* ParticipatedRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F602AA70C40005AC78B /* ParticipatedRoomInfo.swift */; };
-		D7537F672AA75AFB005AC78B /* ParticipationRoomDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F662AA75AFB005AC78B /* ParticipationRoomDetails.swift */; };
+		D7537F672AA75AFB005AC78B /* ParticipationRoomDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F662AA75AFB005AC78B /* ParticipationRoomDetailsView.swift */; };
 		D7537F692AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F682AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift */; };
 		D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */; };
 		D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */; };
@@ -393,7 +393,7 @@
 		D724AF5E28708D830003F280 /* TopCharacterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCharacterImageView.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
 		D7537F602AA70C40005AC78B /* ParticipatedRoomInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatedRoomInfo.swift; sourceTree = "<group>"; };
-		D7537F662AA75AFB005AC78B /* ParticipationRoomDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationRoomDetails.swift; sourceTree = "<group>"; };
+		D7537F662AA75AFB005AC78B /* ParticipationRoomDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationRoomDetailsView.swift; sourceTree = "<group>"; };
 		D7537F682AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationRoomDetailsViewModel.swift; sourceTree = "<group>"; };
 		D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomService.swift; sourceTree = "<group>"; };
 		D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewModel.swift; sourceTree = "<group>"; };
@@ -1376,7 +1376,7 @@
 			isa = PBXGroup;
 			children = (
 				D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */,
-				D7537F662AA75AFB005AC78B /* ParticipationRoomDetails.swift */,
+				D7537F662AA75AFB005AC78B /* ParticipationRoomDetailsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1635,7 +1635,7 @@
 				D7537F692AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift in Sources */,
 				B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */,
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,
-				D7537F672AA75AFB005AC78B /* ParticipationRoomDetails.swift in Sources */,
+				D7537F672AA75AFB005AC78B /* ParticipationRoomDetailsView.swift in Sources */,
 				7E3058C62854B47F00489E6A /* InputTitleView.swift in Sources */,
 				B5F5250128519EFB00614FF7 /* ImageLiteral.swift in Sources */,
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,

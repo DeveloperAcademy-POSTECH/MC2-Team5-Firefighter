@@ -33,8 +33,8 @@ final class ParticipationRoomDetailsViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         let yesButtonDidTap = input.yesButtonDidTap
-            .compactMap { [weak self] _  -> Int? in
-                return self?.roomInfo.id
+            .compactMap { [weak self] _ in
+                self?.roomInfo.id
             }
             .eraseToAnyPublisher()
         

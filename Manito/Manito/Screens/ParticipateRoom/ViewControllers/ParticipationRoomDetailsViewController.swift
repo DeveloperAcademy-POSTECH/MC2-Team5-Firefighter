@@ -14,7 +14,7 @@ final class ParticipationRoomDetailsViewController: BaseViewController {
     
     // MARK: - ui component
     
-    private let checkRoomView: ParticipationRoomDetails = ParticipationRoomDetails()
+    private let participationRoomDetailsView: ParticipationRoomDetailsView = ParticipationRoomDetailsView()
     
     // MARK: - property
 
@@ -40,7 +40,7 @@ final class ParticipationRoomDetailsViewController: BaseViewController {
     // MARK: - life cycle
     
     override func loadView() {
-        self.view = self.checkRoomView
+        self.view = self.participationRoomDetailsView
     }
     
     override func viewDidLoad() {
@@ -64,7 +64,7 @@ final class ParticipationRoomDetailsViewController: BaseViewController {
     
     private func transformedOutput() -> ParticipationRoomDetailsViewModel.Output {
         let input = ParticipationRoomDetailsViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
-                                             yesButtonDidTap: self.checkRoomView.yesButtonDidTapPublisher)
+                                             yesButtonDidTap: self.participationRoomDetailsView.yesButtonDidTapPublisher)
         return viewModel.transform(from: input)
     }
     
@@ -72,7 +72,7 @@ final class ParticipationRoomDetailsViewController: BaseViewController {
         output.roomInfo
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomInfo in
-                self?.checkRoomView.updateRoomInfo(roomInfo: roomInfo)
+                self?.participationRoomDetailsView.updateRoomInfo(roomInfo: roomInfo)
             })
             .store(in: &self.cancellable)
         
@@ -88,7 +88,7 @@ final class ParticipationRoomDetailsViewController: BaseViewController {
     }
     
     private func bindUI() {
-        self.checkRoomView.noButtonDidTapPublisher
+        self.participationRoomDetailsView.noButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.dismiss(animated: true)

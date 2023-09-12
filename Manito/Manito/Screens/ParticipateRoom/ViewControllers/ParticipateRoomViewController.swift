@@ -107,12 +107,12 @@ final class ParticipateRoomViewController: BaseViewController {
                     self?.makeAlert(title: TextLiteral.participateRoomViewControllerInvalidCodeAlertErrorMessage)
                 }
             } receiveValue: { [weak self] roomInfo in
-                self?.presentCheckView(roomInfo: roomInfo)
+                self?.presentParticipationRoomDetailsView(roomInfo: roomInfo)
             }
             .store(in: &self.cancellable)
     }
     
-    private func presentCheckView(roomInfo: ParticipatedRoomInfo) {
+    private func presentParticipationRoomDetailsView(roomInfo: ParticipatedRoomInfo) {
         let viewController = ParticipationRoomDetailsViewController(viewModel: ParticipationRoomDetailsViewModel(roomInfo: roomInfo))
         viewController.modalPresentationStyle = .overFullScreen
         viewController.modalTransitionStyle = .crossDissolve
