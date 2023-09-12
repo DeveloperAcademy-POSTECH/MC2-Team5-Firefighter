@@ -96,12 +96,12 @@ enum TextLiteral {
     static let chooseCharacterViewControllerTitleLabel: String = "캐릭터 선택"
     static let chooseCharacterViewControllerSubTitleLabel: String = "당신만의 캐릭터를 정해주세요"
     
-    // MARK: - CheckRoomViewController
-    static let checkRoomViewControllerQuestionLabel: String = "이 방으로 입장할까요?"
-    static let checkRoomViewControllerNoButtonLabel: String = "NO"
-    static let checkRoomViewControllerYesBUttonLabel: String = "YES"
-    static let checkRoomViewControllerErrorAlertTitle: String = "해당하는 애니또 방이 없어요"
-    static let checkRoomViewControllerErrorAlertMessage: String = "초대 코드를 다시 확인해 주세요"
+    // MARK: - ParticipationRoomDetailsViewController
+    static let participationRoomDetailsViewControllerQuestionLabel: String = "이 방으로 입장할까요?"
+    static let participationRoomDetailsViewControllerNoButtonLabel: String = "NO"
+    static let participationRoomDetailsViewControllerYesBUttonLabel: String = "YES"
+    static let participationRoomDetailsViewControllerErrorAlertTitle: String = "해당하는 애니또 방이 없어요"
+    static let participationRoomDetailsViewControllerErrorAlertMessage: String = "초대 코드를 다시 확인해 주세요"
     
     // MARK: - InputInvitedCodeView
     static let inputInvitedCodeViewRoomCodeText: String = "초대코드 입력"
@@ -238,4 +238,7 @@ enum TextLiteral {
     static let missionEditViewControllerChangeMissionAlertMessage: String = "기본 미션으로 변경을 통해\n되돌릴 수 있습니다."
     static let missionEditViewControllerChangeMissionErrorAlertTitle: String = "오류 발생"
     static let missionEditViewControllerChangeMissionErrorAlertMessage: String = "개별 미션을 수정 할 수 없습니다.\n다시 시도해주세요."
+    
+    // MARK: - ParticipateRoomViewController
+    static let participateRoomViewControllerInvalidCodeAlertErrorMessage: String = "초대코드가 존재하지 않습니다"
 }
