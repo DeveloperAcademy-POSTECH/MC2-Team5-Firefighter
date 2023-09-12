@@ -14,7 +14,7 @@ protocol CreateRoomViewDelegate: AnyObject {
     func didTapCloseButton()
 }
 
-final class CreateRoomView: UIView {
+final class CreateRoomView: UIView, BaseViewType {
     
     // MARK: - ui component
     
@@ -67,10 +67,9 @@ final class CreateRoomView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
         self.setupAction()
         self.setupNotificationCenter()
-        self.configureUI()
     }
     
     @available(*, unavailable)
@@ -78,9 +77,9 @@ final class CreateRoomView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - base func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(66)
@@ -124,7 +123,14 @@ final class CreateRoomView: UIView {
         
         self.bringSubviewToFront(self.nextButton)
     }
-    
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+        self.roomStep = .inputTitle
+    }
+
+    // MARK: - func
+
     private func setupAction() {
         let closeAction = UIAction { [weak self] _ in
             self?.delegate?.didTapCloseButton()
@@ -208,10 +214,6 @@ final class CreateRoomView: UIView {
     
     private func nextButton(isEnable: Bool) {
         self.nextButton.isDisabled = !isEnable
-    }
-    
-    private func configureUI() {
-        self.roomStep = .inputTitle
     }
     
     func configureDelegate(_ delegate: CreateRoomViewDelegate) {

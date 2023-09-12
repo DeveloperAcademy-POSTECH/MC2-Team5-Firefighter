@@ -20,7 +20,7 @@ protocol SettingViewDelegate: AnyObject {
     func withdrawalButtonDidTap()
 }
 
-final class SettingView: UIView {
+final class SettingView: UIView, BaseViewType {
     
     struct Option {
         let title: String
@@ -61,7 +61,7 @@ final class SettingView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
         self.setupButtonAction()
         self.configureModels()
     }
@@ -71,9 +71,9 @@ final class SettingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - base func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.imageRow)
         self.imageRow.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
@@ -95,6 +95,12 @@ final class SettingView: UIView {
             $0.centerX.equalToSuperview()
         }
     }
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - func
     
     private func setupButtonAction() {
         let withdrawalButtonDidTap = UIAction { [weak self] _ in

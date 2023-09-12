@@ -11,7 +11,7 @@ import Gifu
 import SkeletonView
 import SnapKit
 
-final class MainViewController: BaseViewController {
+final class MainViewController: BaseViewController, BaseViewControllerType {
     
     private enum InternalSize {
         static let collectionHorizontalSpacing: CGFloat = 20
@@ -94,6 +94,7 @@ final class MainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
         self.setupGifImage()
         self.setupRefreshControl()
         self.setupSkeletonView()
@@ -105,9 +106,9 @@ final class MainViewController: BaseViewController {
         self.requestManittoRoomList()
     }
     
-    // MARK: - override
+    // MARK: - base func
 
-    override func setupLayout() {
+    func setupLayout() {
         self.view.addSubview(self.backgroundImageView)
         self.backgroundImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -166,6 +167,12 @@ final class MainViewController: BaseViewController {
         }
         self.guideView.setupGuideViewLayout()
     }
+
+    func configureUI() {
+        self.view.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - override
 
     override func setupNavigationBar() {
         super.setupNavigationBar()

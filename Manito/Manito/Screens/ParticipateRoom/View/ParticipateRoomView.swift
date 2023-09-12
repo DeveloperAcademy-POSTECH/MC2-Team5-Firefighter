@@ -14,7 +14,7 @@ protocol ParticipateRoomViewDelegate: AnyObject {
     func closeButtonDidTap()
 }
 
-final class ParticipateRoomView: UIView {
+final class ParticipateRoomView: UIView, BaseViewType {
     
     // MARK: - ui component
     
@@ -46,7 +46,7 @@ final class ParticipateRoomView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
         self.setupButtonAction()
         self.setupNotificationCenter()
     }
@@ -56,9 +56,9 @@ final class ParticipateRoomView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - base func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
@@ -81,6 +81,12 @@ final class ParticipateRoomView: UIView {
         
         self.bringSubviewToFront(self.nextButton)
     }
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - func
     
     private func setupButtonAction() {
         let didTapCloseButton = UIAction { [weak self] _ in

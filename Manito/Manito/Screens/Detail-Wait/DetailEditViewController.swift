@@ -48,22 +48,20 @@ final class DetailEditViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupPresentationController()
         self.configureDelegation()
         self.setupCalendarDateRange()
         if self.editMode == .information {
             self.setupMemberSliderValue()
         }
     }
-    
-    // MARK: - override
-    
-    override func configureUI() {
-        super.configureUI()
+
+    // MARK: - func
+
+    private func setupPresentationController() {
         self.presentationController?.delegate = self
         self.isModalInPresentation = true
     }
-
-    // MARK: - func
     
     private func configureDelegation() {
         self.detailEditView.configureDelegation(self)

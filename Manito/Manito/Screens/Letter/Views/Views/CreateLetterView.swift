@@ -15,7 +15,7 @@ protocol CreateLetterViewDelegate: AnyObject {
     func sendLetterToManittee(with content: String?, _ image: UIImage?)
 }
 
-final class CreateLetterView: UIView {
+final class CreateLetterView: UIView, BaseViewType {
 
     // MARK: - ui component
 
@@ -73,7 +73,7 @@ final class CreateLetterView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
         self.setupButtonAction()
         self.observeSendButtonEnabledState()
     }
@@ -83,9 +83,9 @@ final class CreateLetterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - func
+    // MARK: - base func
 
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.indicatorView)
         self.indicatorView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(9)
@@ -126,6 +126,12 @@ final class CreateLetterView: UIView {
             $0.bottom.equalToSuperview().inset(105)
         }
     }
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - func
 
     private func setupButtonAction() {
         let cancelAction = UIAction { [weak self] _ in
