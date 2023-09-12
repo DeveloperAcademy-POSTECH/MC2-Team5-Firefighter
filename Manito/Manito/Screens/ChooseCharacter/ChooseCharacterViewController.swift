@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class ChooseCharacterViewController: UIViewController, Navigationable {
+final class ChooseCharacterViewController: UIViewController {
     
     // MARK: - ui component
 
@@ -44,18 +44,9 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.setupNavigation()
         self.configureDelegation()
         self.configureNavigationController()
     }
-    
-    // MARK: - override
-    
-//    override func setupNavigationBar() {
-//        super.setupNavigationBar()
-//        // FIXME: ParticipateRoomVC 수정 시 삭제 예정
-//        navigationController?.navigationBar.isHidden = false
-//    }
     
     // MARK: - func
     
