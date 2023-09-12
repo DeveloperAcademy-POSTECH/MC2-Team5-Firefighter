@@ -122,6 +122,8 @@
 		B5C7FC0E2AA88B3500862021 /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C7FC0D2AA88B3500862021 /* UIViewController+Keyboard.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+RandomNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+RandomNumber.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */; };
+		B5EDF4A32AB056B50086230C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5EDF4A52AB056B50086230C /* Localizable.strings */; };
+		B5EDF4A82AB05D5A0086230C /* LocalizableScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EDF4A72AB05D5A0086230C /* LocalizableScript.swift */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
 		B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */; };
 		B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */; };
@@ -331,6 +333,8 @@
 		B5C7FC0D2AA88B3500862021 /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+RandomNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+RandomNumber.swift"; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewController.swift; sourceTree = "<group>"; };
+		B5EDF4A42AB056B50086230C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B5EDF4A72AB05D5A0086230C /* LocalizableScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableScript.swift; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LetterViewController+MailCompose.swift"; sourceTree = "<group>"; };
@@ -983,6 +987,7 @@
 				B5C7FC042AA887A400862021 /* Logger */,
 				B5C7FC052AA887CC00862021 /* Extension */,
 				B5C7FC072AA889BD00862021 /* Literal */,
+				B5EDF4A62AB05D1F0086230C /* Script */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1027,6 +1032,7 @@
 		B5C7FC072AA889BD00862021 /* Literal */ = {
 			isa = PBXGroup;
 			children = (
+				B5EDF4A52AB056B50086230C /* Localizable.strings */,
 				B5F5250028519EFB00614FF7 /* ImageLiteral.swift */,
 				391B3002286198C200421F1D /* SizeLiteral.swift */,
 				7E15F67D28B35B3D00441305 /* TextLiteral.swift */,
@@ -1077,6 +1083,14 @@
 				B50CEEBF2A6FF82600CF1C76 /* Publisher+Async.swift */,
 			);
 			path = Combine;
+			sourceTree = "<group>";
+		};
+		B5EDF4A62AB05D1F0086230C /* Script */ = {
+			isa = PBXGroup;
+			children = (
+				B5EDF4A72AB05D5A0086230C /* LocalizableScript.swift */,
+			);
+			path = Script;
 			sourceTree = "<group>";
 		};
 		B5F524C228519AA000614FF7 = {
@@ -1593,6 +1607,7 @@
 				B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */,
 				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
 				B55BCEC828F5AFD500AF7E45 /* joystick.gif in Resources */,
+				B5EDF4A32AB056B50086230C /* Localizable.strings in Resources */,
 				B5F5250428519F7A00614FF7 /* DungGeunMo.otf in Resources */,
 				CB2F0FCC28A5468C005F04C8 /* gifTto.gif in Resources */,
 				B55BCEC628F5AFB200AF7E45 /* capsule.gif in Resources */,
@@ -1711,6 +1726,7 @@
 				39BDDCC42A52BB4A005E0A71 /* DetailWaitService.swift in Sources */,
 				B5A086022A974B8100C8A98D /* RoomListItem.swift in Sources */,
 				B53A35CC2A96F99D00B720BC /* SettingRepository.swift in Sources */,
+				B5EDF4A82AB05D5A0086230C /* LocalizableScript.swift in Sources */,
 				B50CEEC02A6FF82600CF1C76 /* Publisher+Async.swift in Sources */,
 				B53A35C02A96F21A00B720BC /* MainRepository.swift in Sources */,
 				D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */,
@@ -1811,6 +1827,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B5EDF4A52AB056B50086230C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5EDF4A42AB056B50086230C /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		B5F524D428519AA000614FF7 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
