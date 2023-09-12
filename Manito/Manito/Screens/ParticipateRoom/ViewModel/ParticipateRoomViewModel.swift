@@ -12,14 +12,6 @@ final class ParticipateRoomViewModel: ViewModelType {
     
     typealias Counts = (textCount: Int, maxCount: Int)
     
-    // MARK: - property
-    
-    private let maxCount: Int = 6
-    private let roomInfoSubject = PassthroughSubject<ParticipatedRoomInfo, Error>()
-    
-    private let participateRoomService: ParticipateRoomService
-    private var cancellable = Set<AnyCancellable>()
-    
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let textFieldDidChanged: AnyPublisher<String, Never>
@@ -31,6 +23,27 @@ final class ParticipateRoomViewModel: ViewModelType {
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
         let roomInfo: PassthroughSubject<ParticipatedRoomInfo, Error>
+    }
+    
+    // MARK: - property
+    
+    private let maxCount: Int = 6
+    private let roomInfoSubject = PassthroughSubject<ParticipatedRoomInfo, Error>()
+
+    private let participateRoomService: ParticipateRoomService
+    private var cancellable = Set<AnyCancellable>()
+    
+    // MARK: - init
+    
+    init(participateRoomService: ParticipateRoomService) {
+        self.participateRoomService = participateRoomService
+    }
+    
+    // MARK: - func
+    
+    private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
+        if titleCount > maxCount { return true }
+        else { return false }
     }
     
     func transform(from input: Input) -> Output {
@@ -79,20 +92,6 @@ final class ParticipateRoomViewModel: ViewModelType {
                       isEnabled: isEnabled,
                       roomInfo: self.roomInfoSubject)
     }
-    
-    // MARK: - init
-    
-    init(participateRoomService: ParticipateRoomService) {
-        self.participateRoomService = participateRoomService
-    }
-    
-    // MARK: - func
-    
-    private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
-        if titleCount > maxCount { return true }
-        else { return false }
-    }
-    
     
     // MARK: - network
     

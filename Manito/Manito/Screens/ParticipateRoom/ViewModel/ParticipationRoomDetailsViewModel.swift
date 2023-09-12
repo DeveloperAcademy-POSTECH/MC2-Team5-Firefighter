@@ -10,11 +10,6 @@ import Foundation
 
 final class ParticipationRoomDetailsViewModel: ViewModelType {
     
-    // MARK: - property
-
-    private let roomInfo: ParticipatedRoomInfo
-    private var cancellable = Set<AnyCancellable>()
-    
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let yesButtonDidTap: AnyPublisher<Void, Never>
@@ -25,6 +20,19 @@ final class ParticipationRoomDetailsViewModel: ViewModelType {
         let yesButtonDidTap: AnyPublisher<Int, Never>
     }
     
+    // MARK: - property
+
+    private let roomInfo: ParticipatedRoomInfo
+    private var cancellable = Set<AnyCancellable>()
+    
+    // MARK: - init
+    
+    init(roomInfo: ParticipatedRoomInfo) {
+        self.roomInfo = roomInfo
+    }
+    
+    // MARK: - func
+
     func transform(from input: Input) -> Output {
         let roomInfo = input.viewDidLoad
             .compactMap { [weak self] _ -> ParticipatedRoomInfo? in
@@ -41,13 +49,4 @@ final class ParticipationRoomDetailsViewModel: ViewModelType {
         return Output(roomInfo: roomInfo,
                       yesButtonDidTap: yesButtonDidTap)
     }
-    
-    // MARK: - init
-    
-    init(roomInfo: ParticipatedRoomInfo) {
-        self.roomInfo = roomInfo
-    }
-    
-    // MARK: - func
-
 }
