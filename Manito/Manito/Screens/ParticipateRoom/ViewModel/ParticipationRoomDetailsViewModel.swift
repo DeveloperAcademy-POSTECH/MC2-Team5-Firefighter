@@ -20,7 +20,7 @@ final class ParticipationRoomDetailsViewModel: ViewModelType {
         let yesButtonDidTap: AnyPublisher<Void, Never>
     }
     
-    struct Output{
+    struct Output {
         let roomInfo: AnyPublisher<ParticipatedRoomInfo, Never>
         let yesButtonDidTap: AnyPublisher<Int, Never>
     }
