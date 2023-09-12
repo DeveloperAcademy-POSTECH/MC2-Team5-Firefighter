@@ -11,7 +11,7 @@ import Gifu
 import SkeletonView
 import SnapKit
 
-final class MainViewController: BaseViewController, BaseViewControllerType {
+final class MainViewController: UIViewController, BaseViewControllerType {
     
     private enum InternalSize {
         static let collectionHorizontalSpacing: CGFloat = 20
@@ -94,6 +94,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBar()
         self.baseViewDidLoad()
         self.setupGifImage()
         self.setupRefreshControl()
@@ -174,9 +175,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
 
     // MARK: - override
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-
+    private func setupNavigationBar() {
         let appTitleView = self.makeBarButtonItem(with: self.appTitleView)
         let settingButtonView = self.makeBarButtonItem(with: self.settingButton)
 

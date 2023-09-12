@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FriendListViewController: BaseViewController, BaseViewControllerType {
+final class FriendListViewController: UIViewController, BaseViewControllerType, Navigationable {
     var friendArray: [MemberInfoDTO] = [] {
         didSet {
             friendListCollectionView.reloadData()
@@ -35,6 +35,7 @@ final class FriendListViewController: BaseViewController, BaseViewControllerType
         super.viewDidLoad()
         self.baseViewDidLoad()
         setupDelegation()
+        self.setupNavigation()
     }
 
     // MARK: - base func

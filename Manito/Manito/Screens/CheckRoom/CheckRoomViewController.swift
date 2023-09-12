@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class CheckRoomViewController: BaseViewController, BaseViewControllerType {
+class CheckRoomViewController: UIViewController, BaseViewControllerType, Navigationable {
     var roomId: Int?
     var roomInfo: ParticipatedRoomInfoDTO?
     
@@ -71,7 +71,8 @@ class CheckRoomViewController: BaseViewController, BaseViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.baseViewDidLoad()
-        setupViewController()
+        self.setupViewController()
+        self.setupNavigation()
     }
 
     // MARK: - base func

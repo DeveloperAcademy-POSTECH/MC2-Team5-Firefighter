@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class ParticipateRoomViewController: BaseViewController {
+final class ParticipateRoomViewController: UIViewController, Navigationable {
     
     // MARK: - ui component
     
@@ -35,6 +35,7 @@ final class ParticipateRoomViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.configureNavigation()
+        self.setupNavigation()
     }
     
     // MARK: - override

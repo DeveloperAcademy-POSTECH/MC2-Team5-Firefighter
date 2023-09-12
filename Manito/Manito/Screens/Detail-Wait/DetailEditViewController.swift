@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class DetailEditViewController: BaseViewController {
+final class DetailEditViewController: UIViewController {
     
     // MARK: - ui component
     
@@ -28,7 +28,7 @@ final class DetailEditViewController: BaseViewController {
         self.detailEditView = DetailEditView(editMode: editMode)
         self.editMode = editMode
         self.room = room
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)

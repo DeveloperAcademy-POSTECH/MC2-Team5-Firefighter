@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class SettingDeveloperInfoViewController: BaseViewController, BaseViewControllerType {
+final class SettingDeveloperInfoViewController: UIViewController, BaseViewControllerType, Navigationable {
     
     // 개발자 정보 데이터
     private let developerData: [[String: Any]] = [
@@ -106,20 +106,14 @@ final class SettingDeveloperInfoViewController: BaseViewController, BaseViewCont
     override func viewDidLoad() {
         super.viewDidLoad()
         self.baseViewDidLoad()
+        self.setupNavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupLargeTitle()
     }
-
-    // MARK: - override
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        title = TextLiteral.settingDeveloperInfoTitle
-    }
-
+    
     // MARK: - base func
 
     func setupLayout() {
@@ -132,6 +126,7 @@ final class SettingDeveloperInfoViewController: BaseViewController, BaseViewCont
 
     func configureUI() {
         self.view.backgroundColor = .backgroundGrey
+        self.title = TextLiteral.settingDeveloperInfoTitle
     }
 
     // MARK: - func

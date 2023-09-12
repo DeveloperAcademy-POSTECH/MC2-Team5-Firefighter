@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class DetailingViewController: BaseViewController {
+final class DetailingViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
@@ -25,7 +25,7 @@ final class DetailingViewController: BaseViewController {
     
     init(roomId: String) {
         self.roomId = roomId
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -47,6 +47,7 @@ final class DetailingViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.configureNavigationController()
+        self.setupNavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {

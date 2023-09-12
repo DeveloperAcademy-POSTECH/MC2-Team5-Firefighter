@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class CreateRoomViewController: BaseViewController {
+final class CreateRoomViewController: UIViewController, Navigationable {
     
     // MARK: - ui component
     
@@ -25,7 +25,7 @@ final class CreateRoomViewController: BaseViewController {
     
     init(viewModel: CreateRoomViewModel) {
         self.createRoomViewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -48,6 +48,7 @@ final class CreateRoomViewController: BaseViewController {
         self.setupNavigationBarHiddenState()
         self.configureDelegation()
         self.bindViewModel()
+        self.setupNavigation()
     }
     
     // MARK: - override

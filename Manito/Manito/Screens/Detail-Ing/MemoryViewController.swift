@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MemoryViewController: BaseViewController, BaseViewControllerType {
+final class MemoryViewController: UIViewController, BaseViewControllerType, Navigationable {
     
     private enum MemoryType: Int {
         case manittee = 0
@@ -102,7 +102,7 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
     
     init(roomId: String) {
         self.roomId = roomId
-        super.init()
+        super.init(nibName: nil, bundle: nil)
         requestMemory(roomId: roomId)
     }
     
@@ -119,20 +119,9 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.baseViewDidLoad()
+        self.setupNavigation()
     }
-
-    // MARK: - override
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        let shareButton = makeBarButtonItem(with: shareButton)
-
-        navigationItem.rightBarButtonItem = shareButton
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.largeTitleDisplayMode = .automatic
-        title = TextLiteral.memoryViewControllerTitleLabel
-    }
-
+    
     // MARK: - base func
     
     func setupLayout() {
@@ -201,6 +190,16 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
     func configureUI() {
         self.view.backgroundColor = .backgroundGrey
         self.setupAction()
+        self.setupNavigationBar()
+    }
+    
+    private func setupNavigationBar() {
+        let shareButton = makeBarButtonItem(with: shareButton)
+        
+        self.navigationItem.rightBarButtonItem = shareButton
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.largeTitleDisplayMode = .automatic
+        self.title = TextLiteral.memoryViewControllerTitleLabel
     }
 
     // MARK: - func

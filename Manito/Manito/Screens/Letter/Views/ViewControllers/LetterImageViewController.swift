@@ -8,7 +8,7 @@
 import Photos
 import UIKit
 
-final class LetterImageViewController: BaseViewController {
+final class LetterImageViewController: UIViewController, Navigationable {
 
     // MARK: - ui component
 
@@ -22,7 +22,7 @@ final class LetterImageViewController: BaseViewController {
 
     init(imageUrl: String) {
         self.imageUrl = imageUrl
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
@@ -38,6 +38,7 @@ final class LetterImageViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
+        self.setupNavigation()
     }
 
     override func viewDidAppear(_ animated: Bool) {
