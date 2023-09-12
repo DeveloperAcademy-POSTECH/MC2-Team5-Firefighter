@@ -35,15 +35,11 @@ final class ParticipationRoomDetailsViewModel: ViewModelType {
 
     func transform(from input: Input) -> Output {
         let roomInfo = input.viewDidLoad
-            .compactMap { [weak self] _ -> ParticipatedRoomInfo? in
-                return self?.roomInfo
-            }
+            .compactMap { [weak self] in self?.roomInfo }
             .eraseToAnyPublisher()
         
         let yesButtonDidTap = input.yesButtonDidTap
-            .compactMap { [weak self] _ in
-                self?.roomInfo.id
-            }
+            .compactMap { [weak self] in self?.roomInfo.id }
             .eraseToAnyPublisher()
         
         return Output(roomInfo: roomInfo,

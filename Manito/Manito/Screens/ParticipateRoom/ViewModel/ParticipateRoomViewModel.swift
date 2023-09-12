@@ -54,14 +54,14 @@ final class ParticipateRoomViewModel: ViewModelType {
         
         let countTextFieldDidChangedType = input.textFieldDidChanged
             .map { [weak self] text -> Counts in
-                return (text.count, self?.maxCount ?? 0)
+                (text.count, self?.maxCount ?? 0)
             }
         
         let mergeCount = Publishers.Merge(countViewDidLoadType, countTextFieldDidChangedType)
             .eraseToAnyPublisher()
         
         let fixedTitle = input.textFieldDidChanged
-            .map { [weak self] text -> String in
+            .map { [weak self] text in
                 let isOverMaxCount = self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
                 
                 if isOverMaxCount {
@@ -76,9 +76,7 @@ final class ParticipateRoomViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         let isEnabled = input.textFieldDidChanged
-            .map { text -> Bool in
-                return text.count == 6
-            }
+            .map { $0.count == 6 }
             .eraseToAnyPublisher()
         
         input.nextButtonDidTap
