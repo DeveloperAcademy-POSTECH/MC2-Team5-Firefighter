@@ -120,13 +120,13 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func personalInfomationButtonDidTap() {
-        if let url = URL(string: URLLiteral.personalInfomationUrl) {
+        if let url = URL(string: URLLiteral.Setting.personalInformation) {
             UIApplication.shared.open(url, options: [:])
         }
     }
     
     func termsOfServiceButtonDidTap() {
-        if let url = URL(string: URLLiteral.termsOfServiceUrl) {
+        if let url = URL(string: URLLiteral.Setting.termsOfService) {
             UIApplication.shared.open(url, options: [:])
         }
     }
