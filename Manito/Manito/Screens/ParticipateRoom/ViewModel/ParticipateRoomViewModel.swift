@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-final class ParticipateRoomViewModel: ViewModelType {
+final class ParticipateRoomViewModel: BaseViewModelType {
     
     typealias Counts = (textCount: Int, maxCount: Int)
     

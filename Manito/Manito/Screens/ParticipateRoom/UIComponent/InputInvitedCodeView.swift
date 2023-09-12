@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class InputInvitedCodeView: UIView {
+final class InputInvitedCodeView: UIView, BaseViewType {
     
     // MARK: - ui component
     
@@ -46,7 +46,7 @@ final class InputInvitedCodeView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
     }
     
     @available(*, unavailable)
@@ -56,7 +56,7 @@ final class InputInvitedCodeView: UIView {
     
     // MARK: - func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.roomCodeTextField)
         self.roomCodeTextField.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -68,6 +68,10 @@ final class InputInvitedCodeView: UIView {
             $0.top.equalTo(self.roomCodeTextField.snp.bottom).offset(10)
             $0.trailing.equalToSuperview()
         }
+    }
+    
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
     }
     
     func code() -> String {

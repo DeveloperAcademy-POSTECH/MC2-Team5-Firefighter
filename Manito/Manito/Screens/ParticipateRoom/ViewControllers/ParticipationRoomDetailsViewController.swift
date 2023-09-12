@@ -49,12 +49,6 @@ final class ParticipationRoomDetailsViewController: BaseViewController {
         self.bindUI()
     }
     
-    // MARK: - override
-    
-    override func configureUI() {
-        view.backgroundColor = .black.withAlphaComponent(0.7)
-    }
-    
     // MARK: - func
     
     private func bindToViewModel() {

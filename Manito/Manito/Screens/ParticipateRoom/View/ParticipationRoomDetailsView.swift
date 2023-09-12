@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class ParticipationRoomDetailsView: UIView {
+final class ParticipationRoomDetailsView: UIView, BaseViewType {
     
     // MARK: - ui component
     
@@ -73,7 +73,7 @@ final class ParticipationRoomDetailsView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
     }
     
     @available(*, unavailable)
@@ -83,7 +83,7 @@ final class ParticipationRoomDetailsView: UIView {
     
     // MARK: - func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.roomInfoImageView)
         self.roomInfoImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -139,6 +139,10 @@ final class ParticipationRoomDetailsView: UIView {
             $0.bottom.equalTo(self.noButton.snp.top).offset(-15)
             $0.centerX.equalToSuperview()
         }
+    }
+    
+    func configureUI() {
+        self.backgroundColor = .black.withAlphaComponent(0.7)
     }
     
     func updateRoomInfo(roomInfo: ParticipatedRoomInfo) {

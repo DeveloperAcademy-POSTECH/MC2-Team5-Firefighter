@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-final class ParticipationRoomDetailsViewModel: ViewModelType {
+final class ParticipationRoomDetailsViewModel: BaseViewModelType {
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
