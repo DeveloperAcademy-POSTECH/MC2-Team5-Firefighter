@@ -7,14 +7,15 @@
 
 import UIKit
 
-protocol Navigationable {
+protocol Navigationable: UIGestureRecognizerDelegate {
     func setupNavigation()
 }
 
 extension Navigationable where Self: UIViewController {
     func setupNavigation() {
-        self.setupBackButton()
         self.setupNavigationBar()
+        self.setupBackButton()
+        self.setDragPopGesture(self)
     }
     
     private func backButtonItem() -> UIBarButtonItem {
@@ -53,5 +54,15 @@ extension Navigationable where Self: UIViewController {
         navigationBar.standardAppearance = appearance
         navigationBar.compactAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    func setDragPopGesture(_ vc: Navigationable) {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = vc
+    }
+}
+
+extension Navigationable {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
