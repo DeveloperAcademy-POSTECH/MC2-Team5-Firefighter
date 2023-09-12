@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class ChangeNicknameViewController: UIViewController, Navigationable {
+final class ChangeNicknameViewController: UIViewController, Navigationable, Keyboardable {
     
     // MARK: - property
     
@@ -45,6 +45,7 @@ final class ChangeNicknameViewController: UIViewController, Navigationable {
         super.viewDidLoad()
         self.bindViewModel()
         self.setupNavigation()
+        self.setupKeyboardGesture()
     }
     
     // MARK: - override
