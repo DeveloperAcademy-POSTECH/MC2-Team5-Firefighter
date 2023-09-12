@@ -38,14 +38,14 @@ final class ParticipationRoomDetailsView: UIView {
     }()
     private let questionLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.checkRoomViewControllerQuestionLabel
+        label.text = TextLiteral.participationRoomDetailsViewControllerQuestionLabel
         label.font = .font(.regular, ofSize: 18)
         label.makeShadow(color: .black, opacity: 0.25, offset: CGSize(width: 0, height: 3), radius: 0)
         return label
     }()
     private let noButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(TextLiteral.checkRoomViewControllerNoButtonLabel, for: .normal)
+        button.setTitle(TextLiteral.participationRoomDetailsViewControllerNoButtonLabel, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 35)
         button.backgroundColor = .yellow
@@ -55,7 +55,7 @@ final class ParticipationRoomDetailsView: UIView {
     }()
     private let yesButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(TextLiteral.checkRoomViewControllerYesBUttonLabel, for: .normal)
+        button.setTitle(TextLiteral.participationRoomDetailsViewControllerYesBUttonLabel, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 35)
         button.backgroundColor = .yellow
