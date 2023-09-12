@@ -123,7 +123,7 @@
 		B5E1F2AE285B2917006D880B /* Int+RandomNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+RandomNumber.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */; };
 		B5EDF4A32AB056B50086230C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5EDF4A52AB056B50086230C /* Localizable.strings */; };
-		B5EDF4A82AB05D5A0086230C /* LocalizableScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EDF4A72AB05D5A0086230C /* LocalizableScript.swift */; };
+		B5EDF4AE2AB078180086230C /* LocalizationScript.py in Resources */ = {isa = PBXBuildFile; fileRef = B5EDF4AD2AB078180086230C /* LocalizationScript.py */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
 		B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */; };
 		B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */; };
@@ -334,7 +334,7 @@
 		B5E1F2AD285B2917006D880B /* Int+RandomNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+RandomNumber.swift"; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewController.swift; sourceTree = "<group>"; };
 		B5EDF4A42AB056B50086230C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B5EDF4A72AB05D5A0086230C /* LocalizableScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableScript.swift; sourceTree = "<group>"; };
+		B5EDF4AD2AB078180086230C /* LocalizationScript.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = LocalizationScript.py; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LetterViewController+MailCompose.swift"; sourceTree = "<group>"; };
@@ -1088,7 +1088,7 @@
 		B5EDF4A62AB05D1F0086230C /* Script */ = {
 			isa = PBXGroup;
 			children = (
-				B5EDF4A72AB05D5A0086230C /* LocalizableScript.swift */,
+				B5EDF4AD2AB078180086230C /* LocalizationScript.py */,
 			);
 			path = Script;
 			sourceTree = "<group>";
@@ -1522,6 +1522,7 @@
 				B5F524C928519AA000614FF7 /* Resources */,
 				B53AD41E2A8C892800B83B33 /* GoogleService-Info.plist */,
 				B5B6E4C62A962B2D0082FC7B /* Embed Frameworks */,
+				B5EDF4AA2AB069CE0086230C /* GoogleSheet-Localization */,
 			);
 			buildRules = (
 			);
@@ -1597,6 +1598,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5EDF4AE2AB078180086230C /* LocalizationScript.py in Resources */,
 				CB2F0FCB28A5468C005F04C8 /* gifMa.gif in Resources */,
 				CB2F0FCD28A5468C005F04C8 /* gifNi.gif in Resources */,
 				B50B1B3C285AD2B20080992C /* logo.gif in Resources */,
@@ -1636,6 +1638,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\ncase \"${CONFIGURATION}\" in\n  \"Dev\" )\ncp -r \"$SRCROOT/Configuration/Dev/GoogleService-Info-Dev.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n  \"Prod\" )\ncp -r \"$SRCROOT/Configuration/Prod/GoogleService-Info-Prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n*)\n;;\nesac\n";
+		};
+		B5EDF4AA2AB069CE0086230C /* GoogleSheet-Localization */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "GoogleSheet-Localization";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\npython3 $TARGET_NAME/Util/Script/LocalizationScript.py $TARGET_NAME\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1726,7 +1746,6 @@
 				39BDDCC42A52BB4A005E0A71 /* DetailWaitService.swift in Sources */,
 				B5A086022A974B8100C8A98D /* RoomListItem.swift in Sources */,
 				B53A35CC2A96F99D00B720BC /* SettingRepository.swift in Sources */,
-				B5EDF4A82AB05D5A0086230C /* LocalizableScript.swift in Sources */,
 				B50CEEC02A6FF82600CF1C76 /* Publisher+Async.swift in Sources */,
 				B53A35C02A96F21A00B720BC /* MainRepository.swift in Sources */,
 				D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */,
