@@ -108,7 +108,7 @@ final class ParticipationRoomDetails: UIView {
         self.roomInfoImageView.addSubview(self.peopleImageView)
         self.peopleImageView.snp.makeConstraints {
             $0.top.equalTo(self.dateLabel.snp.bottom).offset(7)
-            $0.height.equalTo(60)
+            $0.width.height.equalTo(60)
             $0.trailing.equalTo(self.snp.centerX).offset(-10)
         }
         
