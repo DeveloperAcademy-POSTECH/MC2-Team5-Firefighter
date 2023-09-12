@@ -85,7 +85,7 @@ final class SettingView: UIView, BaseViewType {
         self.tableView.snp.makeConstraints {
             $0.top.equalTo(self.imageRow.snp.bottom)
             $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.width.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(50)
         }
         

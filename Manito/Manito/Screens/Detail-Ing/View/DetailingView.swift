@@ -240,7 +240,7 @@ final class DetailingView: UIView, BaseViewType {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(100)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.periodLabel)
@@ -260,7 +260,7 @@ final class DetailingView: UIView, BaseViewType {
         self.addSubview(self.missionBackgroundView)
         self.missionBackgroundView.snp.makeConstraints {
             $0.top.equalTo(self.periodLabel.snp.bottom).offset(31)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(100)
         }
         
@@ -280,13 +280,13 @@ final class DetailingView: UIView, BaseViewType {
         self.addSubview(self.informationTitleLabel)
         self.informationTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.missionBackgroundView.snp.bottom).offset(44)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.manitteeBackView)
         self.manitteeBackView.snp.makeConstraints {
             $0.top.equalTo(self.informationTitleLabel.snp.bottom).offset(31)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.trailing.equalTo(self.snp.centerX).offset(-14)
             $0.height.equalTo((UIScreen.main.bounds.width - 28 - 40) / 2)
         }
@@ -321,7 +321,7 @@ final class DetailingView: UIView, BaseViewType {
         self.listBackView.snp.makeConstraints {
             $0.top.equalTo(self.informationTitleLabel.snp.bottom).offset(31)
             $0.leading.equalTo(self.snp.centerX).offset(14)
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo((UIScreen.main.bounds.width - 28 - 40) / 2)
         }
         
@@ -348,20 +348,20 @@ final class DetailingView: UIView, BaseViewType {
         self.addSubview(self.letterBoxButton)
         self.letterBoxButton.snp.makeConstraints {
             $0.top.equalTo(self.manitteeBackView.snp.bottom).offset(25)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(80)
         }
         
         self.addSubview(self.manittoMemoryButton)
         self.manittoMemoryButton.snp.makeConstraints {
             $0.top.equalTo(self.letterBoxButton.snp.bottom).offset(18)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(80)
         }
         
         self.addSubview(self.manittoOpenButtonShadowView)
         self.manittoOpenButtonShadowView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(50)
             $0.height.equalTo(60)
         }

@@ -59,7 +59,7 @@ final class LetterHeaderView: UICollectionReusableView {
         self.addSubview(self.segmentedControl)
         self.segmentedControl.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(13)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(40)
         }
     }

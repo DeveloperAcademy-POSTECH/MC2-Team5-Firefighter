@@ -105,13 +105,13 @@ final class InputCapacityView: UIView {
         
         self.addSubview(self.minLabel)
         self.minLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.top.equalTo(self.personBackView.snp.bottom).offset(49)
         }
         
         self.addSubview(self.maxLabel)
         self.maxLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.top.equalTo(self.minLabel.snp.top)
         }
         

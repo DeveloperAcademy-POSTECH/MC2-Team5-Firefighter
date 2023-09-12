@@ -108,14 +108,14 @@ final class DetailWaitView: UIView, BaseViewType {
     func setupLayout() {
         self.addSubview(self.titleView)
         self.titleView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.top.equalToSuperview().offset(100)
             $0.height.equalTo(86)
         }
         
         self.addSubview(self.togetherFriendLabel)
         self.togetherFriendLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
         
@@ -134,21 +134,21 @@ final class DetailWaitView: UIView, BaseViewType {
         
         self.addSubview(self.copyButton)
         self.copyButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.centerY.equalTo(self.togetherFriendLabel.snp.centerY)
         }
         
         self.addSubview(self.listTableView)
         self.listTableView.snp.makeConstraints {
             $0.top.equalTo(self.togetherFriendLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(44)
         }
         
         self.addSubview(self.startButton)
         self.startButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(65)
             $0.height.equalTo(60)
         }

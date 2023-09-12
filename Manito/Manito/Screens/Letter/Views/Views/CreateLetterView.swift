@@ -109,20 +109,20 @@ final class CreateLetterView: UIView, BaseViewType {
         self.scrollContentView.addSubview(self.missionView)
         self.missionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(25)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(100)
         }
 
         self.scrollContentView.addSubview(self.letterTextView)
         self.letterTextView.snp.makeConstraints {
             $0.top.equalTo(self.missionView.snp.bottom).offset(32)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
 
         self.scrollContentView.addSubview(self.letterPhotoView)
         self.letterPhotoView.snp.makeConstraints {
             $0.top.equalTo(self.letterTextView.snp.bottom).offset(22)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(105)
         }
     }

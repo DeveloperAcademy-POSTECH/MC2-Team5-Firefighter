@@ -117,7 +117,7 @@ final class GuideView: UIView {
             view.addSubview(self.guideBoxImageView)
             self.guideBoxImageView.snp.makeConstraints {
                 $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(35)
-                $0.trailing.equalTo(view.snp.trailing).inset(Size.leadingTrailingPadding + 8)
+                $0.trailing.equalTo(view.snp.trailing).inset(SizeLiteral.leadingTrailingPadding + 8)
                 $0.width.equalTo(270)
                 $0.height.equalTo(90)
             }

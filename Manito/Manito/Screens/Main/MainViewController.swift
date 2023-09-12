@@ -145,7 +145,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
         self.view.addSubview(self.commonMissionView)
         self.commonMissionView.snp.makeConstraints {
             $0.top.equalTo(self.imgStar.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(InternalSize.commonMissionViewHeight)
         }
 

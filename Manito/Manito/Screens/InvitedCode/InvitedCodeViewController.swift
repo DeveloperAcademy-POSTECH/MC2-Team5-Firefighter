@@ -114,14 +114,14 @@ class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
         view.addSubview(invitedImageView)
         invitedImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(142)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(463)
         }
         
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(16)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(SizeLiteral.leadingTrailingPadding)
             $0.height.width.equalTo(44)
         }
         

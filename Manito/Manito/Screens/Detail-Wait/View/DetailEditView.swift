@@ -162,13 +162,13 @@ final class DetailEditView: UIView, BaseViewType {
         self.addSubview(self.manittoPeriodTitleLabel)
         self.manittoPeriodTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.cancelButton.snp.bottom).offset(51)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.calendarView)
         self.calendarView.snp.makeConstraints {
             $0.top.equalTo(self.manittoPeriodTitleLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(400)
         }
         
@@ -196,7 +196,7 @@ final class DetailEditView: UIView, BaseViewType {
         self.addSubview(self.numberOfParticipantsTitleLabel)
         self.numberOfParticipantsTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.calendarView.snp.bottom).offset(60)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.minimumNumberOfParticipantsLabel)

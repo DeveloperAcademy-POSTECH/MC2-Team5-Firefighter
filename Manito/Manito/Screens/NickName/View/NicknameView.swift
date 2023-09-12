@@ -79,20 +79,20 @@ final class NicknameView: UIView, BaseViewType {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
-            $0.leading.equalTo(self.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
+            $0.leading.equalTo(self.safeAreaLayoutGuide).inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.nicknameTextField)
         self.nicknameTextField.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(60)
         }
         
         self.addSubview(self.textLimitLabel)
         self.textLimitLabel.snp.makeConstraints {
             $0.top.equalTo(self.nicknameTextField.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.doneButton)

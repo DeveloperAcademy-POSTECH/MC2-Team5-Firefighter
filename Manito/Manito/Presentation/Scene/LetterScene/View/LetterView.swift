@@ -19,9 +19,9 @@ final class LetterView: UIView, BaseViewType {
         static let headerContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets.zero
         static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
             top: 18.0,
-            leading: Size.leadingTrailingPadding,
+            leading: SizeLiteral.leadingTrailingPadding,
             bottom: 18.0,
-            trailing: Size.leadingTrailingPadding
+            trailing: SizeLiteral.leadingTrailingPadding
         )
         static let stackMargins: UIEdgeInsets = UIEdgeInsets(
             top: 0,
