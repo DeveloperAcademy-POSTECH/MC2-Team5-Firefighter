@@ -46,6 +46,7 @@ final class ParticipationRoomDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bindToViewModel()
+        self.bindUI()
     }
     
     // MARK: - override
@@ -75,13 +76,6 @@ final class ParticipationRoomDetailsViewController: BaseViewController {
             })
             .store(in: &self.cancellable)
         
-        self.checkRoomView.noButtonDidTapPublisher
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] _ in
-                self?.dismiss(animated: true)
-            })
-            .store(in: &self.cancellable)
-        
         output.yesButtonDidTap
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomId in
@@ -89,6 +83,15 @@ final class ParticipationRoomDetailsViewController: BaseViewController {
                 self?.dismiss(animated: true, completion: {
                     presentingViewController.pushViewController(ChooseCharacterViewController(roomId: roomId), animated: true)
                 })
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    private func bindUI() {
+        self.checkRoomView.noButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.dismiss(animated: true)
             })
             .store(in: &self.cancellable)
     }
