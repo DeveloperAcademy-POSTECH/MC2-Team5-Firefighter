@@ -27,6 +27,7 @@
 		395B5BC22A25E20000CE1420 /* DetailWaitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */; };
 		395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */; };
 		397A241028BA494100454E4F /* APIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F0287D984900A04A2B /* APIEnvironment.swift */; };
+		39833CFE2AB09A6C009D173A /* Keyboardable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39833CFD2AB09A6C009D173A /* Keyboardable.swift */; };
 		398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */; };
 		398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CC92A13597600DEFCEC /* FSCalendar */; };
 		398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CCB2A13599D00DEFCEC /* FirebaseAuth */; };
@@ -237,6 +238,7 @@
 		395402D32AAF0BC5003F3012 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModel.swift; sourceTree = "<group>"; };
 		395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModelTest.swift; sourceTree = "<group>"; };
+		39833CFD2AB09A6C009D173A /* Keyboardable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboardable.swift; sourceTree = "<group>"; };
 		398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
 		398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
@@ -978,6 +980,7 @@
 				B5C7FBEC2AA7607300862021 /* BaseViewType.swift */,
 				B5C7FBF42AA859E300862021 /* BaseViewControllerType.swift */,
 				395402D12AAF0B4F003F3012 /* Navigationable.swift */,
+				39833CFD2AB09A6C009D173A /* Keyboardable.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1748,6 +1751,7 @@
 				B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
 				D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */,
+				39833CFE2AB09A6C009D173A /* Keyboardable.swift in Sources */,
 				D71939532AA1C84900A73D6C /* SettingService.swift in Sources */,
 				B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */,
 				B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */,

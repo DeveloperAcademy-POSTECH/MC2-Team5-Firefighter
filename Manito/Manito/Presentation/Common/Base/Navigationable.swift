@@ -16,7 +16,7 @@ extension Navigationable where Self: UIViewController {
         self.setupNavigationBar()
         self.setupBackButton()
         self.setDragPopGesture(self)
-        self.hidekeyboardWhenTappedAround()
+//        self.hidekeyboardWhenTappedAround()
     }
     
     private func backButtonItem() -> UIBarButtonItem {
