@@ -56,7 +56,7 @@ extension Navigationable where Self: UIViewController {
         navigationBar.scrollEdgeAppearance = appearance
     }
     
-    func setDragPopGesture(_ vc: Navigationable) {
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = vc
+    func setDragPopGesture(_ viewController: Navigationable) {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = viewController
     }
 }
