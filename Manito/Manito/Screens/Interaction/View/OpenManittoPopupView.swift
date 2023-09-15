@@ -106,7 +106,7 @@ final class OpenManittoPopupView: UIView {
     }
 
     func setupTypingAnimation(user: String, manitto: String) {
-        self.typingLabel.setTyping(text: "\(user)의 마니또는\n\(manitto)입니다.")
+        self.typingLabel.setTyping(text: TextLiteral.openManittoPopUpContent(user, manitto))
         self.typingLabel.addLabelSpacing()
     }
 }

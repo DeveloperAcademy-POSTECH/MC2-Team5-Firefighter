@@ -126,6 +126,6 @@ class CheckRoomViewController: BaseViewController, BaseViewControllerType {
               let capacity = roomInfo?.capacity else { return }
         roomInfoView.roomLabel.text = title
         roomInfoView.dateLabel.text = "\(startDate) ~ \(endDate)"
-        roomInfoView.peopleInfoView.peopleLabel.text = "X \(capacity)인"
+        roomInfoView.peopleInfoView.peopleLabel.text = TextLiteral.person(capacity)
     }
 }

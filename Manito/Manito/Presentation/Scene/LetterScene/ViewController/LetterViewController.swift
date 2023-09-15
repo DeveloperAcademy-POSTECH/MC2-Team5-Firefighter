@@ -137,7 +137,7 @@ final class LetterViewController: BaseViewController {
                 if let content {
                     self?.reportSubject.send(content)
                 } else {
-                    self?.reportSubject.send("쪽지 내용 없음")
+                    self?.reportSubject.send(TextLiteral.letterEmailEmptyContent)
                 }
             })
             .store(in: &self.cancelBag)

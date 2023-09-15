@@ -116,7 +116,7 @@ final class DetailingView: UIView, BaseViewType {
     private let manitteeIconView = UIImageView(image: ImageLiterals.icManiTti)
     private let manitteeLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(UserDefaultStorage.nickname)의 마니띠"
+        label.text = TextLiteral.detailManitteeTitle(UserDefaultStorage.nickname)
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
         return label

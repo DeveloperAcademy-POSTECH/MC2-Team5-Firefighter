@@ -208,7 +208,8 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
     private func setupAction() {
         let action = UIAction { [weak self] _ in
             guard let self = self else { return }
-            
+
+            // FIXME: - URLLiteral로 이동 시키기
             if let storyShareURL = URL(string: "instagram-stories://share") {
                 if UIApplication.shared.canOpenURL(storyShareURL) {
                     let renderer = UIGraphicsImageRenderer(size: self.shareBoundView.bounds.size)

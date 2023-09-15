@@ -12,24 +12,11 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
             let composeViewController = MFMailComposeViewController()
-            let aenittoEmail = "aenitto@gmail.com"
-            let messageBody = """
-                              
-                              -----------------------------
-                              
-                              - 문의하는 닉네임: \(String(describing: UserDefaultStorage.nickname))
-                              - 문의 메시지 제목 한줄 요약:
-                              - 문의 날짜: \(Date())
-                              
-                              ------------------------------
-                              
-                              문의 내용을 작성해주세요.
-                              
-                              """
-            
+            let aenittoEmail = TextLiteral.mailAenittoEmail
+            let messageBody = TextLiteral.mailHelperMessage.localized(UserDefaultStorage.nickname, Date())
             composeViewController.mailComposeDelegate = self
             composeViewController.setToRecipients([aenittoEmail])
-            composeViewController.setSubject("[문의 사항]")
+            composeViewController.setSubject(TextLiteral.MailHelperTitle)
             composeViewController.setMessageBody(messageBody, isHTML: false)
             
             self.present(composeViewController, animated: true, completion: nil)
@@ -40,8 +27,8 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     }
     
     private func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default)
+        let sendMailErrorAlert = UIAlertController(title: TextLiteral.mailErrorTitle, message: TextLiteral.mailErrorMessage, preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: TextLiteral.commonConfirm, style: .default)
         sendMailErrorAlert.addAction(confirmAction)
         self.present(sendMailErrorAlert, animated: true, completion: nil)
     }

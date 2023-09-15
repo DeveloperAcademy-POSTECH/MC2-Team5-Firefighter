@@ -93,6 +93,7 @@ final class DetailWaitViewController: BaseViewController {
                 switch result {
                 case .finished: return
                 case .failure(_):
+                    // FIXME: - 에러 관련 부분 수정 필요
                     self?.makeAlert(title: "에러 발생")
                 }
             }, receiveValue: { [weak self] room in
@@ -113,6 +114,7 @@ final class DetailWaitViewController: BaseViewController {
                 switch result {
                 case .finished: return
                 case .failure(_):
+                    // FIXME: - 에러 관련 부분 수정 필요
                     self?.makeAlert(title: "에러 발생")
                 }
             }, receiveValue: { [weak self] nickname in
@@ -134,6 +136,7 @@ final class DetailWaitViewController: BaseViewController {
                 switch result {
                 case .finished: return
                 case .failure(_):
+                    // FIXME: - 에러 관련 부분 수정 필요
                     self?.makeAlert(title: "오류 발생")
                 }
             }, receiveValue: { [weak self] _ in
@@ -147,6 +150,7 @@ final class DetailWaitViewController: BaseViewController {
                 switch result {
                 case .finished: return
                 case .failure(_):
+                    // FIXME: - 에러 관련 부분 수정 필요
                     self?.makeAlert(title: "오류 발생")
                 }
             }, receiveValue: { [weak self] _ in
@@ -260,7 +264,7 @@ final class DetailWaitViewController: BaseViewController {
 extension DetailWaitViewController: DetailWaitViewControllerDelegate {
     func didTappedChangeButton() {
         self.changeButtonSubject.send()
-        ToastView.showToast(message: "방 정보 수정 완료",
+        ToastView.showToast(message: TextLiteral.detailWaitToastEditMessage,
                             controller: self)
     }
 }
