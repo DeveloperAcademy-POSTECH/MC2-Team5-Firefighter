@@ -94,14 +94,14 @@ final class LetterViewController: UIViewController, Navigationable {
 
         output.messages
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] completion in
-                switch completion {
-                case .failure(_):
-                    self?.showErrorAlert()
-                case .finished: return
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let items):
+                    self?.handleMessageList(items)
+                case .failure(let error):
+                    self?.showErrorAlert(error.localizedDescription)
+                    self?.handleMessageList([])
                 }
-            }, receiveValue: { [weak self] items in
-                self?.handleMessageList(items)
             })
             .store(in: &self.cancelBag)
 
@@ -124,7 +124,7 @@ final class LetterViewController: UIViewController, Navigationable {
             })
             .store(in: &self.cancelBag)
 
-        Publishers.CombineLatest(output.roomState, output.index)
+        Publishers.CombineLatest(output.roomStatus, output.index)
             .map { (state: $0, index: $1) }
             .sink(receiveValue: { [weak self] result in
                 self?.updateLetterViewBottomArea(with: result.state, result.index)
@@ -172,17 +172,12 @@ final class LetterViewController: UIViewController, Navigationable {
 
 // MARK: - Helper
 extension LetterViewController {
-    private func showErrorAlert() {
+    private func showErrorAlert(_ message: String) {
         self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
-                       message: TextLiteral.letterViewControllerErrorDescription)
+                       message: message)
     }
 
-    private func handleMessageList(_ messages: [MessageListItem]?) {
-        guard let messages else {
-            self.showErrorAlert()
-            return
-        }
-
+    private func handleMessageList(_ messages: [MessageListItem]) {
         self.reloadMessageList(messages)
         self.letterView.updateEmptyAreaStatus(to: !messages.isEmpty)
     }
@@ -196,9 +191,9 @@ extension LetterViewController {
         }
     }
 
-    private func updateLetterViewBottomArea(with state: LetterViewModel.RoomState, _ index: Int) {
+    private func updateLetterViewBottomArea(with state: RoomStatus, _ index: Int) {
         switch (state, index) {
-        case (.processing, 0):
+        case (.PROCESSING, 0):
             self.letterView.showBottomArea()
         default:
             self.letterView.hideBottomArea()

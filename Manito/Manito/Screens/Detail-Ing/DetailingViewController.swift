@@ -155,7 +155,7 @@ final class DetailingViewController: UIViewController, Navigationable {
                                                 roomId: self.roomId,
                                                 mission: mission,
                                                 missionId: missionId.description,
-                                                roomState: self.detailingView.roomType.rawValue,
+                                                roomStatus: self.detailingView.roomType,
                                                 messageType: .received)
                 let letterViewController = LetterViewController(viewModel: viewModel)
                 self.navigationController?.pushViewController(letterViewController, animated: true)
@@ -247,7 +247,7 @@ extension DetailingViewController: DetailingDelegate {
                                         roomId: self.roomId,
                                         mission: mission,
                                         missionId: missionId.description,
-                                        roomState: self.detailingView.roomType.rawValue,
+                                        roomStatus: self.detailingView.roomType,
                                         messageType: .sent)
         let letterViewController = LetterViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(letterViewController, animated: true)

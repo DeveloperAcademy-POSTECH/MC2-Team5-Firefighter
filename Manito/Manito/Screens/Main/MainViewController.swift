@@ -242,7 +242,9 @@ final class MainViewController: UIViewController, BaseViewControllerType {
         let enterRoom = UIAlertAction(title: TextLiteral.enterRoom,
                                       style: .default,
                                       handler: { [weak self] _ in
-            let viewController = ParticipateRoomViewController()
+            let service = ParticipateRoomService(repository: RoomParticipationRepositoryImpl())
+            let viewModel = ParticipateRoomViewModel(participateRoomService: service)
+            let viewController = ParticipateRoomViewController(viewModel: viewModel)
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
@@ -255,17 +257,6 @@ final class MainViewController: UIViewController, BaseViewControllerType {
         alert.addAction(enterRoom)
         alert.addAction(cancel)
         self.present(alert, animated: true)
-    }
-
-    private func presentParticipateRoomViewController() {
-        let storyboard = UIStoryboard(name: "ParticipateRoom", bundle: nil)
-        let participateRoomViewController = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
-
-        participateRoomViewController.modalPresentationStyle = .fullScreen
-        participateRoomViewController.modalTransitionStyle = .crossDissolve
-        DispatchQueue.main.async {
-            self.present(participateRoomViewController, animated: true)
-        }
     }
 
     // FIXME: - roomIndex가 현재 item으로 설정되어 있고, index가 roomIndex로 설정되어있음. KTBQ2B

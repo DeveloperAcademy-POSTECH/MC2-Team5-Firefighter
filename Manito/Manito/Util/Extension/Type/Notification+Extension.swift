@@ -8,6 +8,5 @@
 import Foundation
 
 extension Notification.Name {
-    static let nextNotification = Notification.Name("NextNotification")
     static let createRoomInvitedCode = Notification.Name("CreateRoomInvitedCode")
 }
