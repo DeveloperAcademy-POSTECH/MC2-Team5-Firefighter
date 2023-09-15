@@ -103,6 +103,7 @@ final class MainViewController: UIViewController, BaseViewControllerType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.delegateInteractivePopGesture()
         self.requestCommonMission()
         self.requestManittoRoomList()
     }
@@ -298,6 +299,10 @@ final class MainViewController: UIViewController, BaseViewControllerType {
                        message: TextLiteral.mainViewControllerShowIdErrorAlertMessage)
     }
     
+    private func delegateInteractivePopGesture() {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
     // MARK: - network
     
     private func requestCommonMission() {
@@ -408,5 +413,11 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
                 self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1)
             }
         }
+    }
+}
+
+extension MainViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
 }
