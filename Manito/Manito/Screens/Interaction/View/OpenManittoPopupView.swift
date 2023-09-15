@@ -101,6 +101,22 @@ final class OpenManittoPopupView: UIView {
         self.confirmButton.addAction(confirmAction, for: .touchUpInside)
     }
 
+    private func animateTyping(in label: UILabel, text: String, delay: TimeInterval = 5.0) {
+        label.text = ""
+
+        let writingTask = DispatchWorkItem {
+            text.forEach { char in
+                DispatchQueue.main.async {
+                    label.text?.append(char)
+                }
+                Thread.sleep(forTimeInterval: delay/100)
+            }
+        }
+
+        let queue: DispatchQueue = .init(label: "typespeed", qos: .userInteractive)
+        queue.asyncAfter(deadline: .now() + 0.7, execute: writingTask)
+    }
+
     func configureDelegation(_ delegate: OpenManittoViewDelegate) {
         self.delegate = delegate
     }

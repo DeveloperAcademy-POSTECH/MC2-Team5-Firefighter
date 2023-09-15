@@ -25,7 +25,7 @@ extension RoomInfo {
     }
 
     var canStart: Bool {
-        if let date = roomInformation.startDate.stringToDate {
+        if let date = roomInformation.startDate.toDefaultDate {
             let isMinimumUserCount = participants.count >= 4
             return isMinimumUserCount && date.isToday && admin
         } else {
