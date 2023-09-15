@@ -240,13 +240,13 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
         case .manittee:
             guard let manitteeColorIndex = memory?.memoriesWithManittee?.member?.colorIndex else { return }
             nicknameLabel.text = memory?.memoriesWithManittee?.member?.nickname
-            characterBackView.backgroundColor = Character.allCases[manitteeColorIndex].color
-            characterImageView.image = Character.allCases[manitteeColorIndex].image
+            characterBackView.backgroundColor = DefaultCharacterType.allCases[manitteeColorIndex].backgroundColor
+            characterImageView.image = DefaultCharacterType.allCases[manitteeColorIndex].image
         case .manitto:
             guard let manittoColorIndex = memory?.memoriesWithManitto?.member?.colorIndex else { return }
             nicknameLabel.text = memory?.memoriesWithManitto?.member?.nickname
-            characterBackView.backgroundColor = Character.allCases[manittoColorIndex].color
-            characterImageView.image = Character.allCases[manittoColorIndex].image
+            characterBackView.backgroundColor = DefaultCharacterType.allCases[manittoColorIndex].backgroundColor
+            characterImageView.image = DefaultCharacterType.allCases[manittoColorIndex].image
         }
     }
     

@@ -110,7 +110,7 @@ final class ChooseCharacterView: UIView, BaseViewType {
             self?.delegate?.closeButtonDidTap()
         }
         let didTapJoinButton = UIAction { [weak self] _ in
-            self?.delegate?.joinButtonDidTap(characterIndex: self?.manittoCollectionView.characterIndex ?? 0)
+            self?.delegate?.joinButtonDidTap(characterIndex: self?.manittoCollectionView.characterIndexTapPublisher.value ?? 0)
         }
         
         self.backButton.addAction(didTapBackButton, for: .touchUpInside)
