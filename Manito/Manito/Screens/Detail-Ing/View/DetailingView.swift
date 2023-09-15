@@ -423,7 +423,9 @@ final class DetailingView: UIView, BaseViewType {
         self.missionId = room.mission?.id.description ?? ""
         DispatchQueue.main.async {
             self.titleLabel.text = room.roomInformation.title
-            self.periodLabel.text = "\(room.roomInformation.startDate.subStringToDate()) ~ \(room.roomInformation.endDate.subStringToDate())"
+            // FIXME: - subStringToDate() 메서드를 지우면서 임시적으로 처리해뒀습니다.
+            // !!!: - roomListItem에서는 Date로 가지고 있다가 화면으로 나올 때는 String 처리가 되어서 나온다던지 하는 가공 코드 필요해보입니다.
+            self.periodLabel.text = "\(room.roomInformation.startDate.toDefaultDate?.toDefaultString ?? "") ~ \(room.roomInformation.endDate.toDefaultDate?.toDefaultString ?? "")"
             self.manitteeAnimationLabel.text = room.manittee.nickname
             self.setupBadge(count: room.messages?.count ?? 0)
             self.updateMissionEditButton(room.admin, status: self.roomType)
@@ -496,8 +498,8 @@ final class DetailingView: UIView, BaseViewType {
     }
     
     private func setupManittoOpenButton(date: String) {
-        guard let endDate = date.stringToDateYYYY() else { return }
-        self.manittoOpenButtonShadowView.isHidden = !(endDate.isOpenManitto)
+        guard let endDate = date.toFullDate else { return }
+        self.manittoOpenButtonShadowView.isHidden = !(endDate.canOpenManitto)
     }
     
     private func toggledManitteeAnimation(_ value: Bool) {
@@ -537,5 +539,19 @@ final class DetailingView: UIView, BaseViewType {
                 }
             }
         }
+    }
+}
+
+private extension Date {
+    var isPastOpeningTime: Bool {
+        let now = Date()
+        let nineHoursTimeInterval: TimeInterval = 32400
+        let dateAddNineHours = self + nineHoursTimeInterval
+        let distance = dateAddNineHours.distance(to: now)
+        return distance > 0 && distance < 54000
+    }
+
+    var canOpenManitto: Bool {
+        return self.isToday && self.isPastOpeningTime
     }
 }
