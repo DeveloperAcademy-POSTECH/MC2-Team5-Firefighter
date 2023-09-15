@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIView {
-    
+    // FIXME: - CalendarView, CreateLetterPhotoView 내부에서 삭제한 후 제거 예정
     var viewController: UIViewController? {
         if let nextResponder = self.next as? UIViewController {
             return nextResponder
@@ -37,22 +37,5 @@ extension UIView {
         layer.borderWidth = 1
         layer.borderColor = color.cgColor
         return self
-    }
-    
-    func fadeIn(duration: TimeInterval = 0.4,
-                delay: TimeInterval = 0.0,
-                completion: @escaping ((Bool) -> ()) = { (_: Bool) -> () in }) {
-        UIView.animate(withDuration: duration,
-                       delay: delay,
-                       options: .curveEaseIn,
-                       animations: {
-                        self.alpha = 1.0
-                       }, completion: completion)
-    }
-    
-    func fadeOut(duration: TimeInterval = 0.3) {
-        UIView.animate(withDuration: duration) {
-            self.alpha = 0.0
-        }
     }
 }

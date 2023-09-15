@@ -30,7 +30,7 @@ struct MessageListItem: Hashable {
 
     /// 쪽지 생성 날짜와 오늘 날짜가 동일한지
     var isToday: Bool {
-        return Date().letterDateToString == createdDate
+        return Date().toFullString == createdDate
     }
     /// 쪽지에 해당하는 개별 미션 반환(없으면 날짜 반환)
     var mission: String {

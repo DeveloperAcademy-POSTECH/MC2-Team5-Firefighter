@@ -5,14 +5,13 @@
 //  Created by 이성호 on 2023/05/11.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 
 protocol ParticipateRoomViewDelegate: AnyObject {
     func closeButtonDidTap()
-    func nextButtonDidTap(code: String)
-    func observeNextNotification(roomId: Int)
 }
 
 final class ParticipateRoomView: UIView, BaseViewType {
@@ -36,10 +35,11 @@ final class ParticipateRoomView: UIView, BaseViewType {
         button.isDisabled = true
         return button
     }()
-    private let inputInvitedCodeView: InputInvitedCodeView = InputInvitedCodeView()
+    let inputInvitedCodeView: InputInvitedCodeView = InputInvitedCodeView()
     
     // MARK: - property
     
+    let nextButtonTapPublisher = PassthroughSubject<String, Never>()
     private weak var delegate: ParticipateRoomViewDelegate?
     
     // MARK: - init
@@ -49,7 +49,6 @@ final class ParticipateRoomView: UIView, BaseViewType {
         self.baseInit()
         self.setupButtonAction()
         self.setupNotificationCenter()
-        self.detectNextButtonStatus()
     }
     
     @available(*, unavailable)
@@ -95,8 +94,8 @@ final class ParticipateRoomView: UIView, BaseViewType {
         }
         
         let didTapNextButton = UIAction { [weak self] _ in
-            guard let code = self?.inputInvitedCodeView.roomCodeTextField.text else { return }
-            self?.delegate?.nextButtonDidTap(code: code)
+            guard let code = self?.inputInvitedCodeView.code() else { return }
+            self?.nextButtonTapPublisher.send(code)
         }
         
         self.closeButton.addAction(didTapCloseButton, for: .touchUpInside)
@@ -104,15 +103,8 @@ final class ParticipateRoomView: UIView, BaseViewType {
     }
     
     private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveNextNotification(_:)), name: .nextNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    private func detectNextButtonStatus() {
-        self.inputInvitedCodeView.changeNextButtonEnableStatus = { [weak self] isEnable in
-            self?.nextButton.isDisabled = !isEnable
-        }
     }
     
     func configureDelegate(_ delegate: ParticipateRoomViewDelegate) {
@@ -133,6 +125,10 @@ final class ParticipateRoomView: UIView, BaseViewType {
         }
     }
     
+    func toggleDoneButton(isEnabled: Bool) {
+        self.nextButton.isDisabled = !isEnabled
+    }
+    
     // MARK: - selector
     
     @objc
@@ -149,11 +145,5 @@ final class ParticipateRoomView: UIView, BaseViewType {
         UIView.animate(withDuration: 0.2, animations: {
             self.nextButton.transform = .identity
         })
-    }
-    
-    @objc
-    private func didReceiveNextNotification(_ notification: Notification) {
-        guard let id = notification.userInfo?["roomId"] as? Int else { return }
-        self.delegate?.observeNextNotification(roomId: id)
     }
 }
