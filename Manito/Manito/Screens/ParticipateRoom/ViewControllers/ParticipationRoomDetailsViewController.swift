@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class ParticipationRoomDetailsViewController: BaseViewController {
+final class ParticipationRoomDetailsViewController: UIViewController {
     
     // MARK: - ui component
     
@@ -25,7 +25,7 @@ final class ParticipationRoomDetailsViewController: BaseViewController {
     
     init(viewModel: ParticipationRoomDetailsViewModel) {
         self.viewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
