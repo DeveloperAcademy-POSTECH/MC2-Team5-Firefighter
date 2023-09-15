@@ -83,6 +83,7 @@
 		B55469B32AA96F2C004D9FE6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B12AA96F2C004D9FE6 /* BaseViewController.swift */; };
 		B55469B42AA96F2C004D9FE6 /* BaseViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */; };
 		B55469B62AA96F54004D9FE6 /* DefaultCharacterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B52AA96F54004D9FE6 /* DefaultCharacterType.swift */; };
+		B5546A0B2AADCB13004D9FE6 /* LetterUsecaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A0A2AADCB13004D9FE6 /* LetterUsecaseError.swift */; };
 		B55469EB2AAC3B5F004D9FE6 /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469EA2AAC3B5F004D9FE6 /* UIView+Animation.swift */; };
 		B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */; };
 		B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B55BCEB528D99F8600AF7E45 /* Settings.bundle */; };
@@ -297,6 +298,7 @@
 		B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewModelType.swift; sourceTree = "<group>"; };
 		B55469EA2AAC3B5F004D9FE6 /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		B55469B52AA96F54004D9FE6 /* DefaultCharacterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultCharacterType.swift; sourceTree = "<group>"; };
+		B5546A0A2AADCB13004D9FE6 /* LetterUsecaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterUsecaseError.swift; sourceTree = "<group>"; };
 		B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		B55BCEB528D99F8600AF7E45 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B55BCEC528F5AFB200AF7E45 /* capsule.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capsule.gif; sourceTree = "<group>"; };
@@ -801,6 +803,22 @@
 			path = LetterScene;
 			sourceTree = "<group>";
 		};
+		B55469FD2AADB903004D9FE6 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				B5546A092AADCAFD004D9FE6 /* LetterScene */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		B5546A092AADCAFD004D9FE6 /* LetterScene */ = {
+			isa = PBXGroup;
+			children = (
+				B5546A0A2AADCB13004D9FE6 /* LetterUsecaseError.swift */,
+			);
+			path = LetterScene;
+			sourceTree = "<group>";
+		};
 		B57CB3022A763BB200474042 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,6 +933,7 @@
 		B5A085E72A97302900C8A98D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				B55469FD2AADB903004D9FE6 /* Error */,
 				B58CA30B2A9CC43600977592 /* Usecase */,
 				B5A085E82A97303900C8A98D /* Entity */,
 			);
@@ -1792,6 +1811,7 @@
 				B53A35D42A97266D00B720BC /* CreatedRoomRequestDTO.swift in Sources */,
 				B55469EB2AAC3B5F004D9FE6 /* UIView+Animation.swift in Sources */,
 				B53A35B72A963F2100B720BC /* DetailRoomEndPoint.swift in Sources */,
+				B5546A0B2AADCB13004D9FE6 /* LetterUsecaseError.swift in Sources */,
 				D7C4A1B02A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift in Sources */,
 				3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */,
 				B5A085EE2A9731F000C8A98D /* DailyMissionDTO.swift in Sources */,
