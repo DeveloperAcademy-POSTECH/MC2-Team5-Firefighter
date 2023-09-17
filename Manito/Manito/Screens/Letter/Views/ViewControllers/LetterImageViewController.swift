@@ -70,7 +70,7 @@ extension LetterImageViewController: LetterImageViewDelegate {
                 self?.makeAlert(title: description.title,
                                 message: description.message)
             case .failure(let error):
-                self?.makeAlert(title: TextLiteral.letterImageViewControllerErrorTitle,
+                self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
                                 message: error.errorDescription)
             }
         }
@@ -84,8 +84,8 @@ extension LetterImageViewController: LetterImageViewDelegate {
         }) { (success, error) in
             DispatchQueue.main.async {
                 if success {
-                    completionHandler(.success((title: TextLiteral.letterImageViewControllerSuccessTitle,
-                                                message: TextLiteral.letterImageViewControllerSuccessMessage)))
+                    completionHandler(.success((title: TextLiteral.Letter.saveAlertTitle.localized(),
+                                                message: TextLiteral.Letter.saveAlertMessage.localized())))
                 } else {
                     completionHandler(.failure(.invalidPhotoLibrary))
                 }

@@ -22,7 +22,7 @@ final class SelectManitteeView: UIView, BaseViewType {
     private let informationLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 20)
-        label.text = TextLiteral.selectManitteeViewControllerInformationText
+        label.text = TextLiteral.DetailIng.selectManitteeTitle.localized()
         label.numberOfLines = 2
         label.addLabelSpacing()
         label.textAlignment = .center
@@ -36,7 +36,7 @@ final class SelectManitteeView: UIView, BaseViewType {
     }()
     private let confirmButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.confirm
+        button.title = TextLiteral.Common.confirm.localized()
         return button
     }()
     private let joystickBackgroundView: UIView = UIView()

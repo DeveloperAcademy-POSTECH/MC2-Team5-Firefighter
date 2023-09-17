@@ -18,9 +18,9 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
         var announcingText: String {
             switch self {
             case .manittee:
-                return TextLiteral.memoryViewControllerManitteeText
+                return TextLiteral.Memory.manitteContent.localized()
             case .manitto:
-                return TextLiteral.memoryViewControllerManittoText
+                return TextLiteral.Memory.manittoContent.localized()
             }
         }
     }
@@ -41,7 +41,8 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
         return button
     }()
     private lazy var segmentControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: [TextLiteral.letterHeaderViewSegmentControlManitti, TextLiteral.letterHeaderViewSegmentControlManitto])
+        let control = UISegmentedControl(items: [TextLiteral.Letter.manitteTitle.localized(),
+                                                 TextLiteral.Letter.manittoTitle.localized()])
         let font = UIFont.font(.regular, ofSize: 14)
         let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
         let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
@@ -130,7 +131,7 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
         navigationItem.rightBarButtonItem = shareButton
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .automatic
-        title = TextLiteral.memoryViewControllerTitleLabel
+        title = TextLiteral.Memory.title.localized()
     }
 
     // MARK: - base func
@@ -225,8 +226,8 @@ final class MemoryViewController: BaseViewController, BaseViewControllerType {
                     UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
                     UIApplication.shared.open(storyShareURL, options: [:], completionHandler: nil)
                 } else {
-                    self.makeAlert(title: TextLiteral.memoryViewControllerAlertTitle,
-                                   message: TextLiteral.memoryViewControllerAlertMessage)
+                    self.makeAlert(title: TextLiteral.Memory.Error.instaTitle.localized(),
+                                   message: TextLiteral.Memory.Error.instaMessage.localized())
                 }
             }
         }

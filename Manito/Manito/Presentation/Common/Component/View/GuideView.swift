@@ -18,9 +18,9 @@ final class GuideView: UIView {
 
         var text: String {
             switch self {
-            case .letter: return TextLiteral.letterViewControllerGuideText
-            case .main: return TextLiteral.mainViewControllerGuideText
-            case .detailing: return TextLiteral.detailIngViewControllerGuideText
+            case .letter: return TextLiteral.Letter.guide.localized()
+            case .main: return TextLiteral.Main.guide.localized()
+            case .detailing: return TextLiteral.DetailIng.guide.localized()
             }
         }
 

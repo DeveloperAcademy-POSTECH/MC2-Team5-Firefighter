@@ -12,11 +12,11 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
             let composeViewController = MFMailComposeViewController()
-            let aenittoEmail = TextLiteral.mailAenittoEmail
-            let messageBody = TextLiteral.mailHelperMessage.localized(UserDefaultStorage.nickname, Date())
+            let aenittoEmail = TextLiteral.Mail.aenittoEmail.localized()
+            let messageBody = TextLiteral.Mail.inquiryMessage.localized(with: UserDefaultStorage.nickname, Date().description)
             composeViewController.mailComposeDelegate = self
             composeViewController.setToRecipients([aenittoEmail])
-            composeViewController.setSubject(TextLiteral.MailHelperTitle)
+            composeViewController.setSubject(TextLiteral.Mail.inquiryTitle.localized())
             composeViewController.setMessageBody(messageBody, isHTML: false)
             
             self.present(composeViewController, animated: true, completion: nil)
@@ -27,8 +27,10 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     }
     
     private func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: TextLiteral.mailErrorTitle, message: TextLiteral.mailErrorMessage, preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: TextLiteral.commonConfirm, style: .default)
+        let sendMailErrorAlert = UIAlertController(title: TextLiteral.Mail.Error.title.localized(),
+                                                   message: TextLiteral.Mail.Error.message.localized(),
+                                                   preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: TextLiteral.Common.confirm.localized(), style: .default)
         sendMailErrorAlert.addAction(confirmAction)
         self.present(sendMailErrorAlert, animated: true, completion: nil)
     }

@@ -117,7 +117,7 @@ final class SettingDeveloperInfoViewController: BaseViewController, BaseViewCont
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        title = TextLiteral.settingDeveloperInfoTitle
+        title = TextLiteral.Setting.developerInfo.localized()
     }
 
     // MARK: - base func

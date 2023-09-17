@@ -114,7 +114,8 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
             self?.resignFirstResponder()
             self?.dismiss(animated: true)
         }
-        self.makeActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
+        self.makeActionSheet(actionTitles: [TextLiteral.Common.discardChanges.localized(),
+                                            TextLiteral.Common.cancel.localized()],
                              actionStyle: [.destructive, .cancel],
                              actions: [dismissAction, nil])
     }
@@ -132,8 +133,8 @@ extension CreateLetterViewController: CreateLetterViewDelegate {
                     self?.dismiss(animated: true)
                 case .failure:
                     self?.createLetterView.sending = false
-                    self?.makeAlert(title: TextLiteral.createLetterViewControllerErrorTitle,
-                                    message: TextLiteral.createLetterViewControllerErrorMessage)
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                    message: TextLiteral.SendLetter.Error.sendMessage.localized())
                 }
             }
         }

@@ -77,7 +77,9 @@ final class ChooseCharacterViewController: BaseViewController {
     }
     
     private func makeAlertWhenAlreadyJoin() {
-        self.makeAlert(title: TextLiteral.AlreadyJoinErrorTitle, message: TextLiteral.AlreadyJoinErrorMessage, okAction: { [weak self] _ in
+        self.makeAlert(title: TextLiteral.ParticipateRoom.Error.alreadyJoinTitle.localized(),
+                       message: TextLiteral.ParticipateRoom.Error.alreadyJoinMessage.localized(),
+                       okAction: { [weak self] _ in
             self?.dismiss(animated: true)
         })
     }

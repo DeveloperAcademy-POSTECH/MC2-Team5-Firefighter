@@ -104,7 +104,7 @@ final class ParticipateRoomViewController: BaseViewController {
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    self?.makeAlert(title: TextLiteral.participateRoomViewControllerInvalidCodeAlertErrorMessage)
+                    self?.makeAlert(title: TextLiteral.ParticipateRoom.Error.message.localized())
                 }
             } receiveValue: { [weak self] roomInfo in
                 self?.presentParticipationRoomDetailsView(roomInfo: roomInfo)

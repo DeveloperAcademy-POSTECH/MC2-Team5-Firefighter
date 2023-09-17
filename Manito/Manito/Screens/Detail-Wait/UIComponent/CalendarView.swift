@@ -225,8 +225,8 @@ extension CalendarView: FSCalendarDelegate {
                 DispatchQueue.main.async {                
                     calendar.deselect(date)
                 }
-                self.viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle,
-                                          message: TextLiteral.maxMessage)
+                self.viewController?.makeAlert(title: TextLiteral.Common.Calendar.maxAlertTitle.localized(),
+                                               message: TextLiteral.Common.Calendar.maxDateContent.localized())
             } else {
                 self.tempEndDateText = date.toDefaultString
                 self.setDateRange()
@@ -262,8 +262,8 @@ extension CalendarView: FSCalendarDelegate {
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         if date < Date() - self.oneDayInterval {
-            self.viewController?.makeAlert(title: TextLiteral.calendarViewAlertPastTitle,
-                                      message: TextLiteral.calendarViewAlertPastMessage)
+            self.viewController?.makeAlert(title: TextLiteral.Common.Calendar.pastAlertTitle.localized(),
+                                           message: TextLiteral.Common.Calendar.pastAlertMessage.localized())
             return false
         } else {
             return true

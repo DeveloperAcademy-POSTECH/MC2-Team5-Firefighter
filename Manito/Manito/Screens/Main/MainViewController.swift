@@ -47,7 +47,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     private let commonMissionView: CommonMissionView = CommonMissionView()
     private let menuTitle: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.mainViewControllerMenuTitle
+        label.text = TextLiteral.Main.listTitle.localized()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
@@ -225,11 +225,11 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     }
 
     private func createNewRoom() {
-        let alert = UIAlertController(title: TextLiteral.mainViewControllerNewRoomAlert,
+        let alert = UIAlertController(title: TextLiteral.Main.menuTitle.localized(),
                                       message: nil,
                                       preferredStyle: .actionSheet)
 
-        let createRoom = UIAlertAction(title: TextLiteral.createRoom,
+        let createRoom = UIAlertAction(title: TextLiteral.Common.createRoom.localized(),
                                        style: .default,
                                        handler: { [weak self] _ in
             let createVC = CreateRoomViewController(viewModel: CreateRoomViewModel(createRoomService: CreateRoomService(repository: RoomParticipationRepositoryImpl())))
@@ -239,7 +239,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
                 self?.present(navigationController,animated: true)
             }
         })
-        let enterRoom = UIAlertAction(title: TextLiteral.enterRoom,
+        let enterRoom = UIAlertAction(title: TextLiteral.Common.enterRoom.localized(),
                                       style: .default,
                                       handler: { [weak self] _ in
             let service = ParticipateRoomService(repository: RoomParticipationRepositoryImpl())
@@ -251,7 +251,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
                 self?.present(navigationController, animated: true)
             }
         })
-        let cancel = UIAlertAction(title: TextLiteral.cancel, style: .cancel)
+        let cancel = UIAlertAction(title: TextLiteral.Common.cancel.localized(), style: .cancel)
 
         alert.addAction(createRoom)
         alert.addAction(enterRoom)
@@ -286,8 +286,8 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     }
     
     func showRoomIdErrorAlert() {
-        self.makeAlert(title: TextLiteral.mainViewControllerShowIdErrorAlertTitle,
-                       message: TextLiteral.mainViewControllerShowIdErrorAlertMessage)
+        self.makeAlert(title: TextLiteral.Main.Error.title,
+                       message: TextLiteral.Main.Error.message)
     }
     
     // MARK: - network

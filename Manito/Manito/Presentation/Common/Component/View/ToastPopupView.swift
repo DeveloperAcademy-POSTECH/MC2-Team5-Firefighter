@@ -42,6 +42,6 @@ struct ToastView {
 
     static func showToast(code: String, message: String, controller: UIViewController) {
         UIPasteboard.general.string = code
-        showToast(message: TextLiteral.detailWaitViewControllerCopyCode, controller: controller)
+        showToast(message: TextLiteral.DetailWait.toastCopyMessage.localized(), controller: controller)
     }
 }

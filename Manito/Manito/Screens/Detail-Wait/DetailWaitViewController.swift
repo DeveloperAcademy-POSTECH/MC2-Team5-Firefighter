@@ -196,23 +196,23 @@ final class DetailWaitViewController: BaseViewController {
     
     private func showToastView(code: String) {
         ToastView.showToast(code: code,
-                            message: TextLiteral.detailWaitViewControllerCopyCode,
+                            message: TextLiteral.DetailWait.toastCopyMessage.localized(),
                             controller: self)
     }
     
     private func deleteRoom() {
-        self.makeRequestAlert(title: TextLiteral.datailWaitViewControllerDeleteTitle,
-                              message: TextLiteral.datailWaitViewControllerDeleteMessage,
-                              okTitle: TextLiteral.delete,
+        self.makeRequestAlert(title: TextLiteral.DetailWait.deleteAlertTitle.localized(),
+                              message: TextLiteral.DetailWait.deleteAlertMessage.localized(),
+                              okTitle: TextLiteral.Detail.delete.localized(),
                               okAction: { [weak self] _ in
             self?.deleteMenuButtonSubject.send(())
         })
     }
     
     private func leaveRoom() {
-        self.makeRequestAlert(title: TextLiteral.datailWaitViewControllerExitTitle,
-                              message: TextLiteral.datailWaitViewControllerExitMessage,
-                              okTitle: TextLiteral.leave,
+        self.makeRequestAlert(title: TextLiteral.DetailWait.exitAlertTitle.localized(),
+                              message: TextLiteral.DetailWait.exitAlertMessage.localized(),
+                              okTitle: TextLiteral.Detail.leave.localized(),
                               okAction: { [weak self] _ in
             self?.leaveMenuButtonSubject.send(())
         })
@@ -221,12 +221,10 @@ final class DetailWaitViewController: BaseViewController {
     private func showStartDatePassedAlert(isPassedStartDate: Bool, isAdmin: Bool) {
         guard isPassedStartDate else { return }
         self.makeAlert(
-            title: isAdmin
-            ? TextLiteral.detailWaitViewControllerPastAlertTitle
-            : TextLiteral.detailWaitViewControllerPastAlertTitle,
+            title: TextLiteral.DetailWait.pastAlertTitle.localized(),
             message: isAdmin
-            ? TextLiteral.detailWaitViewControllerPastAdminAlertMessage
-            : TextLiteral.detailWaitViewControllerPastAlertMessage,
+            ? TextLiteral.DetailWait.pastAdminAlertMessage.localized()
+            : TextLiteral.DetailWait.pastAlertMessage.localized(),
             okAction: isAdmin
             ? { [weak self] _ in
                 guard let roomInformaion = self?.detailWaitViewModel.makeRoomInformation() else { return }
@@ -264,7 +262,7 @@ final class DetailWaitViewController: BaseViewController {
 extension DetailWaitViewController: DetailWaitViewControllerDelegate {
     func didTappedChangeButton() {
         self.changeButtonSubject.send()
-        ToastView.showToast(message: TextLiteral.detailWaitToastEditMessage,
+        ToastView.showToast(message: TextLiteral.DetailWait.toastEditMessage.localized(),
                             controller: self)
     }
 }

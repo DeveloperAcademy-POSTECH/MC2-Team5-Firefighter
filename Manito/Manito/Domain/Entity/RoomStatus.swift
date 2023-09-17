@@ -24,9 +24,9 @@ extension RoomStatus {
     /// 방 상태 뱃지에 들어가는 텍스트
     var badgeTitle: String {
         switch self {
-        case .PRE: return TextLiteral.waiting
-        case .PROCESSING: return TextLiteral.doing
-        case .POST: return TextLiteral.done
+        case .PRE: return TextLiteral.Common.waiting.localized()
+        case .PROCESSING: return TextLiteral.Common.processing.localized()
+        case .POST: return TextLiteral.Common.done.localized()
         }
     }
     /// 방 상태 뱃지에 들어가는 배경 색상

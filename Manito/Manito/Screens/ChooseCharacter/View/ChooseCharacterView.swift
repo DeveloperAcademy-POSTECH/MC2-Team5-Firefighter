@@ -31,13 +31,13 @@ final class ChooseCharacterView: UIView, BaseViewType {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.chooseCharacterViewControllerTitleLabel
+        label.text = TextLiteral.ParticipateRoom.chooseCharacterTitle.localized()
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
     private let subTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.chooseCharacterViewControllerSubTitleLabel
+        label.text = TextLiteral.ParticipateRoom.chooseCharacterSubTitle.localized()
         label.font = .font(.regular, ofSize: 18)
         label.textColor = .grey002
         return label
@@ -45,7 +45,7 @@ final class ChooseCharacterView: UIView, BaseViewType {
     private let manittoCollectionView: CharacterCollectionView = CharacterCollectionView()
     private let joinButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.enterRoom
+        button.title = TextLiteral.Common.enterRoom.localized()
         return button
     }()
     

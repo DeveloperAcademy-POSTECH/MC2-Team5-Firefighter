@@ -59,6 +59,10 @@ enum TextLiteral {
         static let informationTitle = "detail_information_title"
         static let manitteeTitle = "detail_manittee_title"
         static let change = "detail_change"
+        static let menuDelete = "detail_menu_delete"
+        static let menuLeave = "detail_menu_leave"
+        static let delete = "detail_delete"
+        static let leave = "detail_leave"
     }
 
     /// Detail Wait 화면에서 사용하는 텍스트
@@ -66,10 +70,6 @@ enum TextLiteral {
         static let copyCode = "detail_wait_copy_code"
         static let buttonWaiting = "datail_wait_button_waiting"
         static let buttonStart = "datail_wait_button_start"
-        static let menuDelete = "detail_wait_menu_delete"
-        static let menuLeave = "detail_wait_menu_leave"
-        static let delete = "detail_wait_delete"
-        static let leave = "detail_wait_leave"
         static let toastCopyMessage = "detail_wait_toast_copy_message"
         static let toastEditMessage = "detail_wait_toast_edit_message"
         static let duringTitle = "detail_wait_during_title"
@@ -120,11 +120,11 @@ enum TextLiteral {
     enum DetailEdit {
         static let periodSettingTitle = "detail_edit_period_setting_title"
         static let memberSettingTitle = "detail_edit_member_setting_title"
-        static let memberAlertTitle = "detail_edit_member_alert_title"
-        static let memberAlertMessage = "detail_edit_member_alert_message"
 
         enum Error {
             static let message = "detail_edit_error_message"
+            static let memberTitle = "detail_edit_member_error_title"
+            static let memberMessage = "detail_edit_member_error_message"
         }
     }
 
@@ -161,7 +161,7 @@ enum TextLiteral {
         static let photoMenuDeletePhoto = "letter_send_photo_menu_delete_photo"
 
         enum Error {
-            static let fetchMessage = "letter_send_error_mesage"
+            static let sendMessage = "letter_send_error_mesage"
             static let photoLoadMessage = "letter_send_photo_load_error_message"
             static let settingMessage = "letter_send_photo_setting_error_message"
             static let deviceMessage = "letter_send_photo_device_error_message"
@@ -188,7 +188,7 @@ enum TextLiteral {
         static let previous = "create_room_previous"
         static let inputDateTitle = "create_room_input_date_title"
         static let inputPersonTitle = "create_room_input_person_title"
-        static let inputNamePlaceholder = "create_room_input_name_placeholder"
+        static let inputNameTitle = "create_room_input_name_title"
         static let invitedCodeTitle = "create_room_invited_code_title"
     }
 
@@ -246,6 +246,18 @@ enum TextLiteral {
             static let title = "mail_error_title"
             static let message = "mail_error_message"
         }
+    }
+}
+
+extension String {
+    /// Localizable의 Key로부터 Value를 가져오는 메서드
+    func localized(comment: String = "") -> String {
+        return NSLocalizedString(self, comment: comment)
+    }
+
+    /// Localizable의 Key로부터 Value를 가져오는 메서드 - Argument가 있는 경우
+    func localized(with argument: CVarArg..., comment: String = "") -> String {
+        return String(format: self.localized(comment: comment), argument)
     }
 }
 

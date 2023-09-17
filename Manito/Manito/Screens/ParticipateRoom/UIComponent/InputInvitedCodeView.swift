@@ -20,7 +20,8 @@ final class InputInvitedCodeView: UIView, BaseViewType {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         textField.backgroundColor = .darkGrey002
-        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputInvitedCodeViewRoomCodeText, attributes: attributes)
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.ParticipateRoom.inputCodePlaceholder.localized(),
+                                                             attributes: attributes)
         textField.textAlignment = .center
         textField.makeBorderLayer(color: .white)
         textField.font = .font(.regular, ofSize: 18)

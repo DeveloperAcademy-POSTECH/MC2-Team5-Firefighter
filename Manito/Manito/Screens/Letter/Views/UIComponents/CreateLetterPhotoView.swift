@@ -21,7 +21,7 @@ final class CreateLetterPhotoView: UIView {
         var errorDescription: String {
             switch self {
             case .loadError:
-                return TextLiteral.letterPhotoViewFail
+                return TextLiteral.SendLetter.Error.photoLoadMessage.localized()
             }
         }
     }
@@ -47,7 +47,7 @@ final class CreateLetterPhotoView: UIView {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.letterPhotoViewTitleLabel
+        label.text = TextLiteral.SendLetter.photoTitle.localized()
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
@@ -102,13 +102,13 @@ final class CreateLetterPhotoView: UIView {
     }
 
     private func actionTitles() -> [String] {
-        return self.hasImage ? [TextLiteral.letterPhotoViewTakePhoto,
-                                TextLiteral.letterPhotoViewChoosePhoto,
-                                TextLiteral.letterPhotoViewDeletePhoto,
-                                TextLiteral.cancel]
-                             : [TextLiteral.letterPhotoViewTakePhoto,
-                                TextLiteral.letterPhotoViewChoosePhoto,
-                                TextLiteral.cancel]
+        return self.hasImage ? [TextLiteral.SendLetter.photoMenuTakePhoto.localized(),
+                                TextLiteral.SendLetter.photoMenuChoosePhoto.localized(),
+                                TextLiteral.SendLetter.photoMenuDeletePhoto.localized(),
+                                TextLiteral.Common.cancel.localized()]
+                             : [TextLiteral.SendLetter.photoMenuTakePhoto.localized(),
+                                TextLiteral.SendLetter.photoMenuChoosePhoto.localized(),
+                                TextLiteral.Common.cancel.localized()]
     }
 
     private func actionStyle() -> [UIAlertAction.Style] {
@@ -131,7 +131,7 @@ final class CreateLetterPhotoView: UIView {
                              : [takePhotoAction, photoLibraryAction, nil]
     }
 
-    private func presentActionSheet(message: String = TextLiteral.letterPhotoViewChoosePhotoToManitto,
+    private func presentActionSheet(message: String = TextLiteral.SendLetter.photoMenuTitle.localized(),
                                     actionTitles: [String],
                                     actionStyle: [UIAlertAction.Style],
                                     actions: [alertAction?]) {
@@ -180,16 +180,16 @@ final class CreateLetterPhotoView: UIView {
     private func openSettings() {
         let settingAction: alertAction = { [weak self] _ in
             guard let settingURL = URL(string: UIApplication.openSettingsURLString) else {
-                self?.viewController?.makeAlert(title: TextLiteral.letterPhotoViewErrorTitle,
-                                                message: TextLiteral.letterPhotoViewSettingFail)
+                self?.viewController?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                                message: TextLiteral.SendLetter.Error.settingMessage.localized())
                 return
             }
             UIApplication.shared.open(settingURL)
         }
 
-        self.viewController?.makeRequestAlert(title: TextLiteral.letterPhotoViewSetting,
-                                              message: TextLiteral.letterPhotoViewSettingAuthorization,
-                                              okTitle: "설정",
+        self.viewController?.makeRequestAlert(title: TextLiteral.Common.Error.title.localized(),
+                                              message: TextLiteral.SendLetter.Error.authorizationMessage.localized(),
+                                              okTitle: TextLiteral.SendLetter.Error.buttonSetting.localized(),
                                               okStyle: .default,
                                               okAction: settingAction,
                                               completion: nil)
@@ -197,8 +197,8 @@ final class CreateLetterPhotoView: UIView {
 
     private func checkImagePickerControllerAccessRight() {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-            self.viewController?.makeAlert(title: TextLiteral.letterPhotoViewErrorTitle,
-                                           message: TextLiteral.letterPhotoViewDeviceFail)
+            self.viewController?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                           message: TextLiteral.SendLetter.Error.deviceMessage.localized())
             return
         }
 

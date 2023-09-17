@@ -25,7 +25,7 @@ final class DetailEditView: UIView, BaseViewType {
     
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(TextLiteral.cancel, for: .normal)
+        button.setTitle(TextLiteral.Common.cancel.localized(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         return button
@@ -38,20 +38,20 @@ final class DetailEditView: UIView, BaseViewType {
     }()
     private let changeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(TextLiteral.change, for: .normal)
+        button.setTitle(TextLiteral.Detail.change.localized(), for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         return button
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.modifiedRoomInfo
+        label.text = TextLiteral.Detail.menuModifiedRoomInfo.localized()
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
     private let manittoPeriodTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.detailEditViewControllerStartSetting
+        label.text = TextLiteral.DetailEdit.periodSettingTitle.localized()
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
@@ -59,28 +59,28 @@ final class DetailEditView: UIView, BaseViewType {
     let calendarView: CalendarView = CalendarView()
     private let helpLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.maxMessage
+        label.text = TextLiteral.Common.Calendar.maxDateContent.localized()
         label.textColor = .grey004
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
     private lazy var numberOfParticipantsTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.detailEditViewControllerSetMember
+        label.text = TextLiteral.DetailEdit.memberSettingTitle.localized()
         label.font = .font(.regular, ofSize: 18)
         label.textColor = .white
         return label
     }()
     private lazy var minimumNumberOfParticipantsLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Int(self.participantsSlider.minimumValue))인"
+        label.text = TextLiteral.Common.people.localized(with: Int(self.participantsSlider.minimumValue))
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
     private lazy var maxNumberOfParticipantsLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Int(self.participantsSlider.maximumValue))인"
+        label.text = TextLiteral.Common.people.localized(with: Int(self.participantsSlider.maximumValue))
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
@@ -110,7 +110,7 @@ final class DetailEditView: UIView, BaseViewType {
     private var maximumMemberCount: Int? {
         willSet(count) {
             if let count {
-                self.numberOfParticipantsLabel.text = count.description + TextLiteral.per
+                self.numberOfParticipantsLabel.text = TextLiteral.Common.people.localized(with: count)
             }
         }
     }

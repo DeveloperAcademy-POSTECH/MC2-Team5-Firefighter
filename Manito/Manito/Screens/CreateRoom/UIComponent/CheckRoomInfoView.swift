@@ -83,7 +83,7 @@ final class CheckRoomInfoView: UIView {
     }
     
     func updateRoomCapacity(capacity: Int) {
-        self.personLabel.text = "\(capacity)" + TextLiteral.per
+        self.personLabel.text = TextLiteral.Common.people.localized(with: capacity)
     }
     
     func updateRoomDateRange(range: String) {

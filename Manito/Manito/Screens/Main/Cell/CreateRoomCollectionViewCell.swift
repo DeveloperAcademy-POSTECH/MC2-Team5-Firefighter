@@ -24,7 +24,7 @@ final class CreateRoomCollectionViewCell: UICollectionViewCell, BaseViewType {
     }()
     private let menuLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.createRoomCollectionViewCellMenuLabel
+        label.text = TextLiteral.Main.cellCreateRoomTitle.localized()
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
         return label

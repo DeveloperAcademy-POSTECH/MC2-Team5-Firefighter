@@ -16,8 +16,8 @@ final class LetterHeaderView: UICollectionReusableView {
     
     private let segmentedControl: UISegmentedControl = {
         let font = UIFont.font(.regular, ofSize: 14)
-        let control = UISegmentedControl(items: [TextLiteral.letterHeaderViewSegmentControlManitti,
-                                                 TextLiteral.letterHeaderViewSegmentControlManitto])
+        let control = UISegmentedControl(items: [TextLiteral.Letter.manitteTitle.localized(),
+                                                 TextLiteral.Letter.manittoTitle.localized()])
         let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
                                     NSAttributedString.Key.font: font]
         let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
