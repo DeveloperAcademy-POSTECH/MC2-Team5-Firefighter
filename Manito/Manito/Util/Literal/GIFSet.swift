@@ -1,6 +1,6 @@
 //
 //  GIFSet.swift
-//  MTResource
+//  Manito
 //
 //  Created by SHIN YOON AH on 2023/09/10.
 //

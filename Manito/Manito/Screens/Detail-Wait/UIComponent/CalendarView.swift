@@ -35,12 +35,12 @@ final class CalendarView: UIView {
 
     private let previousButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icBack, for: .normal)
+        button.setImage(UIImage.Button.back, for: .normal)
         return button
     }()
     private let nextButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icRight, for: .normal)
+        button.setImage(UIImage.Icon.right, for: .normal)
         return button
     }()
     private var calendar: FSCalendar = {

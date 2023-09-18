@@ -15,27 +15,27 @@ final class TopCharacterImageView: UIView {
     
     private let imgCharacterOrange: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgCharacterOrange
+        imageView.image = UIImage.Image.characterOrange
         return imageView
     }()
     private let imgCharacterPurple: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgCharacterPurple
+        imageView.image = UIImage.Image.characterPurple
         return imageView
     }()
     private let imgNi: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
+        imageView.image = UIImage.Image.ni
         return imageView
     }()
     private let imgCharacterLightGreen: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgCharacterLightGreen
+        imageView.image = UIImage.Image.characterLightGreen
         return imageView
     }()
     private let imgCharacterRed: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgCharacterRed
+        imageView.image = UIImage.Image.characterRed
         return imageView
     }()
     

@@ -10,6 +10,7 @@ import UIKit
 import UserNotifications
 
 import Firebase
+import MTResource
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -13,7 +13,7 @@ final class SettingDeveloperInfoHeaderView: UICollectionReusableView {
     
     // MARK: - property
     
-    private let developerRoomView = UIImageView(image: ImageLiterals.imgDevBackground)
+    private let developerRoomView = UIImageView(image: UIImage.Image.devBackground)
     
     // MARK: - init
     

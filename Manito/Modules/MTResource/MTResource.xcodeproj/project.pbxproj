@@ -13,6 +13,7 @@
 		B5546A462AADF6B3004D9FE6 /* ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A452AADF6B3004D9FE6 /* ColorSet.swift */; };
 		B5546A482AADF7ED004D9FE6 /* FontSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A472AADF7ED004D9FE6 /* FontSet.swift */; };
 		B5546A4A2AADF8BF004D9FE6 /* ImageSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5546A492AADF8BF004D9FE6 /* ImageSet.swift */; };
+		B5ABB3972AAEDEE100F31C78 /* BundleToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ABB3962AAEDEE100F31C78 /* BundleToken.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		B5546A452AADF6B3004D9FE6 /* ColorSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSet.swift; sourceTree = "<group>"; };
 		B5546A472AADF7ED004D9FE6 /* FontSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSet.swift; sourceTree = "<group>"; };
 		B5546A492AADF8BF004D9FE6 /* ImageSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSet.swift; sourceTree = "<group>"; };
+		B5ABB3962AAEDEE100F31C78 /* BundleToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleToken.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				B5546A472AADF7ED004D9FE6 /* FontSet.swift */,
 				B5546A492AADF8BF004D9FE6 /* ImageSet.swift */,
 				B5546A2F2AADD72F004D9FE6 /* Resource */,
+				B5ABB3952AAEDED000F31C78 /* Foundation */,
 			);
 			path = MTResource;
 			sourceTree = "<group>";
@@ -79,6 +82,14 @@
 				B5546A422AADF609004D9FE6 /* DungGeunMo.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		B5ABB3952AAEDED000F31C78 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				B5ABB3962AAEDEE100F31C78 /* BundleToken.swift */,
+			);
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +176,7 @@
 			files = (
 				B5546A4A2AADF8BF004D9FE6 /* ImageSet.swift in Sources */,
 				B5546A462AADF6B3004D9FE6 /* ColorSet.swift in Sources */,
+				B5ABB3972AAEDEE100F31C78 /* BundleToken.swift in Sources */,
 				B5546A482AADF7ED004D9FE6 /* FontSet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,7 +184,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		B5546A202AADD618004D9FE6 /* Debug */ = {
+		B5546A202AADD618004D9FE6 /* Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -223,7 +235,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -233,9 +245,9 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Dev;
 		};
-		B5546A212AADD618004D9FE6 /* Release */ = {
+		B5546A212AADD618004D9FE6 /* Prod */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -280,7 +292,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -290,9 +302,9 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Prod;
 		};
-		B5546A232AADD618004D9FE6 /* Debug */ = {
+		B5546A232AADD618004D9FE6 /* Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -326,9 +338,9 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Debug;
+			name = Dev;
 		};
-		B5546A242AADD618004D9FE6 /* Release */ = {
+		B5546A242AADD618004D9FE6 /* Prod */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -361,7 +373,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Release;
+			name = Prod;
 		};
 /* End XCBuildConfiguration section */
 
@@ -369,20 +381,20 @@
 		B5546A152AADD618004D9FE6 /* Build configuration list for PBXProject "MTResource" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B5546A202AADD618004D9FE6 /* Debug */,
-				B5546A212AADD618004D9FE6 /* Release */,
+				B5546A202AADD618004D9FE6 /* Dev */,
+				B5546A212AADD618004D9FE6 /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Prod;
 		};
 		B5546A222AADD618004D9FE6 /* Build configuration list for PBXNativeTarget "MTResource" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B5546A232AADD618004D9FE6 /* Debug */,
-				B5546A242AADD618004D9FE6 /* Release */,
+				B5546A232AADD618004D9FE6 /* Dev */,
+				B5546A242AADD618004D9FE6 /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Prod;
 		};
 /* End XCConfigurationList section */
 	};

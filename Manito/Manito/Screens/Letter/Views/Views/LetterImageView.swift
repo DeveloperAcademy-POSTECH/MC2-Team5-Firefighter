@@ -31,7 +31,7 @@ final class LetterImageView: UIView, BaseViewType {
     }()
     private let closeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(ImageLiterals.btnXmark, for: .normal)
+        button.setImage(UIImage.Button.xmark, for: .normal)
         button.tintColor = .grey001
         return button
     }()
@@ -44,7 +44,7 @@ final class LetterImageView: UIView, BaseViewType {
     }()
     private let downloadButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icSave, for: .normal)
+        button.setImage(UIImage.Icon.save, for: .normal)
         return button
     }()
 
