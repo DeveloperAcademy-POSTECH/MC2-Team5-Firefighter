@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class ParticipateRoomViewController: UIViewController {
+final class ParticipateRoomViewController: UIViewController, Keyboardable {
     
     // MARK: - ui component
     
@@ -48,6 +48,7 @@ final class ParticipateRoomViewController: UIViewController {
         self.configureDelegation()
         self.configureNavigation()
         self.bindToViewModel()
+        self.setupKeyboardGesture()
     }
     
     // MARK: - override
