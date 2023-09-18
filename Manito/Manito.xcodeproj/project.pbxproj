@@ -82,7 +82,6 @@
 		B53A35D42A97266D00B720BC /* CreatedRoomRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35D32A97266D00B720BC /* CreatedRoomRequestDTO.swift */; };
 		B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */; };
 		B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741E929A494E200B75BA3 /* LetterImageError.swift */; };
-		B55469B32AA96F2C004D9FE6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B12AA96F2C004D9FE6 /* BaseViewController.swift */; };
 		B55469B42AA96F2C004D9FE6 /* BaseViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */; };
 		B55469B62AA96F54004D9FE6 /* DefaultCharacterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B52AA96F54004D9FE6 /* DefaultCharacterType.swift */; };
 		B55469EB2AAC3B5F004D9FE6 /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469EA2AAC3B5F004D9FE6 /* UIView+Animation.swift */; };
@@ -305,7 +304,6 @@
 		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageView.swift; sourceTree = "<group>"; };
 		B54741E929A494E200B75BA3 /* LetterImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageError.swift; sourceTree = "<group>"; };
-		B55469B12AA96F2C004D9FE6 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewModelType.swift; sourceTree = "<group>"; };
 		B55469B52AA96F54004D9FE6 /* DefaultCharacterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultCharacterType.swift; sourceTree = "<group>"; };
 		B55469EA2AAC3B5F004D9FE6 /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
@@ -1024,7 +1022,6 @@
 		B5C7FBEB2AA75DC700862021 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				B55469B12AA96F2C004D9FE6 /* BaseViewController.swift */,
 				B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */,
 				B5C7FBEC2AA7607300862021 /* BaseViewType.swift */,
 				B5C7FBF42AA859E300862021 /* BaseViewControllerType.swift */,
@@ -1820,7 +1817,6 @@
 				B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */,
 				7E0C5C362855B22700F698D1 /* CreateNicknameViewController.swift in Sources */,
 				B5B3C15D2A41D6EB00AABD6F /* LetterViewModel.swift in Sources */,
-				B55469B32AA96F2C004D9FE6 /* BaseViewController.swift in Sources */,
 				B5A085FC2A97470400C8A98D /* RoomInfo.swift in Sources */,
 				CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */,
 				B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */,
