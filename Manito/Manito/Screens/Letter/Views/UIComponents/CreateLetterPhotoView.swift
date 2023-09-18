@@ -38,7 +38,7 @@ final class CreateLetterPhotoView: UIView {
         let button = UIButton()
         button.makeBorderLayer(color: .white)
         button.clipsToBounds = true
-        button.setImage(ImageLiterals.btnCamera, for: .normal)
+        button.setImage(UIImage.Button.camera, for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         button.tintColor = .white
@@ -57,10 +57,10 @@ final class CreateLetterPhotoView: UIView {
     var sendHasImageValue: ((_ hasImage: Bool) -> ())?
 
     private var hasImage: Bool {
-        return self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera
+        return self.importPhotosButton.imageView?.image != UIImage.Button.camera
     }
     var image: UIImage? {
-        if self.importPhotosButton.imageView?.image == ImageLiterals.btnCamera { return nil }
+        if self.importPhotosButton.imageView?.image == UIImage.Button.camera { return nil }
         return self.importPhotosButton.imageView?.image
     }
 
@@ -123,7 +123,7 @@ final class CreateLetterPhotoView: UIView {
             self?.openPickerAccordingTo(.library)
         }
         let removePhotoAction: alertAction = { [weak self] _ in
-            self?.importPhotosButton.setImage(ImageLiterals.btnCamera, for: .normal)
+            self?.importPhotosButton.setImage(UIImage.Button.camera, for: .normal)
             self?.sendHasImageValue?(self?.hasImage ?? false)
         }
 
@@ -226,7 +226,7 @@ extension CreateLetterPhotoView: UIImagePickerControllerDelegate & UINavigationC
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             DispatchQueue.main.async {
                 self.importPhotosButton.setImage(image, for: .normal)
-                self.sendHasImageValue?(self.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+                self.sendHasImageValue?(self.importPhotosButton.imageView?.image != UIImage.Button.camera)
                 picker.dismiss(animated: true)
             }
         }
@@ -255,7 +255,7 @@ extension CreateLetterPhotoView: PHPickerViewControllerDelegate {
             case .success(let image):
                 DispatchQueue.main.async {
                     self?.importPhotosButton.setImage(image, for: .normal)
-                    self?.sendHasImageValue?(self?.importPhotosButton.imageView?.image != ImageLiterals.btnCamera)
+                    self?.sendHasImageValue?(self?.importPhotosButton.imageView?.image != UIImage.Button.camera)
                     picker.dismiss(animated: true)
                 }
             case .failure(let error):

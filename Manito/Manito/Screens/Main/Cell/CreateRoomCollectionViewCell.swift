@@ -13,7 +13,7 @@ final class CreateRoomCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - ui component
     
-    private let imageView: UIImageView = UIImageView(image: ImageLiterals.icNewRoom)    
+    private let imageView: UIImageView = UIImageView(image: UIImage.Icon.newRoom)    
     private let circleView: UIView = {
         let circleView = UIView()
         circleView.backgroundColor = .yellow

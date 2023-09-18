@@ -26,7 +26,7 @@ class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
     
     // MARK: - property
     private let invitedImageView: UIImageView = {
-        let imageView = UIImageView(image: ImageLiterals.imgCodeBackground)
+        let imageView = UIImageView(image: UIImage.Image.codeBackground)
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
@@ -36,7 +36,7 @@ class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
             self?.dismiss(animated: true)
         }
         button.addAction(action, for: .touchUpInside)
-        button.setImage(ImageLiterals.btnXmark, for: .normal)
+        button.setImage(UIImage.Button.xmark, for: .normal)
         return button
     }()
     private lazy var roomTitleLabel: UILabel = {
@@ -51,7 +51,7 @@ class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
         label.text = "\(roomInfo.startDate ?? "") ~ \(roomInfo.endDate ?? "")"
         return label
     }()
-    private let roomImage = UIImageView(image: ImageLiterals.imgCharacterBrown)
+    private let roomImage = UIImageView(image: UIImage.Image.characterBrown)
     private lazy var roomPersonLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)

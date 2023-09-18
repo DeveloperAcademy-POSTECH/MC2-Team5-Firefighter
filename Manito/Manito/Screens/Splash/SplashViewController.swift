@@ -73,7 +73,7 @@ final class SplashViewController: UIViewController, BaseViewControllerType {
 
     private func setupGifImage() {
         DispatchQueue.main.async {
-            self.gifImageView.animate(withGIFNamed: ImageLiterals.gifLogo)
+            self.gifImageView.animate(withGIFNamed: GIFSet.logo)
         }
     }
     

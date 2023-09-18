@@ -39,7 +39,7 @@ final class OpenManittoPopupView: UIView {
         button.title = TextLiteral.Common.confirm.localized()
         return button
     }()
-    private let popupImageView: UIImageView = UIImageView(image: ImageLiterals.imgEnterRoom)
+    private let popupImageView: UIImageView = UIImageView(image: UIImage.Image.enterRoom)
 
     // MARK: - property
 

@@ -27,7 +27,7 @@ final class CheckRoomInfoView: UIView {
     }()
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
+        imageView.image = UIImage.Image.ni
         return imageView
     }()
     private var personLabel: UILabel = {

@@ -28,7 +28,7 @@ final class InputCapacityView: UIView {
     }()
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
+        imageView.image = UIImage.Image.ni
         imageView.backgroundColor = .darkGray
         return imageView
     }()
@@ -44,7 +44,7 @@ final class InputCapacityView: UIView {
         slider.minimumValue = 4
         slider.maximumValue = 15
         slider.tintColor = .mainRed
-        slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
+        slider.setThumbImage(UIImage.Image.sliderThumb, for: .normal)
         slider.addTarget(self, action: #selector(self.didSlideSlider(_:)), for: .valueChanged)
         return slider
     }()

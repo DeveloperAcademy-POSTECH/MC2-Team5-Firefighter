@@ -75,7 +75,7 @@ final class DetailingView: UIView, BaseViewType {
             self?.delegate?.editMissionButtonDidTap(mission: mission)
         }
         button.addAction(action, for: .touchUpInside)
-        button.setImage(ImageLiterals.icPencil, for: .normal)
+        button.setImage(UIImage.Icon.pencil, for: .normal)
         return button
     }()
     private let missionContentsLabel: UILabel = {
@@ -113,7 +113,7 @@ final class DetailingView: UIView, BaseViewType {
         view.layer.cornerRadius = 49.5
         return view
     }()
-    private let manitteeIconView = UIImageView(image: ImageLiterals.icManiTti)
+    private let manitteeIconView = UIImageView(image: UIImage.Icon.manitti)
     private let manitteeLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.Detail.manitteeTitle.localized(with: UserDefaultStorage.nickname)
@@ -137,7 +137,7 @@ final class DetailingView: UIView, BaseViewType {
         view.layer.cornerRadius = 49.5
         return view
     }()
-    private let listIconView = UIImageView(image: ImageLiterals.icList)
+    private let listIconView = UIImageView(image: UIImage.Icon.list)
     private let listLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.Detail.togetherFriendTitle.localized()
@@ -184,7 +184,7 @@ final class DetailingView: UIView, BaseViewType {
         return label
     }()
     private let manitiRealIconView: UIImageView = {
-        let imageView = UIImageView(image: ImageLiterals.imgMa)
+        let imageView = UIImageView(image: UIImage.Image.ma)
         imageView.alpha = 0
         return imageView
     }()
@@ -216,7 +216,7 @@ final class DetailingView: UIView, BaseViewType {
     }()
     private let exitButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icMore, for: .normal)
+        button.setImage(UIImage.Icon.more, for: .normal)
         button.showsMenuAsPrimaryAction = true
         return button
     }()

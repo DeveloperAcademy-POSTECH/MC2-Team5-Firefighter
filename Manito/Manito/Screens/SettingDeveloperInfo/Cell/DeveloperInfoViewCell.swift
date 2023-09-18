@@ -15,7 +15,7 @@ class DeveloperInfoViewCell: UICollectionViewCell, BaseViewType {
     
     let developerImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
+        imageView.image = UIImage.Image.ni
         return imageView
     }()
     

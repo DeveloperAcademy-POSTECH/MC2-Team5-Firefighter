@@ -16,7 +16,7 @@ final class ParticipationRoomDetailsView: UIView, BaseViewType {
     
     private let roomInfoImageView: UIImageView = {
         let image = UIImageView()
-        image.image = ImageLiterals.imgEnterRoom
+        image.image = UIImage.Image.enterRoom
         image.isUserInteractionEnabled = true
         return image
     }()
@@ -30,7 +30,7 @@ final class ParticipationRoomDetailsView: UIView, BaseViewType {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    private let peopleImageView = UIImageView(image: ImageLiterals.imgNi)
+    private let peopleImageView = UIImageView(image: UIImage.Image.ni)
     private let peopleLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
