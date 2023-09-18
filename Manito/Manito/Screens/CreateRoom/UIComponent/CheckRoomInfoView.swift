@@ -1,5 +1,5 @@
 //
-//  CheckRoomView.swift
+//  CheckRoomInfoView.swift
 //  Manito
 //
 //  Created by 이성호 on 2022/06/14.

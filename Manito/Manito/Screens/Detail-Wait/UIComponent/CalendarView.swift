@@ -154,8 +154,8 @@ final class CalendarView: UIView {
     }
 
     func setupDateRange() {
-        guard let startDate = self.startDateText.stringToDate else { return }
-        guard let endDate = self.endDateText.stringToDate else { return }
+        guard let startDate = self.startDateText.toDefaultDate else { return }
+        guard let endDate = self.endDateText.toDefaultDate else { return }
         self.setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 
@@ -187,8 +187,8 @@ final class CalendarView: UIView {
             self.calendar.select(addDate)
             startDate += self.oneDayInterval
         }
-        self.tempStartDateText = self.calendar.selectedDates[startIndex].dateToString
-        self.tempEndDateText = self.calendar.selectedDates[endIndex].dateToString
+        self.tempStartDateText = self.calendar.selectedDates[startIndex].toDefaultString
+        self.tempEndDateText = self.calendar.selectedDates[endIndex].toDefaultString
     }
 
     func countDateRange() -> Int {
@@ -228,12 +228,12 @@ extension CalendarView: FSCalendarDelegate {
                 self.viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle,
                                           message: TextLiteral.maxMessage)
             } else {
-                self.tempEndDateText = date.dateToString
+                self.tempEndDateText = date.toDefaultString
                 self.setDateRange()
                 calendar.reloadData()
             }
         } else if isReclickedStartDate {
-            self.tempStartDateText = date.dateToString
+            self.tempStartDateText = date.toDefaultString
             self.tempEndDateText = ""
             (calendar.selectedDates).forEach {
                 calendar.deselect($0)

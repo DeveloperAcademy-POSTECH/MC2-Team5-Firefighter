@@ -1,5 +1,5 @@
 //
-//  UILabel+Extension.swift
+//  UILabel+Config.swift
 //  Manito
 //
 //  Created by SHIN YOON AH on 2022/06/12.
@@ -17,22 +17,6 @@ extension UILabel {
                                                              .paragraphStyle: paragraphStyle])
             lineBreakStrategy = .hangulWordPriority
         }
-    }
-    
-    func setTyping(text: String, characterDelay: TimeInterval = 5.0) {
-        self.text = ""
-        
-        let writingTask = DispatchWorkItem { [weak self] in
-            text.forEach { char in
-                DispatchQueue.main.async {
-                    self?.text?.append(char)
-                }
-                Thread.sleep(forTimeInterval: characterDelay/100)
-            }
-        }
-        
-        let queue: DispatchQueue = .init(label: "typespeed", qos: .userInteractive)
-        queue.asyncAfter(deadline: .now() + 0.7, execute: writingTask)
     }
     
     func applyColor(to targetString: String, with color: UIColor) {
