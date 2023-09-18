@@ -7,13 +7,24 @@
 
 import Foundation
 
+///
+/// 메인 뷰에서 사용하는 방 정보
+/// 데이터 모델 Entity 입니다.
+///
 struct RoomListItem {
+    /// 방의 고유 id값
     let id: Int
+    /// 방 제목
     let title: String
+    /// 현재 진행 상태
     let state: RoomStatus
+    /// 현재 참여한 인원 (옵션)
     let participatingCount: Int?
+    /// 방 참여 가능한 최대 인원
     let capacity: Int
+    /// 시작 날짜 ex) 2023.09.12
     let startDate: String
+    /// 종료 날짜 ex) 2023.09.16
     let endDate: String
 
     init(
@@ -36,38 +47,16 @@ struct RoomListItem {
 }
 
 extension RoomListItem {
+    /// 시작날짜와 종료날짜를 ~을 포함한 String 형식으로 반환
+    /// ex) 2023.09.12 ~ 2023.09.16
     var dateRangeText: String {
         return self.startDate + " ~ " + self.endDate
     }
-
-    var isAlreadyPastDate: Bool {
-        if let date = self.startDate.toDefaultDate {
-            return date.distance(to: Date()) > 86400
-        } else {
-            return false
-        }
-    }
-
-    var isStart: Bool {
-        if let date = self.startDate.toDefaultDate {
-            let isStartDate = date.distance(to: Date()) < 86400
-            let isPast = date.distance(to: Date()) > 86400
-            return !isPast && isStartDate
-        } else {
-            return false
-        }
-    }
-
+    
+    /// 시작 날짜가 오늘보다 과거인지
     var isStartDatePast: Bool {
         guard let startDate = self.startDate.toDefaultDate else { return true }
         return startDate.isPast
-    }
-
-    var dateRange: (startDate: String, endDate: String) {
-        let fiveDaysInterval: TimeInterval = 86400 * 4
-        let startDate: String = self.isStartDatePast ? Date().toDefaultString : self.startDate
-        let endDate: String = self.isStartDatePast ? (Date() + fiveDaysInterval).toDefaultString : self.endDate
-        return (startDate, endDate)
     }
 }
 
