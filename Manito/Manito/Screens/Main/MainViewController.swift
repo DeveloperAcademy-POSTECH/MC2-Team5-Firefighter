@@ -29,12 +29,12 @@ final class MainViewController: UIViewController, BaseViewControllerType {
     
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgBackground
+        imageView.image = UIImage.Image.background
         return imageView
     }()
     private let skeletonAnimation: SkeletonLayerAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
     private let refreshControl: UIRefreshControl = UIRefreshControl()
-    private let appTitleView: UIImageView = UIImageView(image: ImageLiterals.imgLogo)
+    private let appTitleView: UIImageView = UIImageView(image: UIImage.Image.logo)
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
         let action = UIAction { [weak self] _ in
@@ -43,7 +43,7 @@ final class MainViewController: UIViewController, BaseViewControllerType {
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-    private let imgStar: UIImageView = UIImageView(image: ImageLiterals.imgStar)
+    private let imgStar: UIImageView = UIImageView(image: UIImage.Image.star)
     private let commonMissionView: CommonMissionView = CommonMissionView()
     private let menuTitle: UILabel = {
         let label = UILabel()
@@ -194,9 +194,9 @@ final class MainViewController: UIViewController, BaseViewControllerType {
     
     private func setupGifImage() {
         DispatchQueue.main.async {
-            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
-            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
-            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
+            self.maCharacterImageView.animate(withGIFNamed: GIFSet.ma, animationBlock: nil)
+            self.niCharacterImageView.animate(withGIFNamed: GIFSet.ni, animationBlock: nil)
+            self.ttoCharacterImageView.animate(withGIFNamed: GIFSet.tto, animationBlock: nil)
         }
     }
     

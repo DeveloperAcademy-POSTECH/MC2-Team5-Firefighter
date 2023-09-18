@@ -38,15 +38,15 @@ enum DefaultCharacterType: CaseIterable {
 
     var image: UIImage {
         switch self {
-        case .pink: return ImageLiterals.imgCharacterPink
-        case .brown: return ImageLiterals.imgCharacterBrown
-        case .blue: return ImageLiterals.imgCharacterBlue
-        case .red: return ImageLiterals.imgCharacterRed
-        case .orange: return ImageLiterals.imgCharacterOrange
-        case .yellow: return ImageLiterals.imgCharacterYellow
-        case .lightGreen: return ImageLiterals.imgCharacterLightGreen
-        case .heavyPink: return ImageLiterals.imgCharacterHeavyPink
-        case .purple: return ImageLiterals.imgCharacterPurple
+        case .pink: return UIImage.Image.characterPink
+        case .brown: return UIImage.Image.characterBrown
+        case .blue: return UIImage.Image.characterBlue
+        case .red: return UIImage.Image.characterRed
+        case .orange: return UIImage.Image.characterOrange
+        case .yellow: return UIImage.Image.characterYellow
+        case .lightGreen: return UIImage.Image.characterLightGreen
+        case .heavyPink: return UIImage.Image.characterHeavyPink
+        case .purple: return UIImage.Image.characterPurple
         }
     }
 }

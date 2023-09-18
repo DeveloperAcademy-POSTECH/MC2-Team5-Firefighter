@@ -14,8 +14,8 @@ final class LoginViewController: UIViewController, BaseViewControllerType, Navig
 
     // MARK: - ui component
 
-    private let logoImageView: UIImageView = UIImageView(image: ImageLiterals.imgAppIcon)
-    private let logoTextImageView: UIImageView = UIImageView(image: ImageLiterals.imgTextLogo)
+    private let logoImageView: UIImageView = UIImageView(image: UIImage.Image.appIcon)
+    private let logoTextImageView: UIImageView = UIImageView(image: UIImage.Image.textLogo)
     private let appleLoginButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
         button.cornerRadius = 25
