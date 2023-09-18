@@ -26,8 +26,8 @@ final class GuideView: UIView {
 
         var image: UIImage {
             switch self {
-            case .letter: return ImageLiterals.icLetterMissionInfo
-            default: return ImageLiterals.icMissionInfo
+            case .letter: return UIImage.Icon.letterMissionInfo
+            default: return UIImage.Icon.missionInfo
             }
         }
     }
@@ -35,7 +35,7 @@ final class GuideView: UIView {
     // MARK: - ui component
 
     private let guideButton: UIButton = UIButton()
-    private let guideBoxImageView: UIImageView = UIImageView(image: ImageLiterals.imgGuideBox)
+    private let guideBoxImageView: UIImageView = UIImageView(image: UIImage.Image.guideBox)
     private let guideLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0

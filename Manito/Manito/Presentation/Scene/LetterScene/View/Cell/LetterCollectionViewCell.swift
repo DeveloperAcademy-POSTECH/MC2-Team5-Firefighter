@@ -66,7 +66,7 @@ final class LetterCollectionViewCell: UICollectionViewCell, BaseViewType {
     }()
     private let reportButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icReport, for: .normal)
+        button.setImage(UIImage.Icon.report, for: .normal)
         return button
     }()
 

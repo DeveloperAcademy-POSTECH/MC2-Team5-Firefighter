@@ -16,7 +16,7 @@ final class CharacterCollectionViewCell: UICollectionViewCell, BaseViewType {
     private let characterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.image = ImageLiterals.imgMa
+        imageView.image = UIImage.Image.ma
         return imageView
     }()
     
