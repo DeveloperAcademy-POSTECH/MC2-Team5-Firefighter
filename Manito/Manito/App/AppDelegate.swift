@@ -7,9 +7,10 @@
 
 import AuthenticationServices
 import UIKit
+import UserNotifications
 
 import Firebase
-import UserNotifications
+import MTResource
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

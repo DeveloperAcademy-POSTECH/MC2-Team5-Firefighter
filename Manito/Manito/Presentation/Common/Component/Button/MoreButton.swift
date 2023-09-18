@@ -18,7 +18,7 @@ final class MoreButton: UIButton {
     }
     
     private func configUI() {
-        self.setImage(ImageLiterals.icMore, for: .normal)
+        self.setImage(UIImage.Icon.more, for: .normal)
         self.tintColor = .white
     }
 }

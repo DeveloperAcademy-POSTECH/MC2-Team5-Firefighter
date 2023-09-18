@@ -53,7 +53,7 @@ final class DetailWaitView: UIView, BaseViewType {
     }()
     private let characterImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
+        imageView.image = UIImage.Image.ni
         return imageView
     }()
     private let userCountLabel: UILabel = {

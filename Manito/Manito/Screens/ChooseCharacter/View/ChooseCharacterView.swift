@@ -21,12 +21,12 @@ final class ChooseCharacterView: UIView, BaseViewType {
     
     private let closeButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
-        button.setImage(ImageLiterals.btnXmark, for: .normal)
+        button.setImage(UIImage.Button.xmark, for: .normal)
         return button
     }()
     private let backButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
-        button.setImage(ImageLiterals.icBack, for: .normal)
+        button.setImage(UIImage.Button.back, for: .normal)
         return button
     }()
     private let titleLabel: UILabel = {
