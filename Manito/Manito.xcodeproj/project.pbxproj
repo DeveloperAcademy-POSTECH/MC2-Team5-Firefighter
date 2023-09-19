@@ -30,6 +30,7 @@
 		398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */; };
 		398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CC92A13597600DEFCEC /* FSCalendar */; };
 		398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CCB2A13599D00DEFCEC /* FirebaseAuth */; };
+		398CED082AB9E48F00F50CBD /* RoomInfoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398CED072AB9E48F00F50CBD /* RoomInfoTest.swift */; };
 		399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */; };
 		39BDDCC42A52BB4A005E0A71 /* DetailWaitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BDDCC32A52BB4A005E0A71 /* DetailWaitService.swift */; };
 		39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957CD2876E2ED00A04A2B /* LoginViewController.swift */; };
@@ -251,6 +252,7 @@
 		395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModelTest.swift; sourceTree = "<group>"; };
 		398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
 		398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		398CED072AB9E48F00F50CBD /* RoomInfoTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInfoTest.swift; sourceTree = "<group>"; };
 		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
 		39BDDCC32A52BB4A005E0A71 /* DetailWaitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitService.swift; sourceTree = "<group>"; };
 		39C957CD2876E2ED00A04A2B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				390E5CAC2AB89BCE00EBE52E /* RoomListItemTest.swift */,
+				398CED072AB9E48F00F50CBD /* RoomInfoTest.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1751,6 +1754,7 @@
 			files = (
 				390E5CAD2AB89BCE00EBE52E /* RoomListItemTest.swift in Sources */,
 				390E5CB22AB8A70600EBE52E /* Date+ExtensionTest.swift in Sources */,
+				398CED082AB9E48F00F50CBD /* RoomInfoTest.swift in Sources */,
 				395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */,
 				3904F5062AA37A3C00B6264F /* MockDetailWaitService.swift in Sources */,
 			);
