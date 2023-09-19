@@ -6,30 +6,228 @@
 //
 
 import XCTest
+@testable import Manito
 
 final class RoomInfoTest: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func test_canStart_변수가_존재하는가() {
+        let sut = RoomInfo.testRoom
+        
+        let _ = sut.canStart
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func test_canStart_방장이아니고_시작인원이4명이하고_시작날짜가오늘이아닐때() {
+        // given
+        let sut = RoomInfo(
+            roomInformation: RoomListItem(id: 0,
+                                          title: "test",
+                                          state: "PRE",
+                                          capacity: 10,
+                                          startDate: "2030.01.01",
+                                          endDate: "2030.01.05"),
+            participants: ParticipantList(count: 3, members: [UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee]),
+            manittee: UserInfo.testUserManittee,
+            manitto: UserInfo.testUserManitto,
+            invitation: InvitationCode.testInvitationCode,
+            didViewRoulette: false,
+            mission: IndividualMission.testIndividualMission,
+            admin: false,
+            messages: MessageCountInfo.testMessageInfo)
+        
+        // when
+        let canStart = sut.canStart
+        
+        // then
+        XCTAssertFalse(canStart)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    func test_canStart_방장이아니고_시작인원이4명이하고_시작날짜가오늘일때() {
+        // given
+        let oneTimeInterval: TimeInterval = 86400
+        let todayString = Date().toFullString
+        let endDate = todayString.toDefaultDate! + oneTimeInterval
+        let endDateString = endDate.toFullString
+        let sut = RoomInfo(
+            roomInformation: RoomListItem(id: 0,
+                                          title: "test",
+                                          state: "PRE",
+                                          capacity: 10,
+                                          startDate: todayString,
+                                          endDate: endDateString),
+            participants: ParticipantList(count: 3, members: [UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee]),
+            manittee: UserInfo.testUserManittee,
+            manitto: UserInfo.testUserManitto,
+            invitation: InvitationCode.testInvitationCode,
+            didViewRoulette: false,
+            mission: IndividualMission.testIndividualMission,
+            admin: false,
+            messages: MessageCountInfo.testMessageInfo)
+        
+        // when
+        let canStart = sut.canStart
+        
+        // then
+        XCTAssertFalse(canStart)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func test_canStart_방장이아니고_시작인원이4명이상이고_시작날짜가오늘이아닐때() {
+        // given
+        let sut = RoomInfo(
+            roomInformation: RoomListItem(id: 0,
+                                          title: "test",
+                                          state: "PRE",
+                                          capacity: 10,
+                                          startDate: "2030.01.01",
+                                          endDate: "2030.01.05"),
+            participants: ParticipantList(count: 4, members: [UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee]),
+            manittee: UserInfo.testUserManittee,
+            manitto: UserInfo.testUserManitto,
+            invitation: InvitationCode.testInvitationCode,
+            didViewRoulette: false,
+            mission: IndividualMission.testIndividualMission,
+            admin: false,
+            messages: MessageCountInfo.testMessageInfo)
+        
+        // when
+        let canStart = sut.canStart
+        
+        // then
+        XCTAssertFalse(canStart)
     }
-
+    
+    func test_canStart_방장이아니고_시작인원이4명이상이고_시작날짜가오늘일때() {
+        // given
+        let oneTimeInterval: TimeInterval = 86400
+        let todayString = Date().toFullString
+        let endDate = todayString.toDefaultDate! + oneTimeInterval
+        let endDateString = endDate.toFullString
+        let sut = RoomInfo(
+            roomInformation: RoomListItem(id: 0,
+                                          title: "test",
+                                          state: "PRE",
+                                          capacity: 10,
+                                          startDate: todayString,
+                                          endDate: endDateString),
+            participants: ParticipantList(count: 4, members: [UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee]),
+            manittee: UserInfo.testUserManittee,
+            manitto: UserInfo.testUserManitto,
+            invitation: InvitationCode.testInvitationCode,
+            didViewRoulette: false,
+            mission: IndividualMission.testIndividualMission,
+            admin: false,
+            messages: MessageCountInfo.testMessageInfo)
+        
+        // when
+        let canStart = sut.canStart
+        
+        // then
+        XCTAssertFalse(canStart)
+    }
+    
+    func test_canStart_방장이고_시작인원이4명이하고_시작날짜가오늘이아닐때() {
+        // given
+        let sut = RoomInfo(
+            roomInformation: RoomListItem(id: 0,
+                                          title: "test",
+                                          state: "PRE",
+                                          capacity: 10,
+                                          startDate: "2030.01.01",
+                                          endDate: "2030.01.05"),
+            participants: ParticipantList(count: 3, members: [UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee]),
+            manittee: UserInfo.testUserManittee,
+            manitto: UserInfo.testUserManitto,
+            invitation: InvitationCode.testInvitationCode,
+            didViewRoulette: false,
+            mission: IndividualMission.testIndividualMission,
+            admin: true,
+            messages: MessageCountInfo.testMessageInfo)
+        
+        // when
+        let canStart = sut.canStart
+        
+        // then
+        XCTAssertFalse(canStart)
+    }
+    
+    func test_canStart_방장이고_시작인원이4명이하고_시작날짜가오늘일때() {
+        // given
+        let oneTimeInterval: TimeInterval = 86400
+        let todayString = Date().toFullString
+        let endDate = todayString.toDefaultDate! + oneTimeInterval
+        let endDateString = endDate.toFullString
+        let sut = RoomInfo(
+            roomInformation: RoomListItem(id: 0,
+                                          title: "test",
+                                          state: "PRE",
+                                          capacity: 10,
+                                          startDate: todayString,
+                                          endDate: endDateString),
+            participants: ParticipantList(count: 3, members: [UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee]),
+            manittee: UserInfo.testUserManittee,
+            manitto: UserInfo.testUserManitto,
+            invitation: InvitationCode.testInvitationCode,
+            didViewRoulette: false,
+            mission: IndividualMission.testIndividualMission,
+            admin: true,
+            messages: MessageCountInfo.testMessageInfo)
+        
+        // when
+        let canStart = sut.canStart
+        
+        // then
+        XCTAssertFalse(canStart)
+    }
+    
+    func test_canStart_방장이고_시작인원이4명이상이고_시작날짜가오늘이아닐때() {
+        // given
+        let sut = RoomInfo(
+            roomInformation: RoomListItem(id: 0,
+                                          title: "test",
+                                          state: "PRE",
+                                          capacity: 10,
+                                          startDate: "2030.01.01",
+                                          endDate: "2030.01.05"),
+            participants: ParticipantList(count: 4, members: [UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee]),
+            manittee: UserInfo.testUserManittee,
+            manitto: UserInfo.testUserManitto,
+            invitation: InvitationCode.testInvitationCode,
+            didViewRoulette: false,
+            mission: IndividualMission.testIndividualMission,
+            admin: true,
+            messages: MessageCountInfo.testMessageInfo)
+        
+        // when
+        let canStart = sut.canStart
+        
+        // then
+        XCTAssertFalse(canStart)
+    }
+    
+    func test_canStart_방장이고_시작인원이4명이상이고_시작날짜가오늘일때() {
+        // given
+        let oneTimeInterval: TimeInterval = 86400
+        let todayString = Date().toFullString
+        let endDate = todayString.toDefaultDate! + oneTimeInterval
+        let endDateString = endDate.toFullString
+        let sut = RoomInfo(
+            roomInformation: RoomListItem(id: 0,
+                                          title: "test",
+                                          state: "PRE",
+                                          capacity: 10,
+                                          startDate: todayString,
+                                          endDate: endDateString),
+            participants: ParticipantList(count: 4, members: [UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee, UserInfo.testUserManittee]),
+            manittee: UserInfo.testUserManittee,
+            manitto: UserInfo.testUserManitto,
+            invitation: InvitationCode.testInvitationCode,
+            didViewRoulette: false,
+            mission: IndividualMission.testIndividualMission,
+            admin: true,
+            messages: MessageCountInfo.testMessageInfo)
+        
+        // when
+        let canStart = sut.canStart
+        
+        // then
+        XCTAssertTrue(canStart)
+    }
 }
