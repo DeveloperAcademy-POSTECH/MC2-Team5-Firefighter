@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class CreateNicknameViewController: UIViewController, Navigationable, Keyboardable {
+final class CreateNicknameViewController: UIViewController, Keyboardable {
     
     // MARK: - property
     
@@ -46,7 +46,6 @@ final class CreateNicknameViewController: UIViewController, Navigationable, Keyb
         self.configureNavigationController()
         self.setupBackButton()
         self.bindViewModel()
-        self.setupNavigation()
         self.setupKeyboardGesture()
     }
     
