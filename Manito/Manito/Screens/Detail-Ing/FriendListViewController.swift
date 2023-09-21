@@ -7,13 +7,13 @@
 
 import UIKit
 
-final class FriendListViewController: BaseViewController {
-    var friendArray: [Member] = [] {
+final class FriendListViewController: BaseViewController, BaseViewControllerType {
+    var friendArray: [MemberInfoDTO] = [] {
         didSet {
             friendListCollectionView.reloadData()
         }
     }
-    var detailIngService: DetailIngAPI = DetailIngAPI(apiService: APIService())
+    var detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
     
     var roomIndex: Int = 0
     
@@ -33,13 +33,22 @@ final class FriendListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
         setupDelegation()
     }
-    
-    override func configureUI() {
-        super.configureUI()
-        friendListCollectionView.backgroundColor = .clear
+
+    // MARK: - base func
+
+    func setupLayout() {
+        // FIXME: - 스토리보드를 코드 베이스로 바꿔야 하는 화면입니다.
     }
+
+    func configureUI() {
+        self.view.backgroundColor = .backgroundGrey
+        self.friendListCollectionView.backgroundColor = .clear
+    }
+
+    // MARK: - func
     
     private func setupDelegation() {
         friendListCollectionView.delegate = self
@@ -51,10 +60,8 @@ final class FriendListViewController: BaseViewController {
     private func requestWithFriends() {
         Task {
             do {
-                let data = try await detailIngService.requestWithFriends(roomId: "\(roomIndex)")
-                if let list = data {
-                    friendArray = list.members ?? []
-                }
+                let data = try await self.detailRoomRepository.fetchWithFriend(roomId: "\(roomIndex)")
+                friendArray = data.members ?? []
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {

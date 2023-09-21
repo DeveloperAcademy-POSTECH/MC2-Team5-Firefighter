@@ -15,7 +15,7 @@ protocol SelectManitteeViewDelegate: AnyObject {
     func moveToNextStep()
 }
 
-final class SelectManitteeView: UIView {
+final class SelectManitteeView: UIView, BaseViewType {
 
     // MARK: - ui component
 
@@ -51,7 +51,7 @@ final class SelectManitteeView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
         self.setupButtonAction()
         self.setupSwipeGesture()
     }
@@ -63,7 +63,7 @@ final class SelectManitteeView: UIView {
 
     // MARK: - func
 
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.joystickBackgroundView)
         self.joystickBackgroundView.snp.makeConstraints {
             $0.edges.equalTo(self.safeAreaLayoutGuide)
@@ -102,6 +102,12 @@ final class SelectManitteeView: UIView {
             $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(31)
         }
     }
+
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - func
 
     private func setupButtonAction() {
         let confirmAction = UIAction { [weak self] _ in

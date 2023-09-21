@@ -9,12 +9,12 @@ import UIKit
 
 import SnapKit
 
-class InvitedCodeViewController: BaseViewController {
+class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
     
-    var roomInfo: RoomDTO
+    var roomInfo: RoomListItemDTO
     var code: String
     
-    init(roomInfo: RoomDTO, code: String){
+    init(roomInfo: RoomListItemDTO, code: String){
         self.roomInfo = roomInfo
         self.code = code
         super.init()
@@ -48,14 +48,14 @@ class InvitedCodeViewController: BaseViewController {
     private lazy var roomDateLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
-        label.text = "\(roomInfo.startDate) ~ \(roomInfo.endDate)"
+        label.text = "\(roomInfo.startDate ?? "") ~ \(roomInfo.endDate ?? "")"
         return label
     }()
     private let roomImage = UIImageView(image: ImageLiterals.imgCharacterBrown)
     private lazy var roomPersonLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
-        label.text = "X \(roomInfo.capacity)인"
+        label.text = "X \(roomInfo.capacity ?? 0)인"
         return label
     }()
     private lazy var roomPersonView: UIView = {
@@ -101,9 +101,16 @@ class InvitedCodeViewController: BaseViewController {
         print("\(#file) is dead")
     }
 
-    // MARK: - configure
+    // MARK: - life cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.baseViewDidLoad()
+    }
+
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         view.addSubview(invitedImageView)
         invitedImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(142)
@@ -153,7 +160,7 @@ class InvitedCodeViewController: BaseViewController {
         }
     }
     
-    override func configureUI() {
-        view.backgroundColor = .black.withAlphaComponent(0.8)
+    func configureUI() {
+        self.view.backgroundColor = .black.withAlphaComponent(0.8)
     }
 }

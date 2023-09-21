@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class LoginViewController: BaseViewController {
+final class LoginViewController: BaseViewController, BaseViewControllerType {
 
     // MARK: - ui component
 
@@ -24,7 +24,7 @@ final class LoginViewController: BaseViewController {
     
     // MARK: - property
     
-    private let loginService: LoginAPI = LoginAPI(apiService: APIService())
+    private let loginRepository: LoginRepository = LoginRepositoryImpl()
     
     // MARK: - init
     
@@ -36,12 +36,14 @@ final class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
         self.setupLoginButton()
+        self.configureNavigationBar()
     }
 
-    // MARK: - override
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         self.view.addSubview(self.logoImageView)
         self.logoImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -63,8 +65,16 @@ final class LoginViewController: BaseViewController {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
         }
     }
+
+    func configureUI() {
+        self.view.backgroundColor = .backgroundGrey
+    }
     
     // MARK: - func
+    
+    private func configureNavigationBar() {
+        self.navigationController?.navigationBar.isHidden = true
+    }
     
     private func setupLoginButton() {
         let action = UIAction { [weak self] _ in
@@ -99,26 +109,27 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     
                     Task {
                         do {
-                            let response = try await self.loginService.dispatchAppleLogin(dto: LoginDTO(identityToken: tokenToString, fcmToken: UserDefaultStorage.fcmToken))
-                            
-                            if let data = response {
-                                UserDefaultHandler.setIsLogin(isLogin: true)
-                                UserDefaultHandler.setAccessToken(accessToken: data.accessToken ?? "")
-                                UserDefaultHandler.setRefreshToken(refreshToken: data.refreshToken ?? "")
+                            let loginDTO = LoginRequestDTO(identityToken: tokenToString, fcmToken: UserDefaultStorage.fcmToken)
+                            let data = try await self.loginRepository.dispatchAppleLogin(login: loginDTO)
 
-                                guard data.nickname != nil else {
-                                    self.navigationController?.pushViewController(CreateNickNameViewController(), animated: true)
+                            UserDefaultHandler.setIsLogin(isLogin: true)
+                            UserDefaultHandler.setAccessToken(accessToken: data.accessToken ?? "")
+                            UserDefaultHandler.setRefreshToken(refreshToken: data.refreshToken ?? "")
+
+                            if let isNewMember = data.isNewMember {
+                                if isNewMember {
+                                    self.navigationController?.pushViewController(CreateNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
                                     return
                                 }
-                                
-                                UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
-                                UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
-                                viewController.modalPresentationStyle = .fullScreen
-                                viewController.modalTransitionStyle = .crossDissolve
-                                self.present(viewController, animated: true)
                             }
+
+                            UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
+                            UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+                            viewController.modalPresentationStyle = .fullScreen
+                            viewController.modalTransitionStyle = .crossDissolve
+                            self.present(viewController, animated: true)
                         } catch NetworkError.serverError {
                             print("server Error")
                         } catch NetworkError.encodingError {

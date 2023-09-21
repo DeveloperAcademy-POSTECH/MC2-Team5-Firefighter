@@ -9,43 +9,62 @@ import UIKit
 
 import SnapKit
 
-final class CharacterCollectionViewCell: BaseCollectionViewCell {
+final class CharacterCollectionViewCell: UICollectionViewCell, BaseViewType {
     
-    var characterBackground: UIColor?
+    // MARK: - ui component
     
-    // MARK: - property
-    
-    lazy var characterImageView: UIImageView = {
+    private let characterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = ImageLiterals.imgMa
         return imageView
     }()
     
-    // MARK: - life cycle
+    // MARK: - property
     
-    override func setupLayout() {
-        contentView.addSubview(characterImageView)
-        characterImageView.snp.makeConstraints {
+    private var characterBackgroundColor: UIColor?
+
+    // MARK: - init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.baseInit()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - base func
+    
+    func setupLayout() {
+        self.contentView.addSubview(self.characterImageView)
+        self.characterImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.width.height.equalTo(self.frame.size.width).multipliedBy(0.92)
         }
     }
     
-    override func configureUI() {
-        makeBorderLayer(color: .white)
+    func configureUI() {
+        self.makeBorderLayer(color: .white)
         layer.cornerRadius = self.frame.size.width / 2
     }
     
     override var isSelected: Bool {
         didSet {
-            backgroundColor = isSelected ? characterBackground : characterBackground?.withAlphaComponent(0.5)
-            contentView.alpha = isSelected ? 1.0 : 0.5
+            self.backgroundColor = self.isSelected ? self.characterBackgroundColor : self.characterBackgroundColor?.withAlphaComponent(0.5)
+            self.contentView.alpha = self.isSelected ? 1.0 : 0.5
         }
     }
+
+    func configureBackgroundColor(color: UIColor) {
+        self.characterBackgroundColor = color
+        self.backgroundColor = self.characterBackgroundColor?.withAlphaComponent(0.5)
+        self.contentView.alpha = 0.5
+    }
     
-    func setImageBackgroundColor() {
-        backgroundColor = characterBackground?.withAlphaComponent(0.5)
-        contentView.alpha = 0.5
+    func configureImage(image: UIImage) {
+        self.characterImageView.image = image
     }
 }

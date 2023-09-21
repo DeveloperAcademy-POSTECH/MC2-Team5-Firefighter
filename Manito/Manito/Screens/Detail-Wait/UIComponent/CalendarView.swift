@@ -5,10 +5,15 @@
 //  Created by Mingwan Choi on 2022/06/16.
 //
 
+import Combine
 import UIKit
 
 import FSCalendar
 import SnapKit
+
+protocol CalendarDelegate: AnyObject {
+    func detectChangeButton(_ value: Bool)
+}
 
 final class CalendarView: UIView {
     
@@ -69,6 +74,10 @@ final class CalendarView: UIView {
     private var tempStartDateText: String = ""
     private var tempEndDateText: String = ""
     var isFirstTap: Bool = false
+    private weak var delegate: CalendarDelegate?
+    
+    let startDateTapPublisher = PassthroughSubject<String, Never>()
+    let endDateTapPublisher = PassthroughSubject<String, Never>()
 
     // MARK: - init
 
@@ -119,8 +128,14 @@ final class CalendarView: UIView {
         self.nextButton.addAction(action, for: .touchUpInside)
     }
     
+    func configureCalendarDelegate(_ delegate: CalendarDelegate) {
+        self.delegate = delegate
+    }
+    
     func setupButtonState() {
         let hasDate = self.tempStartDateText != "" && self.tempEndDateText != ""
+        self.delegate?.detectChangeButton(hasDate)
+        // FIXME: - delegate로 통일 후 삭제해야함
         self.changeButtonState?(hasDate)
     }
 
@@ -228,6 +243,8 @@ extension CalendarView: FSCalendarDelegate {
             calendar.reloadData()
         }
         
+        self.startDateTapPublisher.send(self.getTempStartDate())
+        self.endDateTapPublisher.send(self.getTempEndDate())
         self.setupButtonState()
     }
 

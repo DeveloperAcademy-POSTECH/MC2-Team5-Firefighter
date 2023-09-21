@@ -13,7 +13,7 @@ protocol OpenManittoViewDelegate: AnyObject {
     func confirmButtonTapped()
 }
 
-final class OpenManittoView: UIView {
+final class OpenManittoView: UIView, BaseViewType {
 
     private enum InternalSize {
         static let collectionHorizontalSpacing: CGFloat = 29.0
@@ -69,7 +69,7 @@ final class OpenManittoView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -77,9 +77,9 @@ final class OpenManittoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - func
+    // MARK: - base func
 
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(57)
@@ -98,7 +98,13 @@ final class OpenManittoView: UIView {
         }
     }
 
-    private func animateManittoCollectionView(with friendList: FriendList,
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - func
+
+    private func animateManittoCollectionView(with friendList: FriendListDTO,
                                               _ manittoIndex: Int,
                                               _ manittoNickname: String) {
         let timeInterval: Double = 0.3
@@ -115,7 +121,7 @@ final class OpenManittoView: UIView {
         })
     }
 
-    private func performRandomShuffleAnimation(with timeInterval: TimeInterval, _ friendList: FriendList) {
+    private func performRandomShuffleAnimation(with timeInterval: TimeInterval, _ friendList: FriendListDTO) {
         guard let count = friendList.count else { return }
         var countNumber: Int = 0
 
@@ -141,7 +147,7 @@ final class OpenManittoView: UIView {
         })
     }
 
-    func setupManittoAnimation(friendList: FriendList, manittoIndex: Int, manittoNickname: String) {
+    func setupManittoAnimation(friendList: FriendListDTO, manittoIndex: Int, manittoNickname: String) {
         self.animateManittoCollectionView(with: friendList, manittoIndex, manittoNickname)
         self.manittoCollectionView.reloadData()
     }

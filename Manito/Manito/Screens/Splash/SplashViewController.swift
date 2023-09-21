@@ -9,7 +9,7 @@ import UIKit
 
 import Gifu
 
-final class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController, BaseViewControllerType {
     
     // MARK: - ui component
     
@@ -31,16 +31,22 @@ final class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureUI()
+        self.baseViewDidLoad()
         self.setupGifImage()
         self.presentViewControllerAfterDelay()
     }
     
-    // MARK: - func
+    // MARK: - base func
+
+    func setupLayout() {
+        // FIXME: - 스토리보드를 코드 베이스로 바꿔야 하는 화면입니다.
+    }
     
-    private func configureUI() {
+    func configureUI() {
         self.view.backgroundColor = .backgroundGrey
     }
+
+    // MARK: - func
 
     private func presentLoginViewConroller() {
         let viewController = LoginViewController()
@@ -52,7 +58,7 @@ final class SplashViewController: UIViewController {
     }
 
     private func presentNicknameSettingViewController() {
-        let viewController = CreateNickNameViewController()
+        let viewController = CreateNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl())))
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
         self.present(viewController, animated: true)

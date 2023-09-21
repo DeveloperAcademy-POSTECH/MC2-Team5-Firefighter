@@ -9,9 +9,9 @@ import UIKit
 
 import SnapKit
 
-class CheckRoomViewController: BaseViewController {
+class CheckRoomViewController: BaseViewController, BaseViewControllerType {
     var roomId: Int?
-    var verification: VerificationCode?
+    var roomInfo: ParticipatedRoomInfoDTO?
     
     // MARK: - Property
     
@@ -70,10 +70,13 @@ class CheckRoomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
         setupViewController()
     }
+
+    // MARK: - base func
     
-    override func setupLayout() {
+    func setupLayout() {
         view.addSubview(roomInfoImageView)
         roomInfoImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -110,17 +113,17 @@ class CheckRoomViewController: BaseViewController {
         }
     }
     
-    override func configureUI() {
-        view.backgroundColor = .black.withAlphaComponent(0.7)
+    func configureUI() {
+        self.view.backgroundColor = .black.withAlphaComponent(0.7)
     }
     
     // MARK: - func
     
     private func setupViewController() {
-        guard let title = verification?.title,
-              let startDate = verification?.startDate,
-              let endDate = verification?.endDate,
-              let capacity = verification?.capacity else { return }
+        guard let title = roomInfo?.title,
+              let startDate = roomInfo?.startDate,
+              let endDate = roomInfo?.endDate,
+              let capacity = roomInfo?.capacity else { return }
         roomInfoView.roomLabel.text = title
         roomInfoView.dateLabel.text = "\(startDate) ~ \(endDate)"
         roomInfoView.peopleInfoView.peopleLabel.text = "X \(capacity)인"

@@ -11,7 +11,7 @@ import Gifu
 import SkeletonView
 import SnapKit
 
-final class MainViewController: BaseViewController {
+final class MainViewController: BaseViewController, BaseViewControllerType {
     
     private enum InternalSize {
         static let collectionHorizontalSpacing: CGFloat = 20
@@ -23,23 +23,6 @@ final class MainViewController: BaseViewController {
                                                   right: collectionHorizontalSpacing)
         static let commonMissionViewWidth: CGFloat = UIScreen.main.bounds.size.width - 40
         static let commonMissionViewHeight: CGFloat = commonMissionViewWidth * 0.6
-    }
-    
-    private enum RoomStatus: String {
-        case waiting = "PRE"
-        case starting = "PROCESSING"
-        case end = "POST"
-        
-        var roomStatus: String {
-            switch self {
-            case .waiting:
-                return TextLiteral.waiting
-            case .starting:
-                return TextLiteral.doing
-            case .end:
-                return TextLiteral.done
-            }
-        }
     }
     
     // MARK: - ui component
@@ -55,7 +38,7 @@ final class MainViewController: BaseViewController {
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
         let action = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(SettingViewController(), animated: true)
+            self?.navigationController?.pushViewController(SettingViewController(viewModel: SettingViewModel(settingService: SettingService(repository: SettingRepositoryImpl()))), animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         return button
@@ -98,8 +81,8 @@ final class MainViewController: BaseViewController {
     
     // MARK: - property
     
-    private let mainService: MainProtocol = MainAPI(apiService: APIService())
-    private var rooms: [ParticipatingRoom]?
+    private let mainRepository: MainRepository = MainRepositoryImpl()
+    private var rooms: [RoomListItemDTO]?
     
     // MARK: - init
     
@@ -111,6 +94,7 @@ final class MainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
         self.setupGifImage()
         self.setupRefreshControl()
         self.setupSkeletonView()
@@ -122,9 +106,9 @@ final class MainViewController: BaseViewController {
         self.requestManittoRoomList()
     }
     
-    // MARK: - override
+    // MARK: - base func
 
-    override func setupLayout() {
+    func setupLayout() {
         self.view.addSubview(self.backgroundImageView)
         self.backgroundImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -184,6 +168,12 @@ final class MainViewController: BaseViewController {
         self.guideView.setupGuideViewLayout()
     }
 
+    func configureUI() {
+        self.view.backgroundColor = .backgroundGrey
+    }
+
+    // MARK: - override
+
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
@@ -242,7 +232,7 @@ final class MainViewController: BaseViewController {
         let createRoom = UIAlertAction(title: TextLiteral.createRoom,
                                        style: .default,
                                        handler: { [weak self] _ in
-            let createVC = CreateRoomViewController()
+            let createVC = CreateRoomViewController(viewModel: CreateRoomViewModel(createRoomService: CreateRoomService(repository: RoomParticipationRepositoryImpl())))
             let navigationController = UINavigationController(rootViewController: createVC)
             navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
@@ -278,12 +268,15 @@ final class MainViewController: BaseViewController {
         }
     }
 
+    // FIXME: - roomIndex가 현재 item으로 설정되어 있고, index가 roomIndex로 설정되어있음. KTBQ2B
     private func pushDetailView(status: RoomStatus, roomIndex: Int, index: Int? = nil) {
         switch status {
-        case .waiting:
+        case .PRE:
             guard let index = index else { return }
-            let viewController = DetailWaitViewController(index: index)
-            viewController.roomInformation = self.rooms?[roomIndex]
+            let viewModel = DetailWaitViewModel(roomIndex: index,
+                                                detailWaitService: DetailWaitService(repository: DetailRoomRepositoryImpl()))
+            let viewController = DetailWaitViewController(viewModel: viewModel)
+            
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
             guard let roomId = rooms?[roomIndex].id?.description
@@ -311,8 +304,8 @@ final class MainViewController: BaseViewController {
     private func requestCommonMission() {
         Task {
             do {
-                let data = try await self.mainService.fetchCommonMission()
-                if let commonMission = data?.mission {
+                let data = try await self.mainRepository.fetchCommonMission()
+                if let commonMission = data.mission {
                     self.commonMissionView.missionLabel.text = commonMission
                 }
             } catch NetworkError.serverError {
@@ -328,13 +321,10 @@ final class MainViewController: BaseViewController {
     private func requestManittoRoomList() {
         Task {
             do {
-                let data = try await self.mainService.fetchManittoList()
-                
-                if let manittoList = data {
-                    self.rooms = manittoList.participatingRooms
-                    self.listCollectionView.reloadData()
-                    self.stopSkeletonView()
-                }
+                let data = try await self.mainRepository.fetchManittoList()
+                self.rooms = data.participatingRooms
+                self.listCollectionView.reloadData()
+                self.stopSkeletonView()
             } catch NetworkError.serverError {
                 print("server Error")
             } catch NetworkError.encodingError {
@@ -394,20 +384,9 @@ extension MainViewController: UICollectionViewDataSource {
             cell.roomLabel.text = "\(title)"
             cell.dateLabel.text = "\(startDate) ~ \(endDate)"
             
-            switch roomStatus {
-            case .waiting:
-                cell.roomStateView.stateLabel.text = "대기중"
-                cell.roomStateView.stateLabel.textColor = .darkGrey001
-                cell.roomStateView.backgroundColor = .badgeBeige
-            case .starting:
-                cell.roomStateView.stateLabel.text = "진행중"
-                cell.roomStateView.stateLabel.textColor = .white
-                cell.roomStateView.backgroundColor = .mainRed
-            case .end:
-                cell.roomStateView.stateLabel.text = "완료"
-                cell.roomStateView.stateLabel.textColor = .white
-                cell.roomStateView.backgroundColor = .grey002
-            }
+            cell.roomStateView.stateLabel.text = roomStatus.badgeTitle
+            cell.roomStateView.stateLabel.textColor = roomStatus.titleColor
+            cell.roomStateView.backgroundColor = roomStatus.badgeColor
             
             return cell
         }
@@ -424,7 +403,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
                   let roomStatus = RoomStatus.init(rawValue: state),
                   let id = self.rooms?[indexPath.item - 1].id
             else { return }
-            if roomStatus == .waiting {
+            if roomStatus == .PRE {
                 self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1, index: id)
             } else {
                 self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1)
