@@ -2083,7 +2083,7 @@
 				CODE_SIGN_ENTITLEMENTS = Manito/App/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2103,7 +2103,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_SWIFT_FLAGS = "-DDEV";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2124,7 +2124,7 @@
 				CODE_SIGN_ENTITLEMENTS = Manito/App/Manito.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = HF8GHZB58X;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -2145,7 +2145,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_SWIFT_FLAGS = "-DPROD";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TeamFirefighter.Manito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
