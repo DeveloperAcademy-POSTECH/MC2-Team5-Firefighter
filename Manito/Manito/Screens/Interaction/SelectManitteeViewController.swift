@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SelectManitteeViewController: BaseViewController {
+final class SelectManitteeViewController: UIViewController, Navigationable {
 
     private enum SelectionStep: Int {
         case showJoystick = 0, showCapsule, openName, openButton
@@ -31,7 +31,7 @@ final class SelectManitteeViewController: BaseViewController {
 
     init(roomId: String, manitteeNickname: String) {
         self.roomId = roomId
-        super.init()
+        super.init(nibName: nil, bundle: nil)
         self.selectManitteeView.configureUI(manitteeNickname: manitteeNickname)
     }
 
@@ -50,6 +50,7 @@ final class SelectManitteeViewController: BaseViewController {
         super.viewDidLoad()
         self.setupStepType()
         self.configureDelegation()
+        self.setupNavigation()
     }
 
     // MARK: - func

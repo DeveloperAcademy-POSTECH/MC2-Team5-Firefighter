@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
+class InvitedCodeViewController: UIViewController, BaseViewControllerType, Navigationable {
     
     var roomInfo: RoomListItemDTO
     var code: String
@@ -17,7 +17,7 @@ class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
     init(roomInfo: RoomListItemDTO, code: String){
         self.roomInfo = roomInfo
         self.code = code
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -106,6 +106,7 @@ class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.baseViewDidLoad()
+        self.setupNavigation()
     }
 
     // MARK: - base func

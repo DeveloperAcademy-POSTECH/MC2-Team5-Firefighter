@@ -16,7 +16,7 @@ final class CreateRoomCollectionViewCell: UICollectionViewCell, BaseViewType {
     private let imageView: UIImageView = UIImageView(image: UIImage.Icon.newRoom)    
     private let circleView: UIView = {
         let circleView = UIView()
-        circleView.backgroundColor = .yellow
+        circleView.backgroundColor = .yellow001
         circleView.layer.cornerRadius = 44
         circleView.layer.borderWidth = 1
         circleView.layer.borderColor = UIColor.grey003.cgColor

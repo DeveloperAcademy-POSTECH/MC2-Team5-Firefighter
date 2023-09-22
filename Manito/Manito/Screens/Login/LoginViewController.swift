@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class LoginViewController: BaseViewController, BaseViewControllerType {
+final class LoginViewController: UIViewController, BaseViewControllerType, Navigationable {
 
     // MARK: - ui component
 
@@ -39,6 +39,7 @@ final class LoginViewController: BaseViewController, BaseViewControllerType {
         self.baseViewDidLoad()
         self.setupLoginButton()
         self.configureNavigationBar()
+        self.setupNavigation()
     }
 
     // MARK: - base func

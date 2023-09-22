@@ -47,7 +47,7 @@ public extension UIColor {
 
     // MARK: - yellow
 
-    static var yellow: UIColor { return UIColor(hex: "#EDC845") }
+    static var yellow001: UIColor { return UIColor(hex: "#EDC845") }
     static var shadowYellow: UIColor { return UIColor(hex: "#C7A83C") }
 
     // MARK: - pink

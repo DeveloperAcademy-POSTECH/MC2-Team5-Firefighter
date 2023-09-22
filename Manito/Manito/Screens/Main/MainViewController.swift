@@ -11,7 +11,7 @@ import Gifu
 import SkeletonView
 import SnapKit
 
-final class MainViewController: BaseViewController, BaseViewControllerType {
+final class MainViewController: UIViewController, BaseViewControllerType {
     
     private enum InternalSize {
         static let collectionHorizontalSpacing: CGFloat = 20
@@ -94,6 +94,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBar()
         self.baseViewDidLoad()
         self.setupGifImage()
         self.setupRefreshControl()
@@ -102,6 +103,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.delegateInteractivePopGesture()
         self.requestCommonMission()
         self.requestManittoRoomList()
     }
@@ -174,9 +176,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
 
     // MARK: - override
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-
+    private func setupNavigationBar() {
         let appTitleView = self.makeBarButtonItem(with: self.appTitleView)
         let settingButtonView = self.makeBarButtonItem(with: self.settingButton)
 
@@ -290,6 +290,10 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
                        message: TextLiteral.mainViewControllerShowIdErrorAlertMessage)
     }
     
+    private func delegateInteractivePopGesture() {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
     // MARK: - network
     
     private func requestCommonMission() {
@@ -400,5 +404,11 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
                 self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1)
             }
         }
+    }
+}
+
+extension MainViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
 }

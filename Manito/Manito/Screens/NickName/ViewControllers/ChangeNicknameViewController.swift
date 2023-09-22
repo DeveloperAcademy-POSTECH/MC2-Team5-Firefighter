@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class ChangeNicknameViewController: BaseViewController {
+final class ChangeNicknameViewController: UIViewController, Navigationable, Keyboardable {
     
     // MARK: - property
     
@@ -23,7 +23,7 @@ final class ChangeNicknameViewController: BaseViewController {
     
     init(viewModel: NicknameViewModel) {
         self.viewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -44,6 +44,8 @@ final class ChangeNicknameViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bindViewModel()
+        self.setupNavigation()
+        self.setupKeyboardGesture()
     }
     
     // MARK: - override
