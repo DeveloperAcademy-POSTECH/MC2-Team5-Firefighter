@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class CreateNicknameViewController: BaseViewController {
+final class CreateNicknameViewController: UIViewController, Keyboardable {
     
     // MARK: - property
     
@@ -23,7 +23,7 @@ final class CreateNicknameViewController: BaseViewController {
     
     init(viewModel: NicknameViewModel) {
         self.viewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -46,6 +46,7 @@ final class CreateNicknameViewController: BaseViewController {
         self.configureNavigationController()
         self.setupBackButton()
         self.bindViewModel()
+        self.setupKeyboardGesture()
     }
     
     private func presentMainViewController() {
@@ -60,7 +61,7 @@ final class CreateNicknameViewController: BaseViewController {
         self.nicknameView.endEditingView()
     }
     
-    override func removeBarButtonItemOffset(with view: UIView, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
+    func removeItemOffset(with view: UIView, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
         let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
         offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
         offsetView.addSubview(view)
@@ -75,7 +76,7 @@ final class CreateNicknameViewController: BaseViewController {
     }
     
     private func setupBackButton() {
-        let leftOffsetBackButton = removeBarButtonItemOffset(with: UIView(), offsetX: 10)
+        let leftOffsetBackButton = removeItemOffset(with: UIView(), offsetX: 10)
         let emptyView = makeBarButtonItem(with: leftOffsetBackButton)
 
         navigationItem.leftBarButtonItem = emptyView

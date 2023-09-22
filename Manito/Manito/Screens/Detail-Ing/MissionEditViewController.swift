@@ -13,7 +13,7 @@ protocol MissionEditDelegate: AnyObject {
     func didChangeMission()
 }
 
-final class MissionEditViewController: BaseViewController, BaseViewControllerType {
+final class MissionEditViewController: UIViewController, BaseViewControllerType, Navigationable {
     
     // MARK: - property
     
@@ -65,7 +65,7 @@ final class MissionEditViewController: BaseViewController, BaseViewControllerTyp
     init(mission: String, roomId: String) {
         self.mission = mission
         self.roomId = roomId
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -80,6 +80,7 @@ final class MissionEditViewController: BaseViewController, BaseViewControllerTyp
         self.baseViewDidLoad()
         self.setupGesture()
         self.setupNotificationCenter()
+        self.setupNavigation()
     }
     
     // MARK: - base func

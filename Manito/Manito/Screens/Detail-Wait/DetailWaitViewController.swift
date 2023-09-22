@@ -14,7 +14,7 @@ protocol DetailWaitViewControllerDelegate: AnyObject {
     func didTappedChangeButton()
 }
 
-final class DetailWaitViewController: BaseViewController {
+final class DetailWaitViewController: UIViewController, Navigationable {
     
     // MARK: - ui component
     
@@ -32,7 +32,7 @@ final class DetailWaitViewController: BaseViewController {
     
     init(viewModel: DetailWaitViewModel) {
         self.detailWaitViewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -52,6 +52,7 @@ final class DetailWaitViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigation()
         self.setupNotificationCenter()
         self.configureNavigationController()
         self.bindViewModel()
