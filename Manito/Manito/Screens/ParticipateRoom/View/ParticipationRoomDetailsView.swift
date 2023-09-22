@@ -48,7 +48,7 @@ final class ParticipationRoomDetailsView: UIView, BaseViewType {
         button.setTitle(TextLiteral.participationRoomDetailsViewControllerNoButtonLabel, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 35)
-        button.backgroundColor = .yellow
+        button.backgroundColor = .yellow001
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
         return button
@@ -58,7 +58,7 @@ final class ParticipationRoomDetailsView: UIView, BaseViewType {
         button.setTitle(TextLiteral.participationRoomDetailsViewControllerYesBUttonLabel, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 35)
-        button.backgroundColor = .yellow
+        button.backgroundColor = .yellow001
         button.makeShadow(color: .shadowYellow, opacity: 1.0, offset: CGSize(width: 0, height: 4), radius: 1)
         button.layer.cornerRadius = 22
         return button
