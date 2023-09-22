@@ -7,8 +7,13 @@
 
 import Foundation
 
+///
+/// 마니또 참여 인원에 대한 Entity
+///
 struct ParticipantList {
+    /// 현재 참여한 총 인원 수
     let count: Int
+    /// 참여한 유저들 리스트
     let members: [UserInfo]
 }
 

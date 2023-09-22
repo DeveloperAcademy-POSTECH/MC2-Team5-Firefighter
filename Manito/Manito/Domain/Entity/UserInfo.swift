@@ -7,8 +7,13 @@
 
 import Foundation
 
+///
+/// 유저 정보에 대한 Entity
+///
 struct UserInfo {
+    /// 유저 고유 id 값
     let id: String
+    /// 유저 닉네임
     let nickname: String
 }
 
