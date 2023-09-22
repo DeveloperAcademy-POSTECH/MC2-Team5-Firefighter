@@ -16,6 +16,8 @@
 		3904F4FE2AA3743C00B6264F /* IndividualMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FD2AA3743C00B6264F /* IndividualMission.swift */; };
 		3904F5002AA3754400B6264F /* MessageCountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FF2AA3754400B6264F /* MessageCountInfo.swift */; };
 		3904F5062AA37A3C00B6264F /* MockDetailWaitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F5052AA37A3C00B6264F /* MockDetailWaitService.swift */; };
+		390E5CAD2AB89BCE00EBE52E /* RoomListItemTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390E5CAC2AB89BCE00EBE52E /* RoomListItemTest.swift */; };
+		390E5CB22AB8A70600EBE52E /* Date+ExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390E5CB12AB8A70600EBE52E /* Date+ExtensionTest.swift */; };
 		3915D54B2A7516A2002D6C25 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3915D54A2A7516A2002D6C25 /* Key.plist */; };
 		3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915D54C2A7516E9002D6C25 /* Key+Extension.swift */; };
 		391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391612D729E9231B004AE982 /* DetailWaitView.swift */; };
@@ -31,6 +33,7 @@
 		398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */; };
 		398B1CCA2A13597600DEFCEC /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CC92A13597600DEFCEC /* FSCalendar */; };
 		398B1CCC2A13599D00DEFCEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 398B1CCB2A13599D00DEFCEC /* FirebaseAuth */; };
+		398CED082AB9E48F00F50CBD /* RoomInfoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398CED072AB9E48F00F50CBD /* RoomInfoTest.swift */; };
 		399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */; };
 		39BDDCC42A52BB4A005E0A71 /* DetailWaitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BDDCC32A52BB4A005E0A71 /* DetailWaitService.swift */; };
 		39C957CE2876E2ED00A04A2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957CD2876E2ED00A04A2B /* LoginViewController.swift */; };
@@ -239,6 +242,8 @@
 		3904F4FD2AA3743C00B6264F /* IndividualMission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualMission.swift; sourceTree = "<group>"; };
 		3904F4FF2AA3754400B6264F /* MessageCountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountInfo.swift; sourceTree = "<group>"; };
 		3904F5052AA37A3C00B6264F /* MockDetailWaitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailWaitService.swift; sourceTree = "<group>"; };
+		390E5CAC2AB89BCE00EBE52E /* RoomListItemTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomListItemTest.swift; sourceTree = "<group>"; };
+		390E5CB12AB8A70600EBE52E /* Date+ExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ExtensionTest.swift"; sourceTree = "<group>"; };
 		3915D54A2A7516A2002D6C25 /* Key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Key.plist; sourceTree = "<group>"; };
 		3915D54C2A7516E9002D6C25 /* Key+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key+Extension.swift"; sourceTree = "<group>"; };
 		391612D729E9231B004AE982 /* DetailWaitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitView.swift; sourceTree = "<group>"; };
@@ -252,6 +257,7 @@
 		39833CFD2AB09A6C009D173A /* Keyboardable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboardable.swift; sourceTree = "<group>"; };
 		398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
 		398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		398CED072AB9E48F00F50CBD /* RoomInfoTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInfoTest.swift; sourceTree = "<group>"; };
 		399D17AA2856C83B00F50D9D /* DetailEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewController.swift; sourceTree = "<group>"; };
 		39BDDCC32A52BB4A005E0A71 /* DetailWaitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitService.swift; sourceTree = "<group>"; };
 		39C957CD2876E2ED00A04A2B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -490,6 +496,47 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		390E5CAA2AB89B9500EBE52E /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				390E5CAB2AB89B9F00EBE52E /* Entity */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		390E5CAB2AB89B9F00EBE52E /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				390E5CAC2AB89BCE00EBE52E /* RoomListItemTest.swift */,
+				398CED072AB9E48F00F50CBD /* RoomInfoTest.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		390E5CAE2AB8A6D100EBE52E /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				390E5CAF2AB8A6D600EBE52E /* Extension */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		390E5CAF2AB8A6D600EBE52E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				390E5CB02AB8A6DB00EBE52E /* Type */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		390E5CB02AB8A6DB00EBE52E /* Type */ = {
+			isa = PBXGroup;
+			children = (
+				390E5CB12AB8A70600EBE52E /* Date+ExtensionTest.swift */,
+			);
+			path = Type;
+			sourceTree = "<group>";
+		};
 		391612D629E92308004AE982 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,7 +566,9 @@
 		398B1CBA2A12415C00DEFCEC /* ManitoTests */ = {
 			isa = PBXGroup;
 			children = (
+				390E5CAE2AB8A6D100EBE52E /* Util */,
 				3904F5012AA379CA00B6264F /* Presentation */,
+				390E5CAA2AB89B9500EBE52E /* Domain */,
 			);
 			path = ManitoTests;
 			sourceTree = "<group>";
@@ -1709,6 +1758,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				390E5CAD2AB89BCE00EBE52E /* RoomListItemTest.swift in Sources */,
+				390E5CB22AB8A70600EBE52E /* Date+ExtensionTest.swift in Sources */,
+				398CED082AB9E48F00F50CBD /* RoomInfoTest.swift in Sources */,
 				395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */,
 				3904F5062AA37A3C00B6264F /* MockDetailWaitService.swift in Sources */,
 			);
