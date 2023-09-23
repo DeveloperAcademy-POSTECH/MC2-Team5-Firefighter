@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+final class ChooseCharacterService {
+    
+    private let repository: RoomParticipationRepository
+    
+    init(repository: RoomParticipationRepository) {
+        self.repository = repository
+    }
+    
+    
+}

@@ -18,13 +18,13 @@ final class ChooseCharacterViewController: UIViewController {
     
     // MARK: - property
     
-    private let roomParticipationRepository: RoomParticipationRepository = RoomParticipationRepositoryImpl()
-    private let roomId: Int?
+    private let viewModel: ChooseCharacterViewModel
+    private var cancellable = Set<AnyCancellable>()
     
     // MARK: - init
     
-    init(roomId: Int?) {
-        self.roomId = roomId
+    init(viewModel: ChooseCharacterViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -47,6 +47,7 @@ final class ChooseCharacterViewController: UIViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.configureNavigationController()
+        self.bindToViewModel()
     }
     
     // MARK: - func
@@ -58,6 +59,24 @@ final class ChooseCharacterViewController: UIViewController {
     private func configureNavigationController() {
         guard let navigationController = self.navigationController else { return }
         self.chooseCharacterView.configureNavigationItem(navigationController)
+    }
+    
+    private func bindToViewModel() {
+        let output = self.transfromedOutput()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transfromedOutput() -> ChooseCharacterViewModel.Output {
+        let input = ChooseCharacterViewModel.Input()
+        return self.viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: ChooseCharacterViewModel.Output) {
+        
+    }
+    
+    private func bindUI() {
+        
     }
     
     private func pushDetailWaitViewController(roomId: Int) {
@@ -74,28 +93,6 @@ final class ChooseCharacterViewController: UIViewController {
             self?.dismiss(animated: true)
         })
     }
-    
-    // MARK: - network
-    
-    private func requestJoinRoom(characterIndex: Int) {
-        Task {
-            do {
-                guard let roomId = self.roomId else { return }
-                let status = try await self.roomParticipationRepository.dispatchJoinRoom(roomId: roomId.description,
-                                                                                         member: MemberInfoRequestDTO(colorIndex: characterIndex))
-                if status == 201 {
-                    self.pushDetailWaitViewController(roomId: roomId)
-                }
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-                self.makeAlertWhenAlreadyJoin()
-            }
-        }
-    }
 }
 
 extension ChooseCharacterViewController: ChooseCharacterViewDelegate {
@@ -108,6 +105,6 @@ extension ChooseCharacterViewController: ChooseCharacterViewDelegate {
     }
     
     func joinButtonDidTap(characterIndex: Int) {
-        self.requestJoinRoom(characterIndex: characterIndex)
+//        self.requestJoinRoom(characterIndex: characterIndex)
     }
 }
