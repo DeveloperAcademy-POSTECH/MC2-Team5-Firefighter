@@ -45,16 +45,12 @@ final class ChooseCharacterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureDelegation()
         self.configureNavigationController()
         self.bindToViewModel()
+        self.bindUI()
     }
     
     // MARK: - func
-    
-    private func configureDelegation() {
-        self.chooseCharacterView.configureDelegate(self)
-    }
     
     private func configureNavigationController() {
         guard let navigationController = self.navigationController else { return }
@@ -76,7 +72,17 @@ final class ChooseCharacterViewController: UIViewController {
     }
     
     private func bindUI() {
+        self.chooseCharacterView.backButtonTapPublisher
+            .sink {
+                self.navigationController?.popViewController(animated: true)
+            }
+            .store(in: &self.cancellable)
         
+        self.chooseCharacterView.closeButtonTapPublisher
+            .sink {
+                self.dismiss(animated: true)
+            }
+            .store(in: &self.cancellable)
     }
     
     private func pushDetailWaitViewController(roomId: Int) {
@@ -92,19 +98,5 @@ final class ChooseCharacterViewController: UIViewController {
         self.makeAlert(title: "이미 참여중인 방입니다", message: "참여중인 애니또 리스트를 확인해 보세요", okAction: { [weak self] _ in
             self?.dismiss(animated: true)
         })
-    }
-}
-
-extension ChooseCharacterViewController: ChooseCharacterViewDelegate {
-    func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    func closeButtonDidTap() {
-        self.dismiss(animated: true)
-    }
-    
-    func joinButtonDidTap(characterIndex: Int) {
-//        self.requestJoinRoom(characterIndex: characterIndex)
     }
 }

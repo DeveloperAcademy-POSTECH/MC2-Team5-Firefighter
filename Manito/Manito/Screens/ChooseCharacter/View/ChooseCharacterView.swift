@@ -10,12 +10,6 @@ import UIKit
 
 import SnapKit
 
-protocol ChooseCharacterViewDelegate: AnyObject {
-    func backButtonDidTap()
-    func closeButtonDidTap()
-    func joinButtonDidTap(characterIndex: Int)
-}
-
 final class ChooseCharacterView: UIView, BaseViewType {
     
     // MARK: - ui component
@@ -52,14 +46,15 @@ final class ChooseCharacterView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private weak var delegate: ChooseCharacterViewDelegate?
+    lazy var backButtonTapPublisher = self.backButton.tapPublisher
+    lazy var closeButtonTapPublisher = self.closeButton.tapPublisher
+    let joinButtonTapPublisher = PassthroughSubject<Int, Never>()
     
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupButtonAction()
     }
     
     @available(*, unavailable)
@@ -102,26 +97,6 @@ final class ChooseCharacterView: UIView, BaseViewType {
     }
 
     // MARK: - func
-    
-    private func setupButtonAction() {
-        let didTapBackButton = UIAction { [weak self] _ in
-            self?.delegate?.backButtonDidTap()
-        }
-        let didTapCloseButton = UIAction { [weak self] _ in
-            self?.delegate?.closeButtonDidTap()
-        }
-        let didTapJoinButton = UIAction { [weak self] _ in
-            self?.delegate?.joinButtonDidTap(characterIndex: self?.manittoCollectionView.characterIndexTapPublisher.value ?? 0)
-        }
-        
-        self.backButton.addAction(didTapBackButton, for: .touchUpInside)
-        self.closeButton.addAction(didTapCloseButton, for: .touchUpInside)
-        self.joinButton.addAction(didTapJoinButton, for: .touchUpInside)
-    }
-        
-    func configureDelegate(_ delegate: ChooseCharacterViewDelegate) {
-        self.delegate = delegate
-    }
     
     func configureNavigationItem(_ navigationController: UINavigationController) {
         let navigationItem = navigationController.topViewController?.navigationItem
