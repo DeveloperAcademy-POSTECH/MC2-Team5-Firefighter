@@ -16,14 +16,14 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let roomId: PassthroughSubject<Int, NetworkError>
+        let roomId: PassthroughSubject<Int, Error>
     }
     
     // MARK: - property
     
     private let roomId: Int
     
-    private let roomIdSubject = PassthroughSubject<Int, NetworkError>()
+    private let roomIdSubject = PassthroughSubject<Int, Error>()
     private let characterIndexSubject = CurrentValueSubject<Int, Never>(0)
     private let participateRoomService: ParticipateRoomService
     private var cancellable = Set<AnyCancellable>()
@@ -59,11 +59,9 @@ final class ChooseCharacterViewModel: BaseViewModelType {
         Task {
             do {
                 let statusCode = try await self.participateRoomService.dispatchJoinRoom(roomId: roomId.description, member: MemberInfoRequestDTO(colorIndex: colorIndex))
-                if statusCode == 201 {
-                    self.roomIdSubject.send(roomId)
-                }
+                self.roomIdSubject.send(roomId)
             } catch(let error) {
-                self.roomIdSubject.send(completion: .failure(error as! NetworkError))
+                self.roomIdSubject.send(completion: .failure(error))
             }
         }
     }
