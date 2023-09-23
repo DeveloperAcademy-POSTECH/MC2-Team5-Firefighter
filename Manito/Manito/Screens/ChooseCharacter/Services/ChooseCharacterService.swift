@@ -15,5 +15,14 @@ final class ChooseCharacterService {
         self.repository = repository
     }
     
-    
+    func dispatchJoinRoom(roomId: String, member: MemberInfoRequestDTO) async throws -> Int {
+        do {
+            let statusCode = try await self.repository.dispatchJoinRoom(roomId: roomId, member: member)
+            return statusCode
+        } catch NetworkError.serverError {
+            throw NetworkError.serverError
+        } catch NetworkError.clientError(let message) {
+            throw NetworkError.clientError(message: message)
+        }
+    }
 }

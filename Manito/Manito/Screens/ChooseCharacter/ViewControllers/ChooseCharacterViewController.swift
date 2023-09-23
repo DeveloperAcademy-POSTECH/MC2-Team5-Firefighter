@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class ChooseCharacterViewController: UIViewController {
+final class ChooseCharacterViewController: UIViewController, Navigationable {
     
     // MARK: - ui component
 
@@ -45,17 +45,12 @@ final class ChooseCharacterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureNavigationController()
+        self.setupNavigation()
         self.bindToViewModel()
         self.bindUI()
     }
     
     // MARK: - func
-    
-    private func configureNavigationController() {
-        guard let navigationController = self.navigationController else { return }
-        self.chooseCharacterView.configureNavigationItem(navigationController)
-    }
     
     private func bindToViewModel() {
         let output = self.transfromedOutput()
@@ -63,12 +58,24 @@ final class ChooseCharacterViewController: UIViewController {
     }
     
     private func transfromedOutput() -> ChooseCharacterViewModel.Output {
-        let input = ChooseCharacterViewModel.Input()
+        let input = ChooseCharacterViewModel.Input(joinButtonTapPublisher: self.chooseCharacterView.joinButtonTapPublisher.eraseToAnyPublisher(),
+                                                   characterIndexPublisher: self.chooseCharacterView.manittoCollectionView.characterIndexTapPublisher.eraseToAnyPublisher()
+        )
         return self.viewModel.transform(from: input)
     }
     
     private func bindOutputToViewModel(_ output: ChooseCharacterViewModel.Output) {
-        
+        output.roomId
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                switch result {
+                case .finished:
+                    return
+                case .failure(_):
+                    self?.makeAlertWhenAlreadyJoin()
+                }
+            } receiveValue: { self.pushDetailWaitViewController(roomId: $0) }
+            .store(in: &self.cancellable)
     }
     
     private func bindUI() {

@@ -37,7 +37,7 @@ final class ChooseCharacterView: UIView, BaseViewType {
         label.textColor = .grey002
         return label
     }()
-    private let manittoCollectionView: CharacterCollectionView = CharacterCollectionView()
+    let manittoCollectionView: CharacterCollectionView = CharacterCollectionView()
     private let joinButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.enterRoom
@@ -48,7 +48,7 @@ final class ChooseCharacterView: UIView, BaseViewType {
     
     lazy var backButtonTapPublisher = self.backButton.tapPublisher
     lazy var closeButtonTapPublisher = self.closeButton.tapPublisher
-    let joinButtonTapPublisher = PassthroughSubject<Int, Never>()
+    lazy var joinButtonTapPublisher = self.joinButton.tapPublisher
     
     // MARK: - init
     
@@ -62,7 +62,7 @@ final class ChooseCharacterView: UIView, BaseViewType {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - base func
+    // MARK: - func
     
     func setupLayout() {
         self.addSubview(self.titleLabel)
@@ -94,16 +94,5 @@ final class ChooseCharacterView: UIView, BaseViewType {
 
     func configureUI() {
         self.backgroundColor = .backgroundGrey
-    }
-
-    // MARK: - func
-    
-    func configureNavigationItem(_ navigationController: UINavigationController) {
-        let navigationItem = navigationController.topViewController?.navigationItem
-        let backButton = UIBarButtonItem(customView: self.backButton)
-        let closeButton = UIBarButtonItem(customView: self.closeButton)
-        
-        navigationItem?.leftBarButtonItem = backButton
-        navigationItem?.rightBarButtonItem = closeButton
     }
 }
