@@ -90,7 +90,7 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
         let input = SendLetterViewModel.Input(
             sendLetterButtonDidTap: self.sendLetterView.sendButtonTapPublisher
                 .handleEvents(receiveOutput: { [weak self] _ in
-                    // FIXME: - Send Button의 isEnable false로 변경
+                    self?.sendLetterView.updateSendButtonIsEnabled(to: false)
                 })
                 .map { [weak self] (content, image) in
                     let data = self?.convertToData(image: image)
@@ -112,7 +112,7 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
                 case .success:
                     self?.handleRefreshLetter()
                 case .failure(let error):
-                    // FIXME: - Send Button의 isEnable true로 변경
+                    self?.sendLetterView.updateSendButtonIsEnabled(to: true)
                     self?.showErrorAlert(error.localizedDescription)
                 }
             })

@@ -91,7 +91,11 @@ final class SendLetterView: UIView, BaseViewType {
 
     func setupMission(to mission: String) {
         self.missionView.setupMission(to: mission)
-    }    
+    }
+
+    func updateSendButtonIsEnabled(to isEnabled: Bool) {
+        self.sendButton.isEnabled = isEnabled
+    }
 }
 
 extension SendLetterView {
