@@ -34,9 +34,31 @@ final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
     }
 
     func dispatchJoinRoom(roomId: String, member: MemberInfoRequestDTO) async throws -> Int {
-        let response = try await self.provider
-            .request(.dispatchJoinRoom(roomId: roomId,
-                                       member: member))
-        return response.statusCode
+        do {
+            let response = try await self.provider
+                .request(.dispatchJoinRoom(roomId: roomId,
+                                           member: member))
+            return response.statusCode
+        } catch MTError.statusCode(reason: .clientError(let response)) {
+            switch response.statusCode {
+            case 409: throw ChooseCharacterError.roomAlreadyParticipating
+            default: throw ChooseCharacterError.someError
+            }
+        }
+    }
+}
+
+// FIXME: Presentation 폴더로 옮기면서 옮길 예정
+enum ChooseCharacterError: LocalizedError {
+    case roomAlreadyParticipating
+    case someError
+}
+// FIXME: TextLiteral 처리는 듀나 작업 이후에 진행하겠습니다! 
+extension ChooseCharacterError {
+    var errorDescription: String? {
+        switch self {
+        case .roomAlreadyParticipating: "이미 참여중인 방입니다."
+        case .someError: "네트워크 오류입니다."
+        }
     }
 }

@@ -71,8 +71,12 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
                 switch result {
                 case .finished:
                     return
-                case .failure(_):
-                    self?.makeAlertWhenAlreadyJoin()
+                case .failure(let error):
+                    switch error {
+                    case .roomAlreadyParticipating: self?.makeAlertWhenAlreadyJoin(error: error.localizedDescription)
+                    case .someError: self?.makeAlertWhenNetworkError(error: error.localizedDescription)
+                    }
+                    
                 }
             } receiveValue: { self.pushDetailWaitViewController(roomId: $0) }
             .store(in: &self.cancellable)
@@ -101,8 +105,14 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
         }
     }
     
-    private func makeAlertWhenAlreadyJoin() {
-        self.makeAlert(title: "이미 참여중인 방입니다", message: "참여중인 애니또 리스트를 확인해 보세요", okAction: { [weak self] _ in
+    private func makeAlertWhenAlreadyJoin(error: String) {
+        self.makeAlert(title: error.description, message: "참여중인 애니또 리스트를 확인해 보세요", okAction: { [weak self] _ in
+            self?.dismiss(animated: true)
+        })
+    }
+    
+    private func makeAlertWhenNetworkError(error: String) {
+        self.makeAlert(title: error.description, message: "네트워크 확인 후 다시 시도해 보세요.", okAction: { [weak self] _ in
             self?.dismiss(animated: true)
         })
     }

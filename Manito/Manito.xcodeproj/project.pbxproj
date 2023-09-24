@@ -192,7 +192,6 @@
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* URLLiteral.swift */; };
 		D79938882ABEC80300711D5B /* ChooseCharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79938872ABEC80300711D5B /* ChooseCharacterViewModel.swift */; };
-		D799388B2ABEC81B00711D5B /* ChooseCharacterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D799388A2ABEC81B00711D5B /* ChooseCharacterService.swift */; };
 		D79E9D8A2A826E0200C031F0 /* CreateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E9D892A826E0200C031F0 /* CreateRoomViewModel.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */; };
 		D7B83FD62A95A48700BFD8FF /* CreateRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B83FD52A95A48700BFD8FF /* CreateRoomService.swift */; };
@@ -420,7 +419,6 @@
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* URLLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLLiteral.swift; sourceTree = "<group>"; };
 		D79938872ABEC80300711D5B /* ChooseCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterViewModel.swift; sourceTree = "<group>"; };
-		D799388A2ABEC81B00711D5B /* ChooseCharacterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterService.swift; sourceTree = "<group>"; };
 		D79E9D892A826E0200C031F0 /* CreateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewModel.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomInfoView.swift; sourceTree = "<group>"; };
 		D7B83FD52A95A48700BFD8FF /* CreateRoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomService.swift; sourceTree = "<group>"; };
@@ -1234,7 +1232,6 @@
 				7E0C5C342855B1EF00F698D1 /* NickName */,
 				B5F524E628519B0A00614FF7 /* Main */,
 				B50B1B3F285B047C0080992C /* Interaction */,
-				CBA15C91285CE1880051EDE2 /* ChooseCharacter */,
 				CB637A3828595BE400FF1240 /* ParticipateRoom */,
 				B5F524EA28519B4B00614FF7 /* Letter */,
 				B5F524E928519B3F00614FF7 /* Detail-Ing */,
@@ -1356,6 +1353,7 @@
 			isa = PBXGroup;
 			children = (
 				CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */,
+				CB21C33828C4C10200128D25 /* CharacterCollectionViewCell.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1382,26 +1380,6 @@
 			children = (
 				CB9592B42855D52700847751 /* CommonMissionView.swift */,
 				CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */,
-			);
-			path = UIComponent;
-			sourceTree = "<group>";
-		};
-		CBA15C91285CE1880051EDE2 /* ChooseCharacter */ = {
-			isa = PBXGroup;
-			children = (
-				D79938892ABEC80A00711D5B /* Services */,
-				D79938862ABEC7F000711D5B /* ViewModel */,
-				D7B83FD32A92F55200BFD8FF /* View */,
-				CBA15C92285CE18F0051EDE2 /* UIComponent */,
-				D79938852ABEC7C900711D5B /* ViewControllers */,
-			);
-			path = ChooseCharacter;
-			sourceTree = "<group>";
-		};
-		CBA15C92285CE18F0051EDE2 /* UIComponent */ = {
-			isa = PBXGroup;
-			children = (
-				CB21C33828C4C10200128D25 /* CharacterCollectionViewCell.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1516,6 +1494,7 @@
 			children = (
 				D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */,
 				D7537F682AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift */,
+				D79938872ABEC80300711D5B /* ChooseCharacterViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1525,6 +1504,7 @@
 			children = (
 				D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */,
 				D7537F662AA75AFB005AC78B /* ParticipationRoomDetailsView.swift */,
+				D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1534,6 +1514,7 @@
 			children = (
 				CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */,
 				CB674C2028596A310063A6B7 /* ParticipationRoomDetailsViewController.swift */,
+				CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1562,44 +1543,12 @@
 			path = UIComponent;
 			sourceTree = "<group>";
 		};
-		D79938852ABEC7C900711D5B /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		D79938862ABEC7F000711D5B /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D79938872ABEC80300711D5B /* ChooseCharacterViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		D79938892ABEC80A00711D5B /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				D799388A2ABEC81B00711D5B /* ChooseCharacterService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		D79E9D882A826D7900C031F0 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				D79E9D892A826E0200C031F0 /* CreateRoomViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		D7B83FD32A92F55200BFD8FF /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		D7B83FD42A95A46F00BFD8FF /* Services */ = {
@@ -1814,7 +1763,6 @@
 				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
 				B5A085E62A972EB700C8A98D /* LetterDTO.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputCapacityView.swift in Sources */,
-				D799388B2ABEC81B00711D5B /* ChooseCharacterService.swift in Sources */,
 				B53A35C62A96F6DB00B720BC /* RoomParticipationRepository.swift in Sources */,
 				CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */,
 				39EEF65E28CB3CFE00437654 /* LoginEndPoint.swift in Sources */,
