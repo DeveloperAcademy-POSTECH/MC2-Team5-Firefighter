@@ -25,6 +25,7 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     
     private let roomIdSubject = PassthroughSubject<Int, ChooseCharacterError>()
     private let characterIndexSubject = CurrentValueSubject<Int, Never>(0)
+    
     private let participateRoomService: ParticipateRoomService
     private var cancellable = Set<AnyCancellable>()
 
@@ -46,7 +47,7 @@ final class ChooseCharacterViewModel: BaseViewModelType {
         
         input.joinButtonTapPublisher
             .sink { [weak self] _ in
-                self?.requestJoinRoom(roomId: self?.roomId ?? 0, colorIndex: self?.characterIndexSubject.value ?? 0)
+                self?.requestParticipateRoom(roomId: self!.roomId, colorIndex: self?.characterIndexSubject.value ?? 0)
             }
             .store(in: &self.cancellable)
         
@@ -55,7 +56,7 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     
     // MARK: - network
     
-    private func requestJoinRoom(roomId: Int, colorIndex: Int) {
+    private func requestParticipateRoom(roomId: Int, colorIndex: Int) {
         Task {
             do {
                 let _ = try await self.participateRoomService.dispatchJoinRoom(roomId: roomId.description, member: MemberInfoRequestDTO(colorIndex: colorIndex))
