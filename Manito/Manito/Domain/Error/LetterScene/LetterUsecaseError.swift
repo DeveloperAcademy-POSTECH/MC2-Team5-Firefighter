@@ -9,12 +9,14 @@ import Foundation
 
 enum LetterUsecaseError: LocalizedError {
     case failedToFetchLetter
+    case failedToSendLetter
 }
 
 extension LetterUsecaseError {
     var errorDescription: String? {
         switch self {
         case .failedToFetchLetter: return TextLiteral.letterViewControllerErrorDescription
+        case .failedToSendLetter: return TextLiteral.createLetterViewControllerErrorMessage
         }
     }
 }
