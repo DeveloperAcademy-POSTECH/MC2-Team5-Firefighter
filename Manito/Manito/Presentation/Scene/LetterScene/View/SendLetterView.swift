@@ -1,21 +1,15 @@
 //
-//  CreateLetterView.swift
+//  SendLetterView.swift
 //  Manito
 //
-//  Created by SHIN YOON AH on 2023/02/28.
+//  Created by SHIN YOON AH on 2023/09/24.
 //
 
 import UIKit
 
 import SnapKit
 
-protocol CreateLetterViewDelegate: AnyObject {
-    func presentationControllerDidDismiss()
-    func showActionSheet()
-    func sendLetterToManittee(with content: String?, _ image: UIImage?)
-}
-
-final class CreateLetterView: UIView, BaseViewType {
+final class SendLetterView: UIView, BaseViewType {
 
     // MARK: - ui component
 
@@ -55,27 +49,23 @@ final class CreateLetterView: UIView, BaseViewType {
 
     // MARK: - property
 
-    private weak var delegate: CreateLetterViewDelegate?
-
-    private var sendButtonObserver: (hasText: Bool, hasImage: Bool) = (false, false) {
-        willSet {
-            self.sendButton.isEnabled = newValue.hasText || newValue.hasImage
-        }
-    }
-
-    var sending: Bool = false {
-        willSet(isDisabled) {
-            self.sendButton.isEnabled = !isDisabled
-        }
-    }
+//    private var sendButtonObserver: (hasText: Bool, hasImage: Bool) = (false, false) {
+//        willSet {
+//            self.sendButton.isEnabled = newValue.hasText || newValue.hasImage
+//        }
+//    }
+//
+//    var sending: Bool = false {
+//        willSet(isDisabled) {
+//            self.sendButton.isEnabled = !isDisabled
+//        }
+//    }
 
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupButtonAction()
-        self.observeSendButtonEnabledState()
     }
 
     @available(*, unavailable)
@@ -83,6 +73,57 @@ final class CreateLetterView: UIView, BaseViewType {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - func
+
+    func configureNavigationController(of viewController: UIViewController) {
+        self.setupNavigationController(of: viewController)
+        self.setupNavigationItem(in: viewController.navigationController ?? UINavigationController())
+    }
+
+    func setupMission(to mission: String) {
+        self.missionView.setupMission(to: mission)
+    }
+
+    // FIXME: - Stream으로 변경
+//    private func setupButtonAction() {
+//        let cancelAction = UIAction { [weak self] _ in
+//            self?.presentationControllerDidAttemptToDismiss()
+//        }
+//        self.cancelButton.addAction(cancelAction, for: .touchUpInside)
+//
+//        let sendAction = UIAction { [weak self] _ in
+//            let image = self?.letterPhotoView.image
+//            let content = self?.letterTextView.text
+//            self?.delegate?.sendLetterToManittee(with: content, image)
+//        }
+//        self.sendButton.addAction(sendAction, for: .touchUpInside)
+//    }
+
+//    private func observeSendButtonEnabledState() {
+//        self.letterTextView.sendHasTextValue = { [weak self] hasText in
+//            self?.sendButtonObserver.hasText = hasText
+//        }
+//
+//        self.letterPhotoView.sendHasImageValue = { [weak self] hasImage in
+//            self?.sendButtonObserver.hasImage = hasImage
+//        }
+//    }
+//
+//    private func presentationControllerDidAttemptToDismiss() {
+//        switch self.sendButtonObserver {
+//        case let (hasText, hasImage) where hasText || hasImage:
+//            self.delegate?.showActionSheet()
+//        default:
+//            self.delegate?.presentationControllerDidDismiss()
+//        }
+//    }
+
+
+    
+}
+
+extension SendLetterView {
+    
     // MARK: - base func
 
     func setupLayout() {
@@ -131,76 +172,15 @@ final class CreateLetterView: UIView, BaseViewType {
         self.backgroundColor = .backgroundGrey
     }
 
-    // MARK: - func
+    // MARK: - Private - func
 
-    private func setupButtonAction() {
-        let cancelAction = UIAction { [weak self] _ in
-            self?.presentationControllerDidAttemptToDismiss()
-        }
-        self.cancelButton.addAction(cancelAction, for: .touchUpInside)
-
-        let sendAction = UIAction { [weak self] _ in
-            let image = self?.letterPhotoView.image
-            let content = self?.letterTextView.text
-            self?.delegate?.sendLetterToManittee(with: content, image)
-        }
-        self.sendButton.addAction(sendAction, for: .touchUpInside)
+    private func setupNavigationController(of viewController: UIViewController) {
+        viewController.title = TextLiteral.createLetterViewControllerTitle
+        viewController.navigationController?.presentationController?.delegate = self
+        viewController.isModalInPresentation = true
     }
 
-    private func observeSendButtonEnabledState() {
-        self.letterTextView.sendHasTextValue = { [weak self] hasText in
-            self?.sendButtonObserver.hasText = hasText
-        }
-
-        self.letterPhotoView.sendHasImageValue = { [weak self] hasImage in
-            self?.sendButtonObserver.hasImage = hasImage
-        }
-    }
-
-    private func presentationControllerDidAttemptToDismiss() {
-        switch self.sendButtonObserver {
-        case let (hasText, hasImage) where hasText || hasImage:
-            self.delegate?.showActionSheet()
-        default:
-            self.delegate?.presentationControllerDidDismiss()
-        }
-    }
-
-    func configureMission(_ mission: String) {
-        self.missionView.setupMission(with: mission)
-    }
-
-    func configureViewController(_ viewController: UIViewController?) {
-        viewController?.isModalInPresentation = true
-        viewController?.title = TextLiteral.createLetterViewControllerTitle
-    }
-
-    func configureDelegation(_ delegate: CreateLetterViewDelegate) {
-        self.delegate = delegate
-    }
-
-    func configureNavigationController(_ navigationController: UINavigationController) {
-        navigationController.presentationController?.delegate = self
-    }
-
-    func configureNavigationBar(_ navigationController: UINavigationController) {
-        let navigationBar = navigationController.navigationBar
-        let appearance = UINavigationBarAppearance()
-        let font = UIFont.font(.regular, ofSize: 16)
-
-        appearance.titleTextAttributes = [.font: font]
-        appearance.shadowColor = .clear
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .clear
-        appearance.backgroundImage = nil
-        appearance.shadowImage = nil
-
-        navigationBar.standardAppearance = appearance
-        navigationBar.compactAppearance = appearance
-        navigationBar.scrollEdgeAppearance = appearance
-    }
-
-    func configureNavigationItem(_ navigationController: UINavigationController) {
+    private func setupNavigationItem(in navigationController: UINavigationController) {
         let navigationItem = navigationController.topViewController?.navigationItem
         let cancelButton = UIBarButtonItem(customView: self.cancelButton)
         let sendButton = UIBarButtonItem(customView: self.sendButton)
@@ -213,7 +193,7 @@ final class CreateLetterView: UIView, BaseViewType {
 }
 
 // MARK: - UIAdaptivePresentationControllerDelegate
-extension CreateLetterView: UIAdaptivePresentationControllerDelegate {
+extension SendLetterView: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
         self.presentationControllerDidAttemptToDismiss()
     }

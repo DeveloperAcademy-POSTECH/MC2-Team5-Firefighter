@@ -64,7 +64,7 @@ final class IndividualMissionView: UIView {
         self.makeBorderLayer(color: .subOrange)
     }
 
-    func setupMission(with mission: String) {
+    func setupMission(to mission: String) {
         self.missionLabel.text = mission
     }
 }
