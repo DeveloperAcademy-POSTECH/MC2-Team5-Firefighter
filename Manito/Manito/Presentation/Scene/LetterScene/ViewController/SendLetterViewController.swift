@@ -50,7 +50,6 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
         super.viewDidLoad()
         self.setupNavigation()
         self.setupKeyboardGesture()
-        self.configureDelegation()
         self.configureNavigationController()
         self.bindUI()
         self.bindViewModel()
@@ -58,7 +57,8 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
 
     // MARK: - func
 
-    private func configureDelegation() {
+    func configureDelegation(_ delegate: SendLetterViewControllerDelegate) {
+        self.delegate = delegate
         self.navigationController?.presentationController?.delegate = self
     }
 

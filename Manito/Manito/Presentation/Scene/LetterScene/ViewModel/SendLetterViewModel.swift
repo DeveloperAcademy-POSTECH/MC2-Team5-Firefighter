@@ -11,7 +11,7 @@ import Foundation
 final class SendLetterViewModel: BaseViewModelType {
 
     typealias Message = (content: String?, image: Data?)
-    typealias MessageDetail = (roomId: String, mission: String, missionId: String, manitteeId: String)
+    typealias MessageDetail = (roomId: String, missionId: String, manitteeId: String)
 
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -30,6 +30,7 @@ final class SendLetterViewModel: BaseViewModelType {
     private var cancelBag: Set<AnyCancellable> = Set()
 
     private let usecase: SendLetterUsecase
+    private let mission: String
 
     // MARK: - init
 
@@ -39,14 +40,15 @@ final class SendLetterViewModel: BaseViewModelType {
          roomId: String,
          missionId: String) {
         self.usecase = usecase
-        self.messageDetailSubject.send((roomId, mission, missionId, manitteeId))
+        self.mission = mission
+        self.messageDetailSubject.send((roomId, missionId, manitteeId))
     }
 
     // MARK: - Public - func
 
     func transform(from input: Input) -> Output {
-        let mission = Publishers.CombineLatest(input.viewDidLoad, self.messageDetailSubject)
-            .map { $1.mission }
+        let mission = input.viewDidLoad
+            .compactMap { [weak self] in self?.mission }
             .eraseToAnyPublisher()
 
         let letterResponse = Publishers.CombineLatest(input.sendLetterButtonDidTap, self.messageDetailSubject)

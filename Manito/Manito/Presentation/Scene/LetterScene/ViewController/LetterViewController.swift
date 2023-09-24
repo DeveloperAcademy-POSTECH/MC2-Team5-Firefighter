@@ -108,10 +108,13 @@ final class LetterViewController: UIViewController, Navigationable {
         output.messageDetails
             .sink(receiveValue: { [weak self] details in
                 guard let self = self else { return }
-                let viewController = CreateLetterViewController(manitteeId: details.manitteeId,
-                                                                roomId: details.roomId,
-                                                                mission: details.mission,
-                                                                missionId: details.missionId)
+                let usecase = SendLetterUsecaseImpl(repository: LetterRepositoryImpl())
+                let viewModel = SendLetterViewModel(usecase: usecase,
+                                                    mission: details.mission,
+                                                    manitteeId: details.manitteeId,
+                                                    roomId: details.roomId,
+                                                    missionId: details.missionId)
+                let viewController = SendLetterViewController(viewModel: viewModel)
                 let navigationController = UINavigationController(rootViewController: viewController)
                 viewController.configureDelegation(self)
                 self.present(navigationController, animated: true)
