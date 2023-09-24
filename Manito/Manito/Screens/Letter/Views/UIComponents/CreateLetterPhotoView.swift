@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import Combine
 import PhotosUI
 import UIKit
 
@@ -54,7 +55,7 @@ final class CreateLetterPhotoView: UIView {
 
     // MARK: - property
 
-    var sendHasImageValue: ((_ hasImage: Bool) -> ())?
+    var hasImageSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
 
     private var hasImage: Bool {
         return self.importPhotosButton.imageView?.image != UIImage.Button.camera
@@ -124,7 +125,7 @@ final class CreateLetterPhotoView: UIView {
         }
         let removePhotoAction: alertAction = { [weak self] _ in
             self?.importPhotosButton.setImage(UIImage.Button.camera, for: .normal)
-            self?.sendHasImageValue?(self?.hasImage ?? false)
+            self?.hasImageSubject.send(self?.hasImage ?? false)
         }
 
         return self.hasImage ? [takePhotoAction, photoLibraryAction, removePhotoAction, nil]
@@ -226,7 +227,7 @@ extension CreateLetterPhotoView: UIImagePickerControllerDelegate & UINavigationC
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             DispatchQueue.main.async {
                 self.importPhotosButton.setImage(image, for: .normal)
-                self.sendHasImageValue?(self.importPhotosButton.imageView?.image != UIImage.Button.camera)
+                self.hasImageSubject.send(self.importPhotosButton.imageView?.image != UIImage.Button.camera)
                 picker.dismiss(animated: true)
             }
         }
@@ -255,7 +256,7 @@ extension CreateLetterPhotoView: PHPickerViewControllerDelegate {
             case .success(let image):
                 DispatchQueue.main.async {
                     self?.importPhotosButton.setImage(image, for: .normal)
-                    self?.sendHasImageValue?(self?.importPhotosButton.imageView?.image != UIImage.Button.camera)
+                    self?.hasImageSubject.send(self?.importPhotosButton.imageView?.image != UIImage.Button.camera)
                     picker.dismiss(animated: true)
                 }
             case .failure(let error):

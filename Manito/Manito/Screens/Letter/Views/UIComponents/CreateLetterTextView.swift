@@ -5,6 +5,7 @@
 //  Created by SHIN YOON AH on 2022/06/13.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -43,7 +44,7 @@ final class CreateLetterTextView: UIView {
 
     // MARK: - property
 
-    var sendHasTextValue: ((_ hasText: Bool) -> ())?
+    var hasTextSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
 
     var text: String? {
         guard self.letterTextView.text != "" && self.letterTextView.text != nil else { return nil }
@@ -104,6 +105,6 @@ extension CreateLetterTextView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         self.setCounter(textView.text?.count ?? 0, maximumCount: self.maximumCount)
         self.textViewReachedMaximumCount(self.letterTextView, maximumCount: self.maximumCount)
-        self.sendHasTextValue?(textView.hasText)
+        self.hasTextSubject.send(textView.hasText)
     }
 }

@@ -100,3 +100,16 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
         }
     }
 }
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+extension SendLetterViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        //        switch self.sendButtonObserver {
+        //        case let (hasText, hasImage) where hasText || hasImage:
+        //            self.delegate?.showActionSheet()
+        //        default:
+        //            self.delegate?.presentationControllerDidDismiss()
+        //        }
+        self.presentationControllerDidAttemptToDismiss()
+    }
+}

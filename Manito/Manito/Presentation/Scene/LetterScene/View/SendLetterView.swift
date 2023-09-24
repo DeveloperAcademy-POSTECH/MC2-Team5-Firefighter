@@ -5,11 +5,14 @@
 //  Created by SHIN YOON AH on 2023/09/24.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 
 final class SendLetterView: UIView, BaseViewType {
+
+    typealias Message = (content: String?, image: UIImage?)
 
     // MARK: - ui component
 
@@ -49,23 +52,29 @@ final class SendLetterView: UIView, BaseViewType {
 
     // MARK: - property
 
-//    private var sendButtonObserver: (hasText: Bool, hasImage: Bool) = (false, false) {
-//        willSet {
-//            self.sendButton.isEnabled = newValue.hasText || newValue.hasImage
-//        }
-//    }
-//
-//    var sending: Bool = false {
-//        willSet(isDisabled) {
-//            self.sendButton.isEnabled = !isDisabled
-//        }
-//    }
+    var cancelButtonTapPublisher: AnyPublisher<Bool, Never> {
+        return self.cancelButton.tapPublisher
+            .map { [weak self] in
+                guard let self else { return false }
+                return self.letterTextView.hasTextSubject.value || self.letterPhotoView.hasImageSubject.value
+            }
+            .eraseToAnyPublisher()
+    }
+
+    var sendButtonTapPublisher: AnyPublisher<Message, Never> {
+        return self.sendButton.tapPublisher
+            .map { [weak self] in (self?.letterTextView.text, self?.letterPhotoView.image) }
+            .eraseToAnyPublisher()
+    }
+
+    private var cancelBag: Set<AnyCancellable> = Set()
 
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
+        self.bindUI()
     }
 
     @available(*, unavailable)
@@ -82,44 +91,7 @@ final class SendLetterView: UIView, BaseViewType {
 
     func setupMission(to mission: String) {
         self.missionView.setupMission(to: mission)
-    }
-
-    // FIXME: - Stream으로 변경
-//    private func setupButtonAction() {
-//        let cancelAction = UIAction { [weak self] _ in
-//            self?.presentationControllerDidAttemptToDismiss()
-//        }
-//        self.cancelButton.addAction(cancelAction, for: .touchUpInside)
-//
-//        let sendAction = UIAction { [weak self] _ in
-//            let image = self?.letterPhotoView.image
-//            let content = self?.letterTextView.text
-//            self?.delegate?.sendLetterToManittee(with: content, image)
-//        }
-//        self.sendButton.addAction(sendAction, for: .touchUpInside)
-//    }
-
-//    private func observeSendButtonEnabledState() {
-//        self.letterTextView.sendHasTextValue = { [weak self] hasText in
-//            self?.sendButtonObserver.hasText = hasText
-//        }
-//
-//        self.letterPhotoView.sendHasImageValue = { [weak self] hasImage in
-//            self?.sendButtonObserver.hasImage = hasImage
-//        }
-//    }
-//
-//    private func presentationControllerDidAttemptToDismiss() {
-//        switch self.sendButtonObserver {
-//        case let (hasText, hasImage) where hasText || hasImage:
-//            self.delegate?.showActionSheet()
-//        default:
-//            self.delegate?.presentationControllerDidDismiss()
-//        }
-//    }
-
-
-    
+    }    
 }
 
 extension SendLetterView {
@@ -176,7 +148,6 @@ extension SendLetterView {
 
     private func setupNavigationController(of viewController: UIViewController) {
         viewController.title = TextLiteral.createLetterViewControllerTitle
-        viewController.navigationController?.presentationController?.delegate = self
         viewController.isModalInPresentation = true
     }
 
@@ -190,11 +161,11 @@ extension SendLetterView {
         navigationItem?.leftBarButtonItem = cancelButton
         navigationItem?.rightBarButtonItem = sendButton
     }
-}
 
-// MARK: - UIAdaptivePresentationControllerDelegate
-extension SendLetterView: UIAdaptivePresentationControllerDelegate {
-    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
-        self.presentationControllerDidAttemptToDismiss()
+    private func bindUI() {
+        Publishers.CombineLatest(self.letterTextView.hasTextSubject, self.letterPhotoView.hasImageSubject)
+            .map { $0 || $1 }
+            .assign(to: \.isEnabled, on: self.sendButton)
+            .store(in: &self.cancelBag)
     }
 }
