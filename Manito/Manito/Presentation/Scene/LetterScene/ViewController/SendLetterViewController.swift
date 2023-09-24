@@ -1,41 +1,26 @@
 //
-//  CreateLetterViewController.swift
+//  SendLetterViewController.swift
 //  Manito
 //
-//  Created by SHIN YOON AH on 2022/06/13.
+//  Created by SHIN YOON AH on 2023/09/23.
 //
 
 import UIKit
 
-protocol CreateLetterViewControllerDelegate: AnyObject {
-    func refreshLetterData()
-}
-
-final class CreateLetterViewController: UIViewController, Navigationable, Keyboardable {
-
-    typealias AlertAction = ((UIAlertAction) -> ())
+final class SendLetterViewController: UIViewController, Navigationable, Keyboardable {
 
     // MARK: - ui component
 
-    private let createLetterView: CreateLetterView = CreateLetterView()
-    
+    private let sendLetterView: CreateLetterView = CreateLetterView()
+
     // MARK: - property
 
-    private let letterRepository: LetterRepository = LetterRepositoryImpl()
-    private let mission: String
-    private let manitteeId: String
-    private let roomId: String
-    private let missionId: String
-
-    private weak var delegate: CreateLetterViewControllerDelegate?
+    private let viewModel: any BaseViewModelType
 
     // MARK: - init
-    
-    init(manitteeId: String, roomId: String, mission: String, missionId: String) {
-        self.manitteeId = manitteeId
-        self.roomId = roomId
-        self.mission = mission
-        self.missionId = missionId
+
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -47,9 +32,9 @@ final class CreateLetterViewController: UIViewController, Navigationable, Keyboa
     // MARK: - life cycle
 
     override func loadView() {
-        self.view = self.createLetterView
+        self.view = self.sendLetterView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUI()
@@ -80,33 +65,7 @@ final class CreateLetterViewController: UIViewController, Navigationable, Keyboa
     func configureDelegation(_ delegate: CreateLetterViewControllerDelegate) {
         self.delegate = delegate
     }
-    
-    // MARK: - network
 
-    private func dispatchLetter(with letterDTO: LetterRequestDTO,
-                                _ jpegData: Data? = nil,
-                                completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let statusCode = try await self.letterRepository.dispatchLetter(roomId: self.roomId,
-                                                                                image: jpegData,
-                                                                                letter: letterDTO,
-                                                                                missionId: self.missionId)
-                switch statusCode {
-                case 200..<300: completionHandler(.success(()))
-                default: completionHandler(.failure(.unknownError))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
-}
-
-// MARK: - CreateLetterViewDelegate
-extension CreateLetterViewController: CreateLetterViewDelegate {
     func presentationControllerDidDismiss() {
         self.dismiss(animated: true)
     }
