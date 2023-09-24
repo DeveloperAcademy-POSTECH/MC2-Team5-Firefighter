@@ -98,6 +98,7 @@
 		B577E4F42ABE0B8A003CC102 /* SendLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E4F32ABE0B8A003CC102 /* SendLetterViewController.swift */; };
 		B577E4F62ABE0C95003CC102 /* SendLetterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E4F52ABE0C95003CC102 /* SendLetterViewModel.swift */; };
 		B577E4F82ABFCA5C003CC102 /* SendLetterUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E4F72ABFCA5C003CC102 /* SendLetterUsecase.swift */; };
+		B577E4FB2ABFDCC3003CC102 /* CommonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E4FA2ABFDCC3003CC102 /* CommonError.swift */; };
 		B5A085DF2A972D2A00C8A98D /* LetterRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */; };
 		B5A085E12A972D7900C8A98D /* LoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */; };
 		B5A085E32A972DDC00C8A98D /* EditedMissionRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085E22A972DDC00C8A98D /* EditedMissionRequestDTO.swift */; };
@@ -324,6 +325,7 @@
 		B577E4F32ABE0B8A003CC102 /* SendLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterViewController.swift; sourceTree = "<group>"; };
 		B577E4F52ABE0C95003CC102 /* SendLetterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterViewModel.swift; sourceTree = "<group>"; };
 		B577E4F72ABFCA5C003CC102 /* SendLetterUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterUsecase.swift; sourceTree = "<group>"; };
+		B577E4FA2ABFDCC3003CC102 /* CommonError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonError.swift; sourceTree = "<group>"; };
 		B57CB3032A763C1600474042 /* MTNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MTNetwork; sourceTree = "<group>"; };
 		B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterRequestDTO.swift; sourceTree = "<group>"; };
 		B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDTO.swift; sourceTree = "<group>"; };
@@ -837,6 +839,7 @@
 		B55469C62AA97273004D9FE6 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				B577E4F92ABFDCB8003CC102 /* Common */,
 				B55469C72AA9727D004D9FE6 /* LetterScene */,
 			);
 			path = Error;
@@ -880,6 +883,14 @@
 				B5546A2A2AADD638004D9FE6 /* MTResource.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B577E4F92ABFDCB8003CC102 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B577E4FA2ABFDCC3003CC102 /* CommonError.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		B57CB3022A763BB200474042 /* Packages */ = {
@@ -1920,6 +1931,7 @@
 				B5A085F62A9733F900C8A98D /* TokenDTO.swift in Sources */,
 				B577E4F62ABE0C95003CC102 /* SendLetterViewModel.swift in Sources */,
 				B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */,
+				B577E4FB2ABFDCC3003CC102 /* CommonError.swift in Sources */,
 				3904F4FC2AA3729300B6264F /* InvitationCode.swift in Sources */,
 				B50B1B2A285AB7650080992C /* SplashViewController.swift in Sources */,
 				B5FEE9DB28C8498A00DEA07E /* ImageCacheManager.swift in Sources */,
