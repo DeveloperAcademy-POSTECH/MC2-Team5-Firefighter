@@ -48,7 +48,7 @@ final class SendLetterView: UIView, BaseViewType {
     private let scrollContentView: UIView = UIView()
     private let missionView: IndividualMissionView = IndividualMissionView()
     private let letterTextView: SendLetterTextView = SendLetterTextView()
-    private let letterPhotoView: CreateLetterPhotoView = CreateLetterPhotoView()
+    private let letterPhotoView: SendLetterPhotoView = SendLetterPhotoView()
 
     // MARK: - property
 

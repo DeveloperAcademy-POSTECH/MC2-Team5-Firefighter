@@ -1,5 +1,5 @@
 //
-//  CreateLetterPhotoView.swift
+//  SendLetterPhotoView.swift
 //  Manito
 //
 //  Created by SHIN YOON AH on 2022/06/13.
@@ -12,7 +12,7 @@ import UIKit
 
 import SnapKit
 
-final class CreateLetterPhotoView: UIView {
+final class SendLetterPhotoView: UIView {
 
     typealias alertAction = ((UIAlertAction) -> ())
     
@@ -222,7 +222,7 @@ final class CreateLetterPhotoView: UIView {
 }
 
 // MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
-extension CreateLetterPhotoView: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+extension SendLetterPhotoView: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             DispatchQueue.main.async {
@@ -235,7 +235,7 @@ extension CreateLetterPhotoView: UIImagePickerControllerDelegate & UINavigationC
 }
 
 // MARK: - PHPickerViewControllerDelegate
-extension CreateLetterPhotoView: PHPickerViewControllerDelegate {
+extension SendLetterPhotoView: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         if let selectedAsset = results.first?.itemProvider {
             self.pickerController(picker, didFinishPicking: selectedAsset)
