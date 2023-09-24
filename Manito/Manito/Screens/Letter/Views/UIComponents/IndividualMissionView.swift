@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class IndividualMissionView: UIView {
+final class IndividualMissionView: UIView, BaseViewType {
     
     // MARK: - ui component
     
@@ -33,17 +33,17 @@ final class IndividualMissionView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
-        self.configureUI()
+        self.baseInit()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - base func
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
@@ -59,10 +59,12 @@ final class IndividualMissionView: UIView {
         }
     }
     
-    private func configureUI() {
+    func configureUI() {
         self.backgroundColor = .darkGrey004
         self.makeBorderLayer(color: .subOrange)
     }
+
+    // MARK: - func
 
     func setupMission(to mission: String) {
         self.missionLabel.text = mission
