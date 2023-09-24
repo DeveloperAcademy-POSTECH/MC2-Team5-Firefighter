@@ -88,6 +88,7 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
     private func transformedOutput() -> SendLetterViewModel.Output? {
         guard let viewModel = self.viewModel as? SendLetterViewModel else { return nil }
         let input = SendLetterViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
             sendLetterButtonDidTap: self.sendLetterView.sendButtonTapPublisher
                 .handleEvents(receiveOutput: { [weak self] _ in
                     self?.sendLetterView.updateSendButtonIsEnabled(to: false)
@@ -104,6 +105,13 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
 
     private func bindOutputToViewModel(_ output: SendLetterViewModel.Output?) {
         guard let output = output else { return }
+
+        output.mission
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] mission in
+                self?.sendLetterView.setupMission(to: mission)
+            })
+            .store(in: &self.cancelBag)
 
         output.letterResponse
             .receive(on: DispatchQueue.main)
