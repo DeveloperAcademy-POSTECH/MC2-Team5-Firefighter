@@ -271,8 +271,8 @@ extension LetterViewController {
     }
 }
 
-// MARK: - CreateLetterViewControllerDelegate
-extension LetterViewController: CreateLetterViewControllerDelegate {
+// MARK: - SendLetterViewControllerDelegate
+extension LetterViewController: SendLetterViewControllerDelegate {
     func refreshLetterData() {
         self.refreshSubject.send(())
     }

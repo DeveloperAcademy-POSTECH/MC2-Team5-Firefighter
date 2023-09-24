@@ -8,6 +8,10 @@
 import Combine
 import UIKit
 
+protocol SendLetterViewControllerDelegate: AnyObject {
+    func refreshLetterData()
+}
+
 final class SendLetterViewController: UIViewController, Navigationable, Keyboardable {
 
     typealias AlertAction = ((UIAlertAction) -> Void)?
@@ -21,6 +25,8 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
     private var cancelBag: Set<AnyCancellable> = Set()
 
     private let viewModel: any BaseViewModelType
+
+    private weak var delegate: SendLetterViewControllerDelegate?
 
     // MARK: - init
 
@@ -140,7 +146,7 @@ extension SendLetterViewController {
     }
 
     private func handleRefreshLetter() {
-//        self.delegate?.refreshLetterData()
+        self.delegate?.refreshLetterData()
         self.dismiss(animated: true)
     }
 }
