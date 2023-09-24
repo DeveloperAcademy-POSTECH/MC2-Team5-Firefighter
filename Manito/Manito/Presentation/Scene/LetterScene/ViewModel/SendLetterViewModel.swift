@@ -42,24 +42,5 @@ final class SendLetterViewModel: BaseViewModelType {
 
     // MARK: - Private - func
 
-    private func dispatchLetter(with letterDTO: LetterRequestDTO,
-                                _ jpegData: Data? = nil,
-                                completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
-        Task {
-            do {
-                let statusCode = try await self.letterRepository.dispatchLetter(roomId: self.roomId,
-                                                                                image: jpegData,
-                                                                                letter: letterDTO,
-                                                                                missionId: self.missionId)
-                switch statusCode {
-                case 200..<300: completionHandler(.success(()))
-                default: completionHandler(.failure(.unknownError))
-                }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
-    }
+    
 }
