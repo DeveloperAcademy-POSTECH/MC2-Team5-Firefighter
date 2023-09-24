@@ -47,10 +47,14 @@ final class SendLetterView: UIView, BaseViewType {
     }()
     private let scrollContentView: UIView = UIView()
     private let missionView: IndividualMissionView = IndividualMissionView()
-    private let letterTextView: CreateLetterTextView = CreateLetterTextView()
+    private let letterTextView: SendLetterTextView = SendLetterTextView()
     private let letterPhotoView: CreateLetterPhotoView = CreateLetterPhotoView()
 
     // MARK: - property
+
+    var textViewChangedPublisher: AnyPublisher<String, Never> {
+        return self.letterTextView.textSubject.eraseToAnyPublisher()
+    }
 
     var cancelButtonTapPublisher: AnyPublisher<Bool, Never> {
         return self.cancelButton.tapPublisher
@@ -63,7 +67,10 @@ final class SendLetterView: UIView, BaseViewType {
 
     var sendButtonTapPublisher: AnyPublisher<Message, Never> {
         return self.sendButton.tapPublisher
-            .map { [weak self] in (self?.letterTextView.text, self?.letterPhotoView.image) }
+            .map { [weak self] in
+                guard let self else { return (nil, nil) }
+                return (self.letterTextView.textSubject.value, self.letterPhotoView.image)
+            }
             .eraseToAnyPublisher()
     }
 
@@ -95,6 +102,14 @@ final class SendLetterView: UIView, BaseViewType {
 
     func updateSendButtonIsEnabled(to isEnabled: Bool) {
         self.sendButton.isEnabled = isEnabled
+    }
+
+    func updateTextView(count: Int, maxCount: Int) {
+        self.letterTextView.updateCounter(count, maxCount: maxCount)
+    }
+
+    func updateTextView(content: String) {
+        self.letterTextView.updateTextViewContent(to: content)
     }
 }
 

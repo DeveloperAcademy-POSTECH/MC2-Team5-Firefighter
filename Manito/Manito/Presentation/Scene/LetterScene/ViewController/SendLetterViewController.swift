@@ -89,18 +89,23 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
         guard let viewModel = self.viewModel as? SendLetterViewModel else { return nil }
         let input = SendLetterViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
-            sendLetterButtonDidTap: self.sendLetterView.sendButtonTapPublisher
-                .handleEvents(receiveOutput: { [weak self] _ in
-                    self?.sendLetterView.updateSendButtonIsEnabled(to: false)
-                })
-                .map { [weak self] (content, image) in
-                    let data = self?.convertToData(image: image)
-                    return (content, data)
-                }
-                .eraseToAnyPublisher()
+            sendLetterButtonDidTap: self.sendButtonTapPublisher(),
+            letterTextDidChange: self.sendLetterView.textViewChangedPublisher
         )
 
         return viewModel.transform(from: input)
+    }
+
+    private func sendButtonTapPublisher() -> AnyPublisher<(content: String?, image: Data?), Never> {
+        return self.sendLetterView.sendButtonTapPublisher
+            .handleEvents(receiveOutput: { [weak self] _ in
+                self?.sendLetterView.updateSendButtonIsEnabled(to: false)
+            })
+            .map { [weak self] (content, image) in
+                let data = self?.convertToData(image: image)
+                return (content, data)
+            }
+            .eraseToAnyPublisher()
     }
 
     private func bindOutputToViewModel(_ output: SendLetterViewModel.Output?) {
@@ -123,6 +128,20 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
                     self?.sendLetterView.updateSendButtonIsEnabled(to: true)
                     self?.showErrorAlert(error.localizedDescription)
                 }
+            })
+            .store(in: &self.cancelBag)
+
+        output.textCount
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] text in
+                self?.sendLetterView.updateTextView(count: text.count, maxCount: text.maxCount)
+            })
+            .store(in: &self.cancelBag)
+
+        output.text
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] text in
+                self?.sendLetterView.updateTextView(content: text)
             })
             .store(in: &self.cancelBag)
     }
