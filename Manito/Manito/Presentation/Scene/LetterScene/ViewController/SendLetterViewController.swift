@@ -5,15 +5,20 @@
 //  Created by SHIN YOON AH on 2023/09/23.
 //
 
+import Combine
 import UIKit
 
 final class SendLetterViewController: UIViewController, Navigationable, Keyboardable {
 
+    typealias AlertAction = ((UIAlertAction) -> Void)?
+
     // MARK: - ui component
 
-    private let sendLetterView: CreateLetterView = CreateLetterView()
+    private let sendLetterView: SendLetterView = SendLetterView()
 
     // MARK: - property
+
+    private var cancelBag: Set<AnyCancellable> = Set()
 
     private let viewModel: any BaseViewModelType
 
@@ -37,40 +42,81 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureUI()
-        self.configureDelegation()
-        self.configureNavigationController()
         self.setupNavigation()
         self.setupKeyboardGesture()
+        self.configureDelegation()
+        self.configureNavigationController()
+        self.bindUI()
+        self.bindViewModel()
     }
 
     // MARK: - func
 
-    private func configureUI() {
-        self.createLetterView.configureMission(self.mission)
-        self.createLetterView.configureViewController(self)
-    }
-
     private func configureDelegation() {
-        self.createLetterView.configureDelegation(self)
+        self.navigationController?.presentationController?.delegate = self
     }
 
     private func configureNavigationController() {
-        guard let navigationController = self.navigationController else { return }
-        self.createLetterView.configureNavigationController(navigationController)
-        self.createLetterView.configureNavigationBar(navigationController)
-        self.createLetterView.configureNavigationItem(navigationController)
+        self.sendLetterView.configureNavigationController(of: self)
     }
 
-    func configureDelegation(_ delegate: CreateLetterViewControllerDelegate) {
-        self.delegate = delegate
+    // MARK: - func - bind
+
+    private func bindUI() {
+        self.sendLetterView.cancelButtonTapPublisher
+            .sink(receiveValue: { [weak self] hasChanged in
+                if hasChanged {
+                    self?.showDiscardChangesActionSheet()
+                } else {
+                    self?.presentationControllerDidDismiss()
+                }
+            })
+            .store(in: &self.cancelBag)
     }
 
-    func presentationControllerDidDismiss() {
-        self.dismiss(animated: true)
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
     }
 
-    func showActionSheet() {
+    private func transformedOutput() -> SendLetterViewModel.Output? {
+        guard let viewModel = self.viewModel as? SendLetterViewModel else { return nil }
+        let input = SendLetterViewModel.Input(
+            sendLetterButtonDidTap: self.sendLetterView.sendButtonTapPublisher
+                .handleEvents(receiveOutput: { [weak self] _ in
+                    // FIXME: - Send Button의 isEnable false로 변경
+                })
+                .map { [weak self] (content, image) in
+                    let data = self?.convertToData(image: image)
+                    return (content, data)
+                }
+                .eraseToAnyPublisher()
+        )
+
+        return viewModel.transform(from: input)
+    }
+
+    private func bindOutputToViewModel(_ output: SendLetterViewModel.Output?) {
+        guard let output = output else { return }
+
+        output.letterResponse
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success:
+                    self?.handleRefreshLetter()
+                case .failure(let error):
+                    // FIXME: - Send Button의 isEnable true로 변경
+                    self?.showErrorAlert(error.localizedDescription)
+                }
+            })
+            .store(in: &self.cancelBag)
+    }
+}
+
+// MARK: - Helper
+extension SendLetterViewController {
+    private func showDiscardChangesActionSheet() {
         let dismissAction: AlertAction = { [weak self] _ in
             self?.resignFirstResponder()
             self?.dismiss(animated: true)
@@ -80,36 +126,28 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
                              actions: [dismissAction, nil])
     }
 
-    func sendLetterToManittee(with content: String?, _ image: UIImage?) {
-        let jpegData = image?.jpegData(compressionQuality: 0.3)
-        let letterDTO = LetterRequestDTO(manitteeId: self.manitteeId, messageContent: content)
+    private func presentationControllerDidDismiss() {
+        self.dismiss(animated: true)
+    }
 
-        self.createLetterView.sending = true
-        self.dispatchLetter(with: letterDTO, jpegData) { [weak self] response in
-            DispatchQueue.main.async {
-                switch response {
-                case .success:
-                    self?.delegate?.refreshLetterData()
-                    self?.dismiss(animated: true)
-                case .failure:
-                    self?.createLetterView.sending = false
-                    self?.makeAlert(title: TextLiteral.createLetterViewControllerErrorTitle,
-                                    message: TextLiteral.createLetterViewControllerErrorMessage)
-                }
-            }
-        }
+    private func convertToData(image: UIImage?) -> Data? {
+        return image?.jpegData(compressionQuality: 0.3)
+    }
+
+    private func showErrorAlert(_ message: String) {
+        self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
+                       message: message)
+    }
+
+    private func handleRefreshLetter() {
+//        self.delegate?.refreshLetterData()
+        self.dismiss(animated: true)
     }
 }
 
 // MARK: - UIAdaptivePresentationControllerDelegate
 extension SendLetterViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
-        //        switch self.sendButtonObserver {
-        //        case let (hasText, hasImage) where hasText || hasImage:
-        //            self.delegate?.showActionSheet()
-        //        default:
-        //            self.delegate?.presentationControllerDidDismiss()
-        //        }
-        self.presentationControllerDidAttemptToDismiss()
+        self.presentationControllerDidDismiss()
     }
 }
