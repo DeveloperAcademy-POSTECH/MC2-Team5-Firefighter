@@ -14,24 +14,16 @@ import SnapKit
 
 final class SendLetterPhotoView: UIView {
 
-    typealias alertAction = ((UIAlertAction) -> ())
-    
-    private enum PHLibraryError: Error {
-        case loadError
-
-        var errorDescription: String {
-            switch self {
-            case .loadError:
-                return TextLiteral.letterPhotoViewFail
-            }
-        }
-    }
+    typealias AlertAction = ((UIAlertAction) -> ())
+    typealias ActionDetail = (message: String,
+                              titles: [String],
+                              styles: [UIAlertAction.Style],
+                              actions: [((UIAlertAction) -> Void)?])
 
     private enum SourceType {
         case camera
         case library
     }
-
     
     // MARK: - ui component
     
@@ -55,24 +47,32 @@ final class SendLetterPhotoView: UIView {
 
     // MARK: - property
 
+    var photoButtonPublisher: AnyPublisher<ActionDetail, Never> {
+        return self.importPhotosButton.tapPublisher
+            .map { [weak self] _ -> ActionDetail in
+                guard let self else { return (message: "", titles: [], styles: [], actions: []) }
+                return (
+                    message: TextLiteral.letterPhotoViewChoosePhotoToManitto,
+                    titles: self.actionTitles(),
+                    styles: self.actionStyles(),
+                    actions: self.alertActions()
+                )
+            }
+            .eraseToAnyPublisher()
+    }
+    var imageSubject: CurrentValueSubject<UIImage?, Never> = CurrentValueSubject(nil)
     var hasImageSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
 
-    private var hasImage: Bool {
-        return self.importPhotosButton.imageView?.image != UIImage.Button.camera
-    }
-    var image: UIImage? {
-        if self.importPhotosButton.imageView?.image == UIImage.Button.camera { return nil }
-        return self.importPhotosButton.imageView?.image
-    }
+    private var cancelBag: Set<AnyCancellable> = Set()
 
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
-        self.setupButtonAction()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -92,54 +92,36 @@ final class SendLetterPhotoView: UIView {
             $0.height.equalTo(209)
         }
     }
-    
-    private func setupButtonAction() {
-        let photoAction = UIAction { [weak self] _ in
-            self?.presentActionSheet(actionTitles: self?.actionTitles() ?? [],
-                                     actionStyle: self?.actionStyle() ?? [],
-                                     actions: self?.alertActions() ?? [])
-        }
-        self.importPhotosButton.addAction(photoAction, for: .touchUpInside)
-    }
 
     private func actionTitles() -> [String] {
-        return self.hasImage ? [TextLiteral.letterPhotoViewTakePhoto,
-                                TextLiteral.letterPhotoViewChoosePhoto,
-                                TextLiteral.letterPhotoViewDeletePhoto,
-                                TextLiteral.cancel]
-                             : [TextLiteral.letterPhotoViewTakePhoto,
-                                TextLiteral.letterPhotoViewChoosePhoto,
-                                TextLiteral.cancel]
+        return self.hasImageSubject.value ? [TextLiteral.letterPhotoViewTakePhoto,
+                                             TextLiteral.letterPhotoViewChoosePhoto,
+                                             TextLiteral.letterPhotoViewDeletePhoto,
+                                             TextLiteral.cancel]
+                                          : [TextLiteral.letterPhotoViewTakePhoto,
+                                             TextLiteral.letterPhotoViewChoosePhoto,
+                                             TextLiteral.cancel]
     }
 
-    private func actionStyle() -> [UIAlertAction.Style] {
-        return self.hasImage ? [.default, .default, .default, .cancel] : [.default, .default, .cancel]
+    private func actionStyles() -> [UIAlertAction.Style] {
+        return self.hasImageSubject.value ? [.default, .default, .default, .cancel]
+                                          : [.default, .default, .cancel]
     }
 
-    private func alertActions() -> [alertAction?] {
-        let takePhotoAction: alertAction = { [weak self] _ in
+    private func alertActions() -> [AlertAction?] {
+        let takePhotoAction: AlertAction = { [weak self] _ in
             self?.openPickerAccordingTo(.camera)
         }
-        let photoLibraryAction: alertAction = { [weak self] _ in
+        let photoLibraryAction: AlertAction = { [weak self] _ in
             self?.openPickerAccordingTo(.library)
         }
-        let removePhotoAction: alertAction = { [weak self] _ in
+        let removePhotoAction: AlertAction = { [weak self] _ in
             self?.importPhotosButton.setImage(UIImage.Button.camera, for: .normal)
-            self?.hasImageSubject.send(self?.hasImage ?? false)
+            self?.hasImageSubject.send(false)
         }
 
-        return self.hasImage ? [takePhotoAction, photoLibraryAction, removePhotoAction, nil]
-                             : [takePhotoAction, photoLibraryAction, nil]
-    }
-
-    private func presentActionSheet(message: String = TextLiteral.letterPhotoViewChoosePhotoToManitto,
-                                    actionTitles: [String],
-                                    actionStyle: [UIAlertAction.Style],
-                                    actions: [alertAction?]) {
-        self.viewController?.makeActionSheet(message: message,
-                                             actionTitles: actionTitles,
-                                             actionStyle: actionStyle,
-                                             actions: actions)
+        return self.hasImageSubject.value ? [takePhotoAction, photoLibraryAction, removePhotoAction, nil]
+                                          : [takePhotoAction, photoLibraryAction, nil]
     }
     
     private func openPickerAccordingTo(_ sourceType: SourceType) {
@@ -179,7 +161,7 @@ final class SendLetterPhotoView: UIView {
     }
     
     private func openSettings() {
-        let settingAction: alertAction = { [weak self] _ in
+        let settingAction: AlertAction = { [weak self] _ in
             guard let settingURL = URL(string: UIApplication.openSettingsURLString) else {
                 self?.viewController?.makeAlert(title: TextLiteral.letterPhotoViewErrorTitle,
                                                 message: TextLiteral.letterPhotoViewSettingFail)
@@ -269,12 +251,12 @@ extension SendLetterPhotoView: PHPickerViewControllerDelegate {
         }
     }
 
-    private func loadUIImage(for itemProvider: NSItemProvider, completionHandler: @escaping ((Result<UIImage, PHLibraryError>) -> ())) {
-        guard itemProvider.canLoadObject(ofClass: UIImage.self) else { completionHandler(.failure(.loadError)); return }
+    private func loadUIImage(for itemProvider: NSItemProvider, completionHandler: @escaping ((Result<UIImage, LetterImageError>) -> ())) {
+        guard itemProvider.canLoadObject(ofClass: UIImage.self) else { completionHandler(.failure(.cantloadPhoto)); return }
 
         itemProvider.loadObject(ofClass: UIImage.self) { image, error in
             if error != nil {
-                completionHandler(.failure(.loadError))
+                completionHandler(.failure(.cantloadPhoto))
             }
 
             if let image = image as? UIImage {

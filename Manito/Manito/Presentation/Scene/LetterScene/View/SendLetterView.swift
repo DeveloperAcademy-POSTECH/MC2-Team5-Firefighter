@@ -13,6 +13,10 @@ import SnapKit
 final class SendLetterView: UIView, BaseViewType {
 
     typealias Message = (content: String?, image: UIImage?)
+    typealias ActionDetail = (message: String,
+                              titles: [String],
+                              styles: [UIAlertAction.Style],
+                              actions: [((UIAlertAction) -> Void)?])
 
     // MARK: - ui component
 
@@ -56,6 +60,10 @@ final class SendLetterView: UIView, BaseViewType {
         return self.letterTextView.textSubject.eraseToAnyPublisher()
     }
 
+    var photoButtonTapPublisher: AnyPublisher<ActionDetail, Never> {
+        return self.letterPhotoView.photoButtonPublisher
+    }
+
     var cancelButtonTapPublisher: AnyPublisher<Bool, Never> {
         return self.cancelButton.tapPublisher
             .map { [weak self] in
@@ -69,7 +77,7 @@ final class SendLetterView: UIView, BaseViewType {
         return self.sendButton.tapPublisher
             .map { [weak self] in
                 guard let self else { return (nil, nil) }
-                return (self.letterTextView.textSubject.value, self.letterPhotoView.image)
+                return (self.letterTextView.textSubject.value, self.letterPhotoView.imageSubject.value)
             }
             .eraseToAnyPublisher()
     }

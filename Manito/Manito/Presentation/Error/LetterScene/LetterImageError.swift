@@ -10,6 +10,7 @@ import Foundation
 enum LetterImageError: LocalizedError {
     case invalidImage
     case invalidPhotoLibrary
+    case cantloadPhoto
 }
 
 extension LetterImageError {
@@ -17,6 +18,7 @@ extension LetterImageError {
         switch self {
         case .invalidImage: return TextLiteral.letterImageViewControllerErrorMessage
         case .invalidPhotoLibrary: return TextLiteral.letterImageViewControllerErrorMessage
+        case .cantloadPhoto: return TextLiteral.letterPhotoViewFail
         }
     }
 }

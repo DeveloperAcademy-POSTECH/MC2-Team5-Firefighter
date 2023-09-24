@@ -72,10 +72,21 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
         self.sendLetterView.cancelButtonTapPublisher
             .sink(receiveValue: { [weak self] hasChanged in
                 if hasChanged {
-                    self?.showDiscardChangesActionSheet()
+                    self?.showActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
+                                          actionStyle: [.destructive, .cancel],
+                                          actions: [self?.dismissAction(), nil])
                 } else {
                     self?.presentationControllerDidDismiss()
                 }
+            })
+            .store(in: &self.cancelBag)
+
+        self.sendLetterView.photoButtonTapPublisher
+            .sink(receiveValue: { [weak self] detail in
+                self?.showActionSheet(message: detail.message,
+                                      actionTitles: detail.titles,
+                                      actionStyle: detail.styles,
+                                      actions: detail.actions)
             })
             .store(in: &self.cancelBag)
     }
@@ -149,14 +160,21 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
 
 // MARK: - Helper
 extension SendLetterViewController {
-    private func showDiscardChangesActionSheet() {
-        let dismissAction: AlertAction = { [weak self] _ in
+    private func dismissAction() -> AlertAction {
+        return { [weak self] _ in
             self?.resignFirstResponder()
             self?.dismiss(animated: true)
         }
-        self.makeActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
-                             actionStyle: [.destructive, .cancel],
-                             actions: [dismissAction, nil])
+    }
+
+    private func showActionSheet(message: String? = nil,
+                                 actionTitles: [String],
+                                 actionStyle: [UIAlertAction.Style],
+                                 actions: [((UIAlertAction) -> Void)?]) {
+        self.makeActionSheet(message: message,
+                             actionTitles: actionTitles,
+                             actionStyle: actionStyle,
+                             actions: actions)
     }
 
     private func presentationControllerDidDismiss() {
