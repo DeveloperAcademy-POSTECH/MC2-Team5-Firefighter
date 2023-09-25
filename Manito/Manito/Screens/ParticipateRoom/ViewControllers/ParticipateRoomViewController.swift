@@ -51,12 +51,6 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
         self.setupKeyboardGesture()
     }
     
-    // MARK: - override
-    
-    override func endEditingView() {
-        self.participateRoomView.endEditing()
-    }
-    
     // MARK: - func
     
     private func configureNavigation() {
