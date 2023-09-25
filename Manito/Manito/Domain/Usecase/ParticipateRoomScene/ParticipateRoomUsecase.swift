@@ -1,5 +1,5 @@
 //
-//  ParticipateRoomService.swift
+//  ParticipateRoomUsecase.swift
 //  Manito
 //
 //  Created by 이성호 on 2023/09/04.
@@ -7,18 +7,24 @@
 
 import Foundation
 
-protocol ParticipateRoomServicable {
+protocol ParticipateRoomUsecase {
     func dispatchVerifyCode(code: String) async throws -> ParticipatedRoomInfoDTO
     func dispatchJoinRoom(roomId: String, member: MemberInfoRequestDTO) async throws -> Int
 }
 
-final class ParticipateRoomService: ParticipateRoomServicable {
+final class ParticipateRoomUsecaseImpl: ParticipateRoomUsecase {
+    
+    // MARK: - property
     
     private let repository: RoomParticipationRepository
+    
+    // MARK: - init
     
     init(repository: RoomParticipationRepository) {
         self.repository = repository
     }
+    
+    // MARK: - Public - func
     
     func dispatchVerifyCode(code: String) async throws -> ParticipatedRoomInfoDTO {
         do {

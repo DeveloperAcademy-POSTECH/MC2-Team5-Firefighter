@@ -242,8 +242,8 @@ final class MainViewController: UIViewController, BaseViewControllerType {
         let enterRoom = UIAlertAction(title: TextLiteral.enterRoom,
                                       style: .default,
                                       handler: { [weak self] _ in
-            let service = ParticipateRoomService(repository: RoomParticipationRepositoryImpl())
-            let viewModel = ParticipateRoomViewModel(participateRoomService: service)
+            let usecase = ParticipateRoomUsecaseImpl(repository: RoomParticipationRepositoryImpl())
+            let viewModel = ParticipateRoomViewModel(usecase: usecase)
             let viewController = ParticipateRoomViewController(viewModel: viewModel)
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen

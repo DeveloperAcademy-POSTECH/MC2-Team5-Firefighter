@@ -186,7 +186,7 @@
 		D7537F612AA70C40005AC78B /* ParticipatedRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F602AA70C40005AC78B /* ParticipatedRoomInfo.swift */; };
 		D7537F672AA75AFB005AC78B /* ParticipationRoomDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F662AA75AFB005AC78B /* ParticipationRoomDetailsView.swift */; };
 		D7537F692AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7537F682AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift */; };
-		D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */; };
+		D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift */; };
 		D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */; };
 		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
 		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
@@ -413,7 +413,7 @@
 		D7537F602AA70C40005AC78B /* ParticipatedRoomInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatedRoomInfo.swift; sourceTree = "<group>"; };
 		D7537F662AA75AFB005AC78B /* ParticipationRoomDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationRoomDetailsView.swift; sourceTree = "<group>"; };
 		D7537F682AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationRoomDetailsViewModel.swift; sourceTree = "<group>"; };
-		D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomService.swift; sourceTree = "<group>"; };
+		D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomUsecase.swift; sourceTree = "<group>"; };
 		D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewModel.swift; sourceTree = "<group>"; };
 		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
 		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
@@ -1486,7 +1486,6 @@
 		D75DEEC02AA6127100BD3AC7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1587,6 +1586,7 @@
 		D7AE5EBB2AC184F300A20D0A /* ParticipateRoomScene */ = {
 			isa = PBXGroup;
 			children = (
+				D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift */,
 			);
 			path = ParticipateRoomScene;
 			sourceTree = "<group>";
@@ -1893,7 +1893,7 @@
 				B50B1AF92856B2C60080992C /* CreateLetterViewController.swift in Sources */,
 				B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
-				D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomService.swift in Sources */,
+				D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift in Sources */,
 				D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */,
 				39833CFE2AB09A6C009D173A /* Keyboardable.swift in Sources */,
 				D71939532AA1C84900A73D6C /* SettingService.swift in Sources */,
