@@ -837,7 +837,6 @@
 		B55469C62AA97273004D9FE6 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				D7AE5EC92AC1C30F00A20D0A /* ParticipateRoomScene */,
 				B55469C72AA9727D004D9FE6 /* LetterScene */,
 			);
 			path = Error;
@@ -854,6 +853,7 @@
 		B55469FD2AADB903004D9FE6 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				D7AE5EC92AC1C30F00A20D0A /* ParticipateRoomScene */,
 				B5546A092AADCAFD004D9FE6 /* LetterScene */,
 			);
 			path = Error;
