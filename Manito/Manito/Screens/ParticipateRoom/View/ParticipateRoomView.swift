@@ -105,12 +105,6 @@ final class ParticipateRoomView: UIView, BaseViewType {
         navigationItem?.leftBarButtonItem = nil
     }
     
-    func endEditing() {
-        if !self.nextButton.isTouchInside {
-            self.endEditing(true)
-        }
-    }
-    
     func toggleDoneButton(isEnabled: Bool) {
         self.nextButton.isDisabled = !isEnabled
     }
