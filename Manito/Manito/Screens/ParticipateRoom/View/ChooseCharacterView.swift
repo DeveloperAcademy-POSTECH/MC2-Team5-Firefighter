@@ -91,6 +91,14 @@ final class ChooseCharacterView: UIView, BaseViewType {
             $0.bottom.equalTo(self.joinButton.snp.top)
         }
     }
+    
+    func configureNavigationBarItem(_ navigationController: UINavigationController) {
+        let navigationItem = navigationController.topViewController?.navigationItem
+        let closeButton = UIBarButtonItem(customView: self.closeButton)
+        
+        navigationItem?.rightBarButtonItem = closeButton
+        navigationItem?.leftBarButtonItem = nil
+    }
 
     func configureUI() {
         self.backgroundColor = .backgroundGrey

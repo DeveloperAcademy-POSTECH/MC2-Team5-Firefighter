@@ -45,12 +45,18 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureNavigation()
         self.setupNavigation()
         self.bindToViewModel()
         self.bindUI()
     }
     
     // MARK: - func
+    
+    private func configureNavigation() {
+        guard let navigationController = self.navigationController else { return }
+        self.chooseCharacterView.configureNavigationBarItem(navigationController)
+    }
     
     private func bindToViewModel() {
         let output = self.transfromedOutput()
