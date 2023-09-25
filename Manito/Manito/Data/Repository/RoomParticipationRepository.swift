@@ -57,8 +57,8 @@ enum ChooseCharacterError: LocalizedError {
 extension ChooseCharacterError {
     var errorDescription: String? {
         switch self {
-        case .roomAlreadyParticipating: "이미 참여중인 방입니다."
-        case .someError: "네트워크 오류입니다."
+        case .roomAlreadyParticipating: return "이미 참여중인 방입니다."
+        case .someError: return "네트워크 오류입니다."
         }
     }
 }
