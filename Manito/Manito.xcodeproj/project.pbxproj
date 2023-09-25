@@ -1230,7 +1230,6 @@
 			isa = PBXGroup;
 			children = (
 				CBBFF775287AE034006A5964 /* SettingDeveloperInfo */,
-				D724AF5B287088110003F280 /* Setting */,
 				B50B1B28285AB7550080992C /* Splash */,
 				39C957CC2876E2BE00A04A2B /* Login */,
 				7E0C5C342855B1EF00F698D1 /* NickName */,
@@ -1392,30 +1391,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		D71939502AA1C82100A73D6C /* Service */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
-		D71939512AA1C82F00A73D6C /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D71939542AA1C85300A73D6C /* SettingViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		D71939562AA1C86600A73D6C /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				D724AF5C287088310003F280 /* SettingViewController.swift */,
-				D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		D719395A2AA23EF200A73D6C /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -1449,41 +1424,12 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		D724AF5B287088110003F280 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				D71939502AA1C82100A73D6C /* Service */,
-				D71939512AA1C82F00A73D6C /* ViewModel */,
-				D7C4A1AE2A0E51F500C3AE4C /* View */,
-				D75ECB6E28A5EDC400A5B271 /* UIComponent */,
-				D75ECB6D28A5EDBC00A5B271 /* Cell */,
-				D71939562AA1C86600A73D6C /* ViewControllers */,
-			);
-			path = Setting;
-			sourceTree = "<group>";
-		};
 		D75E8C7D28D76FB1004A6C41 /* UIcomponent */ = {
 			isa = PBXGroup;
 			children = (
 				D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */,
 			);
 			path = UIcomponent;
-			sourceTree = "<group>";
-		};
-		D75ECB6D28A5EDBC00A5B271 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		D75ECB6E28A5EDC400A5B271 /* UIComponent */ = {
-			isa = PBXGroup;
-			children = (
-				D724AF5E28708D830003F280 /* TopCharacterImageView.swift */,
-			);
-			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		D79E9D882A826D7900C031F0 /* ViewModel */ = {
@@ -1575,6 +1521,7 @@
 		D7AE5EBF2AC1964500A20D0A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				D71939542AA1C85300A73D6C /* SettingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1582,6 +1529,8 @@
 		D7AE5EC02AC1964900A20D0A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				D724AF5C287088310003F280 /* SettingViewController.swift */,
+				D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1589,6 +1538,7 @@
 		D7AE5EC12AC1964E00A20D0A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1596,6 +1546,7 @@
 		D7AE5EC22AC1965100A20D0A /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
+				D724AF5E28708D830003F280 /* TopCharacterImageView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1603,6 +1554,7 @@
 		D7AE5EC32AC1965A00A20D0A /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				7ED845B92876BE530075AC61 /* SettingViewTableCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1621,14 +1573,6 @@
 				D7B83FD52A95A48700BFD8FF /* CreateRoomService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		D7C4A1AE2A0E51F500C3AE4C /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

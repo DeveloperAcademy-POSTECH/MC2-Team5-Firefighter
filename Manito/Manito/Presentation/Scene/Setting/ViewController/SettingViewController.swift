@@ -45,8 +45,8 @@ final class SettingViewController: UIViewController, Navigationable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureDelegation()
         self.bindViewModel()
+        self.bindUI()
         self.setupNavigation()
     }
     
@@ -56,10 +56,6 @@ final class SettingViewController: UIViewController, Navigationable {
     }
     
     // MARK: - func
-    
-    private func configureDelegation() {
-        self.settingView.configureDelegate(self)
-    }
     
     private func configureNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = false
@@ -86,16 +82,80 @@ final class SettingViewController: UIViewController, Navigationable {
                     self?.makeAlert(title: TextLiteral.fail, message: TextLiteral.settingViewControllerFailMessage)
                 }
             } receiveValue: { [weak self] _ in
-                self?.deleteUser()
+                self?.makeRequestAlert(title: TextLiteral.alert,
+                                       message: TextLiteral.settingViewControllerWithdrawalMessage,
+                                       okAction: { [weak self] _ in
+                    self?.deleteUser()
+                })
             }
             .store(in: &self.cancellable)
         
         output.logout
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.logout()
+                self?.makeRequestAlert(title: TextLiteral.settingViewControllerLogoutAlertTitle,
+                                       message: "",
+                                       okAction: { [weak self] _ in
+                    self?.logout()
+                })
             }
             .store(in: &self.cancellable)
+    }
+    
+    private func bindUI() {
+        self.settingView.changNicknameButtonDidTapPublisher
+            .sink { [weak self] _ in
+                self?.changNicknameButtonDidTap()
+            }
+            .store(in: &self.cancellable)
+        
+        self.settingView.personalInfomationButtonDidTapPublisher
+            .sink { [weak self] _ in
+                self?.personalInfomationButtonDidTap()
+            }
+            .store(in: &self.cancellable)
+        
+        self.settingView.termsOfServiceButtonDidTapPublisher
+            .sink { [weak self] _ in
+                self?.termsOfServiceButtonDidTap()
+            }
+            .store(in: &self.cancellable)
+        
+        self.settingView.developerInfoButtonDidTapPublisher
+            .sink { [weak self] _ in
+                self?.developerInfoButtonDidTap()
+            }
+            .store(in: &self.cancellable)
+        
+        self.settingView.helpButtonDidTapPublisher
+            .sink { [weak self] _ in
+                self?.helpButtonDidTap()
+            }
+            .store(in: &self.cancellable)
+    }
+    
+    private func changNicknameButtonDidTap() {
+        self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
+    }
+    
+    private func personalInfomationButtonDidTap() {
+        if let url = URL(string: URLLiteral.personalInfomationUrl) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
+    
+    private func termsOfServiceButtonDidTap() {
+        if let url = URL(string: URLLiteral.termsOfServiceUrl) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
+    
+    private func developerInfoButtonDidTap() {
+        self.navigationController?.pushViewController(SettingDeveloperInfoViewController(), animated: true)
+    }
+    
+    private func helpButtonDidTap() {
+        self.sendReportMail()
     }
     
     private func deleteUser() {
@@ -110,52 +170,5 @@ final class SettingViewController: UIViewController, Navigationable {
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
                 as? SceneDelegate else { return }
         sceneDelegate.moveToLoginViewController()
-    }
-}
-
-// MARK: - Extensions
-
-extension SettingViewController: SettingViewDelegate {
-    func changNicknameButtonDidTap() {
-        self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
-    }
-    
-    func personalInfomationButtonDidTap() {
-        if let url = URL(string: URLLiteral.personalInfomationUrl) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-    
-    func termsOfServiceButtonDidTap() {
-        if let url = URL(string: URLLiteral.termsOfServiceUrl) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-    
-    func developerInfoButtonDidTap() {
-        self.navigationController?.pushViewController(SettingDeveloperInfoViewController(), animated: true)
-    }
-    
-    func helpButtonDidTap() {
-        self.sendReportMail()
-    }
-    
-    func logoutButtonDidTap() {
-        self.makeRequestAlert(title: TextLiteral.settingViewControllerLogoutAlertTitle,
-                              message: "",
-                              okTitle: TextLiteral.confirm,
-                              cancelTitle: TextLiteral.cancel,
-                              okAction: { [weak self] _ in
-            self?.settingView.logoutButtonPublisher.send()
-        })
-    }
-    
-    func withdrawalButtonDidTap() {
-        self.makeRequestAlert(title: TextLiteral.alert,
-                              message: TextLiteral.settingViewControllerWithdrawalMessage,
-                              okTitle: TextLiteral.settingViewControllerWithdrawal,
-                              okAction: { [weak self] _ in
-            self?.settingView.withdrawalButtonPublisher.send()
-        })
     }
 }

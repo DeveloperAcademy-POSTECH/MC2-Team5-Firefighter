@@ -10,16 +10,6 @@ import UIKit
 
 import SnapKit
 
-protocol SettingViewDelegate: AnyObject {
-    func changNicknameButtonDidTap()
-    func personalInfomationButtonDidTap()
-    func termsOfServiceButtonDidTap()
-    func developerInfoButtonDidTap()
-    func helpButtonDidTap()
-    func logoutButtonDidTap()
-    func withdrawalButtonDidTap()
-}
-
 final class SettingView: UIView, BaseViewType {
     
     struct Option {
@@ -52,17 +42,20 @@ final class SettingView: UIView, BaseViewType {
     // MARK: - property
     
     private var options: [Option] = []
-    private weak var delegate: SettingViewDelegate?
     
-    let withdrawalButtonPublisher = PassthroughSubject<Void, Never>()
+    let changNicknameButtonDidTapPublisher = PassthroughSubject<Void, Never>()
+    let personalInfomationButtonDidTapPublisher = PassthroughSubject<Void, Never>()
+    let termsOfServiceButtonDidTapPublisher = PassthroughSubject<Void, Never>()
+    let developerInfoButtonDidTapPublisher = PassthroughSubject<Void, Never>()
+    let helpButtonDidTapPublisher = PassthroughSubject<Void, Never>()
     let logoutButtonPublisher = PassthroughSubject<Void, Never>()
+    lazy var withdrawalButtonPublisher = self.withdrawalButton.tapPublisher
     
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupButtonAction()
         self.configureModels()
     }
     
@@ -102,42 +95,30 @@ final class SettingView: UIView, BaseViewType {
 
     // MARK: - func
     
-    private func setupButtonAction() {
-        let withdrawalButtonDidTap = UIAction { [weak self] _ in
-            self?.delegate?.withdrawalButtonDidTap()
-        }
-        
-        self.withdrawalButton.addAction(withdrawalButtonDidTap, for: .touchUpInside)
-    }
-    
     private func configureModels() {
         self.options.append(Option(title: TextLiteral.settingViewControllerChangeNickNameTitle, handler: { [weak self] in
-            self?.delegate?.changNicknameButtonDidTap()
+            self?.changNicknameButtonDidTapPublisher.send()
         }))
         
         self.options.append(Option(title: TextLiteral.settingViewControllerPersonalInfomationTitle, handler: { [weak self] in
-            self?.delegate?.personalInfomationButtonDidTap()
+            self?.personalInfomationButtonDidTapPublisher.send()
         }))
         
         self.options.append(Option(title: TextLiteral.settingViewControllerTermsOfServiceTitle, handler: { [weak self] in
-            self?.delegate?.termsOfServiceButtonDidTap()
+            self?.termsOfServiceButtonDidTapPublisher.send()
         }))
         
         self.options.append(Option(title: TextLiteral.settingViewControllerDeveloperInfoTitle, handler: { [weak self] in
-            self?.delegate?.developerInfoButtonDidTap()
+            self?.developerInfoButtonDidTapPublisher.send()
         }))
         
         self.options.append(Option(title: TextLiteral.settingViewControllerHelpTitle, handler: { [weak self] in
-            self?.delegate?.helpButtonDidTap()
+            self?.helpButtonDidTapPublisher.send()
         }))
         
         self.options.append(Option(title: TextLiteral.settingViewControllerLogoutTitle, handler: { [weak self] in
-            self?.delegate?.logoutButtonDidTap()
+            self?.logoutButtonPublisher.send()
         }))
-    }
-    
-    func configureDelegate(_ delegate: SettingViewDelegate) {
-        self.delegate = delegate
     }
 }
 
