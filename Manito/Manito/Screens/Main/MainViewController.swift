@@ -38,7 +38,10 @@ final class MainViewController: UIViewController, BaseViewControllerType {
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
         let action = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(SettingViewController(viewModel: SettingViewModel(settingService: SettingService(repository: SettingRepositoryImpl()))), animated: true)
+            let repository = SettingRepositoryImpl()
+            let usecase = SettingUsecaseImpl(repository: repository)
+            let viewModel = SettingViewModel(usecase: usecase)
+            self?.navigationController?.pushViewController(SettingViewController(viewModel: viewModel), animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         return button

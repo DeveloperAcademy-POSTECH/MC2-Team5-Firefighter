@@ -12,7 +12,7 @@ final class SettingViewModel {
     
     // MARK: - property
     
-    private let settingService: SettingService
+    private let usecase: SettingUsecaseImpl
     private var cancellable = Set<AnyCancellable>()
     
     private let deleteUserSubject = PassthroughSubject<Void, NetworkError>()
@@ -48,8 +48,8 @@ final class SettingViewModel {
     
     // MARK: - init
     
-    init(settingService: SettingService) {
-        self.settingService = settingService
+    init(usecase: SettingUsecaseImpl) {
+        self.usecase = usecase
     }
     
     // MARK: - func
@@ -57,7 +57,7 @@ final class SettingViewModel {
     private func requestDeleteUser() {
         Task {
             do {
-                let statusCode = try await self.settingService.deleteUser()
+                let statusCode = try await self.usecase.deleteUser()
                 switch statusCode {
                 case 200..<300:
                     self.deleteUserSubject.send()

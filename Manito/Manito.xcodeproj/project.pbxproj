@@ -175,7 +175,7 @@
 		CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */; };
 		CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */; };
 		D70220232A7A22EC0024BACD /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70220222A7A22EC0024BACD /* CreateRoomView.swift */; };
-		D71939532AA1C84900A73D6C /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939522AA1C84900A73D6C /* SettingService.swift */; };
+		D71939532AA1C84900A73D6C /* SettingUsecaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939522AA1C84900A73D6C /* SettingUsecaseImpl.swift */; };
 		D71939552AA1C85300A73D6C /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939542AA1C85300A73D6C /* SettingViewModel.swift */; };
 		D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939582AA2343E00A73D6C /* NicknameView.swift */; };
 		D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */; };
@@ -402,7 +402,7 @@
 		CBA4D7A52856D48C0018BDC2 /* RoomStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStateView.swift; sourceTree = "<group>"; };
 		CBBFF77B287AE491006A5964 /* DeveloperInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewCell.swift; sourceTree = "<group>"; };
 		D70220222A7A22EC0024BACD /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
-		D71939522AA1C84900A73D6C /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
+		D71939522AA1C84900A73D6C /* SettingUsecaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUsecaseImpl.swift; sourceTree = "<group>"; };
 		D71939542AA1C85300A73D6C /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		D71939582AA2343E00A73D6C /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
@@ -901,6 +901,7 @@
 		B58CA3052A9CC37000977592 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				D7AE5EBE2AC1964000A20D0A /* Setting */,
 				D7AE5EB72AC184A600A20D0A /* ParticipateRoomScene */,
 				B58CA3062A9CC37B00977592 /* LetterScene */,
 			);
@@ -954,6 +955,7 @@
 		B58CA30B2A9CC43600977592 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				D7AE5EC42AC1966B00A20D0A /* Setting */,
 				D7AE5EBB2AC184F300A20D0A /* ParticipateRoomScene */,
 				B58CA3142A9D913600977592 /* LetterScene */,
 			);
@@ -1393,7 +1395,7 @@
 		D71939502AA1C82100A73D6C /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				D71939522AA1C84900A73D6C /* SettingService.swift */,
+				D71939522AA1C84900A73D6C /* SettingUsecaseImpl.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1557,6 +1559,60 @@
 				CB21C33828C4C10200128D25 /* CharacterCollectionViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		D7AE5EBE2AC1964000A20D0A /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				D7AE5EC32AC1965A00A20D0A /* Cell */,
+				D7AE5EC22AC1965100A20D0A /* UIComponent */,
+				D7AE5EC12AC1964E00A20D0A /* View */,
+				D7AE5EC02AC1964900A20D0A /* ViewController */,
+				D7AE5EBF2AC1964500A20D0A /* ViewModel */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		D7AE5EBF2AC1964500A20D0A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D7AE5EC02AC1964900A20D0A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D7AE5EC12AC1964E00A20D0A /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D7AE5EC22AC1965100A20D0A /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		D7AE5EC32AC1965A00A20D0A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		D7AE5EC42AC1966B00A20D0A /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		D7B83FD42A95A46F00BFD8FF /* Services */ = {
@@ -1864,7 +1920,7 @@
 				D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift in Sources */,
 				D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */,
 				39833CFE2AB09A6C009D173A /* Keyboardable.swift in Sources */,
-				D71939532AA1C84900A73D6C /* SettingService.swift in Sources */,
+				D71939532AA1C84900A73D6C /* SettingUsecaseImpl.swift in Sources */,
 				B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */,
 				B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */,
 				CB9592B52855D52700847751 /* CommonMissionView.swift in Sources */,
