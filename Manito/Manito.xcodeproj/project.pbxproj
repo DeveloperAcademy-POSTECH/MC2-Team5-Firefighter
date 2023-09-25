@@ -901,7 +901,7 @@
 		B58CA3052A9CC37000977592 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				D7AE5EBE2AC1964000A20D0A /* Setting */,
+				D7AE5EBE2AC1964000A20D0A /* SettingScene */,
 				D7AE5EB72AC184A600A20D0A /* ParticipateRoomScene */,
 				B58CA3062A9CC37B00977592 /* LetterScene */,
 			);
@@ -1506,7 +1506,7 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		D7AE5EBE2AC1964000A20D0A /* Setting */ = {
+		D7AE5EBE2AC1964000A20D0A /* SettingScene */ = {
 			isa = PBXGroup;
 			children = (
 				D7AE5EC32AC1965A00A20D0A /* Cell */,
@@ -1515,7 +1515,7 @@
 				D7AE5EC02AC1964900A20D0A /* ViewController */,
 				D7AE5EBF2AC1964500A20D0A /* ViewModel */,
 			);
-			path = Setting;
+			path = SettingScene;
 			sourceTree = "<group>";
 		};
 		D7AE5EBF2AC1964500A20D0A /* ViewModel */ = {
