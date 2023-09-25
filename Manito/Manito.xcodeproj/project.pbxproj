@@ -901,6 +901,7 @@
 		B58CA3052A9CC37000977592 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				D7AE5EB72AC184A600A20D0A /* ParticipateRoomScene */,
 				B58CA3062A9CC37B00977592 /* LetterScene */,
 			);
 			path = Scene;
@@ -953,6 +954,7 @@
 		B58CA30B2A9CC43600977592 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				D7AE5EBB2AC184F300A20D0A /* ParticipateRoomScene */,
 				B58CA3142A9D913600977592 /* LetterScene */,
 			);
 			path = Usecase;
@@ -1549,6 +1551,44 @@
 				D79E9D892A826E0200C031F0 /* CreateRoomViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D7AE5EB72AC184A600A20D0A /* ParticipateRoomScene */ = {
+			isa = PBXGroup;
+			children = (
+				D7AE5EBA2AC184BC00A20D0A /* View */,
+				D7AE5EB92AC184B700A20D0A /* ViewController */,
+				D7AE5EB82AC184B300A20D0A /* ViewModel */,
+			);
+			path = ParticipateRoomScene;
+			sourceTree = "<group>";
+		};
+		D7AE5EB82AC184B300A20D0A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D7AE5EB92AC184B700A20D0A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D7AE5EBA2AC184BC00A20D0A /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D7AE5EBB2AC184F300A20D0A /* ParticipateRoomScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ParticipateRoomScene;
 			sourceTree = "<group>";
 		};
 		D7B83FD42A95A46F00BFD8FF /* Services */ = {
