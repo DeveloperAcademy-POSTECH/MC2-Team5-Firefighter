@@ -99,6 +99,8 @@
 		B577E4F82ABFCA5C003CC102 /* SendLetterUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E4F72ABFCA5C003CC102 /* SendLetterUsecase.swift */; };
 		B577E4FB2ABFDCC3003CC102 /* CommonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E4FA2ABFDCC3003CC102 /* CommonError.swift */; };
 		B577E4FD2ABFDE6F003CC102 /* SendLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E4FC2ABFDE6F003CC102 /* SendLetterView.swift */; };
+		B577E5002AC373CA003CC102 /* PhotoPickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E4FF2AC373CA003CC102 /* PhotoPickerManager.swift */; };
+		B577E5022AC37998003CC102 /* PHPickerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E5012AC37998003CC102 /* PHPickerError.swift */; };
 		B5A085DF2A972D2A00C8A98D /* LetterRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */; };
 		B5A085E12A972D7900C8A98D /* LoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */; };
 		B5A085E32A972DDC00C8A98D /* EditedMissionRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085E22A972DDC00C8A98D /* EditedMissionRequestDTO.swift */; };
@@ -326,6 +328,8 @@
 		B577E4F72ABFCA5C003CC102 /* SendLetterUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterUsecase.swift; sourceTree = "<group>"; };
 		B577E4FA2ABFDCC3003CC102 /* CommonError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonError.swift; sourceTree = "<group>"; };
 		B577E4FC2ABFDE6F003CC102 /* SendLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLetterView.swift; sourceTree = "<group>"; };
+		B577E4FF2AC373CA003CC102 /* PhotoPickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerManager.swift; sourceTree = "<group>"; };
+		B577E5012AC37998003CC102 /* PHPickerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPickerError.swift; sourceTree = "<group>"; };
 		B57CB3032A763C1600474042 /* MTNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MTNetwork; sourceTree = "<group>"; };
 		B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterRequestDTO.swift; sourceTree = "<group>"; };
 		B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDTO.swift; sourceTree = "<group>"; };
@@ -688,6 +692,7 @@
 		B53A35B22A9630FE00B720BC /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				B577E4FE2AC373BB003CC102 /* PhotoPickerManager */,
 				B5C7FC032AA8876700862021 /* ImageCacheManager */,
 				B53A35B32A96310700B720BC /* UserDefaultService */,
 			);
@@ -781,7 +786,6 @@
 			children = (
 				B5B3C1592A41D69500AABD6F /* ViewControllers */,
 				B5B3C1582A41D67F00AABD6F /* Views */,
-				B5F5253328547EE000614FF7 /* UIComponents */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -891,6 +895,23 @@
 				B577E4FA2ABFDCC3003CC102 /* CommonError.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		B577E4FE2AC373BB003CC102 /* PhotoPickerManager */ = {
+			isa = PBXGroup;
+			children = (
+				B577E5032AC3799D003CC102 /* Error */,
+				B577E4FF2AC373CA003CC102 /* PhotoPickerManager.swift */,
+			);
+			path = PhotoPickerManager;
+			sourceTree = "<group>";
+		};
+		B577E5032AC3799D003CC102 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				B577E5012AC37998003CC102 /* PHPickerError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 		B57CB3022A763BB200474042 /* Packages */ = {
@@ -1335,13 +1356,6 @@
 				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
 			);
 			path = Storyboards;
-			sourceTree = "<group>";
-		};
-		B5F5253328547EE000614FF7 /* UIComponents */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UIComponents;
 			sourceTree = "<group>";
 		};
 		B5F525462855D00B00614FF7 /* Network */ = {
@@ -1799,6 +1813,7 @@
 				397A241028BA494100454E4F /* APIEnvironment.swift in Sources */,
 				CBBFF77C287AE491006A5964 /* DeveloperInfoViewCell.swift in Sources */,
 				392EC7812855D17D006918A9 /* DetailWaitTitleView.swift in Sources */,
+				B577E5002AC373CA003CC102 /* PhotoPickerManager.swift in Sources */,
 				B5A085E62A972EB700C8A98D /* LetterDTO.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputCapacityView.swift in Sources */,
 				B53A35C62A96F6DB00B720BC /* RoomParticipationRepository.swift in Sources */,
@@ -1811,6 +1826,7 @@
 				3904F5002AA3754400B6264F /* MessageCountInfo.swift in Sources */,
 				D7537F692AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift in Sources */,
 				B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */,
+				B577E5022AC37998003CC102 /* PHPickerError.swift in Sources */,
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,
 				D7537F672AA75AFB005AC78B /* ParticipationRoomDetailsView.swift in Sources */,
 				7E3058C62854B47F00489E6A /* InputTitleView.swift in Sources */,

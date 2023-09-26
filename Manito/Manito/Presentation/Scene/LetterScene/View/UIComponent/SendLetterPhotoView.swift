@@ -5,9 +5,7 @@
 //  Created by SHIN YOON AH on 2022/06/13.
 //
 
-import AVFoundation
 import Combine
-import PhotosUI
 import UIKit
 
 import SnapKit
@@ -19,11 +17,6 @@ final class SendLetterPhotoView: UIView {
                               titles: [String],
                               styles: [UIAlertAction.Style],
                               actions: [((UIAlertAction) -> Void)?])
-
-    private enum SourceType {
-        case camera
-        case library
-    }
     
     // MARK: - ui component
     
@@ -110,10 +103,12 @@ final class SendLetterPhotoView: UIView {
 
     private func alertActions() -> [AlertAction?] {
         let takePhotoAction: AlertAction = { [weak self] _ in
-            self?.openPickerAccordingTo(.camera)
+            manager.openPhotos()
+            self?.importPhotosButton.setImage(image, for: .normal)
+            self?.hasImageSubject.send(self?.importPhotosButton.imageView?.image != UIImage.Button.camera)
         }
         let photoLibraryAction: AlertAction = { [weak self] _ in
-            self?.openPickerAccordingTo(.library)
+            manager.openCamera()
         }
         let removePhotoAction: AlertAction = { [weak self] _ in
             self?.importPhotosButton.setImage(UIImage.Button.camera, for: .normal)
@@ -122,146 +117,5 @@ final class SendLetterPhotoView: UIView {
 
         return self.hasImageSubject.value ? [takePhotoAction, photoLibraryAction, removePhotoAction, nil]
                                           : [takePhotoAction, photoLibraryAction, nil]
-    }
-    
-    private func openPickerAccordingTo(_ sourceType: SourceType) {
-        switch sourceType {
-        case .library:
-            let authorizationStatus = PHPhotoLibrary.authorizationStatus(for: .addOnly)
-            self.checkPHPickerControllerAuthorizationStatus(authorizationStatus)
-        case .camera:
-            self.checkImagePickerControllerAccessRight()
-        }
-    }
-
-    private func checkPHPickerControllerAuthorizationStatus(_ authorizationStatus: PHAuthorizationStatus) {
-        switch authorizationStatus {
-        case .notDetermined:
-            PHPhotoLibrary.requestAuthorization(for: .addOnly) { [weak self] authorizationStatus in
-                if authorizationStatus == .authorized {
-                    self?.phPickerControllerDidShow()
-                }
-            }
-        case .authorized:
-            self.phPickerControllerDidShow()
-        default:
-            self.openSettings()
-        }
-    }
-
-    private func phPickerControllerDidShow() {
-        var configuration = PHPickerConfiguration()
-        configuration.filter = .any(of: [.images, .livePhotos])
-
-        DispatchQueue.main.async {
-            let phPickerController = PHPickerViewController(configuration: configuration)
-            phPickerController.delegate = self
-            self.viewController?.present(phPickerController, animated: true)
-        }
-    }
-    
-    private func openSettings() {
-        let settingAction: AlertAction = { [weak self] _ in
-            guard let settingURL = URL(string: UIApplication.openSettingsURLString) else {
-                self?.viewController?.makeAlert(title: TextLiteral.letterPhotoViewErrorTitle,
-                                                message: TextLiteral.letterPhotoViewSettingFail)
-                return
-            }
-            UIApplication.shared.open(settingURL)
-        }
-
-        self.viewController?.makeRequestAlert(title: TextLiteral.letterPhotoViewSetting,
-                                              message: TextLiteral.letterPhotoViewSettingAuthorization,
-                                              okTitle: "설정",
-                                              okStyle: .default,
-                                              okAction: settingAction,
-                                              completion: nil)
-    }
-
-    private func checkImagePickerControllerAccessRight() {
-        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-            self.viewController?.makeAlert(title: TextLiteral.letterPhotoViewErrorTitle,
-                                           message: TextLiteral.letterPhotoViewDeviceFail)
-            return
-        }
-
-        AVCaptureDevice.requestAccess(for: .video) { [weak self] hasGranted in
-            DispatchQueue.main.async {
-                hasGranted ? self?.imagePickerControllerDidShow() : self?.openSettings()
-            }
-        }
-    }
-
-    private func imagePickerControllerDidShow() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .camera
-
-        DispatchQueue.main.async {
-            self.viewController?.present(imagePickerController, animated: true)
-        }
-    }
-}
-
-// MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
-extension SendLetterPhotoView: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            DispatchQueue.main.async {
-                self.importPhotosButton.setImage(image, for: .normal)
-                self.hasImageSubject.send(self.importPhotosButton.imageView?.image != UIImage.Button.camera)
-                picker.dismiss(animated: true)
-            }
-        }
-    }
-}
-
-// MARK: - PHPickerViewControllerDelegate
-extension SendLetterPhotoView: PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        if let selectedAsset = results.first?.itemProvider {
-            self.pickerController(picker, didFinishPicking: selectedAsset)
-        } else {
-            self.pickerControllerDidCancel(picker)
-        }
-    }
-
-    private func pickerControllerDidCancel(_ picker: PHPickerViewController) {
-        DispatchQueue.main.async {
-            picker.dismiss(animated: true)
-        }
-    }
-
-    private func pickerController(_ picker: PHPickerViewController, didFinishPicking asset: NSItemProvider) {
-        self.loadUIImage(for: asset) { [weak self] result in
-            switch result {
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self?.importPhotosButton.setImage(image, for: .normal)
-                    self?.hasImageSubject.send(self?.importPhotosButton.imageView?.image != UIImage.Button.camera)
-                    picker.dismiss(animated: true)
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    picker.makeAlert(title: "", message: error.errorDescription, okAction: { _ in
-                        picker.dismiss(animated: true)
-                    })
-                }
-            }
-        }
-    }
-
-    private func loadUIImage(for itemProvider: NSItemProvider, completionHandler: @escaping ((Result<UIImage, LetterImageError>) -> ())) {
-        guard itemProvider.canLoadObject(ofClass: UIImage.self) else { completionHandler(.failure(.cantloadPhoto)); return }
-
-        itemProvider.loadObject(ofClass: UIImage.self) { image, error in
-            if error != nil {
-                completionHandler(.failure(.cantloadPhoto))
-            }
-
-            if let image = image as? UIImage {
-                completionHandler(.success(image))
-            }
-        }
     }
 }
