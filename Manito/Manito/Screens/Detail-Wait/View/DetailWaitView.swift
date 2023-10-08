@@ -165,7 +165,7 @@ final class DetailWaitView: UIView, BaseViewType {
         self.titleView.setupLabelData(title: title, dateRange: dateRange)
     }
 
-    private func setupRelatedViews(of userStatus: Bool, _ isStart: Bool) {
+    private func setupRelatedViews(of userStatus: Bool) {
         self.showStartButtonForAdmin(userStatus)
         self.setExitButtonMenu(userStatus)
         self.setupTitleViewGesture(userStatus)
@@ -236,7 +236,7 @@ final class DetailWaitView: UIView, BaseViewType {
         self.setupTitleViewData(title: room.roomInformation.title,
                                 status: room.roomInformation.state,
                                 dateRange: room.roomInformation.dateRangeText)
-        self.setupRelatedViews(of: room.admin, room.roomInformation.isStart)
+        self.setupRelatedViews(of: room.admin)
 
         self.configureStartButton(room.canStart)
         self.configureUserCountLabel(userCount: room.userCount)

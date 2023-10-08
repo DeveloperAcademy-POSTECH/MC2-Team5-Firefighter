@@ -11,7 +11,7 @@ protocol CreateLetterViewControllerDelegate: AnyObject {
     func refreshLetterData()
 }
 
-final class CreateLetterViewController: BaseViewController {
+final class CreateLetterViewController: UIViewController, Navigationable, Keyboardable {
 
     typealias AlertAction = ((UIAlertAction) -> ())
 
@@ -36,7 +36,7 @@ final class CreateLetterViewController: BaseViewController {
         self.roomId = roomId
         self.mission = mission
         self.missionId = missionId
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
 
     @available(*, unavailable)
@@ -55,6 +55,8 @@ final class CreateLetterViewController: BaseViewController {
         self.configureUI()
         self.configureDelegation()
         self.configureNavigationController()
+        self.setupNavigation()
+        self.setupKeyboardGesture()
     }
 
     // MARK: - func

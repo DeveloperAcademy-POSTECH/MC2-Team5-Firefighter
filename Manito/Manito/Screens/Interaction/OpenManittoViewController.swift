@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class OpenManittoViewController: BaseViewController {
+final class OpenManittoViewController: UIViewController, Navigationable {
 
     // MARK: - ui component
 
@@ -27,7 +27,7 @@ final class OpenManittoViewController: BaseViewController {
     init(roomId: String, manittoNickname: String) {
         self.roomId = roomId
         self.manittoNickname = manittoNickname
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
 
     @available(*, unavailable)
@@ -45,6 +45,7 @@ final class OpenManittoViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.fetchManittoData()
+        self.setupNavigation()
     }
 
     // MARK: - func

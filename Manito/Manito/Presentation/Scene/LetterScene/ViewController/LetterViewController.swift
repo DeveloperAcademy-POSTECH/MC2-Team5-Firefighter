@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-final class LetterViewController: BaseViewController {
+final class LetterViewController: UIViewController, Navigationable {
 
     enum Section: CaseIterable {
         case main
@@ -37,7 +37,7 @@ final class LetterViewController: BaseViewController {
     
     init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
 
     @available(*, unavailable)
@@ -55,6 +55,7 @@ final class LetterViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDataSource()
         self.bindViewModel()
+        self.setupNavigation()
     }
 
     override func viewWillAppear(_ animated: Bool) {

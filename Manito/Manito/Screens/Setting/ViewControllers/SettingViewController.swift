@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class SettingViewController: BaseViewController {
+final class SettingViewController: UIViewController, Navigationable {
     
     // MARK: - ui component
     
@@ -25,7 +25,7 @@ final class SettingViewController: BaseViewController {
     
     init(viewModel: SettingViewModel) {
         self.viewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -47,6 +47,7 @@ final class SettingViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.bindViewModel()
+        self.setupNavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
