@@ -65,7 +65,6 @@ final class NicknameView: UIView, BaseViewType {
         self.title = title
         super.init(frame: .zero)
         self.baseInit()
-        self.setupNotificationCenter()
     }
     
     @available(*, unavailable)
@@ -97,7 +96,7 @@ final class NicknameView: UIView, BaseViewType {
         
         self.addSubview(self.doneButton)
         self.doneButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(23)
+            $0.bottom.equalTo(self.keyboardLayoutGuide.snp.top).inset(-23)
             $0.centerX.equalToSuperview()
         }
     }
@@ -107,11 +106,6 @@ final class NicknameView: UIView, BaseViewType {
     }
 
     // MARK: - func
-    
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
     
     func configureNavigationItem(_ navigationController: UINavigationController) {
         navigationController.isNavigationBarHidden = false
@@ -140,22 +134,6 @@ final class NicknameView: UIView, BaseViewType {
     
     func updateNickname(nickname: String) {
         self.nicknameTextField.text = nickname
-    }
-    
-    // MARK: - selector
-    
-    @objc private func keyboardWillShow(notification:NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.doneButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
-        }
-    }
-    
-    @objc private func keyboardWillHide(notification:NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.doneButton.transform = .identity
-        })
     }
 }
 

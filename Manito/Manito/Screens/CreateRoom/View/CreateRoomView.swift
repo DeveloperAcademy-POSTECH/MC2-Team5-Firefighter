@@ -69,7 +69,6 @@ final class CreateRoomView: UIView, BaseViewType {
         super.init(frame: frame)
         self.baseInit()
         self.setupAction()
-        self.setupNotificationCenter()
     }
     
     @available(*, unavailable)
@@ -102,7 +101,7 @@ final class CreateRoomView: UIView, BaseViewType {
         self.addSubview(self.nextButton)
         self.nextButton.snp.makeConstraints {
             $0.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(23)
+            $0.bottom.equalTo(self.keyboardLayoutGuide.snp.top).inset(-23)
             $0.height.equalTo(60)
         }
         
@@ -148,17 +147,6 @@ final class CreateRoomView: UIView, BaseViewType {
             self?.backButtonDidTapPublisher.send(currentStep)
         }
         self.backButton.addAction(backAction, for: .touchUpInside)
-    }
-    
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
     }
     
     private func updateHiddenStepView(at step: CreateRoomStep) {
@@ -255,24 +243,6 @@ final class CreateRoomView: UIView, BaseViewType {
         case .chooseCharacter:
             self.updateChooseCharacterViewAnimation()
         }
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
-        }
-    }
-    
-    @objc
-    private func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.nextButton.transform = .identity
-        })
     }
 }
 

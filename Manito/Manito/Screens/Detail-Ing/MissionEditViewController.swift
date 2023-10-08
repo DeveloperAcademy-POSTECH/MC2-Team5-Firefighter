@@ -79,7 +79,6 @@ final class MissionEditViewController: UIViewController, BaseViewControllerType,
         super.viewDidLoad()
         self.baseViewDidLoad()
         self.setupGesture()
-        self.setupNotificationCenter()
         self.setupNavigation()
     }
     
@@ -89,7 +88,7 @@ final class MissionEditViewController: UIViewController, BaseViewControllerType,
         self.view.addSubview(self.backgroundView)
         self.backgroundView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(-5)
+            $0.bottom.equalTo(self.view.keyboardLayoutGuide.snp.top).inset(-5)
             $0.height.equalTo(120)
         }
         
@@ -120,11 +119,6 @@ final class MissionEditViewController: UIViewController, BaseViewControllerType,
     private func setupGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissViewController))
         self.view.addGestureRecognizer(tapGesture)
-    }
-    
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func didChangedTextField(_ text: String) {
@@ -158,20 +152,6 @@ final class MissionEditViewController: UIViewController, BaseViewControllerType,
     @objc
     private func dismissViewController() {
         self.dismiss(animated: true)
-    }
-    
-    @objc private func keyboardWillShow(notification:NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.backgroundView.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
-        }
-    }
-    
-    @objc private func keyboardWillHide(notification:NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.backgroundView.transform = .identity
-        })
     }
     
     // MARK: - network
