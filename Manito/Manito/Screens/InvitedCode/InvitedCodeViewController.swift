@@ -11,10 +11,10 @@ import SnapKit
 
 class InvitedCodeViewController: UIViewController, BaseViewControllerType, Navigationable {
     
-    var roomInfo: RoomListItemDTO
+    var roomInfo: RoomListItem
     var code: String
     
-    init(roomInfo: RoomListItemDTO, code: String){
+    init(roomInfo: RoomListItem, code: String){
         self.roomInfo = roomInfo
         self.code = code
         super.init(nibName: nil, bundle: nil)
@@ -48,14 +48,14 @@ class InvitedCodeViewController: UIViewController, BaseViewControllerType, Navig
     private lazy var roomDateLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
-        label.text = "\(roomInfo.startDate ?? "") ~ \(roomInfo.endDate ?? "")"
+        label.text = "\(roomInfo.startDate) ~ \(roomInfo.endDate)"
         return label
     }()
     private let roomImage = UIImageView(image: UIImage.Image.characterBrown)
     private lazy var roomPersonLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
-        label.text = "X \(roomInfo.capacity ?? 0)인"
+        label.text = "X \(roomInfo.capacity)인"
         return label
     }()
     private lazy var roomPersonView: UIView = {
