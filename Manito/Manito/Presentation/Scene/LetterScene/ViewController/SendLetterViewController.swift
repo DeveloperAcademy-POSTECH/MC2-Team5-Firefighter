@@ -205,7 +205,9 @@ extension SendLetterViewController {
             case .success(let image):
                 self?.sendLetterView.updatePhotoView(image: image)
             case .failure(let error):
-                self?.showErrorAlert(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self?.showErrorAlert(error.localizedDescription)
+                }
             }
         }
     }

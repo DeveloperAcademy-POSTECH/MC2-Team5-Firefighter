@@ -83,11 +83,13 @@ extension PhotoPickerManager {
             UIApplication.shared.open(settingURL)
         }
 
-        self.viewController?.makeRequestAlert(title: TextLiteral.Common.Error.title.localized(),
-                                              message: TextLiteral.SendLetter.Error.authorizationMessage.localized(with: Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "애니또"),
-                                              okTitle: TextLiteral.SendLetter.Error.buttonSetting.localized(),
-                                              okStyle: .default,
-                                              okAction: settingAction)
+        DispatchQueue.main.async {
+            self.viewController?.makeRequestAlert(title: TextLiteral.Common.Error.title.localized(),
+                                                  message: TextLiteral.SendLetter.Error.authorizationMessage.localized(with: Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "애니또"),
+                                                  okTitle: TextLiteral.SendLetter.Error.buttonSetting.localized(),
+                                                  okStyle: .default,
+                                                  okAction: settingAction)
+        }
     }
 
     private func imagePickerControllerDidShow() {
