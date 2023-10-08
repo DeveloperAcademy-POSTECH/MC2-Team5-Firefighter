@@ -22,6 +22,8 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
 
     // MARK: - property
 
+    private let photoPickerManager: PhotoPickerManager = PhotoPickerManager()
+
     private var cancelBag: Set<AnyCancellable> = Set()
 
     private let viewModel: any BaseViewModelType
@@ -50,6 +52,7 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
         super.viewDidLoad()
         self.setupNavigation()
         self.setupKeyboardGesture()
+        self.setupPhotoPickerManager()
         self.configureNavigationController()
         self.bindUI()
         self.bindViewModel()
@@ -62,6 +65,10 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
         self.navigationController?.presentationController?.delegate = self
     }
 
+    private func setupPhotoPickerManager() {
+        self.photoPickerManager.viewController = self
+    }
+    
     private func configureNavigationController() {
         self.sendLetterView.configureNavigationController(of: self)
     }
@@ -87,6 +94,20 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
                                       actionTitles: detail.titles,
                                       actionStyle: detail.styles,
                                       actions: detail.actions)
+            })
+            .store(in: &self.cancelBag)
+        
+        self.sendLetterView.openCameraMenuTapPublisher
+            .sink(receiveValue: { [weak self] in
+                self?.photoPickerManager.openCamera()
+                self?.updatePhoto()
+            })
+            .store(in: &self.cancelBag)
+        
+        self.sendLetterView.openPhotosMenuTapPublisher
+            .sink(receiveValue: { [weak self] in
+                self?.photoPickerManager.openPhotos()
+                self?.updatePhoto()
             })
             .store(in: &self.cancelBag)
     }
@@ -193,6 +214,17 @@ extension SendLetterViewController {
     private func handleRefreshLetter() {
         self.delegate?.refreshLetterData()
         self.dismiss(animated: true)
+    }
+    
+    private func updatePhoto() {
+        self.photoPickerManager.loadImage = { [weak self] result in
+            switch result {
+            case .success(let image):
+                self?.sendLetterView.updatePhotoView(image: image)
+            case .failure(let error):
+                self?.makeAlert(title: TextLiteral.alert, message: error.errorDescription)
+            }
+        }
     }
 }
 

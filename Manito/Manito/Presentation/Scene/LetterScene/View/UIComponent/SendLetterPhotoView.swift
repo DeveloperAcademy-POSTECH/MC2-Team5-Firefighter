@@ -53,6 +53,9 @@ final class SendLetterPhotoView: UIView {
             }
             .eraseToAnyPublisher()
     }
+    
+    var openCameraMenuSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
+    var openPhotosMenuSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     var imageSubject: CurrentValueSubject<UIImage?, Never> = CurrentValueSubject(nil)
     var hasImageSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
 
@@ -102,20 +105,27 @@ final class SendLetterPhotoView: UIView {
     }
 
     private func alertActions() -> [AlertAction?] {
-        let takePhotoAction: AlertAction = { [weak self] _ in
-            manager.openPhotos()
-            self?.importPhotosButton.setImage(image, for: .normal)
-            self?.hasImageSubject.send(self?.importPhotosButton.imageView?.image != UIImage.Button.camera)
+        let openCameraAction: AlertAction = { [weak self] _ in
+            self?.openCameraMenuSubject.send(())
         }
-        let photoLibraryAction: AlertAction = { [weak self] _ in
-            manager.openCamera()
+        let openPhotosAction: AlertAction = { [weak self] _ in
+            self?.openPhotosMenuSubject.send(())
         }
         let removePhotoAction: AlertAction = { [weak self] _ in
-            self?.importPhotosButton.setImage(UIImage.Button.camera, for: .normal)
-            self?.hasImageSubject.send(false)
+            self?.removePhoto()
         }
 
-        return self.hasImageSubject.value ? [takePhotoAction, photoLibraryAction, removePhotoAction, nil]
-                                          : [takePhotoAction, photoLibraryAction, nil]
+        return self.hasImageSubject.value ? [openCameraAction, openPhotosAction, removePhotoAction, nil]
+                                          : [openCameraAction, openPhotosAction, nil]
+    }
+
+    private func removePhoto() {
+        self.importPhotosButton.setImage(UIImage.Button.camera, for: .normal)
+        self.hasImageSubject.send(false)
+    }
+    
+    func updatePhoto(to image: UIImage) {
+        self.importPhotosButton.setImage(image, for: .normal)
+        self.hasImageSubject.send(true)
     }
 }

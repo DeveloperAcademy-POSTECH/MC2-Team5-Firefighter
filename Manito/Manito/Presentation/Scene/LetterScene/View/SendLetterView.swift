@@ -63,7 +63,15 @@ final class SendLetterView: UIView, BaseViewType {
     var photoButtonTapPublisher: AnyPublisher<ActionDetail, Never> {
         return self.letterPhotoView.photoButtonPublisher
     }
+    
+    var openCameraMenuTapPublisher: AnyPublisher<Void, Never> {
+        return self.letterPhotoView.openCameraMenuSubject.eraseToAnyPublisher()
+    }
 
+    var openPhotosMenuTapPublisher: AnyPublisher<Void, Never> {
+        return self.letterPhotoView.openPhotosMenuSubject.eraseToAnyPublisher()
+    }
+    
     var cancelButtonTapPublisher: AnyPublisher<Bool, Never> {
         return self.cancelButton.tapPublisher
             .map { [weak self] in
@@ -118,6 +126,10 @@ final class SendLetterView: UIView, BaseViewType {
 
     func updateTextView(content: String) {
         self.letterTextView.updateTextViewContent(to: content)
+    }
+    
+    func updatePhotoView(image: UIImage) {
+        self.letterPhotoView.updatePhoto(to: image)
     }
 }
 
