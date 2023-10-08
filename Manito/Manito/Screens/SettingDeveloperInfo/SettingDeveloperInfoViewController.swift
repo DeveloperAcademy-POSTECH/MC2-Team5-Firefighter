@@ -11,7 +11,7 @@ import SnapKit
 
 final class SettingDeveloperInfoViewController: BaseViewController, BaseViewControllerType {
     
-    // 개발자 정보 데이터
+    // FIXME: - 개발자 Data를 따로 빼고 그 안에서 데이터 관리
     private let developerData: [[String: Any]] = [
         [
             "image": UIImage.Image.coby,
@@ -117,7 +117,7 @@ final class SettingDeveloperInfoViewController: BaseViewController, BaseViewCont
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        title = TextLiteral.settingDeveloperInfoTitle
+        title = TextLiteral.Setting.developerInfo.localized()
     }
 
     // MARK: - base func

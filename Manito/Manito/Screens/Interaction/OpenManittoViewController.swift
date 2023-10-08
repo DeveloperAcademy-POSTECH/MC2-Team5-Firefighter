@@ -66,8 +66,8 @@ final class OpenManittoViewController: BaseViewController {
                 }
             case .failure:
                 DispatchQueue.main.async {
-                    self.makeAlert(title: TextLiteral.openManittoViewControllerErrorTitle,
-                                   message: TextLiteral.openManittoViewControllerErrorDescription)
+                    self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                   message: TextLiteral.DetailIng.Error.openManittoMessage.localized())
                     self.dismiss(animated: true)
                 }
             }

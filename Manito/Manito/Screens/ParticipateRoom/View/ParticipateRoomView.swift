@@ -20,7 +20,7 @@ final class ParticipateRoomView: UIView, BaseViewType {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.enterRoom
+        label.text = TextLiteral.Common.enterRoom.localized()
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
@@ -31,7 +31,7 @@ final class ParticipateRoomView: UIView, BaseViewType {
     }()
     private let nextButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.searchRoom
+        button.title = TextLiteral.Common.searchRoom.localized()
         button.isDisabled = true
         return button
     }()

@@ -93,6 +93,7 @@ final class DetailWaitViewController: BaseViewController {
                 switch result {
                 case .finished: return
                 case .failure(_):
+                    // FIXME: - 에러 관련 부분 수정 필요
                     self?.makeAlert(title: "에러 발생")
                 }
             }, receiveValue: { [weak self] room in
@@ -113,6 +114,7 @@ final class DetailWaitViewController: BaseViewController {
                 switch result {
                 case .finished: return
                 case .failure(_):
+                    // FIXME: - 에러 관련 부분 수정 필요
                     self?.makeAlert(title: "에러 발생")
                 }
             }, receiveValue: { [weak self] nickname in
@@ -134,6 +136,7 @@ final class DetailWaitViewController: BaseViewController {
                 switch result {
                 case .finished: return
                 case .failure(_):
+                    // FIXME: - 에러 관련 부분 수정 필요
                     self?.makeAlert(title: "오류 발생")
                 }
             }, receiveValue: { [weak self] _ in
@@ -147,6 +150,7 @@ final class DetailWaitViewController: BaseViewController {
                 switch result {
                 case .finished: return
                 case .failure(_):
+                    // FIXME: - 에러 관련 부분 수정 필요
                     self?.makeAlert(title: "오류 발생")
                 }
             }, receiveValue: { [weak self] _ in
@@ -192,23 +196,23 @@ final class DetailWaitViewController: BaseViewController {
     
     private func showToastView(code: String) {
         ToastView.showToast(code: code,
-                            message: TextLiteral.detailWaitViewControllerCopyCode,
+                            message: TextLiteral.DetailWait.toastCopyMessage.localized(),
                             controller: self)
     }
     
     private func deleteRoom() {
-        self.makeRequestAlert(title: TextLiteral.datailWaitViewControllerDeleteTitle,
-                              message: TextLiteral.datailWaitViewControllerDeleteMessage,
-                              okTitle: TextLiteral.delete,
+        self.makeRequestAlert(title: TextLiteral.DetailWait.deleteAlertTitle.localized(),
+                              message: TextLiteral.DetailWait.deleteAlertMessage.localized(),
+                              okTitle: TextLiteral.Detail.delete.localized(),
                               okAction: { [weak self] _ in
             self?.deleteMenuButtonSubject.send(())
         })
     }
     
     private func leaveRoom() {
-        self.makeRequestAlert(title: TextLiteral.datailWaitViewControllerExitTitle,
-                              message: TextLiteral.datailWaitViewControllerExitMessage,
-                              okTitle: TextLiteral.leave,
+        self.makeRequestAlert(title: TextLiteral.DetailWait.exitAlertTitle.localized(),
+                              message: TextLiteral.DetailWait.exitAlertMessage.localized(),
+                              okTitle: TextLiteral.Detail.leave.localized(),
                               okAction: { [weak self] _ in
             self?.leaveMenuButtonSubject.send(())
         })
@@ -217,12 +221,10 @@ final class DetailWaitViewController: BaseViewController {
     private func showStartDatePassedAlert(isPassedStartDate: Bool, isAdmin: Bool) {
         guard isPassedStartDate else { return }
         self.makeAlert(
-            title: isAdmin
-            ? TextLiteral.detailWaitViewControllerPastAlertTitle
-            : TextLiteral.detailWaitViewControllerPastAlertTitle,
+            title: TextLiteral.DetailWait.pastAlertTitle.localized(),
             message: isAdmin
-            ? TextLiteral.detailWaitViewControllerPastAdminAlertMessage
-            : TextLiteral.detailWaitViewControllerPastAlertMessage,
+            ? TextLiteral.DetailWait.pastAdminAlertMessage.localized()
+            : TextLiteral.DetailWait.pastAlertMessage.localized(),
             okAction: isAdmin
             ? { [weak self] _ in
                 guard let roomInformaion = self?.detailWaitViewModel.makeRoomInformation() else { return }
@@ -260,7 +262,7 @@ final class DetailWaitViewController: BaseViewController {
 extension DetailWaitViewController: DetailWaitViewControllerDelegate {
     func didTappedChangeButton() {
         self.changeButtonSubject.send()
-        ToastView.showToast(message: "방 정보 수정 완료",
+        ToastView.showToast(message: TextLiteral.DetailWait.toastEditMessage.localized(),
                             controller: self)
     }
 }
