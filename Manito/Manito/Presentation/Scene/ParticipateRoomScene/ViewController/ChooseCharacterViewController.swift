@@ -59,11 +59,11 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     }
     
     private func bindToViewModel() {
-        let output = self.transfromedOutput()
+        let output = self.transformedOutput()
         self.bindOutputToViewModel(output)
     }
     
-    private func transfromedOutput() -> ChooseCharacterViewModel.Output {
+    private func transformedOutput() -> ChooseCharacterViewModel.Output {
         let input = ChooseCharacterViewModel.Input(joinButtonTapPublisher: self.chooseCharacterView.joinButtonTapPublisher.eraseToAnyPublisher(),
                                                    characterIndexPublisher: self.chooseCharacterView.manittoCollectionView.characterIndexTapPublisher.eraseToAnyPublisher()
         )

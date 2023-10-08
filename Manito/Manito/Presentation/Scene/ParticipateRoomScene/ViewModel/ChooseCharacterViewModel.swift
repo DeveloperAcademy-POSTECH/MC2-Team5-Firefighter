@@ -47,7 +47,8 @@ final class ChooseCharacterViewModel: BaseViewModelType {
         
         input.joinButtonTapPublisher
             .sink { [weak self] _ in
-                self?.requestParticipateRoom(roomId: self!.roomId, colorIndex: self?.characterIndexSubject.value ?? 0)
+                guard let self = self else { return }
+                self.requestParticipateRoom(roomId: self.roomId, colorIndex: self.characterIndexSubject.value)
             }
             .store(in: &self.cancellable)
         
