@@ -29,7 +29,6 @@ final class ManitoRoomCollectionViewCell: UICollectionViewCell, BaseViewType {
     }()
     let roomLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.manitoRoomCollectionViewCellRoomLabelTitle
         label.textColor = .white
         label.font = .font(.regular, ofSize: 20)
         label.textAlignment = .center

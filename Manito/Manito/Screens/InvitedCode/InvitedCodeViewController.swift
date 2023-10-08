@@ -77,7 +77,7 @@ class InvitedCodeViewController: UIViewController, BaseViewControllerType, Navig
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
             if let code = self?.code {
-                ToastView.showToast(code: code, message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
+                ToastView.showToast(code: code, message: TextLiteral.DetailWait.toastCopyMessage.localized(), controller: self ?? UIViewController())
             }
         }
         button.setTitle(code, for: .normal)
@@ -90,7 +90,7 @@ class InvitedCodeViewController: UIViewController, BaseViewControllerType, Navig
     private let roomInviteInfoLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
-        label.text = TextLiteral.invitedCodeViewCOntroller
+        label.text = TextLiteral.CreateRoom.invitedCodeTitle.localized()
         label.textColor = .backgroundGrey
         return label
     }()
@@ -115,14 +115,14 @@ class InvitedCodeViewController: UIViewController, BaseViewControllerType, Navig
         view.addSubview(invitedImageView)
         invitedImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(142)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(463)
         }
         
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(16)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(SizeLiteral.leadingTrailingPadding)
             $0.height.width.equalTo(44)
         }
         

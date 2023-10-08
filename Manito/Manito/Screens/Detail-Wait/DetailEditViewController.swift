@@ -88,7 +88,8 @@ final class DetailEditViewController: UIViewController {
     }
 
     private func showDiscardActionSheet() {
-        let actionTitles = [TextLiteral.destructive, TextLiteral.cancel]
+        let actionTitles = [TextLiteral.Common.discardChanges.localized(),
+                            TextLiteral.Common.cancel.localized()]
         let actionStyle: [UIAlertAction.Style] = [.destructive, .cancel]
         let actions: [((UIAlertAction) -> Void)?] = [{ [weak self] _ in
             self?.dismiss(animated: true)
@@ -146,14 +147,14 @@ extension DetailEditViewController: DetailEditDelegate {
                     self?.detailWaitDelegate?.didTappedChangeButton()
                     self?.cancelButtonDidTap()
                 case .failure:
-                    self?.makeAlert(title: TextLiteral.detailEditViewControllerChangeErrorTitle,
-                                    message: TextLiteral.detailEditViewControllerChangeErrorMessage
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                    message: TextLiteral.DetailEdit.Error.message.localized()
                     )
                 }
             }
         } else {
-            self.makeAlert(title: TextLiteral.detailEditViewControllerChangeRoomInfoAlertTitle,
-                           message: TextLiteral.detailEditViewControllerChangeRoomInfoAlertMessage)
+            self.makeAlert(title: TextLiteral.DetailEdit.Error.memberTitle.localized(),
+                           message: TextLiteral.DetailEdit.Error.memberMessage.localized())
         }
     }
 }

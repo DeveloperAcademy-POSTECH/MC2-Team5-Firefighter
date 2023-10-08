@@ -14,9 +14,6 @@ enum LetterImageError: LocalizedError {
 
 extension LetterImageError {
     var errorDescription: String? {
-        switch self {
-        case .invalidImage: return TextLiteral.letterImageViewControllerErrorMessage
-        case .invalidPhotoLibrary: return TextLiteral.letterImageViewControllerErrorMessage
-        }
+        return TextLiteral.Letter.Error.imageSaveMessage.localized()
     }
 }

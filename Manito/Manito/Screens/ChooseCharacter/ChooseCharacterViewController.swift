@@ -69,7 +69,9 @@ final class ChooseCharacterViewController: UIViewController {
     }
     
     private func makeAlertWhenAlreadyJoin() {
-        self.makeAlert(title: "이미 참여중인 방입니다", message: "참여중인 애니또 리스트를 확인해 보세요", okAction: { [weak self] _ in
+        self.makeAlert(title: TextLiteral.ParticipateRoom.Error.alreadyJoinTitle.localized(),
+                       message: TextLiteral.ParticipateRoom.Error.alreadyJoinMessage.localized(),
+                       okAction: { [weak self] _ in
             self?.dismiss(animated: true)
         })
     }

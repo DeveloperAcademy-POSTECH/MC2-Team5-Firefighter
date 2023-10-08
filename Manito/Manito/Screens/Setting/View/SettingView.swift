@@ -41,7 +41,7 @@ final class SettingView: UIView, BaseViewType {
     }()
     private let withdrawalButton: UIButton = {
         let button = UIButton()
-        button.setTitle(TextLiteral.settingViewControllerWithdrawalTitle, for: .normal)
+        button.setTitle(TextLiteral.Setting.withdrawal.localized(), for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 15)
         button.setUnderLine()
         return button
@@ -85,7 +85,7 @@ final class SettingView: UIView, BaseViewType {
         self.tableView.snp.makeConstraints {
             $0.top.equalTo(self.imageRow.snp.bottom)
             $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.width.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(50)
         }
         
@@ -111,27 +111,27 @@ final class SettingView: UIView, BaseViewType {
     }
     
     private func configureModels() {
-        self.options.append(Option(title: TextLiteral.settingViewControllerChangeNickNameTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.Setting.changeNickname.localized(), handler: { [weak self] in
             self?.delegate?.changNicknameButtonDidTap()
         }))
         
-        self.options.append(Option(title: TextLiteral.settingViewControllerPersonalInfomationTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.Setting.personalInformation.localized(), handler: { [weak self] in
             self?.delegate?.personalInfomationButtonDidTap()
         }))
         
-        self.options.append(Option(title: TextLiteral.settingViewControllerTermsOfServiceTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.Setting.termsOfService.localized(), handler: { [weak self] in
             self?.delegate?.termsOfServiceButtonDidTap()
         }))
         
-        self.options.append(Option(title: TextLiteral.settingViewControllerDeveloperInfoTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.Setting.developerInfo.localized(), handler: { [weak self] in
             self?.delegate?.developerInfoButtonDidTap()
         }))
         
-        self.options.append(Option(title: TextLiteral.settingViewControllerHelpTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.Setting.inquiry.localized(), handler: { [weak self] in
             self?.delegate?.helpButtonDidTap()
         }))
         
-        self.options.append(Option(title: TextLiteral.settingViewControllerLogoutTitle, handler: { [weak self] in
+        self.options.append(Option(title: TextLiteral.Setting.logout.localized(), handler: { [weak self] in
             self?.delegate?.logoutButtonDidTap()
         }))
     }
