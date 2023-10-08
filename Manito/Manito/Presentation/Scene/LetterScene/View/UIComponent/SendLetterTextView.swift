@@ -16,7 +16,7 @@ final class SendLetterTextView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.letterTextViewTitleLabel
+        label.text = TextLiteral.SendLetter.textTitle.localized()
         label.font = .font(.regular, ofSize: 16)
         return label
     }()

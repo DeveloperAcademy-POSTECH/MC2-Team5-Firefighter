@@ -79,7 +79,8 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
         self.sendLetterView.cancelButtonTapPublisher
             .sink(receiveValue: { [weak self] hasChanged in
                 if hasChanged {
-                    self?.showActionSheet(actionTitles: [TextLiteral.destructive, TextLiteral.cancel],
+                    self?.showActionSheet(actionTitles: [TextLiteral.Common.discardChanges.localized(),
+                                                         TextLiteral.Common.cancel.localized()],
                                           actionStyle: [.destructive, .cancel],
                                           actions: [self?.dismissAction(), nil])
                 } else {
@@ -197,6 +198,17 @@ extension SendLetterViewController {
                              actionStyle: actionStyle,
                              actions: actions)
     }
+    
+    private func updatePhoto() {
+        self.photoPickerManager.loadImage = { [weak self] result in
+            switch result {
+            case .success(let image):
+                self?.sendLetterView.updatePhotoView(image: image)
+            case .failure(let error):
+                self?.showErrorAlert(error.localizedDescription)
+            }
+        }
+    }
 
     private func presentationControllerDidDismiss() {
         self.dismiss(animated: true)
@@ -207,24 +219,13 @@ extension SendLetterViewController {
     }
 
     private func showErrorAlert(_ message: String) {
-        self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
                        message: message)
     }
 
     private func handleRefreshLetter() {
         self.delegate?.refreshLetterData()
         self.dismiss(animated: true)
-    }
-    
-    private func updatePhoto() {
-        self.photoPickerManager.loadImage = { [weak self] result in
-            switch result {
-            case .success(let image):
-                self?.sendLetterView.updatePhotoView(image: image)
-            case .failure(let error):
-                self?.makeAlert(title: TextLiteral.alert, message: error.errorDescription)
-            }
-        }
     }
 }
 

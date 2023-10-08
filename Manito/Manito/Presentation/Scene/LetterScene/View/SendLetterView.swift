@@ -29,7 +29,7 @@ final class SendLetterView: UIView, BaseViewType {
     private let cancelButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.setTitle(TextLiteral.cancel, for: .normal)
+        button.setTitle(TextLiteral.Common.cancel.localized(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
         return button
@@ -37,7 +37,7 @@ final class SendLetterView: UIView, BaseViewType {
     private let sendButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 44)))
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.setTitle(TextLiteral.createLetterViewControllerSendButton, for: .normal)
+        button.setTitle(TextLiteral.SendLetter.buttonSend.localized(), for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .highlighted)
         button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .disabled)
@@ -161,20 +161,20 @@ extension SendLetterView {
         self.scrollContentView.addSubview(self.missionView)
         self.missionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(25)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(100)
         }
 
         self.scrollContentView.addSubview(self.letterTextView)
         self.letterTextView.snp.makeConstraints {
             $0.top.equalTo(self.missionView.snp.bottom).offset(32)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
 
         self.scrollContentView.addSubview(self.letterPhotoView)
         self.letterPhotoView.snp.makeConstraints {
             $0.top.equalTo(self.letterTextView.snp.bottom).offset(22)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(105)
         }
     }
@@ -186,7 +186,7 @@ extension SendLetterView {
     // MARK: - Private - func
 
     private func setupNavigationController(of viewController: UIViewController) {
-        viewController.title = TextLiteral.createLetterViewControllerTitle
+        viewController.title = TextLiteral.SendLetter.title.localized()
         viewController.isModalInPresentation = true
     }
 

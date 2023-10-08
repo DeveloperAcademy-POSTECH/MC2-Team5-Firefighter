@@ -17,11 +17,10 @@ enum PHPickerError: LocalizedError {
 extension PHPickerError {
     var errorDescription: String? {
         switch self {
-        // FIXME: - 수정할 예정 TextLiteral 머지 이후에!
-        case .deniedAuthorization: return "사진첩에 접근할 권한이 없습니다."
-        case .cantloadPhoto: return TextLiteral.letterPhotoViewFail
-        case .cantloadDevice: return TextLiteral.letterPhotoViewDeviceFail
-        case .cantOpenSetting: return TextLiteral.letterPhotoViewSettingFail
+        case .deniedAuthorization: return TextLiteral.SendLetter.Error.photosAuthorizationMessage.localized()
+        case .cantloadPhoto: return TextLiteral.SendLetter.Error.photoLoadMessage.localized()
+        case .cantloadDevice: return TextLiteral.SendLetter.Error.deviceMessage.localized()
+        case .cantOpenSetting: return TextLiteral.SendLetter.Error.settingMessage.localized()
         }
     }
 }

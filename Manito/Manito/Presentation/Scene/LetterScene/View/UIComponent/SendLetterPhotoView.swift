@@ -33,7 +33,7 @@ final class SendLetterPhotoView: UIView {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.letterPhotoViewTitleLabel
+        label.text = TextLiteral.SendLetter.photoTitle.localized()
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
@@ -45,7 +45,7 @@ final class SendLetterPhotoView: UIView {
             .map { [weak self] _ -> ActionDetail in
                 guard let self else { return (message: "", titles: [], styles: [], actions: []) }
                 return (
-                    message: TextLiteral.letterPhotoViewChoosePhotoToManitto,
+                    message: TextLiteral.SendLetter.photoMenuTitle.localized(),
                     titles: self.actionTitles(),
                     styles: self.actionStyles(),
                     actions: self.alertActions()
@@ -90,13 +90,13 @@ final class SendLetterPhotoView: UIView {
     }
 
     private func actionTitles() -> [String] {
-        return self.hasImageSubject.value ? [TextLiteral.letterPhotoViewTakePhoto,
-                                             TextLiteral.letterPhotoViewChoosePhoto,
-                                             TextLiteral.letterPhotoViewDeletePhoto,
-                                             TextLiteral.cancel]
-                                          : [TextLiteral.letterPhotoViewTakePhoto,
-                                             TextLiteral.letterPhotoViewChoosePhoto,
-                                             TextLiteral.cancel]
+        return self.hasImageSubject.value ? [TextLiteral.SendLetter.photoMenuTakePhoto.localized(),
+                                             TextLiteral.SendLetter.photoMenuChoosePhoto.localized(),
+                                             TextLiteral.SendLetter.photoMenuDeletePhoto.localized(),
+                                             TextLiteral.Common.cancel.localized()]
+                                          : [TextLiteral.SendLetter.photoMenuTakePhoto.localized(),
+                                             TextLiteral.SendLetter.photoMenuChoosePhoto.localized(),
+                                             TextLiteral.Common.cancel.localized()]
     }
 
     private func actionStyles() -> [UIAlertAction.Style] {

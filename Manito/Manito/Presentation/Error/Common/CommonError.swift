@@ -14,8 +14,7 @@ enum CommonError: LocalizedError {
 extension CommonError {
     var errorDescription: String? {
         switch self {
-        // FIXME: - Common Error "애니또에 문제가 발생하였습니다."로 수정
-        case .invalidAccess: return TextLiteral.errorAlertTitle
+        case .invalidAccess: return TextLiteral.Common.Error.networkServer.localized()
         }
     }
 }
