@@ -42,7 +42,7 @@ final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
         } catch MTError.statusCode(reason: .clientError(let response)) {
             switch response.statusCode {
             case 409: throw ChooseCharacterError.roomAlreadyParticipating
-            default: throw ChooseCharacterError.someError
+            default: throw ChooseCharacterError.clientError
             }
         }
     }
@@ -51,14 +51,14 @@ final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
 // FIXME: Presentation 폴더로 옮기면서 옮길 예정
 enum ChooseCharacterError: LocalizedError {
     case roomAlreadyParticipating
-    case someError
+    case clientError
 }
 // FIXME: TextLiteral 처리는 듀나 작업 이후에 진행하겠습니다! 
 extension ChooseCharacterError {
     var errorDescription: String? {
         switch self {
         case .roomAlreadyParticipating: return "이미 참여중인 방입니다."
-        case .someError: return "네트워크 오류입니다."
+        case .clientError: return "네트워크 오류입니다."
         }
     }
 }
