@@ -16,7 +16,7 @@ final class InputCapacityView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.inputPersonViewTitle
+        label.text = TextLiteral.CreateRoom.inputPersonTitle.localized()
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
@@ -34,7 +34,7 @@ final class InputCapacityView: UIView {
     }()
     private lazy var personLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.x + " \(Int(self.personSlider.value))인"
+        label.text = TextLiteral.Common.xPeople.localized(with: Int(self.personSlider.value))
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
@@ -105,13 +105,13 @@ final class InputCapacityView: UIView {
         
         self.addSubview(self.minLabel)
         self.minLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.top.equalTo(self.personBackView.snp.bottom).offset(49)
         }
         
         self.addSubview(self.maxLabel)
         self.maxLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.top.equalTo(self.minLabel.snp.top)
         }
         
@@ -124,7 +124,7 @@ final class InputCapacityView: UIView {
     }
     
     func updateCapacity(capacity: Int) {
-        self.personLabel.text = TextLiteral.x + " \(capacity)인"
+        self.personLabel.text = TextLiteral.Common.xPeople.localized(with: capacity)
     }
     
     // MARK: - selector

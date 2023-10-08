@@ -18,9 +18,9 @@ final class MemoryViewController: UIViewController, BaseViewControllerType, Navi
         var announcingText: String {
             switch self {
             case .manittee:
-                return TextLiteral.memoryViewControllerManitteeText
+                return TextLiteral.Memory.manitteContent.localized()
             case .manitto:
-                return TextLiteral.memoryViewControllerManittoText
+                return TextLiteral.Memory.manittoContent.localized()
             }
         }
     }
@@ -41,7 +41,8 @@ final class MemoryViewController: UIViewController, BaseViewControllerType, Navi
         return button
     }()
     private lazy var segmentControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: [TextLiteral.letterHeaderViewSegmentControlManitti, TextLiteral.letterHeaderViewSegmentControlManitto])
+        let control = UISegmentedControl(items: [TextLiteral.Letter.manitteTitle.localized(),
+                                                 TextLiteral.Letter.manittoTitle.localized()])
         let font = UIFont.font(.regular, ofSize: 14)
         let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
         let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
@@ -199,7 +200,7 @@ final class MemoryViewController: UIViewController, BaseViewControllerType, Navi
         self.navigationItem.rightBarButtonItem = shareButton
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.largeTitleDisplayMode = .automatic
-        self.title = TextLiteral.memoryViewControllerTitleLabel
+        self.title = TextLiteral.Memory.title.localized()
     }
 
     // MARK: - func
@@ -207,7 +208,8 @@ final class MemoryViewController: UIViewController, BaseViewControllerType, Navi
     private func setupAction() {
         let action = UIAction { [weak self] _ in
             guard let self = self else { return }
-            
+
+            // FIXME: - URLLiteral로 이동 시키기
             if let storyShareURL = URL(string: "instagram-stories://share") {
                 if UIApplication.shared.canOpenURL(storyShareURL) {
                     let renderer = UIGraphicsImageRenderer(size: self.shareBoundView.bounds.size)
@@ -223,8 +225,8 @@ final class MemoryViewController: UIViewController, BaseViewControllerType, Navi
                     UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
                     UIApplication.shared.open(storyShareURL, options: [:], completionHandler: nil)
                 } else {
-                    self.makeAlert(title: TextLiteral.memoryViewControllerAlertTitle,
-                                   message: TextLiteral.memoryViewControllerAlertMessage)
+                    self.makeAlert(title: TextLiteral.Memory.Error.instaTitle.localized(),
+                                   message: TextLiteral.Memory.Error.instaMessage.localized())
                 }
             }
         }

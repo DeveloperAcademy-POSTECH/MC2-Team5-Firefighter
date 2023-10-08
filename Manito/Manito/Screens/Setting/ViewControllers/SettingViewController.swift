@@ -83,7 +83,8 @@ final class SettingViewController: UIViewController, Navigationable {
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    self?.makeAlert(title: TextLiteral.fail, message: TextLiteral.settingViewControllerFailMessage)
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                    message: TextLiteral.Setting.Error.withDrawalMessage.localized())
                 }
             } receiveValue: { [weak self] _ in
                 self?.deleteUser()
@@ -121,13 +122,13 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func personalInfomationButtonDidTap() {
-        if let url = URL(string: URLLiteral.personalInfomationUrl) {
+        if let url = URL(string: URLLiteral.Setting.personalInformation) {
             UIApplication.shared.open(url, options: [:])
         }
     }
     
     func termsOfServiceButtonDidTap() {
-        if let url = URL(string: URLLiteral.termsOfServiceUrl) {
+        if let url = URL(string: URLLiteral.Setting.termsOfService) {
             UIApplication.shared.open(url, options: [:])
         }
     }
@@ -141,19 +142,19 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func logoutButtonDidTap() {
-        self.makeRequestAlert(title: TextLiteral.settingViewControllerLogoutAlertTitle,
+        self.makeRequestAlert(title: TextLiteral.Setting.logoutAlertTitle.localized(),
                               message: "",
-                              okTitle: TextLiteral.confirm,
-                              cancelTitle: TextLiteral.cancel,
+                              okTitle: TextLiteral.Common.confirm.localized(),
+                              cancelTitle: TextLiteral.Common.cancel.localized(),
                               okAction: { [weak self] _ in
             self?.settingView.logoutButtonPublisher.send()
         })
     }
     
     func withdrawalButtonDidTap() {
-        self.makeRequestAlert(title: TextLiteral.alert,
-                              message: TextLiteral.settingViewControllerWithdrawalMessage,
-                              okTitle: TextLiteral.settingViewControllerWithdrawal,
+        self.makeRequestAlert(title: TextLiteral.Common.warningTitle.localized(),
+                              message: TextLiteral.Setting.withdrawalAlertMessage.localized(),
+                              okTitle: TextLiteral.Setting.withdrawalAlertOk.localized(),
                               okAction: { [weak self] _ in
             self?.settingView.withdrawalButtonPublisher.send()
         })

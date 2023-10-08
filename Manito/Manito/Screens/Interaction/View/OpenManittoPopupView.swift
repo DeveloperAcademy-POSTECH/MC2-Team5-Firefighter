@@ -24,7 +24,7 @@ final class OpenManittoPopupView: UIView {
     private let informationLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
-        label.text = TextLiteral.openManittoViewControllerPopupDescription
+        label.text = TextLiteral.DetailIng.openManittoPopupHelperContent.localized()
         label.numberOfLines = 2
         label.addLabelSpacing()
         label.textAlignment = .center
@@ -36,7 +36,7 @@ final class OpenManittoPopupView: UIView {
     }()
     private let confirmButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.confirm
+        button.title = TextLiteral.Common.confirm.localized()
         return button
     }()
     private let popupImageView: UIImageView = UIImageView(image: UIImage.Image.enterRoom)
@@ -122,7 +122,8 @@ final class OpenManittoPopupView: UIView {
     }
 
     func setupTypingAnimation(user: String, manitto: String) {
-        self.animateTyping(in: self.typingLabel, text: "\(user)의 마니또는\n\(manitto)입니다.")
+        self.animateTyping(in: self.typingLabel,
+                           text: TextLiteral.DetailIng.openManittoPopupContent.localized(with: user, manitto))
         self.typingLabel.addLabelSpacing()
     }
 }
