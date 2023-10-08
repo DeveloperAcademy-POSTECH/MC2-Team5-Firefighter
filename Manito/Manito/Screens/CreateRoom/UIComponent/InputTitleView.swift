@@ -20,7 +20,7 @@ final class InputTitleView: UIView {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         textField.backgroundColor = .darkGrey002
-        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText,
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.CreateRoom.inputNameTitle.localized(),
                                                              attributes:attributes)
         textField.textAlignment = .center
         textField.makeBorderLayer(color: .white)

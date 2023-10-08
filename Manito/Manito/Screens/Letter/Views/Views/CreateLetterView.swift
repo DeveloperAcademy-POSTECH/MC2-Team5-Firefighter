@@ -28,7 +28,7 @@ final class CreateLetterView: UIView, BaseViewType {
     private let cancelButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.setTitle(TextLiteral.cancel, for: .normal)
+        button.setTitle(TextLiteral.Common.cancel.localized(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
         return button
@@ -36,7 +36,7 @@ final class CreateLetterView: UIView, BaseViewType {
     private let sendButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 44)))
         button.titleLabel?.font = .font(.regular, ofSize: 16)
-        button.setTitle(TextLiteral.createLetterViewControllerSendButton, for: .normal)
+        button.setTitle(TextLiteral.SendLetter.buttonSend.localized(), for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .highlighted)
         button.setTitleColor(.subBlue.withAlphaComponent(0.5), for: .disabled)
@@ -172,7 +172,7 @@ final class CreateLetterView: UIView, BaseViewType {
 
     func configureViewController(_ viewController: UIViewController?) {
         viewController?.isModalInPresentation = true
-        viewController?.title = TextLiteral.createLetterViewControllerTitle
+        viewController?.title = TextLiteral.SendLetter.title.localized()
     }
 
     func configureDelegation(_ delegate: CreateLetterViewDelegate) {

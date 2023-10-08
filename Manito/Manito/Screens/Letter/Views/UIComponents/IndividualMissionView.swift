@@ -15,7 +15,7 @@ final class IndividualMissionView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.individualMissionViewTitleLabel
+        label.text = TextLiteral.DetailIng.individualMissionTitle.localized()
         label.font = .font(.regular, ofSize: 14)
         label.textColor = .grey002
         return label

@@ -77,7 +77,7 @@ class InvitedCodeViewController: UIViewController, BaseViewControllerType, Navig
         let button = UIButton(type: .system)
         let buttonAction = UIAction { [weak self] _ in
             if let code = self?.code {
-                ToastView.showToast(code: code, message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
+                ToastView.showToast(code: code, message: TextLiteral.DetailWait.toastCopyMessage.localized(), controller: self ?? UIViewController())
             }
         }
         button.setTitle(code, for: .normal)
@@ -90,7 +90,7 @@ class InvitedCodeViewController: UIViewController, BaseViewControllerType, Navig
     private let roomInviteInfoLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 18)
-        label.text = TextLiteral.invitedCodeViewCOntroller
+        label.text = TextLiteral.CreateRoom.invitedCodeTitle.localized()
         label.textColor = .backgroundGrey
         return label
     }()

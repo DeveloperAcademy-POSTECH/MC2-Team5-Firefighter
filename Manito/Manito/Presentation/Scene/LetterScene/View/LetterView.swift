@@ -49,14 +49,14 @@ final class LetterView: UIView, BaseViewType {
     }()
     private let sendLetterButton: UIButton = {
         let button = MainButton()
-        button.title = TextLiteral.sendLetterViewSendLetterButton
+        button.title = TextLiteral.Letter.buttonSend.localized()
         return button
     }()
     private let emptyLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
         label.font = .font(.regular, ofSize: 16)
-        label.text = TextLiteral.letterViewControllerEmptyViewTo
+        label.text = TextLiteral.Letter.emptyToContent.localized()
         label.isHidden = true
         label.textColor = .grey003
         label.addLabelSpacing(lineSpacing: 16)
@@ -172,7 +172,7 @@ extension LetterView {
 
     private func setupNavigationTitle(in viewController: UIViewController) {
         guard let navigationController = viewController.navigationController else { return }
-        viewController.title = TextLiteral.letterViewControllerTitle
+        viewController.title = TextLiteral.Letter.title.localized()
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationItem.largeTitleDisplayMode = .automatic
     }

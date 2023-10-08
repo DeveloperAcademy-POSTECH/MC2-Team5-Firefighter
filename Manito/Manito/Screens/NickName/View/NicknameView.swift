@@ -26,7 +26,7 @@ final class NicknameView: UIView, BaseViewType {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         textField.backgroundColor = .darkGrey002
-        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.createNickNameViewControllerAskNickName, attributes:attributes)
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.Nickname.placeholder.localized(), attributes:attributes)
         textField.font = .font(.regular, ofSize: 18)
         textField.layer.cornerRadius = 10
         textField.layer.masksToBounds = true
@@ -48,7 +48,7 @@ final class NicknameView: UIView, BaseViewType {
     }()
     private let doneButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.done
+        button.title = TextLiteral.Common.done.localized()
         button.isDisabled = true
         return button
     }()
