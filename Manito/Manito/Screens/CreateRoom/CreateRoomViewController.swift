@@ -78,7 +78,7 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         navigationController.pushViewController(viewController, animated: false)
         
         self.dismiss(animated: true) {
-            NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
+            viewController.createRoomSubject.send(())
         }
     }
     

@@ -22,6 +22,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
+    let createRoomSubject = PassthroughSubject<Void, Never>()
     private let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let changeButtonSubject = PassthroughSubject<Void, Never>()
@@ -53,17 +54,12 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigation()
-        self.setupNotificationCenter()
         self.configureNavigationController()
         self.bindViewModel()
         self.setupBind()
     }
     
     // MARK: - func
-    
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
-    }
     
     private func configureNavigationController() {
         guard let navigationController = self.navigationController else { return }
@@ -83,7 +79,9 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             editMenuButtonDidTap: self.detailWaitView.editMenuButtonSubject.eraseToAnyPublisher(),
             deleteMenuButtonDidTap: self.deleteMenuButtonSubject.eraseToAnyPublisher(),
             leaveMenuButtonDidTap: self.leaveMenuButtonSubject.eraseToAnyPublisher(),
-            changeButtonDidTap: self.changeButtonSubject.eraseToAnyPublisher())
+            changeButtonDidTap: self.changeButtonSubject.eraseToAnyPublisher(),
+            roomDidCreate: self.createRoomSubject.eraseToAnyPublisher()
+        )
         return self.detailWaitViewModel.transform(input)
     }
     
@@ -165,6 +163,19 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                 self?.showStartDatePassedAlert(isPassedStartDate: isPassedStartDate, isAdmin: isAdmin)
             })
             .store(in: &self.cancellable)
+        
+        output.toastView
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: "오류 발생")
+                }
+            }, receiveValue: { [weak self] roomInfo in
+                self?.showInvitedCodeViewController(roomInfo: roomInfo)
+            })
+            .store(in: &self.cancellable)
     }
     
     private func setupBind() {
@@ -235,25 +246,11 @@ final class DetailWaitViewController: UIViewController, Navigationable {
         )
     }
     
-    // MARK: - selector
-    
-    @objc
-    private func didTapEnterButton() {
-        let roomInfo = self.detailWaitViewModel.makeRoomInformation()
-        let title = roomInfo.roomInformation.title
-        let capacity = roomInfo.roomInformation.capacity
-        let startDate = roomInfo.roomInformation.startDate
-        let endDate = roomInfo.roomInformation.endDate
-        let invitationCode = roomInfo.invitation.code
-        let roomDTO = RoomListItemDTO(id: nil,
-                                      title: title,
-                                      state: nil,
-                                      participatingCount: nil,
-                                      capacity: capacity,
-                                      startDate: startDate,
-                                      endDate: endDate)
-        let viewController = InvitedCodeViewController(roomInfo: roomDTO,
-                                                       code: invitationCode)
+    private func showInvitedCodeViewController(roomInfo: RoomInfo) {
+        let roomListItem = roomInfo.roomInformation
+        let code = roomInfo.invitation.code
+        
+        let viewController = InvitedCodeViewController(roomInfo: roomListItem, code: code)
         viewController.modalPresentationStyle = .overCurrentContext
         viewController.modalTransitionStyle = .crossDissolve
         self.present(viewController, animated: true)
