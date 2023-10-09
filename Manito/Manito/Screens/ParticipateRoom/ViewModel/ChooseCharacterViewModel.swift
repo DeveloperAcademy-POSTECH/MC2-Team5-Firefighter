@@ -15,14 +15,14 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let roomId: AnyPublisher<Int, ChooseCharacterError>
+        let roomId: AnyPublisher<Result<Int, ChooseCharacterError>, Never>
     }
     
     // MARK: - property
     
     private let roomId: Int
     
-    private let roomIdSubject = PassthroughSubject<Int, ChooseCharacterError>()
+    private let roomIdSubject = PassthroughSubject<Result<Int, ChooseCharacterError>, Never>()
     
     private let participateRoomService: ParticipateRoomService
     private var cancellable = Set<AnyCancellable>()
@@ -53,10 +53,10 @@ final class ChooseCharacterViewModel: BaseViewModelType {
         Task {
             do {
                 let _ = try await self.participateRoomService.dispatchJoinRoom(roomId: roomId.description, member: MemberInfoRequestDTO(colorIndex: colorIndex))
-                self.roomIdSubject.send(roomId)
+                self.roomIdSubject.send(.success(self.roomId))
             } catch(let error) {
                 guard let error = error as? ChooseCharacterError else { return }
-                self.roomIdSubject.send(completion: .failure(error))
+                self.roomIdSubject.send(.failure(error))
             }
         }
     }

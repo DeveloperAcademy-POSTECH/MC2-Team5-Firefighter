@@ -65,18 +65,17 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     private func bindOutputToViewModel(_ output: ChooseCharacterViewModel.Output) {
         output.roomId
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
+            .sink(receiveValue: { [weak self] result in
                 switch result {
-                case .finished:
-                    return
+                case .success(let roomId):
+                    self?.pushDetailWaitViewController(roomId: roomId)
                 case .failure(let error):
                     switch error {
                     case .roomAlreadyParticipating: self?.makeAlertWhenAlreadyJoin(error: error.localizedDescription)
                     case .clientError: self?.makeAlertWhenNetworkError(error: error.localizedDescription)
                     }
-                    
                 }
-            } receiveValue: { self.pushDetailWaitViewController(roomId: $0) }
+            })
             .store(in: &self.cancellable)
     }
     
@@ -110,8 +109,6 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     }
     
     private func makeAlertWhenNetworkError(error: String) {
-        self.makeAlert(title: TextLiteral.Common.Error.title.localized(), message: TextLiteral.Common.Error.networkServer.localized(), okAction: { [weak self] _ in
-            self?.dismiss(animated: true)
-        })
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(), message: TextLiteral.Common.Error.networkServer.localized(), okAction: nil)
     }
 }
