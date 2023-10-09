@@ -15,7 +15,7 @@ final class ChangeNicknameViewController: UIViewController, Navigationable, Keyb
     // MARK: - property
     
     private let viewModel: NicknameViewModel
-    private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.changeNickNameViewControllerTitle)
+    private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.Nickname.changeTitle.localized())
     
     private var cancellable = Set<AnyCancellable>()
     
@@ -99,7 +99,9 @@ final class ChangeNicknameViewController: UIViewController, Navigationable, Keyb
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    self?.makeAlert(title: TextLiteral.fail, message: "실패")
+                    // FIXME: - Common 에러로 일단 설정했습니다.
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                    message: TextLiteral.Common.Error.networkServer.localized())
                 }
             } receiveValue: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)

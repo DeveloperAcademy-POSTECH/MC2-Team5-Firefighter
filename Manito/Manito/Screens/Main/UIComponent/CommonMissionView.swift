@@ -16,7 +16,7 @@ final class CommonMissionView: UIView {
     private let commonMissionImageView: UIImageView = UIImageView(image: UIImage.Image.commonMisson)
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.commonMissionViewTitle
+        label.text = TextLiteral.Main.commonMissionTitle.localized()
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 15)
         return label

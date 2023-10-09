@@ -57,7 +57,7 @@ class DeveloperInfoViewCell: UICollectionViewCell, BaseViewType {
         addSubview(developerImageView)
         developerImageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.width.height.equalTo(80)
         }
         

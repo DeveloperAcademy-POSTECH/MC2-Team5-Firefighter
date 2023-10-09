@@ -33,7 +33,6 @@ final class LetterViewModel: BaseViewModelType {
         let reportDetails: AnyPublisher<ReportDetails, Never>
         let roomStatus: AnyPublisher<RoomStatus, Never>
     }
-
     // MARK: - property
 
     private var cancelBag: Set<AnyCancellable> = Set()

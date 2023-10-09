@@ -51,7 +51,7 @@ final class OpenManittoView: UIView, BaseViewType {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 34)
-        label.text = TextLiteral.openManittoViewControllerTitle
+        label.text = TextLiteral.DetailIng.openManittoTitle.localized()
         return label
     }()
     private let popupView: OpenManittoPopupView = OpenManittoPopupView()

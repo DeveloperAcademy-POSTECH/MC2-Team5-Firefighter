@@ -20,7 +20,7 @@ final class ParticipateRoomView: UIView, BaseViewType {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.enterRoom
+        label.text = TextLiteral.Common.enterRoom.localized()
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
@@ -31,7 +31,7 @@ final class ParticipateRoomView: UIView, BaseViewType {
     }()
     private let nextButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.searchRoom
+        button.title = TextLiteral.Common.searchRoom.localized()
         button.isDisabled = true
         return button
     }()
@@ -61,12 +61,12 @@ final class ParticipateRoomView: UIView, BaseViewType {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
                 
         self.addSubview(self.nextButton)
         self.nextButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalTo(self.keyboardLayoutGuide.snp.top).inset(-23)
             $0.height.equalTo(60)
         }
@@ -74,7 +74,7 @@ final class ParticipateRoomView: UIView, BaseViewType {
         self.addSubview(self.inputInvitedCodeView)
         self.inputInvitedCodeView.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalTo(self.nextButton.snp.top)
         }
         

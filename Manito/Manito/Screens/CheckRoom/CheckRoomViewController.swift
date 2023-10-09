@@ -17,7 +17,7 @@ class CheckRoomViewController: BaseViewController, BaseViewControllerType {
     
     private let roomInfoImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage.Image.enterRoom
+        image.image = ImageLiterals.imgEnterRoom
         image.isUserInteractionEnabled = true
         return image
     }()
@@ -98,7 +98,7 @@ class CheckRoomViewController: BaseViewController, BaseViewControllerType {
         
         roomInfoImageView.addSubview(noButton)
         noButton.snp.makeConstraints {
-            $0.top.equalTo(questionLabel.snp.bottom).offset(Size.leadingTrailingPadding)
+            $0.top.equalTo(questionLabel.snp.bottom).offset(SizeLiteral.leadingTrailingPadding)
             $0.width.equalTo(110)
             $0.height.equalTo(44)
             $0.leading.equalToSuperview().inset(48)
@@ -106,7 +106,7 @@ class CheckRoomViewController: BaseViewController, BaseViewControllerType {
         
         roomInfoImageView.addSubview(yesButton)
         yesButton.snp.makeConstraints {
-            $0.top.equalTo(questionLabel.snp.bottom).offset(Size.leadingTrailingPadding)
+            $0.top.equalTo(questionLabel.snp.bottom).offset(SizeLiteral.leadingTrailingPadding)
             $0.width.equalTo(110)
             $0.height.equalTo(44)
             $0.trailing.equalToSuperview().inset(48)
@@ -126,6 +126,6 @@ class CheckRoomViewController: BaseViewController, BaseViewControllerType {
               let capacity = roomInfo?.capacity else { return }
         roomInfoView.roomLabel.text = title
         roomInfoView.dateLabel.text = "\(startDate) ~ \(endDate)"
-        roomInfoView.peopleInfoView.peopleLabel.text = "X \(capacity)인"
+        roomInfoView.peopleInfoView.peopleLabel.text = TextLiteral.person(capacity)
     }
 }

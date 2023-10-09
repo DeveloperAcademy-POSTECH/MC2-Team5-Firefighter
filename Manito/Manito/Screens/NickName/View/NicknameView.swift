@@ -26,7 +26,7 @@ final class NicknameView: UIView, BaseViewType {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         textField.backgroundColor = .darkGrey002
-        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.createNickNameViewControllerAskNickName, attributes:attributes)
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.Nickname.placeholder.localized(), attributes:attributes)
         textField.font = .font(.regular, ofSize: 18)
         textField.layer.cornerRadius = 10
         textField.layer.masksToBounds = true
@@ -48,7 +48,7 @@ final class NicknameView: UIView, BaseViewType {
     }()
     private let doneButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.done
+        button.title = TextLiteral.Common.done.localized()
         button.isDisabled = true
         return button
     }()
@@ -78,20 +78,20 @@ final class NicknameView: UIView, BaseViewType {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
-            $0.leading.equalTo(self.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
+            $0.leading.equalTo(self.safeAreaLayoutGuide).inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.nicknameTextField)
         self.nicknameTextField.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(60)
         }
         
         self.addSubview(self.textLimitLabel)
         self.textLimitLabel.snp.makeConstraints {
             $0.top.equalTo(self.nicknameTextField.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.doneButton)

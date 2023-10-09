@@ -14,7 +14,7 @@ enum LetterUsecaseError: LocalizedError {
 extension LetterUsecaseError {
     var errorDescription: String? {
         switch self {
-        case .failedToFetchLetter: return TextLiteral.letterViewControllerErrorDescription
+        case .failedToFetchLetter: return TextLiteral.Letter.Error.fetchMessage.localized()
         }
     }
 }
