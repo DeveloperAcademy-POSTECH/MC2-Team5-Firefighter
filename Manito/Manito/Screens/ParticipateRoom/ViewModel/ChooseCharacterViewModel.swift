@@ -16,7 +16,7 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let roomId: PassthroughSubject<Int, ChooseCharacterError>
+        let roomId: AnyPublisher<Int, ChooseCharacterError>
     }
     
     // MARK: - property
@@ -52,7 +52,7 @@ final class ChooseCharacterViewModel: BaseViewModelType {
             }
             .store(in: &self.cancellable)
         
-        return Output(roomId: self.roomIdSubject)
+        return Output(roomId: self.roomIdSubject.eraseToAnyPublisher())
     }
     
     // MARK: - network

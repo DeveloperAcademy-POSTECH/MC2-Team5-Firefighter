@@ -53,7 +53,7 @@ enum ChooseCharacterError: LocalizedError {
     case roomAlreadyParticipating
     case clientError
 }
-// FIXME: TextLiteral 처리는 듀나 작업 이후에 진행하겠습니다! 
+
 extension ChooseCharacterError {
     var errorDescription: String? {
         switch self {
