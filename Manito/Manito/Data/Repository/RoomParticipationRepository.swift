@@ -53,3 +53,12 @@ enum ChooseCharacterError: LocalizedError {
     case roomAlreadyParticipating
     case clientError
 }
+
+extension ChooseCharacterError {
+    var errorDescription: String? {
+        switch self {
+        case .roomAlreadyParticipating: return TextLiteral.ParticipateRoom.Error.alreadyJoinTitle.localized()
+        case .clientError: return TextLiteral.Common.Error.title.localized()
+        }
+    }
+}
