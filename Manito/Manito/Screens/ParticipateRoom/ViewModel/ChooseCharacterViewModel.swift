@@ -11,8 +11,7 @@ import Foundation
 final class ChooseCharacterViewModel: BaseViewModelType {
     
     struct Input {
-        let joinButtonTapPublisher: AnyPublisher<Void, Never>
-        let characterIndexPublisher: AnyPublisher<Int, Never>
+        let joingButtonTapPublisher: AnyPublisher<Int, Never>
     }
     
     struct Output {
@@ -24,7 +23,6 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     private let roomId: Int
     
     private let roomIdSubject = PassthroughSubject<Int, ChooseCharacterError>()
-    private let characterIndexSubject = CurrentValueSubject<Int, Never>(0)
     
     private let participateRoomService: ParticipateRoomService
     private var cancellable = Set<AnyCancellable>()
@@ -39,16 +37,10 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     // MARK: - func
     
     func transform(from input: Input) -> Output {
-        input.characterIndexPublisher
-            .sink { [weak self] index in
-                self?.characterIndexSubject.send(index)
-            }
-            .store(in: &self.cancellable)
-        
-        input.joinButtonTapPublisher
-            .sink { [weak self] _ in
+        input.joingButtonTapPublisher
+            .sink { [weak self] characterIndex in
                 guard let self = self else { return }
-                self.requestParticipateRoom(roomId: self.roomId, colorIndex: self.characterIndexSubject.value)
+                self.requestParticipateRoom(roomId: self.roomId, colorIndex: characterIndex)
             }
             .store(in: &self.cancellable)
         

@@ -45,8 +45,9 @@ final class CharacterCollectionView: UIView {
     }()
     
     // MARK: - property
-    
+    // FIXME: CreateRoom ViewModel 변경시 삭제예정
     let characterIndexTapPublisher = CurrentValueSubject<Int, Never>(0)
+    private(set) var characterIndex: Int = 0
     
     // MARK: - init
     
@@ -92,6 +93,6 @@ extension CharacterCollectionView: UICollectionViewDataSource {
 
 extension CharacterCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.characterIndexTapPublisher.send(indexPath.item)
+        self.characterIndex = indexPath.item
     }
 }
