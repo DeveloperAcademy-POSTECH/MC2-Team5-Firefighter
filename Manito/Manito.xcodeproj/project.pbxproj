@@ -1526,8 +1526,6 @@
 		D7AE5EBE2AC1964000A20D0A /* SettingScene */ = {
 			isa = PBXGroup;
 			children = (
-				D7AE5EC32AC1965A00A20D0A /* Cell */,
-				D7AE5EC22AC1965100A20D0A /* UIComponent */,
 				D7AE5EC12AC1964E00A20D0A /* View */,
 				D7AE5EC02AC1964900A20D0A /* ViewController */,
 				D7AE5EBF2AC1964500A20D0A /* ViewModel */,
@@ -1555,6 +1553,8 @@
 		D7AE5EC12AC1964E00A20D0A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D7AE5EC32AC1965A00A20D0A /* Cell */,
+				D7AE5EC22AC1965100A20D0A /* UIComponent */,
 				D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */,
 			);
 			path = View;
