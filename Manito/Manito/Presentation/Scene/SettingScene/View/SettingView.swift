@@ -19,6 +19,7 @@ final class SettingView: UIView, BaseViewType {
         case developerInfo
         case help
         case logout
+        case withdrawal
     }
     
     struct Option {
@@ -53,7 +54,6 @@ final class SettingView: UIView, BaseViewType {
     private var options: [Option] = []
 
     let buttonDidTapPublisher = PassthroughSubject<SettingActions, Never>()
-    lazy var withdrawalButtonPublisher = self.withdrawalButton.tapPublisher
     
     // MARK: - init
     
@@ -61,6 +61,7 @@ final class SettingView: UIView, BaseViewType {
         super.init(frame: frame)
         self.baseInit()
         self.configureModels()
+        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -98,6 +99,13 @@ final class SettingView: UIView, BaseViewType {
     }
 
     // MARK: - func
+    
+    private func setupAction() {
+        let didTapWithdrawalButton = UIAction { [weak self] _ in
+            self?.buttonDidTapPublisher.send(.withdrawal)
+        }
+        self.withdrawalButton.addAction(didTapWithdrawalButton, for: .touchUpInside)
+    }
     
     private func configureModels() {
         self.options.append(Option(title: TextLiteral.Setting.changeNickname.localized(), handler: { [weak self] in

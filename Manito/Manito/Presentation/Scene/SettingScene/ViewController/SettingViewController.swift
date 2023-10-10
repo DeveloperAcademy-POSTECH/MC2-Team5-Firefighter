@@ -20,6 +20,7 @@ final class SettingViewController: UIViewController, Navigationable {
     
     private var cancellable = Set<AnyCancellable>()
     private let viewModel: SettingViewModel
+    private let withdrawalPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
     
@@ -67,7 +68,7 @@ final class SettingViewController: UIViewController, Navigationable {
     }
     
     private func transformedOutput() -> SettingViewModel.Output {
-        let input = SettingViewModel.Input(withdrawalButtonDidTap: self.settingView.withdrawalButtonPublisher.eraseToAnyPublisher())
+        let input = SettingViewModel.Input(withdrawalButtonDidTap: self.withdrawalPublisher.eraseToAnyPublisher())
         return viewModel.transform(from: input)
     }
     
@@ -82,11 +83,7 @@ final class SettingViewController: UIViewController, Navigationable {
                                     message: TextLiteral.Setting.Error.withDrawalMessage.localized())
                 }
             } receiveValue: { [weak self] _ in
-                self?.makeRequestAlert(title: TextLiteral.Common.warningTitle.localized(),
-                                       message: TextLiteral.Setting.withdrawalAlertMessage.localized(),
-                                       okAction: { [weak self] _ in
-                    self?.deleteUser()
-                })
+                self?.deleteUser()
             }
             .store(in: &self.cancellable)
     }
@@ -108,8 +105,14 @@ final class SettingViewController: UIViewController, Navigationable {
                 case .logout:
                     self?.makeRequestAlert(title: TextLiteral.Setting.logoutAlertTitle.localized(),
                                            message: "",
-                                           okAction: { [weak self] _ in
+                                           okAction: { _ in
                         self?.logout()
+                    })
+                case .withdrawal:
+                    self?.makeRequestAlert(title: TextLiteral.Common.warningTitle.localized(),
+                                           message: TextLiteral.Setting.withdrawalAlertMessage.localized(),
+                                           okAction: { _ in
+                        self?.withdrawalPublisher.send()
                     })
                 }
             }
