@@ -20,7 +20,7 @@ final class CreateRoomView: UIView, BaseViewType {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.createRoom
+        label.text = TextLiteral.Common.createRoom.localized()
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
@@ -32,14 +32,14 @@ final class CreateRoomView: UIView, BaseViewType {
     }()
     private let nextButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.next
+        button.title = TextLiteral.CreateRoom.next.localized()
         button.isDisabled = true
         return button
     }()
     private let backButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage.Button.back, for: .normal)
-        button.setTitle(" " + TextLiteral.previous, for: .normal)
+        button.setTitle(" " + TextLiteral.CreateRoom.previous.localized(), for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 14)
         button.tintColor = .white
         button.isHidden = true
@@ -83,13 +83,13 @@ final class CreateRoomView: UIView, BaseViewType {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(66)
-            $0.leading.equalTo(self.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
+            $0.leading.equalTo(self.safeAreaLayoutGuide).inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.closeButton)
         self.closeButton.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(9)
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.backButton)
@@ -101,7 +101,7 @@ final class CreateRoomView: UIView, BaseViewType {
         
         self.addSubview(self.nextButton)
         self.nextButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(23)
             $0.height.equalTo(60)
         }
@@ -116,7 +116,7 @@ final class CreateRoomView: UIView, BaseViewType {
             .forEach {
                 $0.snp.makeConstraints {
                     $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
-                    $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+                    $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
                     $0.bottom.equalTo(self.nextButton.snp.top)
                 }
             }

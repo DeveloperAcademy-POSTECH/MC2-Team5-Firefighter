@@ -79,11 +79,12 @@ final class SettingViewController: UIViewController, Navigationable {
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    self?.makeAlert(title: TextLiteral.fail, message: TextLiteral.settingViewControllerFailMessage)
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                    message: TextLiteral.Setting.Error.withDrawalMessage.localized())
                 }
             } receiveValue: { [weak self] _ in
-                self?.makeRequestAlert(title: TextLiteral.alert,
-                                       message: TextLiteral.settingViewControllerWithdrawalMessage,
+                self?.makeRequestAlert(title: TextLiteral.Common.warningTitle.localized(),
+                                       message: TextLiteral.Setting.withdrawalAlertMessage,
                                        okAction: { [weak self] _ in
                     self?.deleteUser()
                 })
@@ -93,7 +94,7 @@ final class SettingViewController: UIViewController, Navigationable {
         output.logout
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.makeRequestAlert(title: TextLiteral.settingViewControllerLogoutAlertTitle,
+                self?.makeRequestAlert(title: TextLiteral.Setting.logoutAlertTitle.localized(),
                                        message: "",
                                        okAction: { [weak self] _ in
                     self?.logout()
@@ -139,13 +140,13 @@ final class SettingViewController: UIViewController, Navigationable {
     }
     
     private func personalInfomationButtonDidTap() {
-        if let url = URL(string: URLLiteral.personalInfomationUrl) {
+        if let url = URL(string: URLLiteral.Setting.personalInformation) {
             UIApplication.shared.open(url, options: [:])
         }
     }
     
     private func termsOfServiceButtonDidTap() {
-        if let url = URL(string: URLLiteral.termsOfServiceUrl) {
+        if let url = URL(string: URLLiteral.Setting.termsOfService) {
             UIApplication.shared.open(url, options: [:])
         }
     }

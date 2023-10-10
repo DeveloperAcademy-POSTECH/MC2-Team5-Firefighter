@@ -26,13 +26,13 @@ final class ChooseCharacterView: UIView, BaseViewType {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.chooseCharacterViewControllerTitleLabel
+        label.text = TextLiteral.ParticipateRoom.chooseCharacterTitle.localized()
         label.font = .font(.regular, ofSize: 34)
         return label
     }()
     private let subTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.chooseCharacterViewControllerSubTitleLabel
+        label.text = TextLiteral.ParticipateRoom.chooseCharacterSubTitle.localized()
         label.font = .font(.regular, ofSize: 18)
         label.textColor = .grey002
         return label
@@ -40,7 +40,7 @@ final class ChooseCharacterView: UIView, BaseViewType {
     let manittoCollectionView: CharacterCollectionView = CharacterCollectionView()
     private let joinButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.enterRoom
+        button.title = TextLiteral.Common.enterRoom.localized()
         return button
     }()
     
@@ -48,13 +48,14 @@ final class ChooseCharacterView: UIView, BaseViewType {
     
     lazy var backButtonTapPublisher = self.backButton.tapPublisher
     lazy var closeButtonTapPublisher = self.closeButton.tapPublisher
-    lazy var joinButtonTapPublisher = self.joinButton.tapPublisher
+    let joinButtonTapPublisher = PassthroughSubject<Int, Never>()
     
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
+        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -64,22 +65,30 @@ final class ChooseCharacterView: UIView, BaseViewType {
     
     // MARK: - func
     
+    private func setupAction() {
+        let didTapJoinButton = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.joinButtonTapPublisher.send(self.manittoCollectionView.characterIndex)
+        }
+        self.joinButton.addAction(didTapJoinButton, for: .touchUpInside)
+    }
+    
     func setupLayout() {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.subTitleLabel)
         self.subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.joinButton)
         self.joinButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(57)
             $0.height.equalTo(60)
         }
@@ -87,7 +96,7 @@ final class ChooseCharacterView: UIView, BaseViewType {
         self.addSubview(self.manittoCollectionView)
         self.manittoCollectionView.snp.makeConstraints {
             $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(37)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalTo(self.joinButton.snp.top)
         }
     }

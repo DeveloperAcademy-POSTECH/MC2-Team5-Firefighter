@@ -11,20 +11,18 @@ import Foundation
 final class ChooseCharacterViewModel: BaseViewModelType {
     
     struct Input {
-        let joinButtonTapPublisher: AnyPublisher<Void, Never>
-        let characterIndexPublisher: AnyPublisher<Int, Never>
+        let joingButtonTapPublisher: AnyPublisher<Int, Never>
     }
     
     struct Output {
-        let roomId: PassthroughSubject<Int, ChooseCharacterError>
+        let roomId: AnyPublisher<Result<Int, ChooseCharacterError>, Never>
     }
     
     // MARK: - property
     
     private let roomId: Int
     
-    private let roomIdSubject = PassthroughSubject<Int, ChooseCharacterError>()
-    private let characterIndexSubject = CurrentValueSubject<Int, Never>(0)
+    private let roomIdSubject = PassthroughSubject<Result<Int, ChooseCharacterError>, Never>()
     
     private let usecase: ParticipateRoomUsecaseImpl
     private var cancellable = Set<AnyCancellable>()
@@ -39,20 +37,14 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     // MARK: - func
     
     func transform(from input: Input) -> Output {
-        input.characterIndexPublisher
-            .sink { [weak self] index in
-                self?.characterIndexSubject.send(index)
-            }
-            .store(in: &self.cancellable)
-        
-        input.joinButtonTapPublisher
-            .sink { [weak self] _ in
+        input.joingButtonTapPublisher
+            .sink { [weak self] characterIndex in
                 guard let self = self else { return }
-                self.requestParticipateRoom(roomId: self.roomId, colorIndex: self.characterIndexSubject.value)
+                self.requestParticipateRoom(roomId: self.roomId, colorIndex: characterIndex)
             }
             .store(in: &self.cancellable)
         
-        return Output(roomId: self.roomIdSubject)
+        return Output(roomId: self.roomIdSubject.eraseToAnyPublisher())
     }
     
     // MARK: - network
@@ -61,10 +53,10 @@ final class ChooseCharacterViewModel: BaseViewModelType {
         Task {
             do {
                 let _ = try await self.usecase.dispatchJoinRoom(roomId: roomId.description, member: MemberInfoRequestDTO(colorIndex: colorIndex))
-                self.roomIdSubject.send(roomId)
+                self.roomIdSubject.send(.success(self.roomId))
             } catch(let error) {
                 guard let error = error as? ChooseCharacterError else { return }
-                self.roomIdSubject.send(completion: .failure(error))
+                self.roomIdSubject.send(.failure(error))
             }
         }
     }

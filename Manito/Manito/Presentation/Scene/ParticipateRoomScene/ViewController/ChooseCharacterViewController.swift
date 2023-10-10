@@ -64,27 +64,24 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     }
     
     private func transformedOutput() -> ChooseCharacterViewModel.Output {
-        let input = ChooseCharacterViewModel.Input(joinButtonTapPublisher: self.chooseCharacterView.joinButtonTapPublisher.eraseToAnyPublisher(),
-                                                   characterIndexPublisher: self.chooseCharacterView.manittoCollectionView.characterIndexTapPublisher.eraseToAnyPublisher()
-        )
+        let input = ChooseCharacterViewModel.Input(joingButtonTapPublisher: self.chooseCharacterView.joinButtonTapPublisher.eraseToAnyPublisher())
         return self.viewModel.transform(from: input)
     }
     
     private func bindOutputToViewModel(_ output: ChooseCharacterViewModel.Output) {
         output.roomId
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
+            .sink(receiveValue: { [weak self] result in
                 switch result {
-                case .finished:
-                    return
+                case .success(let roomId):
+                    self?.pushDetailWaitViewController(roomId: roomId)
                 case .failure(let error):
                     switch error {
                     case .roomAlreadyParticipating: self?.makeAlertWhenAlreadyJoin(error: error.localizedDescription)
-                    case .someError: self?.makeAlertWhenNetworkError(error: error.localizedDescription)
+                    case .clientError: self?.makeAlertWhenNetworkError(error: error.localizedDescription)
                     }
-                    
                 }
-            } receiveValue: { self.pushDetailWaitViewController(roomId: $0) }
+            })
             .store(in: &self.cancellable)
     }
     
@@ -112,14 +109,12 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     }
     
     private func makeAlertWhenAlreadyJoin(error: String) {
-        self.makeAlert(title: error.description, message: "참여중인 애니또 리스트를 확인해 보세요", okAction: { [weak self] _ in
+        self.makeAlert(title: error, message: TextLiteral.ParticipateRoom.Error.alreadyJoinMessage.localized(), okAction: { [weak self] _ in
             self?.dismiss(animated: true)
         })
     }
     
     private func makeAlertWhenNetworkError(error: String) {
-        self.makeAlert(title: error.description, message: "네트워크 확인 후 다시 시도해 보세요.", okAction: { [weak self] _ in
-            self?.dismiss(animated: true)
-        })
+        self.makeAlert(title: error, message: TextLiteral.Common.Error.networkServer.localized(), okAction: nil)
     }
 }

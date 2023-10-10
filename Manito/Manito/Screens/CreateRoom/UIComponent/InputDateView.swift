@@ -15,14 +15,14 @@ final class InputDateView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.inputDateViewTitle
+        label.text = TextLiteral.CreateRoom.inputDateTitle.localized()
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
     let calendarView: CalendarView = CalendarView()
     private let dateInfoLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.maxMessage
+        label.text = TextLiteral.Common.Calendar.maxDateContent.localized()
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .grey002
         return label

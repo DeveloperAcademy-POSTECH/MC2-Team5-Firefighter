@@ -42,7 +42,7 @@ final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
         } catch MTError.statusCode(reason: .clientError(let response)) {
             switch response.statusCode {
             case 409: throw ChooseCharacterError.roomAlreadyParticipating
-            default: throw ChooseCharacterError.someError
+            default: throw ChooseCharacterError.clientError
             }
         }
     }

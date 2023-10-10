@@ -150,6 +150,7 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
                 switch result {
                 case .finished: return
                 case .failure(_):
+                    // FIXME: - 에러 코드 추가 작성 필요
                     self?.makeAlert(title: "에러발생")
                 }
             }, receiveValue: { [weak self] roomid in

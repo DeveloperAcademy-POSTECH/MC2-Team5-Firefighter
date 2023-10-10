@@ -138,7 +138,7 @@ final class LetterViewController: UIViewController, Navigationable {
                 if let content {
                     self?.reportSubject.send(content)
                 } else {
-                    self?.reportSubject.send("쪽지 내용 없음")
+                    self?.reportSubject.send(TextLiteral.Letter.emailEmptyContent.localized())
                 }
             })
             .store(in: &self.cancelBag)
@@ -173,7 +173,7 @@ final class LetterViewController: UIViewController, Navigationable {
 // MARK: - Helper
 extension LetterViewController {
     private func showErrorAlert(_ message: String) {
-        self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
                        message: message)
     }
 
@@ -185,9 +185,9 @@ extension LetterViewController {
     private func updateLetterViewEmptyArea(with index: Int) {
         switch index {
         case 0:
-            self.letterView.updateEmptyArea(with: TextLiteral.letterViewControllerEmptyViewTo)
+            self.letterView.updateEmptyArea(with: TextLiteral.Letter.emptyToContent.localized())
         default:
-            self.letterView.updateEmptyArea(with: TextLiteral.letterViewControllerEmptyViewFrom)
+            self.letterView.updateEmptyArea(with: TextLiteral.Letter.emptyFromContent.localized())
         }
     }
 
