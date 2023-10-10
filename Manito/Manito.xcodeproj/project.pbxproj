@@ -708,6 +708,7 @@
 		B53A35B82A9640EB00B720BC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D7C46A9C2AD57CFF00E5B2AC /* Error */,
 				B53A35D12A971E4200B720BC /* DTO */,
 				B53A35BE2A96F1F900B720BC /* Repository */,
 				B5F525462855D00B00614FF7 /* Network */,
@@ -857,7 +858,6 @@
 		B55469FD2AADB903004D9FE6 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				D7AE5EC92AC1C30F00A20D0A /* ParticipateRoomScene */,
 				B5546A092AADCAFD004D9FE6 /* LetterScene */,
 			);
 			path = Error;
@@ -1598,6 +1598,14 @@
 				D7B83FD52A95A48700BFD8FF /* CreateRoomService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		D7C46A9C2AD57CFF00E5B2AC /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				D7AE5EC92AC1C30F00A20D0A /* ParticipateRoomScene */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
