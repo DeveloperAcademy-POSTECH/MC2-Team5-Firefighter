@@ -12,6 +12,15 @@ import SnapKit
 
 final class SettingView: UIView, BaseViewType {
     
+    enum SettingActions {
+        case changeNickname
+        case personInfomation
+        case termsOfService
+        case developerInfo
+        case help
+        case logout
+    }
+    
     struct Option {
         let title: String
         let handler: () -> Void
@@ -42,13 +51,8 @@ final class SettingView: UIView, BaseViewType {
     // MARK: - property
     
     private var options: [Option] = []
-    
-    let changNicknameButtonDidTapPublisher = PassthroughSubject<Void, Never>()
-    let personalInfomationButtonDidTapPublisher = PassthroughSubject<Void, Never>()
-    let termsOfServiceButtonDidTapPublisher = PassthroughSubject<Void, Never>()
-    let developerInfoButtonDidTapPublisher = PassthroughSubject<Void, Never>()
-    let helpButtonDidTapPublisher = PassthroughSubject<Void, Never>()
-    let logoutButtonPublisher = PassthroughSubject<Void, Never>()
+
+    let buttonDidTapPublisher = PassthroughSubject<SettingActions, Never>()
     lazy var withdrawalButtonPublisher = self.withdrawalButton.tapPublisher
     
     // MARK: - init
@@ -97,27 +101,27 @@ final class SettingView: UIView, BaseViewType {
     
     private func configureModels() {
         self.options.append(Option(title: TextLiteral.Setting.changeNickname.localized(), handler: { [weak self] in
-            self?.changNicknameButtonDidTapPublisher.send()
+            self?.buttonDidTapPublisher.send(.changeNickname)
         }))
         
         self.options.append(Option(title: TextLiteral.Setting.personalInformation.localized(), handler: { [weak self] in
-            self?.personalInfomationButtonDidTapPublisher.send()
+            self?.buttonDidTapPublisher.send(.personInfomation)
         }))
         
         self.options.append(Option(title: TextLiteral.Setting.termsOfService.localized(), handler: { [weak self] in
-            self?.termsOfServiceButtonDidTapPublisher.send()
+            self?.buttonDidTapPublisher.send(.termsOfService)
         }))
         
         self.options.append(Option(title: TextLiteral.Setting.developerInfo.localized(), handler: { [weak self] in
-            self?.developerInfoButtonDidTapPublisher.send()
+            self?.buttonDidTapPublisher.send(.developerInfo)
         }))
         
         self.options.append(Option(title: TextLiteral.Setting.inquiry.localized(), handler: { [weak self] in
-            self?.helpButtonDidTapPublisher.send()
+            self?.buttonDidTapPublisher.send(.help)
         }))
         
         self.options.append(Option(title: TextLiteral.Setting.logout.localized(), handler: { [weak self] in
-            self?.logoutButtonPublisher.send()
+            self?.buttonDidTapPublisher.send(.logout)
         }))
     }
 }

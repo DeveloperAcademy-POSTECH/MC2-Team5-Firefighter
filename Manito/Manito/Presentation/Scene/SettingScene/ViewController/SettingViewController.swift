@@ -67,8 +67,7 @@ final class SettingViewController: UIViewController, Navigationable {
     }
     
     private func transformedOutput() -> SettingViewModel.Output {
-        let input = SettingViewModel.Input(withdrawalButtonDidTap: self.settingView.withdrawalButtonPublisher.eraseToAnyPublisher(),
-                                           logoutButtonDidTap: self.settingView.logoutButtonPublisher.eraseToAnyPublisher())
+        let input = SettingViewModel.Input(withdrawalButtonDidTap: self.settingView.withdrawalButtonPublisher.eraseToAnyPublisher())
         return viewModel.transform(from: input)
     }
     
@@ -84,53 +83,35 @@ final class SettingViewController: UIViewController, Navigationable {
                 }
             } receiveValue: { [weak self] _ in
                 self?.makeRequestAlert(title: TextLiteral.Common.warningTitle.localized(),
-                                       message: TextLiteral.Setting.withdrawalAlertMessage,
+                                       message: TextLiteral.Setting.withdrawalAlertMessage.localized(),
                                        okAction: { [weak self] _ in
                     self?.deleteUser()
-                })
-            }
-            .store(in: &self.cancellable)
-        
-        output.logout
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.makeRequestAlert(title: TextLiteral.Setting.logoutAlertTitle.localized(),
-                                       message: "",
-                                       okAction: { [weak self] _ in
-                    self?.logout()
                 })
             }
             .store(in: &self.cancellable)
     }
     
     private func bindUI() {
-        self.settingView.changNicknameButtonDidTapPublisher
-            .sink { [weak self] _ in
-                self?.changNicknameButtonDidTap()
-            }
-            .store(in: &self.cancellable)
-        
-        self.settingView.personalInfomationButtonDidTapPublisher
-            .sink { [weak self] _ in
-                self?.personalInfomationButtonDidTap()
-            }
-            .store(in: &self.cancellable)
-        
-        self.settingView.termsOfServiceButtonDidTapPublisher
-            .sink { [weak self] _ in
-                self?.termsOfServiceButtonDidTap()
-            }
-            .store(in: &self.cancellable)
-        
-        self.settingView.developerInfoButtonDidTapPublisher
-            .sink { [weak self] _ in
-                self?.developerInfoButtonDidTap()
-            }
-            .store(in: &self.cancellable)
-        
-        self.settingView.helpButtonDidTapPublisher
-            .sink { [weak self] _ in
-                self?.helpButtonDidTap()
+        self.settingView.buttonDidTapPublisher
+            .sink { [weak self] type in
+                switch type {
+                case .changeNickname:
+                    self?.changNicknameButtonDidTap()
+                case .personInfomation:
+                    self?.personalInfomationButtonDidTap()
+                case .termsOfService:
+                    self?.termsOfServiceButtonDidTap()
+                case .developerInfo:
+                    self?.developerInfoButtonDidTap()
+                case .help:
+                    self?.helpButtonDidTap()
+                case .logout:
+                    self?.makeRequestAlert(title: TextLiteral.Setting.logoutAlertTitle.localized(),
+                                           message: "",
+                                           okAction: { [weak self] _ in
+                        self?.logout()
+                    })
+                }
             }
             .store(in: &self.cancellable)
     }
@@ -168,6 +149,8 @@ final class SettingViewController: UIViewController, Navigationable {
     }
     
     private func logout() {
+        UserDefaultHandler.clearAllDataExcludingFcmToken()
+        
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
                 as? SceneDelegate else { return }
         sceneDelegate.moveToLoginViewController()
