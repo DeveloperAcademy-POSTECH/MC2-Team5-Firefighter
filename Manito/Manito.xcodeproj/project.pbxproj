@@ -962,7 +962,7 @@
 		B58CA30B2A9CC43600977592 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
-				D7AE5EC42AC1966B00A20D0A /* Setting */,
+				D7AE5EC42AC1966B00A20D0A /* SettingScene */,
 				D7AE5EBB2AC184F300A20D0A /* ParticipateRoomScene */,
 				B58CA3142A9D913600977592 /* LetterScene */,
 			);
@@ -1576,12 +1576,12 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		D7AE5EC42AC1966B00A20D0A /* Setting */ = {
+		D7AE5EC42AC1966B00A20D0A /* SettingScene */ = {
 			isa = PBXGroup;
 			children = (
 				D71939522AA1C84900A73D6C /* SettingUsecase.swift */,
 			);
-			path = Setting;
+			path = SettingScene;
 			sourceTree = "<group>";
 		};
 		D7AE5EC92AC1C30F00A20D0A /* ParticipateRoomScene */ = {
