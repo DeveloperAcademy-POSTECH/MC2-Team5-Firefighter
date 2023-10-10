@@ -21,6 +21,7 @@ final class SettingViewController: UIViewController, Navigationable {
     private var cancellable = Set<AnyCancellable>()
     private let viewModel: SettingViewModel
     private let withdrawalPublisher = PassthroughSubject<Void, Never>()
+    private let logoutPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
     
@@ -68,11 +69,19 @@ final class SettingViewController: UIViewController, Navigationable {
     }
     
     private func transformedOutput() -> SettingViewModel.Output {
-        let input = SettingViewModel.Input(withdrawalButtonDidTap: self.withdrawalPublisher.eraseToAnyPublisher())
+        let input = SettingViewModel.Input(logoutButtonDidTap: self.logoutPublisher.eraseToAnyPublisher(),
+                                           withdrawalButtonDidTap: self.withdrawalPublisher.eraseToAnyPublisher())
         return viewModel.transform(from: input)
     }
     
     private func bindOutputToViewModel(_ output: SettingViewModel.Output) {
+        output.logout
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.logout()
+            }
+            .store(in: &self.cancellable)
+        
         output.deleteUser
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
@@ -106,7 +115,7 @@ final class SettingViewController: UIViewController, Navigationable {
                     self?.makeRequestAlert(title: TextLiteral.Setting.logoutAlertTitle.localized(),
                                            message: "",
                                            okAction: { _ in
-                        self?.logout()
+                        self?.logoutPublisher.send()
                     })
                 case .withdrawal:
                     self?.makeRequestAlert(title: TextLiteral.Common.warningTitle.localized(),
@@ -144,16 +153,12 @@ final class SettingViewController: UIViewController, Navigationable {
     }
     
     private func deleteUser() {
-        UserDefaultHandler.clearAllDataExcludingFcmToken()
-        
         guard let sceneDelgate = UIApplication.shared.connectedScenes.first?.delegate
                 as? SceneDelegate else { return }
         sceneDelgate.moveToLoginViewController()
     }
     
     private func logout() {
-        UserDefaultHandler.clearAllDataExcludingFcmToken()
-        
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
                 as? SceneDelegate else { return }
         sceneDelegate.moveToLoginViewController()

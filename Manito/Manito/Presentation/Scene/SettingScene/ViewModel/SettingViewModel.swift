@@ -19,21 +19,32 @@ final class SettingViewModel {
     private let logoutSubject = PassthroughSubject<Void, Never>()
     
     struct Input {
+        let logoutButtonDidTap: AnyPublisher<Void, Never>
         let withdrawalButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
-        let deleteUser: PassthroughSubject<Void, NetworkError>
+        let logout: AnyPublisher<Void, Never>
+        let deleteUser: AnyPublisher<Void, NetworkError>
     }
     
     func transform(from input: Input) -> Output {
+        
+        input.logoutButtonDidTap
+            .sink { [weak self] _ in
+                UserDefaultHandler.clearAllDataExcludingFcmToken()
+                self?.logoutSubject.send()
+            }.store(in: &self.cancellable)
+            
+        
         input.withdrawalButtonDidTap
             .sink(receiveValue: { [weak self] _ in
                 self?.requestDeleteUser()
             })
             .store(in: &self.cancellable)
 
-        return Output(deleteUser: self.deleteUserSubject)
+        return Output(logout: self.logoutSubject.eraseToAnyPublisher(),
+                      deleteUser: self.deleteUserSubject.eraseToAnyPublisher())
     }
     
     // MARK: - init
@@ -50,6 +61,7 @@ final class SettingViewModel {
                 let statusCode = try await self.usecase.deleteUser()
                 switch statusCode {
                 case 200..<300:
+                    UserDefaultHandler.clearAllDataExcludingFcmToken()
                     self.deleteUserSubject.send()
                 default:
                     self.deleteUserSubject.send(completion: .failure(.unknownError))
