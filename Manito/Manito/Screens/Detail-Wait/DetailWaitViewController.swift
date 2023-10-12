@@ -200,8 +200,8 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     }
     
     private func presentSelectManittoViewController(nickname: String) {
-        let roomIndex = self.detailWaitViewModel.roomIndex.description
-        let viewController = SelectManitteeViewController(roomId: roomIndex, manitteeNickname: nickname)
+        let roomIndex = self.detailWaitViewModel.roomIndex()
+        let viewController = SelectManitteeViewController(roomId: roomIndex.description, manitteeNickname: nickname)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)

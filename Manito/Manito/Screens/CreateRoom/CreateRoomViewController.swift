@@ -70,8 +70,7 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
     
     private func pushDetailWaitViewController(roomId: Int) {
         guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-        let viewModel = DetailWaitViewModel(roomIndex: roomId,
-                                            usecase: DetailWaitUseCaseImpl(roomIndex: roomId, repository: DetailRoomRepositoryImpl()))
+        let viewModel = DetailWaitViewModel(usecase: DetailWaitUseCaseImpl(roomIndex: roomId, repository: DetailRoomRepositoryImpl()))
         let viewController = DetailWaitViewController(viewModel: viewModel)
         
         navigationController.popViewController(animated: true)
