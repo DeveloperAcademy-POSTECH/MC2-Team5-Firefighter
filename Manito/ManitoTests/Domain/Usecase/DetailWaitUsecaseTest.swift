@@ -18,6 +18,50 @@ final class DetailWaitUsecaseTest: XCTestCase {
     override func tearDown() {
         self.mockUsecase = nil
     }
+    
+    func test_fetchRoomInformaion함수가_올바른값을_리턴하는가() async throws {
+        let sut = RoomInfoDTO.testRoomDTO
+        
+        do {
+            let roomInfoDTO = try await self.mockUsecase.fetchRoomInformaion(roomId: "")
+            XCTAssertEqual(sut, roomInfoDTO)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func test_patchStartManitto함수가_올바른값을_리턴하는가() async throws {
+        let sut = UserInfoDTO.testUserManittee
+        
+        do {
+            let manittee = try await self.mockUsecase.patchStartManitto(roomId: "")
+            XCTAssertEqual(sut, manittee)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func test_deleteRoom함수가_올바른값을_리턴하는가() async throws {
+        let sut = 200
+        
+        do {
+            let statusCode = try await self.mockUsecase.deleteRoom(roomId: "")
+            XCTAssertEqual(sut, statusCode)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func test_deleteLeaveRoom함수가_올바른값을_리턴하는가() async throws {
+        let sut = 200
+        
+        do {
+            let statusCode = try await self.mockUsecase.deleteLeaveRoom(roomId: "")
+            XCTAssertEqual(sut, statusCode)
+        } catch {
+            XCTFail()
+        }
+    }
 }
 
 final class MockDetailWaitUsecase: DetailWaitUseCase {
