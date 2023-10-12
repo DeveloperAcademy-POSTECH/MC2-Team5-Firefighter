@@ -10,8 +10,8 @@ import Foundation
 
 final class LetterViewModel: BaseViewModelType {
 
-    typealias MessageDetails = (roomId: String, mission: String, missionId: String, manitteeId: String)
-    typealias ReportDetails = (nickname: String, content: String)
+    typealias MessageDetail = (roomId: String, mission: String, missionId: String, manitteeId: String)
+    typealias ReportDetail = (nickname: String, content: String)
 
     enum MessageType: Int {
         case sent = 0
@@ -29,8 +29,8 @@ final class LetterViewModel: BaseViewModelType {
     struct Output {
         let messages: AnyPublisher<Result<[MessageListItem], Error>, Never>
         let index: AnyPublisher<Int, Never>
-        let messageDetails: AnyPublisher<MessageDetails, Never>
-        let reportDetails: AnyPublisher<ReportDetails, Never>
+        let messageDetails: AnyPublisher<MessageDetail, Never>
+        let reportDetails: AnyPublisher<ReportDetail, Never>
         let roomStatus: AnyPublisher<RoomStatus, Never>
     }
 
@@ -39,7 +39,7 @@ final class LetterViewModel: BaseViewModelType {
     private var cancelBag: Set<AnyCancellable> = Set()
 
     private let usecase: LetterUsecase
-    private var messageDetails: MessageDetails
+    private var messageDetail: MessageDetail
     private let roomStatus: RoomStatus
     private let messageType: MessageType
 
@@ -52,7 +52,7 @@ final class LetterViewModel: BaseViewModelType {
          roomStatus: RoomStatus,
          messageType: MessageType) {
         self.usecase = usecase
-        self.messageDetails = MessageDetails(roomId, mission, missionId, "")
+        self.messageDetail = MessageDetail(roomId, mission, missionId, "")
         self.roomStatus = roomStatus
         self.messageType = messageType
     }
@@ -89,14 +89,14 @@ final class LetterViewModel: BaseViewModelType {
             .eraseToAnyPublisher()
 
         let messageDetailsPublisher = input.sendLetterButtonDidTap
-            .map { [weak self] _ -> MessageDetails in
-                self?.loadMessageDetails()
-                return (self?.messageDetails)!
+            .map { [weak self] _ -> MessageDetail in
+                self?.loadMessageDetail()
+                return (self?.messageDetail)!
             }
             .eraseToAnyPublisher()
 
         let reportPublisher = input.reportButtonDidTap
-            .map { [weak self] content -> ReportDetails in
+            .map { [weak self] content -> ReportDetail in
                 self?.usecase.loadNickname()
                 return ((self?.usecase.nickname)!, content)
             }
@@ -123,7 +123,7 @@ final class LetterViewModel: BaseViewModelType {
     }
 
     private func fetchMessages(with type: MessageType) async throws -> [MessageListItem] {
-        let roomId = self.messageDetails.roomId
+        let roomId = self.messageDetail.roomId
 
         switch type {
         case .sent:
@@ -150,9 +150,9 @@ extension LetterViewModel {
         return self.insertReportState(type, in: messages)
     }
 
-    private func loadMessageDetails() {
+    private func loadMessageDetail() {
         guard let manitteeId = self.usecase.manitteeId else { return }
-        self.messageDetails.manitteeId = manitteeId
+        self.messageDetail.manitteeId = manitteeId
     }
 
     private func insertReportState(_ type: MessageType, in messages: [MessageListItemDTO]) -> [MessageListItem] {
