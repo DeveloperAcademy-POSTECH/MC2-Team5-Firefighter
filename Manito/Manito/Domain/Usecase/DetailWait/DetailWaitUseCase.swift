@@ -39,7 +39,7 @@ final class DetailWaitUseCaseImpl: DetailWaitUseCase {
             self.roomInformation = roomInformation.toRoomInfo()
             return roomInformation
         } catch {
-            throw NetworkError.unknownError
+            throw DetailWaitUsecaseError.failedToFetchError
         }
     }
     
@@ -48,7 +48,7 @@ final class DetailWaitUseCaseImpl: DetailWaitUseCase {
             let userInformation = try await self.repository.patchStartManitto(roomId: roomId)
             return userInformation
         } catch {
-            throw NetworkError.unknownError
+            throw DetailWaitUsecaseError.failedToStartError
         }
     }
     
@@ -57,7 +57,7 @@ final class DetailWaitUseCaseImpl: DetailWaitUseCase {
             let statusCode = try await self.repository.deleteRoom(roomId: roomId)
             return statusCode
         } catch {
-            throw NetworkError.unknownError
+            throw DetailWaitUsecaseError.failedToDeleteRoomError
         }
     }
     
@@ -66,7 +66,7 @@ final class DetailWaitUseCaseImpl: DetailWaitUseCase {
             let statusCode = try await self.repository.deleteLeaveRoom(roomId: roomId)
             return statusCode
         } catch {
-            throw NetworkError.unknownError
+            throw DetailWaitUsecaseError.failedToLeaveRoomError
         }
     }
 }
