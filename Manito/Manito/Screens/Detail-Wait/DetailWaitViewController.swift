@@ -22,7 +22,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
-    let createRoomSubject = PassthroughSubject<Void, Never>()
+    let createRoomSubject = PassthroughSubject<Void, Error>()
     private let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let changeButtonSubject = PassthroughSubject<Void, Never>()
@@ -96,7 +96,6 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                     self?.makeAlert(title: "에러 발생")
                 }
             }, receiveValue: { [weak self] room in
-                guard let room else { return }
                 self?.detailWaitView.updateDetailWaitView(room: room)
             })
             .store(in: &self.cancellable)
@@ -118,7 +117,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                     self?.makeAlert(title: "에러 발생")
                 }
             }, receiveValue: { [weak self] nickname in
-                self?.presentSelectManittoViewController(nickname: nickname)
+//                self?.presentSelectManittoViewController(nickname: nickname)
             })
             .store(in: &self.cancellable)
         
@@ -160,7 +159,13 @@ final class DetailWaitViewController: UIViewController, Navigationable {
         
         output.passedStartDate
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (isPassedStartDate, isAdmin) in
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: "오류 발생")
+                }
+            }, receiveValue: { [weak self] (isPassedStartDate, isAdmin) in
                 self?.showStartDatePassedAlert(isPassedStartDate: isPassedStartDate, isAdmin: isAdmin)
             })
             .store(in: &self.cancellable)
@@ -175,6 +180,19 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                 }
             }, receiveValue: { [weak self] roomInfo in
                 self?.showInvitedCodeView(roomInfo: roomInfo)
+            })
+            .store(in: &self.cancellable)
+        
+        output.changeOutput
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: "오류 발생")
+                }
+            }, receiveValue: { [weak self] roomInfo in
+                self?.detailWaitView.updateDetailWaitView(room: roomInfo)
             })
             .store(in: &self.cancellable)
     }
@@ -200,8 +218,8 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     }
     
     private func presentSelectManittoViewController(nickname: String) {
-        let roomIndex = self.detailWaitViewModel.roomIndex()
-        let viewController = SelectManitteeViewController(roomId: roomIndex.description, manitteeNickname: nickname)
+        let roomId = self.detailWaitViewModel.roomId
+        let viewController = SelectManitteeViewController(roomId: roomId, manitteeNickname: nickname)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)

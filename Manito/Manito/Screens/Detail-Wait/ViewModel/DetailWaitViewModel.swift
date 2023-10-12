@@ -18,8 +18,6 @@ final class DetailWaitViewModel {
     let roomId: String
     private var cancellable = Set<AnyCancellable>()
     private let usecase: DetailWaitUseCase
-    private let changeButtonSubject = PassthroughSubject<Void, NetworkError>()
-    private let roomInfoTestSubject = PassthroughSubject<RoomInfo, NetworkError>()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -29,7 +27,7 @@ final class DetailWaitViewModel {
         let deleteMenuButtonDidTap: AnyPublisher<Void, Never>
         let leaveMenuButtonDidTap: AnyPublisher<Void, Never>
         let changeButtonDidTap: AnyPublisher<Void, Never>
-        let roomDidCreate: AnyPublisher<Void, Never>
+        let roomDidCreate: AnyPublisher<Void, Error>
         
         init(viewDidLoad: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
              codeCopyButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
@@ -38,7 +36,7 @@ final class DetailWaitViewModel {
              deleteMenuButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
              leaveMenuButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
              changeButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
-             roomDidCreate: AnyPublisher<Void, Never> = Empty<Void, Never>().eraseToAnyPublisher()) {
+             roomDidCreate: AnyPublisher<Void, Error> = Empty<Void, Error>().eraseToAnyPublisher()) {
             self.viewDidLoad = viewDidLoad
             self.codeCopyButtonDidTap = codeCopyButtonDidTap
             self.startButtonDidTap = startButtonDidTap
@@ -57,8 +55,9 @@ final class DetailWaitViewModel {
         let editRoomInformation: AnyPublisher<EditRoomInformation, Never>
         let deleteRoom: AnyPublisher<Int, Error>
         let leaveRoom: AnyPublisher<Int, Error>
-        let passedStartDate: AnyPublisher<PassedStartDateAndIsOwner, Never>
-        let invitedCodeView: PassthroughSubject<RoomInfo, NetworkError>
+        let passedStartDate: AnyPublisher<PassedStartDateAndIsOwner, Error>
+        let invitedCodeView: AnyPublisher<RoomInfo, Error>
+        let changeOutput: AnyPublisher<RoomInfo, Error>
     }
     
     func transform(_ input: Input) -> Output {
@@ -104,27 +103,24 @@ final class DetailWaitViewModel {
             .compactMap { $0 }
             .eraseToAnyPublisher()
         
-        let passedStartDateOutput = input.viewDidLoad
-            .delay(for: 0.5, scheduler: DispatchQueue.main)
+        let passedStartDateOutput = viewDidLoad
             .map { [weak self] _ -> PassedStartDateAndIsOwner in
                 guard let self else { return (false, false) }
                 return self.makeIsAdmin(roomInformation: self.usecase.roomInformation)
             }
             .eraseToAnyPublisher()
         
-        input.changeButtonDidTap
-            .sink(receiveValue: { [weak self] _ in
-                guard let roomId = self?.roomId else { return }
-                //                self?.requestWaitRoomInfo(roomId: roomId)
-            })
-            .store(in: &self.cancellable)
+        let combineLatestPublisher = viewDidLoad.combineLatest(input.roomDidCreate)
+            .compactMap { [weak self] _ in
+                return self?.makeRoomInformation() }
+            .eraseToAnyPublisher()
         
-        input.roomDidCreate
-            .sink(receiveValue: { [weak self] _ in
-                guard let roomId = self?.roomId else { return }
-                //                self?.requestWaitRoomInfoTest(roomId: roomId)
-            })
-            .store(in: &self.cancellable)
+        let changeButtonOutput = input.changeButtonDidTap
+            .asyncMap { [weak self] _ in
+                return try await self?.fetchRoomInformation(roomId: self?.roomId ?? "")
+            }
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
         
         return Output(
             roomInformation: viewDidLoad,
@@ -134,7 +130,8 @@ final class DetailWaitViewModel {
             deleteRoom: deleteOutput,
             leaveRoom: leaveRoomOutput,
             passedStartDate: passedStartDateOutput,
-            invitedCodeView: self.roomInfoTestSubject
+            invitedCodeView: combineLatestPublisher,
+            changeOutput: changeButtonOutput
         )
     }
     
@@ -159,13 +156,12 @@ final class DetailWaitViewModel {
         return self.usecase.roomInformation.manittee.nickname
     }
     
-    func makeEditRoomInformation(roomInformation: RoomInfo) -> EditRoomInformation {
+    private func makeEditRoomInformation(roomInformation: RoomInfo) -> EditRoomInformation {
         let editMode: DetailEditView.EditMode = .information
         return (roomInformation, editMode)
     }
     
-    func makeIsAdmin(roomInformation: RoomInfo) -> PassedStartDateAndIsOwner {
-        
+    private func makeIsAdmin(roomInformation: RoomInfo) -> PassedStartDateAndIsOwner {
         return (roomInformation.roomInformation.isStartDatePast, roomInformation.admin)
     }
     
