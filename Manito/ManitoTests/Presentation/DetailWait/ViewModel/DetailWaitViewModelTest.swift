@@ -12,16 +12,13 @@ import XCTest
 
 final class DetailWaitViewModelTest: XCTestCase {
     private var viewModel: DetailWaitViewModel!
-    private var service: MockDetailWaitService!
     private var cancellable: Set<AnyCancellable>!
     private var output: DetailWaitViewModel.Output!
     
     override func setUp() {
         super.setUp()
-        self.service = MockDetailWaitService()
-        self.viewModel = DetailWaitViewModel(roomIndex: 0, detailWaitService: self.service)
+        self.viewModel = DetailWaitViewModel(roomId: "0", usecase: MockDetailWaitUsecase())
         self.cancellable = Set<AnyCancellable>()
-        self.viewModel.setRoomInformation(room: RoomInfo.testRoom)
     }
     
     override func tearDown() {
@@ -70,7 +67,6 @@ final class DetailWaitViewModelTest: XCTestCase {
     func testMakeRoomInformation() {
         // given
         let checkRoom = RoomInfo.testRoom
-        self.viewModel.setRoomInformation(room: checkRoom)
         
         // then
         let testRoom = self.viewModel.makeRoomInformation()
@@ -147,8 +143,8 @@ final class DetailWaitViewModelTest: XCTestCase {
                 case .failure:
                     XCTFail("fail")
                 }
-            }, receiveValue: { nickname in
-                testNickname = nickname
+            }, receiveValue: { userInfo in
+                testNickname = userInfo.nickname
                 expectation.fulfill()
             })
             .store(in: &self.cancellable)
