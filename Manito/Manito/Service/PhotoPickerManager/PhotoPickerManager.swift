@@ -14,10 +14,6 @@ final class PhotoPickerManager: NSObject {
 
     // MARK: - property
 
-    private var authorizationStatus: PHAuthorizationStatus {
-        return PHPhotoLibrary.authorizationStatus(for: .addOnly)
-    }
-
     var loadImage: ((Result<UIImage, PHPickerError>) -> Void)?
 
     weak var viewController: UIViewController?
@@ -25,7 +21,7 @@ final class PhotoPickerManager: NSObject {
     // MARK: - func
 
     func openPhotos() {
-        switch self.authorizationStatus {
+        switch PHPhotoLibrary.authorizationStatus(for: .addOnly) {
         case .notDetermined:
             self.requestAuthorizationToPHPhotoLibrary()
         case .authorized:
