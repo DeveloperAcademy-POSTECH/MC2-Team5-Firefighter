@@ -148,7 +148,7 @@ final class DetailWaitViewModel {
         return self.usecase.roomInformation
     }
     
-    private func makeCode(roomInformation: RoomInfo) -> String {
+    func makeCode(roomInformation: RoomInfo) -> String {
         return roomInformation.invitation.code
     }
     
@@ -156,12 +156,12 @@ final class DetailWaitViewModel {
         return self.usecase.roomInformation.manittee.nickname
     }
     
-    private func makeEditRoomInformation(roomInformation: RoomInfo) -> EditRoomInformation {
+    func makeEditRoomInformation(roomInformation: RoomInfo) -> EditRoomInformation {
         let editMode: DetailEditView.EditMode = .information
         return (roomInformation, editMode)
     }
     
-    private func makeIsAdmin(roomInformation: RoomInfo) -> PassedStartDateAndIsOwner {
+    func makeIsAdmin(roomInformation: RoomInfo) -> PassedStartDateAndIsOwner {
         return (roomInformation.roomInformation.isStartDatePast, roomInformation.admin)
     }
     
