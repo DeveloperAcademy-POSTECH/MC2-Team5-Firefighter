@@ -156,7 +156,7 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
             .sink(receiveValue: { [weak self] result in
                 switch result {
                 case .success:
-                    self?.handleRefreshLetter()
+                    self?.refreshLetter()
                 case .failure(let error):
                     self?.sendLetterView.updateSendButtonIsEnabled(to: true)
                     self?.showErrorAlert(error.localizedDescription)
@@ -225,7 +225,7 @@ extension SendLetterViewController {
                        message: message)
     }
 
-    private func handleRefreshLetter() {
+    private func refreshLetter() {
         self.delegate?.refreshLetterData()
         self.dismiss(animated: true)
     }
