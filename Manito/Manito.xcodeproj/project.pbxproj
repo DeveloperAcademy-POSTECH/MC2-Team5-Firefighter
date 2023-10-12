@@ -192,7 +192,6 @@
 		D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */; };
 		D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */; };
 		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
-		D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77224DE285DDAB7008B760B /* Notification+Extension.swift */; };
 		D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* URLLiteral.swift */; };
 		D79E9D8A2A826E0200C031F0 /* CreateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E9D892A826E0200C031F0 /* CreateRoomViewModel.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */; };
@@ -421,7 +420,6 @@
 		D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomService.swift; sourceTree = "<group>"; };
 		D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewModel.swift; sourceTree = "<group>"; };
 		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
-		D77224DE285DDAB7008B760B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* URLLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLLiteral.swift; sourceTree = "<group>"; };
 		D79E9D892A826E0200C031F0 /* CreateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewModel.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomInfoView.swift; sourceTree = "<group>"; };
@@ -1182,7 +1180,6 @@
 			children = (
 				B5F525252851A26D00614FF7 /* NSObject+ClassName.swift */,
 				B5E1F2AD285B2917006D880B /* Int+RandomNumber.swift */,
-				D77224DE285DDAB7008B760B /* Notification+Extension.swift */,
 				39C957CF2879521400A04A2B /* String+DateFormatter.swift */,
 				39C957D12879523200A04A2B /* Date+Extension.swift */,
 			);
@@ -1949,7 +1946,6 @@
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
 				398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */,
 				B50B1AFD2856C3500080992C /* CreateLetterTextView.swift in Sources */,
-				D77224DF285DDAB7008B760B /* Notification+Extension.swift in Sources */,
 				B5A085F42A9733A700C8A98D /* LoginDTO.swift in Sources */,
 				B53A35D02A97194D00B720BC /* TokenRepository.swift in Sources */,
 				B5706BF629B9D4650093D198 /* GuideView.swift in Sources */,
