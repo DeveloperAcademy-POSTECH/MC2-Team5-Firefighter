@@ -47,6 +47,7 @@
 		39EE956D2A401ED400AF6857 /* DetailingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EE956C2A401ED400AF6857 /* DetailingView.swift */; };
 		39EE956F2A404A3800AF6857 /* MissionEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EE956E2A404A3800AF6857 /* MissionEditViewController.swift */; };
 		39EEF65E28CB3CFE00437654 /* LoginEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEF65D28CB3CFE00437654 /* LoginEndPoint.swift */; };
+		39EF30F92AD3DE6700466A90 /* DetailWaitUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF30F82AD3DE6700466A90 /* DetailWaitUseCase.swift */; };
 		39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F1C12D28D756E600585B83 /* LetterImageViewController.swift */; };
 		39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FFE32728EEFFFE008442EE /* MoreButton.swift */; };
 		39FFE33428F457AF008442EE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 39FFE33328F457AF008442EE /* FirebaseMessaging */; };
@@ -275,6 +276,7 @@
 		39EE956C2A401ED400AF6857 /* DetailingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailingView.swift; sourceTree = "<group>"; };
 		39EE956E2A404A3800AF6857 /* MissionEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionEditViewController.swift; sourceTree = "<group>"; };
 		39EEF65D28CB3CFE00437654 /* LoginEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginEndPoint.swift; sourceTree = "<group>"; };
+		39EF30F82AD3DE6700466A90 /* DetailWaitUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitUseCase.swift; sourceTree = "<group>"; };
 		39F1C12D28D756E600585B83 /* LetterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageViewController.swift; sourceTree = "<group>"; };
 		39FFE32728EEFFFE008442EE /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
 		39FFE33528F45E44008442EE /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
@@ -633,6 +635,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		39EF30F72AD3DE5600466A90 /* DetailWait */ = {
+			isa = PBXGroup;
+			children = (
+				39EF30F82AD3DE6700466A90 /* DetailWaitUseCase.swift */,
+			);
+			path = DetailWait;
+			sourceTree = "<group>";
+		};
 		7E0C5C342855B1EF00F698D1 /* NickName */ = {
 			isa = PBXGroup;
 			children = (
@@ -955,6 +965,7 @@
 		B58CA30B2A9CC43600977592 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				39EF30F72AD3DE5600466A90 /* DetailWait */,
 				B58CA3142A9D913600977592 /* LetterScene */,
 			);
 			path = Usecase;
@@ -1958,6 +1969,7 @@
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
 				D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */,
 				B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */,
+				39EF30F92AD3DE6700466A90 /* DetailWaitUseCase.swift in Sources */,
 				B5A085EC2A97314800C8A98D /* ParticipatedRoomInfoDTO.swift in Sources */,
 				D724AF5D287088310003F280 /* SettingViewController.swift in Sources */,
 				B5F3F1062AA3516200FA1A32 /* RoomStatus.swift in Sources */,
