@@ -121,6 +121,7 @@ final class SendLetterPhotoView: UIView {
 
     private func removePhoto() {
         self.importPhotosButton.setImage(UIImage.Button.camera, for: .normal)
+        self.imageSubject.send(nil)
         self.hasImageSubject.send(false)
     }
     

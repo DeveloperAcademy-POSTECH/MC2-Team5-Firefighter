@@ -58,12 +58,7 @@ final class SendLetterViewModel: BaseViewModelType {
         let letterResponse = input.sendLetterButtonDidTap
             .asyncMap { [weak self] data -> Result<Void, Error> in
                 do {
-                    guard let self else { return .failure(CommonError.invalidAccess) }
-                    let letter = LetterRequestDTO(manitteeId: self.messageDetail.manitteeId, messageContent: data.content)
-                    let _ = try await self.usecase.dispatchLetter(roomId: self.messageDetail.roomId,
-                                                                 image: data.image,
-                                                                 letter: letter,
-                                                                 missionId: self.messageDetail.missionId)
+                    let _ = try await self?.dispatchLetter(content: data.content, image: data.image)
                     return .success(())
                 } catch(let error) {
                     return .failure(error)
@@ -94,6 +89,14 @@ final class SendLetterViewModel: BaseViewModelType {
 
 // MARK: - Helper
 extension SendLetterViewModel {
+    private func dispatchLetter(content: String?, image: Data?) async throws -> Int {
+        let letter = LetterRequestDTO(manitteeId: self.messageDetail.manitteeId, messageContent: content)
+        return try await self.usecase.dispatchLetter(roomId: self.messageDetail.roomId,
+                                                     image: image,
+                                                     letter: letter,
+                                                     missionId: self.messageDetail.missionId)
+    }
+    
     private func truncateText(_ text: String) -> String {
         if text.count > self.maximumTextCount {
             let prefixText = text[text.startIndex..<text.index(text.startIndex, offsetBy: self.maximumTextCount)]
