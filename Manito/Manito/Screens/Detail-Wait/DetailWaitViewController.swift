@@ -96,6 +96,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                     self?.makeAlert(title: "에러 발생")
                 }
             }, receiveValue: { [weak self] room in
+                guard let room else { return }
                 self?.detailWaitView.updateDetailWaitView(room: room)
             })
             .store(in: &self.cancellable)
@@ -164,7 +165,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             })
             .store(in: &self.cancellable)
         
-        output.toastView
+        output.invitedCodeView
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
@@ -173,7 +174,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                     self?.makeAlert(title: "오류 발생")
                 }
             }, receiveValue: { [weak self] roomInfo in
-                self?.showInvitedCodeViewController(roomInfo: roomInfo)
+                self?.showInvitedCodeView(roomInfo: roomInfo)
             })
             .store(in: &self.cancellable)
     }
@@ -246,7 +247,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
         )
     }
     
-    private func showInvitedCodeViewController(roomInfo: RoomInfo) {
+    private func showInvitedCodeView(roomInfo: RoomInfo) {
         let roomListItem = roomInfo.roomInformation
         let code = roomInfo.invitation.code
         
