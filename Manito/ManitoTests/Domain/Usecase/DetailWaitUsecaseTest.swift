@@ -24,10 +24,14 @@ final class MockDetailWaitUsecase: DetailWaitUseCase {
     var roomInformation: Manito.RoomInfo = .testRoom
     
     func fetchRoomInformaion(roomId: String) async throws -> RoomInfoDTO {
+        try await Task.sleep(nanoseconds: 3_000)
+        
         return .testRoomDTO
     }
     
     func patchStartManitto(roomId: String) async throws -> UserInfoDTO {
+        try await Task.sleep(nanoseconds: 3_000)
+        
         return .testUserManittee
     }
     
