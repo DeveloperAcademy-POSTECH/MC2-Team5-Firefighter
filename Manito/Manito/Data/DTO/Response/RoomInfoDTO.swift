@@ -52,7 +52,7 @@ extension RoomInfoDTO {
     }
 }
 
-extension RoomInfoDTO {
+extension RoomInfoDTO: Equatable {
     static let testRoomDTO = RoomInfoDTO(
         roomInformation: RoomListItemDTO.testRoomListItemDTO,
         participants: ParticipantListDTO.testParticipantListDTO,
@@ -78,7 +78,7 @@ extension ParticipantListDTO {
     }
 }
 
-extension ParticipantListDTO {
+extension ParticipantListDTO: Equatable {
     static let testParticipantListDTO = ParticipantListDTO(
         count: 5,
         members: UserInfoDTO.testUserList
@@ -95,7 +95,7 @@ extension InvitationCodeDTO {
     }
 }
 
-extension InvitationCodeDTO {
+extension InvitationCodeDTO: Equatable {
     static let testInvitationCodeDTO = InvitationCodeDTO(code: "ABCDEF")
 }
 
@@ -113,7 +113,7 @@ extension IndividualMissionDTO {
     }
 }
 
-extension IndividualMissionDTO {
+extension IndividualMissionDTO: Equatable {
     static let testIndividualMissionDTO = IndividualMissionDTO(id: 1, content: "테스트미션")
 }
 
@@ -121,12 +121,12 @@ struct MessageCountInfoDTO: Decodable {
     let count: Int?
 }
 
-extension MessageCountInfoDTO: Equatable {
+extension MessageCountInfoDTO {
     func toMessageCountInfo() -> MessageCountInfo {
         return MessageCountInfo(count: self.count ?? 0)
     }
 }
 
-extension MessageCountInfoDTO {
+extension MessageCountInfoDTO: Equatable {
     static let testMessageInfoDTO = MessageCountInfoDTO(count: 3)
 }

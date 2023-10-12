@@ -24,7 +24,7 @@ extension UserInfoDTO {
     }
 }
 
-extension UserInfoDTO {
+extension UserInfoDTO: Equatable {
     static let testUserManittee = UserInfoDTO(id: "1", nickname: "테스트마니띠")
     static let testUserManitto = UserInfoDTO(id: "2", nickname: "테스트마니또")
     
