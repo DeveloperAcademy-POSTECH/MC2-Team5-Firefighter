@@ -127,6 +127,7 @@ final class SendLetterPhotoView: UIView {
     func updatePhoto(to image: UIImage) {
         DispatchQueue.main.async {
             self.importPhotosButton.setImage(image, for: .normal)
+            self.imageSubject.send(image)
             self.hasImageSubject.send(true)
         }
     }

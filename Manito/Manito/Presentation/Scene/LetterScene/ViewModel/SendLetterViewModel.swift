@@ -28,14 +28,13 @@ final class SendLetterViewModel: BaseViewModelType {
 
     // MARK: - property
 
-    private let messageDetailSubject: PassthroughSubject<MessageDetail, Never> = PassthroughSubject()
-
     private var cancelBag: Set<AnyCancellable> = Set()
 
     private let maximumTextCount: Int = 100
 
     private let usecase: SendLetterUsecase
     private let mission: String
+    private let messageDetail: MessageDetail
 
     // MARK: - init
 
@@ -46,7 +45,7 @@ final class SendLetterViewModel: BaseViewModelType {
          missionId: String) {
         self.usecase = usecase
         self.mission = mission
-        self.messageDetailSubject.send((roomId, missionId, manitteeId))
+        self.messageDetail = (roomId, missionId, manitteeId)
     }
 
     // MARK: - Public - func
@@ -56,15 +55,15 @@ final class SendLetterViewModel: BaseViewModelType {
             .compactMap { [weak self] in self?.mission }
             .eraseToAnyPublisher()
 
-        let letterResponse = Publishers.CombineLatest(input.sendLetterButtonDidTap, self.messageDetailSubject)
-            .asyncMap { [weak self] (data, detail) -> Result<Void, Error> in
+        let letterResponse = input.sendLetterButtonDidTap
+            .asyncMap { [weak self] data -> Result<Void, Error> in
                 do {
                     guard let self else { return .failure(CommonError.invalidAccess) }
-                    let letter = LetterRequestDTO(manitteeId: detail.manitteeId, messageContent: data.content)
-                    let _ = try await self.usecase.dispatchLetter(roomId: detail.roomId,
+                    let letter = LetterRequestDTO(manitteeId: self.messageDetail.manitteeId, messageContent: data.content)
+                    let _ = try await self.usecase.dispatchLetter(roomId: self.messageDetail.roomId,
                                                                  image: data.image,
                                                                  letter: letter,
-                                                                 missionId: detail.missionId)
+                                                                 missionId: self.messageDetail.missionId)
                     return .success(())
                 } catch(let error) {
                     return .failure(error)
