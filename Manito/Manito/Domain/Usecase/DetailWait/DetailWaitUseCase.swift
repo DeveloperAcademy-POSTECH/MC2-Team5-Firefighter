@@ -25,6 +25,8 @@ final class DetailWaitUseCaseImpl: DetailWaitUseCase {
     
     private let repository: DetailRoomRepository
     
+    // MARK: - init
+    
     init(repository: DetailRoomRepository) {
         self.repository = repository
     }
@@ -66,7 +68,6 @@ final class DetailWaitUseCaseImpl: DetailWaitUseCase {
         } catch {
             throw NetworkError.unknownError
         }
-        
     }
     
     func setRoomInformation(_ roomInformation: RoomInfo) {
