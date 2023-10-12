@@ -142,12 +142,12 @@ extension LetterViewModel {
 
     private func fetchSendMessages(roomId: String, type: MessageType) async throws -> [MessageListItem] {
         let messages = try await self.usecase.fetchSendLetter(roomId: roomId)
-        return self.insertReportState(type, in: messages)
+        return await self.insertReportState(type, in: messages)
     }
 
     private func fetchReceivedMessages(roomId: String, type: MessageType) async throws -> [MessageListItem] {
         let messages = try await self.usecase.fetchReceiveLetter(roomId: roomId)
-        return self.insertReportState(type, in: messages)
+        return await self.insertReportState(type, in: messages)
     }
 
     private func loadMessageDetails() {
@@ -155,7 +155,11 @@ extension LetterViewModel {
         self.messageDetails.manitteeId = manitteeId
     }
 
-    private func insertReportState(_ type: MessageType, in messages: [MessageListItemDTO]) -> [MessageListItem] {
-        return messages.map { $0.toMessageListItem(canReport: (type == .received)) }
+    private func insertReportState(_ type: MessageType, in messages: [MessageListItemDTO]) async -> [MessageListItem] {
+        var resultMessages: [MessageListItem] = []
+        for message in messages {
+            resultMessages.append(await message.toMessageListItem(canReport: (type == .received)))
+        }
+        return resultMessages
     }
 }
