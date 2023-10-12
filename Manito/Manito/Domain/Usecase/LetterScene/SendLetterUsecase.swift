@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 protocol SendLetterUsecase {
-    func dispatchLetter(roomId: String, image: Data?, letter: LetterRequestDTO, missionId: String) async throws -> Result<Void, LetterUsecaseError>
+    func dispatchLetter(roomId: String, image: Data?, letter: LetterRequestDTO, missionId: String) async throws -> Int
 }
 
 final class SendLetterUsecaseImpl: SendLetterUsecase {
@@ -26,18 +26,18 @@ final class SendLetterUsecaseImpl: SendLetterUsecase {
 
     // MARK: - Public - func
 
-    func dispatchLetter(roomId: String, image: Data?, letter: LetterRequestDTO, missionId: String) async throws -> Result<Void, LetterUsecaseError> {
+    func dispatchLetter(roomId: String, image: Data?, letter: LetterRequestDTO, missionId: String) async throws -> Int {
         do {
             let statusCode = try await self.repository.dispatchLetter(roomId: roomId,
                                                                       image: image,
                                                                       letter: letter,
                                                                       missionId: missionId)
             switch statusCode {
-            case 200..<300: return .success(())
-            default: return .failure(.failedToSendLetter)
+            case 200..<300: return statusCode
+            default: throw LetterUsecaseError.failedToSendLetter
             }
         } catch {
-            return .failure(.failedToSendLetter)
+            throw LetterUsecaseError.failedToSendLetter
         }
     }
 }
