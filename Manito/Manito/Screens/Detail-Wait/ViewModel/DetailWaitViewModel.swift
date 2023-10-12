@@ -13,12 +13,6 @@ final class DetailWaitViewModel {
     typealias EditRoomInformation = (roomInformation: RoomInfo, mode: DetailEditView.EditMode)
     typealias PassedStartDateAndIsOwner = (passStartDate: Bool, isOwner: Bool)
     
-    // MARK: - property
-    
-    let roomId: String
-    private var cancellable = Set<AnyCancellable>()
-    private let usecase: DetailWaitUseCase
-    
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let codeCopyButtonDidTap: AnyPublisher<Void, Never>
@@ -59,6 +53,21 @@ final class DetailWaitViewModel {
         let invitedCodeView: AnyPublisher<RoomInfo, Error>
         let changeOutput: AnyPublisher<RoomInfo, Error>
     }
+    
+    // MARK: - property
+    
+    let roomId: String
+    private var cancellable = Set<AnyCancellable>()
+    private let usecase: DetailWaitUseCase
+    
+    // MARK: - init
+    
+    init(roomId: String, usecase: DetailWaitUseCase) {
+        self.roomId = roomId
+        self.usecase = usecase
+    }
+    
+    // MARK: - func
     
     func transform(_ input: Input) -> Output {
         let viewDidLoad = input.viewDidLoad
@@ -134,15 +143,6 @@ final class DetailWaitViewModel {
             changeOutput: changeButtonOutput
         )
     }
-    
-    // MARK: - init
-    
-    init(roomId: String, usecase: DetailWaitUseCase) {
-        self.roomId = roomId
-        self.usecase = usecase
-    }
-    
-    // MARK: - func
     
     func makeRoomInformation() -> RoomInfo {
         return self.usecase.roomInformation
