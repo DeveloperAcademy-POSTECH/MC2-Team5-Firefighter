@@ -264,7 +264,7 @@ final class MainViewController: UIViewController, BaseViewControllerType {
         switch status {
         case .PRE:
             guard let index = index else { return }
-            let viewModel = DetailWaitViewModel(usecase: DetailWaitUseCaseImpl(roomIndex: index, repository: DetailRoomRepositoryImpl()))
+            let viewModel = DetailWaitViewModel(roomId: index.description, usecase: DetailWaitUseCaseImpl(repository: DetailRoomRepositoryImpl()))
             let viewController = DetailWaitViewController(viewModel: viewModel)
             
             self.navigationController?.pushViewController(viewController, animated: true)
