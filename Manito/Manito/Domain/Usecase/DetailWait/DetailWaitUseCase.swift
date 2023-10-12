@@ -69,8 +69,4 @@ final class DetailWaitUseCaseImpl: DetailWaitUseCase {
             throw NetworkError.unknownError
         }
     }
-    
-    func setRoomInformation(_ roomInformation: RoomInfo) {
-        self.roomInformation = roomInformation
-    }
 }
