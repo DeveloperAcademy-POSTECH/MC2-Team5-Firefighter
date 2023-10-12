@@ -28,6 +28,7 @@
 		395402D42AAF0BC5003F3012 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395402D32AAF0BC5003F3012 /* UIViewController+Extension.swift */; };
 		395B5BC22A25E20000CE1420 /* DetailWaitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */; };
 		395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */; };
+		39632A282AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39632A272AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift */; };
 		397A241028BA494100454E4F /* APIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F0287D984900A04A2B /* APIEnvironment.swift */; };
 		39833CFE2AB09A6C009D173A /* Keyboardable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39833CFD2AB09A6C009D173A /* Keyboardable.swift */; };
 		398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */; };
@@ -257,6 +258,7 @@
 		395402D32AAF0BC5003F3012 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModel.swift; sourceTree = "<group>"; };
 		395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModelTest.swift; sourceTree = "<group>"; };
+		39632A272AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitUsecaseTest.swift; sourceTree = "<group>"; };
 		39833CFD2AB09A6C009D173A /* Keyboardable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboardable.swift; sourceTree = "<group>"; };
 		398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
 		398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -505,6 +507,7 @@
 		390E5CAA2AB89B9500EBE52E /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				39632A262AD81F1600A6E61D /* Usecase */,
 				390E5CAB2AB89B9F00EBE52E /* Entity */,
 			);
 			path = Domain;
@@ -567,6 +570,14 @@
 				395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		39632A262AD81F1600A6E61D /* Usecase */ = {
+			isa = PBXGroup;
+			children = (
+				39632A272AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift */,
+			);
+			path = Usecase;
 			sourceTree = "<group>";
 		};
 		398B1CBA2A12415C00DEFCEC /* ManitoTests */ = {
@@ -1807,6 +1818,7 @@
 				390E5CAD2AB89BCE00EBE52E /* RoomListItemTest.swift in Sources */,
 				390E5CB22AB8A70600EBE52E /* Date+ExtensionTest.swift in Sources */,
 				398CED082AB9E48F00F50CBD /* RoomInfoTest.swift in Sources */,
+				39632A282AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift in Sources */,
 				395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */,
 				3904F5062AA37A3C00B6264F /* MockDetailWaitService.swift in Sources */,
 			);
