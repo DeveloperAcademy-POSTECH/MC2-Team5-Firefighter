@@ -116,8 +116,8 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                     // FIXME: - 에러 관련 부분 수정 필요
                     self?.makeAlert(title: "에러 발생")
                 }
-            }, receiveValue: { [weak self] nickname in
-//                self?.presentSelectManittoViewController(nickname: nickname)
+            }, receiveValue: { [weak self] userInfo in
+                self?.presentSelectManittoViewController(nickname: userInfo.nickname)
             })
             .store(in: &self.cancellable)
         
