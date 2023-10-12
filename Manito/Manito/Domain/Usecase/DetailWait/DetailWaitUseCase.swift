@@ -34,6 +34,7 @@ final class DetailWaitUseCaseImpl: DetailWaitUseCase {
     func fetchRoomInformaion(roomId: String) async throws -> RoomInfoDTO {
         do {
             let roomInformation = try await self.repository.fetchRoomInfo(roomId: roomId)
+            self.roomInformation = roomInformation.toRoomInfo()
             return roomInformation
         } catch {
             throw NetworkError.unknownError
