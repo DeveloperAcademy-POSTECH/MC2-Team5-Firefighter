@@ -28,6 +28,7 @@ final class SendLetterUsecaseImpl: SendLetterUsecase {
 
     func dispatchLetter(roomId: String, image: Data?, letter: LetterRequestDTO, missionId: String) async throws -> Int {
         do {
+            guard image != nil, letter.messageContent != nil else { throw LetterUsecaseError.failedToSendLetter }
             let statusCode = try await self.repository.dispatchLetter(roomId: roomId,
                                                                       image: image,
                                                                       letter: letter,
