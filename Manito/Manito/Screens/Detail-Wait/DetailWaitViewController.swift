@@ -92,8 +92,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    // FIXME: - 에러 관련 부분 수정 필요
-                    self?.makeAlert(title: "에러 발생")
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
                 }
             }, receiveValue: { [weak self] room in
                 self?.detailWaitView.updateDetailWaitView(room: room)
@@ -113,8 +112,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    // FIXME: - 에러 관련 부분 수정 필요
-                    self?.makeAlert(title: "에러 발생")
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
                 }
             }, receiveValue: { [weak self] userInfo in
                 self?.presentSelectManittoViewController(nickname: userInfo.nickname)
@@ -135,8 +133,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    // FIXME: - 에러 관련 부분 수정 필요
-                    self?.makeAlert(title: "오류 발생")
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
                 }
             }, receiveValue: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
@@ -149,8 +146,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    // FIXME: - 에러 관련 부분 수정 필요
-                    self?.makeAlert(title: "오류 발생")
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
                 }
             }, receiveValue: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
@@ -163,7 +159,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    self?.makeAlert(title: "오류 발생")
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
                 }
             }, receiveValue: { [weak self] (isPassedStartDate, isAdmin) in
                 self?.showStartDatePassedAlert(isPassedStartDate: isPassedStartDate, isAdmin: isAdmin)
@@ -176,7 +172,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    self?.makeAlert(title: "오류 발생")
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
                 }
             }, receiveValue: { [weak self] roomInfo in
                 self?.showInvitedCodeView(roomInfo: roomInfo)
@@ -189,7 +185,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                 switch result {
                 case .finished: return
                 case .failure(_):
-                    self?.makeAlert(title: "오류 발생")
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
                 }
             }, receiveValue: { [weak self] roomInfo in
                 self?.detailWaitView.updateDetailWaitView(room: roomInfo)
