@@ -15,15 +15,11 @@ final class DetailWaitViewModel {
     
     // MARK: - property
     
-    let roomIndex: Int
-    private let detailWaitService: DetailWaitServicable
+    let roomId: String
     private var cancellable = Set<AnyCancellable>()
-    
-    private let roomInformationSubject = CurrentValueSubject<RoomInfo, NetworkError>(RoomInfo.emptyRoom)
-    private let manitteeNicknameSubject = PassthroughSubject<String, NetworkError>()
-    private let deleteRoomSubject = PassthroughSubject<Void, NetworkError>()
-    private let leaveRoomSubject = PassthroughSubject<Void, NetworkError>()
+    private let usecase: DetailWaitUseCase
     private let changeButtonSubject = PassthroughSubject<Void, NetworkError>()
+    private let roomInfoTestSubject = PassthroughSubject<RoomInfo, NetworkError>()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -33,6 +29,7 @@ final class DetailWaitViewModel {
         let deleteMenuButtonDidTap: AnyPublisher<Void, Never>
         let leaveMenuButtonDidTap: AnyPublisher<Void, Never>
         let changeButtonDidTap: AnyPublisher<Void, Never>
+        let roomDidCreate: AnyPublisher<Void, Never>
         
         init(viewDidLoad: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
              codeCopyButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
@@ -40,7 +37,8 @@ final class DetailWaitViewModel {
              editMenuButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
              deleteMenuButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
              leaveMenuButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
-             changeButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher()) {
+             changeButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
+             roomDidCreate: AnyPublisher<Void, Never> = Empty<Void, Never>().eraseToAnyPublisher()) {
             self.viewDidLoad = viewDidLoad
             self.codeCopyButtonDidTap = codeCopyButtonDidTap
             self.startButtonDidTap = startButtonDidTap
@@ -48,103 +46,117 @@ final class DetailWaitViewModel {
             self.deleteMenuButtonDidTap = deleteMenuButtonDidTap
             self.leaveMenuButtonDidTap = leaveMenuButtonDidTap
             self.changeButtonDidTap = changeButtonDidTap
+            self.roomDidCreate = roomDidCreate
         }
     }
     
     struct Output {
-        let roomInformation: CurrentValueSubject<RoomInfo, NetworkError>
+        let roomInformation: AnyPublisher<RoomInfo, Error>
         let code: AnyPublisher<String, Never>
-        let manitteeNickname: PassthroughSubject<String, NetworkError>
+        let manitteeNickname: AnyPublisher<UserInfo, Error>
         let editRoomInformation: AnyPublisher<EditRoomInformation, Never>
-        let deleteRoom: PassthroughSubject<Void, NetworkError>
-        let leaveRoom: PassthroughSubject<Void, NetworkError>
+        let deleteRoom: AnyPublisher<Int, Error>
+        let leaveRoom: AnyPublisher<Int, Error>
         let passedStartDate: AnyPublisher<PassedStartDateAndIsOwner, Never>
+        let invitedCodeView: PassthroughSubject<RoomInfo, NetworkError>
     }
     
     func transform(_ input: Input) -> Output {
-        input.viewDidLoad
-            .sink(receiveValue: { [weak self] _ in
-                guard let roomId = self?.roomIndex.description else { return }
-                self?.requestWaitRoomInfo(roomId: roomId)
-            })
-            .store(in: &self.cancellable)
+        let viewDidLoad = input.viewDidLoad
+            .asyncMap { [weak self] _ in
+                return try await self?.fetchRoomInformation(roomId: self?.roomId ?? "")
+            }
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
         
         let codeOutput = input.codeCopyButtonDidTap
             .map { [weak self] _ -> String in
                 guard let self else { return "" }
-                return self.makeCode(roomInformation: self.roomInformationSubject.value)
+                return self.makeCode(roomInformation: self.usecase.roomInformation)
             }
             .eraseToAnyPublisher()
         
-        input.startButtonDidTap
-            .sink(receiveValue: { [weak self] _ in
-                guard let roomId = self?.roomIndex.description else { return }
-                self?.requestStartManitto(roomId: roomId)
-            })
-            .store(in: &self.cancellable)
+        let manitteeOutput = input.startButtonDidTap
+            .asyncMap { [weak self] _ in
+                return try await self?.patchStartManitto(roomId: self?.roomId ?? "")
+            }
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
         
         let editRoomInformationOutput = input.editMenuButtonDidTap
             .map { [weak self] _ -> EditRoomInformation in
                 guard let self else { return (RoomInfo.emptyRoom, .information) }
-                return self.makeEditRoomInformation(roomInformation: self.roomInformationSubject.value)
+                return self.makeEditRoomInformation(roomInformation: self.usecase.roomInformation)
             }
             .eraseToAnyPublisher()
         
-        input.deleteMenuButtonDidTap
-            .sink(receiveValue: { [weak self] _ in
-                guard let roomId = self?.roomIndex.description else { return }
-                self?.requestDeleteRoom(roomId: roomId)
-            })
-            .store(in: &self.cancellable)
+        let deleteOutput = input.deleteMenuButtonDidTap
+            .asyncMap { [weak self] _ in
+                return try await self?.deleteRoom(roomId: self?.roomId ?? "")
+            }
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
         
-        input.leaveMenuButtonDidTap
-            .sink(receiveValue: { [weak self] _ in
-                guard let roomId = self?.roomIndex.description else { return }
-                self?.requestDeleteLeaveRoom(roomId: roomId)
-            })
-            .store(in: &self.cancellable)
+        let leaveRoomOutput = input.leaveMenuButtonDidTap
+            .asyncMap { [weak self] _ in
+                return try await self?.deleteLeaveRoom(roomId: self?.roomId ?? "")
+            }
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
         
         let passedStartDateOutput = input.viewDidLoad
             .delay(for: 0.5, scheduler: DispatchQueue.main)
             .map { [weak self] _ -> PassedStartDateAndIsOwner in
                 guard let self else { return (false, false) }
-                return self.makeIsAdmin(roomInformation: self.roomInformationSubject.value)
+                return self.makeIsAdmin(roomInformation: self.usecase.roomInformation)
             }
             .eraseToAnyPublisher()
         
         input.changeButtonDidTap
             .sink(receiveValue: { [weak self] _ in
-                guard let roomId = self?.roomIndex.description else { return }
-                self?.requestWaitRoomInfo(roomId: roomId)
+                guard let roomId = self?.roomId else { return }
+                //                self?.requestWaitRoomInfo(roomId: roomId)
             })
             .store(in: &self.cancellable)
-                
+        
+        input.roomDidCreate
+            .sink(receiveValue: { [weak self] _ in
+                guard let roomId = self?.roomId else { return }
+                //                self?.requestWaitRoomInfoTest(roomId: roomId)
+            })
+            .store(in: &self.cancellable)
+        
         return Output(
-            roomInformation: self.roomInformationSubject,
+            roomInformation: viewDidLoad,
             code: codeOutput,
-            manitteeNickname: self.manitteeNicknameSubject,
+            manitteeNickname: manitteeOutput,
             editRoomInformation: editRoomInformationOutput,
-            deleteRoom: self.deleteRoomSubject,
-            leaveRoom: self.leaveRoomSubject,
-            passedStartDate: passedStartDateOutput
+            deleteRoom: deleteOutput,
+            leaveRoom: leaveRoomOutput,
+            passedStartDate: passedStartDateOutput,
+            invitedCodeView: self.roomInfoTestSubject
         )
     }
     
     // MARK: - init
     
-    init(roomIndex: Int, detailWaitService: DetailWaitServicable) {
-        self.roomIndex = roomIndex
-        self.detailWaitService = detailWaitService
+    init(roomId: String, usecase: DetailWaitUseCase) {
+        self.roomId = roomId
+        self.usecase = usecase
     }
     
     // MARK: - func
     
     func makeRoomInformation() -> RoomInfo {
-        return self.roomInformationSubject.value
+        return self.usecase.roomInformation
     }
     
-    func makeCode(roomInformation: RoomInfo) -> String {
+    private func makeCode(roomInformation: RoomInfo) -> String {
         return roomInformation.invitation.code
+    }
+    
+    private func manitteNickname() -> String {
+        return self.usecase.roomInformation.manittee.nickname
     }
     
     func makeEditRoomInformation(roomInformation: RoomInfo) -> EditRoomInformation {
@@ -157,68 +169,23 @@ final class DetailWaitViewModel {
         return (roomInformation.roomInformation.isStartDatePast, roomInformation.admin)
     }
     
-    func setRoomInformation(room: RoomInfo) {
-        self.roomInformationSubject.send(room)
+    private func fetchRoomInformation(roomId: String) async throws -> RoomInfo {
+        let roomInformation = try await self.usecase.fetchRoomInformaion(roomId: roomId)
+        return roomInformation.toRoomInfo()
     }
     
-    // MARK: - network
-    
-    private func requestWaitRoomInfo(roomId: String) {
-        Task {
-            do {
-                let room = try await self.detailWaitService.fetchWaitingRoomInfo(roomId: roomId)
-                self.roomInformationSubject.send(room.toRoomInfo())
-            } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.roomInformationSubject.send(completion: .failure(error))
-            }
-        }
+    private func patchStartManitto(roomId: String) async throws -> UserInfo {
+        let userInfo = try await self.usecase.patchStartManitto(roomId: roomId)
+        return userInfo.toUserInfo()
     }
     
-    private func requestStartManitto(roomId: String) {
-        Task {
-            do {
-                let manittee = try await self.detailWaitService.patchStartManitto(roomId: roomId)
-                guard let nickname = manittee.nickname else { return }
-                self.manitteeNicknameSubject.send(nickname)
-            } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.manitteeNicknameSubject.send(completion: .failure(error))
-            }
-        }
+    private func deleteRoom(roomId: String) async throws -> Int {
+        let statusCode = try await self.usecase.deleteRoom(roomId: roomId)
+        return statusCode
     }
     
-    private func requestDeleteRoom(roomId: String) {
-        Task {
-            do {
-                let statusCode = try await self.detailWaitService.deleteRoom(roomId: roomId)
-                switch statusCode {
-                case 200..<300:
-                    self.deleteRoomSubject.send(())
-                default :
-                    self.deleteRoomSubject.send(completion: .failure(.unknownError))
-                }
-            } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.deleteRoomSubject.send(completion: .failure(error))
-            }
-        }
-    }
-    
-    private func requestDeleteLeaveRoom(roomId: String) {
-        Task {
-            do {
-                let statusCode = try await self.detailWaitService.deleteLeaveRoom(roomId: roomId)
-                switch statusCode {
-                case 200..<300:
-                    self.leaveRoomSubject.send(())
-                default:
-                    self.leaveRoomSubject.send(completion: .failure(.unknownError))
-                }
-            } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.leaveRoomSubject.send(completion: .failure(error))
-            }
-        }
+    private func deleteLeaveRoom(roomId: String) async throws -> Int {
+        let statusCode = try await self.usecase.deleteLeaveRoom(roomId: roomId)
+        return statusCode
     }
 }
