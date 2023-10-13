@@ -97,6 +97,7 @@
 		B5706BF429B710FC0093D198 /* LetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BF329B710FC0093D198 /* LetterView.swift */; };
 		B5706BF629B9D4650093D198 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BF529B9D4650093D198 /* GuideView.swift */; };
 		B57D574E2AD9248500626BCD /* MailComposeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57D574D2AD9248500626BCD /* MailComposeManager.swift */; };
+		B57D57692AD97DAE00626BCD /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57D57682AD97DAE00626BCD /* SplashView.swift */; };
 		B5A085DF2A972D2A00C8A98D /* LetterRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */; };
 		B5A085E12A972D7900C8A98D /* LoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */; };
 		B5A085E32A972DDC00C8A98D /* EditedMissionRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085E22A972DDC00C8A98D /* EditedMissionRequestDTO.swift */; };
@@ -323,6 +324,7 @@
 		B5706BF529B9D4650093D198 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		B57CB3032A763C1600474042 /* MTNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MTNetwork; sourceTree = "<group>"; };
 		B57D574D2AD9248500626BCD /* MailComposeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposeManager.swift; sourceTree = "<group>"; };
+		B57D57682AD97DAE00626BCD /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterRequestDTO.swift; sourceTree = "<group>"; };
 		B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDTO.swift; sourceTree = "<group>"; };
 		B5A085E22A972DDC00C8A98D /* EditedMissionRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditedMissionRequestDTO.swift; sourceTree = "<group>"; };
@@ -654,14 +656,6 @@
 			path = UIComponent;
 			sourceTree = "<group>";
 		};
-		B50B1B28285AB7550080992C /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				B50B1B29285AB7650080992C /* SplashViewController.swift */,
-			);
-			path = Splash;
-			sourceTree = "<group>";
-		};
 		B50B1B3F285B047C0080992C /* Interaction */ = {
 			isa = PBXGroup;
 			children = (
@@ -897,6 +891,31 @@
 			path = MailComposeManager;
 			sourceTree = "<group>";
 		};
+		B57D57652AD97D0200626BCD /* SplashScene */ = {
+			isa = PBXGroup;
+			children = (
+				B57D57672AD97D3A00626BCD /* View */,
+				B57D57662AD97D1A00626BCD /* ViewController */,
+			);
+			path = SplashScene;
+			sourceTree = "<group>";
+		};
+		B57D57662AD97D1A00626BCD /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B50B1B29285AB7650080992C /* SplashViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		B57D57672AD97D3A00626BCD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B57D57682AD97DAE00626BCD /* SplashView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		B58CA2FC2A9CC29A00977592 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -910,6 +929,7 @@
 		B58CA3052A9CC37000977592 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				B57D57652AD97D0200626BCD /* SplashScene */,
 				B58CA3062A9CC37B00977592 /* LetterScene */,
 			);
 			path = Scene;
@@ -1245,7 +1265,6 @@
 			children = (
 				CBBFF775287AE034006A5964 /* SettingDeveloperInfo */,
 				D724AF5B287088110003F280 /* Setting */,
-				B50B1B28285AB7550080992C /* Splash */,
 				39C957CC2876E2BE00A04A2B /* Login */,
 				7E0C5C342855B1EF00F698D1 /* NickName */,
 				B5F524E628519B0A00614FF7 /* Main */,
@@ -1903,6 +1922,7 @@
 				D7B83FD62A95A48700BFD8FF /* CreateRoomService.swift in Sources */,
 				391B3003286198C200421F1D /* SizeLiteral.swift in Sources */,
 				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
+				B57D57692AD97DAE00626BCD /* SplashView.swift in Sources */,
 				D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+ClassName.swift in Sources */,
 				3904F4FA2AA36F4F00B6264F /* UserInfo.swift in Sources */,
