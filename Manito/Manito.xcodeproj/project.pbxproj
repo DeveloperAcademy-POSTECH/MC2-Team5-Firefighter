@@ -100,6 +100,7 @@
 		B577E4FD2ABFDE6F003CC102 /* SendLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E4FC2ABFDE6F003CC102 /* SendLetterView.swift */; };
 		B577E5002AC373CA003CC102 /* PhotoPickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E4FF2AC373CA003CC102 /* PhotoPickerManager.swift */; };
 		B577E5022AC37998003CC102 /* PHPickerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B577E5012AC37998003CC102 /* PHPickerError.swift */; };
+		B57D574E2AD9248500626BCD /* MailComposeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57D574D2AD9248500626BCD /* MailComposeManager.swift */; };
 		B5A085DF2A972D2A00C8A98D /* LetterRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */; };
 		B5A085E12A972D7900C8A98D /* LoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */; };
 		B5A085E32A972DDC00C8A98D /* EditedMissionRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085E22A972DDC00C8A98D /* EditedMissionRequestDTO.swift */; };
@@ -143,7 +144,6 @@
 		B5EDF4AE2AB078180086230C /* LocalizationScript.py in Resources */ = {isa = PBXBuildFile; fileRef = B5EDF4AD2AB078180086230C /* LocalizationScript.py */; };
 		B5F31BB028BE1CA700F61D0F /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */; };
 		B5F31BB228BE1CD700F61D0F /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */; };
-		B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */; };
 		B5F3F1062AA3516200FA1A32 /* RoomStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F3F1052AA3516200FA1A32 /* RoomStatus.swift */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
@@ -204,7 +204,6 @@
 		D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */; };
 		D7C4A1AB2A0D1AA400C3AE4C /* ParticipateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */; };
 		D7C4A1AD2A0DD8FA00C3AE4C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */; };
-		D7C4A1B02A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -331,6 +330,7 @@
 		B577E4FF2AC373CA003CC102 /* PhotoPickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerManager.swift; sourceTree = "<group>"; };
 		B577E5012AC37998003CC102 /* PHPickerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPickerError.swift; sourceTree = "<group>"; };
 		B57CB3032A763C1600474042 /* MTNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MTNetwork; sourceTree = "<group>"; };
+		B57D574D2AD9248500626BCD /* MailComposeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposeManager.swift; sourceTree = "<group>"; };
 		B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterRequestDTO.swift; sourceTree = "<group>"; };
 		B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDTO.swift; sourceTree = "<group>"; };
 		B5A085E22A972DDC00C8A98D /* EditedMissionRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditedMissionRequestDTO.swift; sourceTree = "<group>"; };
@@ -374,7 +374,6 @@
 		B5EDF4AD2AB078180086230C /* LocalizationScript.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = LocalizationScript.py; sourceTree = "<group>"; };
 		B5F31BAF28BE1CA700F61D0F /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B5F31BB128BE1CD700F61D0F /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
-		B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LetterViewController+MailCompose.swift"; sourceTree = "<group>"; };
 		B5F3F1052AA3516200FA1A32 /* RoomStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStatus.swift; sourceTree = "<group>"; };
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -436,7 +435,6 @@
 		D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterView.swift; sourceTree = "<group>"; };
 		D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomView.swift; sourceTree = "<group>"; };
 		D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingViewController+MailComposeViewControllerDelegate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -694,6 +692,7 @@
 		B53A35B22A9630FE00B720BC /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				B57D574C2AD9244600626BCD /* MailComposeManager */,
 				B577E4FE2AC373BB003CC102 /* PhotoPickerManager */,
 				B5C7FC032AA8876700862021 /* ImageCacheManager */,
 				B53A35B32A96310700B720BC /* UserDefaultService */,
@@ -915,6 +914,14 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
+		B57D574C2AD9244600626BCD /* MailComposeManager */ = {
+			isa = PBXGroup;
+			children = (
+				B57D574D2AD9248500626BCD /* MailComposeManager.swift */,
+			);
+			path = MailComposeManager;
+			sourceTree = "<group>";
+		};
 		B58CA2FC2A9CC29A00977592 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1074,7 +1081,6 @@
 		B5B3C1592A41D69500AABD6F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				B5F31C4F28BF922E00F61D0F /* LetterViewController+MailCompose.swift */,
 				39F1C12D28D756E600585B83 /* LetterImageViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1480,7 +1486,6 @@
 			isa = PBXGroup;
 			children = (
 				D724AF5C287088310003F280 /* SettingViewController.swift */,
-				D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1825,6 +1830,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B57D574E2AD9248500626BCD /* MailComposeManager.swift in Sources */,
 				D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */,
 				CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */,
 				333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */,
@@ -1928,7 +1934,6 @@
 				B5B3C15D2A41D6EB00AABD6F /* LetterViewModel.swift in Sources */,
 				B5A085FC2A97470400C8A98D /* RoomInfo.swift in Sources */,
 				CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */,
-				B5F31C5028BF922E00F61D0F /* LetterViewController+MailCompose.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
 				D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomService.swift in Sources */,
 				D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */,
@@ -1951,7 +1956,6 @@
 				B55469EB2AAC3B5F004D9FE6 /* UIView+Animation.swift in Sources */,
 				B53A35B72A963F2100B720BC /* DetailRoomEndPoint.swift in Sources */,
 				B5546A0B2AADCB13004D9FE6 /* LetterUsecaseError.swift in Sources */,
-				D7C4A1B02A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift in Sources */,
 				3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */,
 				B5A085EE2A9731F000C8A98D /* DailyMissionDTO.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
