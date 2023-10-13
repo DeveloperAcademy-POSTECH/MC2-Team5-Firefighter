@@ -9,41 +9,27 @@ import UIKit
 
 import Gifu
 
-final class SplashViewController: UIViewController, BaseViewControllerType {
+final class SplashViewController: UIViewController {
     
     // MARK: - ui component
     
-    @IBOutlet weak var gifImageView: GIFImageView!
+    private let splashView: SplashView = SplashView()
     
     // MARK: - property
     
     private let isLogin: Bool = UserDefaultStorage.isLogin
     private let nickname: String? = UserDefaultStorage.nickname
     private let isSetFcmToken: Bool = UserDefaultStorage.isSetFcmToken
-    
-    // MARK: - init
-    
-    deinit {
-        print("\(#file) is dead")
-    }
 
     // MARK: - life cycle
+    
+    override func loadView() {
+        self.view = self.splashView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.baseViewDidLoad()
-        self.setupGifImage()
         self.presentViewControllerAfterDelay()
-    }
-    
-    // MARK: - base func
-
-    func setupLayout() {
-        // FIXME: - 스토리보드를 코드 베이스로 바꿔야 하는 화면입니다.
-    }
-    
-    func configureUI() {
-        self.view.backgroundColor = .backgroundGrey
     }
 
     // MARK: - func
@@ -70,24 +56,18 @@ final class SplashViewController: UIViewController, BaseViewControllerType {
         navigationController.modalTransitionStyle = .crossDissolve
         self.present(navigationController, animated: true)
     }
-
-    private func setupGifImage() {
-        DispatchQueue.main.async {
-            self.gifImageView.animate(withGIFNamed: GIFSet.logo)
-        }
-    }
     
     private func presentViewControllerAfterDelay() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            if !self.isSetFcmToken {
-                self.presentLoginViewConroller()
-            } else if self.isLogin {
-                self.presentMainViewController()
-            } else if self.isLogin && self.nickname == "" {
-                self.presentNicknameSettingViewController()
-            } else {
-                self.presentLoginViewConroller()
-            }
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//            if !self.isSetFcmToken {
+//                self.presentLoginViewConroller()
+//            } else if self.isLogin {
+//                self.presentMainViewController()
+//            } else if self.isLogin && self.nickname == "" {
+//                self.presentNicknameSettingViewController()
+//            } else {
+//                self.presentLoginViewConroller()
+//            }
+//        }
     }
 }

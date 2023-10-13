@@ -7,15 +7,22 @@
 
 import UIKit
 
+import Gifu
 import SnapKit
 
 final class SplashView: UIView, BaseViewType {
+    
+    // MARK: - ui component
+    
+    private let logoImageView: UIImageView = UIImageView(image: UIImage.Image.textLogo)
+    private let logoGIFImageView: GIFImageView = GIFImageView()
 
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
+        self.setupGifImage()
     }
 
     @available(*, unavailable)
@@ -23,13 +30,34 @@ final class SplashView: UIView, BaseViewType {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - func
+    // MARK: - base func
     
     func setupLayout() {
-        <#code#>
+        self.addSubview(self.logoImageView)
+        self.logoImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(30)
+            $0.width.equalTo(196)
+            $0.height.equalTo(48)
+        }
+        
+        self.addSubview(self.logoGIFImageView)
+        self.logoGIFImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(self.logoImageView.snp.top).offset(-3)
+            $0.width.height.equalTo(130)
+        }
     }
     
     func configureUI() {
-        <#code#>
+        self.backgroundColor = .backgroundGrey
+    }
+    
+    // MARK: - func
+    
+    private func setupGifImage() {
+        DispatchQueue.main.async {
+            self.logoGIFImageView.animate(withGIFNamed: GIFSet.logo)
+        }
     }
 }
