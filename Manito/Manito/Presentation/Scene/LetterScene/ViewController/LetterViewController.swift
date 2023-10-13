@@ -22,6 +22,8 @@ final class LetterViewController: UIViewController, Navigationable {
     private var snapShot: NSDiffableDataSourceSnapshot<Section, MessageListItem>!
 
     // MARK: - property
+    
+    private let mailManager: MailComposeManager = MailComposeManager()
 
     private let segmentValueSubject: PassthroughSubject<Int, Never> = PassthroughSubject()
     private let reportSubject: PassthroughSubject<String, Never> = PassthroughSubject()
@@ -55,6 +57,7 @@ final class LetterViewController: UIViewController, Navigationable {
         super.viewDidLoad()
         self.configureDataSource()
         self.bindViewModel()
+        self.setupMailManager()
         self.setupNavigation()
     }
 
@@ -66,6 +69,12 @@ final class LetterViewController: UIViewController, Navigationable {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.letterView.removeGuideView()
+    }
+    
+    // MARK: - func
+    
+    private func setupMailManager() {
+        self.mailManager.viewController = self
     }
 
     // MARK: - func - bind
@@ -120,7 +129,10 @@ final class LetterViewController: UIViewController, Navigationable {
 
         output.reportDetails
             .sink(receiveValue: { [weak self] details in
-                self?.sendReportMail(userNickname: details.nickname, content: details.content)
+                let content = TextLiteral.Mail.reportMessage.localized(with: details.nickname, 
+                                                                       details.content,
+                                                                       Date().description)
+                self?.sendReportMail(content: content)
             })
             .store(in: &self.cancelBag)
 
@@ -180,6 +192,11 @@ extension LetterViewController {
     private func handleMessageList(_ messages: [MessageListItem]) {
         self.reloadMessageList(messages)
         self.letterView.updateEmptyAreaStatus(to: !messages.isEmpty)
+    }
+    
+    private func sendReportMail(content: String) {
+        let title = TextLiteral.Mail.reportTitle.localized()
+        self.mailManager.sendMail(title: title, content: content)
     }
 
     private func updateLetterViewEmptyArea(with index: Int) {
