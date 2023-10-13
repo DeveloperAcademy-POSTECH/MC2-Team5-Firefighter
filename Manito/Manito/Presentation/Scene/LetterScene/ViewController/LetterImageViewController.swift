@@ -66,34 +66,8 @@ final class LetterImageViewController: UIViewController, Navigationable {
         
         self.letterImageView.downloadButtonPublisher
             .sink(receiveValue: { image in
-                self.uploadImage(for: image) { [weak self] result in
-                    switch result {
-                    case .success(let description):
-                        self?.makeAlert(title: description.title,
-                                        message: description.message)
-                    case .failure(let error):
-                        self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                                        message: error.errorDescription)
-                    }
-                }
+                
             })
             .store(in: &self.cancelBag)
-    }
-    
-    private func uploadImage(for image: UIImage?, completionHandler: @escaping ((Result<(title: String, message: String), LetterImageError>) -> ())) {
-        guard let image else { completionHandler(.failure(.invalidImage)); return }
-
-        PHPhotoLibrary.shared().performChanges({
-            PHAssetChangeRequest.creationRequestForAsset(from: image)
-        }) { (success, error) in
-            DispatchQueue.main.async {
-                if success {
-                    completionHandler(.success((title: TextLiteral.Letter.saveAlertTitle.localized(),
-                                                message: TextLiteral.Letter.saveAlertMessage.localized())))
-                } else {
-                    completionHandler(.failure(.invalidPhotoLibrary))
-                }
-            }
-        }
     }
 }
