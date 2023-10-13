@@ -11,14 +11,6 @@ final class MailComposeManager: NSObject {
     
     // MARK: - property
     
-    private var defaultMailController: MFMailComposeViewController {
-        let controller = MFMailComposeViewController()
-        let aenittoEmail = TextLiteral.Mail.aenittoEmail.localized()
-        controller.mailComposeDelegate = self
-        controller.setToRecipients([aenittoEmail])
-        return controller
-    }
-    
     weak var viewController: UIViewController?
     
     // MARK: - func
@@ -34,9 +26,13 @@ final class MailComposeManager: NSObject {
     // MARK: - Private - func
     
     private func showMail(title: String, content: String) {
-        self.defaultMailController.setSubject(title)
-        self.defaultMailController.setMessageBody(content, isHTML: false)
-        self.viewController?.present(self.defaultMailController, animated: true)
+        let controller = MFMailComposeViewController()
+        let aenittoEmail = TextLiteral.Mail.aenittoEmail.localized()
+        controller.mailComposeDelegate = self
+        controller.setToRecipients([aenittoEmail])
+        controller.setSubject(title)
+        controller.setMessageBody(content, isHTML: false)
+        self.viewController?.present(controller, animated: true)
     }
     
     private func showErrorAlert() {
