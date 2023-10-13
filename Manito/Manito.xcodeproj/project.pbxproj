@@ -200,7 +200,6 @@
 		D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */; };
 		D7C4A1AB2A0D1AA400C3AE4C /* ParticipateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */; };
 		D7C4A1AD2A0DD8FA00C3AE4C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */; };
-		D7C4A1B02A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -428,7 +427,6 @@
 		D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterView.swift; sourceTree = "<group>"; };
 		D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomView.swift; sourceTree = "<group>"; };
 		D7C4A1AC2A0DD8FA00C3AE4C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingViewController+MailComposeViewControllerDelegate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1468,7 +1466,6 @@
 			isa = PBXGroup;
 			children = (
 				D724AF5C287088310003F280 /* SettingViewController.swift */,
-				D7C4A1AF2A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1937,7 +1934,6 @@
 				B55469EB2AAC3B5F004D9FE6 /* UIView+Animation.swift in Sources */,
 				B53A35B72A963F2100B720BC /* DetailRoomEndPoint.swift in Sources */,
 				B5546A0B2AADCB13004D9FE6 /* LetterUsecaseError.swift in Sources */,
-				D7C4A1B02A0E522800C3AE4C /* SettingViewController+MailComposeViewControllerDelegate.swift in Sources */,
 				3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */,
 				B5A085EE2A9731F000C8A98D /* DailyMissionDTO.swift in Sources */,
 				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
