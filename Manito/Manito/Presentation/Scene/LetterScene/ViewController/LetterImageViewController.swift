@@ -6,7 +6,6 @@
 //
 
 import Combine
-import Photos
 import UIKit
 
 final class LetterImageViewController: UIViewController, Navigationable {
