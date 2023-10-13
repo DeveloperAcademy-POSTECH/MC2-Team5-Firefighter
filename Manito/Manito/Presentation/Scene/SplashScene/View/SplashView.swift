@@ -15,7 +15,7 @@ final class SplashView: UIView, BaseViewType {
     // MARK: - ui component
     
     private let logoImageView: UIImageView = UIImageView(image: UIImage.Image.textLogo)
-    private let logoGIFImageView: GIFImageView = GIFImageView()
+    private let logoGIFImageView: GIFImageView = GIFImageView(image: UIImage(named: GIFSet.logo))
 
     // MARK: - init
 
@@ -38,7 +38,7 @@ final class SplashView: UIView, BaseViewType {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(30)
             $0.width.equalTo(196)
-            $0.height.equalTo(48)
+            $0.height.equalTo(44)
         }
         
         self.addSubview(self.logoGIFImageView)

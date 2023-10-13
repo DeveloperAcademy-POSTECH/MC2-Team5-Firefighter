@@ -58,16 +58,16 @@ final class SplashViewController: UIViewController {
     }
     
     private func presentViewControllerAfterDelay() {
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-//            if !self.isSetFcmToken {
-//                self.presentLoginViewConroller()
-//            } else if self.isLogin {
-//                self.presentMainViewController()
-//            } else if self.isLogin && self.nickname == "" {
-//                self.presentNicknameSettingViewController()
-//            } else {
-//                self.presentLoginViewConroller()
-//            }
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            if !self.isSetFcmToken {
+                self.presentLoginViewConroller()
+            } else if self.isLogin {
+                self.presentMainViewController()
+            } else if self.isLogin && self.nickname == "" {
+                self.presentNicknameSettingViewController()
+            } else {
+                self.presentLoginViewConroller()
+            }
+        }
     }
 }
