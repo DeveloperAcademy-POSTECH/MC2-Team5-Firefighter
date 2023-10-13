@@ -96,6 +96,7 @@
 		B5706BE129ADC20A0093D198 /* CreateLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BE029ADC20A0093D198 /* CreateLetterView.swift */; };
 		B5706BF429B710FC0093D198 /* LetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BF329B710FC0093D198 /* LetterView.swift */; };
 		B5706BF629B9D4650093D198 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5706BF529B9D4650093D198 /* GuideView.swift */; };
+		B57D574E2AD9248500626BCD /* MailComposeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57D574D2AD9248500626BCD /* MailComposeManager.swift */; };
 		B5A085DF2A972D2A00C8A98D /* LetterRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */; };
 		B5A085E12A972D7900C8A98D /* LoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */; };
 		B5A085E32A972DDC00C8A98D /* EditedMissionRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A085E22A972DDC00C8A98D /* EditedMissionRequestDTO.swift */; };
@@ -323,6 +324,7 @@
 		B5706BF329B710FC0093D198 /* LetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterView.swift; sourceTree = "<group>"; };
 		B5706BF529B9D4650093D198 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		B57CB3032A763C1600474042 /* MTNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MTNetwork; sourceTree = "<group>"; };
+		B57D574D2AD9248500626BCD /* MailComposeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposeManager.swift; sourceTree = "<group>"; };
 		B5A085DE2A972D2A00C8A98D /* LetterRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterRequestDTO.swift; sourceTree = "<group>"; };
 		B5A085E02A972D7900C8A98D /* LoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDTO.swift; sourceTree = "<group>"; };
 		B5A085E22A972DDC00C8A98D /* EditedMissionRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditedMissionRequestDTO.swift; sourceTree = "<group>"; };
@@ -686,6 +688,7 @@
 		B53A35B22A9630FE00B720BC /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				B57D574C2AD9244600626BCD /* MailComposeManager */,
 				B5C7FC032AA8876700862021 /* ImageCacheManager */,
 				B53A35B32A96310700B720BC /* UserDefaultService */,
 			);
@@ -888,6 +891,14 @@
 				B57CB3032A763C1600474042 /* MTNetwork */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		B57D574C2AD9244600626BCD /* MailComposeManager */ = {
+			isa = PBXGroup;
+			children = (
+				B57D574D2AD9248500626BCD /* MailComposeManager.swift */,
+			);
+			path = MailComposeManager;
 			sourceTree = "<group>";
 		};
 		B58CA2FC2A9CC29A00977592 /* Presentation */ = {
@@ -1805,6 +1816,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B57D574E2AD9248500626BCD /* MailComposeManager.swift in Sources */,
 				D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */,
 				CBA4D7A62856D48C0018BDC2 /* RoomStateView.swift in Sources */,
 				333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */,
