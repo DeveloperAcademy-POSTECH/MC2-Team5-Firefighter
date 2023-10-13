@@ -782,15 +782,6 @@
 			path = Dev;
 			sourceTree = "<group>";
 		};
-		B54741DE29A3A4BA00B75BA3 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				B5B3C1592A41D69500AABD6F /* ViewControllers */,
-				B5B3C1582A41D67F00AABD6F /* Views */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		B54B72A12AA3616600D60E4B /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -955,6 +946,7 @@
 			children = (
 				B5F5250D2851A07700614FF7 /* LetterViewController.swift */,
 				B577E4F32ABE0B8A003CC102 /* SendLetterViewController.swift */,
+				39F1C12D28D756E600585B83 /* LetterImageViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -966,6 +958,7 @@
 				B58CA3092A9CC3D700977592 /* UIComponent */,
 				B5706BF329B710FC0093D198 /* LetterView.swift */,
 				B577E4FC2ABFDE6F003CC102 /* SendLetterView.swift */,
+				B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1068,22 +1061,6 @@
 				B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		B5B3C1582A41D67F00AABD6F /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		B5B3C1592A41D69500AABD6F /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				39F1C12D28D756E600585B83 /* LetterImageViewController.swift */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		B5C0BF842AAEE65500E9017C /* GIFs */ = {
@@ -1282,7 +1259,6 @@
 				B50B1B3F285B047C0080992C /* Interaction */,
 				CBA15C91285CE1880051EDE2 /* ChooseCharacter */,
 				CB637A3828595BE400FF1240 /* ParticipateRoom */,
-				B5F524EA28519B4B00614FF7 /* Letter */,
 				B5F524E928519B3F00614FF7 /* Detail-Ing */,
 				B5F524E828519B2F00614FF7 /* Detail-Wait */,
 				B5F524E728519B0E00614FF7 /* InvitedCode */,
@@ -1346,14 +1322,6 @@
 				39EE956E2A404A3800AF6857 /* MissionEditViewController.swift */,
 			);
 			path = "Detail-Ing";
-			sourceTree = "<group>";
-		};
-		B5F524EA28519B4B00614FF7 /* Letter */ = {
-			isa = PBXGroup;
-			children = (
-				B54741DE29A3A4BA00B75BA3 /* Views */,
-			);
-			path = Letter;
 			sourceTree = "<group>";
 		};
 		B5F524F928519BD600614FF7 /* Storyboards */ = {
