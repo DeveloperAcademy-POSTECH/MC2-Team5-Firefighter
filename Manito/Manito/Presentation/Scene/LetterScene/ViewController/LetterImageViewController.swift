@@ -17,6 +17,8 @@ final class LetterImageViewController: UIViewController, Navigationable {
 
     // MARK: - property
     
+    private let photoPickerManager = PhotoPickerManager()
+    
     private var cancelBag: Set<AnyCancellable> = Set()
 
     private let imageUrl: String
@@ -42,6 +44,7 @@ final class LetterImageViewController: UIViewController, Navigationable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigation()
+        self.setupPhotoPickerManager()
         self.bindUI()
     }
 
@@ -57,6 +60,10 @@ final class LetterImageViewController: UIViewController, Navigationable {
         self.letterImageView.configureImage(self.imageUrl)
     }
     
+    private func setupPhotoPickerManager() {
+        self.photoPickerManager.viewController = self
+    }
+    
     private func bindUI() {
         self.letterImageView.closeButtonPublisher
             .sink(receiveValue: { [weak self] in
@@ -65,8 +72,8 @@ final class LetterImageViewController: UIViewController, Navigationable {
             .store(in: &self.cancelBag)
         
         self.letterImageView.downloadButtonPublisher
-            .sink(receiveValue: { image in
-                
+            .sink(receiveValue: { [weak self] image in
+                self?.photoPickerManager.savePhoto(image: image)
             })
             .store(in: &self.cancelBag)
     }
