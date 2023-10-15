@@ -58,7 +58,7 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     }
     
     private func transformedOutput() -> ChooseCharacterViewModel.Output {
-        let input = ChooseCharacterViewModel.Input(joingButtonTapPublisher: self.chooseCharacterView.joinButtonTapPublisher.eraseToAnyPublisher())
+        let input = ChooseCharacterViewModel.Input(joinButtonTapPublisher: self.chooseCharacterView.joinButtonTapPublisher.eraseToAnyPublisher())
         return self.viewModel.transform(from: input)
     }
     
