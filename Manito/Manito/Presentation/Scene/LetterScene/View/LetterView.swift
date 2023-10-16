@@ -131,7 +131,9 @@ final class LetterView: UIView, BaseViewType {
 }
 
 extension LetterView {
+
     // MARK: - base func
+
     func setupLayout() {
         self.addSubview(self.wholeStackView)
         self.wholeStackView.snp.makeConstraints {
@@ -160,7 +162,7 @@ extension LetterView {
         self.backgroundColor = .backgroundGrey
     }
 
-    // MARK: - private func
+    // MARK: - Private - func
 
     private func bindUI() {
         self.listCollectionView.scrollPublisher
