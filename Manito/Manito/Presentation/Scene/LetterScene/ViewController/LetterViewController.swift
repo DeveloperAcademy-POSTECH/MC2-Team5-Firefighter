@@ -9,6 +9,8 @@ import Combine
 import UIKit
 
 final class LetterViewController: UIViewController, Navigationable {
+    
+    typealias MessageDetail = (roomId: String, mission: String, missionId: String, manitteeId: String)
 
     enum Section: CaseIterable {
         case main
@@ -115,15 +117,8 @@ final class LetterViewController: UIViewController, Navigationable {
             .store(in: &self.cancelBag)
 
         output.messageDetails
-            .sink(receiveValue: { [weak self] details in
-                guard let self = self else { return }
-                let viewController = CreateLetterViewController(manitteeId: details.manitteeId,
-                                                                roomId: details.roomId,
-                                                                mission: details.mission,
-                                                                missionId: details.missionId)
-                let navigationController = UINavigationController(rootViewController: viewController)
-                viewController.configureDelegation(self)
-                self.present(navigationController, animated: true)
+            .sink(receiveValue: { [weak self] detail in
+                self?.presentSendLetterViewController(detail: detail)
             })
             .store(in: &self.cancelBag)
 
@@ -216,6 +211,19 @@ extension LetterViewController {
             self.letterView.hideBottomArea()
         }
     }
+    
+    private func presentSendLetterViewController(detail: MessageDetail) {
+        let usecase = SendLetterUsecaseImpl(repository: LetterRepositoryImpl())
+        let viewModel = SendLetterViewModel(usecase: usecase,
+                                            mission: detail.mission,
+                                            manitteeId: detail.manitteeId,
+                                            roomId: detail.roomId,
+                                            missionId: detail.missionId)
+        let viewController = SendLetterViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        viewController.configureDelegation(self)
+        self.present(navigationController, animated: true)
+    }
 }
 
 // MARK: - DataSource
@@ -288,8 +296,8 @@ extension LetterViewController {
     }
 }
 
-// MARK: - CreateLetterViewControllerDelegate
-extension LetterViewController: CreateLetterViewControllerDelegate {
+// MARK: - SendLetterViewControllerDelegate
+extension LetterViewController: SendLetterViewControllerDelegate {
     func refreshLetterData() {
         self.refreshSubject.send(())
     }
