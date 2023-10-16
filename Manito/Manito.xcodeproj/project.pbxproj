@@ -779,6 +779,22 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		B5422CBA2ADD3B5C0051A966 /* LetterScene */ = {
+			isa = PBXGroup;
+			children = (
+				B5B3C15E2A41D6F400AABD6F /* LetterUsecase.swift */,
+			);
+			path = LetterScene;
+			sourceTree = "<group>";
+		};
+		B5422CBB2ADD3B6B0051A966 /* SplashScene */ = {
+			isa = PBXGroup;
+			children = (
+				B5422CA12ADD113C0051A966 /* SplashUsecase.swift */,
+			);
+			path = SplashScene;
+			sourceTree = "<group>";
+		};
 		B54741DE29A3A4BA00B75BA3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -995,8 +1011,8 @@
 		B58CA30B2A9CC43600977592 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
-				B5422CA12ADD113C0051A966 /* SplashUsecase.swift */,
-				B5B3C15E2A41D6F400AABD6F /* LetterUsecase.swift */,
+				B5422CBB2ADD3B6B0051A966 /* SplashScene */,
+				B5422CBA2ADD3B5C0051A966 /* LetterScene */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
