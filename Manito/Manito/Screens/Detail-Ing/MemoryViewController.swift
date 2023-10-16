@@ -27,11 +27,6 @@ final class MemoryViewController: UIViewController, Navigationable {
     
     // MARK: - properties
     
-    
-
-
-    
-    private var detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
     private var memoryType: MemoryType = .manittee {
         willSet {
             setupData(with: newValue)
@@ -114,22 +109,6 @@ final class MemoryViewController: UIViewController, Navigationable {
         }
     }
     
-    private func requestMemory(roomId: String) {
-        Task {
-            do {
-                let data = try await self.detailRoomRepository.fetchMemory(roomId: roomId)
-                self.memory = data
-                self.setupData(with: .manittee)
-                self.memoryCollectionView.reloadData()
-            } catch NetworkError.serverError {
-                print("server Error")
-            } catch NetworkError.encodingError {
-                print("encoding Error")
-            } catch NetworkError.clientError(let message) {
-                print("client Error: \(String(describing: message))")
-            }
-        }
-    }
 }
 
 extension MemoryViewController: UICollectionViewDataSource {
