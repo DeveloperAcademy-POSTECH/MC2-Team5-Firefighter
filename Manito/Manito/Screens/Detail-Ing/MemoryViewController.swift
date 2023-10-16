@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MemoryViewController: UIViewController, BaseViewControllerType, Navigationable {
+final class MemoryViewController: UIViewController, Navigationable {
     
     private enum MemoryType: Int {
         case manittee = 0
@@ -25,69 +25,11 @@ final class MemoryViewController: UIViewController, BaseViewControllerType, Navi
         }
     }
     
-    private enum Size {
-        static let lineSpacing: CGFloat = 10.0
-        static let margin: CGFloat = 16.0
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - (margin * 2 + lineSpacing)) / 2
-        static let cellHeight: CGFloat = cellWidth * 0.9
-        static let collectionViewHeight: CGFloat = cellHeight * 2 + lineSpacing
-    }
-    
     // MARK: - properties
     
-    private let shareButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage.Icon.insta, for: .normal)
-        return button
-    }()
-    private lazy var segmentControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: [TextLiteral.Letter.manitteTitle.localized(),
-                                                 TextLiteral.Letter.manittoTitle.localized()])
-        let font = UIFont.font(.regular, ofSize: 14)
-        let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
-        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, .font: font]
-        
-        control.setTitleTextAttributes(normalTextAttributes, for: .normal)
-        control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
-        control.selectedSegmentTintColor = .white
-        control.backgroundColor = .darkGrey004
-        control.selectedSegmentIndex = 0
-        control.addTarget(self, action: #selector(changedIndexValue(_:)), for: .valueChanged)
-        
-        return control
-    }()
-    private let shareBoundView = UIView()
-    private let announcementLabel: UILabel = {
-        let label = UILabel()
-        label.font = .font(.regular, ofSize: 15)
-        return label
-    }()
-    private let nicknameLabel: UILabel = {
-        let label = UILabel()
-        label.font = .font(.regular, ofSize: 30)
-        return label
-    }()
-    private lazy var memoryCollectionView: UICollectionView = {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        flowLayout.minimumLineSpacing = Size.lineSpacing
-        flowLayout.minimumInteritemSpacing = Size.lineSpacing
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: Size.margin, bottom: 0, right: Size.margin)
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        collectionView.backgroundColor = .clear
-        collectionView.dataSource = self
-        collectionView.register(MemoryCollectionViewCell.self, forCellWithReuseIdentifier: MemoryCollectionViewCell.className)
-        return collectionView
-    }()
-    private let manittoTopImageView = UIImageView(image: UIImage.Image.characters)
-    private let manittoBottomImageView = UIImageView(image: UIImage.Image.characters)
-    private let characterImageView = UIImageView()
-    private let characterBackView: UIView = {
-        let view = UIView()
-        view.makeBorderLayer(color: .white)
-        view.layer.cornerRadius = 49.5
-        return view
-    }()
+    
+
+
     
     private var detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
     private var memoryType: MemoryType = .manittee {
@@ -107,103 +49,24 @@ final class MemoryViewController: UIViewController, BaseViewControllerType, Navi
         requestMemory(roomId: roomId)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    deinit {
-        print("\(#file) is dead")
     }
     
     // MARK: - life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.baseViewDidLoad()
-        self.setupNavigation()
-    }
-    
-    // MARK: - base func
-    
-    func setupLayout() {
-        view.addSubview(segmentControl)
-        segmentControl.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(36)
-            $0.width.equalTo(294)
-        }
-        
-        view.addSubview(shareBoundView)
-        shareBoundView.snp.makeConstraints {
-            $0.top.equalTo(segmentControl.snp.bottom).offset(32)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(31)
-        }
-        
-        shareBoundView.addSubview(manittoTopImageView)
-        manittoTopImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(15)
-            $0.height.equalTo(40)
-        }
-        
-        shareBoundView.addSubview(announcementLabel)
-        announcementLabel.snp.makeConstraints {
-            $0.top.equalTo(manittoTopImageView.snp.bottom).offset(30)
-            $0.centerX.equalToSuperview()
-        }
-        
-        shareBoundView.addSubview(memoryCollectionView)
-        memoryCollectionView.snp.makeConstraints {
-            $0.top.equalTo(announcementLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(Size.collectionViewHeight)
-        }
-        
-        shareBoundView.addSubview(manittoBottomImageView)
-        manittoBottomImageView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(15)
-            $0.height.equalTo(40)
-        }
-        
-        shareBoundView.addSubview(nicknameLabel)
-        nicknameLabel.snp.makeConstraints {
-            $0.bottom.equalTo(manittoBottomImageView.snp.top).offset(-30)
-            $0.centerX.equalToSuperview()
-        }
-        
-        shareBoundView.addSubview(characterBackView)
-        characterBackView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalTo(memoryCollectionView.snp.centerY)
-            $0.width.height.equalTo(99)
-        }
-        
-        characterBackView.addSubview(characterImageView)
-        characterImageView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.height.equalTo(90)
-        }
-    }
-
-    func configureUI() {
-        self.view.backgroundColor = .backgroundGrey
-        self.setupAction()
-        self.setupNavigationBar()
-    }
-    
-    private func setupNavigationBar() {
-        let shareButton = makeBarButtonItem(with: shareButton)
-        
-        self.navigationItem.rightBarButtonItem = shareButton
-        self.navigationController?.navigationBar.prefersLargeTitles = false
-        self.navigationItem.largeTitleDisplayMode = .automatic
-        self.title = TextLiteral.Memory.title.localized()
+        self.configureUI()
     }
 
     // MARK: - func
+    
+    private func configureUI() {
+        self.memoryView.configureNavigationBar(of: self)
+        self.memoryView.configureDelegation(self)
+    }
     
     private func setupAction() {
         let action = UIAction { [weak self] _ in
@@ -266,14 +129,6 @@ final class MemoryViewController: UIViewController, BaseViewControllerType, Navi
                 print("client Error: \(String(describing: message))")
             }
         }
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    private func changedIndexValue(_ sender: UISegmentedControl) {
-        segmentControl.selectedSegmentIndex = sender.selectedSegmentIndex
-        memoryType = MemoryType(rawValue: sender.selectedSegmentIndex) ?? .manittee
     }
 }
 
