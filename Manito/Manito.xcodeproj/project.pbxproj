@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */; };
-		333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF669285864CE0039F77F /* MemoryViewController.swift */; };
 		33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDF5612856E03800564211 /* FriendListViewController.swift */; };
 		39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39018F4128C4708A00C78DBA /* UIButton+Extension.swift */; };
 		3904F4FA2AA36F4F00B6264F /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4F92AA36F4F00B6264F /* UserInfo.swift */; };
@@ -246,7 +245,6 @@
 
 /* Begin PBXFileReference section */
 		333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewCell.swift; sourceTree = "<group>"; };
-		333BF669285864CE0039F77F /* MemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
 		33BDF5612856E03800564211 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		39018F4128C4708A00C78DBA /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		3904F4F92AA36F4F00B6264F /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
@@ -1427,7 +1425,6 @@
 				333BF66428571C850039F77F /* Cell */,
 				435B17672913E71400212663 /* DetailingViewController.swift */,
 				33BDF5612856E03800564211 /* FriendListViewController.swift */,
-				333BF669285864CE0039F77F /* MemoryViewController.swift */,
 				39EE956E2A404A3800AF6857 /* MissionEditViewController.swift */,
 			);
 			path = "Detail-Ing";
@@ -1993,7 +1990,6 @@
 				D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */,
 				D724AF5F28708D830003F280 /* TopCharacterImageView.swift in Sources */,
 				7EA25C2728C4FEA800746AEA /* ChangeNicknameViewController.swift in Sources */,
-				333BF66A285864CE0039F77F /* MemoryViewController.swift in Sources */,
 				D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */,
 				B5C7FBF52AA859E300862021 /* BaseViewControllerType.swift in Sources */,
 				39BDDCC42A52BB4A005E0A71 /* DetailWaitService.swift in Sources */,

@@ -9,6 +9,8 @@ import UIKit
 
 final class MemoryView: UIView, BaseViewType {
     
+    typealias MemoryDetail = (announcingText: String, nickname: String, backgroundColor: UIColor, image: UIImage)
+    
     private enum Size {
         static let lineSpacing: CGFloat = 10.0
         static let margin: CGFloat = 16.0
@@ -166,6 +168,13 @@ final class MemoryView: UIView, BaseViewType {
         navigationController.navigationBar.prefersLargeTitles = false
         navigationController.navigationItem.largeTitleDisplayMode = .automatic
         viewController.title = TextLiteral.Memory.title.localized()
+    }
+    
+    func updateMemoryView(_ detail: MemoryDetail) {
+        self.announcementLabel.text = detail.announcingText
+        self.nicknameLabel.text = detail.nickname
+        self.characterBackView.backgroundColor = detail.backgroundColor
+        self.characterImageView.image = detail.image
     }
 
     // MARK: - selector
