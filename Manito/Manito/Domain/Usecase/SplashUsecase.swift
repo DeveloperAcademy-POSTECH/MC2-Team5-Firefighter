@@ -9,18 +9,10 @@ import Combine
 import Foundation
 
 protocol SplashUsecase {
-    associatedtype EntryType
-    
     var entryType: EntryType { get set }
 }
 
 final class SplashUsecaseImpl: SplashUsecase {
-    
-    enum EntryType {
-        case login
-        case nickname
-        case main
-    }
     
     // MARK: - property
     

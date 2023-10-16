@@ -83,6 +83,8 @@
 		B53A35D02A97194D00B720BC /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CF2A97194D00B720BC /* TokenRepository.swift */; };
 		B53A35D42A97266D00B720BC /* CreatedRoomRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35D32A97266D00B720BC /* CreatedRoomRequestDTO.swift */; };
 		B5422CA22ADD113C0051A966 /* SplashUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5422CA12ADD113C0051A966 /* SplashUsecase.swift */; };
+		B5422CA52ADD16C40051A966 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5422CA42ADD16C40051A966 /* SplashViewModel.swift */; };
+		B5422CA72ADD191A0051A966 /* EntryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5422CA62ADD191A0051A966 /* EntryType.swift */; };
 		B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */; };
 		B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741E929A494E200B75BA3 /* LetterImageError.swift */; };
 		B55469B42AA96F2C004D9FE6 /* BaseViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */; };
@@ -310,6 +312,8 @@
 		B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		B5422CA12ADD113C0051A966 /* SplashUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUsecase.swift; sourceTree = "<group>"; };
+		B5422CA42ADD16C40051A966 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		B5422CA62ADD191A0051A966 /* EntryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryType.swift; sourceTree = "<group>"; };
 		B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageView.swift; sourceTree = "<group>"; };
 		B54741E929A494E200B75BA3 /* LetterImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageError.swift; sourceTree = "<group>"; };
 		B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewModelType.swift; sourceTree = "<group>"; };
@@ -767,6 +771,14 @@
 			path = Dev;
 			sourceTree = "<group>";
 		};
+		B5422CA32ADD16B60051A966 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B5422CA42ADD16C40051A966 /* SplashViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		B54741DE29A3A4BA00B75BA3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -896,6 +908,7 @@
 			children = (
 				B57D57672AD97D3A00626BCD /* View */,
 				B57D57662AD97D1A00626BCD /* ViewController */,
+				B5422CA32ADD16B60051A966 /* ViewModel */,
 			);
 			path = SplashScene;
 			sourceTree = "<group>";
@@ -1037,6 +1050,7 @@
 				B5F3F1052AA3516200FA1A32 /* RoomStatus.swift */,
 				D7537F602AA70C40005AC78B /* ParticipatedRoomInfo.swift */,
 				B55469B52AA96F54004D9FE6 /* DefaultCharacterType.swift */,
+				B5422CA62ADD191A0051A966 /* EntryType.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1875,6 +1889,7 @@
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				B5422CA22ADD113C0051A966 /* SplashUsecase.swift in Sources */,
 				391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */,
+				B5422CA72ADD191A0051A966 /* EntryType.swift in Sources */,
 				7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */,
 				B5B3C15F2A41D6F400AABD6F /* LetterUsecase.swift in Sources */,
 				395402D42AAF0BC5003F3012 /* UIViewController+Extension.swift in Sources */,
@@ -1959,6 +1974,7 @@
 				B53A35D02A97194D00B720BC /* TokenRepository.swift in Sources */,
 				B5706BF629B9D4650093D198 /* GuideView.swift in Sources */,
 				B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */,
+				B5422CA52ADD16C40051A966 /* SplashViewModel.swift in Sources */,
 				B5B3C1652A427B5800AABD6F /* UIControl+Combine.swift in Sources */,
 				B5A085F82A9744CC00C8A98D /* RoomListDTO.swift in Sources */,
 				B5A085F62A9733F900C8A98D /* TokenDTO.swift in Sources */,
