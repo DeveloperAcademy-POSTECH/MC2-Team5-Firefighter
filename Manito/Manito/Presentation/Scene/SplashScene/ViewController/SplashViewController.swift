@@ -7,8 +7,6 @@
 
 import UIKit
 
-import Gifu
-
 final class SplashViewController: UIViewController {
     
     // MARK: - ui component
