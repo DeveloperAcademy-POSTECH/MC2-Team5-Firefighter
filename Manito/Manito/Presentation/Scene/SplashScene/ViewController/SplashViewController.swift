@@ -14,10 +14,6 @@ final class SplashViewController: UIViewController {
     private let splashView: SplashView = SplashView()
     
     // MARK: - property
-    
-    private let isLogin: Bool = UserDefaultStorage.isLogin
-    private let nickname: String? = UserDefaultStorage.nickname
-    private let isSetFcmToken: Bool = UserDefaultStorage.isSetFcmToken
 
     // MARK: - life cycle
     

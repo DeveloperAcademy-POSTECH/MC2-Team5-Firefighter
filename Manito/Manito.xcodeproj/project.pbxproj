@@ -82,6 +82,7 @@
 		B53A35CE2A96FA7A00B720BC /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CD2A96FA7A00B720BC /* LoginRepository.swift */; };
 		B53A35D02A97194D00B720BC /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CF2A97194D00B720BC /* TokenRepository.swift */; };
 		B53A35D42A97266D00B720BC /* CreatedRoomRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35D32A97266D00B720BC /* CreatedRoomRequestDTO.swift */; };
+		B5422CA22ADD113C0051A966 /* SplashUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5422CA12ADD113C0051A966 /* SplashUsecase.swift */; };
 		B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */; };
 		B54741EA29A494E200B75BA3 /* LetterImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54741E929A494E200B75BA3 /* LetterImageError.swift */; };
 		B55469B42AA96F2C004D9FE6 /* BaseViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */; };
@@ -308,6 +309,7 @@
 		B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
+		B5422CA12ADD113C0051A966 /* SplashUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUsecase.swift; sourceTree = "<group>"; };
 		B54741DF29A3A4DB00B75BA3 /* LetterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageView.swift; sourceTree = "<group>"; };
 		B54741E929A494E200B75BA3 /* LetterImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageError.swift; sourceTree = "<group>"; };
 		B55469B22AA96F2C004D9FE6 /* BaseViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewModelType.swift; sourceTree = "<group>"; };
@@ -980,17 +982,10 @@
 		B58CA30B2A9CC43600977592 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
-				B58CA3142A9D913600977592 /* LetterScene */,
-			);
-			path = Usecase;
-			sourceTree = "<group>";
-		};
-		B58CA3142A9D913600977592 /* LetterScene */ = {
-			isa = PBXGroup;
-			children = (
+				B5422CA12ADD113C0051A966 /* SplashUsecase.swift */,
 				B5B3C15E2A41D6F400AABD6F /* LetterUsecase.swift */,
 			);
-			path = LetterScene;
+			path = Usecase;
 			sourceTree = "<group>";
 		};
 		B58CA3192A9D992F00977592 /* Cell */ = {
@@ -1878,6 +1873,7 @@
 				39C95804287DAD3000A04A2B /* LetterEndPoint.swift in Sources */,
 				B50B1B44285B146A0080992C /* OpenManittoCollectionViewCell.swift in Sources */,
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
+				B5422CA22ADD113C0051A966 /* SplashUsecase.swift in Sources */,
 				391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */,
 				7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */,
 				B5B3C15F2A41D6F400AABD6F /* LetterUsecase.swift in Sources */,
