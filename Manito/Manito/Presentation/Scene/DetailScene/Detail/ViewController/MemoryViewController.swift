@@ -93,7 +93,7 @@ final class MemoryViewController: UIViewController, Navigationable {
             .sink(receiveValue: { [weak self] result in
                 switch result {
                 case .success(let data):
-                    self?.messages = data
+                    self?.updateMessages(data)
                 case .failure(let error):
                     self?.showErrorAlert(message: error.localizedDescription)
                 }
@@ -118,6 +118,11 @@ extension MemoryViewController {
         let image = DefaultCharacterType.allCases[colorIndex].image
         let detail = (announcingText: announcingText, nickname: nickname, backgroundColor: backgroundColor, image: image)
         self.memoryView.updateMemoryView(detail)
+    }
+    
+    private func updateMessages(_ messages: [MessageListItem]) {
+        self.messages = messages
+        self.memoryView.updateCollectionView()
     }
     
     private func handleInstagramShare(_ items: [String: Any]) {
