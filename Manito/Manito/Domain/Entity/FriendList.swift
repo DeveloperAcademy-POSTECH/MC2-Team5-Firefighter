@@ -13,11 +13,15 @@ import Foundation
 ///
 
 struct FriendList {
+    /// 방 참여 멤버 수
     let count: Int
+    /// 방 참여 멤버 정보
     let members: [MemberInfo]
 }
 
 struct MemberInfo {
+    /// 닉네임
     let nickname: String
+    /// 멤버 색깔 인덱스
     let colorIndex: Int
 }
