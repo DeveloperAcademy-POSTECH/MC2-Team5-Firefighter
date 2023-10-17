@@ -120,11 +120,6 @@ extension MemoryViewController {
         self.memoryView.updateMemoryView(detail)
     }
     
-    private func showErrorAlert(title: String = TextLiteral.Common.Error.title.localized(),
-                                message: String) {
-        self.makeAlert(title: title, message: message)
-    }
-    
     private func handleInstagramShare(_ items: [String: Any]) {
         if let shareURL = URL(string: URLLiteral.Memory.instagram) {
             if UIApplication.shared.canOpenURL(shareURL) {
@@ -137,6 +132,11 @@ extension MemoryViewController {
             }
         }
     }
+    
+    private func showErrorAlert(title: String = TextLiteral.Common.Error.title.localized(),
+                                message: String) {
+        self.makeAlert(title: title, message: message)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -148,15 +148,18 @@ extension MemoryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: MemoryCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
         let message = self.messages[indexPath.item]
-        
         cell.setData(imageUrl: message.imageUrl, content: message.content)
-        cell.didTappedImage = { [weak self] image in
-//            let viewController = LetterImageViewController(imageUrl: image)
-//            viewController.modalPresentationStyle = .fullScreen
-//            viewController.modalTransitionStyle = .crossDissolve
-//            self?.present(viewController, animated: true)
-        }
-
+        cell.delegate = self
         return cell
+    }
+}
+
+// MARK: - MemoryCollectionViewCellDelegate
+extension MemoryViewController: MemoryCollectionViewCellDelegate {
+    func didTapPhotoImage(_ imageURL: String) {
+        let viewController = LetterImageViewController(imageUrl: imageURL)
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        self.present(viewController, animated: true)
     }
 }
