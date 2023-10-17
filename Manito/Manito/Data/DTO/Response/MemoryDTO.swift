@@ -21,8 +21,8 @@ struct MemoryDTO: Decodable {
 
 extension MemoryDTO {
     func toMemory() async -> Memory {
-        return await Memory(memoriesWithManitto: self.memoriesWithManitto?.toMemoryItem(),
-                            memoriesWithManittee: self.memoriesWithManittee?.toMemoryItem())
+        return await Memory(memoriesWithManitto: (self.memoriesWithManitto?.toMemoryItem())!,
+                            memoriesWithManittee: (self.memoriesWithManittee?.toMemoryItem())!)
     }
 }
 

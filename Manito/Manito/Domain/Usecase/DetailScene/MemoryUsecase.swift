@@ -9,13 +9,17 @@ import Combine
 import Foundation
 
 protocol MemoryUsecase {
-    func fetchMemory(roomId: String) async throws -> Memory
+    var memory: Memory? { get set }
+    
+    func fetchMemory(roomId: String) async throws
 }
 
 final class MemoryUsecaseImpl: MemoryUsecase {
 
     // MARK: - property
 
+    @Published var memory: Memory?
+    
     private let repository: DetailRoomRepository
 
     // MARK: - init
@@ -26,10 +30,10 @@ final class MemoryUsecaseImpl: MemoryUsecase {
 
     // MARK: - Public - func
     
-    func fetchMemory(roomId: String) async throws -> Memory {
+    func fetchMemory(roomId: String) async throws {
         do {
             let memoryData = try await self.repository.fetchMemory(roomId: roomId)
-            return await memoryData.toMemory()
+            self.memory = await memoryData.toMemory()
         } catch {
             throw DetailUsecaseError.failedToFetchMemory
         }

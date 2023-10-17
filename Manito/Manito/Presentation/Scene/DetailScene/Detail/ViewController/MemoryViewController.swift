@@ -20,13 +20,15 @@ final class MemoryViewController: UIViewController, Navigationable {
     
     private var messages: [MessageListItem] = []
     
-    private let viewModel: any BaseViewModelType
+    private var cancelBag: Set<AnyCancellable> = Set()
+    
+    private var viewModel: any BaseViewModelType
     
     // MARK: - init
     
     init(viewModel: any BaseViewModelType) {
-        super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -43,6 +45,7 @@ final class MemoryViewController: UIViewController, Navigationable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUI()
+        self.bindViewModel()
     }
 
     // MARK: - func
@@ -52,39 +55,81 @@ final class MemoryViewController: UIViewController, Navigationable {
         self.memoryView.configureDelegation(self)
     }
     
-    private func setupAction() {
-        let action = UIAction { [weak self] _ in
-            guard let self = self else { return }
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
+    }
 
-            // FIXME: - URLLiteral로 이동 시키기
-            if let storyShareURL = URL(string: "instagram-stories://share") {
-                if UIApplication.shared.canOpenURL(storyShareURL) {
-                    let renderer = UIGraphicsImageRenderer(size: self.shareBoundView.bounds.size)
-                    let renderImage = renderer.image { _ in
-                        self.shareBoundView.drawHierarchy(in: self.shareBoundView.bounds, afterScreenUpdates: true)
-                    }
-                    guard let imageData = renderImage.pngData() else {return}
-                    let pasteboardItems: [String: Any] = [
-                        "com.instagram.sharedSticker.stickerImage": imageData
-                    ]
-                    let pasteboardOptions = [UIPasteboard.OptionsKey.expirationDate: Date().addingTimeInterval(300)]
-                    
-                    UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
-                    UIApplication.shared.open(storyShareURL, options: [:], completionHandler: nil)
-                } else {
-                    self.makeAlert(title: TextLiteral.Memory.Error.instaTitle.localized(),
-                                   message: TextLiteral.Memory.Error.instaMessage.localized())
+    private func transformedOutput() -> MemoryViewModel.Output? {
+        guard let viewModel = self.viewModel as? MemoryViewModel else { return nil }
+        let input = MemoryViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            segmentControlValueChanged: self.memoryView.segmentControlPublisher
+        )
+        return viewModel.transform(from: input)
+    }
+
+    private func bindOutputToViewModel(_ output: MemoryViewModel.Output?) {
+        guard let output = output else { return }
+
+        output.member
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let data):
+                    self?.updateMemoryView(announcingText: data.announcingText,
+                                           nickname: data.memberInfo.nickname,
+                                           colorIndex: data.memberInfo.colorIndex)
+                case .failure(let error):
+                    self?.showErrorAlert(message: error.localizedDescription)
                 }
-            }
-        }
-        shareButton.addAction(action, for: .touchUpInside)
+            })
+            .store(in: &self.cancelBag)
+        
+        output.messages
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let data):
+                    self?.messages = data
+                case .failure(let error):
+                    self?.showErrorAlert(message: error.localizedDescription)
+                }
+            })
+            .store(in: &self.cancelBag)
     }
     
+    private func handleInstagramImage() {
+        if let shareURL = URL(string: URLLiteral.Memory.instagram) {
+            if UIApplication.shared.canOpenURL(shareURL) {
+                self.memoryView.shareButtonPublisher
+                    .map { [URLLiteral.Memory.instagramBundle: $0] }
+                    .sink(receiveValue: {
+                        let options = [UIPasteboard.OptionsKey.expirationDate: Date().addingTimeInterval(300)]
+                        UIPasteboard.general.setItems([$0], options: options)
+                        UIApplication.shared.open(shareURL)
+                    })
+                    .store(in: &self.cancelBag)
+            } else {
+                self.showErrorAlert(title: TextLiteral.Memory.Error.instaTitle.localized(),
+                                    message: TextLiteral.Memory.Error.instaMessage.localized())
+            }
+        }
+    }
+}
+
+// MARK: - Helper
+extension MemoryViewController {
     private func updateMemoryView(announcingText: String, nickname: String, colorIndex: Int) {
         let backgroundColor = DefaultCharacterType.allCases[colorIndex].backgroundColor
         let image = DefaultCharacterType.allCases[colorIndex].image
         let detail = (announcingText: announcingText, nickname: nickname, backgroundColor: backgroundColor, image: image)
         self.memoryView.updateMemoryView(detail)
+    }
+    
+    private func showErrorAlert(title: String = TextLiteral.Common.Error.title,
+                                message: String) {
+        self.makeAlert(title: title, message: message)
     }
 }
 
@@ -100,10 +145,10 @@ extension MemoryViewController: UICollectionViewDataSource {
         
         cell.setData(imageUrl: message.imageUrl, content: message.content)
         cell.didTappedImage = { [weak self] image in
-            let viewController = LetterImageViewController(imageUrl: image)
-            viewController.modalPresentationStyle = .fullScreen
-            viewController.modalTransitionStyle = .crossDissolve
-            self?.present(viewController, animated: true)
+//            let viewController = LetterImageViewController(imageUrl: image)
+//            viewController.modalPresentationStyle = .fullScreen
+//            viewController.modalTransitionStyle = .crossDissolve
+//            self?.present(viewController, animated: true)
         }
 
         return cell

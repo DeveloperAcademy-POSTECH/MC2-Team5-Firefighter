@@ -14,9 +14,9 @@ import Foundation
 
 struct Memory {
     /// 마니또와의 추억
-    let memoriesWithManitto: MemoryItem?
+    let memoriesWithManitto: MemoryItem
     /// 마니띠와의 추억
-    let memoriesWithManittee: MemoryItem?
+    let memoriesWithManittee: MemoryItem
 }
 
 struct MemoryItem {

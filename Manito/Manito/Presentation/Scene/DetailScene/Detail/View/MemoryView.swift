@@ -5,7 +5,10 @@
 //  Created by SHIN YOON AH on 10/16/23.
 //
 
+import Combine
 import UIKit
+
+import SnapKit
 
 final class MemoryView: UIView, BaseViewType {
     
@@ -33,7 +36,6 @@ final class MemoryView: UIView, BaseViewType {
         control.selectedSegmentTintColor = .white
         control.backgroundColor = .darkGrey004
         control.selectedSegmentIndex = 0
-        control.addTarget(self, action: #selector(self.changedIndexValue(_:)), for: .valueChanged)
         
         return control
     }()
@@ -73,6 +75,21 @@ final class MemoryView: UIView, BaseViewType {
         view.layer.cornerRadius = 49.5
         return view
     }()
+    
+    // MARK: - property
+    
+    var segmentControlPublisher: AnyPublisher<Int, Never> {
+        return self.segmentControl.tapPublisher
+            .compactMap { [weak self] in self?.segmentControl.selectedSegmentIndex }
+            .eraseToAnyPublisher()
+    }
+    var shareButtonPublisher: AnyPublisher<Data, Never> {
+        return self.shareButton.tapPublisher
+            .compactMap { [weak self] in
+                self?.convert(self?.instaShareBoundView)
+            }
+            .eraseToAnyPublisher()
+    }
     
     // MARK: - init
 
@@ -176,11 +193,16 @@ final class MemoryView: UIView, BaseViewType {
         self.characterBackView.backgroundColor = detail.backgroundColor
         self.characterImageView.image = detail.image
     }
+}
 
-    // MARK: - selector
-    
-    @objc
-    private func changedIndexValue(_ sender: UISegmentedControl) {
-        self.segmentControl.selectedSegmentIndex = sender.selectedSegmentIndex
+// MARK: - Helper
+extension MemoryView {
+    private func convert(_ inputView: UIView?) -> Data? {
+        guard let view = inputView else { return nil }
+        let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
+        let renderImage = renderer.image { _ in
+            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        }
+        return renderImage.pngData()
     }
 }

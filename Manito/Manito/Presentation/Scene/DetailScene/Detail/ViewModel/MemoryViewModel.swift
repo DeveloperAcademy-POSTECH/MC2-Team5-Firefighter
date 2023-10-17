@@ -10,21 +10,25 @@ import Foundation
 
 final class MemoryViewModel: BaseViewModelType {
 
-    enum MessageType: Int {
-        case sent = 0
-        case received = 1
+    enum MemberType: Int {
+        case manitto = 0
+        case manitte = 1
     }
 
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
-        let segmentControlValueChanged: PassthroughSubject<Int, Never>
+        let segmentControlValueChanged: AnyPublisher<Int, Never>
     }
 
     struct Output {
-        let memory: AnyPublisher<Result<Memory, Error>, Never>
+        let member: AnyPublisher<Result<(announcingText: String, memberInfo: MemberInfo), Error>, Never>
+        let messages: AnyPublisher<Result<[MessageListItem], Error>, Never>
     }
 
     // MARK: - property
+    
+    private let memberSubject: PassthroughSubject<Result<(announcingText: String, memberInfo: MemberInfo), Error>, Never> = PassthroughSubject()
+    private let messageSubject: PassthroughSubject<Result<[MessageListItem], Error>, Never> = PassthroughSubject()
 
     private var cancelBag: Set<AnyCancellable> = Set()
 
@@ -42,24 +46,54 @@ final class MemoryViewModel: BaseViewModelType {
     // MARK: - Public - func
 
     func transform(from input: Input) -> Output {
-        let memoryResponse = input.viewDidLoad
-            .compactMap { [weak self] in self }
-            .asyncMap { viewModel -> Result<Memory, Error> in
-                do {
-                    let data = try await viewModel.fetchMemory()
-                    return .success(data)
-                } catch(let error) {
-                    return .failure(error)
-                }
-            }
-            .eraseToAnyPublisher()
+        input.viewDidLoad
+            .sink(receiveValue: { [weak self] in
+                self?.fetchMemory()
+            })
+            .store(in: &self.cancelBag)
+        
+        input.segmentControlValueChanged
+            .compactMap { MemberType(rawValue: $0) }
+            .sink(receiveValue: { [weak self] in
+                self?.sendInformation(with: $0)
+            })
+            .store(in: &self.cancelBag)
 
-        return Output(memory: memoryResponse)
+        return Output(
+            member: self.memberSubject.eraseToAnyPublisher(),
+            messages: self.messageSubject.eraseToAnyPublisher()
+        )
     }
 
     // MARK: - Private - func
 
-    private func fetchMemory() async throws -> Memory {
-        return try await self.usecase.fetchMemory(roomId: self.roomId)
+    private func fetchMemory() {
+        Task {
+            do {
+                let _ = try await self.usecase.fetchMemory(roomId: self.roomId)
+                self.sendInformation(with: .manitto)
+            } catch(let error) {
+                self.memberSubject.send(.failure(error))
+            }
+        }
+    }
+    
+    private func sendInformation(with type: MemberType) {
+        guard let data = self.usecase.memory else { return }
+        
+        switch type {
+        case .manitto:
+            let memberInfo = MemberInfo(nickname: data.memoriesWithManitto.member.nickname,
+                                        colorIndex: data.memoriesWithManitto.member.colorIndex)
+            let message = data.memoriesWithManitto.messages
+            self.memberSubject.send(.success((TextLiteral.Memory.manittoContent.localized(), memberInfo)))
+            self.messageSubject.send(.success(message))
+        case .manitte:
+            let memberInfo = MemberInfo(nickname: data.memoriesWithManittee.member.nickname,
+                                        colorIndex: data.memoriesWithManittee.member.colorIndex)
+            let message = data.memoriesWithManittee.messages
+            self.memberSubject.send(.success((TextLiteral.Memory.manitteContent.localized(), memberInfo)))
+            self.messageSubject.send(.success(message))
+        }
     }
 }
