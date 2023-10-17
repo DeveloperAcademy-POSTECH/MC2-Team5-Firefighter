@@ -44,9 +44,10 @@ final class MemoryViewController: UIViewController, Navigationable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigation()
         self.configureUI()
         self.bindViewModel()
+        self.bindUI()
+        self.setupNavigation()
     }
 
     // MARK: - func
@@ -100,22 +101,13 @@ final class MemoryViewController: UIViewController, Navigationable {
             .store(in: &self.cancelBag)
     }
     
-    private func handleInstagramImage() {
-        if let shareURL = URL(string: URLLiteral.Memory.instagram) {
-            if UIApplication.shared.canOpenURL(shareURL) {
-                self.memoryView.shareButtonPublisher
-                    .map { [URLLiteral.Memory.instagramBundle: $0] }
-                    .sink(receiveValue: {
-                        let options = [UIPasteboard.OptionsKey.expirationDate: Date().addingTimeInterval(300)]
-                        UIPasteboard.general.setItems([$0], options: options)
-                        UIApplication.shared.open(shareURL)
-                    })
-                    .store(in: &self.cancelBag)
-            } else {
-                self.showErrorAlert(title: TextLiteral.Memory.Error.instaTitle.localized(),
-                                    message: TextLiteral.Memory.Error.instaMessage.localized())
-            }
-        }
+    private func bindUI() {
+        self.memoryView.shareButtonPublisher
+            .map { [URLLiteral.Memory.instagramBundle: $0] }
+            .sink(receiveValue: { [weak self] in
+                self?.handleInstagramShare($0)
+            })
+            .store(in: &self.cancelBag)
     }
 }
 
@@ -131,6 +123,19 @@ extension MemoryViewController {
     private func showErrorAlert(title: String = TextLiteral.Common.Error.title.localized(),
                                 message: String) {
         self.makeAlert(title: title, message: message)
+    }
+    
+    private func handleInstagramShare(_ items: [String: Any]) {
+        if let shareURL = URL(string: URLLiteral.Memory.instagram) {
+            if UIApplication.shared.canOpenURL(shareURL) {
+                let options = [UIPasteboard.OptionsKey.expirationDate: Date().addingTimeInterval(300)]
+                UIPasteboard.general.setItems([items], options: options)
+                UIApplication.shared.open(shareURL)
+            } else {
+                self.showErrorAlert(title: TextLiteral.Memory.Error.instaTitle.localized(),
+                                    message: TextLiteral.Memory.Error.instaMessage.localized())
+            }
+        }
     }
 }
 

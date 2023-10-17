@@ -180,11 +180,11 @@ final class MemoryView: UIView, BaseViewType {
     
     func configureNavigationBar(of viewController: UIViewController) {
         guard let navigationController = viewController.navigationController else { return }
-        let shareButton = UIBarButtonItem(customView: shareButton)
-        navigationController.navigationItem.rightBarButtonItem = shareButton
+        let shareButton = UIBarButtonItem(customView: self.shareButton)
+        viewController.navigationItem.rightBarButtonItem = shareButton
+        viewController.title = TextLiteral.Memory.title.localized()
         navigationController.navigationBar.prefersLargeTitles = false
         navigationController.navigationItem.largeTitleDisplayMode = .automatic
-        viewController.title = TextLiteral.Memory.title.localized()
     }
     
     func updateMemoryView(_ detail: MemoryDetail) {
