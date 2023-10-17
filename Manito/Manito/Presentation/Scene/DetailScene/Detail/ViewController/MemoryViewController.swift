@@ -44,6 +44,7 @@ final class MemoryViewController: UIViewController, Navigationable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigation()
         self.configureUI()
         self.bindViewModel()
     }
@@ -127,7 +128,7 @@ extension MemoryViewController {
         self.memoryView.updateMemoryView(detail)
     }
     
-    private func showErrorAlert(title: String = TextLiteral.Common.Error.title,
+    private func showErrorAlert(title: String = TextLiteral.Common.Error.title.localized(),
                                 message: String) {
         self.makeAlert(title: title, message: message)
     }

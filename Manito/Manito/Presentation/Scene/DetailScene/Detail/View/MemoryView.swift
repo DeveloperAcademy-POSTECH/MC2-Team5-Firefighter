@@ -192,6 +192,7 @@ final class MemoryView: UIView, BaseViewType {
         self.nicknameLabel.text = detail.nickname
         self.characterBackView.backgroundColor = detail.backgroundColor
         self.characterImageView.image = detail.image
+        self.memoryCollectionView.reloadData()
     }
 }
 

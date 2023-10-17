@@ -11,8 +11,8 @@ import Foundation
 final class MemoryViewModel: BaseViewModelType {
 
     enum MemberType: Int {
-        case manitto = 0
-        case manitte = 1
+        case manitte = 0
+        case manitto = 1
     }
 
     struct Input {
@@ -71,7 +71,7 @@ final class MemoryViewModel: BaseViewModelType {
         Task {
             do {
                 let _ = try await self.usecase.fetchMemory(roomId: self.roomId)
-                self.sendInformation(with: .manitto)
+                self.sendInformation(with: .manitte)
             } catch(let error) {
                 self.memberSubject.send(.failure(error))
             }
@@ -82,17 +82,17 @@ final class MemoryViewModel: BaseViewModelType {
         guard let data = self.usecase.memory else { return }
         
         switch type {
-        case .manitto:
-            let memberInfo = MemberInfo(nickname: data.memoriesWithManitto.member.nickname,
-                                        colorIndex: data.memoriesWithManitto.member.colorIndex)
-            let message = data.memoriesWithManitto.messages
-            self.memberSubject.send(.success((TextLiteral.Memory.manittoContent.localized(), memberInfo)))
-            self.messageSubject.send(.success(message))
         case .manitte:
             let memberInfo = MemberInfo(nickname: data.memoriesWithManittee.member.nickname,
                                         colorIndex: data.memoriesWithManittee.member.colorIndex)
             let message = data.memoriesWithManittee.messages
             self.memberSubject.send(.success((TextLiteral.Memory.manitteContent.localized(), memberInfo)))
+            self.messageSubject.send(.success(message))
+        case .manitto:
+            let memberInfo = MemberInfo(nickname: data.memoriesWithManitto.member.nickname,
+                                        colorIndex: data.memoriesWithManitto.member.colorIndex)
+            let message = data.memoriesWithManitto.messages
+            self.memberSubject.send(.success((TextLiteral.Memory.manittoContent.localized(), memberInfo)))
             self.messageSubject.send(.success(message))
         }
     }
