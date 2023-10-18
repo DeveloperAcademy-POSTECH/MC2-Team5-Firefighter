@@ -689,17 +689,9 @@
 			isa = PBXGroup;
 			children = (
 				B5AE11EE29D1E38D00F86FF8 /* View */,
-				B50B1B42285B14550080992C /* Cell */,
 				B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */,
 			);
 			path = Interaction;
-			sourceTree = "<group>";
-		};
-		B50B1B42285B14550080992C /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Cell;
 			sourceTree = "<group>";
 		};
 		B53A35B22A9630FE00B720BC /* Service */ = {
