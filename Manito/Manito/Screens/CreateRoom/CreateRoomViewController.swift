@@ -77,7 +77,7 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         navigationController.pushViewController(viewController, animated: false)
         
         self.dismiss(animated: true) {
-            viewController.createRoomSubject.send(())
+            viewController.sendCreateRoomEvent()
         }
     }
     

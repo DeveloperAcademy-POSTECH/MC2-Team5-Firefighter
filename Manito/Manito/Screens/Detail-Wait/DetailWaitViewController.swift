@@ -22,7 +22,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
-    let createRoomSubject = PassthroughSubject<Void, Error>()
+    private let createRoomSubject = PassthroughSubject<Void, Error>()
     private let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let changeButtonSubject = PassthroughSubject<Void, Never>()
@@ -269,6 +269,10 @@ final class DetailWaitViewController: UIViewController, Navigationable {
         viewController.modalPresentationStyle = .overCurrentContext
         viewController.modalTransitionStyle = .crossDissolve
         self.present(viewController, animated: true)
+    }
+    
+    func sendCreateRoomEvent() {
+        self.createRoomSubject.send(())
     }
 }
 
