@@ -55,16 +55,7 @@ final class OpenManittoView: UIView, BaseViewType {
         return label
     }()
     private let popupView: OpenManittoPopupView = OpenManittoPopupView()
-
-    // MARK: - property
-
-    private let totalCount: Double = 10.0
-    private(set) var randomIndex: Int = -1 {
-        didSet {
-            self.manittoCollectionView.reloadData()
-        }
-    }
-
+    
     // MARK: - init
 
     override init(frame: CGRect) {
@@ -104,56 +95,19 @@ final class OpenManittoView: UIView, BaseViewType {
 
     // MARK: - func
 
-    private func animateManittoCollectionView(with friendList: FriendListDTO,
-                                              _ manittoIndex: Int,
-                                              _ manittoNickname: String) {
-        let timeInterval: Double = 0.3
-        let durationTime: Double = timeInterval * self.totalCount
-        let delay: Double = 1.0
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-            UIView.animate(withDuration: durationTime, animations: {
-                self.performRandomShuffleAnimation(with: timeInterval, friendList)
-            }, completion: { _ in
-                let deadline: DispatchTime = .now() + delay + durationTime
-                self.performOpenManittoAnimation(with: deadline, manittoIndex, manittoNickname)
-            })
-        })
-    }
-
-    private func performRandomShuffleAnimation(with timeInterval: TimeInterval, _ friendList: FriendListDTO) {
-        guard let count = friendList.count else { return }
-        var countNumber: Int = 0
-
-        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { [weak self] _ in
-            guard let self = self,
-                  countNumber != Int(self.totalCount) else { return }
-
-            countNumber += 1
-            self.randomIndex = Int.random(in: 0...count-1, excluding: self.randomIndex)
-        }
-    }
-
-    private func performOpenManittoAnimation(with deadline: DispatchTime,
-                                             _ manittoIndex: Int,
-                                             _ manittoNickname: String) {
-        DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
-            self.randomIndex = manittoIndex
-        })
-
-        DispatchQueue.main.asyncAfter(deadline: deadline + 1.0, execute: {
-            self.popupView.fadeIn(duration: 0.2)
-            self.popupView.setupTypingAnimation(user: UserDefaultStorage.nickname, manitto: manittoNickname)
-        })
-    }
-
-    func setupManittoAnimation(friendList: FriendListDTO, manittoIndex: Int, manittoNickname: String) {
-        self.animateManittoCollectionView(with: friendList, manittoIndex, manittoNickname)
-        self.manittoCollectionView.reloadData()
-    }
-
     func configureDelegation(_ delegate: UICollectionViewDataSource & OpenManittoViewDelegate) {
         self.manittoCollectionView.dataSource = delegate
         self.popupView.configureDelegation(delegate)
+    }
+    
+    func updateCollectionView() {
+        self.manittoCollectionView.reloadData()
+    }
+    
+    func updatePopupView(text: String) {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            self.popupView.fadeIn(duration: 0.2)
+            self.popupView.setupTypingAnimation(text)
+        }
     }
 }

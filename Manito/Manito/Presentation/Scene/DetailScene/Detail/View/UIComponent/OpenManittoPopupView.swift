@@ -121,9 +121,8 @@ final class OpenManittoPopupView: UIView {
         self.delegate = delegate
     }
 
-    func setupTypingAnimation(user: String, manitto: String) {
-        self.animateTyping(in: self.typingLabel,
-                           text: TextLiteral.DetailIng.openManittoPopupContent.localized(with: user, manitto))
+    func setupTypingAnimation(_ text: String) {
+        self.animateTyping(in: self.typingLabel, text: text)
         self.typingLabel.addLabelSpacing()
     }
 }

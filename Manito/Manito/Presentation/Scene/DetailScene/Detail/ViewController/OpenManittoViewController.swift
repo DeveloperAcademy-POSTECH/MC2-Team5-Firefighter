@@ -80,7 +80,7 @@ final class OpenManittoViewController: UIViewController, Navigationable {
             .sink(receiveValue: { [weak self] result in
                 switch result {
                 case .success(let list):
-                    self?.memberList = list
+                    self?.updateMemberList(list)
                 case .failure(let error):
                     self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
                                    message: error.localizedDescription)
@@ -95,18 +95,34 @@ final class OpenManittoViewController: UIViewController, Navigationable {
                 self?.randomCompletionSubject.send(())
             })
             .sink(receiveValue: { [weak self] index in
-                // update view with random index
-//                self?.openManittoView.setupManittoAnimation(friendList: list,
-//                                                           manittoIndex: manittoIndex,
-//                                                           manittoNickname: self.manittoNickname)
+                self?.updateRandomIndex(to: index)
             })
             .store(in: &self.cancelBag)
         
         Publishers.Zip(output.manittoIndex, output.popupText)
-            .sink(receiveValue: { index, text in
-                // update manitto index and pop up view
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] index, text in
+                self?.updateManittoView(index: index, openText: text)
             })
             .store(in: &self.cancelBag)
+    }
+}
+
+// MARK: - Helper
+extension OpenManittoViewController {
+    private func updateMemberList(_ list: [MemberInfo]) {
+        self.memberList = list
+        self.openManittoView.updateCollectionView()
+    }
+    
+    private func updateRandomIndex(to index: Int) {
+        self.randomIndex = index
+        self.openManittoView.updateCollectionView()
+    }
+    
+    private func updateManittoView(index: Int, openText: String) {
+        self.updateRandomIndex(to: index)
+        self.openManittoView.updatePopupView(text: openText)
     }
 }
 
