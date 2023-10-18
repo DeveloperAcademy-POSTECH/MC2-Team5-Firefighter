@@ -16,17 +16,13 @@ final class OpenManittoViewController: UIViewController, Navigationable {
     private let openManittoView: OpenManittoView = OpenManittoView()
 
     // MARK: - property
-
-    private let detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
-    private var friendsList: FriendListDTO = FriendListDTO(count: 0, members: [])
-    private let roomId: String
-    private let manittoNickname: String
     
+    private let viewModel: any BaseViewModelType
+
     // MARK: - init
     
-    init(roomId: String, manittoNickname: String) {
-        self.roomId = roomId
-        self.manittoNickname = manittoNickname
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
