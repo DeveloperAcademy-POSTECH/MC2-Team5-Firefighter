@@ -5,6 +5,7 @@
 //  Created by SHIN YOON AH on 2022/06/16.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -16,6 +17,11 @@ final class OpenManittoViewController: UIViewController, Navigationable {
     private let openManittoView: OpenManittoView = OpenManittoView()
 
     // MARK: - property
+    
+    private var memberList: [MemberInfo] = []
+    private var randomIndex: Int = 0
+    
+    private var cancelBag: Set<AnyCancellable> = Set()
     
     private let viewModel: any BaseViewModelType
 
@@ -40,7 +46,7 @@ final class OpenManittoViewController: UIViewController, Navigationable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
-        self.fetchManittoData()
+        self.bindViewModel()
         self.setupNavigation()
     }
 
@@ -49,46 +55,59 @@ final class OpenManittoViewController: UIViewController, Navigationable {
     private func configureDelegation() {
         self.openManittoView.configureDelegation(self)
     }
+    
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
+    }
 
-    private func fetchManittoData() {
-        self.fetchFriendList(roomId: self.roomId, manittoNickname: self.manittoNickname) { [weak self] response in
-            guard let self = self else { return }
-            switch response {
-            case .success((let list, let manittoIndex)):
-                self.friendsList = list
-                DispatchQueue.main.async {
-                    self.openManittoView.setupManittoAnimation(friendList: list,
+    private func transformedOutput() -> OpenManittoViewModel.Output? {
+        guard let viewModel = self.viewModel as? OpenManittoViewModel else { return nil }
+        let input = OpenManittoViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            openManitto: <#T##AnyPublisher<Void, Never>#>
+        )
+        return viewModel.transform(from: input)
+    }
+
+    private func bindOutputToViewModel(_ output: OpenManittoViewModel.Output?) {
+        guard let output = output else { return }
+        
+        output.memberInfo
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let list):
+                    self?.memberList = list
+                    self?.openManittoView.setupManittoAnimation(friendList: list,
                                                                manittoIndex: manittoIndex,
                                                                manittoNickname: self.manittoNickname)
+                case .failure(let error):
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                   message: error.localizedDescription)
+                    self?.dismiss(animated: true)
                 }
-            case .failure:
-                DispatchQueue.main.async {
-                    self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                                   message: TextLiteral.DetailIng.Error.openManittoMessage.localized())
-                    self.dismiss(animated: true)
-                }
-            }
-        }
+            })
+            .store(in: &self.cancelBag)
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+extension OpenManittoViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.memberList.count
     }
     
-    // MARK: - network
-    
-    private func fetchFriendList(roomId: String,
-                                 manittoNickname: String,
-                                 completionHandler: @escaping (Result<(FriendListDTO, Int), NetworkError>) -> Void) {
-        Task {
-            do {
-                let data = try await self.detailRoomRepository.fetchWithFriend(roomId: roomId)
-                let manittoIndex = data.members?.firstIndex(where: { $0.nickname == manittoNickname }).map { Int($0) } ?? 0
-                completionHandler(.success((data, manittoIndex)))
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.encodingError {
-                completionHandler(.failure(.encodingError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: OpenManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        let member = self.memberList[indexPath.item]
+        cell.configureCell(colorIndex: member.colorIndex)
+
+        if indexPath.item == self.randomIndex {
+            cell.highlightCell()
         }
+
+        return cell
     }
 }
 
@@ -96,27 +115,5 @@ final class OpenManittoViewController: UIViewController, Navigationable {
 extension OpenManittoViewController: OpenManittoViewDelegate {
     func confirmButtonTapped() {
         self.dismiss(animated: true)
-    }
-}
-
-// MARK: - UICollectionViewDataSource
-extension OpenManittoViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let count = self.friendsList.count else { return 0 }
-        return count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: OpenManittoCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-
-        if let colorIndex = self.friendsList.members?[indexPath.item].colorIndex {
-            cell.configureCell(colorIndex: colorIndex)
-        }
-
-        if indexPath.item == self.openManittoView.randomIndex {
-            cell.highlightCell()
-        }
-
-        return cell
     }
 }

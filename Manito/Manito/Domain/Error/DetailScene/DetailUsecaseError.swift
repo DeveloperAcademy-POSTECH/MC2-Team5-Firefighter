@@ -14,6 +14,11 @@ enum DetailUsecaseError: LocalizedError {
 
 extension DetailUsecaseError {
     var errorDescription: String? {
-        return TextLiteral.Common.Error.networkServer.localized()
+        switch self {
+        case .failedToFetchMemory:
+            return TextLiteral.Common.Error.networkServer.localized()
+        case .failedToFetchFriend:
+            return TextLiteral.DetailIng.Error.openManittoMessage.localized()
+        }
     }
 }
