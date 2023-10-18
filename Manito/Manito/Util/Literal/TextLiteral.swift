@@ -80,6 +80,13 @@ enum TextLiteral {
         static let deleteAlertMessage = "datail_wait_delete_alert_message"
         static let exitAlertTitle = "datail_wait_exit_alert_title"
         static let exitAlertMessage = "datail_wait_exit_alert_message"
+        
+        enum Error {
+            static let fetchRoom = "detail_wait_fetch_error"
+            static let startManitto = "detail_wait_start_error"
+            static let deleteRoom = "detail_wait_delete_error"
+            static let leaveRoom = "detail_wait_leave_error"
+        }
     }
 
     /// Detail Ing 화면에서 사용하는 텍스트
