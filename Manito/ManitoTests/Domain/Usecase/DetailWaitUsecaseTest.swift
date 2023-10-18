@@ -20,7 +20,7 @@ final class DetailWaitUsecaseTest: XCTestCase {
     }
     
     func test_fetchRoomInformaion함수가_올바른값을_리턴하는가() async throws {
-        let sut = RoomInfoDTO.testRoomDTO
+        let sut = RoomInfoDTO.testDummyRoomDTO
         
         do {
             let roomInfoDTO = try await self.mockUsecase.fetchRoomInformaion(roomId: "")
@@ -31,7 +31,7 @@ final class DetailWaitUsecaseTest: XCTestCase {
     }
     
     func test_patchStartManitto함수가_올바른값을_리턴하는가() async throws {
-        let sut = UserInfoDTO.testUserManittee
+        let sut = UserInfoDTO.testDummyUserManittee
         
         do {
             let manittee = try await self.mockUsecase.patchStartManitto(roomId: "")
@@ -70,13 +70,13 @@ final class MockDetailWaitUsecase: DetailWaitUseCase {
     func fetchRoomInformaion(roomId: String) async throws -> RoomInfoDTO {
         try await Task.sleep(nanoseconds: 3_000)
         
-        return .testRoomDTO
+        return .testDummyRoomDTO
     }
     
     func patchStartManitto(roomId: String) async throws -> UserInfoDTO {
         try await Task.sleep(nanoseconds: 3_000)
         
-        return .testUserManittee
+        return .testDummyUserManittee
     }
     
     func deleteRoom(roomId: String) async throws -> Int {

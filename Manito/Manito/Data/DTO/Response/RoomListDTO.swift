@@ -35,7 +35,7 @@ extension RoomListItemDTO {
 }
 
 extension RoomListItemDTO: Equatable {
-    static let testRoomListItemDTO = RoomListItemDTO(
+    static let testDummyRoomListItemDTO = RoomListItemDTO(
         id: 1,
         title: "테스트타이틀",
         state: "PRE",

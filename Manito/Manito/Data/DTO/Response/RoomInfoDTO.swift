@@ -53,16 +53,16 @@ extension RoomInfoDTO {
 }
 
 extension RoomInfoDTO: Equatable {
-    static let testRoomDTO = RoomInfoDTO(
-        roomInformation: RoomListItemDTO.testRoomListItemDTO,
-        participants: ParticipantListDTO.testParticipantListDTO,
-        manittee: UserInfoDTO.testUserManittee,
-        manitto: UserInfoDTO.testUserManitto,
-        invitation: InvitationCodeDTO.testInvitationCodeDTO,
+    static let testDummyRoomDTO = RoomInfoDTO(
+        roomInformation: RoomListItemDTO.testDummyRoomListItemDTO,
+        participants: ParticipantListDTO.testDummyParticipantListDTO,
+        manittee: UserInfoDTO.testDummyUserManittee,
+        manitto: UserInfoDTO.testDummyUserManitto,
+        invitation: InvitationCodeDTO.testDummyInvitationCodeDTO,
         didViewRoulette: false,
-        mission: IndividualMissionDTO.testIndividualMissionDTO,
+        mission: IndividualMissionDTO.testDummyIndividualMissionDTO,
         admin: false,
-        messages: MessageCountInfoDTO.testMessageInfoDTO
+        messages: MessageCountInfoDTO.testDummyMessageInfoDTO
     )
 }
 
@@ -79,9 +79,9 @@ extension ParticipantListDTO {
 }
 
 extension ParticipantListDTO: Equatable {
-    static let testParticipantListDTO = ParticipantListDTO(
+    static let testDummyParticipantListDTO = ParticipantListDTO(
         count: 5,
-        members: UserInfoDTO.testUserList
+        members: UserInfoDTO.testDummyUserList
     )
 }
 
@@ -96,7 +96,7 @@ extension InvitationCodeDTO {
 }
 
 extension InvitationCodeDTO: Equatable {
-    static let testInvitationCodeDTO = InvitationCodeDTO(code: "ABCDEF")
+    static let testDummyInvitationCodeDTO = InvitationCodeDTO(code: "ABCDEF")
 }
 
 /// 개별 미션에 대한 정보들을 반환하는 데이터 모델 DTO입니다.
@@ -114,7 +114,7 @@ extension IndividualMissionDTO {
 }
 
 extension IndividualMissionDTO: Equatable {
-    static let testIndividualMissionDTO = IndividualMissionDTO(id: 1, content: "테스트미션")
+    static let testDummyIndividualMissionDTO = IndividualMissionDTO(id: 1, content: "테스트미션")
 }
 
 struct MessageCountInfoDTO: Decodable {
@@ -128,5 +128,5 @@ extension MessageCountInfoDTO {
 }
 
 extension MessageCountInfoDTO: Equatable {
-    static let testMessageInfoDTO = MessageCountInfoDTO(count: 3)
+    static let testDummyMessageInfoDTO = MessageCountInfoDTO(count: 3)
 }
