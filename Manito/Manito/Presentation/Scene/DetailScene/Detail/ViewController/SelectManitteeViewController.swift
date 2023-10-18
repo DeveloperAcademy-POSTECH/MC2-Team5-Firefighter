@@ -5,34 +5,26 @@
 //  Created by SHIN YOON AH on 2022/06/19.
 //
 
+import Combine
 import UIKit
 
 final class SelectManitteeViewController: UIViewController, Navigationable {
-
-    private enum SelectionStep: Int {
-        case showJoystick = 0, showCapsule, openName, openButton
-    }
 
     // MARK: - ui component
 
     private let selectManitteeView: SelectManitteeView = SelectManitteeView()
 
     // MARK: - property
-
-    private let roomId: String
-    private var stepType: SelectionStep? {
-        willSet(step) {
-            guard let stepIndex = step?.rawValue else { return }
-            self.selectManitteeView.manageStepView(step: stepIndex)
-        }
-    }
+    
+    private var cancelBag: Set<AnyCancellable> = Set()
+    
+    private let viewModel: any BaseViewModelType
 
     // MARK: - init
 
-    init(roomId: String, manitteeNickname: String) {
-        self.roomId = roomId
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.selectManitteeView.configureUI(manitteeNickname: manitteeNickname)
     }
 
     @available(*, unavailable)
@@ -48,35 +40,63 @@ final class SelectManitteeViewController: UIViewController, Navigationable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupStepType()
-        self.configureDelegation()
+        self.bindViewModel()
         self.setupNavigation()
     }
 
     // MARK: - func
-
-    private func setupStepType() {
-        self.stepType = .showJoystick
+    
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
     }
 
-    private func configureDelegation() {
-        self.selectManitteeView.configureDelegation(self)
+    private func transformedOutput() -> SelectManitteeViewModel.Output? {
+        guard let viewModel = self.viewModel as? SelectManitteeViewModel else { return nil }
+        let input = SelectManitteeViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            swapView: self.selectManitteeView.nextStepSubject.eraseToAnyPublisher(),
+            confirmButtonDidTap: self.selectManitteeView.confirmButtonPublisher
+        )
+        return viewModel.transform(from: input)
+    }
+
+    private func bindOutputToViewModel(_ output: SelectManitteeViewModel.Output?) {
+        guard let output = output else { return }
+        
+        output.currentType
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] type in
+                switch type {
+                case (.showJoystick, _): 
+                    self?.selectManitteeView.showJoystick()
+                case (.showCapsule, _): 
+                    self?.selectManitteeView.showCapsule()
+                case (.openName, let nickname): 
+                    self?.selectManitteeView.setupManitteeNickname(nickname)
+                    self?.selectManitteeView.showManitteeName()
+                case (.openButton, _):
+                    self?.selectManitteeView.showConfirmButton()
+                }
+            })
+            .store(in: &self.cancelBag)
+        
+        output.roomId
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] in
+                self?.presentDetailIngViewController(roomId: $0)
+            })
+            .store(in: &self.cancelBag)
     }
 }
 
-// MARK: - SelectManitteeViewDelegate
-extension SelectManitteeViewController: SelectManitteeViewDelegate {
-    func confirmButtonDidTap() {
+// MARK: - Helper
+extension SelectManitteeViewController {
+    private func presentDetailIngViewController(roomId: String) {
         guard let presentingViewController = self.presentingViewController as? UINavigationController else { return }
-        let detailingViewController = DetailingViewController(roomId: self.roomId)
+        let detailingViewController = DetailingViewController(roomId: roomId)
         presentingViewController.popViewController(animated: true)
         presentingViewController.pushViewController(detailingViewController, animated: false)
         self.dismiss(animated: true)
-    }
-
-    func moveToNextStep() {
-        guard let stepIndex = self.stepType?.rawValue,
-              let nextStep = SelectionStep(rawValue: stepIndex + 1) else { return }
-        self.stepType = nextStep
     }
 }
