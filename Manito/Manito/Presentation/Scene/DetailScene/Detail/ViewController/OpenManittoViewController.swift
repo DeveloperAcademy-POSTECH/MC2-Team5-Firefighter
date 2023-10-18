@@ -18,10 +18,12 @@ final class OpenManittoViewController: UIViewController, Navigationable {
 
     // MARK: - property
     
-    private var memberList: [MemberInfo] = []
-    private var randomIndex: Int = 0
+    private let randomCompletionSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var cancelBag: Set<AnyCancellable> = Set()
+    
+    private var memberList: [MemberInfo] = []
+    private var randomIndex: Int = 0
     
     private let viewModel: any BaseViewModelType
 
@@ -65,7 +67,7 @@ final class OpenManittoViewController: UIViewController, Navigationable {
         guard let viewModel = self.viewModel as? OpenManittoViewModel else { return nil }
         let input = OpenManittoViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
-            openManitto: <#T##AnyPublisher<Void, Never>#>
+            openManitto: self.randomCompletionSubject.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
     }
@@ -79,14 +81,30 @@ final class OpenManittoViewController: UIViewController, Navigationable {
                 switch result {
                 case .success(let list):
                     self?.memberList = list
-                    self?.openManittoView.setupManittoAnimation(friendList: list,
-                                                               manittoIndex: manittoIndex,
-                                                               manittoNickname: self.manittoNickname)
                 case .failure(let error):
                     self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
                                    message: error.localizedDescription)
                     self?.dismiss(animated: true)
                 }
+            })
+            .store(in: &self.cancelBag)
+        
+        output.randomIndex
+            .receive(on: DispatchQueue.main)
+            .handleEvents(receiveCompletion: { [weak self] _ in
+                self?.randomCompletionSubject.send(())
+            })
+            .sink(receiveValue: { [weak self] index in
+                // update view with random index
+//                self?.openManittoView.setupManittoAnimation(friendList: list,
+//                                                           manittoIndex: manittoIndex,
+//                                                           manittoNickname: self.manittoNickname)
+            })
+            .store(in: &self.cancelBag)
+        
+        Publishers.Zip(output.manittoIndex, output.popupText)
+            .sink(receiveValue: { index, text in
+                // update manitto index and pop up view
             })
             .store(in: &self.cancelBag)
     }
