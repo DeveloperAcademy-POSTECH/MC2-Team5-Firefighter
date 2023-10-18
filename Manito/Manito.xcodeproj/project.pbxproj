@@ -83,6 +83,7 @@
 		B53A35D42A97266D00B720BC /* CreatedRoomRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35D32A97266D00B720BC /* CreatedRoomRequestDTO.swift */; };
 		B53CD0382ADF941300BE7353 /* OpenManittoUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53CD0372ADF941200BE7353 /* OpenManittoUsecase.swift */; };
 		B53CD03A2ADF9B6100BE7353 /* OpenManittoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53CD0392ADF9B6100BE7353 /* OpenManittoViewModel.swift */; };
+		B53CD0402ADFC25C00BE7353 /* SelectManitteeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53CD03F2ADFC25C00BE7353 /* SelectManitteeViewModel.swift */; };
 		B5422CB22ADD2AE60051A966 /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5422CB12ADD2AE60051A966 /* MemoryViewController.swift */; };
 		B5422CB42ADD2B040051A966 /* MemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5422CB32ADD2B040051A966 /* MemoryView.swift */; };
 		B5422CB62ADD2B190051A966 /* MemoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5422CB52ADD2B190051A966 /* MemoryViewModel.swift */; };
@@ -321,6 +322,7 @@
 		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		B53CD0372ADF941200BE7353 /* OpenManittoUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoUsecase.swift; sourceTree = "<group>"; };
 		B53CD0392ADF9B6100BE7353 /* OpenManittoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoViewModel.swift; sourceTree = "<group>"; };
+		B53CD03F2ADFC25C00BE7353 /* SelectManitteeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewModel.swift; sourceTree = "<group>"; };
 		B5422CB12ADD2AE60051A966 /* MemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
 		B5422CB32ADD2B040051A966 /* MemoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryView.swift; sourceTree = "<group>"; };
 		B5422CB52ADD2B190051A966 /* MemoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewModel.swift; sourceTree = "<group>"; };
@@ -829,8 +831,9 @@
 		B5422CB02ADD2AC50051A966 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				B5422CB52ADD2B190051A966 /* MemoryViewModel.swift */,
+				B53CD03F2ADFC25C00BE7353 /* SelectManitteeViewModel.swift */,
 				B53CD0392ADF9B6100BE7353 /* OpenManittoViewModel.swift */,
+				B5422CB52ADD2B190051A966 /* MemoryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1945,6 +1948,7 @@
 				39EE956F2A404A3800AF6857 /* MissionEditViewController.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
 				B5A085F02A97326B00C8A98D /* FriendListDTO.swift in Sources */,
+				B53CD0402ADFC25C00BE7353 /* SelectManitteeViewModel.swift in Sources */,
 				D7C4A1AB2A0D1AA400C3AE4C /* ParticipateRoomView.swift in Sources */,
 				39C957D02879521400A04A2B /* String+DateFormatter.swift in Sources */,
 				399D17AB2856C83B00F50D9D /* DetailEditViewController.swift in Sources */,
