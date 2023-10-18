@@ -59,7 +59,7 @@ final class SplashViewController: UIViewController {
     }
 
     private func bindOutputToViewModel(_ output: SplashViewModel.Output?) {
-        guard let output = output else { return }
+        guard let output else { return }
 
         output.entryType
             .sink(receiveValue: { [weak self] type in
