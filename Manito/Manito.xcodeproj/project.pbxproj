@@ -686,7 +686,6 @@
 			children = (
 				B5AE11EE29D1E38D00F86FF8 /* View */,
 				B50B1B42285B14550080992C /* Cell */,
-				B50B1B40285B048A0080992C /* OpenManittoViewController.swift */,
 				B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */,
 			);
 			path = Interaction;
@@ -695,7 +694,6 @@
 		B50B1B42285B14550080992C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B50B1B43285B146A0080992C /* OpenManittoCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -793,6 +791,14 @@
 			path = Dev;
 			sourceTree = "<group>";
 		};
+		B53CD0362ADF8EE300BE7353 /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */,
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
 		B5422CAC2ADD2AA10051A966 /* DetailScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,6 +820,7 @@
 		B5422CAE2ADD2AB90051A966 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				B50B1B40285B048A0080992C /* OpenManittoViewController.swift */,
 				B5422CB12ADD2AE60051A966 /* MemoryViewController.swift */,
 			);
 			path = ViewController;
@@ -823,6 +830,8 @@
 			isa = PBXGroup;
 			children = (
 				B5422CB72ADD2B280051A966 /* Cell */,
+				B53CD0362ADF8EE300BE7353 /* UIComponent */,
+				B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */,
 				B5422CB32ADD2B040051A966 /* MemoryView.swift */,
 			);
 			path = View;
@@ -839,6 +848,7 @@
 		B5422CB72ADD2B280051A966 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B50B1B43285B146A0080992C /* OpenManittoCollectionViewCell.swift */,
 				B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */,
 			);
 			path = Cell;
@@ -1146,8 +1156,6 @@
 		B5AE11EE29D1E38D00F86FF8 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */,
-				B5AE11F129D28CB500F86FF8 /* OpenManittoPopupView.swift */,
 				B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */,
 			);
 			path = View;
