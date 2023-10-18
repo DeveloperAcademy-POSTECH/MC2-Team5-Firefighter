@@ -55,7 +55,7 @@ class InvitedCodeViewController: UIViewController, BaseViewControllerType, Navig
     private lazy var roomPersonLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 24)
-        label.text = "X \(roomInfo.capacity)인"
+        label.text = TextLiteral.Common.xPeople.localized(with: roomInfo.capacity)
         return label
     }()
     private lazy var roomPersonView: UIView = {
