@@ -70,7 +70,7 @@ final class MemoryViewModel: BaseViewModelType {
     private func fetchMemory() {
         Task {
             do {
-                let _ = try await self.usecase.fetchMemory(roomId: self.roomId)
+                try await self.usecase.fetchMemory(roomId: self.roomId)
                 self.sendInformation(with: .manitte)
             } catch(let error) {
                 self.memberSubject.send(.failure(error))
