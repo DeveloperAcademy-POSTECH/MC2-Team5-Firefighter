@@ -85,13 +85,13 @@ final class MemoryViewModel: BaseViewModelType {
         case .manitte:
             let memberInfo = MemberInfo(nickname: data.memoriesWithManittee.member.nickname,
                                         colorIndex: data.memoriesWithManittee.member.colorIndex)
-            let message = data.memoriesWithManittee.messages
+            let message = data.memoriesWithManittee.messages.filter { $0.imageUrl != nil || $0.content != nil }
             self.memberSubject.send(.success((TextLiteral.Memory.manitteContent.localized(), memberInfo)))
             self.messageSubject.send(.success(message))
         case .manitto:
             let memberInfo = MemberInfo(nickname: data.memoriesWithManitto.member.nickname,
                                         colorIndex: data.memoriesWithManitto.member.colorIndex)
-            let message = data.memoriesWithManitto.messages
+            let message = data.memoriesWithManitto.messages.filter { $0.imageUrl != nil || $0.content != nil }
             self.memberSubject.send(.success((TextLiteral.Memory.manittoContent.localized(), memberInfo)))
             self.messageSubject.send(.success(message))
         }

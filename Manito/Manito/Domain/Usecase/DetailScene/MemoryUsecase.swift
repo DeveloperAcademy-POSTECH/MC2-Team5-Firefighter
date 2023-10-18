@@ -39,4 +39,3 @@ final class MemoryUsecaseImpl: MemoryUsecase {
         }
     }
 }
-
