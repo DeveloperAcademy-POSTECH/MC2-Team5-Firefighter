@@ -685,15 +685,6 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
-		B50B1B3F285B047C0080992C /* Interaction */ = {
-			isa = PBXGroup;
-			children = (
-				B5AE11EE29D1E38D00F86FF8 /* View */,
-				B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */,
-			);
-			path = Interaction;
-			sourceTree = "<group>";
-		};
 		B53A35B22A9630FE00B720BC /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -816,6 +807,7 @@
 		B5422CAE2ADD2AB90051A966 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */,
 				B50B1B40285B048A0080992C /* OpenManittoViewController.swift */,
 				B5422CB12ADD2AE60051A966 /* MemoryViewController.swift */,
 			);
@@ -827,6 +819,7 @@
 			children = (
 				B5422CB72ADD2B280051A966 /* Cell */,
 				B53CD0362ADF8EE300BE7353 /* UIComponent */,
+				B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */,
 				B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */,
 				B5422CB32ADD2B040051A966 /* MemoryView.swift */,
 			);
@@ -1151,14 +1144,6 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
-		B5AE11EE29D1E38D00F86FF8 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		B5B3C1582A41D67F00AABD6F /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1368,7 +1353,6 @@
 				39C957CC2876E2BE00A04A2B /* Login */,
 				7E0C5C342855B1EF00F698D1 /* NickName */,
 				B5F524E628519B0A00614FF7 /* Main */,
-				B50B1B3F285B047C0080992C /* Interaction */,
 				CBA15C91285CE1880051EDE2 /* ChooseCharacter */,
 				CB637A3828595BE400FF1240 /* ParticipateRoom */,
 				B5F524EA28519B4B00614FF7 /* Letter */,
