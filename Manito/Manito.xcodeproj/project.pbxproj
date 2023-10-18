@@ -81,6 +81,7 @@
 		B53A35CE2A96FA7A00B720BC /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CD2A96FA7A00B720BC /* LoginRepository.swift */; };
 		B53A35D02A97194D00B720BC /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35CF2A97194D00B720BC /* TokenRepository.swift */; };
 		B53A35D42A97266D00B720BC /* CreatedRoomRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A35D32A97266D00B720BC /* CreatedRoomRequestDTO.swift */; };
+		B53CD0382ADF941300BE7353 /* OpenManittoUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53CD0372ADF941200BE7353 /* OpenManittoUsecase.swift */; };
 		B5422CB22ADD2AE60051A966 /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5422CB12ADD2AE60051A966 /* MemoryViewController.swift */; };
 		B5422CB42ADD2B040051A966 /* MemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5422CB32ADD2B040051A966 /* MemoryView.swift */; };
 		B5422CB62ADD2B190051A966 /* MemoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5422CB52ADD2B190051A966 /* MemoryViewModel.swift */; };
@@ -317,6 +318,7 @@
 		B53AD4122A8BC6B300B83B33 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		B53AD4132A8BC6BE00B83B33 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		B53AD41D2A8C88E100B83B33 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
+		B53CD0372ADF941200BE7353 /* OpenManittoUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenManittoUsecase.swift; sourceTree = "<group>"; };
 		B5422CB12ADD2AE60051A966 /* MemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
 		B5422CB32ADD2B040051A966 /* MemoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryView.swift; sourceTree = "<group>"; };
 		B5422CB52ADD2B190051A966 /* MemoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewModel.swift; sourceTree = "<group>"; };
@@ -858,6 +860,7 @@
 			isa = PBXGroup;
 			children = (
 				B5422CCE2ADD3DEC0051A966 /* MemoryUsecase.swift */,
+				B53CD0372ADF941200BE7353 /* OpenManittoUsecase.swift */,
 			);
 			path = DetailScene;
 			sourceTree = "<group>";
@@ -2000,6 +2003,7 @@
 				7EA25C2728C4FEA800746AEA /* ChangeNicknameViewController.swift in Sources */,
 				D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */,
 				B5C7FBF52AA859E300862021 /* BaseViewControllerType.swift in Sources */,
+				B53CD0382ADF941300BE7353 /* OpenManittoUsecase.swift in Sources */,
 				39BDDCC42A52BB4A005E0A71 /* DetailWaitService.swift in Sources */,
 				B5422CB62ADD2B190051A966 /* MemoryViewModel.swift in Sources */,
 				B5A086022A974B8100C8A98D /* RoomListItem.swift in Sources */,
