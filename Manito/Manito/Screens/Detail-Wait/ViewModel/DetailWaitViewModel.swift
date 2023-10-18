@@ -119,9 +119,8 @@ final class DetailWaitViewModel {
             }
             .eraseToAnyPublisher()
         
-        let combineLatestPublisher = viewDidLoad.combineLatest(input.roomDidCreate)
-            .compactMap { [weak self] _ in
-                return self?.makeRoomInformation() }
+        let zipPublisher = Publishers.Zip(viewDidLoad, input.roomDidCreate)
+            .compactMap { $0.0 }
             .eraseToAnyPublisher()
         
         let changeButtonOutput = input.changeButtonDidTap
@@ -139,7 +138,7 @@ final class DetailWaitViewModel {
             deleteRoom: deleteOutput,
             leaveRoom: leaveRoomOutput,
             passedStartDate: passedStartDateOutput,
-            invitedCodeView: combineLatestPublisher,
+            invitedCodeView: zipPublisher,
             changeOutput: changeButtonOutput
         )
     }
