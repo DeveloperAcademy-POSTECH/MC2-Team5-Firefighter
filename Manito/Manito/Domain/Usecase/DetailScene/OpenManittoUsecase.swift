@@ -9,18 +9,13 @@ import Combine
 import Foundation
 
 protocol OpenManittoUsecase {
-    var userNickname: String { get }
-    
     func fetchFriendList(roomId: String) async throws -> FriendList
+    func loadNickname() -> String
 }
 
 final class OpenManittoUsecaseImpl: OpenManittoUsecase {
     
     // MARK: - property
-    
-    var userNickname: String {
-        return UserDefaultStorage.nickname
-    }
 
     private let repository: DetailRoomRepository
 
@@ -39,5 +34,9 @@ final class OpenManittoUsecaseImpl: OpenManittoUsecase {
         } catch {
             throw DetailUsecaseError.failedToFetchFriend
         }
+    }
+    
+    func loadNickname() -> String {
+        return UserDefaultStorage.nickname
     }
 }

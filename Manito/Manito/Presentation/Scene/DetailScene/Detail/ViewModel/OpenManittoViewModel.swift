@@ -108,7 +108,7 @@ final class OpenManittoViewModel: BaseViewModelType {
     }
     
     private func manittoPopupText() -> String {
-        let userNickname = self.usecase.userNickname
+        let userNickname = self.usecase.loadNickname()
         return TextLiteral.DetailIng.openManittoPopupContent.localized(with: userNickname, self.manittoNickname)
     }
 }
