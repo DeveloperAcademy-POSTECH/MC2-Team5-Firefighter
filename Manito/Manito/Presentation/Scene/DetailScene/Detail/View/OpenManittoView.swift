@@ -5,13 +5,10 @@
 //  Created by SHIN YOON AH on 2023/03/27.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
-
-protocol OpenManittoViewDelegate: AnyObject {
-    func confirmButtonTapped()
-}
 
 final class OpenManittoView: UIView, BaseViewType {
 
@@ -57,6 +54,12 @@ final class OpenManittoView: UIView, BaseViewType {
     private let popupView: OpenManittoPopupView = OpenManittoPopupView()
     
     // MARK: - init
+    
+    var confirmPublisher: AnyPublisher<Void, Never> {
+        return self.popupView.confirmButtonPublisher
+    }
+    
+    // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,9 +98,8 @@ final class OpenManittoView: UIView, BaseViewType {
 
     // MARK: - func
 
-    func configureDelegation(_ delegate: UICollectionViewDataSource & OpenManittoViewDelegate) {
+    func configureDelegation(_ delegate: UICollectionViewDataSource) {
         self.manittoCollectionView.dataSource = delegate
-        self.popupView.configureDelegation(delegate)
     }
     
     func updateCollectionView() {
@@ -105,7 +107,7 @@ final class OpenManittoView: UIView, BaseViewType {
     }
     
     func updatePopupView(text: String) {
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.popupView.fadeIn(duration: 0.2)
             self.popupView.setupTypingAnimation(text)
         }

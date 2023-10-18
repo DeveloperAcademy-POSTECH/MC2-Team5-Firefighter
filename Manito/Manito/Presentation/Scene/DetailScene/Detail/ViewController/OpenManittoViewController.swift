@@ -49,6 +49,7 @@ final class OpenManittoViewController: UIViewController, Navigationable {
         super.viewDidLoad()
         self.configureDelegation()
         self.bindViewModel()
+        self.bindUI()
         self.setupNavigation()
     }
 
@@ -106,6 +107,14 @@ final class OpenManittoViewController: UIViewController, Navigationable {
             })
             .store(in: &self.cancelBag)
     }
+    
+    private func bindUI() {
+        self.openManittoView.confirmPublisher
+            .sink(receiveValue: { [weak self] in
+                self?.dismiss(animated: true)
+            })
+            .store(in: &self.cancelBag)
+    }
 }
 
 // MARK: - Helper
@@ -142,12 +151,5 @@ extension OpenManittoViewController: UICollectionViewDataSource {
         }
 
         return cell
-    }
-}
-
-// MARK: - OpenManittoViewDelegate
-extension OpenManittoViewController: OpenManittoViewDelegate {
-    func confirmButtonTapped() {
-        self.dismiss(animated: true)
     }
 }

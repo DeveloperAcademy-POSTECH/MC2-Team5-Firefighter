@@ -112,4 +112,3 @@ final class OpenManittoViewModel: BaseViewModelType {
         return TextLiteral.DetailIng.openManittoPopupContent.localized(with: userNickname, self.manittoNickname)
     }
 }
-
