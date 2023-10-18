@@ -43,6 +43,22 @@ final class PhotoPickerManager: NSObject {
             }
         }
     }
+    
+    func savePhoto(image: UIImage) {
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
+        }) { [weak self] (success, error) in
+            DispatchQueue.main.async {
+                if success {
+                    self?.viewController?.makeAlert(title: TextLiteral.Letter.saveAlertTitle.localized(),
+                                                   message: TextLiteral.Letter.saveAlertMessage.localized())
+                } else {
+                    self?.viewController?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                                    message: TextLiteral.Letter.Error.imageSaveMessage.localized())
+                }
+            }
+        }
+    }
 }
 
 extension PhotoPickerManager {
