@@ -18,6 +18,8 @@ final class SettingViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
+    private let mailManager: MailComposeManager = MailComposeManager()
+    
     private var cancellable = Set<AnyCancellable>()
     private let viewModel: SettingViewModel
     
@@ -46,6 +48,7 @@ final class SettingViewController: UIViewController, Navigationable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDelegation()
+        self.setupMailManager()
         self.bindViewModel()
         self.setupNavigation()
     }
@@ -63,6 +66,10 @@ final class SettingViewController: UIViewController, Navigationable {
     
     private func configureNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
+    private func setupMailManager() {
+        self.mailManager.viewController = self
     }
     
     private func bindViewModel() {
@@ -138,7 +145,9 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func helpButtonDidTap() {
-        self.sendReportMail()
+        let title = TextLiteral.Mail.inquiryTitle.localized()
+        let content = TextLiteral.Mail.inquiryMessage.localized(with: UserDefaultStorage.nickname, Date().description)
+        self.mailManager.sendMail(title: title, content: content)
     }
     
     func logoutButtonDidTap() {

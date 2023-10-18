@@ -164,6 +164,7 @@ enum TextLiteral {
             static let sendMessage = "letter_send_error_mesage"
             static let photoLoadMessage = "letter_send_photo_load_error_message"
             static let settingMessage = "letter_send_photo_setting_error_message"
+            static let photosAuthorizationMessage = "letter_send_photo_photos_authorization_error_message"
             static let deviceMessage = "letter_send_photo_device_error_message"
             static let authorizationMessage = "letter_photo_authorization_error_message"
             static let buttonSetting = "letter_send_photo_error_button_setting"

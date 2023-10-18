@@ -1,15 +1,16 @@
 //
-//  CreateLetterTextView.swift
+//  SendLetterTextView.swift
 //  Manito
 //
 //  Created by SHIN YOON AH on 2022/06/13.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 
-final class CreateLetterTextView: UIView {
+final class SendLetterTextView: UIView {
     
     // MARK: - ui component
     
@@ -43,24 +44,17 @@ final class CreateLetterTextView: UIView {
 
     // MARK: - property
 
-    var sendHasTextValue: ((_ hasText: Bool) -> ())?
-
-    var text: String? {
-        guard self.letterTextView.text != "" && self.letterTextView.text != nil else { return nil }
-        return self.letterTextView.text
-    }
-    private let maximumCount: Int = 100
-
-
+    var textSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    var hasTextSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
     
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
-        self.setCounter(0, maximumCount: self.maximumCount)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -88,22 +82,19 @@ final class CreateLetterTextView: UIView {
         }
     }
     
-    private func setCounter(_ count: Int, maximumCount: Int) {
-        self.countLabel.text = "\(count)/\(maximumCount)"
+    func updateCounter(_ count: Int, maxCount: Int) {
+        self.countLabel.text = "\(count)/\(maxCount)"
     }
     
-    private func textViewReachedMaximumCount(_ textView: UITextView, maximumCount: Int) {
-        if (textView.text?.count ?? 0 > maximumCount) {
-            textView.deleteBackward()
-        }
+    func updateTextViewContent(to content: String) {
+        self.letterTextView.text = content
     }
 }
 
 // MARK: - UITextViewDelegate
-extension CreateLetterTextView: UITextViewDelegate {
+extension SendLetterTextView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        self.setCounter(textView.text?.count ?? 0, maximumCount: self.maximumCount)
-        self.textViewReachedMaximumCount(self.letterTextView, maximumCount: self.maximumCount)
-        self.sendHasTextValue?(textView.hasText)
+        self.hasTextSubject.send(textView.hasText)
+        self.textSubject.send(textView.text)
     }
 }
