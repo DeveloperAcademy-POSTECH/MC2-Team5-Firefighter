@@ -49,8 +49,44 @@ final class FriendListViewController: UIViewController, Navigationable {
         super.viewDidLoad()
         self.setupNavigation()
         self.configureDataSource()
+        self.bindViewModel()
+    }
+    
+    // MARK: - func
+    
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
     }
 
+    private func transformedOutput() -> FriendListViewModel.Output? {
+        guard let viewModel = self.viewModel as? FriendListViewModel else { return nil }
+        let input = FriendListViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher
+        )
+        return viewModel.transform(from: input)
+    }
+
+    private func bindOutputToViewModel(_ output: FriendListViewModel.Output?) {
+        guard let output = output else { return }
+
+        output.friendList
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let data):
+                    self?.reloadMemberList(data)
+                case .failure(let error):
+                    self?.showErrorAlert(message: error.localizedDescription)
+                }
+            })
+            .store(in: &self.cancelBag)
+    }
+    
+    private func showErrorAlert(title: String = TextLiteral.Common.Error.title.localized(),
+                                message: String) {
+        self.makeAlert(title: title, message: message)
+    }
 }
 
 // MARK: - DataSource
