@@ -44,7 +44,6 @@ final class ParticipateRoomView: UIView, BaseViewType {
         super.init(frame: frame)
         self.baseInit()
         self.setupButtonAction()
-        self.setupNotificationCenter()
     }
     
     @available(*, unavailable)
@@ -64,7 +63,7 @@ final class ParticipateRoomView: UIView, BaseViewType {
         self.addSubview(self.nextButton)
         self.nextButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(23)
+            $0.bottom.equalTo(self.keyboardLayoutGuide.snp.top).inset(-23)
             $0.height.equalTo(60)
         }
         
@@ -92,11 +91,6 @@ final class ParticipateRoomView: UIView, BaseViewType {
         self.nextButton.addAction(didTapNextButton, for: .touchUpInside)
     }
     
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     func configureNavigationBarItem(_ navigationController: UINavigationController) {
         let navigationItem = navigationController.topViewController?.navigationItem
         let closeButton = UIBarButtonItem(customView: self.closeButton)
@@ -113,23 +107,5 @@ final class ParticipateRoomView: UIView, BaseViewType {
     
     func toggleDoneButton(isEnabled: Bool) {
         self.nextButton.isDisabled = !isEnabled
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
-        }
-    }
-    
-    @objc
-    private func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.nextButton.transform = .identity
-        })
     }
 }

@@ -67,6 +67,7 @@
 "detail_ing_mission_edit_alert_message" = "기본 미션으로 변경을 통해\n되돌릴 수 있습니다.";
 "detail_ing_reset_error_message" = "미션을 되돌릴 수 없습니다.\n다시 시도해주세요.";
 "detail_ing_mission_edit_error_message" = "개별 미션을 수정 할 수 없습니다.\n다시 시도해주세요.";
+"detail_ing_fetch_friend_error_message" = "방에 참여하는 친구들 정보를 불러올 수 없습니다.";
 "detail_ing_open_manitto_error_message" = "마니또를 확인할 수 없습니다.";
 "detail_done_mission" = "종료된 마니또예요";
 "detail_done_exit_alert_title" = "정말 방을 나가시겠습니까?";
