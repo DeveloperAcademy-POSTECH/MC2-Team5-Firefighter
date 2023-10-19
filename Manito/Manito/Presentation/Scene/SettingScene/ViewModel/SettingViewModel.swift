@@ -34,7 +34,8 @@ final class SettingViewModel {
             .sink { [weak self] _ in
                 UserDefaultHandler.clearAllDataExcludingFcmToken()
                 self?.logoutSubject.send()
-            }.store(in: &self.cancellable)
+            }
+            .store(in: &self.cancellable)
             
         
         input.withdrawalButtonDidTap

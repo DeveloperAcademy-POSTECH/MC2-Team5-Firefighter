@@ -109,12 +109,16 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     }
     
     private func makeAlertWhenAlreadyJoin(error: String) {
-        self.makeAlert(title: TextLiteral.ParticipateRoom.Error.alreadyJoinTitle.localized(), message: error, okAction: { [weak self] _ in
+        self.makeAlert(title: TextLiteral.ParticipateRoom.Error.alreadyJoinTitle.localized(), 
+                       message: error,
+                       okAction: { [weak self] _ in
             self?.dismiss(animated: true)
         })
     }
     
     private func makeAlertWhenNetworkError(error: String) {
-        self.makeAlert(title: TextLiteral.Common.Error.title.localized(), message: error, okAction: nil)
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(), 
+                       message: error,
+                       okAction: nil)
     }
 }
