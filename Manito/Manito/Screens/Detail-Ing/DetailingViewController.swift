@@ -257,7 +257,9 @@ extension DetailingViewController: DetailingDelegate {
     }
     
     func manittoMemoryButtonDidTap() {
-        let viewController = MemoryViewController(roomId: self.roomId)
+        let usecase = MemoryUsecaseImpl(repository: DetailRoomRepositoryImpl())
+        let viewModel = MemoryViewModel(usecase: usecase, roomId: self.roomId)
+        let viewController = MemoryViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
