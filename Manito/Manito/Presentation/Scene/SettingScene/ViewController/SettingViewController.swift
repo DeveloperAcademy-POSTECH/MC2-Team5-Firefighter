@@ -18,6 +18,8 @@ final class SettingViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
+    private let mailManager: MailComposeManager = MailComposeManager()
+    
     private var cancellable = Set<AnyCancellable>()
     private let viewModel: SettingViewModel
     private let withdrawalPublisher = PassthroughSubject<Void, Never>()
@@ -47,6 +49,7 @@ final class SettingViewController: UIViewController, Navigationable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupMailManager()
         self.bindViewModel()
         self.bindUI()
         self.setupNavigation()
@@ -61,6 +64,10 @@ final class SettingViewController: UIViewController, Navigationable {
     
     private func configureNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
+    private func setupMailManager() {
+        self.mailManager.viewController = self
     }
     
     private func bindViewModel() {
@@ -154,6 +161,12 @@ final class SettingViewController: UIViewController, Navigationable {
         if let url = URL(string: url) {
             UIApplication.shared.open(url, options: [:])
         }
+    }
+    
+    private func sendReportMail() {
+        let title = TextLiteral.Mail.inquiryTitle.localized()
+        let content = TextLiteral.Mail.inquiryMessage.localized(with: UserDefaultStorage.nickname, Date().description)
+        self.mailManager.sendMail(title: title, content: content)
     }
     
     private func pushDeveloperInfoViewController() {
