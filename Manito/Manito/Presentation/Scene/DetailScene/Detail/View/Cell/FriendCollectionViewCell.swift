@@ -28,6 +28,7 @@ final class FriendCollectionViewCell: UICollectionViewCell, BaseViewType {
     private let friendNicknameLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 15)
+        label.textAlignment = .center
         return label
     }()
     

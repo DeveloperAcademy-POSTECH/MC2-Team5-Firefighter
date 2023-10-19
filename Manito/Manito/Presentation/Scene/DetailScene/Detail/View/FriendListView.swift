@@ -14,11 +14,9 @@ final class FriendListView: UIView, BaseViewType {
     private enum ConstantSize {
         static let groupInterItemSpacing: CGFloat = 14
         static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
-            top: 18.0,
-            leading: SizeLiteral.leadingTrailingPadding,
-            bottom: 18.0,
-            trailing: SizeLiteral.leadingTrailingPadding
+            top: 18.0, leading: 28.0, bottom: 18.0, trailing: 28.0
         )
+        static let itemSpacing: CGFloat = 28.0 * 2 + groupInterItemSpacing
     }
     
     // MARK: - ui component
@@ -60,6 +58,10 @@ final class FriendListView: UIView, BaseViewType {
     
     // MARK: - func
     
+    func configureNavigationBar(_ viewController: UIViewController) {
+        viewController.title = TextLiteral.Detail.togetherFriendTitle.localized()
+    }
+    
     func collectionView() -> UICollectionView {
         return self.friendListCollectionView
     }
@@ -69,17 +71,20 @@ final class FriendListView: UIView, BaseViewType {
 extension FriendListView {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
+            let itemWidth = ((self.window?.windowScene?.screen.bounds.width ?? 0) - ConstantSize.itemSpacing) / 2
             let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(0.5),
-                heightDimension: .fractionalWidth(0.5)
+                widthDimension: .absolute(itemWidth),
+                heightDimension: .absolute(itemWidth)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalWidth(0.5)
+                heightDimension: .absolute(itemWidth)
             )
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let groupSpacing = NSCollectionLayoutSpacing.fixed(ConstantSize.groupInterItemSpacing)
+            group.interItemSpacing = groupSpacing
             
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = ConstantSize.sectionContentInset

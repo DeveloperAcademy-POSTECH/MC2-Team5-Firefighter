@@ -48,11 +48,16 @@ final class FriendListViewController: UIViewController, Navigationable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigation()
+        self.configureNavigationBar()
         self.configureDataSource()
         self.bindViewModel()
     }
     
     // MARK: - func
+    
+    private func configureNavigationBar() {
+        self.friendListView.configureNavigationBar(self)
+    }
     
     private func bindViewModel() {
         let output = self.transformedOutput()
@@ -98,11 +103,8 @@ extension FriendListViewController {
     
     private func friendListCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, MemberInfo> {
         let friendCellRegistration = UICollectionView.CellRegistration<FriendCollectionViewCell, MemberInfo> { cell, indexPath, item in
-            cell.setupFont()
-            cell.setupViewLayer()
-            cell.makeBorderLayer(color: .white)
-            cell.setFriendName(name: item.nickname)
-            cell.setFriendImage(index: item.colorIndex)
+            cell.configureCell(name: item.nickname,
+                               colorIndex: item.colorIndex)
         }
         
         return UICollectionViewDiffableDataSource(

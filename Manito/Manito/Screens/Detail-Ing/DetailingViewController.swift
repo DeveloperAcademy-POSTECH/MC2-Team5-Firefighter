@@ -80,10 +80,9 @@ final class DetailingViewController: UIViewController, Navigationable {
     }
     
     private func pushFriendListViewController() {
-        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className) as? FriendListViewController else { return }
-        guard let roomId = Int(roomId) else { return }
-        viewController.roomIndex = roomId
+        let usecase = FriendListUsecaseImpl(repository: DetailRoomRepositoryImpl())
+        let viewModel = FriendListViewModel(usecase: usecase, roomId: self.roomId)
+        let viewController = FriendListViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
