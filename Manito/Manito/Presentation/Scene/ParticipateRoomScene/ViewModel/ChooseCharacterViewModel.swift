@@ -22,10 +22,10 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     
     private let roomId: Int
     
-    private let roomIdSubject = PassthroughSubject<Result<Int, ChooseCharacterError>, Never>()
-    
-    private let usecase: ParticipateRoomUsecaseImpl
+    private let usecase: ParticipateRoomUsecase
     private var cancellable = Set<AnyCancellable>()
+    
+    private let roomIdSubject = PassthroughSubject<Result<Int, ChooseCharacterError>, Never>()
 
     // MARK: - init
     

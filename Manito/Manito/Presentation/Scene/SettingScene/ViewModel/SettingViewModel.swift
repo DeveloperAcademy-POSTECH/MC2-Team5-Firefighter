@@ -12,7 +12,7 @@ final class SettingViewModel {
     
     // MARK: - property
     
-    private let usecase: SettingUsecaseImpl
+    private let usecase: SettingUsecase
     private var cancellable = Set<AnyCancellable>()
     
     private let deleteUserSubject = PassthroughSubject<Void, NetworkError>()

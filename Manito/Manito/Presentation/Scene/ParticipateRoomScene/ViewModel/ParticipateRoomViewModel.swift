@@ -28,10 +28,11 @@ final class ParticipateRoomViewModel: BaseViewModelType {
     // MARK: - property
     
     private let maxCount: Int = 6
-    private let roomInfoSubject = PassthroughSubject<ParticipatedRoomInfo, Error>()
-
-    private let usecase: ParticipateRoomUsecaseImpl
+    
+    private let usecase: ParticipateRoomUsecase
     private var cancellable = Set<AnyCancellable>()
+    
+    private let roomInfoSubject = PassthroughSubject<ParticipatedRoomInfo, Error>()
     
     // MARK: - init
     
