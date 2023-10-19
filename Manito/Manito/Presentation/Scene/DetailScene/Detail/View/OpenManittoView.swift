@@ -107,7 +107,7 @@ final class OpenManittoView: UIView, BaseViewType {
     }
     
     func updatePopupView(text: String) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.popupView.fadeIn(duration: 0.2)
             self.popupView.setupTypingAnimation(text)
         }
