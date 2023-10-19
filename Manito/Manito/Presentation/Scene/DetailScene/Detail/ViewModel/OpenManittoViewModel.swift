@@ -54,6 +54,7 @@ final class OpenManittoViewModel: BaseViewModelType {
             .autoconnect()
         
         let randomIndex = Publishers.CombineLatest(memberInfo, timerPublisher)
+            .delay(for: .seconds(0.5), scheduler: DispatchQueue.global())
             .map { result, _ -> [MemberInfo] in
                 switch result {
                 case .success(let list): return list
@@ -65,6 +66,7 @@ final class OpenManittoViewModel: BaseViewModelType {
             .eraseToAnyPublisher()
         
         let manittoIndex = Publishers.CombineLatest(memberInfo, input.openManitto)
+            .delay(for: .seconds(1), scheduler: DispatchQueue.global())
             .compactMap { [weak self] result, _ -> Int? in
                 switch result {
                 case .success(let list): return self?.manittoIndex(in: list)
