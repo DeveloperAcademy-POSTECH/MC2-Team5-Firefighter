@@ -57,6 +57,12 @@ final class FriendListView: UIView, BaseViewType {
     func configureUI() {
         self.backgroundColor = .backgroundGrey
     }
+    
+    // MARK: - func
+    
+    func collectionView() -> UICollectionView {
+        return self.friendListCollectionView
+    }
 }
 
 // MARK: - UICollectionViewLayout

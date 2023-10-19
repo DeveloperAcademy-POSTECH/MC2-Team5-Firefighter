@@ -10,9 +10,16 @@ import UIKit
 
 final class FriendListViewController: UIViewController, Navigationable {
     
+    enum Section: CaseIterable {
+        case main
+    }
+    
     // MARK: - ui component
     
     private let friendListView: FriendListView = FriendListView()
+    
+    private var dataSource: UICollectionViewDiffableDataSource<Section, MemberInfo>?
+    private var snapShot: NSDiffableDataSourceSnapshot<Section, MemberInfo>?
 
     // MARK: - property
     
@@ -41,23 +48,54 @@ final class FriendListViewController: UIViewController, Navigationable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigation()
+        self.configureDataSource()
     }
 
 }
 
-// MARK: - UICollectionViewDataSource
-extension FriendListViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return friendArray.count
+// MARK: - DataSource
+extension FriendListViewController {
+    private func configureDataSource() {
+        self.dataSource = self.friendListCollectionViewDataSource()
+        self.configureSnapshot()
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendCollectionViewCell.className, for: indexPath) as? FriendCollectionViewCell else { return UICollectionViewCell() }
-        cell.setupFont()
-        cell.setupViewLayer()
-        cell.makeBorderLayer(color: .white)
-        cell.setFriendName(name: friendArray[indexPath.item].nickname ?? "닉네임")
-        cell.setFriendImage(index: friendArray[indexPath.item].colorIndex ?? 0)
-        return cell
+    private func friendListCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, MemberInfo> {
+        let friendCellRegistration = UICollectionView.CellRegistration<FriendCollectionViewCell, MemberInfo> { cell, indexPath, item in
+            cell.setupFont()
+            cell.setupViewLayer()
+            cell.makeBorderLayer(color: .white)
+            cell.setFriendName(name: item.nickname)
+            cell.setFriendImage(index: item.colorIndex)
+        }
+        
+        return UICollectionViewDiffableDataSource(
+            collectionView: self.friendListView.collectionView(),
+            cellProvider: { collectionView, indexPath, item in
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: friendCellRegistration,
+                    for: indexPath,
+                    item: item)
+            }
+        )
+    }
+}
+
+// MARK: - Snapshot
+extension FriendListViewController {
+    private func configureSnapshot() {
+        self.snapShot = NSDiffableDataSourceSnapshot<Section, MemberInfo>()
+        self.snapShot?.appendSections([.main])
+        if let snapShot {
+            self.dataSource?.apply(snapShot, animatingDifferences: true)
+        }
+    }
+    
+    private func reloadMemberList(_ items: [MemberInfo]) {
+        guard var snapShot else { return }
+        let previousMemberData = snapShot.itemIdentifiers(inSection: .main)
+        snapShot.deleteItems(previousMemberData)
+        snapShot.appendItems(items, toSection: .main)
+        self.dataSource?.apply(snapShot, animatingDifferences: true)
     }
 }
