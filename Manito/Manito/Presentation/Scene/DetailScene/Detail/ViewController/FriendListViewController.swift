@@ -77,20 +77,22 @@ final class FriendListViewController: UIViewController, Navigationable {
 
         output.friendList
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] result in
-                switch result {
-                case .success(let data):
-                    self?.reloadMemberList(data)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished: break
                 case .failure(let error):
                     self?.showErrorAlert(message: error.localizedDescription)
                 }
+            }, receiveValue: { [weak self] list in
+                self?.reloadMemberList(list)
             })
             .store(in: &self.cancelBag)
     }
     
-    private func showErrorAlert(title: String = TextLiteral.Common.Error.title.localized(),
-                                message: String) {
-        self.makeAlert(title: title, message: message)
+    private func showErrorAlert(message: String) {
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(), 
+                       message: message,
+                       okAction: { [weak self] _ in self?.navigationController?.popViewController(animated: true) })
     }
 }
 

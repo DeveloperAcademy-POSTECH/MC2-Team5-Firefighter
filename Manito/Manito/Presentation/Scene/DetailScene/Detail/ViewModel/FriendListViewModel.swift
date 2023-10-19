@@ -15,7 +15,7 @@ final class FriendListViewModel: BaseViewModelType {
     }
 
     struct Output {
-        let friendList: AnyPublisher<Result<[MemberInfo], Error>, Never>
+        let friendList: AnyPublisher<[MemberInfo], Error>
     }
 
     // MARK: - property
@@ -36,14 +36,7 @@ final class FriendListViewModel: BaseViewModelType {
     func transform(from input: Input) -> Output {
         let friendList = input.viewDidLoad
             .compactMap { [weak self] in return self }
-            .asyncMap { viewModel -> Result<[MemberInfo], Error> in
-                do {
-                    let list = try await viewModel.usecase.fetchFriendList(roomId: viewModel.roomId)
-                    return .success(list.members)
-                } catch(let error) {
-                    return .failure(error)
-                }
-            }
+            .asyncMap { try await $0.usecase.fetchFriendList(roomId: $0.roomId).members }
             .eraseToAnyPublisher()
 
         return Output(friendList: friendList)
