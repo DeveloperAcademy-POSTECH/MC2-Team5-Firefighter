@@ -102,15 +102,15 @@ final class SettingViewController: UIViewController, Navigationable {
             .sink { [weak self] type in
                 switch type {
                 case .changeNickname:
-                    self?.changNicknameButtonDidTap()
+                    self?.pushChangeNicknameViewController()
                 case .personInfomation:
-                    self?.personalInfomationButtonDidTap()
+                    self?.openUrlBySettingButton(type: .personInfomation)
                 case .termsOfService:
-                    self?.termsOfServiceButtonDidTap()
+                    self?.openUrlBySettingButton(type: .termsOfService)
                 case .developerInfo:
-                    self?.developerInfoButtonDidTap()
+                    self?.pushDeveloperInfoViewController()
                 case .help:
-                    self?.helpButtonDidTap()
+                    self?.sendReportMail()
                 case .logout:
                     self?.makeAlertBySettingButton(type: .logout)
                 case .withdrawal:
@@ -134,33 +134,30 @@ final class SettingViewController: UIViewController, Navigationable {
                                    okAction: { [weak self] _ in
                 self?.withdrawalPublisher.send()
             })
-        default:
-            return
+        default: return
         }
     }
     
-    private func changNicknameButtonDidTap() {
+    private func pushChangeNicknameViewController() {
         self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
     }
     
-    private func personalInfomationButtonDidTap() {
-        if let url = URL(string: URLLiteral.Setting.personalInformation) {
+    private func openUrlBySettingButton(type: SettingView.SettingActions) {
+        switch type {
+        case .personInfomation: self.openUrl(url: URLLiteral.Setting.personalInformation)
+        case .termsOfService: self.openUrl(url: URLLiteral.Setting.termsOfService)
+        default: return
+        }
+    }
+    
+    private func openUrl(url: String) {
+        if let url = URL(string: url) {
             UIApplication.shared.open(url, options: [:])
         }
     }
     
-    private func termsOfServiceButtonDidTap() {
-        if let url = URL(string: URLLiteral.Setting.termsOfService) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-    
-    private func developerInfoButtonDidTap() {
+    private func pushDeveloperInfoViewController() {
         self.navigationController?.pushViewController(SettingDeveloperInfoViewController(), animated: true)
-    }
-    
-    private func helpButtonDidTap() {
-        self.sendReportMail()
     }
     
     private func deleteUser() {
