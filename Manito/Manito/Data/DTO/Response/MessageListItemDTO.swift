@@ -26,12 +26,32 @@ struct MessageListItemDTO: Decodable {
 }
 
 extension MessageListItemDTO {
-    func toMessageListItem(canReport: Bool) -> MessageListItem {
-        return MessageListItem(id: self.id ?? 0,
+    func toMessageListItem(canReport: Bool) async -> MessageListItem {
+        return await MessageListItem(id: self.id ?? 0,
                                content: self.content,
-                               imageUrl: self.imageUrl,
+                               imageUrl: self.verifiedImageURL(),
                                createdDate: self.createdDate ?? "",
                                missionInfo: self.missionInfo,
                                canReport: canReport)
+    }
+    
+    // MARK: - Private - func
+    
+    /// DB에 이미지가 없는 imageURL를 걸러내고 검증된 imageURL만 반환
+    private func verifiedImageURL() async -> String? {
+        do {
+            guard let imageURL = self.imageUrl else { return nil }
+            guard let url = URL(string: imageURL) else { return nil }
+            
+            let (_, response) = try await URLSession.shared.data(from: url)
+            guard let urlResponse = response as? HTTPURLResponse else { return nil }
+            
+            switch urlResponse.statusCode {
+            case 200..<300: return self.imageUrl
+            default: return nil
+            }
+        } catch {
+            return nil
+        }
     }
 }
