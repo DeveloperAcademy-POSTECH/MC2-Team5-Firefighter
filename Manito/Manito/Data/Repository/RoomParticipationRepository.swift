@@ -57,8 +57,8 @@ enum ChooseCharacterError: LocalizedError {
 extension ChooseCharacterError {
     var errorDescription: String? {
         switch self {
-        case .roomAlreadyParticipating: return TextLiteral.ParticipateRoom.Error.alreadyJoinTitle.localized()
-        case .clientError: return TextLiteral.Common.Error.title.localized()
+        case .roomAlreadyParticipating: return TextLiteral.ParticipateRoom.Error.alreadyJoinMessage.localized()
+        case .clientError: return TextLiteral.Common.Error.networkServer.localized()
         }
     }
 }
