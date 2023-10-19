@@ -152,7 +152,6 @@
 		B5F3F1062AA3516200FA1A32 /* RoomStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F3F1052AA3516200FA1A32 /* RoomStatus.swift */; };
 		B5F524CF28519AA000614FF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524CE28519AA000614FF7 /* AppDelegate.swift */; };
 		B5F524D128519AA000614FF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524D028519AA000614FF7 /* SceneDelegate.swift */; };
-		B5F524D628519AA000614FF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D428519AA000614FF7 /* Main.storyboard */; };
 		B5F524D828519AA100614FF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D728519AA100614FF7 /* Assets.xcassets */; };
 		B5F524DB28519AA100614FF7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F524D928519AA100614FF7 /* LaunchScreen.storyboard */; };
 		B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F524FA28519C2A00614FF7 /* MainViewController.swift */; };
@@ -389,7 +388,6 @@
 		B5F524CB28519AA000614FF7 /* Manito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F524CE28519AA000614FF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5F524D028519AA000614FF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B5F524D528519AA000614FF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B5F524D728519AA100614FF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5F524DA28519AA100614FF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5F524DC28519AA100614FF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1392,7 +1390,6 @@
 			isa = PBXGroup;
 			children = (
 				7E0C5C372855B73100F698D1 /* Splash.storyboard */,
-				B5F524D428519AA000614FF7 /* Main.storyboard */,
 				B5F524D928519AA100614FF7 /* LaunchScreen.storyboard */,
 				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
 			);
@@ -1776,7 +1773,6 @@
 				B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */,
 				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
 				B5EDF4A32AB056B50086230C /* Localizable.strings in Resources */,
-				B5F524D628519AA000614FF7 /* Main.storyboard in Resources */,
 				B5C0BF9C2AAEE6B000E9017C /* gifNi.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2035,14 +2031,6 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		B5F524D428519AA000614FF7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B5F524D528519AA000614FF7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B5F524D928519AA100614FF7 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2242,7 +2230,6 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "‘애니또’가 사용자의 사진에 접근하려고 합니다. 쪽지에 사진을 업로드할 때 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
@@ -2284,7 +2271,6 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "‘애니또’가 사용자의 사진에 접근하려고 합니다. 쪽지에 사진을 업로드할 때 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
