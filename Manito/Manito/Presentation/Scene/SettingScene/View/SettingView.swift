@@ -12,7 +12,7 @@ import SnapKit
 
 final class SettingView: UIView, BaseViewType {
     
-    enum SettingActions {
+    enum SettingActions: CaseIterable {
         case changeNickname
         case personInfomation
         case termsOfService
@@ -20,11 +20,25 @@ final class SettingView: UIView, BaseViewType {
         case help
         case logout
         case withdrawal
-    }
-    
-    struct Option {
-        let title: String
-        let handler: () -> Void
+        
+        var title: String {
+            switch self {
+            case .changeNickname:
+                return TextLiteral.Setting.changeNickname.localized()
+            case .personInfomation:
+                return TextLiteral.Setting.personalInformation.localized()
+            case .termsOfService:
+                return TextLiteral.Setting.termsOfService.localized()
+            case .developerInfo:
+                return TextLiteral.Setting.developerInfo.localized()
+            case .help:
+                return TextLiteral.Setting.inquiry.localized()
+            case .logout:
+                return TextLiteral.Setting.logout.localized()
+            case .withdrawal:
+                return ""
+            }
+        }
     }
     
     // MARK: - ui component
@@ -51,7 +65,7 @@ final class SettingView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private var options: [Option] = []
+    private var settingActions: [SettingActions] = SettingActions.allCases
 
     let buttonDidTapPublisher = PassthroughSubject<SettingActions, Never>()
     
@@ -60,7 +74,6 @@ final class SettingView: UIView, BaseViewType {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.configureModels()
         self.setupAction()
     }
     
@@ -106,38 +119,11 @@ final class SettingView: UIView, BaseViewType {
         }
         self.withdrawalButton.addAction(didTapWithdrawalButton, for: .touchUpInside)
     }
-    
-    private func configureModels() {
-        self.options.append(Option(title: TextLiteral.Setting.changeNickname.localized(), handler: { [weak self] in
-            self?.buttonDidTapPublisher.send(.changeNickname)
-        }))
-        
-        self.options.append(Option(title: TextLiteral.Setting.personalInformation.localized(), handler: { [weak self] in
-            self?.buttonDidTapPublisher.send(.personInfomation)
-        }))
-        
-        self.options.append(Option(title: TextLiteral.Setting.termsOfService.localized(), handler: { [weak self] in
-            self?.buttonDidTapPublisher.send(.termsOfService)
-        }))
-        
-        self.options.append(Option(title: TextLiteral.Setting.developerInfo.localized(), handler: { [weak self] in
-            self?.buttonDidTapPublisher.send(.developerInfo)
-        }))
-        
-        self.options.append(Option(title: TextLiteral.Setting.inquiry.localized(), handler: { [weak self] in
-            self?.buttonDidTapPublisher.send(.help)
-        }))
-        
-        self.options.append(Option(title: TextLiteral.Setting.logout.localized(), handler: { [weak self] in
-            self?.buttonDidTapPublisher.send(.logout)
-        }))
-    }
 }
 
 extension SettingView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.options[indexPath.row]
-        model.handler()
+        self.buttonDidTapPublisher.send(self.settingActions[indexPath.row])
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -147,15 +133,14 @@ extension SettingView: UITableViewDelegate {
 
 extension SettingView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.options.count
+        return self.settingActions.count - 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = self.options[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as? SettingViewTableCell else {
             return UITableViewCell()
         }
-        cell.configureCell(title: model.title)
+        cell.configureCell(title: settingActions[indexPath.row].title)
         return cell
     }
 }
