@@ -16,6 +16,8 @@ final class FriendListView: UIView, BaseViewType {
     private let friendListCollectionView: UICollectionView = {
         let collectionView = UICollectionView()
         collectionView.backgroundColor = .clear
+        collectionView.register(cell: FriendCollectionViewCell.self,
+                                forCellWithReuseIdentifier: FriendCollectionViewCell.className)
         return collectionView
     }()
 
@@ -40,5 +42,11 @@ final class FriendListView: UIView, BaseViewType {
     func configureUI() {
         self.backgroundColor = .backgroundGrey
     }
+}
 
+// MARK: - UICollectionViewLayout
+extension FriendListView {
+    private func createLayout() -> UICollectionViewLayout {
+        
+    }
 }

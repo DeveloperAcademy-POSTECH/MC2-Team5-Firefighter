@@ -9,6 +9,10 @@ import Combine
 import UIKit
 
 final class FriendListViewController: UIViewController, Navigationable {
+    
+    // MARK: - ui component
+    
+    private let friendListView: FriendListView = FriendListView()
 
     // MARK: - property
     
@@ -29,6 +33,10 @@ final class FriendListViewController: UIViewController, Navigationable {
     }
     
     // MARK: - life cycle
+    
+    override func loadView() {
+        self.view = self.friendListView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
