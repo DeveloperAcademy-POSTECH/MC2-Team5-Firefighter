@@ -112,20 +112,31 @@ final class SettingViewController: UIViewController, Navigationable {
                 case .help:
                     self?.helpButtonDidTap()
                 case .logout:
-                    self?.makeRequestAlert(title: TextLiteral.Setting.logoutAlertTitle.localized(),
-                                           message: "",
-                                           okAction: { _ in
-                        self?.logoutPublisher.send()
-                    })
+                    self?.makeAlertBySettingButton(type: .logout)
                 case .withdrawal:
-                    self?.makeRequestAlert(title: TextLiteral.Common.warningTitle.localized(),
-                                           message: TextLiteral.Setting.withdrawalAlertMessage.localized(),
-                                           okAction: { _ in
-                        self?.withdrawalPublisher.send()
-                    })
+                    self?.makeAlertBySettingButton(type: .withdrawal)
                 }
             }
             .store(in: &self.cancellable)
+    }
+    
+    private func makeAlertBySettingButton(type: SettingView.SettingActions) {
+        switch type {
+        case .logout:
+            self.makeRequestAlert(title: TextLiteral.Setting.logoutAlertTitle.localized(),
+                                   message: "",
+                                   okAction: { [weak self] _ in
+                self?.logoutPublisher.send()
+            })
+        case .withdrawal:
+            self.makeRequestAlert(title: TextLiteral.Common.warningTitle.localized(),
+                                   message: TextLiteral.Setting.withdrawalAlertMessage.localized(),
+                                   okAction: { [weak self] _ in
+                self?.withdrawalPublisher.send()
+            })
+        default:
+            return
+        }
     }
     
     private func changNicknameButtonDidTap() {
