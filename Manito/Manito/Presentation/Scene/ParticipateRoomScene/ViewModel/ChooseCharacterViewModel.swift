@@ -11,7 +11,7 @@ import Foundation
 final class ChooseCharacterViewModel: BaseViewModelType {
     
     struct Input {
-        let joingButtonTapPublisher: AnyPublisher<Int, Never>
+        let joinButtonTapPublisher: AnyPublisher<Int, Never>
     }
     
     struct Output {
@@ -37,7 +37,7 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     // MARK: - func
     
     func transform(from input: Input) -> Output {
-        input.joingButtonTapPublisher
+        input.joinButtonTapPublisher
             .sink { [weak self] characterIndex in
                 guard let self = self else { return }
                 self.requestParticipateRoom(roomId: self.roomId, colorIndex: characterIndex)

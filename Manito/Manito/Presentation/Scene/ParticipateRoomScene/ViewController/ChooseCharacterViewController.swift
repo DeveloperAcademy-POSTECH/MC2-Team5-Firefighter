@@ -64,7 +64,7 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     }
     
     private func transformedOutput() -> ChooseCharacterViewModel.Output {
-        let input = ChooseCharacterViewModel.Input(joingButtonTapPublisher: self.chooseCharacterView.joinButtonTapPublisher.eraseToAnyPublisher())
+        let input = ChooseCharacterViewModel.Input(joinButtonTapPublisher: self.chooseCharacterView.joinButtonTapPublisher.eraseToAnyPublisher())
         return self.viewModel.transform(from: input)
     }
     
@@ -109,12 +109,12 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     }
     
     private func makeAlertWhenAlreadyJoin(error: String) {
-        self.makeAlert(title: error, message: TextLiteral.ParticipateRoom.Error.alreadyJoinMessage.localized(), okAction: { [weak self] _ in
+        self.makeAlert(title: TextLiteral.ParticipateRoom.Error.alreadyJoinTitle.localized(), message: error, okAction: { [weak self] _ in
             self?.dismiss(animated: true)
         })
     }
     
     private func makeAlertWhenNetworkError(error: String) {
-        self.makeAlert(title: error, message: TextLiteral.Common.Error.networkServer.localized(), okAction: nil)
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(), message: error, okAction: nil)
     }
 }
