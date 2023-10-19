@@ -8,11 +8,7 @@
 import UIKit
 
 final class FriendListViewController: UIViewController, BaseViewControllerType, Navigationable {
-    var friendArray: [MemberInfoDTO] = [] {
-        didSet {
-            friendListCollectionView.reloadData()
-        }
-    }
+    
     var detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
     
     var roomIndex: Int = 0
