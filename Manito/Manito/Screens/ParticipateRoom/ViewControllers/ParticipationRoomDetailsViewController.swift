@@ -75,7 +75,10 @@ final class ParticipationRoomDetailsViewController: UIViewController {
             .sink(receiveValue: { [weak self] roomId in
                 guard let presentingViewController = self?.presentingViewController as? UINavigationController else { return }
                 self?.dismiss(animated: true, completion: {
-                    presentingViewController.pushViewController(ChooseCharacterViewController(roomId: roomId), animated: true)
+                    let repository = RoomParticipationRepositoryImpl()
+                    let service = ParticipateRoomService(repository: repository)
+                    let viewModel = ChooseCharacterViewModel(participateRoomService: service, roomId: roomId)
+                    presentingViewController.pushViewController(ChooseCharacterViewController(viewModel: viewModel), animated: true)
                 })
             })
             .store(in: &self.cancellable)

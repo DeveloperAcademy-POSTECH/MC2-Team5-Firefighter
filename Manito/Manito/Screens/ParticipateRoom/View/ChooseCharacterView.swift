@@ -5,15 +5,10 @@
 //  Created by 이성호 on 2023/05/10.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
-
-protocol ChooseCharacterViewDelegate: AnyObject {
-    func backButtonDidTap()
-    func closeButtonDidTap()
-    func joinButtonDidTap(characterIndex: Int)
-}
 
 final class ChooseCharacterView: UIView, BaseViewType {
     
@@ -42,7 +37,7 @@ final class ChooseCharacterView: UIView, BaseViewType {
         label.textColor = .grey002
         return label
     }()
-    private let manittoCollectionView: CharacterCollectionView = CharacterCollectionView()
+    let manittoCollectionView: CharacterCollectionView = CharacterCollectionView()
     private let joinButton: MainButton = {
         let button = MainButton()
         button.title = TextLiteral.Common.enterRoom.localized()
@@ -51,14 +46,16 @@ final class ChooseCharacterView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private weak var delegate: ChooseCharacterViewDelegate?
+    lazy var backButtonTapPublisher = self.backButton.tapPublisher
+    lazy var closeButtonTapPublisher = self.closeButton.tapPublisher
+    let joinButtonTapPublisher = PassthroughSubject<Int, Never>()
     
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupButtonAction()
+        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -66,7 +63,15 @@ final class ChooseCharacterView: UIView, BaseViewType {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - base func
+    // MARK: - func
+    
+    private func setupAction() {
+        let didTapJoinButton = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.joinButtonTapPublisher.send(self.manittoCollectionView.characterIndex)
+        }
+        self.joinButton.addAction(didTapJoinButton, for: .touchUpInside)
+    }
     
     func setupLayout() {
         self.addSubview(self.titleLabel)
@@ -98,36 +103,5 @@ final class ChooseCharacterView: UIView, BaseViewType {
 
     func configureUI() {
         self.backgroundColor = .backgroundGrey
-    }
-
-    // MARK: - func
-    
-    private func setupButtonAction() {
-        let didTapBackButton = UIAction { [weak self] _ in
-            self?.delegate?.backButtonDidTap()
-        }
-        let didTapCloseButton = UIAction { [weak self] _ in
-            self?.delegate?.closeButtonDidTap()
-        }
-        let didTapJoinButton = UIAction { [weak self] _ in
-            self?.delegate?.joinButtonDidTap(characterIndex: self?.manittoCollectionView.characterIndexTapPublisher.value ?? 0)
-        }
-        
-        self.backButton.addAction(didTapBackButton, for: .touchUpInside)
-        self.closeButton.addAction(didTapCloseButton, for: .touchUpInside)
-        self.joinButton.addAction(didTapJoinButton, for: .touchUpInside)
-    }
-        
-    func configureDelegate(_ delegate: ChooseCharacterViewDelegate) {
-        self.delegate = delegate
-    }
-    
-    func configureNavigationItem(_ navigationController: UINavigationController) {
-        let navigationItem = navigationController.topViewController?.navigationItem
-        let backButton = UIBarButtonItem(customView: self.backButton)
-        let closeButton = UIBarButtonItem(customView: self.closeButton)
-        
-        navigationItem?.leftBarButtonItem = backButton
-        navigationItem?.rightBarButtonItem = closeButton
     }
 }
