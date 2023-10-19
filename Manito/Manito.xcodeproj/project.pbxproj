@@ -1460,8 +1460,6 @@
 		D7AE5EB72AC184A600A20D0A /* ParticipateRoomScene */ = {
 			isa = PBXGroup;
 			children = (
-				D7AE5EBD2AC1956300A20D0A /* Cell */,
-				D7AE5EBC2AC1951100A20D0A /* UIComponent */,
 				D7AE5EBA2AC184BC00A20D0A /* View */,
 				D7AE5EB92AC184B700A20D0A /* ViewController */,
 				D7AE5EB82AC184B300A20D0A /* ViewModel */,
@@ -1492,6 +1490,8 @@
 		D7AE5EBA2AC184BC00A20D0A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D7AE5EBD2AC1956300A20D0A /* Cell */,
+				D7AE5EBC2AC1951100A20D0A /* UIComponent */,
 				D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */,
 				D7537F662AA75AFB005AC78B /* ParticipationRoomDetailsView.swift */,
 				D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */,
