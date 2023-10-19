@@ -103,6 +103,7 @@ enum TextLiteral {
         enum Error {
             static let resetMessage = "detail_ing_reset_error_message"
             static let missionEditMessage = "detail_ing_mission_edit_error_message"
+            static let fetchFriendMessage = "detail_ing_fetch_friend_error_message"
             static let openManittoMessage = "detail_ing_open_manitto_error_message"
         }
     }

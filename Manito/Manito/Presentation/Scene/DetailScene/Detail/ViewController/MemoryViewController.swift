@@ -16,7 +16,7 @@ final class MemoryViewController: UIViewController, Navigationable {
     
     private let memoryView = MemoryView()
     
-    // MARK: - properties
+    // MARK: - property
     
     private var messages: [MessageListItem] = []
     

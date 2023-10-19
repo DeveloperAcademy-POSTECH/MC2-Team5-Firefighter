@@ -10,22 +10,30 @@ import UIKit
 
 final class FriendListViewController: UIViewController, Navigationable {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    // MARK: - property
+    
+    private var cancelBag: Set<AnyCancellable> = Set()
+    
+    private var viewModel: any BaseViewModelType
+    
+    // MARK: - init
+    
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    */
+    
+    // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupNavigation()
+    }
 
 }
 

@@ -9,14 +9,36 @@ import UIKit
 
 import SnapKit
 
-final class FriendListView: UIView {
+final class FriendListView: UIView, BaseViewType {
+    
+    // MARK: - ui component
+    
+    private let friendListCollectionView: UICollectionView = {
+        let collectionView = UICollectionView()
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    // MARK: - init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.baseInit()
     }
-    */
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - base func
+    
+    func setupLayout() {
+        
+    }
+    
+    func configureUI() {
+        self.backgroundColor = .backgroundGrey
+    }
 
 }

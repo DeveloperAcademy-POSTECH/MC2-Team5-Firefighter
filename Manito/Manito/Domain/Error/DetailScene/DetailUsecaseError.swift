@@ -9,12 +9,19 @@ import Foundation
 
 enum DetailUsecaseError: LocalizedError {
     case failedToFetchMemory
+    case failedToFetchManitto
+    case failedToFetchFriend
 }
 
 extension DetailUsecaseError {
     var errorDescription: String? {
         switch self {
-        case .failedToFetchMemory: return TextLiteral.Common.Error.networkServer.localized()
+        case .failedToFetchMemory:
+            return TextLiteral.Common.Error.networkServer.localized()
+        case .failedToFetchManitto:
+            return TextLiteral.DetailIng.Error.openManittoMessage.localized()
+        case .failedToFetchFriend:
+            return TextLiteral.DetailIng.Error.fetchFriendMessage.localized()
         }
     }
 }
