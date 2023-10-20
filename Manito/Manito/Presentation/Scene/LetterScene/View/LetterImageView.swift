@@ -5,14 +5,10 @@
 //  Created by SHIN YOON AH on 2023/02/20.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
-
-protocol LetterImageViewDelegate: AnyObject {
-    func downloadImageAsset(_ imageAsset: UIImage?)
-    func closeButtonTapped()
-}
 
 final class LetterImageView: UIView, BaseViewType {
 
@@ -47,17 +43,23 @@ final class LetterImageView: UIView, BaseViewType {
         button.setImage(UIImage.Icon.save, for: .normal)
         return button
     }()
-
+    
     // MARK: - property
-
-    private weak var delegate: LetterImageViewDelegate?
+    
+    var closeButtonPublisher: AnyPublisher<Void, Never> {
+        return self.closeButton.tapPublisher
+    }
+    var downloadButtonPublisher: AnyPublisher<UIImage, Never> {
+        return self.downloadButton.tapPublisher
+            .compactMap { self.imageView.image }
+            .eraseToAnyPublisher()
+    }
 
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupAction()
         self.setupImagePinchGesture()
     }
 
@@ -92,35 +94,18 @@ final class LetterImageView: UIView, BaseViewType {
 
     // MARK: - func
 
-    private func setupAction() {
-        let downloadAction = UIAction { [weak self] _ in
-            let downloadImage = self?.imageView.image
-            self?.delegate?.downloadImageAsset(downloadImage)
-        }
-        self.downloadButton.addAction(downloadAction, for: .touchUpInside)
-
-        let closeAction = UIAction { [weak self] _ in
-            self?.delegate?.closeButtonTapped()
-        }
-        self.closeButton.addAction(closeAction, for: .touchUpInside)
-    }
-
-    private func setupImagePinchGesture() {
-        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.didPinchImage(_:)))
-        self.addGestureRecognizer(pinch)
-    }
-
     func configureImageFrame() {
         self.scrollView.frame = self.bounds
         self.imageView.frame = self.scrollView.bounds
     }
-
+    
     func configureImage(_ imageUrl: String) {
         self.imageView.loadImageUrl(imageUrl)
     }
-
-    func configureDelegate(_ delegate: LetterImageViewDelegate) {
-        self.delegate = delegate
+    
+    private func setupImagePinchGesture() {
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.didPinchImage(_:)))
+        self.addGestureRecognizer(pinch)
     }
 
     // MARK: - selector
@@ -132,7 +117,7 @@ final class LetterImageView: UIView, BaseViewType {
     }
 }
 
-
+// MARK: - UIScrollViewDelegate
 extension LetterImageView: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
          return self.imageView
