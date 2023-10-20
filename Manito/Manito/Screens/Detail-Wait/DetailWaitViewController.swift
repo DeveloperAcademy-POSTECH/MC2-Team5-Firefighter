@@ -91,8 +91,11 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished: return
-                case .failure(_):
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
+                case .failure(let error):
+                    self?.showAlertError(message: error.localizedDescription,
+                                         okAction: { [weak self] _ in
+                        self?.navigationController?.popViewController(animated: true)
+                    })
                 }
             }, receiveValue: { [weak self] room in
                 self?.detailWaitView.updateDetailWaitView(room: room)
@@ -111,8 +114,8 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished: return
-                case .failure(_):
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
+                case .failure(let error):
+                    self?.showAlertError(message: error.localizedDescription)
                 }
             }, receiveValue: { [weak self] userInfo in
                 self?.presentSelectManittoViewController(nickname: userInfo.nickname)
@@ -132,8 +135,8 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished: return
-                case .failure(_):
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
+                case .failure(let error):
+                    self?.showAlertError(message: error.localizedDescription)
                 }
             }, receiveValue: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
@@ -145,8 +148,8 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished: return
-                case .failure(_):
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
+                case .failure(let error):
+                    self?.showAlertError(message: error.localizedDescription)
                 }
             }, receiveValue: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
@@ -281,5 +284,14 @@ extension DetailWaitViewController: DetailWaitViewControllerDelegate {
         self.changeButtonSubject.send()
         ToastView.showToast(message: TextLiteral.DetailWait.toastEditMessage.localized(),
                             controller: self)
+    }
+}
+
+extension DetailWaitViewController {
+    private func showAlertError(message: String, okAction: ((UIAlertAction) -> ())? = nil) {
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                       message: message,
+                       okAction: okAction
+        )
     }
 }
