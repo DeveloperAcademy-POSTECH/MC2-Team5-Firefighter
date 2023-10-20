@@ -81,6 +81,21 @@ final class DetailWaitUsecaseTest: XCTestCase {
             XCTAssertTrue(true)
         }
     }
+    
+    func test_deleteLeave함수가_400이들어왔을때_에러를_리턴하는가() async throws {
+        let mock = MockDetailWaitUsecase(statusCode: 400)
+        
+        do {
+            let statusCode = try await mock.deleteLeaveRoom(roomId: "")
+            if statusCode == 204 {
+                XCTFail()
+            } else {
+                XCTAssertTrue(true)
+            }
+        } catch {
+            XCTAssertTrue(true)
+        }
+    }
 }
 
 final class MockDetailWaitUsecase: DetailWaitUseCase {
