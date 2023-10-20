@@ -82,10 +82,10 @@ enum TextLiteral {
         static let exitAlertMessage = "datail_wait_exit_alert_message"
         
         enum Error {
-            static let fetchRoom = "detail_wait_fetch_error"
-            static let startManitto = "detail_wait_start_error"
-            static let deleteRoom = "detail_wait_delete_error"
-            static let leaveRoom = "detail_wait_leave_error"
+            static let fetchRoom = "detail_wait_fetch_error_message"
+            static let startManitto = "detail_wait_start_error_message"
+            static let deleteRoom = "detail_wait_delete_error_message"
+            static let leaveRoom = "detail_wait_leave_error_message"
         }
     }
 
