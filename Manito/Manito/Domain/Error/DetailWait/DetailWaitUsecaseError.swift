@@ -18,11 +18,8 @@ extension DetailWaitUsecaseError {
     var errorDescription: String? {
         switch self {
         case .failedToFetchError: return TextLiteral.DetailWait.Error.fetchRoom.localized()
-            
         case .failedToStartError: return TextLiteral.DetailWait.Error.startManitto.localized()
-            
         case .failedToDeleteRoomError: return TextLiteral.DetailWait.Error.deleteRoom.localized()
-            
         case .failedToLeaveRoomError: return TextLiteral.DetailWait.Error.leaveRoom.localized()
         }
     }
