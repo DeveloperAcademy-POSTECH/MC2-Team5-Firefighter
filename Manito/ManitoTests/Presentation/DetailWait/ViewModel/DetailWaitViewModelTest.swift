@@ -17,7 +17,7 @@ final class DetailWaitViewModelTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        self.viewModel = DetailWaitViewModel(roomId: "0", usecase: MockDetailWaitUsecase())
+        self.viewModel = DetailWaitViewModel(roomId: "0", usecase: MockDetailWaitUsecase(statusCode: 200))
         self.cancellable = Set<AnyCancellable>()
     }
     

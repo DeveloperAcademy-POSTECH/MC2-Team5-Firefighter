@@ -55,7 +55,11 @@ final class DetailWaitUseCaseImpl: DetailWaitUseCase {
     func deleteRoom(roomId: String) async throws -> Int {
         do {
             let statusCode = try await self.repository.deleteRoom(roomId: roomId)
-            return statusCode
+            if statusCode == 204 {
+                return statusCode
+            } else {
+                throw DetailWaitUsecaseError.failedToDeleteRoomError
+            }
         } catch {
             throw DetailWaitUsecaseError.failedToDeleteRoomError
         }
@@ -64,7 +68,11 @@ final class DetailWaitUseCaseImpl: DetailWaitUseCase {
     func deleteLeaveRoom(roomId: String) async throws -> Int {
         do {
             let statusCode = try await self.repository.deleteLeaveRoom(roomId: roomId)
-            return statusCode
+            if statusCode == 204 {
+                return statusCode
+            } else {
+                throw DetailWaitUsecaseError.failedToLeaveRoomError
+            }
         } catch {
             throw DetailWaitUsecaseError.failedToLeaveRoomError
         }

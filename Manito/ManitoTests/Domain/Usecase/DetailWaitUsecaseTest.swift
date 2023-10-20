@@ -12,7 +12,7 @@ final class DetailWaitUsecaseTest: XCTestCase {
     private var mockUsecase: DetailWaitUseCase!
     
     override func setUp() {
-        self.mockUsecase = MockDetailWaitUsecase()
+        self.mockUsecase = MockDetailWaitUsecase(statusCode: 204)
     }
     
     override func tearDown() {
@@ -42,30 +42,54 @@ final class DetailWaitUsecaseTest: XCTestCase {
     }
     
     func test_deleteRoom함수가_올바른값을_리턴하는가() async throws {
-        let sut = 200
-        
         do {
             let statusCode = try await self.mockUsecase.deleteRoom(roomId: "")
-            XCTAssertEqual(sut, statusCode)
+            if statusCode == 204 {
+                XCTAssertTrue(true)
+            } else {
+                XCTFail()
+            }
         } catch {
             XCTFail()
         }
     }
     
     func test_deleteLeaveRoom함수가_올바른값을_리턴하는가() async throws {
-        let sut = 200
-        
         do {
             let statusCode = try await self.mockUsecase.deleteLeaveRoom(roomId: "")
-            XCTAssertEqual(sut, statusCode)
+            if statusCode == 204 {
+                XCTAssertTrue(true)
+            } else {
+                XCTFail()
+            }
         } catch {
             XCTFail()
+        }
+    }
+    
+    func test_delete함수가_400이들어왔을때_에러를_리턴하는가() async throws {
+        let mock = MockDetailWaitUsecase(statusCode: 400)
+        
+        do {
+            let statusCode = try await mock.deleteRoom(roomId: "")
+            if statusCode == 204 {
+                XCTFail()
+            } else {
+                XCTAssertTrue(true)
+            }
+        } catch {
+            XCTAssertTrue(true)
         }
     }
 }
 
 final class MockDetailWaitUsecase: DetailWaitUseCase {
+    let statusCode: Int
     var roomInformation: Manito.RoomInfo = .testRoom
+    
+    init(statusCode: Int) {
+        self.statusCode = statusCode
+    }
     
     func fetchRoomInformaion(roomId: String) async throws -> RoomInfoDTO {
         try await Task.sleep(nanoseconds: 3_000)
@@ -82,12 +106,12 @@ final class MockDetailWaitUsecase: DetailWaitUseCase {
     func deleteRoom(roomId: String) async throws -> Int {
         try await Task.sleep(nanoseconds: 3_000)
         
-        return 200
+        return self.statusCode
     }
     
     func deleteLeaveRoom(roomId: String) async throws -> Int {
         try await Task.sleep(nanoseconds: 3_000)
         
-        return 200
+        return self.statusCode
     }
 }
