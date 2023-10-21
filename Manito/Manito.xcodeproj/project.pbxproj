@@ -1367,8 +1367,6 @@
 			isa = PBXGroup;
 			children = (
 				CBBFF775287AE034006A5964 /* SettingDeveloperInfo */,
-				B50B1B28285AB7550080992C /* Splash */,
-				D724AF5B287088110003F280 /* Setting */,
 				39C957CC2876E2BE00A04A2B /* Login */,
 				7E0C5C342855B1EF00F698D1 /* NickName */,
 				B5F524E628519B0A00614FF7 /* Main */,
