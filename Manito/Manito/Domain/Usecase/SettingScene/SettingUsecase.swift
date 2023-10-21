@@ -1,5 +1,5 @@
 //
-//  SettingService.swift
+//  SettingUsecase.swift
 //  Manito
 //
 //  Created by 이성호 on 2023/09/01.
@@ -7,17 +7,23 @@
 
 import Foundation
 
-protocol SettingServicable {
+protocol SettingUsecase {
     func deleteUser() async throws -> Int
 }
 
-final class SettingService: SettingServicable {
+final class SettingUsecaseImpl: SettingUsecase {
+    
+    // MARK: - property
     
     private let repository: SettingRepository
+    
+    // MARK: - init
     
     init(repository: SettingRepository) {
         self.repository = repository
     }
+    
+    // MARK: - Public - func
     
     func deleteUser() async throws -> Int {
         do {

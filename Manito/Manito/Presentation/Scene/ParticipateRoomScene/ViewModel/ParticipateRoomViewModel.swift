@@ -28,15 +28,16 @@ final class ParticipateRoomViewModel: BaseViewModelType {
     // MARK: - property
     
     private let maxCount: Int = 6
-    private let roomInfoSubject = PassthroughSubject<ParticipatedRoomInfo, Error>()
-
-    private let participateRoomService: ParticipateRoomService
+    
+    private let usecase: ParticipateRoomUsecase
     private var cancellable = Set<AnyCancellable>()
+    
+    private let roomInfoSubject = PassthroughSubject<ParticipatedRoomInfo, Error>()
     
     // MARK: - init
     
-    init(participateRoomService: ParticipateRoomService) {
-        self.participateRoomService = participateRoomService
+    init(usecase: ParticipateRoomUsecaseImpl) {
+        self.usecase = usecase
     }
     
     // MARK: - func
@@ -96,7 +97,7 @@ final class ParticipateRoomViewModel: BaseViewModelType {
     private func requestParticipateRoom(_ code: String) {
         Task {
             do {
-                let data = try await self.participateRoomService.dispatchVerifyCode(code: code)
+                let data = try await self.usecase.dispatchVerifyCode(code: code)
                 self.roomInfoSubject.send(data.toParticipateRoomInfo())
             } catch(let error) {
                 self.roomInfoSubject.send(completion: .failure(error))

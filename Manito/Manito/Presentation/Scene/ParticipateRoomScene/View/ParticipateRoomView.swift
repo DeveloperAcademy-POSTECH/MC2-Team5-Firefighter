@@ -10,10 +10,6 @@ import UIKit
 
 import SnapKit
 
-protocol ParticipateRoomViewDelegate: AnyObject {
-    func closeButtonDidTap()
-}
-
 final class ParticipateRoomView: UIView, BaseViewType {
     
     // MARK: - ui component
@@ -40,7 +36,7 @@ final class ParticipateRoomView: UIView, BaseViewType {
     // MARK: - property
     
     let nextButtonTapPublisher = PassthroughSubject<String, Never>()
-    private weak var delegate: ParticipateRoomViewDelegate?
+    lazy var closeButtonTapPublisher = self.closeButton.tapPublisher
     
     // MARK: - init
     
@@ -88,21 +84,11 @@ final class ParticipateRoomView: UIView, BaseViewType {
     // MARK: - func
     
     private func setupButtonAction() {
-        let didTapCloseButton = UIAction { [weak self] _ in
-            self?.delegate?.closeButtonDidTap()
-        }
-        
         let didTapNextButton = UIAction { [weak self] _ in
             guard let code = self?.inputInvitedCodeView.code() else { return }
             self?.nextButtonTapPublisher.send(code)
         }
-        
-        self.closeButton.addAction(didTapCloseButton, for: .touchUpInside)
         self.nextButton.addAction(didTapNextButton, for: .touchUpInside)
-    }
-    
-    func configureDelegate(_ delegate: ParticipateRoomViewDelegate) {
-        self.delegate = delegate
     }
     
     func configureNavigationBarItem(_ navigationController: UINavigationController) {

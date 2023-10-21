@@ -76,8 +76,8 @@ final class ParticipationRoomDetailsViewController: UIViewController {
                 guard let presentingViewController = self?.presentingViewController as? UINavigationController else { return }
                 self?.dismiss(animated: true, completion: {
                     let repository = RoomParticipationRepositoryImpl()
-                    let service = ParticipateRoomService(repository: repository)
-                    let viewModel = ChooseCharacterViewModel(participateRoomService: service, roomId: roomId)
+                    let usecase = ParticipateRoomUsecaseImpl(repository: repository)
+                    let viewModel = ChooseCharacterViewModel(usecase: usecase, roomId: roomId)
                     presentingViewController.pushViewController(ChooseCharacterViewController(viewModel: viewModel), animated: true)
                 })
             })

@@ -10,21 +10,35 @@ import UIKit
 
 import SnapKit
 
-protocol SettingViewDelegate: AnyObject {
-    func changNicknameButtonDidTap()
-    func personalInfomationButtonDidTap()
-    func termsOfServiceButtonDidTap()
-    func developerInfoButtonDidTap()
-    func helpButtonDidTap()
-    func logoutButtonDidTap()
-    func withdrawalButtonDidTap()
-}
-
 final class SettingView: UIView, BaseViewType {
     
-    struct Option {
-        let title: String
-        let handler: () -> Void
+    enum SettingActions: CaseIterable {
+        case changeNickname
+        case personInfomation
+        case termsOfService
+        case developerInfo
+        case help
+        case logout
+        case withdrawal
+        
+        var title: String {
+            switch self {
+            case .changeNickname:
+                return TextLiteral.Setting.changeNickname.localized()
+            case .personInfomation:
+                return TextLiteral.Setting.personalInformation.localized()
+            case .termsOfService:
+                return TextLiteral.Setting.termsOfService.localized()
+            case .developerInfo:
+                return TextLiteral.Setting.developerInfo.localized()
+            case .help:
+                return TextLiteral.Setting.inquiry.localized()
+            case .logout:
+                return TextLiteral.Setting.logout.localized()
+            case .withdrawal:
+                return ""
+            }
+        }
     }
     
     // MARK: - ui component
@@ -51,19 +65,16 @@ final class SettingView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private var options: [Option] = []
-    private weak var delegate: SettingViewDelegate?
-    
-    let withdrawalButtonPublisher = PassthroughSubject<Void, Never>()
-    let logoutButtonPublisher = PassthroughSubject<Void, Never>()
+    private var settingActions: [SettingActions] = SettingActions.allCases
+
+    let buttonDidTapPublisher = PassthroughSubject<SettingActions, Never>()
     
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupButtonAction()
-        self.configureModels()
+        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -102,49 +113,17 @@ final class SettingView: UIView, BaseViewType {
 
     // MARK: - func
     
-    private func setupButtonAction() {
-        let withdrawalButtonDidTap = UIAction { [weak self] _ in
-            self?.delegate?.withdrawalButtonDidTap()
+    private func setupAction() {
+        let didTapWithdrawalButton = UIAction { [weak self] _ in
+            self?.buttonDidTapPublisher.send(.withdrawal)
         }
-        
-        self.withdrawalButton.addAction(withdrawalButtonDidTap, for: .touchUpInside)
-    }
-    
-    private func configureModels() {
-        self.options.append(Option(title: TextLiteral.Setting.changeNickname.localized(), handler: { [weak self] in
-            self?.delegate?.changNicknameButtonDidTap()
-        }))
-        
-        self.options.append(Option(title: TextLiteral.Setting.personalInformation.localized(), handler: { [weak self] in
-            self?.delegate?.personalInfomationButtonDidTap()
-        }))
-        
-        self.options.append(Option(title: TextLiteral.Setting.termsOfService.localized(), handler: { [weak self] in
-            self?.delegate?.termsOfServiceButtonDidTap()
-        }))
-        
-        self.options.append(Option(title: TextLiteral.Setting.developerInfo.localized(), handler: { [weak self] in
-            self?.delegate?.developerInfoButtonDidTap()
-        }))
-        
-        self.options.append(Option(title: TextLiteral.Setting.inquiry.localized(), handler: { [weak self] in
-            self?.delegate?.helpButtonDidTap()
-        }))
-        
-        self.options.append(Option(title: TextLiteral.Setting.logout.localized(), handler: { [weak self] in
-            self?.delegate?.logoutButtonDidTap()
-        }))
-    }
-    
-    func configureDelegate(_ delegate: SettingViewDelegate) {
-        self.delegate = delegate
+        self.withdrawalButton.addAction(didTapWithdrawalButton, for: .touchUpInside)
     }
 }
 
 extension SettingView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.options[indexPath.row]
-        model.handler()
+        self.buttonDidTapPublisher.send(self.settingActions[indexPath.row])
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -154,15 +133,14 @@ extension SettingView: UITableViewDelegate {
 
 extension SettingView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.options.count
+        return self.settingActions.count - 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = self.options[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as? SettingViewTableCell else {
             return UITableViewCell()
         }
-        cell.configureCell(title: model.title)
+        cell.configureCell(title: settingActions[indexPath.row].title)
         return cell
     }
 }
