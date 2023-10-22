@@ -45,9 +45,9 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureDelegation()
         self.configureNavigation()
         self.bindToViewModel()
+        self.bindUI()
         self.setupKeyboardGesture()
     }
     
@@ -58,10 +58,6 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
     }
     
     // MARK: - func
-    
-    private func configureDelegation() {
-        self.participateRoomView.configureDelegate(self)
-    }
     
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
@@ -113,16 +109,18 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
             .store(in: &self.cancellable)
     }
     
+    private func bindUI() {
+        self.participateRoomView.closeButtonTapPublisher
+            .sink { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
+            .store(in: &self.cancellable)
+    }
+    
     private func presentParticipationRoomDetailsView(roomInfo: ParticipatedRoomInfo) {
         let viewController = ParticipationRoomDetailsViewController(viewModel: ParticipationRoomDetailsViewModel(roomInfo: roomInfo))
         viewController.modalPresentationStyle = .overFullScreen
         viewController.modalTransitionStyle = .crossDissolve
         self.present(viewController, animated: true)
-    }
-}
-
-extension ParticipateRoomViewController: ParticipateRoomViewDelegate {
-    func closeButtonDidTap() {
-        self.dismiss(animated: true)
     }
 }

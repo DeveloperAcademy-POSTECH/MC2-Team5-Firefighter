@@ -8,7 +8,7 @@
 import Foundation
 
 enum GIFSet {
-    static let logo = "logo"
+    static let logo = "logo.gif"
     static let joystick = "joystick"
     static let capsule = "capsule"
     static let ma = "gifMa"
