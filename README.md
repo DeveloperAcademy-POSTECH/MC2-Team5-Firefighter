@@ -39,23 +39,24 @@
 
 ### 🛠 Development Environment
 
-<img width="77" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://img.shields.io/badge/iOS-15.0+-silver"> <img width="95" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://img.shields.io/badge/Xcode-13.3-blue">
+<img width="77" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://img.shields.io/badge/iOS-15.0+-silver"> <img width="83" alt="스크린샷 2021-11-19 오후 3 52 02" src="https://img.shields.io/badge/Xcode-13.3-blue">
 
 ### :sparkles: Skills & Tech Stack
 * UIKit
-* Storyboard + Code base
-* URLSession
-* Github
+* AutoLayout + Code base
+* MVVM + Clean Architecture
+* Combine
+* URLSession(Custom Network Library - MTNetwork)
 
 ### 🎁 Library
 
-| Name              | Version |       |
-| ----------------- | :-----: | ----- |
-| SnapKit           | `5.6.0` | `SPM` |
-| FSCalendar        | `2.8.4` | `SPM` |
-| Gifu              | `3.3.1` | `SPM` |
-| Firebase              | `9.6.0` | `SPM` |
-| SkeletonView              | `main` | `SPM` |
+| Name              |       |
+| ----------------- | ----- |
+| SnapKit           | `SPM` |
+| FSCalendar        | `SPM` |
+| Gifu              | `SPM` |
+| Firebase          | `SPM` |
+| SkeletonView      | `SPM` |
 
 ### 🔀 Git branch & [Git Flow](https://techblog.woowahan.com/2553/)
 
@@ -72,35 +73,48 @@ hotfix/11-main-activty-bug
 ### 🗂 Folder Structure
 
 ```
-Aenitto-iOS
+Manito
   |
-  └── Aenitto
-          |── 🗂 Network
-          │   │── 📁 Storage
-          │   │── 📁 Protocol
-          │   │── 📁 API
-          │   │── 📁 EndPoint
-          │   │── 📁 Foundation
-          │   └── 📁 Models
-          │
-          |── 🗂 Global
+  |── Packages
+  │   └── 🗂 MTNetwork
+  |── Modules
+  │   └── ⚒️ MTResourse
+  |── Configuration
+  │   │── 🗂 Dev
+  │   └── 🗂 Prod
+  │          └── 🔨 Prod.xcconfig
+  └── Manito
+          │── 🗂 App
+          │      │── 📄 SceneDelegate
+          │      │── 📄 AppDelegate
+          │      └── 🗒 Info.plist
+          |── 🗂 Presentation
+          │   │── 📁 Common
+          │   └── 📁 Scene
+          │          └── 📁 Scene
+          │                  │── 📁 View
+          │                  │── 📁 ViewController
+          │                  └── 📁 ViewModel
+          |── 🗂 Domain
           │   │── 📁 Error
-          │   │── 📁 Utils
-          │   │── 📁 Literal
-          │   │── 📁 Base
-          │   │── 📁 Supports
-          │   │      │── 📄 SceneDelegate
-          │   │      │── 📄 AppDelegate
-          │   │      │── 🗒 GoogleService-Info.plist
-          │   │      └── 🗒 Info.plist
+          │   │── 📁 Usecase
+          │   └── 📁 Entity
+          |── 🗂 Data
+          │   │── 📁 DTO
+          │   │── 📁 Repository
+          │   └── 📁 Network
+          │          │── 📁 Foundation
+          │          └── 📁 EndPoint
+          |── 🗂 Util
+          │   │── 📁 Logger
           │   │── 📁 Extension
-          │   │── 📁 UIComponent
-          │   └── 📁 Resource
-          │          │── 🖼 Assets.xcassets
-          │          │── 📁 Font
-          │          │── 📁 GIF
-          │          └── 📁 Storyboard
-          └── 🗂 Screens 
+          │   │── 📁 Script
+          │   │      └── 📄 LocalizationScript.py
+          │   └── 📁 Literal
+          │          │── 📄 Localizable
+          │          └── 📄 TextLiteral
+          |── 🗂 Service
+          └── 🗂 Screens(legacy) 
               |── 📁 Splash
               |── 📁 Main
               |── 📁 Letter
