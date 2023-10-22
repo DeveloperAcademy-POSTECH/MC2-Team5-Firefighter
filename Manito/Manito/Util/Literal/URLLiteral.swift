@@ -14,7 +14,7 @@ enum URLLiteral {
     }
     
     enum Memory {
-        static let instagram: String = "instagram-stories://share"
+        static let instagram: String = "instagram-stories://share?source_application=\(Bundle.main.instagramAppID)"
         static let instagramBundle: String = "com.instagram.sharedSticker.stickerImage"
     }
 }

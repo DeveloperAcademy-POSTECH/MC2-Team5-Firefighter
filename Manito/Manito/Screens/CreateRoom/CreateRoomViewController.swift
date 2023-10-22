@@ -68,17 +68,16 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         self.createRoomView.configureDelegate(self)
     }
     
-    private func pushDetailWaitViewController(roomId: Int) {
+    private func pushDetailWaitViewController(roomId: String) {
         guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-        let viewModel = DetailWaitViewModel(roomIndex: roomId,
-                                            detailWaitService: DetailWaitService(repository: DetailRoomRepositoryImpl()))
+        let viewModel = DetailWaitViewModel(roomId: roomId, usecase: DetailWaitUseCaseImpl(repository: DetailRoomRepositoryImpl()))
         let viewController = DetailWaitViewController(viewModel: viewModel)
         
         navigationController.popViewController(animated: true)
         navigationController.pushViewController(viewController, animated: false)
         
         self.dismiss(animated: true) {
-            NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
+            viewController.sendCreateRoomEvent()
         }
     }
     
@@ -153,8 +152,8 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
                     // FIXME: - 에러 코드 추가 작성 필요
                     self?.makeAlert(title: "에러발생")
                 }
-            }, receiveValue: { [weak self] roomid in
-                self?.pushDetailWaitViewController(roomId: roomid)
+            }, receiveValue: { [weak self] roomId in
+                self?.pushDetailWaitViewController(roomId: roomId.description)
             })
             .store(in: &self.cancellable)
     }

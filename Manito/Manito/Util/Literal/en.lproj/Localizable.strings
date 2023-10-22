@@ -46,10 +46,10 @@
 "datail_wait_delete_alert_message" = "방을 삭제하시면 다시 되돌릴 수 없습니다.";
 "datail_wait_exit_alert_title" = "정말 나가실거예요?";
 "datail_wait_exit_alert_message" = "초대코드를 입력하면 \n 다시 들어올 수 있어요.";
-"detail_wait_fetch_error" = "방 정보를 불러오는데 실패했습니다.";
-"detail_wait_start_error" = "마니또 시작에 실패했습니다. \n다시 시도해주세요.";
-"detail_wait_delete_error" = "방 삭제에 실패했습니다. \n다시 시도해주세요.";
-"detail_wait_leave_error" = "방 나가기에 실패했습니다. \n다시 시도해 주세요.";
+"detail_wait_fetch_error_message" = "방 정보를 불러오는데 실패했습니다.";
+"detail_wait_start_error_message" = "마니또 시작에 실패했습니다. \n다시 시도해주세요.";
+"detail_wait_delete_error_message" = "방 삭제에 실패했습니다. \n다시 시도해주세요.";
+"detail_wait_leave_error_message" = "방 나가기에 실패했습니다. \n다시 시도해 주세요.";
 "detail_ing_individual_mission_title" = "오늘의 개별 미션";
 "detail_ing_select_manittee_title" = "레버를 스와이프해서\n내 마니띠를 확인하세요.";
 "detail_ing_open_manitto_title" = "당신의 마니또는?";

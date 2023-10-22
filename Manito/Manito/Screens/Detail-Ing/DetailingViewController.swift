@@ -264,7 +264,11 @@ extension DetailingViewController: DetailingDelegate {
     }
     
     func manittoOpenButtonDidTap(nickname: String) {
-        let viewController = OpenManittoViewController(roomId: self.roomId, manittoNickname: nickname)
+        let usecase = OpenManittoUsecaseImpl(repository: DetailRoomRepositoryImpl())
+        let viewModel = OpenManittoViewModel(usecase: usecase,
+                                             roomId: self.roomId,
+                                             manittoNickname: nickname)
+        let viewController = OpenManittoViewController(viewModel: viewModel)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)
