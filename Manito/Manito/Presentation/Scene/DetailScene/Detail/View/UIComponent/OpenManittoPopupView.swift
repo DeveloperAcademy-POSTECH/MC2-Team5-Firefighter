@@ -5,11 +5,12 @@
 //  Created by SHIN YOON AH on 2023/03/28.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 
-final class OpenManittoPopupView: UIView {
+final class OpenManittoPopupView: UIView, BaseViewType {
 
     // MARK: - ui component
 
@@ -40,18 +41,18 @@ final class OpenManittoPopupView: UIView {
         return button
     }()
     private let popupImageView: UIImageView = UIImageView(image: UIImage.Image.enterRoom)
-
-    // MARK: - property
-
-    private weak var delegate: OpenManittoViewDelegate?
+    
+    // MARK: - init
+    
+    var confirmButtonPublisher: AnyPublisher<Void, Never> {
+        return self.confirmButton.tapPublisher
+    }
 
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
-        self.configureUI()
-        self.setupButtonAction()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -59,29 +60,29 @@ final class OpenManittoPopupView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - func
+    // MARK: - base func
 
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.popupImageView)
         self.popupImageView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(UIScreen.main.bounds.size.height * 0.15)
             $0.leading.trailing.equalToSuperview().inset(21)
             $0.height.equalTo(self.popupImageView.snp.width).multipliedBy(1.16)
         }
-
+        
         self.addSubview(self.confirmButton)
         self.confirmButton.snp.makeConstraints {
             $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(31)
             $0.centerX.equalToSuperview()
         }
-
+        
         self.popupImageView.addSubview(self.typingLabel)
         self.typingLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().offset(-30)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(24)
         }
-
+        
         self.popupImageView.addSubview(self.informationLabel)
         self.informationLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(51)
@@ -89,18 +90,21 @@ final class OpenManittoPopupView: UIView {
         }
     }
 
-    private func configureUI() {
+    func configureUI() {
         self.backgroundColor = .black.withAlphaComponent(0.8)
         self.alpha = 0.0
     }
+    
+    // MARK: - func
 
-    private func setupButtonAction() {
-        let confirmAction = UIAction { [weak self] _ in
-            self?.delegate?.confirmButtonTapped()
-        }
-        self.confirmButton.addAction(confirmAction, for: .touchUpInside)
+    func setupTypingAnimation(_ text: String) {
+        self.animateTyping(in: self.typingLabel, text: text)
+        self.typingLabel.addLabelSpacing()
     }
+}
 
+// MARK: - Helper
+extension OpenManittoPopupView {
     private func animateTyping(in label: UILabel, text: String, delay: TimeInterval = 5.0) {
         label.text = ""
 
@@ -115,15 +119,5 @@ final class OpenManittoPopupView: UIView {
 
         let queue: DispatchQueue = .init(label: "typespeed", qos: .userInteractive)
         queue.asyncAfter(deadline: .now() + 0.7, execute: writingTask)
-    }
-
-    func configureDelegation(_ delegate: OpenManittoViewDelegate) {
-        self.delegate = delegate
-    }
-
-    func setupTypingAnimation(user: String, manitto: String) {
-        self.animateTyping(in: self.typingLabel,
-                           text: TextLiteral.DetailIng.openManittoPopupContent.localized(with: user, manitto))
-        self.typingLabel.addLabelSpacing()
     }
 }
