@@ -34,9 +34,16 @@ final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
     }
 
     func dispatchJoinRoom(roomId: String, member: MemberInfoRequestDTO) async throws -> Int {
-        let response = try await self.provider
-            .request(.dispatchJoinRoom(roomId: roomId,
-                                       member: member))
-        return response.statusCode
+        do {
+            let response = try await self.provider
+                .request(.dispatchJoinRoom(roomId: roomId,
+                                           member: member))
+            return response.statusCode
+        } catch MTError.statusCode(reason: .clientError(let response)) {
+            switch response.statusCode {
+            case 409: throw ChooseCharacterError.roomAlreadyParticipating
+            default: throw ChooseCharacterError.clientError
+            }
+        }
     }
 }

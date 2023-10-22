@@ -23,3 +23,16 @@ extension UserInfoDTO {
         return UserInfo(id: self.id ?? "" , nickname: self.nickname ?? "")
     }
 }
+
+extension UserInfoDTO: Equatable {
+    static let testDummyUserManittee = UserInfoDTO(id: "1", nickname: "테스트마니띠")
+    static let testDummyUserManitto = UserInfoDTO(id: "2", nickname: "테스트마니또")
+    
+    static let testDummyUserList = [
+        UserInfoDTO(id: "100", nickname: "유저1"),
+        UserInfoDTO(id: "200", nickname: "유저2"),
+        UserInfoDTO(id: "300", nickname: "유저3"),
+        UserInfoDTO(id: "400", nickname: "유저4"),
+        UserInfoDTO(id: "500", nickname: "유저5")
+    ]
+}

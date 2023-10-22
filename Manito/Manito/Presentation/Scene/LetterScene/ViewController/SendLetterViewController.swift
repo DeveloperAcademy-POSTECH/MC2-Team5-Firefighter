@@ -142,7 +142,7 @@ final class SendLetterViewController: UIViewController, Navigationable, Keyboard
     }
 
     private func bindOutputToViewModel(_ output: SendLetterViewModel.Output?) {
-        guard let output = output else { return }
+        guard let output else { return }
 
         output.mission
             .receive(on: DispatchQueue.main)

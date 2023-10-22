@@ -22,6 +22,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
+    private let createRoomSubject = PassthroughSubject<Void, Error>()
     private let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let changeButtonSubject = PassthroughSubject<Void, Never>()
@@ -53,17 +54,12 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigation()
-        self.setupNotificationCenter()
         self.configureNavigationController()
         self.bindViewModel()
         self.setupBind()
     }
     
     // MARK: - func
-    
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didTapEnterButton), name: .createRoomInvitedCode, object: nil)
-    }
     
     private func configureNavigationController() {
         guard let navigationController = self.navigationController else { return }
@@ -83,7 +79,9 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             editMenuButtonDidTap: self.detailWaitView.editMenuButtonSubject.eraseToAnyPublisher(),
             deleteMenuButtonDidTap: self.deleteMenuButtonSubject.eraseToAnyPublisher(),
             leaveMenuButtonDidTap: self.leaveMenuButtonSubject.eraseToAnyPublisher(),
-            changeButtonDidTap: self.changeButtonSubject.eraseToAnyPublisher())
+            changeButtonDidTap: self.changeButtonSubject.eraseToAnyPublisher(),
+            roomDidCreate: self.createRoomSubject.eraseToAnyPublisher()
+        )
         return self.detailWaitViewModel.transform(input)
     }
     
@@ -93,9 +91,11 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished: return
-                case .failure(_):
-                    // FIXME: - 에러 관련 부분 수정 필요
-                    self?.makeAlert(title: "에러 발생")
+                case .failure(let error):
+                    self?.showAlertError(message: error.localizedDescription,
+                                         okAction: { [weak self] _ in
+                        self?.navigationController?.popViewController(animated: true)
+                    })
                 }
             }, receiveValue: { [weak self] room in
                 self?.detailWaitView.updateDetailWaitView(room: room)
@@ -109,17 +109,18 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             })
             .store(in: &self.cancellable)
         
-        output.manitteeNickname
+        output.selectManitteeInfo
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished: return
-                case .failure(_):
-                    // FIXME: - 에러 관련 부분 수정 필요
-                    self?.makeAlert(title: "에러 발생")
+                case .failure(let error):
+                    self?.showAlertError(message: error.localizedDescription)
                 }
-            }, receiveValue: { [weak self] nickname in
-                self?.presentSelectManittoViewController(nickname: nickname)
+            }, receiveValue: { [weak self] data in
+                guard let nickname = data.userInfo?.nickname,
+                      let roomId = data.roomId else { return }
+                self?.presentSelectManittoViewController(nickname: nickname, roomId: roomId)
             })
             .store(in: &self.cancellable)
         
@@ -136,9 +137,8 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished: return
-                case .failure(_):
-                    // FIXME: - 에러 관련 부분 수정 필요
-                    self?.makeAlert(title: "오류 발생")
+                case .failure(let error):
+                    self?.showAlertError(message: error.localizedDescription)
                 }
             }, receiveValue: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
@@ -150,9 +150,8 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished: return
-                case .failure(_):
-                    // FIXME: - 에러 관련 부분 수정 필요
-                    self?.makeAlert(title: "오류 발생")
+                case .failure(let error):
+                    self?.showAlertError(message: error.localizedDescription)
                 }
             }, receiveValue: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
@@ -161,8 +160,40 @@ final class DetailWaitViewController: UIViewController, Navigationable {
         
         output.passedStartDate
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (isPassedStartDate, isAdmin) in
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
+                }
+            }, receiveValue: { [weak self] (isPassedStartDate, isAdmin) in
                 self?.showStartDatePassedAlert(isPassedStartDate: isPassedStartDate, isAdmin: isAdmin)
+            })
+            .store(in: &self.cancellable)
+        
+        output.invitedCodeView
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
+                }
+            }, receiveValue: { [weak self] roomInfo in
+                self?.showInvitedCodeView(roomInfo: roomInfo)
+            })
+            .store(in: &self.cancellable)
+        
+        output.changeOutput
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized())
+                }
+            }, receiveValue: { [weak self] roomInfo in
+                self?.detailWaitView.updateDetailWaitView(room: roomInfo)
             })
             .store(in: &self.cancellable)
     }
@@ -187,9 +218,8 @@ final class DetailWaitViewController: UIViewController, Navigationable {
         self.present(viewController, animated: true)
     }
     
-    private func presentSelectManittoViewController(nickname: String) {
-        let roomIndex = self.detailWaitViewModel.roomIndex.description
-        let viewModel = SelectManitteeViewModel(roomId: roomIndex, manitteeNickname: nickname)
+    private func presentSelectManittoViewController(nickname: String, roomId: String) {
+        let viewModel = SelectManitteeViewModel(roomId: roomId, manitteeNickname: nickname)
         let viewController = SelectManitteeViewController(viewModel: viewModel)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
@@ -236,28 +266,18 @@ final class DetailWaitViewController: UIViewController, Navigationable {
         )
     }
     
-    // MARK: - selector
-    
-    @objc
-    private func didTapEnterButton() {
-        let roomInfo = self.detailWaitViewModel.makeRoomInformation()
-        let title = roomInfo.roomInformation.title
-        let capacity = roomInfo.roomInformation.capacity
-        let startDate = roomInfo.roomInformation.startDate
-        let endDate = roomInfo.roomInformation.endDate
-        let invitationCode = roomInfo.invitation.code
-        let roomDTO = RoomListItemDTO(id: nil,
-                                      title: title,
-                                      state: nil,
-                                      participatingCount: nil,
-                                      capacity: capacity,
-                                      startDate: startDate,
-                                      endDate: endDate)
-        let viewController = InvitedCodeViewController(roomInfo: roomDTO,
-                                                       code: invitationCode)
+    private func showInvitedCodeView(roomInfo: RoomInfo) {
+        let roomListItem = roomInfo.roomInformation
+        let code = roomInfo.invitation.code
+        
+        let viewController = InvitedCodeViewController(roomInfo: roomListItem, code: code)
         viewController.modalPresentationStyle = .overCurrentContext
         viewController.modalTransitionStyle = .crossDissolve
         self.present(viewController, animated: true)
+    }
+    
+    func sendCreateRoomEvent() {
+        self.createRoomSubject.send(())
     }
 }
 
@@ -266,5 +286,14 @@ extension DetailWaitViewController: DetailWaitViewControllerDelegate {
         self.changeButtonSubject.send()
         ToastView.showToast(message: TextLiteral.DetailWait.toastEditMessage.localized(),
                             controller: self)
+    }
+}
+
+extension DetailWaitViewController {
+    private func showAlertError(message: String, okAction: ((UIAlertAction) -> ())? = nil) {
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                       message: message,
+                       okAction: okAction
+        )
     }
 }

@@ -38,7 +38,10 @@ final class MainViewController: UIViewController, BaseViewControllerType {
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
         let action = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(SettingViewController(viewModel: SettingViewModel(settingService: SettingService(repository: SettingRepositoryImpl()))), animated: true)
+            let repository = SettingRepositoryImpl()
+            let usecase = SettingUsecaseImpl(repository: repository)
+            let viewModel = SettingViewModel(usecase: usecase)
+            self?.navigationController?.pushViewController(SettingViewController(viewModel: viewModel), animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         return button
@@ -242,8 +245,8 @@ final class MainViewController: UIViewController, BaseViewControllerType {
         let enterRoom = UIAlertAction(title: TextLiteral.Common.enterRoom.localized(),
                                       style: .default,
                                       handler: { [weak self] _ in
-            let service = ParticipateRoomService(repository: RoomParticipationRepositoryImpl())
-            let viewModel = ParticipateRoomViewModel(participateRoomService: service)
+            let usecase = ParticipateRoomUsecaseImpl(repository: RoomParticipationRepositoryImpl())
+            let viewModel = ParticipateRoomViewModel(usecase: usecase)
             let viewController = ParticipateRoomViewController(viewModel: viewModel)
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen
@@ -264,8 +267,7 @@ final class MainViewController: UIViewController, BaseViewControllerType {
         switch status {
         case .PRE:
             guard let index = index else { return }
-            let viewModel = DetailWaitViewModel(roomIndex: index,
-                                                detailWaitService: DetailWaitService(repository: DetailRoomRepositoryImpl()))
+            let viewModel = DetailWaitViewModel(roomId: index.description, usecase: DetailWaitUseCaseImpl(repository: DetailRoomRepositoryImpl()))
             let viewController = DetailWaitViewController(viewModel: viewModel)
             
             self.navigationController?.pushViewController(viewController, animated: true)
