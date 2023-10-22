@@ -52,6 +52,20 @@ extension RoomInfoDTO {
     }
 }
 
+extension RoomInfoDTO: Equatable {
+    static let testDummyRoomDTO = RoomInfoDTO(
+        roomInformation: RoomListItemDTO.testDummyRoomListItemDTO,
+        participants: ParticipantListDTO.testDummyParticipantListDTO,
+        manittee: UserInfoDTO.testDummyUserManittee,
+        manitto: UserInfoDTO.testDummyUserManitto,
+        invitation: InvitationCodeDTO.testDummyInvitationCodeDTO,
+        didViewRoulette: false,
+        mission: IndividualMissionDTO.testDummyIndividualMissionDTO,
+        admin: false,
+        messages: MessageCountInfoDTO.testDummyMessageInfoDTO
+    )
+}
+
 struct ParticipantListDTO: Decodable {
     let count: Int?
     let members: [UserInfoDTO]?
@@ -64,6 +78,13 @@ extension ParticipantListDTO {
     }
 }
 
+extension ParticipantListDTO: Equatable {
+    static let testDummyParticipantListDTO = ParticipantListDTO(
+        count: 5,
+        members: UserInfoDTO.testDummyUserList
+    )
+}
+
 struct InvitationCodeDTO: Decodable {
     let code: String?
 }
@@ -72,6 +93,10 @@ extension InvitationCodeDTO {
     func toInvitationCode() -> InvitationCode {
         return InvitationCode(code: self.code ?? "")
     }
+}
+
+extension InvitationCodeDTO: Equatable {
+    static let testDummyInvitationCodeDTO = InvitationCodeDTO(code: "ABCDEF")
 }
 
 /// 개별 미션에 대한 정보들을 반환하는 데이터 모델 DTO입니다.
@@ -88,12 +113,20 @@ extension IndividualMissionDTO {
     }
 }
 
+extension IndividualMissionDTO: Equatable {
+    static let testDummyIndividualMissionDTO = IndividualMissionDTO(id: 1, content: "테스트미션")
+}
+
 struct MessageCountInfoDTO: Decodable {
     let count: Int?
 }
 
-extension MessageCountInfoDTO: Equatable {
+extension MessageCountInfoDTO {
     func toMessageCountInfo() -> MessageCountInfo {
         return MessageCountInfo(count: self.count ?? 0)
     }
+}
+
+extension MessageCountInfoDTO: Equatable {
+    static let testDummyMessageInfoDTO = MessageCountInfoDTO(count: 3)
 }
