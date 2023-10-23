@@ -101,7 +101,7 @@ final class LetterViewController: UIViewController, Navigationable {
     }
 
     private func bindOutputToViewModel(_ output: LetterViewModel.Output?) {
-        guard let output = output else { return }
+        guard let output else { return }
 
         output.messages
             .receive(on: DispatchQueue.main)

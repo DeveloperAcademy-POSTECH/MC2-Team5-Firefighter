@@ -47,18 +47,3 @@ final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
         }
     }
 }
-
-// FIXME: Presentation 폴더로 옮기면서 옮길 예정
-enum ChooseCharacterError: LocalizedError {
-    case roomAlreadyParticipating
-    case clientError
-}
-
-extension ChooseCharacterError {
-    var errorDescription: String? {
-        switch self {
-        case .roomAlreadyParticipating: return TextLiteral.ParticipateRoom.Error.alreadyJoinMessage.localized()
-        case .clientError: return TextLiteral.Common.Error.networkServer.localized()
-        }
-    }
-}
