@@ -113,8 +113,13 @@ final class DetailWaitViewModelTest: XCTestCase {
                 case .finished:
                     break
                 }
-            }, receiveValue: { room in
-                testRoom = room
+            }, receiveValue: { result in
+                switch result {
+                case .success(let roomInfo):
+                    testRoom = roomInfo
+                case .failure:
+                    XCTFail()
+                }
                 expectation.fulfill()
             })
             .store(in: &self.cancellable)
