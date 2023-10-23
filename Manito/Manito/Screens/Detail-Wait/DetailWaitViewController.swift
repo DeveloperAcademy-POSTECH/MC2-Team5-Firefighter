@@ -109,7 +109,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
             })
             .store(in: &self.cancellable)
         
-        output.manitteeNickname
+        output.selectManitteeInfo
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
@@ -117,8 +117,10 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                 case .failure(let error):
                     self?.showAlertError(message: error.localizedDescription)
                 }
-            }, receiveValue: { [weak self] userInfo in
-                self?.presentSelectManittoViewController(nickname: userInfo.nickname)
+            }, receiveValue: { [weak self] data in
+                guard let nickname = data.userInfo?.nickname,
+                      let roomId = data.roomId else { return }
+                self?.presentSelectManittoViewController(nickname: nickname, roomId: roomId)
             })
             .store(in: &self.cancellable)
         
@@ -216,9 +218,9 @@ final class DetailWaitViewController: UIViewController, Navigationable {
         self.present(viewController, animated: true)
     }
     
-    private func presentSelectManittoViewController(nickname: String) {
-        let roomId = self.detailWaitViewModel.roomId
-        let viewController = SelectManitteeViewController(roomId: roomId, manitteeNickname: nickname)
+    private func presentSelectManittoViewController(nickname: String, roomId: String) {
+        let viewModel = SelectManitteeViewModel(roomId: roomId, manitteeNickname: nickname)
+        let viewController = SelectManitteeViewController(viewModel: viewModel)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)

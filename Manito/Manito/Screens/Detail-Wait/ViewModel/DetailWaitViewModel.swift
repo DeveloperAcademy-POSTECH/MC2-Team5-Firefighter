@@ -45,7 +45,7 @@ final class DetailWaitViewModel {
     struct Output {
         let roomInformation: AnyPublisher<RoomInfo, Error>
         let code: AnyPublisher<String, Never>
-        let manitteeNickname: AnyPublisher<UserInfo, Error>
+        let selectManitteeInfo: AnyPublisher<(userInfo: UserInfo?, roomId: String?), Error>
         let editRoomInformation: AnyPublisher<EditRoomInformation, Never>
         let deleteRoom: AnyPublisher<Int, Error>
         let leaveRoom: AnyPublisher<Int, Error>
@@ -88,7 +88,7 @@ final class DetailWaitViewModel {
             .asyncMap { [weak self] _ in
                 return try await self?.patchStartManitto(roomId: self?.roomId ?? "")
             }
-            .compactMap { $0 }
+            .compactMap { [weak self] in (userInfo: $0, roomId: self?.roomId) }
             .eraseToAnyPublisher()
         
         let editRoomInformationOutput = input.editMenuButtonDidTap
@@ -133,7 +133,7 @@ final class DetailWaitViewModel {
         return Output(
             roomInformation: viewDidLoad,
             code: codeOutput,
-            manitteeNickname: manitteeOutput,
+            selectManitteeInfo: manitteeOutput,
             editRoomInformation: editRoomInformationOutput,
             deleteRoom: deleteOutput,
             leaveRoom: leaveRoomOutput,

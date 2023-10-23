@@ -5,15 +5,11 @@
 //  Created by SHIN YOON AH on 2023/03/28.
 //
 
+import Combine
 import UIKit
 
 import Gifu
 import SnapKit
-
-protocol SelectManitteeViewDelegate: AnyObject {
-    func confirmButtonDidTap()
-    func moveToNextStep()
-}
 
 final class SelectManitteeView: UIView, BaseViewType {
 
@@ -45,14 +41,17 @@ final class SelectManitteeView: UIView, BaseViewType {
 
     // MARK: - property
 
-    private weak var delegate: SelectManitteeViewDelegate?
-
+    var nextStepSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
+    
+    var confirmButtonPublisher: AnyPublisher<Void, Never> {
+        return self.confirmButton.tapPublisher
+    }
+    
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupButtonAction()
         self.setupSwipeGesture()
     }
 
@@ -108,14 +107,47 @@ final class SelectManitteeView: UIView, BaseViewType {
     }
 
     // MARK: - func
-
-    private func setupButtonAction() {
-        let confirmAction = UIAction { [weak self] _ in
-            self?.delegate?.confirmButtonDidTap()
-        }
-        self.confirmButton.addAction(confirmAction, for: .touchUpInside)
+    
+    func showJoystick() {
+        self.hideStepView(at: 0)
+        self.joystickImageView.animate(withGIFNamed: GIFSet.joystick)
     }
 
+    func showCapsule() {
+        self.hideStepView(at: 1)
+        self.joystickImageView.stopAnimatingGIF()
+        self.openCapsuleImageView.animate(withGIFNamed: GIFSet.capsule, loopCount: 1, animationBlock: { [weak self] in
+            self?.nextStepSubject.send(())
+        })
+    }
+
+    func showManitteeName() {
+        self.hideStepView(at: 2)
+        self.nameLabel.fadeIn()
+        self.openCapsuleImageView.stopAnimatingGIF()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+            self?.nextStepSubject.send(())
+        })
+    }
+    
+    func showConfirmButton() {
+        self.hideStepView(at: 3)
+    }
+    
+    func setupManitteeNickname(_ nickname: String) {
+        self.nameLabel.text = nickname
+    }
+}
+
+// MARK: - Helper
+extension SelectManitteeView {
+    private func hideStepView(at step: Int) {
+        self.joystickBackgroundView.isHidden = !(step == 0)
+        self.openCapsuleImageView.isHidden = !(step == 1 || step == 2 || step == 3)
+        self.nameLabel.isHidden = !(step == 2 || step == 3)
+        self.confirmButton.isHidden = !(step == 3)
+    }
+    
     private func setupSwipeGesture() {
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(_:)))
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(_:)))
@@ -124,58 +156,14 @@ final class SelectManitteeView: UIView, BaseViewType {
         self.joystickBackgroundView.addGestureRecognizer(swipeLeftGesture)
         self.joystickBackgroundView.addGestureRecognizer(swipeRightGesture)
     }
-
-    private func setupShowJoystickConfiguration() {
-        self.joystickImageView.animate(withGIFNamed: GIFSet.joystick)
-    }
-
-    private func setupShowCapsuleConfiguration() {
-        self.joystickImageView.stopAnimatingGIF()
-        self.openCapsuleImageView.animate(withGIFNamed: GIFSet.capsule, loopCount: 1, animationBlock: { [weak self] in
-            self?.delegate?.moveToNextStep()
-        })
-    }
-
-    private func setupOpenNameConfiguration() {
-        self.nameLabel.fadeIn()
-        self.openCapsuleImageView.stopAnimatingGIF()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
-            self?.delegate?.moveToNextStep()
-        })
-    }
-
-    private func setupHiddenStepView(at step: Int) {
-        self.joystickBackgroundView.isHidden = !(step == 0)
-        self.openCapsuleImageView.isHidden = !(step == 1 || step == 2 || step == 3)
-        self.nameLabel.isHidden = !(step == 2 || step == 3)
-        self.confirmButton.isHidden = !(step == 3)
-    }
-
-    func configureDelegation(_ delegate: SelectManitteeViewDelegate) {
-        self.delegate = delegate
-    }
-
-    func configureUI(manitteeNickname: String) {
-        self.nameLabel.text = manitteeNickname
-    }
-
-    func manageStepView(step: Int) {
-        self.setupHiddenStepView(at: step)
-        switch step {
-        case 0: self.setupShowJoystickConfiguration()
-        case 1: self.setupShowCapsuleConfiguration()
-        case 2: self.setupOpenNameConfiguration()
-        default: break
-        }
-    }
-
+    
     // MARK: - selector
 
     @objc
     private func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
-            case .left, .right: self.delegate?.moveToNextStep()
+            case .left, .right: self.nextStepSubject.send(())
             default: break
             }
         }

@@ -135,7 +135,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         let output = self.viewModel.transform(input)
 
         // when
-        output.manitteeNickname
+        output.selectManitteeInfo
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:
@@ -143,8 +143,9 @@ final class DetailWaitViewModelTest: XCTestCase {
                 case .failure:
                     XCTFail("fail")
                 }
-            }, receiveValue: { userInfo in
-                testNickname = userInfo.nickname
+            }, receiveValue: { data in
+                guard let nickname = data.userInfo?.nickname else { return }
+                testNickname = nickname
                 expectation.fulfill()
             })
             .store(in: &self.cancellable)

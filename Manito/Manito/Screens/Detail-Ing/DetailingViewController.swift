@@ -73,7 +73,8 @@ final class DetailingViewController: UIViewController, Navigationable {
     }
         
     private func openManittee(manitteeName: String) {
-        let viewController = SelectManitteeViewController(roomId: self.roomId, manitteeNickname: manitteeName)
+        let viewModel = SelectManitteeViewModel(roomId: self.roomId, manitteeNickname: manitteeName)
+        let viewController = SelectManitteeViewController(viewModel: viewModel)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)
