@@ -73,7 +73,7 @@ final class FriendListViewController: UIViewController, Navigationable {
     }
 
     private func bindOutputToViewModel(_ output: FriendListViewModel.Output?) {
-        guard let output = output else { return }
+        guard let output else { return }
 
         output.friendList
             .receive(on: DispatchQueue.main)
