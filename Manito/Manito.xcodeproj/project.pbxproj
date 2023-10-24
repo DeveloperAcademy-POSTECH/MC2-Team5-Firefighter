@@ -182,6 +182,9 @@
 		CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB358C0128A564080084D001 /* SettingDeveloperInfoViewController.swift */; };
 		CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */; };
 		CB6637E82959CBC60050BD04 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = CB6637E72959CBC60050BD04 /* SkeletonView */; };
+		CB66FD6C2AE7FCDE00358CA2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66FD6B2AE7FCDE00358CA2 /* LoginView.swift */; };
+		CB66FD6E2AE7FCE900358CA2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66FD6D2AE7FCE900358CA2 /* LoginViewModel.swift */; };
+		CB66FD702AE7FCF600358CA2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66FD6F2AE7FCF600358CA2 /* LoginService.swift */; };
 		CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */; };
 		CB674C2128596A310063A6B7 /* ParticipationRoomDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C2028596A310063A6B7 /* ParticipationRoomDetailsViewController.swift */; };
 		CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */; };
@@ -425,6 +428,9 @@
 		CB21C33828C4C10200128D25 /* CharacterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB358C0128A564080084D001 /* SettingDeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoViewController.swift; sourceTree = "<group>"; };
 		CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewController.swift; sourceTree = "<group>"; };
+		CB66FD6B2AE7FCDE00358CA2 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		CB66FD6D2AE7FCE900358CA2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		CB66FD6F2AE7FCF600358CA2 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputInvitedCodeView.swift; sourceTree = "<group>"; };
 		CB674C2028596A310063A6B7 /* ParticipationRoomDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationRoomDetailsViewController.swift; sourceTree = "<group>"; };
 		CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoHeaderView.swift; sourceTree = "<group>"; };
@@ -624,6 +630,9 @@
 		39C957CC2876E2BE00A04A2B /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				CB66FD682AE7FC7D00358CA2 /* Service */,
+				CB66FD692AE7FC8200358CA2 /* ViewModel */,
+				CB66FD6A2AE7FC8600358CA2 /* View */,
 				39C957CD2876E2ED00A04A2B /* LoginViewController.swift */,
 			);
 			path = Login;
@@ -1452,6 +1461,30 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		CB66FD682AE7FC7D00358CA2 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				CB66FD6F2AE7FCF600358CA2 /* LoginService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		CB66FD692AE7FC8200358CA2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CB66FD6D2AE7FCE900358CA2 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CB66FD6A2AE7FC8600358CA2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB66FD6B2AE7FCDE00358CA2 /* LoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		CB85DE1D28A76F1A00399109 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
@@ -1940,6 +1973,7 @@
 				7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */,
 				D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */,
 				B5A085FE2A97493900C8A98D /* UserInfoDTO.swift in Sources */,
+				CB66FD6C2AE7FCDE00358CA2 /* LoginView.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B5422CD62ADD42CD0051A966 /* DetailUsecaseError.swift in Sources */,
 				B55469B62AA96F54004D9FE6 /* DefaultCharacterType.swift in Sources */,
@@ -2054,6 +2088,7 @@
 				B53A35D02A97194D00B720BC /* TokenRepository.swift in Sources */,
 				B5706BF629B9D4650093D198 /* GuideView.swift in Sources */,
 				B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */,
+				CB66FD702AE7FCF600358CA2 /* LoginService.swift in Sources */,
 				B5422CA52ADD16C40051A966 /* SplashViewModel.swift in Sources */,
 				B5B3C1652A427B5800AABD6F /* UIControl+Combine.swift in Sources */,
 				B5A085F82A9744CC00C8A98D /* RoomListDTO.swift in Sources */,
@@ -2070,6 +2105,7 @@
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
 				D7537F612AA70C40005AC78B /* ParticipatedRoomInfo.swift in Sources */,
 				B53A35C42A96F50100B720BC /* DetailRoomRepository.swift in Sources */,
+				CB66FD6E2AE7FCE900358CA2 /* LoginViewModel.swift in Sources */,
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
 				D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */,
 				B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */,
