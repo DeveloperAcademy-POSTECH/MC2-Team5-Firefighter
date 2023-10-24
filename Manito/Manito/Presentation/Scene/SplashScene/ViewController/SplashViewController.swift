@@ -76,7 +76,7 @@ final class SplashViewController: UIViewController {
 // MARK: - Helper
 extension SplashViewController {
     private func presentLoginViewConroller() {
-        let viewController = LoginViewController()
+        let viewController = LoginViewController(viewModel: LoginViewModel(loginService: LoginService(repository: LoginRepositoryImpl())))
         let navigtionViewController = UINavigationController(rootViewController: viewController)
         navigtionViewController.setNavigationBarHidden(true, animated: true)
         navigtionViewController.modalPresentationStyle = .fullScreen

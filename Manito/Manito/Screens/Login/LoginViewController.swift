@@ -6,27 +6,33 @@
 //
 
 import AuthenticationServices
+import Combine
 import UIKit
 
 import SnapKit
 
-final class LoginViewController: UIViewController, BaseViewControllerType, Navigationable {
+final class LoginViewController: UIViewController, Navigationable {
 
     // MARK: - ui component
 
-    private let logoImageView: UIImageView = UIImageView(image: UIImage.Image.appIcon)
-    private let logoTextImageView: UIImageView = UIImageView(image: UIImage.Image.textLogo)
-    private let appleLoginButton: ASAuthorizationAppleIDButton = {
-        let button = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
-        button.cornerRadius = 25
-        return button
-    }()
+    private let loginView: LoginView = LoginView()
     
     // MARK: - property
     
-    private let loginRepository: LoginRepository = LoginRepositoryImpl()
+    private var cancellable = Set<AnyCancellable>()
+    private let loginViewModel: LoginViewModel
     
     // MARK: - init
+    
+    init(viewModel: LoginViewModel) {
+        self.loginViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     deinit {
         print("\(#file) is dead")
@@ -34,129 +40,71 @@ final class LoginViewController: UIViewController, BaseViewControllerType, Navig
     
     // MARK: - life cycle
     
+    override func loadView() {
+        self.view = self.loginView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.baseViewDidLoad()
-        self.setupLoginButton()
-        self.configureNavigationBar()
+        self.setupNavigationBarHiddenState()
+        self.bindViewModel()
         self.setupNavigation()
     }
 
-    // MARK: - base func
-    
-    func setupLayout() {
-        self.view.addSubview(self.logoImageView)
-        self.logoImageView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().offset(-92)
-            $0.width.height.equalTo(130)
-        }
-
-        self.view.addSubview(self.logoTextImageView)
-        self.logoTextImageView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.logoImageView.snp.bottom).offset(7)
-        }
-
-        self.view.addSubview(self.appleLoginButton)
-        self.appleLoginButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(65)
-            $0.height.equalTo(50)
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
-        }
-    }
-
-    func configureUI() {
-        self.view.backgroundColor = .backgroundGrey
-    }
-    
     // MARK: - func
-    
-    private func configureNavigationBar() {
+
+    private func setupNavigationBarHiddenState() {
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    private func setupLoginButton() {
-        let action = UIAction { [weak self] _ in
-            self?.appleSignIn()
-        }
-        self.appleLoginButton.addAction(action, for: .touchUpInside)
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
     }
-
-    private func appleSignIn() {
-        let provider = ASAuthorizationAppleIDProvider()
-        let request = provider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        let controller = ASAuthorizationController(authorizationRequests: [request])
-        controller.delegate = self
-        controller.presentationContextProvider = self
-        controller.performRequests()
+    
+    private func transformedOutput() -> LoginViewModel.Output {
+        let input = LoginViewModel.Input(
+            appleSignButtonDidTap: self.loginView.appleSignButtonDidTapPublisher.eraseToAnyPublisher()
+        )
+        return self.loginViewModel.transform(from: input)
     }
-}
-
-extension LoginViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            
-            let userIdentifier = appleIDCredential.user
-            
-            let appleIDProvider = ASAuthorizationAppleIDProvider()
-            appleIDProvider.getCredentialState(forUserID: userIdentifier) { (credentialState, error) in
-                switch credentialState {
-                case .authorized:
-                    guard let token = appleIDCredential.identityToken else { return }
-                    guard let tokenToString = String(data: token, encoding: .utf8) else { return }
-                    
-                    Task {
-                        do {
-                            let loginDTO = LoginRequestDTO(identityToken: tokenToString, fcmToken: UserDefaultStorage.fcmToken)
-                            let data = try await self.loginRepository.dispatchAppleLogin(login: loginDTO)
-
-                            UserDefaultHandler.setIsLogin(isLogin: true)
-                            UserDefaultHandler.setAccessToken(accessToken: data.accessToken ?? "")
-                            UserDefaultHandler.setRefreshToken(refreshToken: data.refreshToken ?? "")
-
-                            if let isNewMember = data.isNewMember {
-                                if isNewMember {
-                                    self.navigationController?.pushViewController(CreateNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
-                                    return
-                                }
-                            }
-
-                            UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
-                            UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
-                            viewController.modalPresentationStyle = .fullScreen
-                            viewController.modalTransitionStyle = .crossDissolve
-                            self.present(viewController, animated: true)
-                        } catch NetworkError.serverError {
-                            print("server Error")
-                        } catch NetworkError.encodingError {
-                            print("encoding Error")
-                        } catch NetworkError.clientError(let message) {
-                            print("client Error: \(String(describing: message))")
-                        }
-                    }
-                    print("userIdentifier = \(userIdentifier)")
-                    UserDefaultHandler.setUserID(userID: userIdentifier)
-                    break
-                default:
-                    break
+    
+    private func bindOutputToViewModel(_ output: LoginViewModel.Output) {
+        output.loginDTO
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished:
+                    self?.presentMainViewController()
+                case .failure(_):
+                    // FIXME: - 에러 코드 추가 작성 필요
+                    self?.makeAlert(title: "에러발생")
                 }
-            }
-        }
-    }
-
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print(error)
+            }, receiveValue: { [weak self] loginDTO in
+                UserDefaultHandler.setIsLogin(isLogin: true)
+                UserDefaultHandler.setAccessToken(accessToken: loginDTO.accessToken ?? "")
+                UserDefaultHandler.setRefreshToken(refreshToken: loginDTO.refreshToken ?? "")
+                
+                if let isNewMember = loginDTO.isNewMember {
+                    if isNewMember {
+                        self?.navigationController?.pushViewController(CreateNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
+                        return
+                    }
+                }
+                
+                UserDefaultHandler.setNickname(nickname: loginDTO.nickname ?? "")
+                UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
+            })
+            .store(in: &self.cancellable)
     }
 }
 
-extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        guard let window = self.view.window else { return ASPresentationAnchor() }
-        return window
+// MARK: - Helper
+extension LoginViewController {
+    private func presentMainViewController() {
+        let navigationController = UINavigationController(rootViewController: MainViewController())
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalTransitionStyle = .crossDissolve
+        self.present(navigationController, animated: true)
     }
 }

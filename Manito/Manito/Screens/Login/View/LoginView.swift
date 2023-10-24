@@ -11,10 +11,6 @@ import UIKit
 
 import SnapKit
 
-protocol LoginViewDelegate: AnyObject {
-    func didTapCloseButton()
-}
-
 final class LoginView: UIView, BaseViewType {
     
     // MARK: - ui component
@@ -29,7 +25,7 @@ final class LoginView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private weak var delegate: LoginViewDelegate?
+    let appleSignButtonDidTapPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
     
@@ -76,9 +72,9 @@ final class LoginView: UIView, BaseViewType {
     // MARK: - func
 
     private func setupAction() {
-    }
-    
-    func configureDelegate(_ delegate: LoginViewDelegate) {
-        self.delegate = delegate
+        let action = UIAction { [weak self] _ in
+            self?.appleSignButtonDidTapPublisher.send()
+        }
+        self.appleLoginButton.addAction(action, for: .touchUpInside)
     }
 }
