@@ -22,7 +22,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
-    private let createRoomSubject = PassthroughSubject<Void, Error>()
+    private let createRoomSubject = PassthroughSubject<Void, Never>()
     private let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let changeButtonSubject = PassthroughSubject<Void, Never>()
@@ -97,8 +97,16 @@ final class DetailWaitViewController: UIViewController, Navigationable {
                         self?.navigationController?.popViewController(animated: true)
                     })
                 }
-            }, receiveValue: { [weak self] room in
-                self?.detailWaitView.updateDetailWaitView(room: room)
+            }, receiveValue: { [weak self] result in
+                switch result {
+                case .success(let roomInfo):
+                    self?.detailWaitView.updateDetailWaitView(room: roomInfo)
+                case .failure(let error):
+                    self?.showAlertError(message: error.localizedDescription,
+                                         okAction: { [weak self] _ in
+                        self?.navigationController?.popViewController(animated: true)
+                    })
+                }
             })
             .store(in: &self.cancellable)
         

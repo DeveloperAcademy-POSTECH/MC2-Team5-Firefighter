@@ -21,7 +21,7 @@ final class DetailWaitViewModel {
         let deleteMenuButtonDidTap: AnyPublisher<Void, Never>
         let leaveMenuButtonDidTap: AnyPublisher<Void, Never>
         let changeButtonDidTap: AnyPublisher<Void, Never>
-        let roomDidCreate: AnyPublisher<Void, Error>
+        let roomDidCreate: AnyPublisher<Void, Never>
         
         init(viewDidLoad: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
              codeCopyButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
@@ -30,7 +30,7 @@ final class DetailWaitViewModel {
              deleteMenuButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
              leaveMenuButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
              changeButtonDidTap: AnyPublisher<Void, Never> = Empty<Void,Never>().eraseToAnyPublisher(),
-             roomDidCreate: AnyPublisher<Void, Error> = Empty<Void, Error>().eraseToAnyPublisher()) {
+             roomDidCreate: AnyPublisher<Void, Never> = Empty<Void, Never>().eraseToAnyPublisher()) {
             self.viewDidLoad = viewDidLoad
             self.codeCopyButtonDidTap = codeCopyButtonDidTap
             self.startButtonDidTap = startButtonDidTap
@@ -43,14 +43,14 @@ final class DetailWaitViewModel {
     }
     
     struct Output {
-        let roomInformation: AnyPublisher<RoomInfo, Error>
+        let roomInformation: AnyPublisher<Result<RoomInfo, Error>, Never>
         let code: AnyPublisher<String, Never>
         let selectManitteeInfo: AnyPublisher<(userInfo: UserInfo?, roomId: String?), Error>
         let editRoomInformation: AnyPublisher<EditRoomInformation, Never>
         let deleteRoom: AnyPublisher<Int, Error>
         let leaveRoom: AnyPublisher<Int, Error>
-        let passedStartDate: AnyPublisher<PassedStartDateAndIsOwner, Error>
-        let invitedCodeView: AnyPublisher<RoomInfo, Error>
+        let passedStartDate: AnyPublisher<PassedStartDateAndIsOwner, Never>
+        let invitedCodeView: AnyPublisher<RoomInfo, Never>
         let changeOutput: AnyPublisher<RoomInfo, Error>
     }
     
@@ -71,10 +71,14 @@ final class DetailWaitViewModel {
     
     func transform(_ input: Input) -> Output {
         let viewDidLoad = input.viewDidLoad
-            .asyncMap { [weak self] _ in
-                return try await self?.fetchRoomInformation(roomId: self?.roomId ?? "")
+            .asyncMap { [weak self] _ -> Result<RoomInfo, Error> in
+                do {
+                    let roomInfo = try await self?.fetchRoomInformation(roomId: self?.roomId ?? "")
+                    return .success(roomInfo ?? .emptyRoom)
+                } catch(let error) {
+                    return .failure(error)
+                }
             }
-            .compactMap { $0 }
             .eraseToAnyPublisher()
         
         let codeOutput = input.codeCopyButtonDidTap
@@ -113,14 +117,27 @@ final class DetailWaitViewModel {
             .eraseToAnyPublisher()
         
         let passedStartDateOutput = viewDidLoad
-            .map { [weak self] _ -> PassedStartDateAndIsOwner in
-                guard let self else { return (false, false) }
-                return self.makeIsAdmin(roomInformation: self.usecase.roomInformation)
+            .map { [weak self] result -> PassedStartDateAndIsOwner in
+                switch result {
+                case .success(let roomInfo):
+                    guard let self else { return (false, false) }
+                    return self.makeIsAdmin(roomInformation: roomInfo)
+                case .failure:
+                    return (false, false)
+                }
             }
             .eraseToAnyPublisher()
         
         let zipPublisher = Publishers.Zip(viewDidLoad, input.roomDidCreate)
             .compactMap { $0.0 }
+            .map { result -> RoomInfo in
+                switch result {
+                case .success(let roomInfo):
+                    return roomInfo
+                case .failure:
+                    return RoomInfo.emptyRoom
+                }
+            }
             .eraseToAnyPublisher()
         
         let changeButtonOutput = input.changeButtonDidTap
