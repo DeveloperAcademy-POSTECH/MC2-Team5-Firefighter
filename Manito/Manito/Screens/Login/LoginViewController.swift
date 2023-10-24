@@ -74,8 +74,7 @@ final class LoginViewController: UIViewController, Navigationable {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
-                case .finished:
-                    self?.presentMainViewController()
+                case .finished: return
                 case .failure(_):
                     // FIXME: - 에러 코드 추가 작성 필요
                     self?.makeAlert(title: "에러발생")
@@ -94,6 +93,8 @@ final class LoginViewController: UIViewController, Navigationable {
                 
                 UserDefaultHandler.setNickname(nickname: loginDTO.nickname ?? "")
                 UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
+                
+                self?.presentMainViewController()
             })
             .store(in: &self.cancellable)
     }
