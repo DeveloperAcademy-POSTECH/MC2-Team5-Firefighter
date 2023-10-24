@@ -70,8 +70,8 @@ final class FriendListView: UIView, BaseViewType {
 // MARK: - UICollectionViewLayout
 extension FriendListView {
     private func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
-            let itemWidth = ((self.window?.windowScene?.screen.bounds.width ?? 0) - ConstantSize.itemSpacing) / 2
+        let layout = UICollectionViewCompositionalLayout { [weak self] index, environment -> NSCollectionLayoutSection? in
+            let itemWidth = ((self?.window?.windowScene?.screen.bounds.width ?? 0) - ConstantSize.itemSpacing) / 2
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .absolute(itemWidth),
                 heightDimension: .absolute(itemWidth)
