@@ -19,7 +19,7 @@ struct FriendList {
     let members: [MemberInfo]
 }
 
-struct MemberInfo {
+struct MemberInfo: Hashable {
     /// 닉네임
     let nickname: String
     /// 멤버 색깔 인덱스

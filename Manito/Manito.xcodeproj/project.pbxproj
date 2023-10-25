@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		333BF66628571CF00039F77F /* FriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */; };
-		33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDF5612856E03800564211 /* FriendListViewController.swift */; };
 		39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39018F4128C4708A00C78DBA /* UIButton+Extension.swift */; };
 		3904F4FA2AA36F4F00B6264F /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4F92AA36F4F00B6264F /* UserInfo.swift */; };
 		3904F4FC2AA3729300B6264F /* InvitationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904F4FB2AA3729300B6264F /* InvitationCode.swift */; };
@@ -149,6 +148,10 @@
 		B5C7FBF52AA859E300862021 /* BaseViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C7FBF42AA859E300862021 /* BaseViewControllerType.swift */; };
 		B5C7FC0C2AA88AF500862021 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C7FC0B2AA88AF500862021 /* UIViewController+Alert.swift */; };
 		B5C7FC0E2AA88B3500862021 /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C7FC0D2AA88B3500862021 /* UIViewController+Keyboard.swift */; };
+		B5D3D2932AE0D0500016F1D5 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3D2922AE0D0500016F1D5 /* FriendListViewController.swift */; };
+		B5D3D2952AE0D0B60016F1D5 /* FriendListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3D2942AE0D0B60016F1D5 /* FriendListView.swift */; };
+		B5D3D2972AE0D0CE0016F1D5 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3D2962AE0D0CE0016F1D5 /* FriendListViewModel.swift */; };
+		B5D3D2992AE0D1270016F1D5 /* FriendListUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3D2982AE0D1270016F1D5 /* FriendListUsecase.swift */; };
 		B5E1F2AE285B2917006D880B /* Int+RandomNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2AD285B2917006D880B /* Int+RandomNumber.swift */; };
 		B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */; };
 		B5E850302AAEE4CF00652AC3 /* GIFSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E8502F2AAEE4CF00652AC3 /* GIFSet.swift */; };
@@ -166,7 +169,6 @@
 		B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */; };
 		B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525092851A06700614FF7 /* DetailWaitViewController.swift */; };
 		B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F5250D2851A07700614FF7 /* LetterViewController.swift */; };
-		B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F525152851A0F600614FF7 /* DetailIng.storyboard */; };
 		B5F525242851A25400614FF7 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525232851A25400614FF7 /* UICollectionView+Extension.swift */; };
 		B5F525262851A26D00614FF7 /* NSObject+ClassName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525252851A26D00614FF7 /* NSObject+ClassName.swift */; };
 		B5F525292851A2A400614FF7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F525282851A2A400614FF7 /* Logger.swift */; };
@@ -251,7 +253,6 @@
 
 /* Begin PBXFileReference section */
 		333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewCell.swift; sourceTree = "<group>"; };
-		33BDF5612856E03800564211 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		39018F4128C4708A00C78DBA /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		3904F4F92AA36F4F00B6264F /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3904F4FB2AA3729300B6264F /* InvitationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationCode.swift; sourceTree = "<group>"; };
@@ -391,6 +392,10 @@
 		B5C7FBF42AA859E300862021 /* BaseViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewControllerType.swift; sourceTree = "<group>"; };
 		B5C7FC0B2AA88AF500862021 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		B5C7FC0D2AA88B3500862021 /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
+		B5D3D2922AE0D0500016F1D5 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
+		B5D3D2942AE0D0B60016F1D5 /* FriendListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListView.swift; sourceTree = "<group>"; };
+		B5D3D2962AE0D0CE0016F1D5 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
+		B5D3D2982AE0D1270016F1D5 /* FriendListUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListUsecase.swift; sourceTree = "<group>"; };
 		B5E1F2AD285B2917006D880B /* Int+RandomNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+RandomNumber.swift"; sourceTree = "<group>"; };
 		B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectManitteeViewController.swift; sourceTree = "<group>"; };
 		B5E8502F2AAEE4CF00652AC3 /* GIFSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFSet.swift; sourceTree = "<group>"; };
@@ -410,7 +415,6 @@
 		B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedCodeViewController.swift; sourceTree = "<group>"; };
 		B5F525092851A06700614FF7 /* DetailWaitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewController.swift; sourceTree = "<group>"; };
 		B5F5250D2851A07700614FF7 /* LetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewController.swift; sourceTree = "<group>"; };
-		B5F525152851A0F600614FF7 /* DetailIng.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailIng.storyboard; sourceTree = "<group>"; };
 		B5F525232851A25400614FF7 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		B5F525252851A26D00614FF7 /* NSObject+ClassName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+ClassName.swift"; sourceTree = "<group>"; };
 		B5F525282851A2A400614FF7 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -488,14 +492,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		333BF66428571C850039F77F /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
 		3904F5012AA379CA00B6264F /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -827,6 +823,7 @@
 				B5E1F2B1285ECBDF006D880B /* SelectManitteeViewController.swift */,
 				B50B1B40285B048A0080992C /* OpenManittoViewController.swift */,
 				B5422CB12ADD2AE60051A966 /* MemoryViewController.swift */,
+				B5D3D2922AE0D0500016F1D5 /* FriendListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -839,6 +836,7 @@
 				B5AE11F329D32EE700F86FF8 /* SelectManitteeView.swift */,
 				B5AE11EF29D1E43B00F86FF8 /* OpenManittoView.swift */,
 				B5422CB32ADD2B040051A966 /* MemoryView.swift */,
+				B5D3D2942AE0D0B60016F1D5 /* FriendListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -849,6 +847,7 @@
 				B53CD03F2ADFC25C00BE7353 /* SelectManitteeViewModel.swift */,
 				B53CD0392ADF9B6100BE7353 /* OpenManittoViewModel.swift */,
 				B5422CB52ADD2B190051A966 /* MemoryViewModel.swift */,
+				B5D3D2962AE0D0CE0016F1D5 /* FriendListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -858,6 +857,7 @@
 			children = (
 				B50B1B43285B146A0080992C /* OpenManittoCollectionViewCell.swift */,
 				B55BCEB328D8449E00AF7E45 /* MemoryCollectionViewCell.swift */,
+				333BF66528571CF00039F77F /* FriendCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -884,6 +884,7 @@
 			children = (
 				B5422CCE2ADD3DEC0051A966 /* MemoryUsecase.swift */,
 				B53CD0372ADF941200BE7353 /* OpenManittoUsecase.swift */,
+				B5D3D2982AE0D1270016F1D5 /* FriendListUsecase.swift */,
 			);
 			path = DetailScene;
 			sourceTree = "<group>";
@@ -1426,9 +1427,7 @@
 			children = (
 				39EE956B2A401E9600AF6857 /* View */,
 				D75E8C7D28D76FB1004A6C41 /* UIcomponent */,
-				333BF66428571C850039F77F /* Cell */,
 				435B17672913E71400212663 /* DetailingViewController.swift */,
-				33BDF5612856E03800564211 /* FriendListViewController.swift */,
 				39EE956E2A404A3800AF6857 /* MissionEditViewController.swift */,
 			);
 			path = "Detail-Ing";
@@ -1438,7 +1437,6 @@
 			isa = PBXGroup;
 			children = (
 				B5F524D928519AA100614FF7 /* LaunchScreen.storyboard */,
-				B5F525152851A0F600614FF7 /* DetailIng.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1839,7 +1837,6 @@
 				B5C0BF992AAEE6B000E9017C /* capsule.gif in Resources */,
 				B5C0BF9B2AAEE6B000E9017C /* joystick.gif in Resources */,
 				B55BCEB628D99F8600AF7E45 /* Settings.bundle in Resources */,
-				B5F525162851A0F600614FF7 /* DetailIng.storyboard in Resources */,
 				B5EDF4A32AB056B50086230C /* Localizable.strings in Resources */,
 				B5C0BF9C2AAEE6B000E9017C /* gifNi.gif in Resources */,
 			);
@@ -1934,6 +1931,7 @@
 				B577E5022AC37998003CC102 /* PHPickerError.swift in Sources */,
 				B5F524FB28519C2A00614FF7 /* MainViewController.swift in Sources */,
 				D7537F672AA75AFB005AC78B /* ParticipationRoomDetailsView.swift in Sources */,
+				B5D3D2992AE0D1270016F1D5 /* FriendListUsecase.swift in Sources */,
 				7E3058C62854B47F00489E6A /* InputTitleView.swift in Sources */,
 				B5422CD32ADD418C0051A966 /* FriendList.swift in Sources */,
 				39F1C12E28D756E600585B83 /* LetterImageViewController.swift in Sources */,
@@ -1966,10 +1964,12 @@
 				B5F5253128545E4C00614FF7 /* BackButton.swift in Sources */,
 				B5422CA22ADD113C0051A966 /* SplashUsecase.swift in Sources */,
 				391612D829E9231B004AE982 /* DetailWaitView.swift in Sources */,
+				B5D3D2952AE0D0B60016F1D5 /* FriendListView.swift in Sources */,
 				B5422CA72ADD191A0051A966 /* EntryType.swift in Sources */,
 				7ED845BA2876BE530075AC61 /* SettingViewTableCell.swift in Sources */,
 				B5B3C15F2A41D6F400AABD6F /* LetterUsecase.swift in Sources */,
 				395402D42AAF0BC5003F3012 /* UIViewController+Extension.swift in Sources */,
+				B5D3D2932AE0D0500016F1D5 /* FriendListViewController.swift in Sources */,
 				B5AE11F229D28CB500F86FF8 /* OpenManittoPopupView.swift in Sources */,
 				B517C04A28D1F7EC0008BED0 /* TokenEndPoint.swift in Sources */,
 				B5C7FC0C2AA88AF500862021 /* UIViewController+Alert.swift in Sources */,
@@ -2007,6 +2007,7 @@
 				D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */,
 				D7B83FD62A95A48700BFD8FF /* CreateRoomService.swift in Sources */,
 				391B3003286198C200421F1D /* SizeLiteral.swift in Sources */,
+				B5D3D2972AE0D0CE0016F1D5 /* FriendListViewModel.swift in Sources */,
 				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
 				B57D57692AD97DAE00626BCD /* SplashView.swift in Sources */,
 				D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */,
@@ -2044,7 +2045,6 @@
 				B5546A0B2AADCB13004D9FE6 /* LetterUsecaseError.swift in Sources */,
 				3915D54D2A7516E9002D6C25 /* Key+Extension.swift in Sources */,
 				B5A085EE2A9731F000C8A98D /* DailyMissionDTO.swift in Sources */,
-				33BDF5622856E03800564211 /* FriendListViewController.swift in Sources */,
 				D71939552AA1C85300A73D6C /* SettingViewModel.swift in Sources */,
 				B5F5250E2851A07700614FF7 /* LetterViewController.swift in Sources */,
 				B5F525082851A05E00614FF7 /* InvitedCodeViewController.swift in Sources */,
