@@ -19,12 +19,12 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
     // MARK: - property
     
     private var cancellable = Set<AnyCancellable>()
-    private let createRoomViewModel: CreateRoomViewModel
+    private let viewModel: any BaseViewModelType
     
     // MARK: - init
     
-    init(viewModel: CreateRoomViewModel) {
-        self.createRoomViewModel = viewModel
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -82,7 +82,8 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> CreateRoomViewModel.Output {
+    private func transformedOutput() -> CreateRoomViewModel.Output? {
+        guard let viewModel = self.viewModel as? CreateRoomViewModel else { return nil }
         let input = CreateRoomViewModel.Input(textFieldTextDidChanged: self.createRoomView.roomTitleView.textFieldPublisher.eraseToAnyPublisher(),
                                               sliderValueDidChanged: self.createRoomView.roomCapacityView.sliderPublisher.eraseToAnyPublisher(),
                                               startDateDidTap: self.createRoomView.roomDateView.calendarView.startDateTapPublisher.eraseToAnyPublisher(),
@@ -90,15 +91,18 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
                                               characterIndexDidTap: self.createRoomView.characterCollectionView.characterIndexTapPublisher.eraseToAnyPublisher(),
                                               nextButtonDidTap: self.createRoomView.nextButtonDidTapPublisher.eraseToAnyPublisher(),
                                               backButtonDidTap: self.createRoomView.backButtonDidTapPublisher.eraseToAnyPublisher())
-        return self.createRoomViewModel.transform(from: input)
+        return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: CreateRoomViewModel.Output) {
+    private func bindOutputToViewModel(_ output: CreateRoomViewModel.Output?) {
+        guard let output,
+              let viewModel = self.viewModel as? CreateRoomViewModel
+        else { return }
         
         output.title
             .sink(receiveValue: { [weak self] title in
                 self?.createRoomView.roomInfoView.updateRoomTitle(title: title)
-                self?.createRoomView.roomTitleView.updateTitleCount(count: title.count, maxLength: self?.createRoomViewModel.maxCount ?? 0)
+                self?.createRoomView.roomTitleView.updateTitleCount(count: title.count, maxLength: viewModel.maxCount)
             })
             .store(in: &self.cancellable)
         
