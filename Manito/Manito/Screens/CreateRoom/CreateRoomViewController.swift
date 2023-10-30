@@ -64,19 +64,6 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    private func pushDetailWaitViewController(roomId: String) {
-        guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-        let viewModel = DetailWaitViewModel(roomId: roomId, usecase: DetailWaitUseCaseImpl(repository: DetailRoomRepositoryImpl()))
-        let viewController = DetailWaitViewController(viewModel: viewModel)
-        
-        navigationController.popViewController(animated: true)
-        navigationController.pushViewController(viewController, animated: false)
-        
-        self.dismiss(animated: true) {
-            viewController.sendCreateRoomEvent()
-        }
-    }
-    
     private func bindViewModel() {
         let output = self.transformedOutput()
         self.bindOutputToViewModel(output)
@@ -160,5 +147,21 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
                 self?.dismiss(animated: true)
             }
             .store(in: &self.cancellable)
+    }
+}
+
+// MARK: - Helper
+extension CreateRoomViewController {
+    private func pushDetailWaitViewController(roomId: String) {
+        guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+        let viewModel = DetailWaitViewModel(roomId: roomId, usecase: DetailWaitUseCaseImpl(repository: DetailRoomRepositoryImpl()))
+        let viewController = DetailWaitViewController(viewModel: viewModel)
+        
+        navigationController.popViewController(animated: true)
+        navigationController.pushViewController(viewController, animated: false)
+        
+        self.dismiss(animated: true) {
+            viewController.sendCreateRoomEvent()
+        }
     }
 }
