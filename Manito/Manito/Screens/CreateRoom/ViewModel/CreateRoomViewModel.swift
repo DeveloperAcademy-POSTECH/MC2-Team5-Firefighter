@@ -38,14 +38,14 @@ final class CreateRoomViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let title: CurrentValueSubject<String, Never>
+        let title: AnyPublisher<String, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
-        let capacity: CurrentValueSubject<Int, Never>
-        let dateRange: PassthroughSubject<String, Never>
+        let capacity: AnyPublisher<Int, Never>
+        let dateRange: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
         let currentNextStep: AnyPublisher<CurrentNextStep, Never>
         let previousStep: AnyPublisher<CreateRoomStep, Never>
-        let roomId: PassthroughSubject<Result<Int, Error>, Never>
+        let roomId: AnyPublisher<Result<Int, Error>, Never>
     }
     
     func transform(from input: Input) -> Output {
@@ -120,13 +120,13 @@ final class CreateRoomViewModel: BaseViewModelType {
             }
             .eraseToAnyPublisher()
         
-        return Output(title: self.titleSubject,
+        return Output(title: self.titleSubject.eraseToAnyPublisher(),
                       fixedTitleByMaxCount: fixedTitle,
-                      capacity: self.capacitySubject,
-                      dateRange: self.dateRangeSubject,
+                      capacity: self.capacitySubject.eraseToAnyPublisher(),
+                      dateRange: self.dateRangeSubject.eraseToAnyPublisher(),
                       isEnabled: isEnabled,
                       currentNextStep: currentNextStep, previousStep: previousStep,
-                      roomId: self.roomIdSubject)
+                      roomId: self.roomIdSubject.eraseToAnyPublisher())
     }
     
     // MARK: - init
