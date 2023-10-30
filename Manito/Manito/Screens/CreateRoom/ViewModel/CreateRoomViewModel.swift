@@ -16,7 +16,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     
     let maxCount: Int = 8
     
-    private let createRoomService: CreateRoomService
+    private let createRoomService: CreateRoomSevicable
     private var cancellable = Set<AnyCancellable>()
     
     private let titleSubject = CurrentValueSubject<String, Never>("")
