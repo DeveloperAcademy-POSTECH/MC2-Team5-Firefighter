@@ -10,10 +10,6 @@ import UIKit
 
 import SnapKit
 
-protocol CreateRoomViewDelegate: AnyObject {
-    func didTapCloseButton()
-}
-
 final class CreateRoomView: UIView, BaseViewType {
     
     // MARK: - ui component
@@ -53,10 +49,10 @@ final class CreateRoomView: UIView, BaseViewType {
     
     let nextButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
     let backButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
+    lazy var closeButtonDidTapPublisher = self.closeButton.tapPublisher
     
     // MARK: - property
     
-    private weak var delegate: CreateRoomViewDelegate?
     private var roomStep: CreateRoomStep = .inputTitle {
         willSet(step) {
             self.manageStepView(step: step)
@@ -131,11 +127,6 @@ final class CreateRoomView: UIView, BaseViewType {
     // MARK: - func
 
     private func setupAction() {
-        let closeAction = UIAction { [weak self] _ in
-            self?.delegate?.didTapCloseButton()
-        }
-        self.closeButton.addAction(closeAction, for: .touchUpInside)
-        
         let nextAction = UIAction { [weak self] _ in
             guard let currentStep = self?.roomStep else { return }
             self?.nextButtonDidTapPublisher.send(currentStep)
@@ -202,10 +193,6 @@ final class CreateRoomView: UIView, BaseViewType {
     
     private func nextButton(isEnable: Bool) {
         self.nextButton.isDisabled = !isEnable
-    }
-    
-    func configureDelegate(_ delegate: CreateRoomViewDelegate) {
-        self.delegate = delegate
     }
     
     func endEditingView() {

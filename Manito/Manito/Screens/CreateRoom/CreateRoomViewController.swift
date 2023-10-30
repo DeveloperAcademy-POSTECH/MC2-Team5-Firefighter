@@ -46,8 +46,8 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigationBarHiddenState()
-        self.configureDelegation()
         self.bindViewModel()
+        self.bindUI()
         self.setupNavigation()
         self.setupKeyboardGesture()
     }
@@ -62,10 +62,6 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
 
     private func setupNavigationBarHiddenState() {
         self.navigationController?.navigationBar.isHidden = true
-    }
-    
-    private func configureDelegation() {
-        self.createRoomView.configureDelegate(self)
     }
     
     private func pushDetailWaitViewController(roomId: String) {
@@ -153,10 +149,12 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
             }
             .store(in: &self.cancellable)
     }
-}
-
-extension CreateRoomViewController: CreateRoomViewDelegate {
-    func didTapCloseButton() {
-        self.dismiss(animated: true)
+    
+    private func bindUI() {
+        self.createRoomView.closeButtonDidTapPublisher
+            .sink { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
+            .store(in: &self.cancellable)
     }
 }
