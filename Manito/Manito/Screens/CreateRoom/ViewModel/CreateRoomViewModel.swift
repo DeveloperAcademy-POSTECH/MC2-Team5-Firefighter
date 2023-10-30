@@ -25,7 +25,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     private let endDateSubject = CurrentValueSubject<String, Never>("")
     private let dateRangeSubject = PassthroughSubject<String, Never>()
     private let characterIndexSubject = CurrentValueSubject<Int, Never>(0)
-    private let roomIdSubject = PassthroughSubject<Int, NetworkError>()
+    private let roomIdSubject = PassthroughSubject<Result<Int, Error>, Never>()
     
     struct Input {
         let textFieldTextDidChanged: AnyPublisher<String, Never>
@@ -45,7 +45,7 @@ final class CreateRoomViewModel: BaseViewModelType {
         let isEnabled: AnyPublisher<Bool, Never>
         let currentNextStep: AnyPublisher<CurrentNextStep, Never>
         let previousStep: AnyPublisher<CreateRoomStep, Never>
-        let roomId: PassthroughSubject<Int, NetworkError>
+        let roomId: PassthroughSubject<Result<Int, Error>, Never>
     }
     
     func transform(from input: Input) -> Output {
@@ -180,10 +180,9 @@ final class CreateRoomViewModel: BaseViewModelType {
                                                                                                                                              startDate: "20\(roomInfo.startDate)",
                                                                                                                                              endDate: "20\(roomInfo.endDate)"),
                                                                                                              member: MemberInfoRequestDTO(colorIndex: self.characterIndexSubject.value)))
-                self.roomIdSubject.send(roomId)
+                self.roomIdSubject.send(.success(roomId))
             } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.roomIdSubject.send(completion: .failure(error))
+                self.roomIdSubject.send(.failure(error))
             }
         }
     }
