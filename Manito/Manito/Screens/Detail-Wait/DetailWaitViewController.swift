@@ -221,7 +221,13 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     }
         
     private func showDetailEditViewController(roomInformation: RoomInfo, mode: DetailEditView.EditMode) {
-        let viewController = DetailEditViewController(editMode: mode, room: roomInformation)
+        let repository = DetailRoomRepositoryImpl()
+        let usecase = DetailEditUsecaseImpl(roomInformation: roomInformation,
+                                            repository: repository)
+        let viewModel = DetailEditViewModel(usecase: usecase)
+        let viewController = DetailEditViewController(editMode: mode,
+                                                      room: roomInformation,
+                                                      viewModel: viewModel)
         viewController.detailWaitDelegate = self
         self.present(viewController, animated: true)
     }
