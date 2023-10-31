@@ -114,6 +114,14 @@ final class DetailEditView: UIView, BaseViewType {
         return self.cancelButton.tapPublisher
     }
     
+    var changeButtonPublisher: AnyPublisher<Void, Never> {
+        return self.changeButton.tapPublisher
+    }
+    
+    var sliderPublisher: AnyPublisher<Float, Never> {
+        return self.participantsSlider.valuePublisher
+    }
+    
     // MARK: - init
     
     init(editMode: EditMode) {
