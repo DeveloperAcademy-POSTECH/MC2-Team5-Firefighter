@@ -61,6 +61,8 @@ final class InputCapacityView: UIView {
         return label
     }()
     
+    // MARK: - property
+    
     let sliderPublisher = PassthroughSubject<Int, Never>()
     
     // MARK: - init

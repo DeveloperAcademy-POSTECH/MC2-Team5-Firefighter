@@ -41,22 +41,32 @@ final class CreateRoomView: UIView, BaseViewType {
         button.isHidden = true
         return button
     }()
-    let roomTitleView: InputTitleView = InputTitleView()
-    let roomCapacityView: InputCapacityView = InputCapacityView()
-    let roomDateView: InputDateView = InputDateView()
-    let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
-    let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
+    private let roomTitleView: InputTitleView = InputTitleView()
+    private let roomCapacityView: InputCapacityView = InputCapacityView()
+    private let roomDateView: InputDateView = InputDateView()
+    private let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
+    private let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
     
     let nextButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
     let backButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
-    lazy var closeButtonDidTapPublisher = self.closeButton.tapPublisher
+    var closeButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        return self.closeButton.tapPublisher
+    }
     var textFieldPublisher: PassthroughSubject<String, Never> {
         return self.roomTitleView.textFieldPublisher
     }
     var sliderPublisher: PassthroughSubject<Int, Never> {
         return self.roomCapacityView.sliderPublisher
     }
-    
+    var startDateTapPublisher: PassthroughSubject<String, Never> {
+        return self.roomDateView.startDateTapPublisher
+    }
+    var endDateTapPublisher: PassthroughSubject<String, Never> {
+        return self.roomDateView.endDateTapPublisher
+    }
+    var characterIndexTapPublisher: CurrentValueSubject<Int, Never> {
+        return self.characterCollectionView.characterIndexTapPublisher
+    }
     // MARK: - property
     
     private var roomStep: CreateRoomStep = .inputTitle {
@@ -218,6 +228,30 @@ final class CreateRoomView: UIView, BaseViewType {
     
     func toggleNextButton(isEnable: Bool) {
         self.nextButton.isDisabled = !isEnable
+    }
+    
+    func updateTitleCount(count: Int, maxLength: Int) {
+        self.roomTitleView.updateTitleCount(count: count, maxLength: maxLength)
+    }
+    
+    func updateRoomTitle(title: String) {
+        self.roomInfoView.updateRoomTitle(title: title)
+    }
+    
+    func updateTextFieldText(fixedTitle: String) {
+        self.roomTitleView.updateTextFieldText(fixedTitle: fixedTitle)
+    }
+    
+    func updateCapacity(capacity: Int) {
+        self.roomCapacityView.updateCapacity(capacity: capacity)
+    }
+    
+    func updateRoomCapacity(capacity: Int) {
+        self.roomInfoView.updateRoomCapacity(capacity: capacity)
+    }
+    
+    func updateRoomDateRange(range: String) {
+        self.roomInfoView.updateRoomDateRange(range: range)
     }
     
     private func manageStepView(step: CreateRoomStep) {

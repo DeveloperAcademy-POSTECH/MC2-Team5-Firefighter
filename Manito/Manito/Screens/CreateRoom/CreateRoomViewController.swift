@@ -73,9 +73,9 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         guard let viewModel = self.viewModel as? CreateRoomViewModel else { return nil }
         let input = CreateRoomViewModel.Input(textFieldTextDidChanged: self.createRoomView.textFieldPublisher.eraseToAnyPublisher(),
                                               sliderValueDidChanged: self.createRoomView.sliderPublisher.eraseToAnyPublisher(),
-                                              startDateDidTap: self.createRoomView.roomDateView.calendarView.startDateTapPublisher.eraseToAnyPublisher(),
-                                              endDateDidTap: self.createRoomView.roomDateView.calendarView.endDateTapPublisher.eraseToAnyPublisher(),
-                                              characterIndexDidTap: self.createRoomView.characterCollectionView.characterIndexTapPublisher.eraseToAnyPublisher(),
+                                              startDateDidTap: self.createRoomView.startDateTapPublisher.eraseToAnyPublisher(),
+                                              endDateDidTap: self.createRoomView.endDateTapPublisher.eraseToAnyPublisher(),
+                                              characterIndexDidTap: self.createRoomView.characterIndexTapPublisher.eraseToAnyPublisher(),
                                               nextButtonDidTap: self.createRoomView.nextButtonDidTapPublisher.eraseToAnyPublisher(),
                                               backButtonDidTap: self.createRoomView.backButtonDidTapPublisher.eraseToAnyPublisher())
         return viewModel.transform(from: input)
@@ -88,27 +88,27 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         
         output.title
             .sink(receiveValue: { [weak self] title in
-                self?.createRoomView.roomInfoView.updateRoomTitle(title: title)
-                self?.createRoomView.roomTitleView.updateTitleCount(count: title.count, maxLength: viewModel.maxCount)
+                self?.createRoomView.updateRoomTitle(title: title)
+                self?.createRoomView.updateTitleCount(count: title.count, maxLength: viewModel.maxCount)
             })
             .store(in: &self.cancellable)
         
         output.fixedTitleByMaxCount
             .sink(receiveValue: { [weak self] fixedTitle in
-                self?.createRoomView.roomTitleView.updateTextFieldText(fixedTitle: fixedTitle)
+                self?.createRoomView.updateTextFieldText(fixedTitle: fixedTitle)
             })
             .store(in: &self.cancellable)
         
         output.capacity
             .sink(receiveValue: { [weak self] capacity in
-                self?.createRoomView.roomCapacityView.updateCapacity(capacity: capacity)
-                self?.createRoomView.roomInfoView.updateRoomCapacity(capacity: capacity)
+                self?.createRoomView.updateCapacity(capacity: capacity)
+                self?.createRoomView.updateRoomCapacity(capacity: capacity)
             })
             .store(in: &self.cancellable)
         
         output.dateRange
             .sink(receiveValue: { [weak self] dateRange in
-                self?.createRoomView.roomInfoView.updateRoomDateRange(range: dateRange)
+                self?.createRoomView.updateRoomDateRange(range: dateRange)
             })
             .store(in: &self.cancellable)
         
