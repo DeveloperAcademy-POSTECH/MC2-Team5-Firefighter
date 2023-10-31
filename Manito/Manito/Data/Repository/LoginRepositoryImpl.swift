@@ -9,10 +9,6 @@ import Foundation
 
 import MTNetwork
 
-protocol LoginRepository {
-    func dispatchAppleLogin(login: LoginRequestDTO) async throws -> LoginDTO
-}
-
 final class LoginRepositoryImpl: LoginRepository {
 
     private var provider = Provider<LoginEndPoint>()

@@ -9,11 +9,6 @@ import Foundation
 
 import MTNetwork
 
-protocol MainRepository {
-    func fetchCommonMission() async throws -> DailyMissionDTO
-    func fetchManittoList() async throws -> RoomListDTO
-}
-
 final class MainRepositoryImpl: MainRepository {
 
     private var provider = Provider<MainEndPoint>()
