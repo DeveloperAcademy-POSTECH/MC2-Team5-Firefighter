@@ -50,6 +50,12 @@ final class CreateRoomView: UIView, BaseViewType {
     let nextButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
     let backButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
     lazy var closeButtonDidTapPublisher = self.closeButton.tapPublisher
+    var textFieldPublisher: PassthroughSubject<String, Never> {
+        return self.roomTitleView.textFieldPublisher
+    }
+    var sliderPublisher: PassthroughSubject<Int, Never> {
+        return self.roomCapacityView.sliderPublisher
+    }
     
     // MARK: - property
     

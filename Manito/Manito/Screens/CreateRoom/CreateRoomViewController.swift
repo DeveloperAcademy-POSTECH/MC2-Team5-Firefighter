@@ -71,8 +71,8 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
     
     private func transformedOutput() -> CreateRoomViewModel.Output? {
         guard let viewModel = self.viewModel as? CreateRoomViewModel else { return nil }
-        let input = CreateRoomViewModel.Input(textFieldTextDidChanged: self.createRoomView.roomTitleView.textFieldPublisher.eraseToAnyPublisher(),
-                                              sliderValueDidChanged: self.createRoomView.roomCapacityView.sliderPublisher.eraseToAnyPublisher(),
+        let input = CreateRoomViewModel.Input(textFieldTextDidChanged: self.createRoomView.textFieldPublisher.eraseToAnyPublisher(),
+                                              sliderValueDidChanged: self.createRoomView.sliderPublisher.eraseToAnyPublisher(),
                                               startDateDidTap: self.createRoomView.roomDateView.calendarView.startDateTapPublisher.eraseToAnyPublisher(),
                                               endDateDidTap: self.createRoomView.roomDateView.calendarView.endDateTapPublisher.eraseToAnyPublisher(),
                                               characterIndexDidTap: self.createRoomView.characterCollectionView.characterIndexTapPublisher.eraseToAnyPublisher(),
