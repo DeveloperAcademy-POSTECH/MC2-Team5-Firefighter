@@ -11,6 +11,7 @@ import Foundation
 final class CreateRoomViewModel: BaseViewModelType {
     
     typealias CurrentNextStep = (current: CreateRoomStep, next: CreateRoomStep)
+    typealias Counts = (textCount: Int, maxCount: Int)
     
     // MARK: - property
     
@@ -28,6 +29,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     private let roomIdSubject = PassthroughSubject<Result<Int, Error>, Never>()
     
     struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
         let textFieldTextDidChanged: AnyPublisher<String, Never>
         let sliderValueDidChanged: AnyPublisher<Int, Never>
         let startDateDidTap: AnyPublisher<String, Never>
@@ -39,6 +41,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     
     struct Output {
         let title: AnyPublisher<String, Never>
+        let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let capacity: AnyPublisher<Int, Never>
         let dateRange: AnyPublisher<String, Never>
@@ -49,6 +52,18 @@ final class CreateRoomViewModel: BaseViewModelType {
     }
     
     func transform(from input: Input) -> Output {
+        let countViewDidLoadType = input.viewDidLoad
+            .map { [weak self] _ -> Counts in
+                (0, self?.maxCount ?? 0)
+            }
+        
+        let countTextFieldDidChangedType = input.textFieldTextDidChanged
+            .map { [weak self] text -> Counts in
+                (text.count, self?.maxCount ?? 0)
+            }
+        
+        let mergeCount = Publishers.Merge(countViewDidLoadType, countTextFieldDidChangedType).eraseToAnyPublisher()
+        
         let fixedTitle = input.textFieldTextDidChanged
             .map { [weak self] text -> String in
                 let isOverMaxCount = self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
@@ -120,7 +135,8 @@ final class CreateRoomViewModel: BaseViewModelType {
             }
             .eraseToAnyPublisher()
         
-        return Output(title: self.titleSubject.eraseToAnyPublisher(),
+        return Output(title: self.titleSubject.eraseToAnyPublisher(), 
+                      counts: mergeCount,
                       fixedTitleByMaxCount: fixedTitle,
                       capacity: self.capacitySubject.eraseToAnyPublisher(),
                       dateRange: self.dateRangeSubject.eraseToAnyPublisher(),

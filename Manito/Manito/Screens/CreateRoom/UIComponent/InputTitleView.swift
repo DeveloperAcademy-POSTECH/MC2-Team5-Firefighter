@@ -32,9 +32,8 @@ final class InputTitleView: UIView {
         textField.becomeFirstResponder()
         return textField
     }()
-    private lazy var roomsTextLimitLabel : UILabel = {
+    private let roomsTextLimitLabel : UILabel = {
         let label = UILabel()
-        label.text = "0/\(self.maxLength)"
         label.font = .font(.regular, ofSize: 20)
         label.textColor = .grey002
         return label
@@ -42,7 +41,6 @@ final class InputTitleView: UIView {
     
     // MARK: - property
     
-    private var maxLength: Int = 8
     let textFieldPublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init

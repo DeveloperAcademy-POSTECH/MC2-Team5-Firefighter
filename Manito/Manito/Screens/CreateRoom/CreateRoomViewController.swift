@@ -71,7 +71,8 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
     
     private func transformedOutput() -> CreateRoomViewModel.Output? {
         guard let viewModel = self.viewModel as? CreateRoomViewModel else { return nil }
-        let input = CreateRoomViewModel.Input(textFieldTextDidChanged: self.createRoomView.textFieldPublisher.eraseToAnyPublisher(),
+        let input = CreateRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher, 
+                                              textFieldTextDidChanged: self.createRoomView.textFieldPublisher.eraseToAnyPublisher(),
                                               sliderValueDidChanged: self.createRoomView.sliderPublisher.eraseToAnyPublisher(),
                                               startDateDidTap: self.createRoomView.startDateTapPublisher.eraseToAnyPublisher(),
                                               endDateDidTap: self.createRoomView.endDateTapPublisher.eraseToAnyPublisher(),
@@ -82,15 +83,18 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
     }
     
     private func bindOutputToViewModel(_ output: CreateRoomViewModel.Output?) {
-        guard let output,
-              let viewModel = self.viewModel as? CreateRoomViewModel
-        else { return }
+        guard let output else { return }
         
         output.title
             .sink(receiveValue: { [weak self] title in
                 self?.createRoomView.updateRoomTitle(title: title)
-                self?.createRoomView.updateTitleCount(count: title.count, maxLength: viewModel.maxCount)
             })
+            .store(in: &self.cancellable)
+        
+        output.counts
+            .sink { [weak self] (textCount, maxCount) in
+                self?.createRoomView.updateTitleCount(count: textCount, maxLength: maxCount)
+            }
             .store(in: &self.cancellable)
         
         output.fixedTitleByMaxCount
