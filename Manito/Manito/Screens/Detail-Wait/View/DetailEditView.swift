@@ -5,14 +5,10 @@
 //  Created by Mingwan Choi on 2023/04/20.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
-
-protocol DetailEditDelegate: AnyObject {
-    func cancelButtonDidTap()
-    func changeButtonDidTap(capacity: Int, from startDate: String, to endDate: String)
-}
 
 final class DetailEditView: UIView, BaseViewType {
     
@@ -104,7 +100,6 @@ final class DetailEditView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private weak var delegate: DetailEditDelegate?
     private weak var calendarDelegate: CalendarDelegate?
     private let editMode: EditMode
     private var maximumMemberCount: Int? {
@@ -113,6 +108,10 @@ final class DetailEditView: UIView, BaseViewType {
                 self.numberOfParticipantsLabel.text = TextLiteral.Common.people.localized(with: count)
             }
         }
+    }
+    
+    var cancleButtonPublisher: AnyPublisher<Void, Never> {
+        return self.cancelButton.tapPublisher
     }
     
     // MARK: - init
@@ -186,8 +185,6 @@ final class DetailEditView: UIView, BaseViewType {
 
     func configureUI() {
         self.backgroundColor = .backgroundGrey
-        self.setupCancleButton()
-        self.setupChangeButton()
     }
 
     // MARK: - func
@@ -226,25 +223,6 @@ final class DetailEditView: UIView, BaseViewType {
         }
     }
     
-    private func setupCancleButton() {
-        let action = UIAction { [weak self] _ in
-            self?.delegate?.cancelButtonDidTap()
-        }
-        self.cancelButton.addAction(action, for: .touchUpInside)
-    }
-    
-    private func setupChangeButton() {
-        let action = UIAction { [weak self] _ in
-            guard let capacity = self?.participantsSlider.value,
-                  let startDateString = self?.calendarView.getTempStartDate(),
-                  let endDateString = self?.calendarView.getTempEndDate() else { return }
-            self?.delegate?.changeButtonDidTap(capacity: Int(capacity),
-                                                  from: startDateString,
-                                                  to: endDateString)
-        }
-        self.changeButton.addAction(action, for: .touchUpInside)
-    }
-    
     func setupChangeButton(_ value: Bool) {
         self.changeButton.isEnabled = value
         self.changeButton.setTitleColor(.subBlue, for: .normal)
@@ -279,10 +257,6 @@ final class DetailEditView: UIView, BaseViewType {
             self.calendarView.endDateText = endDateString
         }
         self.calendarView.setupDateRange()
-    }
-    
-    func configureDelegation(_ delegate: DetailEditDelegate) {
-        self.delegate = delegate
     }
     
     func configureCalendarDelegate(_ delegate: CalendarDelegate) {
