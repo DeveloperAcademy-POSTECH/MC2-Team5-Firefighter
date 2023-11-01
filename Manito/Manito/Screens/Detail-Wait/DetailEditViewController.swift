@@ -160,6 +160,7 @@ final class DetailEditViewController: UIViewController {
             }, receiveValue: { [weak self] statusCode in
                 switch statusCode {
                 case 200..<300:
+                    self?.detailWaitDelegate?.didTappedChangeButton()
                     self?.dismiss(animated: true)
                 default:
                     return
