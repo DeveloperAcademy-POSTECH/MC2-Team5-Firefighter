@@ -10,12 +10,10 @@ import Foundation
 
 final class DetailEditViewModel: BaseViewModelType {
     struct Input {
-        let viewDidLoad: AnyPublisher<Void, Never>
         let changeRoomPublisher: AnyPublisher<CreatedRoomInfoRequestDTO, Never>
         let changeButtonDidTap: AnyPublisher<Void, Never>
     }
     struct Output {
-        let roomInformation: AnyPublisher<RoomInfo, Never>
         let passStartDate: AnyPublisher<Bool, Never>
         let overMember: AnyPublisher<Bool, Never>
         let changeSuccess: AnyPublisher<Int, Error>
@@ -30,12 +28,6 @@ final class DetailEditViewModel: BaseViewModelType {
     // MARK: - func
     
     func transform(from input: Input) -> Output {
-        let roomInformationOutput = input.viewDidLoad
-            .compactMap { [weak self] _ in
-                return self?.usecase.roomInformation
-            }
-            .eraseToAnyPublisher()
-        
         let isPastPublisher = input.changeButtonDidTap.combineLatest(input.changeRoomPublisher)
             .compactMap { [weak self] _, dto in
                 self?.validStartDatePast(startDate: dto.startDate)
@@ -54,13 +46,10 @@ final class DetailEditViewModel: BaseViewModelType {
             }
             .compactMap { $0 }
             .eraseToAnyPublisher()
-            
         
-        return Output(roomInformation: roomInformationOutput,
-                      passStartDate: isPastPublisher,
+        return Output(passStartDate: isPastPublisher,
                       overMember: isMemberOverPublisher,
-                      changeSuccess: changeRoomOutput
-        )
+                      changeSuccess: changeRoomOutput)
     }
     
     private func validStartDatePast(startDate: String) -> Bool {
