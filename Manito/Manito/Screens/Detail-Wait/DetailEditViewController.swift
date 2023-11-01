@@ -55,6 +55,7 @@ final class DetailEditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.updateView(roomInfo: self.roomPublisher.value)
         self.setupPresentationController()
         self.configureDelegation()
         self.bindViewModel()
@@ -72,10 +73,10 @@ final class DetailEditViewController: UIViewController {
         self.detailEditView.configureCalendarDelegate(self)
     }
     
-    private func updateView(roomInfo: RoomInfo) {
-        let startDate = roomInfo.roomInformation.startDate
-        let endDate = roomInfo.roomInformation.endDate
-        let capacity = roomInfo.roomInformation.capacity
+    private func updateView(roomInfo: CreatedRoomInfoRequestDTO) {
+        let startDate = roomInfo.startDate
+        let endDate = roomInfo.endDate
+        let capacity = roomInfo.capacity
         
         self.setupCalendarDateRange(startDate: startDate, endDate: endDate)
         self.setupMemberSliderValue(capacity: capacity)
@@ -118,7 +119,6 @@ final class DetailEditViewController: UIViewController {
     private func transformedOutput() -> DetailEditViewModel.Output? {
         guard let viewModel = self.viewModel as? DetailEditViewModel else { return nil }
         let input = DetailEditViewModel.Input(
-            viewDidLoad: viewDidLoadPublisher,
             changeRoomPublisher: self.roomPublisher.eraseToAnyPublisher(),
             changeButtonDidTap: self.detailEditView.changeButtonPublisher)
         
@@ -127,13 +127,6 @@ final class DetailEditViewController: UIViewController {
     
     private func bindOutputToViewModel(_ output: DetailEditViewModel.Output?) {
         guard let output else { return }
-        
-        output.roomInformation
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] roomInfo in
-                self?.updateView(roomInfo: roomInfo)
-            })
-            .store(in: &self.cancellable)
         
         output.passStartDate
             .receive(on: DispatchQueue.main)
