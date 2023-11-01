@@ -77,8 +77,8 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
                                               startDateDidTap: self.createRoomView.startDateTapPublisher.eraseToAnyPublisher(),
                                               endDateDidTap: self.createRoomView.endDateTapPublisher.eraseToAnyPublisher(),
                                               characterIndexDidTap: self.createRoomView.characterIndexTapPublisher.eraseToAnyPublisher(),
-                                              nextButtonDidTap: self.createRoomView.nextButtonDidTapPublisher.eraseToAnyPublisher(),
-                                              backButtonDidTap: self.createRoomView.backButtonDidTapPublisher.eraseToAnyPublisher())
+                                              nextButtonDidTap: self.createRoomView.nextButtonDidTapPublisher,
+                                              backButtonDidTap: self.createRoomView.backButtonDidTapPublisher)
         return viewModel.transform(from: input)
     }
     
@@ -109,18 +109,6 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
             })
             .store(in: &self.cancellable)
         
-        output.currentNextStep
-            .sink(receiveValue: { [weak self] step in
-                self?.createRoomView.nextButtonDidTap(currentStep: step.0, nextStep: step.1)
-            })
-            .store(in: &self.cancellable)
-        
-        output.previousStep
-            .sink(receiveValue: { [weak self] step in
-                self?.createRoomView.backButtonDidTap(previousStep: step)
-            })
-            .store(in: &self.cancellable)
-        
         output.roomId
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
@@ -133,9 +121,21 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         
         output.roomInfo
             .sink { [weak self] roomInfo in
-                self?.createRoomView.updateRoomTitle(title: roomInfo.title)
-                self?.createRoomView.updateRoomCapacity(capacity: roomInfo.capacity)
-                self?.createRoomView.updateRoomDateRange(range: roomInfo.dateRange)
+                self?.createRoomView.updateRoomInfo(title: roomInfo.title, 
+                                                    capacity: roomInfo.capacity,
+                                                    range: roomInfo.dateRange)
+            }
+            .store(in: &self.cancellable)
+        
+        output.currentStep
+            .sink { [weak self] currentStep in
+                self?.createRoomView.manageViewByStep(at: currentStep.rawValue, isNextButton: true)
+            }
+            .store(in: &self.cancellable)
+        
+        output.previousStep
+            .sink { [weak self] previousStep in
+                self?.createRoomView.manageViewByStep(at: previousStep.rawValue, isNextButton: false)
             }
             .store(in: &self.cancellable)
     }
