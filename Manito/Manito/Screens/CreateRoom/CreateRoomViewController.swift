@@ -85,12 +85,6 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
     private func bindOutputToViewModel(_ output: CreateRoomViewModel.Output?) {
         guard let output else { return }
         
-        output.title
-            .sink(receiveValue: { [weak self] title in
-                self?.createRoomView.updateRoomTitle(title: title)
-            })
-            .store(in: &self.cancellable)
-        
         output.counts
             .sink { [weak self] (textCount, maxCount) in
                 self?.createRoomView.updateTitleCount(count: textCount, maxLength: maxCount)
@@ -106,13 +100,6 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         output.capacity
             .sink(receiveValue: { [weak self] capacity in
                 self?.createRoomView.updateCapacity(capacity: capacity)
-                self?.createRoomView.updateRoomCapacity(capacity: capacity)
-            })
-            .store(in: &self.cancellable)
-        
-        output.dateRange
-            .sink(receiveValue: { [weak self] dateRange in
-                self?.createRoomView.updateRoomDateRange(range: dateRange)
             })
             .store(in: &self.cancellable)
         
@@ -141,6 +128,14 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
                 case .success(let roomId): self?.pushDetailWaitViewController(roomId: roomId.description)
                 case .failure(let error): self?.makeAlert(title: error.localizedDescription)
                 }
+            }
+            .store(in: &self.cancellable)
+        
+        output.roomInfo
+            .sink { [weak self] roomInfo in
+                self?.createRoomView.updateRoomTitle(title: roomInfo.title)
+                self?.createRoomView.updateRoomCapacity(capacity: roomInfo.capacity)
+                self?.createRoomView.updateRoomDateRange(range: roomInfo.dateRange)
             }
             .store(in: &self.cancellable)
     }

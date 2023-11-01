@@ -13,6 +13,12 @@ final class CreateRoomViewModel: BaseViewModelType {
     typealias CurrentNextStep = (current: CreateRoomStep, next: CreateRoomStep)
     typealias Counts = (textCount: Int, maxCount: Int)
     
+    struct RoomInfo {
+        let title: String
+        let capacity: Int
+        let dateRange: String
+    }
+    
     // MARK: - property
     
     private let maxCount: Int = 8
@@ -40,15 +46,14 @@ final class CreateRoomViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let title: AnyPublisher<String, Never>
         let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let capacity: AnyPublisher<Int, Never>
-        let dateRange: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
         let currentNextStep: AnyPublisher<CurrentNextStep, Never>
         let previousStep: AnyPublisher<CreateRoomStep, Never>
         let roomId: AnyPublisher<Result<Int, Error>, Never>
+        let roomInfo: AnyPublisher<RoomInfo, Never>
     }
     
     func transform(from input: Input) -> Output {
@@ -126,14 +131,19 @@ final class CreateRoomViewModel: BaseViewModelType {
             }
             .eraseToAnyPublisher()
         
-        return Output(title: self.titleSubject.eraseToAnyPublisher(), 
-                      counts: mergeCount,
+        let roomInfo = Publishers.CombineLatest3(self.titleSubject, self.capacitySubject, self.dateRangeSubject)
+            .map { title, capacity, date in
+                return RoomInfo(title: title, capacity: capacity, dateRange: date)
+            }
+            .eraseToAnyPublisher()
+        
+        return Output(counts: mergeCount,
                       fixedTitleByMaxCount: fixedTitle,
                       capacity: self.capacitySubject.eraseToAnyPublisher(),
-                      dateRange: self.dateRangeSubject.eraseToAnyPublisher(),
                       isEnabled: isEnabled,
                       currentNextStep: currentNextStep, previousStep: previousStep,
-                      roomId: self.roomIdSubject.eraseToAnyPublisher())
+                      roomId: self.roomIdSubject.eraseToAnyPublisher(), 
+                      roomInfo: roomInfo)
     }
     
     // MARK: - init
