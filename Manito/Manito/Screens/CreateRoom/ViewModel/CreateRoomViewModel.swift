@@ -15,7 +15,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     
     // MARK: - property
     
-    let maxCount: Int = 8
+    private let maxCount: Int = 8
     
     private let createRoomService: CreateRoomSevicable
     private var cancellable = Set<AnyCancellable>()
