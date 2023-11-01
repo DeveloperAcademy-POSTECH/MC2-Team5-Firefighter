@@ -13,3 +13,19 @@ struct CreateRoomInfo {
     let startDate: String
     let endDate: String
 }
+
+extension CreateRoomInfo {
+    static let emptyCreateInfo: CreateRoomInfo = {
+        return CreateRoomInfo(title: "",
+                              capacity: 0,
+                              startDate: "",
+                              endDate: "")
+    }()
+    
+    func toCreateRoomInfoDTO() -> CreatedRoomInfoRequestDTO {
+        return CreatedRoomInfoRequestDTO(title: self.title,
+                                         capacity: self.capacity,
+                                         startDate: "20\(self.startDate)",
+                                         endDate: "20\(self.endDate)")
+    }
+}
