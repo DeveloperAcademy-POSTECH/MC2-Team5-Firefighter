@@ -128,16 +128,16 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
             .store(in: &self.cancellable)
         
         output.currentStep
-            .sink { [weak self] currentStep in
-                self?.createRoomView.manageViewByStep(at: currentStep.rawValue, isNextButton: true)
+            .sink { [weak self] (currentStep, isEnabled) in
+                self?.createRoomView.manageViewByStep(at: currentStep.rawValue, isEnabled: isEnabled)
             }
             .store(in: &self.cancellable)
         
-        output.previousStep
-            .sink { [weak self] previousStep in
-                self?.createRoomView.manageViewByStep(at: previousStep.rawValue, isNextButton: false)
-            }
-            .store(in: &self.cancellable)
+//        output.previousStep
+//            .sink { [weak self] (previousStep, isEnabled) in
+//                self?.createRoomView.manageViewByStep(at: previousStep.rawValue, isEnabled: isEnabled)
+//            }
+//            .store(in: &self.cancellable)
     }
     
     private func bindUI() {

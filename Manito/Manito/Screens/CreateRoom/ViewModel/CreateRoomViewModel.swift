@@ -11,6 +11,7 @@ import Foundation
 final class CreateRoomViewModel: BaseViewModelType {
     
     typealias Counts = (textCount: Int, maxCount: Int)
+    typealias StepButtonState = (step: Step, isEnabled: Bool)
     
     struct RoomInfo {
         let title: String
@@ -80,8 +81,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let currentStep: AnyPublisher<Step, Never>
-        let previousStep: AnyPublisher<Step, Never>
+        let currentStep: AnyPublisher<StepButtonState, Never>
         let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let capacity: AnyPublisher<Int, Never>
@@ -99,11 +99,11 @@ final class CreateRoomViewModel: BaseViewModelType {
             .compactMap { [weak self] in self?.nextStep() }
             .eraseToAnyPublisher()
         
-        let currentStep = Publishers.Merge(viewDidLoad, nextButtonDidTap)
-            .eraseToAnyPublisher()
-        
         let previousStep = input.backButtonDidTap
             .compactMap { [weak self] in self?.previousStep() }
+            .eraseToAnyPublisher()
+        
+        let currentStep = Publishers.Merge3(viewDidLoad, nextButtonDidTap, previousStep)
             .eraseToAnyPublisher()
         
         let countViewDidLoadType = input.viewDidLoad
@@ -177,7 +177,6 @@ final class CreateRoomViewModel: BaseViewModelType {
             .eraseToAnyPublisher()
         
         return Output(currentStep: currentStep,
-                      previousStep: previousStep,
                       counts: mergeCount,
                       fixedTitleByMaxCount: fixedTitle,
                       capacity: self.capacitySubject.eraseToAnyPublisher(),
@@ -213,30 +212,36 @@ final class CreateRoomViewModel: BaseViewModelType {
         else { return false }
     }
     
-    private func initStep() -> Step {
-        return self.currentStep
+    private func initStep() -> StepButtonState {
+        return (self.currentStep, false)
     }
     
-    private func nextStep() -> Step {
+    private func nextStep() -> StepButtonState {
         switch currentStep {
+        case .capacity:
+            self.currentStep = currentStep.next()
+            return (self.currentStep, self.dateIsEmpty())
         case .character:
             let roomInfo = CreateRoomInfo(title: self.titleSubject.value,
                                           capacity: self.capacitySubject.value,
                                           startDate: self.startDateSubject.value,
                                           endDate: self.endDateSubject.value)
             self.dispatchCreateRoom(roomInfo: roomInfo)
-            return self.currentStep
+            return (self.currentStep, true)
         default:
             self.currentStep = currentStep.next()
-            return self.currentStep
+            return (self.currentStep, true)
         }
     }
     
-    private func previousStep() -> Step {
+    private func previousStep() -> StepButtonState {
         self.currentStep = currentStep.previous()
-        return self.currentStep
+        return (self.currentStep, true)
     }
     
+    private func dateIsEmpty() -> Bool {
+        return self.endDateSubject.value.isEmpty ? false : true
+    }
     // MARK: - network
     
     private func dispatchCreateRoom(roomInfo: CreateRoomInfo) {

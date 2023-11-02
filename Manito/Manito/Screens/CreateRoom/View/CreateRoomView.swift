@@ -179,17 +179,17 @@ final class CreateRoomView: UIView, BaseViewType {
         self.characterCollectionView.fadeIn()
     }
     
-    private func manageViewByNextStep(at step: Int, isNextButton: Bool) {
+    private func manageViewByNextStep(at step: Int, isEnabled: Bool) {
         switch step {
         case 0:
             self.updateRoomTitleViewAnimation()
             self.endEditing(true)
         case 1:
             self.updateRoomCapacityViewAnimation()
-            if !isNextButton { self.toggleNextButton(isEnable: true) }
+            self.toggleNextButton(isEnable: isEnabled)
         case 2:
             self.updateRoomDateViewAnimation()
-            if isNextButton { self.toggleNextButton(isEnable: false) }
+            self.toggleNextButton(isEnable: isEnabled)
         case 3: self.updateRoomDataCheckViewAnimation()
         case 4: self.updateChooseCharacterViewAnimation()
         default: return
@@ -224,9 +224,9 @@ final class CreateRoomView: UIView, BaseViewType {
                                          range: range)
     }
     
-    func manageViewByStep(at step: Int, isNextButton: Bool) {
+    func manageViewByStep(at step: Int, isEnabled: Bool) {
         self.updateHiddenView(at: step)
         self.updateHiddenBackButton(at: step)
-        self.manageViewByNextStep(at: step, isNextButton: isNextButton)
+        self.manageViewByNextStep(at: step, isEnabled: isEnabled)
     }
 }
