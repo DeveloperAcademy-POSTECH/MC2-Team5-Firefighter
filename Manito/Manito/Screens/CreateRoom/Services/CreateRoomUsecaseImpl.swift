@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol CreateRoomSevicable {
+protocol CreateRoomUsecase {
     func dispatchCreateRoom(room: CreatedRoomRequestDTO) async throws -> Int
 }
 
-final class CreateRoomService: CreateRoomSevicable {
+final class CreateRoomUsecaseImpl: CreateRoomUsecase {
     
     private let repository: RoomParticipationRepository
     

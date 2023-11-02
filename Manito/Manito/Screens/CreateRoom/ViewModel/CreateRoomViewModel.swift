@@ -58,7 +58,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     private let maxCount: Int = 8
     private var currentStep: Step = .title
     
-    private let createRoomService: CreateRoomSevicable
+    private let usecase: CreateRoomUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
     private let titleSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
@@ -183,8 +183,8 @@ final class CreateRoomViewModel: BaseViewModelType {
     
     // MARK: - init
     
-    init(createRoomService: CreateRoomService) {
-        self.createRoomService = createRoomService
+    init(createRoomService: CreateRoomUsecaseImpl) {
+        self.usecase = createRoomService
     }
     
     // MARK: - func
@@ -245,7 +245,7 @@ final class CreateRoomViewModel: BaseViewModelType {
             do {
                 let roomInfoDTO = roomInfo.toCreateRoomInfoDTO()
                 let memberInfoDTO = MemberInfoRequestDTO(colorIndex: self.characterIndexSubject.value)
-                let roomId = try await self.createRoomService.dispatchCreateRoom(room: CreatedRoomRequestDTO(room: roomInfoDTO,
+                let roomId = try await self.usecase.dispatchCreateRoom(room: CreatedRoomRequestDTO(room: roomInfoDTO,
                                                                                                              member: memberInfoDTO))
                 self.roomIdSubject.send(.success(roomId))
             } catch(let error) {
