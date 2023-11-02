@@ -148,14 +148,10 @@ final class CreateRoomViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         let isEnabledTitleType = input.textFieldTextDidChanged
-            .map { title -> Bool in
-                return !title.isEmpty
-            }
+            .map { !$0.isEmpty }
     
         let isEnabledDateType = input.endDateDidTap
-            .map { endDate -> Bool in
-                return !endDate.isEmpty
-            }
+            .map { !$0.isEmpty }
         
         let isEnabled = Publishers.Merge(isEnabledTitleType, isEnabledDateType)
             .eraseToAnyPublisher()
@@ -208,8 +204,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     }
     
     private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
-        if titleCount > maxCount { return true }
-        else { return false }
+        return titleCount > maxCount ? true : false
     }
     
     private func initStep() -> StepButtonState {
@@ -242,6 +237,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     private func dateIsEmpty() -> Bool {
         return self.endDateSubject.value.isEmpty ? false : true
     }
+    
     // MARK: - network
     
     private func dispatchCreateRoom(roomInfo: CreateRoomInfo) {
