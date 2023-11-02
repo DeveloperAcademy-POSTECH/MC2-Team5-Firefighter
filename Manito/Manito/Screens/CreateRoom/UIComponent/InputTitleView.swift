@@ -41,7 +41,7 @@ final class InputTitleView: UIView {
     
     // MARK: - property
     
-    let textFieldPublisher = PassthroughSubject<String, Never>()
+    let textFieldPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
     
     // MARK: - init
     

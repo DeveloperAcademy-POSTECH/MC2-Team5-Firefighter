@@ -18,7 +18,7 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
     
     // MARK: - property
     
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     private let viewModel: any BaseViewModelType
     
     // MARK: - init
@@ -132,12 +132,6 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
                 self?.createRoomView.manageViewByStep(at: currentStep.rawValue, isEnabled: isEnabled)
             }
             .store(in: &self.cancellable)
-        
-//        output.previousStep
-//            .sink { [weak self] (previousStep, isEnabled) in
-//                self?.createRoomView.manageViewByStep(at: previousStep.rawValue, isEnabled: isEnabled)
-//            }
-//            .store(in: &self.cancellable)
     }
     
     private func bindUI() {

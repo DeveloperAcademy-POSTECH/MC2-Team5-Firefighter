@@ -59,15 +59,15 @@ final class CreateRoomViewModel: BaseViewModelType {
     private var currentStep: Step = .title
     
     private let createRoomService: CreateRoomSevicable
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     
-    private let titleSubject = CurrentValueSubject<String, Never>("")
-    private let capacitySubject = CurrentValueSubject<Int, Never>(4)
-    private let startDateSubject = CurrentValueSubject<String, Never>("")
-    private let endDateSubject = CurrentValueSubject<String, Never>("")
-    private let dateRangeSubject = PassthroughSubject<String, Never>()
-    private let characterIndexSubject = CurrentValueSubject<Int, Never>(0)
-    private let roomIdSubject = PassthroughSubject<Result<Int, Error>, Never>()
+    private let titleSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    private let capacitySubject:CurrentValueSubject<Int, Never> = CurrentValueSubject(4)
+    private let startDateSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    private let endDateSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    private let dateRangeSubject: PassthroughSubject<String, Never> = PassthroughSubject()
+    private let characterIndexSubject: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
+    private let roomIdSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>

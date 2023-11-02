@@ -45,8 +45,7 @@ final class CharacterCollectionView: UIView {
     }()
     
     // MARK: - property
-    // FIXME: CreateRoom ViewModel 변경시 삭제예정
-    let characterIndexTapPublisher = CurrentValueSubject<Int, Never>(0)
+    let characterIndexTapPublisher: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
     private(set) var characterIndex: Int = 0
     
     // MARK: - init
