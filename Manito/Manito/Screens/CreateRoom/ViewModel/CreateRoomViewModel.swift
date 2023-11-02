@@ -183,8 +183,8 @@ final class CreateRoomViewModel: BaseViewModelType {
     
     // MARK: - init
     
-    init(createRoomService: CreateRoomUsecaseImpl) {
-        self.usecase = createRoomService
+    init(usecase: CreateRoomUsecaseImpl) {
+        self.usecase = usecase
     }
     
     // MARK: - func
