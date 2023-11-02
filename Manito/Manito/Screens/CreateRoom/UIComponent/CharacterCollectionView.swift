@@ -45,6 +45,7 @@ final class CharacterCollectionView: UIView {
     }()
     
     // MARK: - property
+    
     let characterIndexTapPublisher: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
     private(set) var characterIndex: Int = 0
     
