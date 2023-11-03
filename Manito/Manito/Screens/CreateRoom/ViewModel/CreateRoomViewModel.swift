@@ -186,8 +186,8 @@ final class CreateRoomViewModel: BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: CreateRoomUsecaseImpl,
-         textFieldUsecase: TextFieldUsecaseImpl) {
+    init(usecase: CreateRoomUsecase,
+         textFieldUsecase: TextFieldUsecase) {
         self.usecase = usecase
         self.textFieldUsecase = textFieldUsecase
     }
