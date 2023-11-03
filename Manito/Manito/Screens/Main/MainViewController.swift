@@ -237,7 +237,9 @@ final class MainViewController: UIViewController, BaseViewControllerType {
                                        handler: { [weak self] _ in
             let repository = RoomParticipationRepositoryImpl()
             let usecase = CreateRoomUsecaseImpl(repository: repository)
-            let viewController = CreateRoomViewController(viewModel: CreateRoomViewModel(usecase: usecase))
+            let textFieldUsecase = TextFieldUsecaseImpl()
+            let viewController = CreateRoomViewController(viewModel: CreateRoomViewModel(usecase: usecase,
+                                                                                         textFieldUsecase: textFieldUsecase))
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
