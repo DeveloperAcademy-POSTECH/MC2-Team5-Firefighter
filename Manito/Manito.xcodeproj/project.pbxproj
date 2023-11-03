@@ -1120,6 +1120,7 @@
 		B58CA30B2A9CC43600977592 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */,
 				D7AE5EC42AC1966B00A20D0A /* SettingScene */,
 				D7AE5EBB2AC184F300A20D0A /* ParticipateRoomScene */,
 				B5422CBB2ADD3B6B0051A966 /* SplashScene */,
@@ -1388,7 +1389,6 @@
 		B5F524E528519ACA00614FF7 /* CreateRoom */ = {
 			isa = PBXGroup;
 			children = (
-				D7B83FD42A95A46F00BFD8FF /* Services */,
 				D79E9D882A826D7900C031F0 /* ViewModel */,
 				D70220212A7A22DC0024BACD /* View */,
 				7E3058C42854B45300489E6A /* UIComponent */,
@@ -1698,14 +1698,6 @@
 			path = ParticipateRoomScene;
 			sourceTree = "<group>";
 		};
-		D7B83FD42A95A46F00BFD8FF /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		D7C46A9C2AD57CFF00E5B2AC /* Error */ = {
 			isa = PBXGroup;
 			children = (
@@ -1713,6 +1705,14 @@
 				D7AE5EC92AC1C30F00A20D0A /* ParticipateRoomScene */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */ = {
+			isa = PBXGroup;
+			children = (
+				D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */,
+			);
+			path = CreateRoomScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
