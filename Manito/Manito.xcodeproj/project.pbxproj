@@ -1710,20 +1710,20 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */ = {
-			isa = PBXGroup;
-			children = (
-				D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */,
-			);
-			path = CreateRoomScene;
-			sourceTree = "<group>";
-		};
 		D7F1CC6F2AF4C13D007CFC97 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				D7C0D9322AF4B67D00B5B9B1 /* TextFieldUsecase.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */ = {
+			isa = PBXGroup;
+			children = (
+				D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */,
+			);
+			path = CreateRoomScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
