@@ -121,7 +121,9 @@ final class CreateRoomViewModel: BaseViewModelType {
         let fixedTitle = input.textFieldTextDidChanged
             .map { [weak self] text -> String in
                 guard let self else { return "" }
-                return self.cutTextByMaxCount(text: text)
+                let title = self.cutTextByMaxCount(text: text, maxCount: self.maxCount)
+                self.titleSubject.send(title)
+                return title
             }
             .eraseToAnyPublisher()
         
@@ -189,17 +191,14 @@ final class CreateRoomViewModel: BaseViewModelType {
     
     // MARK: - func
     
-    private func cutTextByMaxCount(text: String) -> String {
-        let isOverMaxCount = self.isOverMaxCount(titleCount: text.count, maxCount: self.maxCount)
+    private func cutTextByMaxCount(text: String, maxCount: Int) -> String {
+        let isOverMaxCount = self.isOverMaxCount(titleCount: text.count, maxCount: maxCount)
         
         if isOverMaxCount {
-            let endIndex = text.index(text.startIndex, offsetBy: self.maxCount)
+            let endIndex = text.index(text.startIndex, offsetBy: maxCount)
             let fixedText = text[text.startIndex..<endIndex]
-            self.titleSubject.send(String(fixedText))
             return String(fixedText)
         }
-        
-        self.titleSubject.send(text)
         return text
     }
     
