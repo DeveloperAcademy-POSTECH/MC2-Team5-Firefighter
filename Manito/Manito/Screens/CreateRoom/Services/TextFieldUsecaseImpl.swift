@@ -9,7 +9,6 @@ import Foundation
 
 protocol TextFieldUsecase {
     func cutTextByMaxCount(text: String, maxCount: Int) -> String
-//    func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool
 }
 
 final class TextFieldUsecaseImpl: TextFieldUsecase {
