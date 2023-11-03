@@ -185,7 +185,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: CreateRoomUsecaseImpl) {
+    init(usecase: CreateRoomUsecase) {
         self.usecase = usecase
     }
     
