@@ -183,10 +183,10 @@ final class CreateRoomView: UIView, BaseViewType {
         switch step {
         case 0:
             self.updateRoomTitleViewAnimation()
-            self.endEditing(true)
         case 1:
             self.updateRoomCapacityViewAnimation()
             self.toggleNextButton(isEnable: isEnabled)
+            self.endEditing(true)
         case 2:
             self.updateRoomDateViewAnimation()
             self.toggleNextButton(isEnable: isEnabled)
