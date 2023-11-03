@@ -1,5 +1,5 @@
 //
-//  textFieldUsecaseImpl.swift
+//  textFieldUsecase.swift
 //  Manito
 //
 //  Created by 이성호 on 11/3/23.
