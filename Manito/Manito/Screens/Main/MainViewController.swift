@@ -250,7 +250,9 @@ final class MainViewController: UIViewController, BaseViewControllerType {
                                       style: .default,
                                       handler: { [weak self] _ in
             let usecase = ParticipateRoomUsecaseImpl(repository: RoomParticipationRepositoryImpl())
-            let viewModel = ParticipateRoomViewModel(usecase: usecase)
+            let textFieldUsecase = TextFieldUsecaseImpl()
+            let viewModel = ParticipateRoomViewModel(usecase: usecase,
+                                                     textFieldUsecase: textFieldUsecase)
             let viewController = ParticipateRoomViewController(viewModel: viewModel)
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen
