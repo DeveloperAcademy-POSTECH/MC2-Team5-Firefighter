@@ -37,7 +37,7 @@ final class ParticipateRoomViewModel: BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: ParticipateRoomUsecaseImpl,
+    init(usecase: ParticipateRoomUsecase,
          textFieldUsecase: TextFieldUsecase) {
         self.usecase = usecase
         self.textFieldUsecase = textFieldUsecase
