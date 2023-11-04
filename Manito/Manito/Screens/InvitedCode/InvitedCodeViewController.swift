@@ -10,22 +10,20 @@ import UIKit
 import SnapKit
 
 final class InvitedCodeViewController: UIViewController {
-    
-    var roomInfo: RoomListItem
-    var code: String
         
     // MARK: - ui components
     
     private let invitedCodeView: InvitedCodeView = InvitedCodeView()
     
+    
     // MARK: - property
     
+    private let viewModel: any BaseViewModelType
     
     // MARK: - init
     
-    init(roomInfo: RoomListItem, code: String){
-        self.roomInfo = roomInfo
-        self.code = code
+    init(viewModel: any BaseViewModelType){
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     

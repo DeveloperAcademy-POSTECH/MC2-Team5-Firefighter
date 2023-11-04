@@ -58,6 +58,13 @@ extension RoomListItem {
         guard let startDate = self.startDate.toDefaultDate else { return true }
         return startDate.isPast
     }
+    
+    static let emptyRoomListItem = RoomListItem(id: 0,
+                                                title: "",
+                                                state: "",
+                                                capacity: 0,
+                                                startDate: "",
+                                                endDate: "")
 }
 
 extension RoomListItem: Equatable {
