@@ -15,10 +15,12 @@ final class InvitedCodeViewModel: BaseViewModelType {
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
+        let copyButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
         let roomInfo: AnyPublisher<RoomInfo, Never>
+        let copyButtonDidTap: AnyPublisher<String, Never>
     }
     
     // MARK: - property
@@ -41,7 +43,14 @@ final class InvitedCodeViewModel: BaseViewModelType {
                 return RoomInfo(roomInfo: self?.roomInfo ?? RoomListItem.emptyRoomListItem, code: self?.code ?? "")
             }
             .eraseToAnyPublisher()
+        
+        let code = input.copyButtonDidTap
+            .map { [weak self] _ in
+                return self?.code ?? ""
+            }
+            .eraseToAnyPublisher()
             
-        return Output(roomInfo: roomInfo)
+        return Output(roomInfo: roomInfo, 
+                      copyButtonDidTap: code)
     }
 }

@@ -43,11 +43,6 @@ final class InvitedCodeView: UIView, BaseViewType {
     private let roomPersonView: UIView = UIView()
     private let roomInviteCodeButton: UIButton = {
         let button = UIButton(type: .system)
-//        let buttonAction = UIAction { [weak self] _ in
-//            if let code = self?.code {
-//                ToastView.showToast(code: code, message: TextLiteral.DetailWait.toastCopyMessage.localized(), controller: self ?? UIViewController())
-//            }
-//        }
         button.setTitleColor(.blue, for: .normal)
         button.setTitleColor(.blue.withAlphaComponent(0.8), for: .highlighted)
         button.titleLabel?.font = .font(.regular, ofSize: 50)
@@ -82,7 +77,7 @@ final class InvitedCodeView: UIView, BaseViewType {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - public func
     
     func setupLayout() {
         self.addSubview(self.invitedImageView)
@@ -132,6 +127,19 @@ final class InvitedCodeView: UIView, BaseViewType {
             $0.top.equalTo(self.roomInviteCodeButton.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
         }
+        
+        self.roomPersonView.addSubview(self.roomImageView)
+        self.roomImageView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.height.width.equalTo(60)
+        }
+        
+        self.addSubview(self.roomPersonLabel)
+        self.roomPersonLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(roomImageView.snp.trailing)
+            $0.centerY.equalTo(roomImageView.snp.centerY)
+        }
     }
     
     func configureUI() {
@@ -142,20 +150,6 @@ final class InvitedCodeView: UIView, BaseViewType {
         self.roomTitleLabel.text = roomInfo.title
         self.roomDateLabel.text = "\(roomInfo.startDate) ~ \(roomInfo.endDate)"
         self.roomPersonLabel.text = TextLiteral.Common.xPeople.localized(with: roomInfo.capacity)
-    }
-    
-    func setupPersonView() {
-        self.roomPersonView.addSubview(self.roomImageView)
-        self.roomImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.height.width.equalTo(60)
-        }
-        self.addSubview(self.roomPersonLabel)
-        self.roomPersonLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(roomImageView.snp.trailing)
-            $0.centerY.equalTo(roomImageView.snp.centerY)
-        }
     }
     
     func updateCodeButtonTitle(code: String) {
