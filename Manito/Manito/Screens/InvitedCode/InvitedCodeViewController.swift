@@ -16,7 +16,6 @@ final class InvitedCodeViewController: UIViewController {
     
     private let invitedCodeView: InvitedCodeView = InvitedCodeView()
     
-    
     // MARK: - property
     
     private let viewModel: any BaseViewModelType
