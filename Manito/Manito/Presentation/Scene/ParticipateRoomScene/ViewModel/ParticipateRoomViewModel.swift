@@ -22,7 +22,7 @@ final class ParticipateRoomViewModel: BaseViewModelType {
         let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
-        let roomInfo: AnyPublisher<Result<ParticipatedRoomInfo, ParticipateRoomError>, Never>
+        let roomInfo: AnyPublisher<Result<ParticipatedRoomInfo, Error>, Never>
     }
     
     // MARK: - property
@@ -71,12 +71,12 @@ final class ParticipateRoomViewModel: BaseViewModelType {
             .eraseToAnyPublisher()
         
         let roomInfo = input.nextButtonDidTap
-            .asyncMap({ [weak self] code -> Result<ParticipatedRoomInfo, ParticipateRoomError> in
+            .asyncMap({ [weak self] code -> Result<ParticipatedRoomInfo, Error> in
                 do {
                     let roomInfo = try await self?.dispatchVerifyCode(code)
                     return .success(roomInfo ?? ParticipatedRoomInfo.emptyInfo)
                 } catch (let error) {
-                    return .failure(error as! ParticipateRoomError)
+                    return .failure(error)
                 }
             })
             .eraseToAnyPublisher()
