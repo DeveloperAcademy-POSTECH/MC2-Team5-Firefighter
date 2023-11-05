@@ -19,7 +19,7 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
     // MARK: - property
     
     private let viewModel: any BaseViewModelType
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
@@ -72,7 +72,7 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
     private func transfromedOutput() -> ParticipateRoomViewModel.Output? {
         guard let viewModel = self.viewModel as? ParticipateRoomViewModel else { return nil }
         let input = ParticipateRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
-                                                   textFieldDidChanged: self.participateRoomView.inputInvitedCodeView.textFieldDidChangedPublisher.eraseToAnyPublisher(),
+                                                   textFieldDidChanged: self.participateRoomView.textFieldDidChangedPublisher.eraseToAnyPublisher(),
                                                    nextButtonDidTap: self.participateRoomView.nextButtonTapPublisher.eraseToAnyPublisher())
         return viewModel.transform(from: input)
     }
@@ -82,13 +82,13 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
         
         output.counts
             .sink(receiveValue: { [weak self] (textCount, maxCount) in
-                self?.participateRoomView.inputInvitedCodeView.updateTextCount(count: textCount, maxLength: maxCount)
+                self?.participateRoomView.updateTextCount(count: textCount, maxLength: maxCount)
             })
             .store(in: &self.cancellable)
         
         output.fixedTitleByMaxCount
             .sink { [weak self] fixedTitle in
-                self?.participateRoomView.inputInvitedCodeView.updateTextFieldText(fixedText: fixedTitle)
+                self?.participateRoomView.updateTextFieldText(fixedText: fixedTitle)
             }
             .store(in: &self.cancellable)
         

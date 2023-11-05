@@ -46,9 +46,13 @@ final class ChooseCharacterView: UIView, BaseViewType {
     
     // MARK: - property
     
-    lazy var backButtonTapPublisher = self.backButton.tapPublisher
-    lazy var closeButtonTapPublisher = self.closeButton.tapPublisher
-    let joinButtonTapPublisher = PassthroughSubject<Int, Never>()
+    var backButtonTapPublisher: AnyPublisher<Void, Never> {
+        return self.backButton.tapPublisher
+    }
+    var closeButtonTapPublisher: AnyPublisher<Void, Never> {
+        return self.closeButton.tapPublisher
+    }
+    let joinButtonTapPublisher: PassthroughSubject<Int, Never> = PassthroughSubject()
     
     // MARK: - init
     

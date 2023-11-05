@@ -31,9 +31,9 @@ final class ParticipateRoomViewModel: BaseViewModelType {
     
     private let usecase: ParticipateRoomUsecase
     private let textFieldUsecase: TextFieldUsecase
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     
-    private let roomInfoSubject = PassthroughSubject<ParticipatedRoomInfo, Error>()
+    private let roomInfoSubject: PassthroughSubject<ParticipatedRoomInfo, Error> = PassthroughSubject()
     
     // MARK: - init
     

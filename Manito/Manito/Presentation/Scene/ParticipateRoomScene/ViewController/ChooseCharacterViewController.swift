@@ -19,7 +19,7 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     // MARK: - property
     
     private let viewModel: any BaseViewModelType
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
