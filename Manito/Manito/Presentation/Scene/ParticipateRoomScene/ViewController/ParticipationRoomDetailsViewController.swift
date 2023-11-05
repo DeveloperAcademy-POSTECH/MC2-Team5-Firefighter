@@ -18,12 +18,12 @@ final class ParticipationRoomDetailsViewController: UIViewController {
     
     // MARK: - property
 
-    private let viewModel: ParticipationRoomDetailsViewModel
+    private let viewModel: any BaseViewModelType
     private var cancellable = Set<AnyCancellable>()
     
     // MARK: - init
     
-    init(viewModel: ParticipationRoomDetailsViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -56,13 +56,16 @@ final class ParticipationRoomDetailsViewController: UIViewController {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> ParticipationRoomDetailsViewModel.Output {
+    private func transformedOutput() -> ParticipationRoomDetailsViewModel.Output? {
+        guard let viewModel = self.viewModel as? ParticipationRoomDetailsViewModel else { return nil }
         let input = ParticipationRoomDetailsViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
                                              yesButtonDidTap: self.participationRoomDetailsView.yesButtonDidTapPublisher)
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: ParticipationRoomDetailsViewModel.Output) {
+    private func bindOutputToViewModel(_ output: ParticipationRoomDetailsViewModel.Output?) {
+        guard let output else { return }
+        
         output.roomInfo
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomInfo in

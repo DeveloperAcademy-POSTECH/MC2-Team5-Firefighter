@@ -18,12 +18,12 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
     
     // MARK: - property
     
-    private let viewModel: ParticipateRoomViewModel
+    private let viewModel: any BaseViewModelType
     private var cancellable = Set<AnyCancellable>()
     
     // MARK: - init
     
-    init(viewModel: ParticipateRoomViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -69,14 +69,17 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
         self.bindOutputToViewModel(output)
     }
     
-    private func transfromedOutput() -> ParticipateRoomViewModel.Output {
+    private func transfromedOutput() -> ParticipateRoomViewModel.Output? {
+        guard let viewModel = self.viewModel as? ParticipateRoomViewModel else { return nil }
         let input = ParticipateRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
                                                    textFieldDidChanged: self.participateRoomView.inputInvitedCodeView.textFieldDidChangedPublisher.eraseToAnyPublisher(),
                                                    nextButtonDidTap: self.participateRoomView.nextButtonTapPublisher.eraseToAnyPublisher())
-        return self.viewModel.transform(from: input)
+        return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: ParticipateRoomViewModel.Output) {
+    private func bindOutputToViewModel(_ output: ParticipateRoomViewModel.Output?) {
+        guard let output else { return }
+        
         output.counts
             .sink(receiveValue: { [weak self] (textCount, maxCount) in
                 self?.participateRoomView.inputInvitedCodeView.updateTextCount(count: textCount, maxLength: maxCount)

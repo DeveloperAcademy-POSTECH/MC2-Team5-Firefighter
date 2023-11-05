@@ -18,12 +18,12 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
-    private let viewModel: ChooseCharacterViewModel
+    private let viewModel: any BaseViewModelType
     private var cancellable = Set<AnyCancellable>()
     
     // MARK: - init
     
-    init(viewModel: ChooseCharacterViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -63,12 +63,15 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> ChooseCharacterViewModel.Output {
+    private func transformedOutput() -> ChooseCharacterViewModel.Output? {
+        guard let viewModel = self.viewModel as? ChooseCharacterViewModel else { return nil }
         let input = ChooseCharacterViewModel.Input(joinButtonTapPublisher: self.chooseCharacterView.joinButtonTapPublisher.eraseToAnyPublisher())
-        return self.viewModel.transform(from: input)
+        return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: ChooseCharacterViewModel.Output) {
+    private func bindOutputToViewModel(_ output: ChooseCharacterViewModel.Output?) {
+        guard let output else { return }
+        
         output.roomId
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
