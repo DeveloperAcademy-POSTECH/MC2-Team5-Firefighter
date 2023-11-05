@@ -39,8 +39,10 @@ final class InvitedCodeViewModel: BaseViewModelType {
     
     func transform(from input: Input) -> Output {
         let roomInfo = input.viewDidLoad
-            .map { [weak self] _ in
-                return RoomInfo(roomInfo: self?.roomInfo ?? RoomListItem.emptyRoomListItem, code: self?.code ?? "")
+            .map { [weak self] _ -> RoomInfo in
+                guard let self else { return RoomInfo(roomInfo: RoomListItem.emptyRoomListItem, code: "") }
+                let roomInfo = RoomInfo(roomInfo: self.roomInfo,code: self.code)
+                return roomInfo
             }
             .eraseToAnyPublisher()
         
