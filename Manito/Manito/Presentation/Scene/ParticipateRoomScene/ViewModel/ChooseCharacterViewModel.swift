@@ -29,7 +29,7 @@ final class ChooseCharacterViewModel: BaseViewModelType {
 
     // MARK: - init
     
-    init(usecase: ParticipateRoomUsecaseImpl, roomId: Int) {
+    init(usecase: ParticipateRoomUsecase, roomId: Int) {
         self.usecase = usecase
         self.roomId = roomId
     }
