@@ -100,15 +100,14 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
         
         output.roomInfo
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
+            .sink(receiveValue: { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    self?.makeAlert(title: TextLiteral.ParticipateRoom.Error.message.localized())
+                case .success(let roomInfo):
+                    self?.presentParticipationRoomDetailsView(roomInfo: roomInfo)
+                case .failure(let error):
+                    self?.makeAlert(title: error.localizedDescription)
                 }
-            } receiveValue: { [weak self] roomInfo in
-                self?.presentParticipationRoomDetailsView(roomInfo: roomInfo)
-            }
+            })
             .store(in: &self.cancellable)
     }
     

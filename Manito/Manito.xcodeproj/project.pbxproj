@@ -208,6 +208,7 @@
 		D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift */; };
 		D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */; };
 		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
+		D76E025F2AF7D12600F079FB /* ParticipateRoomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76E025E2AF7D12600F079FB /* ParticipateRoomError.swift */; };
 		D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* URLLiteral.swift */; };
 		D78B97E02AEFD20A009D9522 /* CreateRoomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97DF2AEFD20A009D9522 /* CreateRoomError.swift */; };
 		D78B97F52AF23CD0009D9522 /* CreateRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97F42AF23CD0009D9522 /* CreateRoomInfo.swift */; };
@@ -456,6 +457,7 @@
 		D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomUsecase.swift; sourceTree = "<group>"; };
 		D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewModel.swift; sourceTree = "<group>"; };
 		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
+		D76E025E2AF7D12600F079FB /* ParticipateRoomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomError.swift; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* URLLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLLiteral.swift; sourceTree = "<group>"; };
 		D78B97DF2AEFD20A009D9522 /* CreateRoomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomError.swift; sourceTree = "<group>"; };
 		D78B97F42AF23CD0009D9522 /* CreateRoomInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomInfo.swift; sourceTree = "<group>"; };
@@ -1697,6 +1699,7 @@
 			isa = PBXGroup;
 			children = (
 				D7AE5ECA2AC1C32F00A20D0A /* ChooseCharacterError.swift */,
+				D76E025E2AF7D12600F079FB /* ParticipateRoomError.swift */,
 			);
 			path = ParticipateRoomScene;
 			sourceTree = "<group>";
@@ -2104,6 +2107,7 @@
 				B5A085EC2A97314800C8A98D /* ParticipatedRoomInfoDTO.swift in Sources */,
 				D724AF5D287088310003F280 /* SettingViewController.swift in Sources */,
 				D78B97F52AF23CD0009D9522 /* CreateRoomInfo.swift in Sources */,
+				D76E025F2AF7D12600F079FB /* ParticipateRoomError.swift in Sources */,
 				B5F3F1062AA3516200FA1A32 /* RoomStatus.swift in Sources */,
 				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
 				39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */,
