@@ -47,9 +47,7 @@ final class InvitedCodeViewModel: BaseViewModelType {
             .eraseToAnyPublisher()
         
         let code = input.copyButtonDidTap
-            .map { [weak self] _ in
-                return self?.code ?? ""
-            }
+            .compactMap { [weak self] in self?.code}
             .eraseToAnyPublisher()
             
         return Output(roomInfo: roomInfo, 
