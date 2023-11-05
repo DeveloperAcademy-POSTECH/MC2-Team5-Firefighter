@@ -24,8 +24,6 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     
     private let usecase: ParticipateRoomUsecase
     private var cancellable: Set<AnyCancellable> = Set()
-    
-    private let roomIdSubject: PassthroughSubject<Result<Int, ChooseCharacterError>, Never> = PassthroughSubject()
 
     // MARK: - init
     
@@ -37,27 +35,26 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     // MARK: - func
     
     func transform(from input: Input) -> Output {
-        input.joinButtonTapPublisher
-            .sink { [weak self] characterIndex in
-                guard let self = self else { return }
-                self.dispatchJoinRoom(roomId: self.roomId, colorIndex: characterIndex)
+        let roomId = input.joinButtonTapPublisher
+            .asyncMap { [weak self] characterIndex -> Result<Int, ChooseCharacterError> in
+                do {
+                    let roomId = try await self?.dispatchJoinRoom(roomId: self?.roomId ?? 0, colorIndex: characterIndex)
+                    return .success(roomId ?? 0)
+                } catch (let error) {
+                    return .failure(error as! ChooseCharacterError)
+                }
             }
-            .store(in: &self.cancellable)
+            .eraseToAnyPublisher()
         
-        return Output(roomId: self.roomIdSubject.eraseToAnyPublisher())
-    }
-    
-    // MARK: - network
-    
-    private func dispatchJoinRoom(roomId: Int, colorIndex: Int) {
-        Task {
-            do {
-                let _ = try await self.usecase.dispatchJoinRoom(roomId: roomId.description, member: MemberInfoRequestDTO(colorIndex: colorIndex))
-                self.roomIdSubject.send(.success(self.roomId))
-            } catch(let error) {
-                guard let error = error as? ChooseCharacterError else { return }
-                self.roomIdSubject.send(.failure(error))
-            }
-        }
+        return Output(roomId: roomId)
     }
 }
+
+// MARK: - Helper
+
+extension ChooseCharacterViewModel {
+    private func dispatchJoinRoom(roomId: Int, colorIndex: Int) async throws -> Int {
+        return try await self.usecase.dispatchJoinRoom(roomId: roomId.description, member: MemberInfoRequestDTO(colorIndex: colorIndex))
+    }
+}
+
