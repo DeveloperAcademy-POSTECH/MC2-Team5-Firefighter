@@ -22,7 +22,7 @@ final class ParticipateRoomViewModel: BaseViewModelType {
         let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
-        let roomInfo: PassthroughSubject<ParticipatedRoomInfo, Error>
+        let roomInfo: AnyPublisher<ParticipatedRoomInfo, Error>
     }
     
     // MARK: - property
@@ -80,7 +80,7 @@ final class ParticipateRoomViewModel: BaseViewModelType {
         return Output(counts: mergeCount,
                       fixedTitleByMaxCount: fixedTitle,
                       isEnabled: isEnabled,
-                      roomInfo: self.roomInfoSubject)
+                      roomInfo: self.roomInfoSubject.eraseToAnyPublisher())
     }
     
     // MARK: - network
