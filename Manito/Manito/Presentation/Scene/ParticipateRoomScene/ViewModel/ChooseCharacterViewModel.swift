@@ -41,7 +41,8 @@ final class ChooseCharacterViewModel: BaseViewModelType {
                     let roomId = try await self?.dispatchJoinRoom(roomId: self?.roomId ?? 0, colorIndex: characterIndex)
                     return .success(roomId ?? 0)
                 } catch (let error) {
-                    return .failure(error as! ChooseCharacterError)
+                    guard let error = error as? ChooseCharacterError else { return .failure(.unknownError) }
+                    return .failure(error)
                 }
             }
             .eraseToAnyPublisher()

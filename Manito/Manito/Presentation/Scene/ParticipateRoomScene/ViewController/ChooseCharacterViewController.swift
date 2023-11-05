@@ -81,7 +81,7 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
                 case .failure(let error):
                     switch error {
                     case .roomAlreadyParticipating: self?.makeAlertWhenAlreadyJoin(error: error.localizedDescription)
-                    case .clientError: self?.makeAlertWhenNetworkError(error: error.localizedDescription)
+                    default: self?.makeAlertWhenNetworkError(error: error.localizedDescription)
                     }
                 }
             })

@@ -10,6 +10,7 @@ import Foundation
 enum ChooseCharacterError: LocalizedError {
     case roomAlreadyParticipating
     case clientError
+    case unknownError
 }
 
 extension ChooseCharacterError {
@@ -17,6 +18,7 @@ extension ChooseCharacterError {
         switch self {
         case .roomAlreadyParticipating: return TextLiteral.ParticipateRoom.Error.alreadyJoinMessage.localized()
         case .clientError: return TextLiteral.Common.Error.networkServer.localized()
+        case .unknownError: return TextLiteral.Common.Error.networkServer.localized()
         }
     }
 }
