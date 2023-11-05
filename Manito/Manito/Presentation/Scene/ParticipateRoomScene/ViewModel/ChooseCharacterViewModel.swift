@@ -40,7 +40,7 @@ final class ChooseCharacterViewModel: BaseViewModelType {
         input.joinButtonTapPublisher
             .sink { [weak self] characterIndex in
                 guard let self = self else { return }
-                self.requestParticipateRoom(roomId: self.roomId, colorIndex: characterIndex)
+                self.dispatchJoinRoom(roomId: self.roomId, colorIndex: characterIndex)
             }
             .store(in: &self.cancellable)
         
@@ -49,7 +49,7 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     
     // MARK: - network
     
-    private func requestParticipateRoom(roomId: Int, colorIndex: Int) {
+    private func dispatchJoinRoom(roomId: Int, colorIndex: Int) {
         Task {
             do {
                 let _ = try await self.usecase.dispatchJoinRoom(roomId: roomId.description, member: MemberInfoRequestDTO(colorIndex: colorIndex))

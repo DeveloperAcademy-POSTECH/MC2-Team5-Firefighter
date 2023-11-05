@@ -73,7 +73,7 @@ final class ParticipateRoomViewModel: BaseViewModelType {
         
         input.nextButtonDidTap
             .sink(receiveValue: { [weak self] code in
-                self?.requestParticipateRoom(code)
+                self?.dispatchVerifyCode(code)
             })
             .store(in: &self.cancellable)
         
@@ -85,7 +85,7 @@ final class ParticipateRoomViewModel: BaseViewModelType {
     
     // MARK: - network
     
-    private func requestParticipateRoom(_ code: String) {
+    private func dispatchVerifyCode(_ code: String) {
         Task {
             do {
                 let data = try await self.usecase.dispatchVerifyCode(code: code)
