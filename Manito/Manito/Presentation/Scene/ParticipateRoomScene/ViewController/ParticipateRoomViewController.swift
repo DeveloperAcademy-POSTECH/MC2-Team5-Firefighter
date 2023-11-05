@@ -119,7 +119,11 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
             }
             .store(in: &self.cancellable)
     }
-    
+}
+
+// MARK: - Helper
+
+extension ParticipateRoomViewController {
     private func presentParticipationRoomDetailsView(roomInfo: ParticipatedRoomInfo) {
         let viewController = ParticipationRoomDetailsViewController(viewModel: ParticipationRoomDetailsViewModel(roomInfo: roomInfo))
         viewController.modalPresentationStyle = .overFullScreen

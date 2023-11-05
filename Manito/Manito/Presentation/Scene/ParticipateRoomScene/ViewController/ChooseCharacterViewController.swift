@@ -102,15 +102,6 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
             .store(in: &self.cancellable)
     }
     
-    private func pushDetailWaitViewController(roomId: Int) {
-        guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-        let viewModel = DetailWaitViewModel(roomId: roomId.description, usecase: DetailWaitUseCaseImpl(repository: DetailRoomRepositoryImpl()))
-        let viewController = DetailWaitViewController(viewModel: viewModel)
-        self.dismiss(animated: true) {
-            navigationController.pushViewController(viewController, animated: true)
-        }
-    }
-    
     private func makeAlertWhenAlreadyJoin(error: String) {
         self.makeAlert(title: TextLiteral.ParticipateRoom.Error.alreadyJoinTitle.localized(), 
                        message: error,
@@ -123,5 +114,20 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
         self.makeAlert(title: TextLiteral.Common.Error.title.localized(), 
                        message: error,
                        okAction: nil)
+    }
+}
+
+// MARK: - Helper
+
+extension ChooseCharacterViewController {
+    private func pushDetailWaitViewController(roomId: Int) {
+        guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+        let repository = DetailRoomRepositoryImpl()
+        let usecase = DetailWaitUseCaseImpl(repository: repository)
+        let viewModel = DetailWaitViewModel(roomId: roomId.description, usecase: usecase)
+        let viewController = DetailWaitViewController(viewModel: viewModel)
+        self.dismiss(animated: true) {
+            navigationController.pushViewController(viewController, animated: true)
+        }
     }
 }
