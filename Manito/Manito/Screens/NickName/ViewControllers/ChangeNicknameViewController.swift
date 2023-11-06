@@ -12,11 +12,13 @@ import SnapKit
 
 final class ChangeNicknameViewController: UIViewController, Navigationable, Keyboardable {
     
+    // MARK: - ui components
+    
+    private let nicknameView: NicknameView = NicknameView(title: TextLiteral.Nickname.changeTitle.localized())
+    
     // MARK: - property
     
     private let viewModel: any BaseViewModelType
-    private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.Nickname.changeTitle.localized())
-    
     private var cancellable = Set<AnyCancellable>()
     
     // MARK: - init
