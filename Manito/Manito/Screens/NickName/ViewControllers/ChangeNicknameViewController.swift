@@ -14,14 +14,14 @@ final class ChangeNicknameViewController: UIViewController, Navigationable, Keyb
     
     // MARK: - property
     
-    private let viewModel: NicknameViewModel
+    private let viewModel: any BaseViewModelType
     private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.Nickname.changeTitle.localized())
     
     private var cancellable = Set<AnyCancellable>()
     
     // MARK: - init
     
-    init(viewModel: NicknameViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -61,14 +61,17 @@ final class ChangeNicknameViewController: UIViewController, Navigationable, Keyb
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> NicknameViewModel.Output {
+    private func transformedOutput() -> NicknameViewModel.Output? {
+        guard let viewModel = self.viewModel as? NicknameViewModel else { return nil }
         let input = NicknameViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
                                             textFieldDidChanged: self.nicknameView.textFieldPublisher.eraseToAnyPublisher(),
                                             doneButtonDidTap: self.nicknameView.doneButtonTapPublisher.eraseToAnyPublisher())
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: NicknameViewModel.Output) {
+    private func bindOutputToViewModel(_ output: NicknameViewModel.Output?) {
+        guard let output else { return }
+        
         output.nickname
             .sink { [weak self] nickname in
                 self?.nicknameView.updateNickname(nickname: nickname)

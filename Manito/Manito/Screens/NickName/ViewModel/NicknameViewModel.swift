@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-final class NicknameViewModel {
+final class NicknameViewModel: BaseViewModelType {
     
     typealias Counts = (textCount: Int, maxCount: Int)
     
