@@ -19,37 +19,63 @@ final class DetailEditViewModel: BaseViewModelType {
         let changeSuccess: AnyPublisher<Int, Error>
     }
     
+    var roomDto: CurrentValueSubject<CreatedRoomInfoRequestDTO, Never>
     let usecase: DetailEditUsecase
+    private var cancellable = Set<AnyCancellable>()
     
     init(usecase: DetailEditUsecase) {
+        let roomInfo = usecase.roomInformation.roomInformation
+        let dto = CreatedRoomInfoRequestDTO(title: roomInfo.title,
+                                            capacity: roomInfo.capacity,
+                                            startDate: roomInfo.startDate,
+                                            endDate: roomInfo.endDate)
+        self.roomDto = .init(dto)
         self.usecase = usecase
     }
     
     // MARK: - func
     
     func transform(from input: Input) -> Output {
-        let isPastPublisher = input.changeButtonDidTap.combineLatest(input.changeRoomPublisher)
-            .compactMap { [weak self] _, dto in
-                self?.validStartDatePast(startDate: dto.startDate)
+        input.changeRoomPublisher
+            .sink(receiveValue: { [weak self] dto in
+                self?.roomDto.send(dto)
+            })
+            .store(in: &self.cancellable)
+        
+        let isPastPublisher = input.changeButtonDidTap
+            .compactMap { [weak self] _ in
+                self?.roomDto.value
+            }
+            .map {
+                self.validStartDatePast(startDate: $0.startDate)
             }
             .eraseToAnyPublisher()
         
-        let isMemberOverPublisher = input.changeButtonDidTap.combineLatest(input.changeRoomPublisher)
-            .compactMap { [weak self] _, dto in
-                self?.validMemberCountOver(capacity: dto.capacity)
+        let isMemberOverPublisher = input.changeButtonDidTap
+            .compactMap { [weak self] _ in
+                self?.roomDto.value
+            }
+            .map {
+                self.validMemberCountOver(capacity: $0.capacity)
             }
             .eraseToAnyPublisher()
         
-        let changeRoomOutput = input.changeButtonDidTap.combineLatest(input.changeRoomPublisher)
-            .asyncMap { [weak self] _, dto in
-                try await self?.changeRoomInformation(roomDto: dto)
+        let changeRoomOutput = input.changeButtonDidTap
+            .compactMap { [weak self] _ in
+                self?.roomDto.value
+            }
+            .filter { self.validMemberCountOver(capacity: $0.capacity) }
+            .filter { self.validStartDatePast(startDate: $0.startDate) }
+            .asyncMap { dto in
+                try await self.changeRoomInformation(roomDto: dto)
             }
             .compactMap { $0 }
             .eraseToAnyPublisher()
         
-        return Output(passStartDate: isPastPublisher,
-                      overMember: isMemberOverPublisher,
-                      changeSuccess: changeRoomOutput)
+        return Output(
+            passStartDate: isPastPublisher,
+            overMember: isMemberOverPublisher,
+            changeSuccess: changeRoomOutput)
     }
     
     private func validStartDatePast(startDate: String) -> Bool {
@@ -59,8 +85,8 @@ final class DetailEditViewModel: BaseViewModelType {
     }
     
     private func validMemberCountOver(capacity: Int) -> Bool {
-        let isOverMember = self.usecase.roomInformation.participants.count > capacity
-        return !isOverMember
+        let isUnderOverMember = self.usecase.roomInformation.participants.count <= capacity
+        return isUnderOverMember
     }
     
     private func changeRoomInformation(roomDto: CreatedRoomInfoRequestDTO) async throws -> Int {
