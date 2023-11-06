@@ -50,8 +50,7 @@ final class CreateNicknameViewController: UIViewController, Keyboardable {
     }
     
     private func presentMainViewController() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+        let viewController = MainViewController()
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
         present(viewController, animated: true)
