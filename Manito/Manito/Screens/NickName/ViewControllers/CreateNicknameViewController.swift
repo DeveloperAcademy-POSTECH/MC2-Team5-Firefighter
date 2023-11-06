@@ -126,7 +126,7 @@ final class CreateNicknameViewController: UIViewController, Keyboardable {
 
 extension CreateNicknameViewController {
     private func presentMainViewController() {
-        let viewController = MainViewController()
+        let viewController = UINavigationController(rootViewController: MainViewController())
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
         present(viewController, animated: true)
