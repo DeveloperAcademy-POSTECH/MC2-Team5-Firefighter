@@ -56,8 +56,10 @@ final class NicknameView: UIView, BaseViewType {
     // MARK: - property
     
     private let title: String
-    lazy var doneButtonTapPublisher = self.doneButton.tapPublisher
-    let textFieldPublisher = PassthroughSubject<String, Never>()
+    var doneButtonTapPublisher: AnyPublisher<Void, Never> {
+        return self.doneButton.tapPublisher
+    }
+    let textFieldPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
     
     // MARK: - init
     

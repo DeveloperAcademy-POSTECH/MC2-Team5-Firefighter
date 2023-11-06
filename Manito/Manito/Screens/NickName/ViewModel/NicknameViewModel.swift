@@ -17,10 +17,10 @@ final class NicknameViewModel: BaseViewModelType {
     let maxCount: Int = 5
     
     private let nicknameService: NicknameService
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     
-    private let nicknameSubject = CurrentValueSubject<String, Never>("")
-    private let doneButtonSubject = PassthroughSubject<Void, NetworkError>()
+    private let nicknameSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    private let doneButtonSubject: PassthroughSubject<Void, NetworkError> = PassthroughSubject()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
