@@ -130,6 +130,7 @@ final class DetailEditViewController: UIViewController {
         
         output.passStartDate
             .receive(on: DispatchQueue.main)
+            .filter { !$0 }
             .sink(receiveValue: { [weak self] value in
                 self?.showAlertPassedStartDate(value)
             })
@@ -137,6 +138,7 @@ final class DetailEditViewController: UIViewController {
         
         output.overMember
             .receive(on: DispatchQueue.main)
+            .filter { !$0 }
             .sink(receiveValue: { [weak self] value in
                 self?.showAlertOverMember(value)
             })
@@ -209,17 +211,13 @@ final class DetailEditViewController: UIViewController {
 // MARK: - Helper
 extension DetailEditViewController {
     private func showAlertPassedStartDate(_ value: Bool) {
-        if !value {
-            self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                            message: TextLiteral.DetailEdit.Error.memberMessage.localized())
-        }
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                       message: TextLiteral.DetailEdit.Error.date.localized())
     }
     
     private func showAlertOverMember(_ value: Bool) {
-        if !value {
-            self.makeAlert(title: TextLiteral.DetailEdit.Error.memberTitle.localized(),
-                           message: TextLiteral.DetailEdit.Error.memberMessage.localized())
-        }
+        self.makeAlert(title: TextLiteral.DetailEdit.Error.memberTitle.localized(),
+                       message: TextLiteral.DetailEdit.Error.memberMessage.localized())
     }
     
     private func showErrorAlert(_ text: String) {

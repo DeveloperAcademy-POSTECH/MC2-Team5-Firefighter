@@ -133,6 +133,7 @@ enum TextLiteral {
             static let message = "detail_edit_error_message"
             static let memberTitle = "detail_edit_member_error_title"
             static let memberMessage = "detail_edit_member_error_message"
+            static let date = "detail_edit_date_error_message"
         }
     }
 
