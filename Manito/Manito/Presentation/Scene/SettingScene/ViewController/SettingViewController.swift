@@ -146,7 +146,12 @@ final class SettingViewController: UIViewController, Navigationable {
     }
     
     private func pushChangeNicknameViewController() {
-        self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
+        let repository = SettingRepositoryImpl()
+        let nicknameUsecase = NicknameService(repository: repository)
+        let textFieldUsecase = TextFieldUsecaseImpl()
+        let viewMdoel = NicknameViewModel(nicknameService: nicknameUsecase,
+                                          textFieldUsecase: textFieldUsecase)
+        self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: viewMdoel), animated: true)
     }
     
     private func openUrlBySettingButton(type: SettingView.SettingActions) {

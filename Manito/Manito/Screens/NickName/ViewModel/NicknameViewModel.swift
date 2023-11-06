@@ -17,6 +17,7 @@ final class NicknameViewModel: BaseViewModelType {
     let maxCount: Int = 5
     
     private let nicknameService: NicknameService
+    private let textFieldUsecase: TextFieldUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
     private let nicknameSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
@@ -56,22 +57,14 @@ final class NicknameViewModel: BaseViewModelType {
         
         let fixedTitle = input.textFieldDidChanged
             .map { [weak self] text -> String in
-                let isOverMaxCount = self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
-                
-                if isOverMaxCount {
-                    let endIndex = text.index(text.startIndex, offsetBy: self?.maxCount ?? 0)
-                    let fixedText = text[text.startIndex..<endIndex]
-                    return String(fixedText)
-                }
-
+                guard let self else { return "" }
+                let text = self.textFieldUsecase.cutTextByMaxCount(text: text, maxCount: self.maxCount)
                 return text
             }
             .eraseToAnyPublisher()
         
         let isEnabled = input.textFieldDidChanged
-            .map { text -> Bool in
-                return !text.isEmpty
-            }
+            .map { !$0.isEmpty }
             .eraseToAnyPublisher()
         
         let doneButtonDidTap = input.doneButtonDidTap
@@ -96,16 +89,13 @@ final class NicknameViewModel: BaseViewModelType {
     
     // MARK: - init
     
-    init(nicknameService: NicknameService) {
+    init(nicknameService: NicknameService,
+         textFieldUsecase: TextFieldUsecase) {
         self.nicknameService = nicknameService
+        self.textFieldUsecase = textFieldUsecase
     }
     
     // MARK: - func
-    
-    private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
-        if titleCount > maxCount { return true }
-        else { return false }
-    }
     
     private func saveNicknameToUserDefault(nickname: String) {
         UserData.setValue(nickname, forKey: .nickname)
