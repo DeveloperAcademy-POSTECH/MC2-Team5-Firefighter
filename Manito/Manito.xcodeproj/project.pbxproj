@@ -677,7 +677,7 @@
 		7E0C5C342855B1EF00F698D1 /* NickName */ = {
 			isa = PBXGroup;
 			children = (
-				D719395A2AA23EF200A73D6C /* Service */,
+				D719395A2AA23EF200A73D6C /* Usecase */,
 				D719395B2AA23EFC00A73D6C /* ViewModel */,
 				D719395C2AA23F0400A73D6C /* View */,
 				D719395D2AA23F0900A73D6C /* ViewControllers */,
@@ -1512,12 +1512,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		D719395A2AA23EF200A73D6C /* Service */ = {
+		D719395A2AA23EF200A73D6C /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
 				D71939602AA23F3B00A73D6C /* NicknameUsecase.swift */,
 			);
-			path = Service;
+			path = Usecase;
 			sourceTree = "<group>";
 		};
 		D719395B2AA23EFC00A73D6C /* ViewModel */ = {
