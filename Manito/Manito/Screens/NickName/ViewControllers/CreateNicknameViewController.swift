@@ -12,7 +12,7 @@ import SnapKit
 
 final class CreateNicknameViewController: UIViewController, Keyboardable {
     
-    // MARK: - ui components
+    // MARK: - ui component
     
     private let nicknameView: NicknameView = NicknameView(title: TextLiteral.Nickname.createTitle.localized())
     
