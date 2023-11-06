@@ -21,7 +21,6 @@ final class NicknameViewModel: BaseViewModelType {
     private var cancellable: Set<AnyCancellable> = Set()
     
     private let nicknameSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
-    private let doneButtonSubject: PassthroughSubject<Void, NetworkError> = PassthroughSubject()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -36,6 +35,16 @@ final class NicknameViewModel: BaseViewModelType {
         let isEnabled: AnyPublisher<Bool, Never>
         let doneButton: AnyPublisher<Result<Void, Error>, Never>
     }
+    
+    // MARK: - init
+    
+    init(nicknameService: NicknameService,
+         textFieldUsecase: TextFieldUsecase) {
+        self.nicknameService = nicknameService
+        self.textFieldUsecase = textFieldUsecase
+    }
+    
+    // MARK: - func
     
     func transform(from input: Input) -> Output {
         let nickname = input.viewDidLoad
@@ -86,16 +95,6 @@ final class NicknameViewModel: BaseViewModelType {
                       isEnabled: isEnabled,
                       doneButton: doneButtonDidTap)
     }
-    
-    // MARK: - init
-    
-    init(nicknameService: NicknameService,
-         textFieldUsecase: TextFieldUsecase) {
-        self.nicknameService = nicknameService
-        self.textFieldUsecase = textFieldUsecase
-    }
-    
-    // MARK: - func
     
     private func saveNicknameToUserDefault(nickname: String) {
         UserData.setValue(nickname, forKey: .nickname)
