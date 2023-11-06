@@ -109,8 +109,16 @@ final class ChangeNicknameViewController: UIViewController, Navigationable, Keyb
                                     message: TextLiteral.Common.Error.networkServer.localized())
                 }
             } receiveValue: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
+                self?.popViewController()
             }
             .store(in: &self.cancellable)
+    }
+}
+
+// MARK: - Helper
+
+extension ChangeNicknameViewController {
+    private func popViewController() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

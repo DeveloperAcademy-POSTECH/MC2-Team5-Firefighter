@@ -51,13 +51,6 @@ final class CreateNicknameViewController: UIViewController, Keyboardable {
         self.setupKeyboardGesture()
     }
     
-    private func presentMainViewController() {
-        let viewController = MainViewController()
-        viewController.modalPresentationStyle = .fullScreen
-        viewController.modalTransitionStyle = .crossDissolve
-        present(viewController, animated: true)
-    }
-    
     override func endEditingView() {
         self.nicknameView.endEditingView()
     }
@@ -131,5 +124,16 @@ final class CreateNicknameViewController: UIViewController, Keyboardable {
                 self?.presentMainViewController()
             }
             .store(in: &self.cancellable)
+    }
+}
+
+// MARK: - Helper
+
+extension CreateNicknameViewController {
+    private func presentMainViewController() {
+        let viewController = MainViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
     }
 }
