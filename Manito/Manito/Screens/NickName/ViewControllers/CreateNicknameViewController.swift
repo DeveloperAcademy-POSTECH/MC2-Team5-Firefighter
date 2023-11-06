@@ -114,14 +114,9 @@ final class CreateNicknameViewController: UIViewController, Keyboardable {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    // FIXME: - 일단 기본 에러로 설정해뒀습니다.
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                                    message: TextLiteral.Common.Error.networkServer.localized())
+                case .success(): self?.presentMainViewController()
+                case .failure(let error): self?.makeAlert(title: error.localizedDescription)
                 }
-            } receiveValue: { [weak self] _ in
-                self?.presentMainViewController()
             }
             .store(in: &self.cancellable)
     }

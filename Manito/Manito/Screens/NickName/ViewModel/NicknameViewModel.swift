@@ -33,7 +33,7 @@ final class NicknameViewModel: BaseViewModelType {
         let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
-        let doneButton: PassthroughSubject<Void, NetworkError>
+        let doneButton: AnyPublisher<Result<Void, Error>, Never>
     }
     
     func transform(from input: Input) -> Output {
@@ -74,17 +74,24 @@ final class NicknameViewModel: BaseViewModelType {
             }
             .eraseToAnyPublisher()
         
-        input.doneButtonDidTap
-            .sink(receiveValue: { [weak self] _ in
-                self?.didTapDoneButton()
-            })
-            .store(in: &self.cancellable)
+        let doneButtonDidTap = input.doneButtonDidTap
+            .asyncMap { [weak self] _  -> Result<Void, Error> in
+                do {
+                    let nickname = self?.nicknameSubject.value
+                    self?.saveNicknameToUserDefault(nickname: nickname ?? "")
+                    let _ = try await self?.nicknameService.putUserInfo(nickname: NicknameDTO(nickname: nickname ?? ""))
+                    return .success(())
+                } catch (let error) {
+                    return .failure(error)
+                }
+            }
+            .eraseToAnyPublisher()
         
         return Output(nickname: nickname,
                       counts: mergeCount,
                       fixedTitleByMaxCount: fixedTitle,
                       isEnabled: isEnabled,
-                      doneButton: self.doneButtonSubject)
+                      doneButton: doneButtonDidTap)
     }
     
     // MARK: - init
@@ -100,30 +107,16 @@ final class NicknameViewModel: BaseViewModelType {
         else { return false }
     }
     
-    private func didTapDoneButton() {
-        let nickname = self.nicknameSubject.value
+    private func saveNicknameToUserDefault(nickname: String) {
         UserData.setValue(nickname, forKey: .nickname)
         UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
-        self.requestCreateNickname(nickname: NicknameDTO(nickname: nickname))
     }
-    
-    // MARK: - network
-    
-    private func requestCreateNickname(nickname: NicknameDTO) {
-        Task {
-            do {
-                let statusCode = try await self.nicknameService.putUserInfo(nickname: nickname)
-                switch statusCode {
-                case 200..<300:
-                    UserDefaultHandler.setNickname(nickname: nickname.nickname)
-                    self.doneButtonSubject.send()
-                default:
-                    self.doneButtonSubject.send(completion: .failure(.unknownError))
-                }
-            } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.doneButtonSubject.send(completion: .failure(error))
-            }
-        }
+}
+
+// MARK: - Helper
+
+extension NicknameViewModel {
+    private func putUserInfo(nickname: NicknameDTO) async throws -> Int {
+        return try await self.nicknameService.putUserInfo(nickname: nickname)
     }
 }

@@ -102,14 +102,9 @@ final class ChangeNicknameViewController: UIViewController, Navigationable, Keyb
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    // FIXME: - Common 에러로 일단 설정했습니다.
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                                    message: TextLiteral.Common.Error.networkServer.localized())
+                case .success(): self?.popViewController()
+                case .failure(let error): self?.makeAlert(title: error.localizedDescription)
                 }
-            } receiveValue: { [weak self] _ in
-                self?.popViewController()
             }
             .store(in: &self.cancellable)
     }
