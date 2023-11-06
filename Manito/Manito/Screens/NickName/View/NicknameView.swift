@@ -14,10 +14,9 @@ final class NicknameView: UIView, BaseViewType {
     
     // MARK: - ui components
     
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 34)
-        label.text = self.title
         return label
     }()
     private lazy var nicknameTextField: UITextField = {
@@ -56,6 +55,7 @@ final class NicknameView: UIView, BaseViewType {
     // MARK: - property
     
     private let title: String
+    
     var doneButtonTapPublisher: AnyPublisher<Void, Never> {
         return self.doneButton.tapPublisher
     }
@@ -67,6 +67,7 @@ final class NicknameView: UIView, BaseViewType {
         self.title = title
         super.init(frame: .zero)
         self.baseInit()
+        self.setupTitleLabel()
     }
     
     @available(*, unavailable)
@@ -107,7 +108,7 @@ final class NicknameView: UIView, BaseViewType {
         self.backgroundColor = .backgroundGrey
     }
 
-    // MARK: - func
+    // MARK: - public func
     
     func configureNavigationItem(_ navigationController: UINavigationController) {
         navigationController.isNavigationBarHidden = false
@@ -136,6 +137,12 @@ final class NicknameView: UIView, BaseViewType {
     
     func updateNickname(nickname: String) {
         self.nicknameTextField.text = nickname
+    }
+    
+    // MARK: - private func
+    
+    private func setupTitleLabel() {
+        self.titleLabel.text = self.title
     }
 }
 
