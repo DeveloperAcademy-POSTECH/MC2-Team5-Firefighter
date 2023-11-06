@@ -14,9 +14,9 @@ final class NicknameViewModel: BaseViewModelType {
     
     // MARK: - property
     
-    let maxCount: Int = 5
+    private let maxCount: Int = 5
     
-    private let nicknameService: NicknameService
+    private let nicknameUsecase: NicknameUsecase
     private let textFieldUsecase: TextFieldUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
@@ -38,9 +38,9 @@ final class NicknameViewModel: BaseViewModelType {
     
     // MARK: - init
     
-    init(nicknameService: NicknameService,
+    init(nicknameUsecase: NicknameUsecase,
          textFieldUsecase: TextFieldUsecase) {
-        self.nicknameService = nicknameService
+        self.nicknameUsecase = nicknameUsecase
         self.textFieldUsecase = textFieldUsecase
     }
     
@@ -81,7 +81,7 @@ final class NicknameViewModel: BaseViewModelType {
                 do {
                     let nickname = self?.nicknameSubject.value
                     self?.saveNicknameToUserDefault(nickname: nickname ?? "")
-                    let _ = try await self?.nicknameService.putUserInfo(nickname: NicknameDTO(nickname: nickname ?? ""))
+                    let _ = try await self?.nicknameUsecase.putUserInfo(nickname: NicknameDTO(nickname: nickname ?? ""))
                     return .success(())
                 } catch (let error) {
                     return .failure(error)
@@ -106,6 +106,6 @@ final class NicknameViewModel: BaseViewModelType {
 
 extension NicknameViewModel {
     private func putUserInfo(nickname: NicknameDTO) async throws -> Int {
-        return try await self.nicknameService.putUserInfo(nickname: nickname)
+        return try await self.nicknameUsecase.putUserInfo(nickname: nickname)
     }
 }

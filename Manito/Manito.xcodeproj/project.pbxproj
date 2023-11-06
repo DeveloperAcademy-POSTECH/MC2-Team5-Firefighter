@@ -198,7 +198,7 @@
 		D71939552AA1C85300A73D6C /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939542AA1C85300A73D6C /* SettingViewModel.swift */; };
 		D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939582AA2343E00A73D6C /* NicknameView.swift */; };
 		D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */; };
-		D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939602AA23F3B00A73D6C /* NicknameService.swift */; };
+		D71939612AA23F3B00A73D6C /* NicknameUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939602AA23F3B00A73D6C /* NicknameUsecase.swift */; };
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* TopCharacterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* TopCharacterImageView.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
@@ -447,7 +447,7 @@
 		D71939542AA1C85300A73D6C /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		D71939582AA2343E00A73D6C /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
-		D71939602AA23F3B00A73D6C /* NicknameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameService.swift; sourceTree = "<group>"; };
+		D71939602AA23F3B00A73D6C /* NicknameUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameUsecase.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* TopCharacterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCharacterImageView.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
@@ -1515,7 +1515,7 @@
 		D719395A2AA23EF200A73D6C /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				D71939602AA23F3B00A73D6C /* NicknameService.swift */,
+				D71939602AA23F3B00A73D6C /* NicknameUsecase.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -2110,7 +2110,7 @@
 				D7BA95B52AF8AB9400455107 /* NicknameError.swift in Sources */,
 				B53A35C42A96F50100B720BC /* DetailRoomRepository.swift in Sources */,
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
-				D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */,
+				D71939612AA23F3B00A73D6C /* NicknameUsecase.swift in Sources */,
 				B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */,
 				39EF30F92AD3DE6700466A90 /* DetailWaitUseCase.swift in Sources */,
 				B5A085EC2A97314800C8A98D /* ParticipatedRoomInfoDTO.swift in Sources */,

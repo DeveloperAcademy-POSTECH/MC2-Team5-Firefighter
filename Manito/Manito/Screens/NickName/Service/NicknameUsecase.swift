@@ -1,5 +1,5 @@
 //
-//  NicknameService.swift
+//  NicknameUsecase.swift
 //  Manito
 //
 //  Created by 이성호 on 2023/09/02.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol NicknameServicable {
+protocol NicknameUsecase {
     func putUserInfo(nickname: NicknameDTO) async throws -> Int
 }
 
-final class NicknameService: NicknameServicable {
+final class NicknameUsecaseImpl: NicknameUsecase {
     
     private let repository: SettingRepository
     

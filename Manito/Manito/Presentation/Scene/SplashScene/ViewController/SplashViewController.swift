@@ -85,9 +85,9 @@ extension SplashViewController {
     }
 
     private func presentCreateNicknameViewController() {
-        let service = NicknameService(repository: SettingRepositoryImpl())
+        let nicknameUsecase = NicknameUsecaseImpl(repository: SettingRepositoryImpl())
         let textFieldUsecase = TextFieldUsecaseImpl()
-        let viewModel = NicknameViewModel(nicknameService: service,
+        let viewModel = NicknameViewModel(nicknameUsecase: nicknameUsecase,
                                           textFieldUsecase: textFieldUsecase)
         let viewController = CreateNicknameViewController(viewModel: viewModel)
         viewController.modalPresentationStyle = .fullScreen

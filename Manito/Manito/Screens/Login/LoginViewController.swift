@@ -120,9 +120,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                             if let isNewMember = data.isNewMember {
                                 if isNewMember {
                                     let repository = SettingRepositoryImpl()
-                                    let nicknameUsecase = NicknameService(repository: repository)
+                                    let nicknameUsecase = NicknameUsecaseImpl(repository: repository)
                                     let textFieldUsecase = TextFieldUsecaseImpl()
-                                    let viewMdoel = NicknameViewModel(nicknameService: nicknameUsecase,
+                                    let viewMdoel = NicknameViewModel(nicknameUsecase: nicknameUsecase,
                                                                       textFieldUsecase: textFieldUsecase)
                                     self.navigationController?.pushViewController(CreateNicknameViewController(viewModel: viewMdoel), animated: true)
                                     return

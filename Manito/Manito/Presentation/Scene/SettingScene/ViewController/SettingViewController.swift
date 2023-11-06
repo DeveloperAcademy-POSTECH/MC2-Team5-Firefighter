@@ -147,9 +147,9 @@ final class SettingViewController: UIViewController, Navigationable {
     
     private func pushChangeNicknameViewController() {
         let repository = SettingRepositoryImpl()
-        let nicknameUsecase = NicknameService(repository: repository)
+        let nicknameUsecase = NicknameUsecaseImpl(repository: repository)
         let textFieldUsecase = TextFieldUsecaseImpl()
-        let viewMdoel = NicknameViewModel(nicknameService: nicknameUsecase,
+        let viewMdoel = NicknameViewModel(nicknameUsecase: nicknameUsecase,
                                           textFieldUsecase: textFieldUsecase)
         self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: viewMdoel), animated: true)
     }
