@@ -47,7 +47,6 @@ final class CharacterCollectionView: UIView {
     // MARK: - property
     
     let characterIndexTapPublisher: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
-    private(set) var characterIndex: Int = 0
     
     // MARK: - init
     
@@ -93,6 +92,7 @@ extension CharacterCollectionView: UICollectionViewDataSource {
 
 extension CharacterCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.characterIndex = indexPath.item
+        let index = indexPath.item
+        self.characterIndexTapPublisher.send(index)
     }
 }

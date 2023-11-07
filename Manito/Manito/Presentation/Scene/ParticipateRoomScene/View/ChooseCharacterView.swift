@@ -68,7 +68,7 @@ final class ChooseCharacterView: UIView, BaseViewType {
     private func setupAction() {
         let didTapJoinButton = UIAction { [weak self] _ in
             guard let self = self else { return }
-            self.joinButtonTapPublisher.send(self.manittoCollectionView.characterIndex)
+            self.joinButtonTapPublisher.send(self.manittoCollectionView.characterIndexTapPublisher.value)
         }
         self.joinButton.addAction(didTapJoinButton, for: .touchUpInside)
     }
