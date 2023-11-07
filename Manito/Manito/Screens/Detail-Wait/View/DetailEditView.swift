@@ -89,6 +89,7 @@ final class DetailEditView: UIView, BaseViewType {
         slider.minimumTrackTintColor = .red001
         slider.isContinuous = true
         slider.setThumbImage(UIImage.Image.sliderThumb, for: .normal)
+        slider.addTarget(self, action: #selector(self.didSlideSlider(_:)), for: .valueChanged)
         return slider
     }()
     private lazy var numberOfParticipantsLabel: UILabel = {
@@ -109,25 +110,31 @@ final class DetailEditView: UIView, BaseViewType {
             }
         }
     }
+    private let roomTitle: String
+    private let capacity: Int
+    private var cancellable = Set<AnyCancellable>()
     
     var cancleButtonPublisher: AnyPublisher<Void, Never> {
         return self.cancelButton.tapPublisher
     }
     
+    var changeButtonSubject: PassthroughSubject<CreatedRoomInfoRequestDTO, Never> = PassthroughSubject()
+    
     var changeButtonPublisher: AnyPublisher<Void, Never> {
         return self.changeButton.tapPublisher
     }
     
-    var sliderPublisher: AnyPublisher<Float, Never> {
-        return self.participantsSlider.valuePublisher
-    }
+    lazy var sliderPublisher: CurrentValueSubject<Int, Never> = CurrentValueSubject(self.capacity)
     
     // MARK: - init
     
-    init(editMode: EditMode) {
+    init(editMode: EditMode, roomInfo: RoomInfo) {
         self.editMode = editMode
+        self.roomTitle = roomInfo.roomInformation.title
+        self.capacity = roomInfo.roomInformation.capacity
         super.init(frame: .zero)
         self.baseInit()
+        self.bindChangeButton()
     }
     
     @available(*, unavailable)
@@ -269,5 +276,21 @@ final class DetailEditView: UIView, BaseViewType {
     
     func configureCalendarDelegate(_ delegate: CalendarDelegate) {
         self.calendarView.configureCalendarDelegate(delegate)
+    }
+    
+    private func bindChangeButton() {
+        self.changeButton.tapPublisher.sink(receiveValue: { [weak self] _ in
+            self?.changeButtonSubject.send(CreatedRoomInfoRequestDTO(title: self?.roomTitle ?? "",
+                                                                     capacity: self?.sliderPublisher.value ?? 0,
+                                                                     startDate: self?.calendarView.getTempStartDate() ?? "",
+                                                                     endDate: self?.calendarView.getTempEndDate() ?? ""))
+        })
+        .store(in: &self.cancellable)
+    }
+    
+    @objc
+    private func didSlideSlider(_ slider: UISlider) {
+        let value = Int(slider.value)
+        self.sliderPublisher.send(value)
     }
 }
