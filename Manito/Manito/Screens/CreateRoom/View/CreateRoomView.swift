@@ -55,7 +55,7 @@ final class CreateRoomView: UIView, BaseViewType {
     var textFieldPublisher: PassthroughSubject<String, Never> {
         return self.roomTitleView.textFieldPublisher
     }
-    var sliderPublisher: PassthroughSubject<Int, Never> {
+    var sliderPublisher: AnyPublisher<Int, Never> {
         return self.roomCapacityView.sliderPublisher
     }
     var startDateTapPublisher: PassthroughSubject<String, Never> {
