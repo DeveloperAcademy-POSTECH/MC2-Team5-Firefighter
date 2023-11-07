@@ -28,7 +28,7 @@ final class DetailEditViewController: UIViewController {
     // MARK: - init
     
     init(editMode: DetailEditView.EditMode, room: RoomInfo, viewModel: any BaseViewModelType) {
-        self.detailEditView = DetailEditView(editMode: editMode)
+        self.detailEditView = DetailEditView(editMode: editMode, roomInfo: room)
         self.editMode = editMode
         self.viewModel = viewModel
         self.roomPublisher = .init(CreatedRoomInfoRequestDTO(title: room.roomInformation.title,
@@ -120,7 +120,7 @@ final class DetailEditViewController: UIViewController {
         guard let viewModel = self.viewModel as? DetailEditViewModel else { return nil }
         let input = DetailEditViewModel.Input(
             changeRoomPublisher: self.roomPublisher.eraseToAnyPublisher(),
-            changeButtonDidTap: self.detailEditView.changeButtonPublisher)
+            changeButtonDidTap: self.detailEditView.changeButtonSubject.eraseToAnyPublisher())
         
         return viewModel.transform(from: input)
     }

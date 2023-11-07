@@ -11,7 +11,7 @@ import Foundation
 final class DetailEditViewModel: BaseViewModelType {
     struct Input {
         let changeRoomPublisher: AnyPublisher<CreatedRoomInfoRequestDTO, Never>
-        let changeButtonDidTap: AnyPublisher<Void, Never>
+        let changeButtonDidTap: AnyPublisher<CreatedRoomInfoRequestDTO, Never>
     }
     struct Output {
         let passStartDate: AnyPublisher<Bool, Never>
@@ -43,31 +43,26 @@ final class DetailEditViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         let isPastPublisher = input.changeButtonDidTap
-            .compactMap { [weak self] _ in
-                self?.roomDto.value
-            }
-            .map {
-                self.validStartDatePast(startDate: $0.startDate)
+            .compactMap { [weak self] dto in
+                self?.validStartDatePast(startDate: dto.startDate)
             }
             .eraseToAnyPublisher()
         
         let isMemberOverPublisher = input.changeButtonDidTap
-            .compactMap { [weak self] _ in
-                self?.roomDto.value
-            }
-            .map {
-                self.validMemberCountOver(capacity: $0.capacity)
+            .compactMap { [weak self] dto in
+                self?.validMemberCountOver(capacity: dto.capacity)
             }
             .eraseToAnyPublisher()
         
         let changeRoomOutput = input.changeButtonDidTap
-            .compactMap { [weak self] _ in
-                self?.roomDto.value
-            }
-            .filter { self.validMemberCountOver(capacity: $0.capacity) }
-            .filter { self.validStartDatePast(startDate: $0.startDate) }
-            .asyncMap { dto in
-                try await self.changeRoomInformation(roomDto: dto)
+            .filter { [weak self] dto in
+                guard let self else { return false }
+                return self.validMemberCountOver(capacity: dto.capacity) }
+            .filter { [weak self] dto in
+                guard let self else { return false }
+                return self.validStartDatePast(startDate: dto.startDate) }
+            .asyncMap { [weak self] dto in
+                try await self?.changeRoomInformation(roomDto: dto)
             }
             .compactMap { $0 }
             .eraseToAnyPublisher()
