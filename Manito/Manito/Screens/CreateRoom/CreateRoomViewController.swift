@@ -145,16 +145,12 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         
         output.roomId
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] result in 
+            .sink { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    // FIXME: - 에러 코드 추가 작성 필요
-                    self?.makeAlert(title: "에러발생")
+                case .success(let roomId): self?.pushDetailWaitViewController(roomId: roomId.description)
+                case .failure(let error): self?.makeAlert(title: error.localizedDescription)
                 }
-            }, receiveValue: { [weak self] roomId in
-                self?.pushDetailWaitViewController(roomId: roomId.description)
-            })
+            }
             .store(in: &self.cancellable)
     }
 }

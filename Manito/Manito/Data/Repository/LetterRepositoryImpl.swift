@@ -9,12 +9,6 @@ import Foundation
 
 import MTNetwork
 
-protocol LetterRepository {
-    func dispatchLetter(roomId: String, image: Data?, letter: LetterRequestDTO, missionId: String) async throws -> Int
-    func fetchSendLetter(roomId: String) async throws -> LetterDTO
-    func fetchReceiveLetter(roomId: String) async throws -> LetterDTO
-}
-
 final class LetterRepositoryImpl: LetterRepository {
 
     private var provider = Provider<LetterEndPoint>()
