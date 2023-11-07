@@ -41,13 +41,13 @@ final class InvitedCodeViewModel: BaseViewModelType {
         let roomInfo = input.viewDidLoad
             .map { [weak self] _ -> RoomInfo in
                 guard let self else { return RoomInfo(roomInfo: RoomListItem.emptyRoomListItem, code: "") }
-                let roomInfo = RoomInfo(roomInfo: self.roomInfo,code: self.code)
+                let roomInfo = RoomInfo(roomInfo: self.roomInfo, code: self.code)
                 return roomInfo
             }
             .eraseToAnyPublisher()
         
         let code = input.copyButtonDidTap
-            .compactMap { [weak self] in self?.code}
+            .compactMap { [weak self] in self?.code }
             .eraseToAnyPublisher()
             
         return Output(roomInfo: roomInfo, 
