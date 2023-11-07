@@ -10,16 +10,16 @@ import Foundation
 
 final class DetailEditViewModel: BaseViewModelType {
     struct Input {
-        let changeRoomPublisher: AnyPublisher<CreatedRoomInfoRequestDTO, Never>
+        let viewDidLoad: AnyPublisher<Void, Never>
         let changeButtonDidTap: AnyPublisher<CreatedRoomInfoRequestDTO, Never>
     }
     struct Output {
+        let roomInfo: AnyPublisher<RoomInfo, Never>
         let passStartDate: AnyPublisher<Bool, Never>
         let overMember: AnyPublisher<Bool, Never>
         let changeSuccess: AnyPublisher<Int, Error>
     }
     
-    var roomDto: CurrentValueSubject<CreatedRoomInfoRequestDTO, Never>
     let usecase: DetailEditUsecase
     private var cancellable = Set<AnyCancellable>()
     
@@ -29,18 +29,17 @@ final class DetailEditViewModel: BaseViewModelType {
                                             capacity: roomInfo.capacity,
                                             startDate: roomInfo.startDate,
                                             endDate: roomInfo.endDate)
-        self.roomDto = .init(dto)
         self.usecase = usecase
     }
     
     // MARK: - func
     
     func transform(from input: Input) -> Output {
-        input.changeRoomPublisher
-            .sink(receiveValue: { [weak self] dto in
-                self?.roomDto.send(dto)
-            })
-            .store(in: &self.cancellable)
+        let roomInfoOutput = input.viewDidLoad
+            .compactMap { [weak self] _ in
+                self?.usecase.roomInformation
+            }
+            .eraseToAnyPublisher()
         
         let isPastPublisher = input.changeButtonDidTap
             .compactMap { [weak self] dto in
@@ -68,6 +67,7 @@ final class DetailEditViewModel: BaseViewModelType {
             .eraseToAnyPublisher()
         
         return Output(
+            roomInfo: roomInfoOutput,
             passStartDate: isPastPublisher,
             overMember: isMemberOverPublisher,
             changeSuccess: changeRoomOutput)

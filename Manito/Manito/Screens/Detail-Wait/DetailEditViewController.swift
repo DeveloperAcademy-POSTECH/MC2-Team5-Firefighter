@@ -19,7 +19,6 @@ final class DetailEditViewController: UIViewController {
     // MARK: - property
     
     private let editMode: DetailEditView.EditMode
-    private var roomPublisher: CurrentValueSubject<CreatedRoomInfoRequestDTO, Never>
     private let viewModel: any BaseViewModelType
     weak var detailWaitDelegate: DetailWaitViewControllerDelegate?
     private var cancellable = Set<AnyCancellable>()
@@ -31,10 +30,6 @@ final class DetailEditViewController: UIViewController {
         self.detailEditView = DetailEditView(editMode: editMode, roomInfo: room)
         self.editMode = editMode
         self.viewModel = viewModel
-        self.roomPublisher = .init(CreatedRoomInfoRequestDTO(title: room.roomInformation.title,
-                                                             capacity: room.roomInformation.capacity,
-                                                             startDate: room.roomInformation.startDate,
-                                                             endDate: room.roomInformation.endDate))
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -55,11 +50,10 @@ final class DetailEditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.updateView(roomInfo: self.roomPublisher.value)
         self.setupPresentationController()
         self.configureDelegation()
         self.bindViewModel()
-        self.bindUI()
+        self.bindCancleButton()
     }
 
     // MARK: - func
@@ -73,10 +67,10 @@ final class DetailEditViewController: UIViewController {
         self.detailEditView.configureCalendarDelegate(self)
     }
     
-    private func updateView(roomInfo: CreatedRoomInfoRequestDTO) {
-        let startDate = roomInfo.startDate
-        let endDate = roomInfo.endDate
-        let capacity = roomInfo.capacity
+    private func updateView(roomInfo: RoomInfo) {
+        let startDate = roomInfo.roomInformation.startDate
+        let endDate = roomInfo.roomInformation.endDate
+        let capacity = roomInfo.roomInformation.capacity
         
         self.setupCalendarDateRange(startDate: startDate, endDate: endDate)
         self.setupMemberSliderValue(capacity: capacity)
@@ -119,7 +113,7 @@ final class DetailEditViewController: UIViewController {
     private func transformedOutput() -> DetailEditViewModel.Output? {
         guard let viewModel = self.viewModel as? DetailEditViewModel else { return nil }
         let input = DetailEditViewModel.Input(
-            changeRoomPublisher: self.roomPublisher.eraseToAnyPublisher(),
+            viewDidLoad: self.viewDidLoadPublisher,
             changeButtonDidTap: self.detailEditView.changeButtonSubject.eraseToAnyPublisher())
         
         return viewModel.transform(from: input)
@@ -127,6 +121,13 @@ final class DetailEditViewController: UIViewController {
     
     private func bindOutputToViewModel(_ output: DetailEditViewModel.Output?) {
         guard let output else { return }
+        
+        output.roomInfo
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] roomInfo in
+                self?.updateView(roomInfo: roomInfo)
+            })
+            .store(in: &self.cancellable)
         
         output.passStartDate
             .receive(on: DispatchQueue.main)
@@ -160,40 +161,6 @@ final class DetailEditViewController: UIViewController {
                 default:
                     return
                 }
-            })
-            .store(in: &self.cancellable)
-    }
-    
-    private func bindUI() {
-        self.bindCalendar()
-        self.bindSlider()
-        self.bindCancleButton()
-    }
-    
-    private func bindCalendar() {
-        let calendarView = self.detailEditView.calendarView
-        let calendarPublisher = calendarView.startDateTapPublisher.zip(calendarView.endDateTapPublisher)
-        calendarPublisher
-            .sink(receiveValue: { [weak self] startDate, endDate in
-                guard let room = self?.roomPublisher.value else { return }
-                let dto = CreatedRoomInfoRequestDTO(title: room.title,
-                                                    capacity: room.capacity,
-                                                    startDate: startDate,
-                                                    endDate: endDate)
-                self?.roomPublisher.send(dto)
-            })
-            .store(in: &self.cancellable)
-    }
-    
-    private func bindSlider() {
-        self.detailEditView.sliderPublisher
-            .sink(receiveValue: { [weak self] value in
-                guard let room = self?.roomPublisher.value else { return }
-                let dto = CreatedRoomInfoRequestDTO(title: room.title,
-                                                    capacity: Int(value),
-                                                    startDate: room.startDate,
-                                                    endDate: room.endDate)
-                self?.roomPublisher.send(dto)
             })
             .store(in: &self.cancellable)
     }
