@@ -23,10 +23,8 @@ final class CreateRoomService: CreateRoomSevicable {
         do {
             let roomId = try await self.repository.dispatchCreateRoom(room: room)
             return roomId
-        } catch NetworkError.serverError {
-            throw NetworkError.serverError
-        } catch NetworkError.clientError(let message) {
-            throw NetworkError.clientError(message: message)
+        } catch {
+            throw CreateRoomError.failedToCreateRoom
         }
     }
 }
