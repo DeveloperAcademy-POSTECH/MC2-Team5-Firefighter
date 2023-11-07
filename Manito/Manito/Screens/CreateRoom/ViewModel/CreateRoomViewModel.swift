@@ -211,7 +211,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     }
     
     private func nextStep() -> StepButtonState {
-        switch currentStep {
+        switch self.currentStep {
         case .capacity:
             self.currentStep = currentStep.next()
             return (self.currentStep, self.dateIsEmpty())
