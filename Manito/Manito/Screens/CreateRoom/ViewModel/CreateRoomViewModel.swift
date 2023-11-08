@@ -203,7 +203,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     }
     
     private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
-        return titleCount > maxCount ? true : false
+        return titleCount > maxCount
     }
     
     private func initStep() -> StepButtonState {
@@ -234,7 +234,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     }
     
     private func dateIsEmpty() -> Bool {
-        return self.endDateSubject.value.isEmpty ? false : true
+        return !self.endDateSubject.value.isEmpty
     }
     
     // MARK: - network
