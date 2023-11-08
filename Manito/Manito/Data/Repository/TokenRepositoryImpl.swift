@@ -9,10 +9,6 @@ import Foundation
 
 import MTNetwork
 
-protocol TokenRepository {
-    func patchRefreshToken(token: TokenDTO) async throws -> TokenDTO
-}
-
 final class TokenRepositoryImpl: TokenRepository {
 
     private var provider = Provider<TokenEndPoint>()

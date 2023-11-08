@@ -129,7 +129,7 @@ final class CreateRoomViewController: UIViewController, Navigationable, Keyboard
         
         output.currentStep
             .sink { [weak self] (currentStep, isEnabled) in
-                self?.createRoomView.manageViewByStep(at: currentStep.rawValue, isEnabled: isEnabled)
+                self?.createRoomView.manageViewByStep(at: currentStep, isEnabled: isEnabled)
             }
             .store(in: &self.cancellable)
     }
