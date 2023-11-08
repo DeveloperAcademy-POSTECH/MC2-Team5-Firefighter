@@ -50,7 +50,7 @@ final class SettingViewModel: BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: SettingUsecaseImpl) {
+    init(usecase: SettingUsecase) {
         self.usecase = usecase
     }
     
