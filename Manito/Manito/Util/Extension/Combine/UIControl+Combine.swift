@@ -74,12 +74,3 @@ extension UISegmentedControl {
             .eraseToAnyPublisher()
     }
 }
-
-extension UISlider {
-    var valuePublisher: AnyPublisher<Float, Never> {
-        controlPublisher(for: .valueChanged)
-            .map { $0 as! UISlider }
-            .map { $0.value }
-            .eraseToAnyPublisher()
-    }
-}
