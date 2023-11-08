@@ -81,7 +81,7 @@ final class NicknameViewModel: BaseViewModelType {
                 do {
                     let nickname = self?.nicknameSubject.value
                     self?.saveNicknameToUserDefault(nickname: nickname ?? "")
-                    let _ = try await self?.nicknameUsecase.putUserInfo(nickname: NicknameDTO(nickname: nickname ?? ""))
+                    let _ = try await self?.putUserInfo(nickname: NicknameDTO(nickname: nickname ?? ""))
                     return .success(())
                 } catch (let error) {
                     return .failure(error)
