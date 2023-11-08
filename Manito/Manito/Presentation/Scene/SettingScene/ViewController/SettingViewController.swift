@@ -97,13 +97,9 @@ final class SettingViewController: UIViewController, Navigationable {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                                    message: TextLiteral.Setting.Error.withDrawalMessage.localized())
+                case .success(): self?.deleteUser()
+                case .failure(let error): self?.makeAlert(title: error.localizedDescription)
                 }
-            } receiveValue: { [weak self] _ in
-                self?.deleteUser()
             }
             .store(in: &self.cancellable)
     }
