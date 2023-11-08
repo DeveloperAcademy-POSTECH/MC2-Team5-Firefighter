@@ -11,7 +11,7 @@ import SnapKit
 
 final class TopCharacterImageView: UIView {
     
-    // MARK: - Property
+    // MARK: - ui component
     
     private let imgCharacterOrange: UIImageView = {
         let imageView = UIImageView()
@@ -39,51 +39,50 @@ final class TopCharacterImageView: UIView {
         return imageView
     }()
     
-    // MARK: - Init
+    // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Function
+    // MARK: - func
     
-    private func render() {
-
-        self.addSubview(imgCharacterOrange)
-        imgCharacterOrange.snp.makeConstraints {
+    private func setupLayout() {
+        self.addSubview(self.imgCharacterOrange)
+        self.imgCharacterOrange.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview().offset(-80)
             $0.height.width.equalTo(40)
         }
         
-        self.addSubview(imgCharacterPurple)
-        imgCharacterPurple.snp.makeConstraints {
+        self.addSubview(self.imgCharacterPurple)
+        self.imgCharacterPurple.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview().offset(-40)
             $0.height.width.equalTo(40)
         }
         
-        self.addSubview(imgNi)
-        imgNi.snp.makeConstraints {
+        self.addSubview(self.imgNi)
+        self.imgNi.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
             $0.height.width.equalTo(40)
         }
         
-        self.addSubview(imgCharacterLightGreen)
-        imgCharacterLightGreen.snp.makeConstraints {
+        self.addSubview(self.imgCharacterLightGreen)
+        self.imgCharacterLightGreen.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview().offset(40)
             $0.height.width.equalTo(40)
         }
         
-        self.addSubview(imgCharacterRed)
-        imgCharacterRed.snp.makeConstraints {
+        self.addSubview(self.imgCharacterRed)
+        self.imgCharacterRed.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview().offset(80)
             $0.height.width.equalTo(40)
