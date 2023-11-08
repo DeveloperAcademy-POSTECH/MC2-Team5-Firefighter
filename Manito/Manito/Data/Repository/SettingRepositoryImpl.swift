@@ -9,11 +9,6 @@ import Foundation
 
 import MTNetwork
 
-protocol SettingRepository {
-    func putUserInfo(nickname: NicknameDTO) async throws -> Int
-    func deleteMember() async throws -> Int
-}
-
 final class SettingRepositoryImpl: SettingRepository {
 
     private var provider = Provider<SettingEndPoint>()

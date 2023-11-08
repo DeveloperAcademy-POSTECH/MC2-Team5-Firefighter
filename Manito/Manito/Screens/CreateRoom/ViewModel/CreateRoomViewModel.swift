@@ -199,7 +199,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     }
     
     private func nextStep() -> StepButtonState {
-        switch currentStep {
+        switch self.currentStep {
         case .capacity:
             self.currentStep = currentStep.next()
             return (self.currentStep, self.dateIsEmpty())
@@ -222,7 +222,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     }
     
     private func dateIsEmpty() -> Bool {
-        return self.endDateSubject.value.isEmpty ? false : true
+        return !self.endDateSubject.value.isEmpty
     }
     
     // MARK: - network
