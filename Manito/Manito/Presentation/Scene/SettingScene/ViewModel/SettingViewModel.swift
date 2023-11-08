@@ -55,7 +55,11 @@ final class SettingViewModel: BaseViewModelType {
     }
     
     // MARK: - func
-    
+}
+
+// MARK: - Helper
+
+extension SettingViewModel {
     private func requestDeleteUser() {
         Task {
             do {

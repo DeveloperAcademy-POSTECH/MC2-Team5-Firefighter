@@ -149,10 +149,6 @@ final class SettingViewController: UIViewController, Navigationable {
         }
     }
     
-    private func pushChangeNicknameViewController() {
-        self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
-    }
-    
     private func openUrlBySettingButton(type: SettingView.SettingActions) {
         switch type {
         case .personInfomation: self.openUrl(url: URLLiteral.Setting.personalInformation)
@@ -161,16 +157,18 @@ final class SettingViewController: UIViewController, Navigationable {
         }
     }
     
-    private func openUrl(url: String) {
-        if let url = URL(string: url) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-    
     private func sendReportMail() {
         let title = TextLiteral.Mail.inquiryTitle.localized()
         let content = TextLiteral.Mail.inquiryMessage.localized(with: UserDefaultStorage.nickname, Date().description)
         self.mailManager.sendMail(title: title, content: content)
+    }
+}
+
+// MARK: - Helper
+
+extension SettingViewController {
+    private func pushChangeNicknameViewController() {
+        self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
     }
     
     private func pushDeveloperInfoViewController() {
@@ -187,5 +185,11 @@ final class SettingViewController: UIViewController, Navigationable {
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
                 as? SceneDelegate else { return }
         sceneDelegate.moveToLoginViewController()
+    }
+    
+    private func openUrl(url: String) {
+        if let url = URL(string: url) {
+            UIApplication.shared.open(url, options: [:])
+        }
     }
 }
