@@ -126,8 +126,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
 
                             UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
                             UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+                            let viewController = UINavigationController(rootViewController: MainViewController())
                             viewController.modalPresentationStyle = .fullScreen
                             viewController.modalTransitionStyle = .crossDissolve
                             self.present(viewController, animated: true)

@@ -25,8 +25,6 @@ final class SettingViewModel: BaseViewModelType {
     private let usecase: SettingUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
-    private let logoutSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
-    
     // MARK: - init
     
     init(usecase: SettingUsecase) {
@@ -36,13 +34,9 @@ final class SettingViewModel: BaseViewModelType {
     // MARK: - func
     
     func transform(from input: Input) -> Output {
-        
-        input.logoutButtonDidTap
-            .sink { [weak self] _ in
-                UserDefaultHandler.clearAllDataExcludingFcmToken()
-                self?.logoutSubject.send()
-            }
-            .store(in: &self.cancellable)
+        let logout = input.logoutButtonDidTap
+            .map { UserDefaultHandler.clearAllDataExcludingFcmToken() }
+            .eraseToAnyPublisher()
     
         let deleteUser = input.withdrawalButtonDidTap
             .asyncMap { [weak self] _ -> Result<Void, Error> in
@@ -55,7 +49,7 @@ final class SettingViewModel: BaseViewModelType {
             }
             .eraseToAnyPublisher()
 
-        return Output(logout: self.logoutSubject.eraseToAnyPublisher(),
+        return Output(logout: logout,
                       deleteUser: deleteUser)
     }
 }

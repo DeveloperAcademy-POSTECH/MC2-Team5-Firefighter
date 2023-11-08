@@ -88,9 +88,7 @@ final class SettingViewController: UIViewController, Navigationable {
         
         output.logout
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.logout()
-            }
+            .sink { [weak self] in self?.logout() }
             .store(in: &self.cancellable)
         
         output.deleteUser
