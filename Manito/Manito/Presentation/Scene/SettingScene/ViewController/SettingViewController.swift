@@ -20,10 +20,11 @@ final class SettingViewController: UIViewController, Navigationable {
     
     private let mailManager: MailComposeManager = MailComposeManager()
     
-    private var cancellable = Set<AnyCancellable>()
     private let viewModel: any BaseViewModelType
-    private let withdrawalPublisher = PassthroughSubject<Void, Never>()
-    private let logoutPublisher = PassthroughSubject<Void, Never>()
+    private var cancellable: Set<AnyCancellable> = Set()
+    
+    private let withdrawalPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    private let logoutPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     // MARK: - init
     

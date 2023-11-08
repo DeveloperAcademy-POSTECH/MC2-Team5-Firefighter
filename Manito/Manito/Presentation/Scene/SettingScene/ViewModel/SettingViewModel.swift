@@ -13,10 +13,10 @@ final class SettingViewModel: BaseViewModelType {
     // MARK: - property
     
     private let usecase: SettingUsecase
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     
-    private let deleteUserSubject = PassthroughSubject<Void, NetworkError>()
-    private let logoutSubject = PassthroughSubject<Void, Never>()
+    private let deleteUserSubject: PassthroughSubject<Void, NetworkError> = PassthroughSubject()
+    private let logoutSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     struct Input {
         let logoutButtonDidTap: AnyPublisher<Void, Never>

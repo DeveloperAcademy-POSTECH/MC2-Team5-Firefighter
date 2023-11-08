@@ -67,7 +67,7 @@ final class SettingView: UIView, BaseViewType {
     
     private var settingActions: [SettingActions] = SettingActions.allCases
 
-    let buttonDidTapPublisher = PassthroughSubject<SettingActions, Never>()
+    let buttonDidTapPublisher: PassthroughSubject<SettingActions, Never> = PassthroughSubject()
     
     // MARK: - init
     
