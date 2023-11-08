@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-final class SettingViewModel {
+final class SettingViewModel: BaseViewModelType {
     
     // MARK: - property
     

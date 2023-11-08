@@ -21,13 +21,13 @@ final class SettingViewController: UIViewController, Navigationable {
     private let mailManager: MailComposeManager = MailComposeManager()
     
     private var cancellable = Set<AnyCancellable>()
-    private let viewModel: SettingViewModel
+    private let viewModel: any BaseViewModelType
     private let withdrawalPublisher = PassthroughSubject<Void, Never>()
     private let logoutPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
     
-    init(viewModel: SettingViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -75,13 +75,16 @@ final class SettingViewController: UIViewController, Navigationable {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> SettingViewModel.Output {
+    private func transformedOutput() -> SettingViewModel.Output? {
+        guard let viewModel = self.viewModel as? SettingViewModel else { return nil }
         let input = SettingViewModel.Input(logoutButtonDidTap: self.logoutPublisher.eraseToAnyPublisher(),
                                            withdrawalButtonDidTap: self.withdrawalPublisher.eraseToAnyPublisher())
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: SettingViewModel.Output) {
+    private func bindOutputToViewModel(_ output: SettingViewModel.Output?) {
+        guard let output else { return }
+        
         output.logout
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
