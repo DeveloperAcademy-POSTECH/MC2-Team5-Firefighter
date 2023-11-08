@@ -60,12 +60,11 @@ final class SettingView: UIView, BaseViewType {
         button.setUnderLine()
         return button
     }()
-    
     private let imageRow: TopCharacterImageView = TopCharacterImageView()
     
     // MARK: - property
     
-    private var settingActions: [SettingActions] = SettingActions.allCases
+    private let settingActions: [SettingActions] = SettingActions.allCases
 
     let buttonDidTapPublisher: PassthroughSubject<SettingActions, Never> = PassthroughSubject()
     
@@ -121,6 +120,8 @@ final class SettingView: UIView, BaseViewType {
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension SettingView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.buttonDidTapPublisher.send(self.settingActions[indexPath.row])
@@ -131,15 +132,15 @@ extension SettingView: UITableViewDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension SettingView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.settingActions.count - 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as? SettingViewTableCell else {
-            return UITableViewCell()
-        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.className ,for: indexPath) as? SettingViewTableCell else { return UITableViewCell() }
         cell.configureCell(title: settingActions[indexPath.row].title)
         return cell
     }
