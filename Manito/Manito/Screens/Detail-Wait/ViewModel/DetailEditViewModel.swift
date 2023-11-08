@@ -43,25 +43,25 @@ final class DetailEditViewModel: BaseViewModelType {
         
         let isPastPublisher = input.changeButtonDidTap
             .compactMap { [weak self] dto in
-                self?.validStartDatePast(startDate: dto.startDate)
+                self?.usecase.validStartDatePast(startDate: dto.startDate)
             }
             .eraseToAnyPublisher()
         
         let isMemberOverPublisher = input.changeButtonDidTap
             .compactMap { [weak self] dto in
-                self?.validMemberCountOver(capacity: dto.capacity)
+                self?.usecase.validMemberCountOver(capacity: dto.capacity)
             }
             .eraseToAnyPublisher()
         
         let changeRoomOutput = input.changeButtonDidTap
             .filter { [weak self] dto in
                 guard let self else { return false }
-                return self.validMemberCountOver(capacity: dto.capacity) }
+                return self.usecase.validMemberCountOver(capacity: dto.capacity) }
             .filter { [weak self] dto in
                 guard let self else { return false }
-                return self.validStartDatePast(startDate: dto.startDate) }
+                return self.usecase.validStartDatePast(startDate: dto.startDate) }
             .asyncMap { [weak self] dto in
-                try await self?.changeRoomInformation(roomDto: dto)
+                try await self?.usecase.changeRoomInformation(roomDto: dto)
             }
             .compactMap { $0 }
             .eraseToAnyPublisher()
@@ -71,21 +71,5 @@ final class DetailEditViewModel: BaseViewModelType {
             passStartDate: isPastPublisher,
             overMember: isMemberOverPublisher,
             changeSuccess: changeRoomOutput)
-    }
-    
-    private func validStartDatePast(startDate: String) -> Bool {
-        guard let startDate = startDate.toDefaultDate else { return false }
-        let isPast = startDate.isPast
-        return !isPast
-    }
-    
-    private func validMemberCountOver(capacity: Int) -> Bool {
-        let isUnderOverMember = self.usecase.roomInformation.participants.count <= capacity
-        return isUnderOverMember
-    }
-    
-    private func changeRoomInformation(roomDto: CreatedRoomInfoRequestDTO) async throws -> Int {
-        let statusCode = try await self.usecase.changeRoomInformation(roomDto: roomDto)
-        return statusCode
     }
 }
