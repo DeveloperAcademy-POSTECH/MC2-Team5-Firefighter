@@ -25,10 +25,6 @@ final class DetailEditViewModel: BaseViewModelType {
     
     init(usecase: DetailEditUsecase) {
         let roomInfo = usecase.roomInformation.roomInformation
-        let dto = CreatedRoomInfoRequestDTO(title: roomInfo.title,
-                                            capacity: roomInfo.capacity,
-                                            startDate: roomInfo.startDate,
-                                            endDate: roomInfo.endDate)
         self.usecase = usecase
     }
     
