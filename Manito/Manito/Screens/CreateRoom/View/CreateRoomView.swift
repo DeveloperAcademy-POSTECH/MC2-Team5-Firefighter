@@ -55,7 +55,7 @@ final class CreateRoomView: UIView, BaseViewType {
     var textFieldPublisher: PassthroughSubject<String, Never> {
         return self.roomTitleView.textFieldPublisher
     }
-    var sliderPublisher: PassthroughSubject<Int, Never> {
+    var sliderPublisher: AnyPublisher<Int, Never> {
         return self.roomCapacityView.sliderPublisher
     }
     var startDateTapPublisher: PassthroughSubject<String, Never> {
@@ -139,16 +139,16 @@ final class CreateRoomView: UIView, BaseViewType {
 
     // MARK: - func
     
-    private func updateHiddenView(at step: Int) {
-        self.roomTitleView.isHidden = !(step == 0)
-        self.roomCapacityView.isHidden = !(step == 1)
-        self.roomDateView.isHidden = !(step == 2)
-        self.roomInfoView.isHidden = !(step == 3)
-        self.characterCollectionView.isHidden = !(step == 4)
+    private func updateHiddenView(at step: CreateRoomViewModel.Step) {
+        self.roomTitleView.isHidden = !(step == .title)
+        self.roomCapacityView.isHidden = !(step == .capacity)
+        self.roomDateView.isHidden = !(step == .date)
+        self.roomInfoView.isHidden = !(step == .roomInfo)
+        self.characterCollectionView.isHidden = !(step == .character)
     }
     
-    private func updateHiddenBackButton(at step: Int) {
-        self.backButton.isHidden = !(step == 1 || step == 2 || step == 3 || step == 4)
+    private func updateHiddenBackButton(at step: CreateRoomViewModel.Step) {
+        self.backButton.isHidden = !(step == .capacity || step == .date || step == .roomInfo || step == .character)
     }
     
     private func updateRoomTitleViewAnimation() {
@@ -179,20 +179,19 @@ final class CreateRoomView: UIView, BaseViewType {
         self.characterCollectionView.fadeIn()
     }
     
-    private func manageViewByNextStep(at step: Int, isEnabled: Bool) {
+    private func manageViewByNextStep(at step: CreateRoomViewModel.Step, isEnabled: Bool) {
         switch step {
-        case 0:
+        case .title:
             self.updateRoomTitleViewAnimation()
-        case 1:
+        case .capacity:
             self.updateRoomCapacityViewAnimation()
             self.toggleNextButton(isEnable: isEnabled)
             self.endEditing(true)
-        case 2:
+        case .date:
             self.updateRoomDateViewAnimation()
             self.toggleNextButton(isEnable: isEnabled)
-        case 3: self.updateRoomDataCheckViewAnimation()
-        case 4: self.updateChooseCharacterViewAnimation()
-        default: return
+        case .roomInfo: self.updateRoomDataCheckViewAnimation()
+        case .character: self.updateChooseCharacterViewAnimation()
         }
     }
     
@@ -224,7 +223,7 @@ final class CreateRoomView: UIView, BaseViewType {
                                          range: range)
     }
     
-    func manageViewByStep(at step: Int, isEnabled: Bool) {
+    func manageViewByStep(at step: CreateRoomViewModel.Step, isEnabled: Bool) {
         self.updateHiddenView(at: step)
         self.updateHiddenBackButton(at: step)
         self.manageViewByNextStep(at: step, isEnabled: isEnabled)

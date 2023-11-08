@@ -9,12 +9,6 @@ import Foundation
 
 import MTNetwork
 
-protocol RoomParticipationRepository {
-    func dispatchCreateRoom(room: CreatedRoomRequestDTO) async throws -> Int
-    func dispatchVerifyCode(code: String) async throws -> ParticipatedRoomInfoDTO
-    func dispatchJoinRoom(roomId: String, member: MemberInfoRequestDTO) async throws -> Int
-}
-
 final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
 
     private var provider = Provider<RoomParticipationEndPoint>()
