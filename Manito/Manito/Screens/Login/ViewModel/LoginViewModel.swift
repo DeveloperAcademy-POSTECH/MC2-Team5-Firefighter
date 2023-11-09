@@ -23,7 +23,7 @@ final class LoginViewModel: NSObject, BaseViewModelType {
     }
     
     struct Output {
-        let loginDTO: PassthroughSubject<LoginDTO, NetworkError>
+        let loginDTO: AnyPublisher<LoginDTO, NetworkError>
     }
     
     func transform(from input: Input) -> Output {
@@ -32,7 +32,7 @@ final class LoginViewModel: NSObject, BaseViewModelType {
                 self?.didTapAppleSignButton()
             })
             .store(in: &self.cancellable)
-        return Output(loginDTO: self.loginDTOSubject)
+        return Output(loginDTO: self.loginDTOSubject.eraseToAnyPublisher())
     }
     
     // MARK: - init
@@ -60,6 +60,18 @@ final class LoginViewModel: NSObject, BaseViewModelType {
         Task {
             do {
                 let loginDTO = try await self.loginService.dispatchAppleLogin(login: login)
+                
+                UserDefaultHandler.setIsLogin(isLogin: true)
+                UserDefaultHandler.setAccessToken(accessToken: loginDTO.accessToken ?? "")
+                UserDefaultHandler.setRefreshToken(refreshToken: loginDTO.refreshToken ?? "")
+                
+                if let isNewMember = loginDTO.isNewMember {
+                    if !isNewMember {
+                        UserDefaultHandler.setNickname(nickname: loginDTO.nickname ?? "")
+                        UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
+                    }
+                }
+                
                 self.loginDTOSubject.send(loginDTO)
             } catch(let error) {
                 guard let error = error as? NetworkError else { return }
@@ -76,6 +88,6 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
         guard let tokenToString = String(data: token, encoding: .utf8) else { return }
         
         let loginDTO = LoginRequestDTO(identityToken: tokenToString, fcmToken: UserDefaultStorage.fcmToken)
-        requestLogin(login: loginDTO)
+        self.requestLogin(login: loginDTO)
     }
 }

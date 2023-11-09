@@ -74,19 +74,16 @@ final class LoginViewController: UIViewController {
                     self?.makeAlert(title: "에러발생")
                 }
             }, receiveValue: { [weak self] loginDTO in
-                UserDefaultHandler.setIsLogin(isLogin: true)
-                UserDefaultHandler.setAccessToken(accessToken: loginDTO.accessToken ?? "")
-                UserDefaultHandler.setRefreshToken(refreshToken: loginDTO.refreshToken ?? "")
-                
                 if let isNewMember = loginDTO.isNewMember {
                     if isNewMember {
-                        self?.navigationController?.pushViewController(CreateNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
+                        let repository = SettingRepositoryImpl()
+                        let service = NicknameService(repository: repository)
+                        let viewModel = NicknameViewModel(nicknameService: service)
+                        let viewController = CreateNicknameViewController(viewModel: viewModel)
+                        self?.navigationController?.pushViewController(viewController, animated: true)
                         return
                     }
                 }
-                
-                UserDefaultHandler.setNickname(nickname: loginDTO.nickname ?? "")
-                UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
                 
                 self?.presentMainViewController()
             })
