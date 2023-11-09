@@ -16,14 +16,14 @@ final class LoginViewModel: NSObject, BaseViewModelType {
     private let usecase: LoginUsecase
     private var cancellable = Set<AnyCancellable>()
     
-    private let loginDTOSubject = PassthroughSubject<Bool, NetworkError>()
+    private let isNewMemberSubject = PassthroughSubject<Result<Bool, Error>, Never>()
     
     struct Input {
         let appleSignButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
-        let isNewMember: AnyPublisher<Bool, NetworkError>
+        let isNewMember: AnyPublisher<Result<Bool, Error>, Never>
     }
     
     func transform(from input: Input) -> Output {
@@ -32,7 +32,7 @@ final class LoginViewModel: NSObject, BaseViewModelType {
                 self?.didTapAppleSignButton()
             })
             .store(in: &self.cancellable)
-        return Output(isNewMember: self.loginDTOSubject.eraseToAnyPublisher())
+        return Output(isNewMember: self.isNewMemberSubject.eraseToAnyPublisher())
     }
     
     // MARK: - init
@@ -71,11 +71,10 @@ final class LoginViewModel: NSObject, BaseViewModelType {
                         UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
                     }
                     
-                    self.loginDTOSubject.send(isNewMember)
+                    self.isNewMemberSubject.send(.success(isNewMember))
                 }
             } catch(let error) {
                 guard let error = error as? NetworkError else { return }
-                self.loginDTOSubject.send(completion: .failure(error))
             }
         }
     }

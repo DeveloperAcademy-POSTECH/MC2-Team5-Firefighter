@@ -68,22 +68,20 @@ final class LoginViewController: UIViewController {
         
         output.isNewMember
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] result in
+            .sink(receiveValue: { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    // FIXME: - 에러 코드 추가 작성 필요
-                    self?.makeAlert(title: "에러발생")
-                }
-            }, receiveValue: { [weak self] isNewMember in
-                if isNewMember {
-                    let repository = SettingRepositoryImpl()
-                    let service = NicknameService(repository: repository)
-                    let viewModel = NicknameViewModel(nicknameService: service)
-                    let viewController = CreateNicknameViewController(viewModel: viewModel)
-                    self?.navigationController?.pushViewController(viewController, animated: true)
-                } else {
-                    self?.presentMainViewController()
+                case .success(let isNewMember):
+                    if isNewMember {
+                        let repository = SettingRepositoryImpl()
+                        let service = NicknameService(repository: repository)
+                        let viewModel = NicknameViewModel(nicknameService: service)
+                        let viewController = CreateNicknameViewController(viewModel: viewModel)
+                        self?.navigationController?.pushViewController(viewController, animated: true)
+                    } else {
+                        self?.presentMainViewController()
+                    }
+                case .failure:
+                    return
                 }
             })
             .store(in: &self.cancellable)
