@@ -79,15 +79,15 @@ final class LoginViewModel: NSObject, BaseViewModelType {
 }
 
 extension LoginViewModel: ASAuthorizationControllerDelegate {
-    private func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) throws {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else {
-            throw LoginUsecaseError.failedCredential
+            return
         }
         guard let token = credential.identityToken else {
-            throw LoginUsecaseError.failedToken
+            return
         }
         guard let tokenToString = String(data: token, encoding: .utf8) else {
-            throw LoginUsecaseError.failedTokenToString
+            return
         }
         
         let loginDTO = LoginRequestDTO(identityToken: tokenToString, fcmToken: UserDefaultStorage.fcmToken)
