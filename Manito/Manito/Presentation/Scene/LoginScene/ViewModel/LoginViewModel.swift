@@ -59,20 +59,18 @@ final class LoginViewModel: NSObject, BaseViewModelType {
     private func requestLogin(login: LoginRequestDTO) {
         Task {
             do {
-                let loginDTO = try await self.usecase.dispatchAppleLogin(login: login)
+                let login = try await self.usecase.dispatchAppleLogin(login: login)
                 
                 UserDefaultHandler.setIsLogin(isLogin: true)
-                UserDefaultHandler.setAccessToken(accessToken: loginDTO.accessToken ?? "")
-                UserDefaultHandler.setRefreshToken(refreshToken: loginDTO.refreshToken ?? "")
+                UserDefaultHandler.setAccessToken(accessToken: login.accessToken)
+                UserDefaultHandler.setRefreshToken(refreshToken: login.refreshToken)
                 
-                if let isNewMember = loginDTO.isNewMember {
-                    if !isNewMember {
-                        UserDefaultHandler.setNickname(nickname: loginDTO.nickname ?? "")
-                        UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
-                    }
-                    
-                    self.isNewMemberSubject.send(.success(isNewMember))
+                if !login.isNewMember {
+                    UserDefaultHandler.setNickname(nickname: login.nickname)
+                    UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
                 }
+                
+                self.isNewMemberSubject.send(.success(login.isNewMember))
             } catch(let error) {
                 guard let error = error as? NetworkError else { return }
             }
