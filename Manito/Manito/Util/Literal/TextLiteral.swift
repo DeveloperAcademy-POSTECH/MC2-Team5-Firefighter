@@ -37,6 +37,15 @@ enum TextLiteral {
             static let networkAuthorized = "common_network_authorized_error"
         }
     }
+    
+    /// Sign 화면에서 사용하는 텍스트
+    enum Sign {
+        enum Error {
+            static let credential = "sign_error_credential"
+            static let token = "sign_error_token"
+            static let tokenToString = "sign_error_tokenToString"
+        }
+    }
 
     /// Main 화면에서 사용하는 텍스트
     enum Main {

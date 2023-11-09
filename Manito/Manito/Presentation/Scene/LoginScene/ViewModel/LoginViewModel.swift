@@ -72,17 +72,23 @@ final class LoginViewModel: NSObject, BaseViewModelType {
                 
                 self.isNewMemberSubject.send(.success(login.isNewMember))
             } catch(let error) {
-                guard let error = error as? NetworkError else { return }
+                self.isNewMemberSubject.send(.failure(error))
             }
         }
     }
 }
 
 extension LoginViewModel: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
-        guard let token = credential.identityToken else { return }
-        guard let tokenToString = String(data: token, encoding: .utf8) else { return }
+    private func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) throws {
+        guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            throw LoginUsecaseError.failedCredential
+        }
+        guard let token = credential.identityToken else {
+            throw LoginUsecaseError.failedToken
+        }
+        guard let tokenToString = String(data: token, encoding: .utf8) else {
+            throw LoginUsecaseError.failedTokenToString
+        }
         
         let loginDTO = LoginRequestDTO(identityToken: tokenToString, fcmToken: UserDefaultStorage.fcmToken)
         self.requestLogin(login: loginDTO)

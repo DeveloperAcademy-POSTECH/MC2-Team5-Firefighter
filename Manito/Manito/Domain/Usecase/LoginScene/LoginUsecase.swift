@@ -29,10 +29,8 @@ final class LoginUsecaseImpl: LoginUsecase {
         do {
             let loginDTO = try await self.repository.dispatchAppleLogin(login: login)
             return loginDTO.toLogin()
-        } catch NetworkError.serverError {
-            throw NetworkError.serverError
-        } catch NetworkError.clientError(let message) {
-            throw NetworkError.clientError(message: message)
+        } catch {
+            throw LoginUsecaseError.failedToLogin
         }
     }
 }

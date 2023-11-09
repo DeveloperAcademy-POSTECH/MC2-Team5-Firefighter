@@ -191,6 +191,7 @@
 		CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */; };
 		CB9332562AFCAE3100B7F87A /* LoginUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9332552AFCAE3100B7F87A /* LoginUsecase.swift */; };
 		CB93325A2AFCAF3F00B7F87A /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9332592AFCAF3F00B7F87A /* Login.swift */; };
+		CB93325F2AFCBD4D00B7F87A /* LoginUsecaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB93325E2AFCBD4D00B7F87A /* LoginUsecaseError.swift */; };
 		CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */; };
 		CB9592B52855D52700847751 /* CommonMissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissionView.swift */; };
 		CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */; };
@@ -448,6 +449,7 @@
 		CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoHeaderView.swift; sourceTree = "<group>"; };
 		CB9332552AFCAE3100B7F87A /* LoginUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUsecase.swift; sourceTree = "<group>"; };
 		CB9332592AFCAF3F00B7F87A /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		CB93325E2AFCBD4D00B7F87A /* LoginUsecaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUsecaseError.swift; sourceTree = "<group>"; };
 		CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomCollectionCell.swift; sourceTree = "<group>"; };
 		CB9592B42855D52700847751 /* CommonMissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissionView.swift; sourceTree = "<group>"; };
 		CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterViewController.swift; sourceTree = "<group>"; };
@@ -966,6 +968,7 @@
 		B55469FD2AADB903004D9FE6 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				CB93325D2AFCBD3C00B7F87A /* LoginScene */,
 				39632A292AD8429000A6E61D /* DetailWait */,
 				B5422CD42ADD42C00051A966 /* DetailScene */,
 				B5546A092AADCAFD004D9FE6 /* LetterScene */,
@@ -1517,6 +1520,14 @@
 				39C957CD2876E2ED00A04A2B /* LoginViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CB93325D2AFCBD3C00B7F87A /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB93325E2AFCBD4D00B7F87A /* LoginUsecaseError.swift */,
+			);
+			path = LoginScene;
 			sourceTree = "<group>";
 		};
 		CB9592B02855BFDD00847751 /* Cell */ = {
@@ -2155,6 +2166,7 @@
 				B5422CB22ADD2AE60051A966 /* MemoryViewController.swift in Sources */,
 				B5A085F62A9733F900C8A98D /* TokenDTO.swift in Sources */,
 				B577E4F62ABE0C95003CC102 /* SendLetterViewModel.swift in Sources */,
+				CB93325F2AFCBD4D00B7F87A /* LoginUsecaseError.swift in Sources */,
 				B53CD03A2ADF9B6100BE7353 /* OpenManittoViewModel.swift in Sources */,
 				B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */,
 				3904F4FC2AA3729300B6264F /* InvitationCode.swift in Sources */,
