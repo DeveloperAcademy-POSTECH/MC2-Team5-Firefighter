@@ -13,7 +13,7 @@ final class LoginViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
-    private let loginService: LoginService
+    private let loginService: LoginSevicable
     private var cancellable = Set<AnyCancellable>()
     
     private let loginDTOSubject = PassthroughSubject<LoginDTO, NetworkError>()

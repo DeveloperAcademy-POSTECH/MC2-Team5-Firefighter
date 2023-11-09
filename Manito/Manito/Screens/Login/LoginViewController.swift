@@ -5,7 +5,6 @@
 //  Created by Mingwan Choi on 2022/07/07.
 //
 
-import AuthenticationServices
 import Combine
 import UIKit
 
@@ -20,12 +19,12 @@ final class LoginViewController: UIViewController {
     // MARK: - property
     
     private var cancellable = Set<AnyCancellable>()
-    private let loginViewModel: LoginViewModel
+    private let viewModel: any BaseViewModelType
     
     // MARK: - init
     
-    init(viewModel: LoginViewModel) {
-        self.loginViewModel = viewModel
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -56,14 +55,17 @@ final class LoginViewController: UIViewController {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> LoginViewModel.Output {
+    private func transformedOutput() -> LoginViewModel.Output? {
+        guard let viewModel = self.viewModel as? LoginViewModel else { return nil }
         let input = LoginViewModel.Input(
             appleSignButtonDidTap: self.loginView.appleSignButtonDidTapPublisher.eraseToAnyPublisher()
         )
-        return self.loginViewModel.transform(from: input)
+        return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: LoginViewModel.Output) {
+    private func bindOutputToViewModel(_ output: LoginViewModel.Output?) {
+        guard let output else { return }
+        
         output.loginDTO
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] result in
