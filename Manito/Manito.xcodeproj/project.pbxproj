@@ -2153,7 +2153,7 @@
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
 				D7537F612AA70C40005AC78B /* ParticipatedRoomInfo.swift in Sources */,
 				B53A35C42A96F50100B720BC /* DetailRoomRepositoryImpl.swift in Sources */,
-				B53A35C42A96F50100B720BC /* DetailRoomRepository.swift in Sources */,
+				B53A35C42A96F50100B720BC /* DetailRoomRepositoryImpl.swift in Sources */,
 				CB66FD6E2AE7FCE900358CA2 /* LoginViewModel.swift in Sources */,
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
 				D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */,
