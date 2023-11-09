@@ -74,3 +74,11 @@ extension UISegmentedControl {
             .eraseToAnyPublisher()
     }
 }
+
+extension UIControl {
+    var buttonTapPublisher: AnyPublisher<Void, Never> {
+        self.controlPublisher(for: .touchUpInside)
+            .map { _ in Void() }
+            .eraseToAnyPublisher()
+    }
+}

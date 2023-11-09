@@ -58,7 +58,7 @@ final class LoginViewController: UIViewController {
     private func transformedOutput() -> LoginViewModel.Output? {
         guard let viewModel = self.viewModel as? LoginViewModel else { return nil }
         let input = LoginViewModel.Input(
-            appleSignButtonDidTap: self.loginView.appleSignButtonDidTapPublisher.eraseToAnyPublisher()
+            appleSignButtonDidTap: self.loginView.appleSignButtonTapPublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
     }

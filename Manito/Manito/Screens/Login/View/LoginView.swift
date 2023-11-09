@@ -25,14 +25,15 @@ final class LoginView: UIView, BaseViewType {
     
     // MARK: - property
     
-    let appleSignButtonDidTapPublisher = PassthroughSubject<Void, Never>()
+    var appleSignButtonTapPublisher: AnyPublisher<Void, Never> {
+        return self.appleLoginButton.buttonTapPublisher
+    }
     
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -67,14 +68,5 @@ final class LoginView: UIView, BaseViewType {
 
     func configureUI() {
         self.backgroundColor = .backgroundGrey
-    }
-
-    // MARK: - func
-
-    private func setupAction() {
-        let action = UIAction { [weak self] _ in
-            self?.appleSignButtonDidTapPublisher.send()
-        }
-        self.appleLoginButton.addAction(action, for: .touchUpInside)
     }
 }
