@@ -11,7 +11,7 @@ import UIKit
 
 import SnapKit
 
-final class LoginViewController: UIViewController, Navigationable {
+final class LoginViewController: UIViewController {
 
     // MARK: - ui component
 
@@ -46,16 +46,10 @@ final class LoginViewController: UIViewController, Navigationable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBarHiddenState()
         self.bindViewModel()
-        self.setupNavigation()
     }
 
     // MARK: - func
-
-    private func setupNavigationBarHiddenState() {
-        self.navigationController?.navigationBar.isHidden = true
-    }
     
     private func bindViewModel() {
         let output = self.transformedOutput()

@@ -34,7 +34,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     func moveToLoginViewController() {
-        let viewController = UINavigationController(rootViewController: LoginViewController(viewModel: LoginViewModel(loginService: LoginService(repository: LoginRepositoryImpl()))))
+        let repository = LoginRepositoryImpl()
+        let service = LoginService(repository: repository)
+        let viewModel = LoginViewModel(loginService: service)
+        let viewController = LoginViewController(viewModel: viewModel)
         window?.rootViewController = viewController
     }
     
