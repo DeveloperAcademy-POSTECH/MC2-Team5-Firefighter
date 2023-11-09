@@ -13,17 +13,17 @@ final class LoginViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
-    private let loginService: LoginSevicable
+    private let usecase: LoginUsecase
     private var cancellable = Set<AnyCancellable>()
     
-    private let loginDTOSubject = PassthroughSubject<LoginDTO, NetworkError>()
+    private let loginDTOSubject = PassthroughSubject<Bool, NetworkError>()
     
     struct Input {
         let appleSignButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
-        let loginDTO: AnyPublisher<LoginDTO, NetworkError>
+        let isNewMember: AnyPublisher<Bool, NetworkError>
     }
     
     func transform(from input: Input) -> Output {
@@ -32,13 +32,13 @@ final class LoginViewModel: NSObject, BaseViewModelType {
                 self?.didTapAppleSignButton()
             })
             .store(in: &self.cancellable)
-        return Output(loginDTO: self.loginDTOSubject.eraseToAnyPublisher())
+        return Output(isNewMember: self.loginDTOSubject.eraseToAnyPublisher())
     }
     
     // MARK: - init
     
-    init(loginService: LoginService) {
-        self.loginService = loginService
+    init(usecase: LoginUsecase) {
+        self.usecase = usecase
     }
     
     // MARK: - func
@@ -59,7 +59,7 @@ final class LoginViewModel: NSObject, BaseViewModelType {
     private func requestLogin(login: LoginRequestDTO) {
         Task {
             do {
-                let loginDTO = try await self.loginService.dispatchAppleLogin(login: login)
+                let loginDTO = try await self.usecase.dispatchAppleLogin(login: login)
                 
                 UserDefaultHandler.setIsLogin(isLogin: true)
                 UserDefaultHandler.setAccessToken(accessToken: loginDTO.accessToken ?? "")
@@ -70,9 +70,9 @@ final class LoginViewModel: NSObject, BaseViewModelType {
                         UserDefaultHandler.setNickname(nickname: loginDTO.nickname ?? "")
                         UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
                     }
+                    
+                    self.loginDTOSubject.send(isNewMember)
                 }
-                
-                self.loginDTOSubject.send(loginDTO)
             } catch(let error) {
                 guard let error = error as? NetworkError else { return }
                 self.loginDTOSubject.send(completion: .failure(error))

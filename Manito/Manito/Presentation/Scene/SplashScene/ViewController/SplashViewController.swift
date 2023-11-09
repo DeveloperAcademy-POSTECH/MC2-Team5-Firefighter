@@ -76,9 +76,8 @@ final class SplashViewController: UIViewController {
 // MARK: - Helper
 extension SplashViewController {
     private func presentLoginViewConroller() {
-        let repository = LoginRepositoryImpl()
-        let service = LoginService(repository: repository)
-        let viewModel = LoginViewModel(loginService: service)
+        let usecase = LoginUsecaseImpl(repository: LoginRepositoryImpl())
+        let viewModel = LoginViewModel(usecase: usecase)
         let viewController = LoginViewController(viewModel: viewModel)
         let navigtionViewController = UINavigationController(rootViewController: viewController)
         navigtionViewController.setNavigationBarHidden(true, animated: true)

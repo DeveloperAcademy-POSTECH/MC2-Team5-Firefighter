@@ -66,7 +66,7 @@ final class LoginViewController: UIViewController {
     private func bindOutputToViewModel(_ output: LoginViewModel.Output?) {
         guard let output else { return }
         
-        output.loginDTO
+        output.isNewMember
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
@@ -75,19 +75,16 @@ final class LoginViewController: UIViewController {
                     // FIXME: - 에러 코드 추가 작성 필요
                     self?.makeAlert(title: "에러발생")
                 }
-            }, receiveValue: { [weak self] loginDTO in
-                if let isNewMember = loginDTO.isNewMember {
-                    if isNewMember {
-                        let repository = SettingRepositoryImpl()
-                        let service = NicknameService(repository: repository)
-                        let viewModel = NicknameViewModel(nicknameService: service)
-                        let viewController = CreateNicknameViewController(viewModel: viewModel)
-                        self?.navigationController?.pushViewController(viewController, animated: true)
-                        return
-                    }
+            }, receiveValue: { [weak self] isNewMember in
+                if isNewMember {
+                    let repository = SettingRepositoryImpl()
+                    let service = NicknameService(repository: repository)
+                    let viewModel = NicknameViewModel(nicknameService: service)
+                    let viewController = CreateNicknameViewController(viewModel: viewModel)
+                    self?.navigationController?.pushViewController(viewController, animated: true)
+                } else {
+                    self?.presentMainViewController()
                 }
-                
-                self?.presentMainViewController()
             })
             .store(in: &self.cancellable)
     }

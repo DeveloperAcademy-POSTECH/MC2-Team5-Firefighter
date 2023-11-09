@@ -1,23 +1,29 @@
 //
-//  LoginService.swift
+//  LoginUsecase.swift
 //  Manito
 //
-//  Created by COBY_PRO on 10/24/23.
+//  Created by COBY_PRO on 11/9/23.
 //
 
 import Foundation
 
-protocol LoginSevicable {
+protocol LoginUsecase {
     func dispatchAppleLogin(login: LoginRequestDTO) async throws -> LoginDTO
 }
 
-final class LoginService: LoginSevicable {
+final class LoginUsecaseImpl: LoginUsecase {
+    
+    // MARK: - property
     
     private let repository: LoginRepository
+    
+    // MARK: - init
     
     init(repository: LoginRepository) {
         self.repository = repository
     }
+    
+    // MARK: - Public - func
     
     func dispatchAppleLogin(login: LoginRequestDTO) async throws -> LoginDTO {
         do {
