@@ -87,14 +87,14 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     
     private func bindUI() {
         self.chooseCharacterView.backButtonTapPublisher
-            .sink {
-                self.navigationController?.popViewController(animated: true)
+            .sink { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &self.cancellable)
         
         self.chooseCharacterView.closeButtonTapPublisher
-            .sink {
-                self.dismiss(animated: true)
+            .sink { [weak self] _ in
+                self?.dismiss(animated: true)
             }
             .store(in: &self.cancellable)
     }

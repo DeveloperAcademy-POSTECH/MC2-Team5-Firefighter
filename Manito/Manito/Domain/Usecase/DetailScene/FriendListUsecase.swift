@@ -1,20 +1,19 @@
 //
-//  OpenManittoUsecase.swift
+//  FriendListUsecase.swift
 //  Manito
 //
-//  Created by SHIN YOON AH on 10/18/23.
+//  Created by SHIN YOON AH on 10/19/23.
 //
 
 import Combine
 import Foundation
 
-protocol OpenManittoUsecase {
+protocol FriendListUsecase {
     func fetchFriendList(roomId: String) async throws -> FriendList
-    func loadNickname() -> String
 }
 
-final class OpenManittoUsecaseImpl: OpenManittoUsecase {
-    
+final class FriendListUsecaseImpl: FriendListUsecase {
+
     // MARK: - property
 
     private let repository: DetailRoomRepository
@@ -29,14 +28,11 @@ final class OpenManittoUsecaseImpl: OpenManittoUsecase {
     
     func fetchFriendList(roomId: String) async throws -> FriendList {
         do {
-            let data = try await self.repository.fetchWithFriend(roomId: roomId)
-            return data.toFriendList()
+            let friendListData = try await self.repository.fetchWithFriend(roomId: roomId)
+            return friendListData.toFriendList()
         } catch {
-            throw DetailUsecaseError.failedToFetchManitto
+            throw DetailUsecaseError.failedToFetchFriend
         }
     }
-    
-    func loadNickname() -> String {
-        return UserDefaultStorage.nickname
-    }
 }
+
