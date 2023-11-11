@@ -217,11 +217,12 @@
 		D78B97ED2AF11DE8009D9522 /* SettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97EC2AF11DE8009D9522 /* SettingRepository.swift */; };
 		D78B97EF2AF11DED009D9522 /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97EE2AF11DED009D9522 /* LoginRepository.swift */; };
 		D78B97F12AF11DF0009D9522 /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97F02AF11DF0009D9522 /* TokenRepository.swift */; };
+		D78B97F52AF23CD0009D9522 /* CreateRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97F42AF23CD0009D9522 /* CreateRoomInfo.swift */; };
 		D79938882ABEC80300711D5B /* ChooseCharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79938872ABEC80300711D5B /* ChooseCharacterViewModel.swift */; };
 		D79E9D8A2A826E0200C031F0 /* CreateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E9D892A826E0200C031F0 /* CreateRoomViewModel.swift */; };
 		D7AE5ECB2AC1C32F00A20D0A /* ChooseCharacterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AE5ECA2AC1C32F00A20D0A /* ChooseCharacterError.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */; };
-		D7B83FD62A95A48700BFD8FF /* CreateRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B83FD52A95A48700BFD8FF /* CreateRoomService.swift */; };
+		D7B83FD62A95A48700BFD8FF /* CreateRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */; };
 		D7C4A1A72A0B2EB000C3AE4C /* CharacterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */; };
 		D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */; };
 		D7C4A1AB2A0D1AA400C3AE4C /* ParticipateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */; };
@@ -470,11 +471,12 @@
 		D78B97EC2AF11DE8009D9522 /* SettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRepository.swift; sourceTree = "<group>"; };
 		D78B97EE2AF11DED009D9522 /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		D78B97F02AF11DF0009D9522 /* TokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepository.swift; sourceTree = "<group>"; };
+		D78B97F42AF23CD0009D9522 /* CreateRoomInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomInfo.swift; sourceTree = "<group>"; };
 		D79938872ABEC80300711D5B /* ChooseCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterViewModel.swift; sourceTree = "<group>"; };
 		D79E9D892A826E0200C031F0 /* CreateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewModel.swift; sourceTree = "<group>"; };
 		D7AE5ECA2AC1C32F00A20D0A /* ChooseCharacterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterError.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomInfoView.swift; sourceTree = "<group>"; };
-		D7B83FD52A95A48700BFD8FF /* CreateRoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomService.swift; sourceTree = "<group>"; };
+		D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomUsecase.swift; sourceTree = "<group>"; };
 		D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionView.swift; sourceTree = "<group>"; };
 		D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterView.swift; sourceTree = "<group>"; };
 		D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomView.swift; sourceTree = "<group>"; };
@@ -1132,6 +1134,7 @@
 		B58CA30B2A9CC43600977592 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */,
 				D7AE5EC42AC1966B00A20D0A /* SettingScene */,
 				D7AE5EBB2AC184F300A20D0A /* ParticipateRoomScene */,
 				B5422CBB2ADD3B6B0051A966 /* SplashScene */,
@@ -1195,6 +1198,7 @@
 				B5422CA62ADD191A0051A966 /* EntryType.swift */,
 				B5422CD02ADD3E4B0051A966 /* Memory.swift */,
 				B5422CD22ADD418C0051A966 /* FriendList.swift */,
+				D78B97F42AF23CD0009D9522 /* CreateRoomInfo.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1400,7 +1404,6 @@
 		B5F524E528519ACA00614FF7 /* CreateRoom */ = {
 			isa = PBXGroup;
 			children = (
-				D7B83FD42A95A46F00BFD8FF /* Services */,
 				D79E9D882A826D7900C031F0 /* ViewModel */,
 				D70220212A7A22DC0024BACD /* View */,
 				7E3058C42854B45300489E6A /* UIComponent */,
@@ -1724,14 +1727,6 @@
 			path = ParticipateRoomScene;
 			sourceTree = "<group>";
 		};
-		D7B83FD42A95A46F00BFD8FF /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				D7B83FD52A95A48700BFD8FF /* CreateRoomService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		D7C46A9C2AD57CFF00E5B2AC /* Error */ = {
 			isa = PBXGroup;
 			children = (
@@ -1739,6 +1734,14 @@
 				D7AE5EC92AC1C30F00A20D0A /* ParticipateRoomScene */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */ = {
+			isa = PBXGroup;
+			children = (
+				D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */,
+			);
+			path = CreateRoomScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2050,7 +2053,7 @@
 				395402D22AAF0B4F003F3012 /* Navigationable.swift in Sources */,
 				CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */,
 				D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */,
-				D7B83FD62A95A48700BFD8FF /* CreateRoomService.swift in Sources */,
+				D7B83FD62A95A48700BFD8FF /* CreateRoomUsecase.swift in Sources */,
 				391B3003286198C200421F1D /* SizeLiteral.swift in Sources */,
 				B5D3D2972AE0D0CE0016F1D5 /* FriendListViewModel.swift in Sources */,
 				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
@@ -2124,6 +2127,7 @@
 				39EF30F92AD3DE6700466A90 /* DetailWaitUseCase.swift in Sources */,
 				B5A085EC2A97314800C8A98D /* ParticipatedRoomInfoDTO.swift in Sources */,
 				D724AF5D287088310003F280 /* SettingViewController.swift in Sources */,
+				D78B97F52AF23CD0009D9522 /* CreateRoomInfo.swift in Sources */,
 				B5F3F1062AA3516200FA1A32 /* RoomStatus.swift in Sources */,
 				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
 				39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */,
