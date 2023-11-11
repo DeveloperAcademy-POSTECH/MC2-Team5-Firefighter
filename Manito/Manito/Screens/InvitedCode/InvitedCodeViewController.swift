@@ -76,7 +76,8 @@ final class InvitedCodeViewController: UIViewController {
         output.copyButtonDidTap
             .sink { [weak self] code in
                 ToastView.showToast(code: code,
-                                    message: TextLiteral.DetailWait.toastCopyMessage.lowercased(), controller: self ?? UIViewController())
+                                    message: TextLiteral.DetailWait.toastCopyMessage.lowercased(), 
+                                    controller: self ?? UIViewController())
             }
             .store(in: &self.cancellable)
     }
