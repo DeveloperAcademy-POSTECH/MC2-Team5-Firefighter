@@ -67,9 +67,9 @@ final class InvitedCodeViewController: UIViewController {
         guard let output else { return }
         
         output.roomInfo
-            .sink { [weak self] (roomInfo, code) in
-                self?.invitedCodeView.updateRoomInfo(roomInfo: roomInfo)
-                self?.invitedCodeView.updateCodeButtonTitle(code: code)
+            .sink { [weak self] roomInfo in
+                self?.invitedCodeView.updateRoomInfo(roomInfo: roomInfo.roomInformation)
+                self?.invitedCodeView.updateCodeButtonTitle(code: roomInfo.invitation.code)
             }
             .store(in: &self.cancellable)
         

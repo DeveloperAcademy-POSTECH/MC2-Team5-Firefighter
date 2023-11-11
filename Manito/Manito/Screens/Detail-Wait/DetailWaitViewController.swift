@@ -275,9 +275,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     }
     
     private func showInvitedCodeView(roomInfo: RoomInfo) {
-        let roomListItem = roomInfo.roomInformation
-        let code = roomInfo.invitation.code
-        let viewModel = InvitedCodeViewModel(roomInfo: roomListItem, code: code)
+        let viewModel = InvitedCodeViewModel(roomInfo: roomInfo)
         let viewController = InvitedCodeViewController(viewModel: viewModel)
         viewController.modalPresentationStyle = .overCurrentContext
         viewController.modalTransitionStyle = .crossDissolve

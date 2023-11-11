@@ -11,8 +11,6 @@ import Combine
 
 final class InvitedCodeViewModel: BaseViewModelType {
     
-    typealias RoomInfo = (roomInfo: RoomListItem, code: String)
-    
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let copyButtonDidTap: AnyPublisher<Void, Never>
@@ -24,33 +22,27 @@ final class InvitedCodeViewModel: BaseViewModelType {
     }
     
     // MARK: - property
-    
-    let roomInfo: RoomListItem
-    let code: String
+
+    let roomInfo: RoomInfo
     
     // MARK: - init
     
-    init(roomInfo: RoomListItem, code: String) {
+    init(roomInfo: RoomInfo) {
         self.roomInfo = roomInfo
-        self.code = code
     }
     
     // MARK: - func
     
     func transform(from input: Input) -> Output {
         let roomInfo = input.viewDidLoad
-            .map { [weak self] _ -> RoomInfo in
-                guard let self else { return RoomInfo(roomInfo: RoomListItem.emptyRoomListItem, code: "") }
-                let roomInfo = RoomInfo(roomInfo: self.roomInfo, code: self.code)
-                return roomInfo
-            }
+            .compactMap { [weak self] _ in self?.roomInfo }
             .eraseToAnyPublisher()
         
         let code = input.copyButtonDidTap
-            .compactMap { [weak self] in self?.code }
+            .compactMap { [weak self] in self?.roomInfo.invitation.code }
             .eraseToAnyPublisher()
-            
-        return Output(roomInfo: roomInfo, 
+
+        return Output(roomInfo: roomInfo,
                       copyButtonDidTap: code)
     }
 }
