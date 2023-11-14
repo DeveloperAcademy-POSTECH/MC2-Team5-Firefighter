@@ -24,6 +24,6 @@ final class TextFieldUsecaseImpl: TextFieldUsecase {
     }
     
     private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
-        return titleCount > maxCount ? true : false
+        return titleCount > maxCount
     }
 }
