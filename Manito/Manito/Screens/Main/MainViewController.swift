@@ -235,8 +235,12 @@ final class MainViewController: UIViewController, BaseViewControllerType {
         let createRoom = UIAlertAction(title: TextLiteral.Common.createRoom.localized(),
                                        style: .default,
                                        handler: { [weak self] _ in
-            let createVC = CreateRoomViewController(viewModel: CreateRoomViewModel(createRoomService: CreateRoomService(repository: RoomParticipationRepositoryImpl())))
-            let navigationController = UINavigationController(rootViewController: createVC)
+            let repository = RoomParticipationRepositoryImpl()
+            let usecase = CreateRoomUsecaseImpl(repository: repository)
+            let textFieldUsecase = TextFieldUsecaseImpl()
+            let viewController = CreateRoomViewController(viewModel: CreateRoomViewModel(usecase: usecase,
+                                                                                         textFieldUsecase: textFieldUsecase))
+            let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController,animated: true)
@@ -246,7 +250,9 @@ final class MainViewController: UIViewController, BaseViewControllerType {
                                       style: .default,
                                       handler: { [weak self] _ in
             let usecase = ParticipateRoomUsecaseImpl(repository: RoomParticipationRepositoryImpl())
-            let viewModel = ParticipateRoomViewModel(usecase: usecase)
+            let textFieldUsecase = TextFieldUsecaseImpl()
+            let viewModel = ParticipateRoomViewModel(usecase: usecase,
+                                                     textFieldUsecase: textFieldUsecase)
             let viewController = ParticipateRoomViewController(viewModel: viewModel)
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen

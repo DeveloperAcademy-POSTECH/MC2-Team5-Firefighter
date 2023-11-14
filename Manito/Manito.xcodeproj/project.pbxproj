@@ -213,6 +213,8 @@
 		D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift */; };
 		D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */; };
 		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
+		D76E024F2AF5DD9800F079FB /* InvitedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76E024E2AF5DD9800F079FB /* InvitedCodeView.swift */; };
+		D76E02512AF5DE5500F079FB /* InvitedCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76E02502AF5DE5500F079FB /* InvitedCodeViewModel.swift */; };
 		D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* URLLiteral.swift */; };
 		D78B97E02AEFD20A009D9522 /* CreateRoomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97DF2AEFD20A009D9522 /* CreateRoomError.swift */; };
 		D78B97E52AF11DC1009D9522 /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97E42AF11DC1009D9522 /* MainRepository.swift */; };
@@ -222,11 +224,13 @@
 		D78B97ED2AF11DE8009D9522 /* SettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97EC2AF11DE8009D9522 /* SettingRepository.swift */; };
 		D78B97EF2AF11DED009D9522 /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97EE2AF11DED009D9522 /* LoginRepository.swift */; };
 		D78B97F12AF11DF0009D9522 /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97F02AF11DF0009D9522 /* TokenRepository.swift */; };
+		D78B97F52AF23CD0009D9522 /* CreateRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97F42AF23CD0009D9522 /* CreateRoomInfo.swift */; };
 		D79938882ABEC80300711D5B /* ChooseCharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79938872ABEC80300711D5B /* ChooseCharacterViewModel.swift */; };
 		D79E9D8A2A826E0200C031F0 /* CreateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E9D892A826E0200C031F0 /* CreateRoomViewModel.swift */; };
 		D7AE5ECB2AC1C32F00A20D0A /* ChooseCharacterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AE5ECA2AC1C32F00A20D0A /* ChooseCharacterError.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */; };
-		D7B83FD62A95A48700BFD8FF /* CreateRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B83FD52A95A48700BFD8FF /* CreateRoomService.swift */; };
+		D7B83FD62A95A48700BFD8FF /* CreateRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */; };
+		D7C0D9332AF4B67D00B5B9B1 /* TextFieldUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C0D9322AF4B67D00B5B9B1 /* TextFieldUsecase.swift */; };
 		D7C4A1A72A0B2EB000C3AE4C /* CharacterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */; };
 		D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */; };
 		D7C4A1AB2A0D1AA400C3AE4C /* ParticipateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */; };
@@ -471,6 +475,8 @@
 		D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomUsecase.swift; sourceTree = "<group>"; };
 		D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewModel.swift; sourceTree = "<group>"; };
 		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
+		D76E024E2AF5DD9800F079FB /* InvitedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedCodeView.swift; sourceTree = "<group>"; };
+		D76E02502AF5DE5500F079FB /* InvitedCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedCodeViewModel.swift; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* URLLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLLiteral.swift; sourceTree = "<group>"; };
 		D78B97DF2AEFD20A009D9522 /* CreateRoomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomError.swift; sourceTree = "<group>"; };
 		D78B97E42AF11DC1009D9522 /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
@@ -480,11 +486,13 @@
 		D78B97EC2AF11DE8009D9522 /* SettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRepository.swift; sourceTree = "<group>"; };
 		D78B97EE2AF11DED009D9522 /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		D78B97F02AF11DF0009D9522 /* TokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepository.swift; sourceTree = "<group>"; };
+		D78B97F42AF23CD0009D9522 /* CreateRoomInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomInfo.swift; sourceTree = "<group>"; };
 		D79938872ABEC80300711D5B /* ChooseCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterViewModel.swift; sourceTree = "<group>"; };
 		D79E9D892A826E0200C031F0 /* CreateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewModel.swift; sourceTree = "<group>"; };
 		D7AE5ECA2AC1C32F00A20D0A /* ChooseCharacterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterError.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomInfoView.swift; sourceTree = "<group>"; };
-		D7B83FD52A95A48700BFD8FF /* CreateRoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomService.swift; sourceTree = "<group>"; };
+		D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomUsecase.swift; sourceTree = "<group>"; };
+		D7C0D9322AF4B67D00B5B9B1 /* TextFieldUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldUsecase.swift; sourceTree = "<group>"; };
 		D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionView.swift; sourceTree = "<group>"; };
 		D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterView.swift; sourceTree = "<group>"; };
 		D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomView.swift; sourceTree = "<group>"; };
@@ -1137,6 +1145,8 @@
 			isa = PBXGroup;
 			children = (
 				CB9332542AFCAE2200B7F87A /* LoginScene */,
+				D7F1CC6F2AF4C13D007CFC97 /* Common */,
+				D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */,
 				D7AE5EC42AC1966B00A20D0A /* SettingScene */,
 				D7AE5EBB2AC184F300A20D0A /* ParticipateRoomScene */,
 				B5422CBB2ADD3B6B0051A966 /* SplashScene */,
@@ -1201,6 +1211,7 @@
 				B5422CA62ADD191A0051A966 /* EntryType.swift */,
 				B5422CD02ADD3E4B0051A966 /* Memory.swift */,
 				B5422CD22ADD418C0051A966 /* FriendList.swift */,
+				D78B97F42AF23CD0009D9522 /* CreateRoomInfo.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1405,7 +1416,6 @@
 		B5F524E528519ACA00614FF7 /* CreateRoom */ = {
 			isa = PBXGroup;
 			children = (
-				D7B83FD42A95A46F00BFD8FF /* Services */,
 				D79E9D882A826D7900C031F0 /* ViewModel */,
 				D70220212A7A22DC0024BACD /* View */,
 				7E3058C42854B45300489E6A /* UIComponent */,
@@ -1427,6 +1437,8 @@
 		B5F524E728519B0E00614FF7 /* InvitedCode */ = {
 			isa = PBXGroup;
 			children = (
+				D76E024C2AF5DD7800F079FB /* ViewModel */,
+				D76E024B2AF5DD6E00F079FB /* View */,
 				B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */,
 			);
 			path = InvitedCode;
@@ -1615,6 +1627,22 @@
 			path = UIcomponent;
 			sourceTree = "<group>";
 		};
+		D76E024B2AF5DD6E00F079FB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D76E024E2AF5DD9800F079FB /* InvitedCodeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D76E024C2AF5DD7800F079FB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D76E02502AF5DE5500F079FB /* InvitedCodeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		D78B97DE2AEFD1E8009D9522 /* CreateRoomScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -1779,14 +1807,6 @@
 			path = ParticipateRoomScene;
 			sourceTree = "<group>";
 		};
-		D7B83FD42A95A46F00BFD8FF /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				D7B83FD52A95A48700BFD8FF /* CreateRoomService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		D7C46A9C2AD57CFF00E5B2AC /* Error */ = {
 			isa = PBXGroup;
 			children = (
@@ -1794,6 +1814,22 @@
 				D7AE5EC92AC1C30F00A20D0A /* ParticipateRoomScene */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		D7F1CC6F2AF4C13D007CFC97 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D7C0D9322AF4B67D00B5B9B1 /* TextFieldUsecase.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */ = {
+			isa = PBXGroup;
+			children = (
+				D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */,
+			);
+			path = CreateRoomScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2021,6 +2057,7 @@
 				B5E850302AAEE4CF00652AC3 /* GIFSet.swift in Sources */,
 				CB674C2128596A310063A6B7 /* ParticipationRoomDetailsViewController.swift in Sources */,
 				B5A085DF2A972D2A00C8A98D /* LetterRequestDTO.swift in Sources */,
+				D76E024F2AF5DD9800F079FB /* InvitedCodeView.swift in Sources */,
 				3904F5002AA3754400B6264F /* MessageCountInfo.swift in Sources */,
 				D7537F692AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift in Sources */,
 				B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */,
@@ -2083,6 +2120,7 @@
 				435B17682913E71400212663 /* DetailingViewController.swift in Sources */,
 				B50CEE912A445EB700CF1C76 /* UIScrollView+Combine.swift in Sources */,
 				CB9332562AFCAE3100B7F87A /* LoginUsecase.swift in Sources */,
+				D76E02512AF5DE5500F079FB /* InvitedCodeViewModel.swift in Sources */,
 				B5A085F22A9732E800C8A98D /* MemoryDTO.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */,
 				D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */,
@@ -2107,7 +2145,7 @@
 				395402D22AAF0B4F003F3012 /* Navigationable.swift in Sources */,
 				CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */,
 				D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */,
-				D7B83FD62A95A48700BFD8FF /* CreateRoomService.swift in Sources */,
+				D7B83FD62A95A48700BFD8FF /* CreateRoomUsecase.swift in Sources */,
 				391B3003286198C200421F1D /* SizeLiteral.swift in Sources */,
 				B5D3D2972AE0D0CE0016F1D5 /* FriendListViewModel.swift in Sources */,
 				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
@@ -2123,6 +2161,7 @@
 				B5A085FC2A97470400C8A98D /* RoomInfo.swift in Sources */,
 				CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
+				D7C0D9332AF4B67D00B5B9B1 /* TextFieldUsecase.swift in Sources */,
 				D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift in Sources */,
 				D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */,
 				D78B97E52AF11DC1009D9522 /* MainRepository.swift in Sources */,
@@ -2185,6 +2224,7 @@
 				39EF30F92AD3DE6700466A90 /* DetailWaitUseCase.swift in Sources */,
 				B5A085EC2A97314800C8A98D /* ParticipatedRoomInfoDTO.swift in Sources */,
 				D724AF5D287088310003F280 /* SettingViewController.swift in Sources */,
+				D78B97F52AF23CD0009D9522 /* CreateRoomInfo.swift in Sources */,
 				B5F3F1062AA3516200FA1A32 /* RoomStatus.swift in Sources */,
 				B5F5253D2854B8CB00614FF7 /* UIView+Extension.swift in Sources */,
 				39018F4228C4708A00C78DBA /* UIButton+Extension.swift in Sources */,

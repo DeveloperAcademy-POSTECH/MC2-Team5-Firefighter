@@ -82,3 +82,12 @@ extension UIControl {
             .eraseToAnyPublisher()
     }
 }
+
+extension UISlider {
+     var valuePublisher: AnyPublisher<Int, Never> {
+         controlPublisher(for: .valueChanged)
+             .map { $0 as! UISlider }
+             .map { Int($0.value) }
+             .eraseToAnyPublisher()
+     }
+ }
