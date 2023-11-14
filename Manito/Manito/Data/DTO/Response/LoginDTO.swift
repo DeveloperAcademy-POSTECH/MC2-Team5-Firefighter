@@ -16,8 +16,8 @@ struct LoginDTO: Decodable {
 }
 
 extension LoginDTO {
-    func toLogin() -> Login {
-        return Login(
+    func toLoginInfo() -> LoginInfo {
+        return LoginInfo(
             accessToken: self.accessToken ?? "",
             refreshToken: self.refreshToken ?? "",
             nickname: self.nickname ?? "",

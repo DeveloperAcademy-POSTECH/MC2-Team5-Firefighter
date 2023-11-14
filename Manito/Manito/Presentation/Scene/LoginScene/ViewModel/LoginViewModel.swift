@@ -14,9 +14,9 @@ final class LoginViewModel: NSObject, BaseViewModelType {
     // MARK: - property
     
     private let usecase: LoginUsecase
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     
-    private let isNewMemberSubject = PassthroughSubject<Result<Bool, Error>, Never>()
+    private let isNewMemberSubject: PassthroughSubject<Result<Bool, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let appleSignButtonDidTap: AnyPublisher<Void, Never>
@@ -56,7 +56,7 @@ final class LoginViewModel: NSObject, BaseViewModelType {
     
     // MARK: - network
     
-    private func requestLogin(login: LoginRequestDTO) {
+    private func dispatchLogin(login: LoginRequestDTO) {
         Task {
             do {
                 let login = try await self.usecase.dispatchAppleLogin(login: login)
@@ -90,7 +90,8 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
             return
         }
         
-        let loginDTO = LoginRequestDTO(identityToken: tokenToString, fcmToken: UserDefaultStorage.fcmToken)
-        self.requestLogin(login: loginDTO)
+        let loginDTO = LoginRequestDTO(identityToken: tokenToString, 
+                                       fcmToken: UserDefaultStorage.fcmToken)
+        self.dispatchLogin(login: loginDTO)
     }
 }

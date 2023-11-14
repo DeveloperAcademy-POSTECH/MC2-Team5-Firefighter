@@ -1,5 +1,5 @@
 //
-//  Login.swift
+//  LoginInfo.swift
 //  Manito
 //
 //  Created by COBY_PRO on 11/9/23.
@@ -12,7 +12,7 @@ import Foundation
 /// 데이터 모델 Entity입니다.
 ///
 
-struct Login {
+struct LoginInfo {
     let accessToken: String
     let refreshToken: String
     let nickname: String

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoginUsecase {
-    func dispatchAppleLogin(login: LoginRequestDTO) async throws -> Login
+    func dispatchAppleLogin(login: LoginRequestDTO) async throws -> LoginInfo
 }
 
 final class LoginUsecaseImpl: LoginUsecase {
@@ -25,10 +25,10 @@ final class LoginUsecaseImpl: LoginUsecase {
     
     // MARK: - Public - func
     
-    func dispatchAppleLogin(login: LoginRequestDTO) async throws -> Login {
+    func dispatchAppleLogin(login: LoginRequestDTO) async throws -> LoginInfo {
         do {
             let loginDTO = try await self.repository.dispatchAppleLogin(login: login)
-            return loginDTO.toLogin()
+            return loginDTO.toLoginInfo()
         } catch {
             throw LoginUsecaseError.failedToLogin
         }

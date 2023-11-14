@@ -76,7 +76,8 @@ final class SplashViewController: UIViewController {
 // MARK: - Helper
 extension SplashViewController {
     private func presentLoginViewConroller() {
-        let usecase = LoginUsecaseImpl(repository: LoginRepositoryImpl())
+        let repository = LoginRepositoryImpl()
+        let usecase = LoginUsecaseImpl(repository: repository)
         let viewModel = LoginViewModel(usecase: usecase)
         let viewController = LoginViewController(viewModel: viewModel)
         let navigtionViewController = UINavigationController(rootViewController: viewController)

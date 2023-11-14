@@ -18,7 +18,7 @@ final class LoginViewController: UIViewController {
     
     // MARK: - property
     
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     private let viewModel: any BaseViewModelType
     
     // MARK: - init
@@ -58,7 +58,7 @@ final class LoginViewController: UIViewController {
     private func transformedOutput() -> LoginViewModel.Output? {
         guard let viewModel = self.viewModel as? LoginViewModel else { return nil }
         let input = LoginViewModel.Input(
-            appleSignButtonDidTap: self.loginView.appleSignButtonTapPublisher.eraseToAnyPublisher()
+            appleSignButtonDidTap: self.loginView.appleSignButtonTapPublisher
         )
         return viewModel.transform(from: input)
     }
@@ -72,11 +72,7 @@ final class LoginViewController: UIViewController {
                 switch result {
                 case .success(let isNewMember):
                     if isNewMember {
-                        let repository = SettingRepositoryImpl()
-                        let service = NicknameService(repository: repository)
-                        let viewModel = NicknameViewModel(nicknameService: service)
-                        let viewController = CreateNicknameViewController(viewModel: viewModel)
-                        self?.navigationController?.pushViewController(viewController, animated: true)
+                        self?.presentCreateNicknameViewController()
                     } else {
                         self?.presentMainViewController()
                     }
@@ -90,6 +86,14 @@ final class LoginViewController: UIViewController {
 
 // MARK: - Helper
 extension LoginViewController {
+    private func presentCreateNicknameViewController() {
+        let repository = SettingRepositoryImpl()
+        let service = NicknameService(repository: repository)
+        let viewModel = NicknameViewModel(nicknameService: service)
+        let viewController = CreateNicknameViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     private func presentMainViewController() {
         let navigationController = UINavigationController(rootViewController: MainViewController())
         navigationController.modalPresentationStyle = .fullScreen
