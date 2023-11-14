@@ -30,22 +30,20 @@ final class ParticipateRoomViewModel: BaseViewModelType {
     private let maxCount: Int = 6
     
     private let usecase: ParticipateRoomUsecase
+    private let textFieldUsecase: TextFieldUsecase
     private var cancellable = Set<AnyCancellable>()
     
     private let roomInfoSubject = PassthroughSubject<ParticipatedRoomInfo, Error>()
     
     // MARK: - init
     
-    init(usecase: ParticipateRoomUsecaseImpl) {
+    init(usecase: ParticipateRoomUsecase,
+         textFieldUsecase: TextFieldUsecase) {
         self.usecase = usecase
+        self.textFieldUsecase = textFieldUsecase
     }
     
     // MARK: - func
-    
-    private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
-        if titleCount > maxCount { return true }
-        else { return false }
-    }
     
     func transform(from input: Input) -> Output {
         let countViewDidLoadType = input.viewDidLoad
@@ -63,16 +61,9 @@ final class ParticipateRoomViewModel: BaseViewModelType {
         
         let fixedTitle = input.textFieldDidChanged
             .map { [weak self] text in
-                let isOverMaxCount = self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
-                
-                if isOverMaxCount {
-                    let endIndex = text.index(text.startIndex, offsetBy: self?.maxCount ?? 0)
-                    let fixedText = text[text.startIndex..<endIndex]
-                    
-                    return String(fixedText)
-                }
-
-                return text
+                guard let self else { return "" }
+                let code = self.textFieldUsecase.cutTextByMaxCount(text: text, maxCount: self.maxCount)
+                return code
             }
             .eraseToAnyPublisher()
         

@@ -59,6 +59,7 @@ final class CreateRoomViewModel: BaseViewModelType {
     private var currentStep: Step = .title
     
     private let usecase: CreateRoomUsecase
+    private let textFieldUsecase: TextFieldUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
     private let titleSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
@@ -121,7 +122,7 @@ final class CreateRoomViewModel: BaseViewModelType {
         let fixedTitle = input.textFieldTextDidChanged
             .map { [weak self] text -> String in
                 guard let self else { return "" }
-                let title = self.cutTextByMaxCount(text: text, maxCount: self.maxCount)
+                let title = self.textFieldUsecase.cutTextByMaxCount(text: text, maxCount: self.maxCount)
                 self.titleSubject.send(title)
                 return title
             }
@@ -185,26 +186,13 @@ final class CreateRoomViewModel: BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: CreateRoomUsecase) {
+    init(usecase: CreateRoomUsecase,
+         textFieldUsecase: TextFieldUsecase) {
         self.usecase = usecase
+        self.textFieldUsecase = textFieldUsecase
     }
     
     // MARK: - func
-    
-    private func cutTextByMaxCount(text: String, maxCount: Int) -> String {
-        let isOverMaxCount = self.isOverMaxCount(titleCount: text.count, maxCount: maxCount)
-        
-        if isOverMaxCount {
-            let endIndex = text.index(text.startIndex, offsetBy: maxCount)
-            let fixedText = text[text.startIndex..<endIndex]
-            return String(fixedText)
-        }
-        return text
-    }
-    
-    private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
-        return titleCount > maxCount
-    }
     
     private func initStep() -> StepButtonState {
         return (self.currentStep, false)

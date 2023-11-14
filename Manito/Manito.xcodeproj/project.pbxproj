@@ -223,6 +223,7 @@
 		D7AE5ECB2AC1C32F00A20D0A /* ChooseCharacterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AE5ECA2AC1C32F00A20D0A /* ChooseCharacterError.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */; };
 		D7B83FD62A95A48700BFD8FF /* CreateRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */; };
+		D7C0D9332AF4B67D00B5B9B1 /* TextFieldUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C0D9322AF4B67D00B5B9B1 /* TextFieldUsecase.swift */; };
 		D7C4A1A72A0B2EB000C3AE4C /* CharacterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */; };
 		D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */; };
 		D7C4A1AB2A0D1AA400C3AE4C /* ParticipateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */; };
@@ -477,6 +478,7 @@
 		D7AE5ECA2AC1C32F00A20D0A /* ChooseCharacterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterError.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomInfoView.swift; sourceTree = "<group>"; };
 		D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomUsecase.swift; sourceTree = "<group>"; };
+		D7C0D9322AF4B67D00B5B9B1 /* TextFieldUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldUsecase.swift; sourceTree = "<group>"; };
 		D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionView.swift; sourceTree = "<group>"; };
 		D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterView.swift; sourceTree = "<group>"; };
 		D7C4A1AA2A0D1AA400C3AE4C /* ParticipateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomView.swift; sourceTree = "<group>"; };
@@ -1134,6 +1136,7 @@
 		B58CA30B2A9CC43600977592 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				D7F1CC6F2AF4C13D007CFC97 /* Common */,
 				D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */,
 				D7AE5EC42AC1966B00A20D0A /* SettingScene */,
 				D7AE5EBB2AC184F300A20D0A /* ParticipateRoomScene */,
@@ -1736,6 +1739,14 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
+		D7F1CC6F2AF4C13D007CFC97 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D7C0D9322AF4B67D00B5B9B1 /* TextFieldUsecase.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -2068,6 +2079,7 @@
 				B5A085FC2A97470400C8A98D /* RoomInfo.swift in Sources */,
 				CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */,
 				7E3058CA2854B7A900489E6A /* InputDateView.swift in Sources */,
+				D7C0D9332AF4B67D00B5B9B1 /* TextFieldUsecase.swift in Sources */,
 				D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift in Sources */,
 				D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */,
 				D78B97E52AF11DC1009D9522 /* MainRepository.swift in Sources */,
