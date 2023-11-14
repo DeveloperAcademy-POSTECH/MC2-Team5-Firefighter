@@ -108,25 +108,21 @@ extension LoginViewController {
     
     private func makeAlertWhenLoginError(error: String) {
         self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                       message: error,
-                       okAction: nil)
+                       message: error)
     }
     
     private func makeAlertWhenCredentialError(error: String) {
         self.makeAlert(title: TextLiteral.Sign.Error.credential.localized(),
-                       message: error,
-                       okAction: nil)
+                       message: error)
     }
     
     private func makeAlertWhenTokenError(error: String) {
         self.makeAlert(title: TextLiteral.Sign.Error.token.localized(),
-                       message: error,
-                       okAction: nil)
+                       message: error)
     }
     
     private func makeAlertWhenTokenToStringError(error: String) {
         self.makeAlert(title: TextLiteral.Sign.Error.tokenToString.localized(),
-                       message: error,
-                       okAction: nil)
+                       message: error)
     }
 }
