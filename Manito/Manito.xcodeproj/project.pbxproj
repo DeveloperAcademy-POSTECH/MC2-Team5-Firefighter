@@ -208,6 +208,8 @@
 		D75DEEC52AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift */; };
 		D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */; };
 		D75E8C7F28D76FFB004A6C41 /* LetterCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */; };
+		D76E024F2AF5DD9800F079FB /* InvitedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76E024E2AF5DD9800F079FB /* InvitedCodeView.swift */; };
+		D76E02512AF5DE5500F079FB /* InvitedCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76E02502AF5DE5500F079FB /* InvitedCodeViewModel.swift */; };
 		D777D2C928C7780E008655BD /* URLLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = D777D2C828C7780E008655BD /* URLLiteral.swift */; };
 		D78B97E02AEFD20A009D9522 /* CreateRoomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97DF2AEFD20A009D9522 /* CreateRoomError.swift */; };
 		D78B97E52AF11DC1009D9522 /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78B97E42AF11DC1009D9522 /* MainRepository.swift */; };
@@ -463,6 +465,8 @@
 		D75DEEC42AA612CE00BD3AC7 /* ParticipateRoomUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomUsecase.swift; sourceTree = "<group>"; };
 		D75DEEC62AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewModel.swift; sourceTree = "<group>"; };
 		D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCountBadgeView.swift; sourceTree = "<group>"; };
+		D76E024E2AF5DD9800F079FB /* InvitedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedCodeView.swift; sourceTree = "<group>"; };
+		D76E02502AF5DE5500F079FB /* InvitedCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedCodeViewModel.swift; sourceTree = "<group>"; };
 		D777D2C828C7780E008655BD /* URLLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLLiteral.swift; sourceTree = "<group>"; };
 		D78B97DF2AEFD20A009D9522 /* CreateRoomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomError.swift; sourceTree = "<group>"; };
 		D78B97E42AF11DC1009D9522 /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
@@ -1428,6 +1432,8 @@
 		B5F524E728519B0E00614FF7 /* InvitedCode */ = {
 			isa = PBXGroup;
 			children = (
+				D76E024C2AF5DD7800F079FB /* ViewModel */,
+				D76E024B2AF5DD6E00F079FB /* View */,
 				B5F525072851A05E00614FF7 /* InvitedCodeViewController.swift */,
 			);
 			path = InvitedCode;
@@ -1564,6 +1570,22 @@
 				D75E8C7E28D76FFB004A6C41 /* LetterCountBadgeView.swift */,
 			);
 			path = UIcomponent;
+			sourceTree = "<group>";
+		};
+		D76E024B2AF5DD6E00F079FB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D76E024E2AF5DD9800F079FB /* InvitedCodeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D76E024C2AF5DD7800F079FB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D76E02502AF5DE5500F079FB /* InvitedCodeViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		D78B97DE2AEFD1E8009D9522 /* CreateRoomScene */ = {
@@ -1980,6 +2002,7 @@
 				B5E850302AAEE4CF00652AC3 /* GIFSet.swift in Sources */,
 				CB674C2128596A310063A6B7 /* ParticipationRoomDetailsViewController.swift in Sources */,
 				B5A085DF2A972D2A00C8A98D /* LetterRequestDTO.swift in Sources */,
+				D76E024F2AF5DD9800F079FB /* InvitedCodeView.swift in Sources */,
 				3904F5002AA3754400B6264F /* MessageCountInfo.swift in Sources */,
 				D7537F692AA76DD0005AC78B /* ParticipationRoomDetailsViewModel.swift in Sources */,
 				B50B1AFB2856B5180080992C /* IndividualMissionView.swift in Sources */,
@@ -2040,6 +2063,7 @@
 				D7AE5ECB2AC1C32F00A20D0A /* ChooseCharacterError.swift in Sources */,
 				435B17682913E71400212663 /* DetailingViewController.swift in Sources */,
 				B50CEE912A445EB700CF1C76 /* UIScrollView+Combine.swift in Sources */,
+				D76E02512AF5DE5500F079FB /* InvitedCodeViewModel.swift in Sources */,
 				B5A085F22A9732E800C8A98D /* MemoryDTO.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */,
 				D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */,
