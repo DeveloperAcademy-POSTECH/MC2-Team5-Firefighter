@@ -85,7 +85,7 @@ final class CreateNicknameViewController: UIViewController, Keyboardable {
         guard let viewModel = self.viewModel as? NicknameViewModel else { return nil }
         let input = NicknameViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
                                             textFieldDidChanged: self.nicknameView.textFieldPublisher.eraseToAnyPublisher(),
-                                            doneButtonDidTap: self.nicknameView.doneButtonTapPublisher.eraseToAnyPublisher())
+                                            doneButtonDidTap: self.nicknameView.doneButtonTapPublisher)
         return viewModel.transform(from: input)
     }
     
