@@ -38,8 +38,8 @@ final class ChooseCharacterViewModel: BaseViewModelType {
         let roomId = input.joinButtonTapPublisher
             .asyncMap { [weak self] characterIndex -> Result<Int, ChooseCharacterError> in
                 do {
-                    let roomId = try await self?.dispatchJoinRoom(roomId: self?.roomId ?? 0, colorIndex: characterIndex)
-                    return .success(roomId ?? 0)
+                    let _ = try await self?.dispatchJoinRoom(roomId: self?.roomId ?? 0, colorIndex: characterIndex)
+                    return .success(self?.roomId ?? 0)
                 } catch (let error) {
                     guard let error = error as? ChooseCharacterError else { return .failure(.unknownError) }
                     return .failure(error)
