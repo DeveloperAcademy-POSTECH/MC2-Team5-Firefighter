@@ -1484,7 +1484,6 @@
 			isa = PBXGroup;
 			children = (
 				CB66FD6B2AE7FCDE00358CA2 /* LoginView.swift */,
-				CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1492,6 +1491,7 @@
 		CB85DE1D28A76F1A00399109 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
+				CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";

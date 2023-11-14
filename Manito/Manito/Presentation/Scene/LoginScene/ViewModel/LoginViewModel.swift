@@ -16,14 +16,14 @@ final class LoginViewModel: NSObject, BaseViewModelType {
     private let usecase: LoginUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
-    private let isNewMemberSubject: PassthroughSubject<Result<Bool, Error>, Never> = PassthroughSubject()
+    private let isNewLoginSubject: PassthroughSubject<Result<Bool, LoginUsecaseError>, Never> = PassthroughSubject()
     
     struct Input {
         let appleSignButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
-        let isNewMember: AnyPublisher<Result<Bool, Error>, Never>
+        let isNewLogin: AnyPublisher<Result<Bool, LoginUsecaseError>, Never>
     }
     
     func transform(from input: Input) -> Output {
@@ -32,7 +32,7 @@ final class LoginViewModel: NSObject, BaseViewModelType {
                 self?.didTapAppleSignButton()
             })
             .store(in: &self.cancellable)
-        return Output(isNewMember: self.isNewMemberSubject.eraseToAnyPublisher())
+        return Output(isNewLogin: self.isNewLoginSubject.eraseToAnyPublisher())
     }
     
     // MARK: - init
@@ -70,9 +70,9 @@ final class LoginViewModel: NSObject, BaseViewModelType {
                     UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
                 }
                 
-                self.isNewMemberSubject.send(.success(login.isNewMember))
-            } catch(let error) {
-                self.isNewMemberSubject.send(.failure(error))
+                self.isNewLoginSubject.send(.success(login.isNewMember))
+            } catch {
+                self.isNewLoginSubject.send(.failure(LoginUsecaseError.failedToLogin))
             }
         }
     }
@@ -81,12 +81,15 @@ final class LoginViewModel: NSObject, BaseViewModelType {
 extension LoginViewModel: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            self.isNewLoginSubject.send(.failure(LoginUsecaseError.failedCredential))
             return
         }
         guard let token = credential.identityToken else {
+            self.isNewLoginSubject.send(.failure(LoginUsecaseError.failedToken))
             return
         }
         guard let tokenToString = String(data: token, encoding: .utf8) else {
+            self.isNewLoginSubject.send(.failure(LoginUsecaseError.failedTokenToString))
             return
         }
         

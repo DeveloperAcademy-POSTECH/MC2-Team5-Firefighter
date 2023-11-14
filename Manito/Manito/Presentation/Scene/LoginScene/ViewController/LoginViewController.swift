@@ -66,18 +66,23 @@ final class LoginViewController: UIViewController {
     private func bindOutputToViewModel(_ output: LoginViewModel.Output?) {
         guard let output else { return }
         
-        output.isNewMember
+        output.isNewLogin
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
                 switch result {
-                case .success(let isNewMember):
-                    if isNewMember {
+                case .success(let isNewLogin):
+                    if isNewLogin {
                         self?.presentCreateNicknameViewController()
                     } else {
                         self?.presentMainViewController()
                     }
-                case .failure:
-                    return
+                case .failure(let error):
+                    switch error {
+                    case .failedToLogin: self?.makeAlertWhenLoginError(error: error.localizedDescription)
+                    case .failedCredential: self?.makeAlertWhenCredentialError(error: error.localizedDescription)
+                    case .failedToken: self?.makeAlertWhenTokenError(error: error.localizedDescription)
+                    case .failedTokenToString: self?.makeAlertWhenTokenToStringError(error: error.localizedDescription)
+                    }
                 }
             })
             .store(in: &self.cancellable)
@@ -99,5 +104,29 @@ extension LoginViewController {
         navigationController.modalPresentationStyle = .fullScreen
         navigationController.modalTransitionStyle = .crossDissolve
         self.present(navigationController, animated: true)
+    }
+    
+    private func makeAlertWhenLoginError(error: String) {
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                       message: error,
+                       okAction: nil)
+    }
+    
+    private func makeAlertWhenCredentialError(error: String) {
+        self.makeAlert(title: TextLiteral.Sign.Error.credential.localized(),
+                       message: error,
+                       okAction: nil)
+    }
+    
+    private func makeAlertWhenTokenError(error: String) {
+        self.makeAlert(title: TextLiteral.Sign.Error.token.localized(),
+                       message: error,
+                       okAction: nil)
+    }
+    
+    private func makeAlertWhenTokenToStringError(error: String) {
+        self.makeAlert(title: TextLiteral.Sign.Error.tokenToString.localized(),
+                       message: error,
+                       okAction: nil)
     }
 }
