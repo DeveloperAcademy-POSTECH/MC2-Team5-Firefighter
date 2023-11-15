@@ -198,7 +198,7 @@
 		D71939552AA1C85300A73D6C /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939542AA1C85300A73D6C /* SettingViewModel.swift */; };
 		D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939582AA2343E00A73D6C /* NicknameView.swift */; };
 		D719395F2AA23F2300A73D6C /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */; };
-		D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939602AA23F3B00A73D6C /* NicknameService.swift */; };
+		D71939612AA23F3B00A73D6C /* NicknameUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71939602AA23F3B00A73D6C /* NicknameUsecase.swift */; };
 		D724AF5D287088310003F280 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5C287088310003F280 /* SettingViewController.swift */; };
 		D724AF5F28708D830003F280 /* TopCharacterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D724AF5E28708D830003F280 /* TopCharacterImageView.swift */; };
 		D739C36728C7B82500161117 /* NicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D739C36628C7B82500161117 /* NicknameDTO.swift */; };
@@ -226,6 +226,7 @@
 		D7AE5ECB2AC1C32F00A20D0A /* ChooseCharacterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AE5ECA2AC1C32F00A20D0A /* ChooseCharacterError.swift */; };
 		D7B6C97C2858B2D40024F326 /* CheckRoomInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */; };
 		D7B83FD62A95A48700BFD8FF /* CreateRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */; };
+		D7BA95B52AF8AB9400455107 /* NicknameError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BA95B42AF8AB9400455107 /* NicknameError.swift */; };
 		D7C0D9332AF4B67D00B5B9B1 /* TextFieldUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C0D9322AF4B67D00B5B9B1 /* TextFieldUsecase.swift */; };
 		D7C4A1A72A0B2EB000C3AE4C /* CharacterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */; };
 		D7C4A1A92A0B895300C3AE4C /* ChooseCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */; };
@@ -456,7 +457,7 @@
 		D71939542AA1C85300A73D6C /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		D71939582AA2343E00A73D6C /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		D719395E2AA23F2300A73D6C /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
-		D71939602AA23F3B00A73D6C /* NicknameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameService.swift; sourceTree = "<group>"; };
+		D71939602AA23F3B00A73D6C /* NicknameUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameUsecase.swift; sourceTree = "<group>"; };
 		D724AF5C287088310003F280 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D724AF5E28708D830003F280 /* TopCharacterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCharacterImageView.swift; sourceTree = "<group>"; };
 		D739C36628C7B82500161117 /* NicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameDTO.swift; sourceTree = "<group>"; };
@@ -484,6 +485,7 @@
 		D7AE5ECA2AC1C32F00A20D0A /* ChooseCharacterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterError.swift; sourceTree = "<group>"; };
 		D7B6C97B2858B2D40024F326 /* CheckRoomInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomInfoView.swift; sourceTree = "<group>"; };
 		D7B83FD52A95A48700BFD8FF /* CreateRoomUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomUsecase.swift; sourceTree = "<group>"; };
+		D7BA95B42AF8AB9400455107 /* NicknameError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameError.swift; sourceTree = "<group>"; };
 		D7C0D9322AF4B67D00B5B9B1 /* TextFieldUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldUsecase.swift; sourceTree = "<group>"; };
 		D7C4A1A62A0B2EB000C3AE4C /* CharacterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionView.swift; sourceTree = "<group>"; };
 		D7C4A1A82A0B895300C3AE4C /* ChooseCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterView.swift; sourceTree = "<group>"; };
@@ -695,7 +697,7 @@
 		7E0C5C342855B1EF00F698D1 /* NickName */ = {
 			isa = PBXGroup;
 			children = (
-				D719395A2AA23EF200A73D6C /* Service */,
+				D719395A2AA23EF200A73D6C /* Usecase */,
 				D719395B2AA23EFC00A73D6C /* ViewModel */,
 				D719395C2AA23F0400A73D6C /* View */,
 				D719395D2AA23F0900A73D6C /* ViewControllers */,
@@ -1533,12 +1535,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		D719395A2AA23EF200A73D6C /* Service */ = {
+		D719395A2AA23EF200A73D6C /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
-				D71939602AA23F3B00A73D6C /* NicknameService.swift */,
+				D71939602AA23F3B00A73D6C /* NicknameUsecase.swift */,
 			);
-			path = Service;
+			path = Usecase;
 			sourceTree = "<group>";
 		};
 		D719395B2AA23EFC00A73D6C /* ViewModel */ = {
@@ -1755,9 +1757,18 @@
 			path = ParticipateRoomScene;
 			sourceTree = "<group>";
 		};
+		D7BA95B32AF8AB8100455107 /* NicknameScene */ = {
+			isa = PBXGroup;
+			children = (
+				D7BA95B42AF8AB9400455107 /* NicknameError.swift */,
+			);
+			path = NicknameScene;
+			sourceTree = "<group>";
+		};
 		D7C46A9C2AD57CFF00E5B2AC /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				D7BA95B32AF8AB8100455107 /* NicknameScene */,
 				D78B97DE2AEFD1E8009D9522 /* CreateRoomScene */,
 				D7AE5EC92AC1C30F00A20D0A /* ParticipateRoomScene */,
 			);
@@ -2159,9 +2170,11 @@
 				B5A085FA2A9745DA00C8A98D /* RoomInfoDTO.swift in Sources */,
 				B5F52537285481C800614FF7 /* LetterCollectionViewCell.swift in Sources */,
 				D7537F612AA70C40005AC78B /* ParticipatedRoomInfo.swift in Sources */,
+				D7BA95B52AF8AB9400455107 /* NicknameError.swift in Sources */,
+				B53A35C42A96F50100B720BC /* DetailRoomRepositoryImpl.swift in Sources */,
 				B53A35C42A96F50100B720BC /* DetailRoomRepositoryImpl.swift in Sources */,
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
-				D71939612AA23F3B00A73D6C /* NicknameService.swift in Sources */,
+				D71939612AA23F3B00A73D6C /* NicknameUsecase.swift in Sources */,
 				B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */,
 				39EF30F92AD3DE6700466A90 /* DetailWaitUseCase.swift in Sources */,
 				B5A085EC2A97314800C8A98D /* ParticipatedRoomInfoDTO.swift in Sources */,

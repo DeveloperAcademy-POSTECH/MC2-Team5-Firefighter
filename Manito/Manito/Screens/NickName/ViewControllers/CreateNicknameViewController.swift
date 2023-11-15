@@ -12,16 +12,18 @@ import SnapKit
 
 final class CreateNicknameViewController: UIViewController, Keyboardable {
     
+    // MARK: - ui component
+    
+    private let nicknameView: NicknameView = NicknameView(title: TextLiteral.Nickname.createTitle.localized())
+    
     // MARK: - property
     
-    private let viewModel: NicknameViewModel
-    private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.Nickname.createTitle.localized())
-    
-    private var cancellable = Set<AnyCancellable>()
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
-    init(viewModel: NicknameViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -49,22 +51,8 @@ final class CreateNicknameViewController: UIViewController, Keyboardable {
         self.setupKeyboardGesture()
     }
     
-    private func presentMainViewController() {
-        let viewController = UINavigationController(rootViewController: MainViewController())
-        viewController.modalPresentationStyle = .fullScreen
-        viewController.modalTransitionStyle = .crossDissolve
-        present(viewController, animated: true)
-    }
-    
     override func endEditingView() {
         self.nicknameView.endEditingView()
-    }
-    
-    func removeItemOffset(with view: UIView, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
-        let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
-        offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
-        offsetView.addSubview(view)
-        return offsetView
     }
     
     // MARK: - func
@@ -81,19 +69,29 @@ final class CreateNicknameViewController: UIViewController, Keyboardable {
         navigationItem.leftBarButtonItem = emptyView
     }
     
+    private func removeItemOffset(with view: UIView, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
+        let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
+        offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
+        offsetView.addSubview(view)
+        return offsetView
+    }
+    
     private func bindViewModel() {
         let output = self.transformedOutput()
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> NicknameViewModel.Output {
+    private func transformedOutput() -> NicknameViewModel.Output? {
+        guard let viewModel = self.viewModel as? NicknameViewModel else { return nil }
         let input = NicknameViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
                                             textFieldDidChanged: self.nicknameView.textFieldPublisher.eraseToAnyPublisher(),
-                                            doneButtonDidTap: self.nicknameView.doneButtonTapPublisher.eraseToAnyPublisher())
+                                            doneButtonDidTap: self.nicknameView.doneButtonTapPublisher)
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: NicknameViewModel.Output) {
+    private func bindOutputToViewModel(_ output: NicknameViewModel.Output?) {
+        guard let output else { return }
+        
         output.counts
             .sink { [weak self] (textCount, maxCount) in
                 self?.nicknameView.updateTextCount(count: textCount, maxLength: maxCount)
@@ -116,15 +114,21 @@ final class CreateNicknameViewController: UIViewController, Keyboardable {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    // FIXME: - 일단 기본 에러로 설정해뒀습니다.
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                                    message: TextLiteral.Common.Error.networkServer.localized())
+                case .success(): self?.presentMainViewController()
+                case .failure(let error): self?.makeAlert(title: error.localizedDescription)
                 }
-            } receiveValue: { [weak self] _ in
-                self?.presentMainViewController()
             }
             .store(in: &self.cancellable)
+    }
+}
+
+// MARK: - Helper
+
+extension CreateNicknameViewController {
+    private func presentMainViewController() {
+        let viewController = UINavigationController(rootViewController: MainViewController())
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
     }
 }
