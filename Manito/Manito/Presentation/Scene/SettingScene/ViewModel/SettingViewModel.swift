@@ -8,15 +8,7 @@
 import Combine
 import Foundation
 
-final class SettingViewModel {
-    
-    // MARK: - property
-    
-    private let usecase: SettingUsecase
-    private var cancellable = Set<AnyCancellable>()
-    
-    private let deleteUserSubject = PassthroughSubject<Void, NetworkError>()
-    private let logoutSubject = PassthroughSubject<Void, Never>()
+final class SettingViewModel: BaseViewModelType {
     
     struct Input {
         let logoutButtonDidTap: AnyPublisher<Void, Never>
@@ -25,52 +17,48 @@ final class SettingViewModel {
     
     struct Output {
         let logout: AnyPublisher<Void, Never>
-        let deleteUser: AnyPublisher<Void, NetworkError>
+        let deleteUser: AnyPublisher<Result<Void, Error>, Never>
     }
     
-    func transform(from input: Input) -> Output {
-        
-        input.logoutButtonDidTap
-            .sink { [weak self] _ in
-                UserDefaultHandler.clearAllDataExcludingFcmToken()
-                self?.logoutSubject.send()
-            }
-            .store(in: &self.cancellable)
-            
-        
-        input.withdrawalButtonDidTap
-            .sink(receiveValue: { [weak self] _ in
-                self?.requestDeleteUser()
-            })
-            .store(in: &self.cancellable)
-
-        return Output(logout: self.logoutSubject.eraseToAnyPublisher(),
-                      deleteUser: self.deleteUserSubject.eraseToAnyPublisher())
-    }
+    // MARK: - property
+    
+    private let usecase: SettingUsecase
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
-    init(usecase: SettingUsecaseImpl) {
+    init(usecase: SettingUsecase) {
         self.usecase = usecase
     }
     
     // MARK: - func
     
-    private func requestDeleteUser() {
-        Task {
-            do {
-                let statusCode = try await self.usecase.deleteUser()
-                switch statusCode {
-                case 200..<300:
-                    UserDefaultHandler.clearAllDataExcludingFcmToken()
-                    self.deleteUserSubject.send()
-                default:
-                    self.deleteUserSubject.send(completion: .failure(.unknownError))
+    func transform(from input: Input) -> Output {
+        let logout = input.logoutButtonDidTap
+            .map { UserDefaultHandler.clearAllDataExcludingFcmToken() }
+            .eraseToAnyPublisher()
+    
+        let deleteUser = input.withdrawalButtonDidTap
+            .asyncMap { [weak self] _ -> Result<Void, Error> in
+                do {
+                    let _ = try await self?.deleteUser()
+                    return .success(())
+                } catch(let error) {
+                    return .failure(error)
                 }
-            } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.deleteUserSubject.send(completion: .failure(error))
             }
-        }
+            .eraseToAnyPublisher()
+
+        return Output(logout: logout,
+                      deleteUser: deleteUser)
+    }
+}
+
+// MARK: - Helper
+
+extension SettingViewModel {
+    private func deleteUser() async throws {
+        let _ = try await self.usecase.deleteUser()
+        UserDefaultHandler.clearAllDataExcludingFcmToken()
     }
 }

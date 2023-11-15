@@ -29,10 +29,8 @@ final class SettingUsecaseImpl: SettingUsecase {
         do {
             let statusCode = try await self.repository.deleteMember()
             return statusCode
-        } catch NetworkError.serverError {
-            throw NetworkError.serverError
-        } catch NetworkError.clientError(let message) {
-            throw NetworkError.clientError(message: message)
+        } catch {
+            throw SettingError.clientError
         }
     }
 }

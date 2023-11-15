@@ -20,14 +20,15 @@ final class SettingViewController: UIViewController, Navigationable {
     
     private let mailManager: MailComposeManager = MailComposeManager()
     
-    private var cancellable = Set<AnyCancellable>()
-    private let viewModel: SettingViewModel
-    private let withdrawalPublisher = PassthroughSubject<Void, Never>()
-    private let logoutPublisher = PassthroughSubject<Void, Never>()
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
+    
+    private let withdrawalPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    private let logoutPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     // MARK: - init
     
-    init(viewModel: SettingViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -75,31 +76,28 @@ final class SettingViewController: UIViewController, Navigationable {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> SettingViewModel.Output {
+    private func transformedOutput() -> SettingViewModel.Output? {
+        guard let viewModel = self.viewModel as? SettingViewModel else { return nil }
         let input = SettingViewModel.Input(logoutButtonDidTap: self.logoutPublisher.eraseToAnyPublisher(),
                                            withdrawalButtonDidTap: self.withdrawalPublisher.eraseToAnyPublisher())
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: SettingViewModel.Output) {
+    private func bindOutputToViewModel(_ output: SettingViewModel.Output?) {
+        guard let output else { return }
+        
         output.logout
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.logout()
-            }
+            .sink { [weak self] in self?.logout() }
             .store(in: &self.cancellable)
         
         output.deleteUser
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                                    message: TextLiteral.Setting.Error.withDrawalMessage.localized())
+                case .success(): self?.deleteUser()
+                case .failure(let error): self?.makeAlert(title: error.localizedDescription)
                 }
-            } receiveValue: { [weak self] _ in
-                self?.deleteUser()
             }
             .store(in: &self.cancellable)
     }
@@ -145,15 +143,6 @@ final class SettingViewController: UIViewController, Navigationable {
         }
     }
     
-    private func pushChangeNicknameViewController() {
-        let repository = SettingRepositoryImpl()
-        let nicknameUsecase = NicknameUsecaseImpl(repository: repository)
-        let textFieldUsecase = TextFieldUsecaseImpl()
-        let viewMdoel = NicknameViewModel(nicknameUsecase: nicknameUsecase,
-                                          textFieldUsecase: textFieldUsecase)
-        self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: viewMdoel), animated: true)
-    }
-    
     private func openUrlBySettingButton(type: SettingView.SettingActions) {
         switch type {
         case .personInfomation: self.openUrl(url: URLLiteral.Setting.personalInformation)
@@ -162,16 +151,23 @@ final class SettingViewController: UIViewController, Navigationable {
         }
     }
     
-    private func openUrl(url: String) {
-        if let url = URL(string: url) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-    
     private func sendReportMail() {
         let title = TextLiteral.Mail.inquiryTitle.localized()
         let content = TextLiteral.Mail.inquiryMessage.localized(with: UserDefaultStorage.nickname, Date().description)
         self.mailManager.sendMail(title: title, content: content)
+    }
+}
+
+// MARK: - Helper
+
+extension SettingViewController {
+    private func pushChangeNicknameViewController() {
+        let repository = SettingRepositoryImpl()
+        let nicknameUsecase = NicknameUsecaseImpl(repository: repository)
+        let textFieldUsecase = TextFieldUsecaseImpl()
+        let viewMdoel = NicknameViewModel(nicknameUsecase: nicknameUsecase,
+                                          textFieldUsecase: textFieldUsecase)
+        self.navigationController?.pushViewController(ChangeNicknameViewController(viewModel: viewMdoel), animated: true)
     }
     
     private func pushDeveloperInfoViewController() {
@@ -188,5 +184,11 @@ final class SettingViewController: UIViewController, Navigationable {
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate
                 as? SceneDelegate else { return }
         sceneDelegate.moveToLoginViewController()
+    }
+    
+    private func openUrl(url: String) {
+        if let url = URL(string: url) {
+            UIApplication.shared.open(url, options: [:])
+        }
     }
 }
