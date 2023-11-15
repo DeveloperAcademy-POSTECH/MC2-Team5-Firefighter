@@ -46,9 +46,13 @@ final class ChooseCharacterView: UIView, BaseViewType {
     
     // MARK: - property
     
-    lazy var backButtonTapPublisher = self.backButton.tapPublisher
-    lazy var closeButtonTapPublisher = self.closeButton.tapPublisher
-    let joinButtonTapPublisher = PassthroughSubject<Int, Never>()
+    var backButtonTapPublisher: AnyPublisher<Void, Never> {
+        return self.backButton.tapPublisher
+    }
+    var closeButtonTapPublisher: AnyPublisher<Void, Never> {
+        return self.closeButton.tapPublisher
+    }
+    let joinButtonTapPublisher: PassthroughSubject<Int, Never> = PassthroughSubject()
     
     // MARK: - init
     
@@ -68,7 +72,7 @@ final class ChooseCharacterView: UIView, BaseViewType {
     private func setupAction() {
         let didTapJoinButton = UIAction { [weak self] _ in
             guard let self = self else { return }
-            self.joinButtonTapPublisher.send(self.manittoCollectionView.characterIndex)
+            self.joinButtonTapPublisher.send(self.manittoCollectionView.characterIndexTapPublisher.value)
         }
         self.joinButton.addAction(didTapJoinButton, for: .touchUpInside)
     }

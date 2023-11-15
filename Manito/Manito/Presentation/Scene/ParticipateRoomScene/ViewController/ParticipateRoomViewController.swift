@@ -18,12 +18,12 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
     
     // MARK: - property
     
-    private let viewModel: ParticipateRoomViewModel
-    private var cancellable = Set<AnyCancellable>()
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
-    init(viewModel: ParticipateRoomViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -69,23 +69,26 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
         self.bindOutputToViewModel(output)
     }
     
-    private func transfromedOutput() -> ParticipateRoomViewModel.Output {
+    private func transfromedOutput() -> ParticipateRoomViewModel.Output? {
+        guard let viewModel = self.viewModel as? ParticipateRoomViewModel else { return nil }
         let input = ParticipateRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
-                                                   textFieldDidChanged: self.participateRoomView.inputInvitedCodeView.textFieldDidChangedPublisher.eraseToAnyPublisher(),
+                                                   textFieldDidChanged: self.participateRoomView.textFieldDidChangedPublisher.eraseToAnyPublisher(),
                                                    nextButtonDidTap: self.participateRoomView.nextButtonTapPublisher.eraseToAnyPublisher())
-        return self.viewModel.transform(from: input)
+        return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: ParticipateRoomViewModel.Output) {
+    private func bindOutputToViewModel(_ output: ParticipateRoomViewModel.Output?) {
+        guard let output else { return }
+        
         output.counts
             .sink(receiveValue: { [weak self] (textCount, maxCount) in
-                self?.participateRoomView.inputInvitedCodeView.updateTextCount(count: textCount, maxLength: maxCount)
+                self?.participateRoomView.updateTextCount(count: textCount, maxLength: maxCount)
             })
             .store(in: &self.cancellable)
         
         output.fixedTitleByMaxCount
             .sink { [weak self] fixedTitle in
-                self?.participateRoomView.inputInvitedCodeView.updateTextFieldText(fixedText: fixedTitle)
+                self?.participateRoomView.updateTextFieldText(fixedText: fixedTitle)
             }
             .store(in: &self.cancellable)
         
@@ -97,15 +100,14 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
         
         output.roomInfo
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
+            .sink(receiveValue: { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    self?.makeAlert(title: TextLiteral.ParticipateRoom.Error.message.localized())
+                case .success(let roomInfo):
+                    self?.presentParticipationRoomDetailsView(roomInfo: roomInfo)
+                case .failure(let error):
+                    self?.makeAlert(title: error.localizedDescription)
                 }
-            } receiveValue: { [weak self] roomInfo in
-                self?.presentParticipationRoomDetailsView(roomInfo: roomInfo)
-            }
+            })
             .store(in: &self.cancellable)
     }
     
@@ -116,7 +118,11 @@ final class ParticipateRoomViewController: UIViewController, Keyboardable {
             }
             .store(in: &self.cancellable)
     }
-    
+}
+
+// MARK: - Helper
+
+extension ParticipateRoomViewController {
     private func presentParticipationRoomDetailsView(roomInfo: ParticipatedRoomInfo) {
         let viewController = ParticipationRoomDetailsViewController(viewModel: ParticipationRoomDetailsViewModel(roomInfo: roomInfo))
         viewController.modalPresentationStyle = .overFullScreen

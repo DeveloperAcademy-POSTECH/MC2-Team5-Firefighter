@@ -23,13 +23,11 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     private let roomId: Int
     
     private let usecase: ParticipateRoomUsecase
-    private var cancellable = Set<AnyCancellable>()
-    
-    private let roomIdSubject = PassthroughSubject<Result<Int, ChooseCharacterError>, Never>()
+    private var cancellable: Set<AnyCancellable> = Set()
 
     // MARK: - init
     
-    init(usecase: ParticipateRoomUsecaseImpl, roomId: Int) {
+    init(usecase: ParticipateRoomUsecase, roomId: Int) {
         self.usecase = usecase
         self.roomId = roomId
     }
@@ -37,27 +35,27 @@ final class ChooseCharacterViewModel: BaseViewModelType {
     // MARK: - func
     
     func transform(from input: Input) -> Output {
-        input.joinButtonTapPublisher
-            .sink { [weak self] characterIndex in
-                guard let self = self else { return }
-                self.requestParticipateRoom(roomId: self.roomId, colorIndex: characterIndex)
+        let roomId = input.joinButtonTapPublisher
+            .asyncMap { [weak self] characterIndex -> Result<Int, ChooseCharacterError> in
+                do {
+                    let _ = try await self?.dispatchJoinRoom(roomId: self?.roomId ?? 0, colorIndex: characterIndex)
+                    return .success(self?.roomId ?? 0)
+                } catch (let error) {
+                    guard let error = error as? ChooseCharacterError else { return .failure(.unknownError) }
+                    return .failure(error)
+                }
             }
-            .store(in: &self.cancellable)
+            .eraseToAnyPublisher()
         
-        return Output(roomId: self.roomIdSubject.eraseToAnyPublisher())
-    }
-    
-    // MARK: - network
-    
-    private func requestParticipateRoom(roomId: Int, colorIndex: Int) {
-        Task {
-            do {
-                let _ = try await self.usecase.dispatchJoinRoom(roomId: roomId.description, member: MemberInfoRequestDTO(colorIndex: colorIndex))
-                self.roomIdSubject.send(.success(self.roomId))
-            } catch(let error) {
-                guard let error = error as? ChooseCharacterError else { return }
-                self.roomIdSubject.send(.failure(error))
-            }
-        }
+        return Output(roomId: roomId)
     }
 }
+
+// MARK: - Helper
+
+extension ChooseCharacterViewModel {
+    private func dispatchJoinRoom(roomId: Int, colorIndex: Int) async throws -> Int {
+        return try await self.usecase.dispatchJoinRoom(roomId: roomId.description, member: MemberInfoRequestDTO(colorIndex: colorIndex))
+    }
+}
+

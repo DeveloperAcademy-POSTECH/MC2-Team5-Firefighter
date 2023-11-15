@@ -151,3 +151,6 @@
 "mail_aenitto_email" = "aenitto@gmail.com";
 "mail_error_title" = "메일 전송 실패";
 "mail_error_message" = "아이폰 이메일 설정을 확인하고 다시 시도해주세요.";
+"sign_error_credential" = "애플 로그인 실패";
+"sign_error_token" = "애플 로그인 토큰 획득 실패";
+"sign_error_tokenToString" = "애플 로그인 토큰 String 변환 실패";

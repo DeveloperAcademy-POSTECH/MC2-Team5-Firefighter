@@ -5,6 +5,7 @@
 //  Created by LeeSungHo on 2022/06/11.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -19,7 +20,7 @@ final class InputDateView: UIView {
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
-    let calendarView: CalendarView = CalendarView()
+    private let calendarView: CalendarView = CalendarView()
     private let dateInfoLabel: UILabel = {
         let label = UILabel()
         label.text = TextLiteral.Common.Calendar.maxDateContent.localized()
@@ -27,6 +28,15 @@ final class InputDateView: UIView {
         label.textColor = .grey002
         return label
     }()
+
+    // MARK: - property
+    
+    var startDateTapPublisher: PassthroughSubject<String, Never> {
+        return self.calendarView.startDateTapPublisher
+    }
+    var endDateTapPublisher: PassthroughSubject<String, Never> {
+        return self.calendarView.endDateTapPublisher
+    }
     
     // MARK: - init
     
