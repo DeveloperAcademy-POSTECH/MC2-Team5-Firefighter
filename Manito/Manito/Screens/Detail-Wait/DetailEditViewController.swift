@@ -54,7 +54,7 @@ final class DetailEditViewController: UIViewController {
         self.setupPresentationController()
         self.configureDelegation()
         self.bindViewModel()
-        self.bindCancleButton()
+        self.bindCancelButton()
     }
 
     // MARK: - func
@@ -165,7 +165,7 @@ final class DetailEditViewController: UIViewController {
             .store(in: &self.cancellable)
     }
     
-    private func bindCancleButton() {
+    private func bindCancelButton() {
         self.detailEditView.cancleButtonPublisher
             .sink(receiveValue: { [weak self] _ in
                 self?.dismiss(animated: true)
