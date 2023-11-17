@@ -114,7 +114,7 @@ final class DetailEditView: UIView, BaseViewType {
     private let capacity: Int
     private var cancellable = Set<AnyCancellable>()
     
-    var cancleButtonPublisher: AnyPublisher<Void, Never> {
+    var cancelButtonPublisher: AnyPublisher<Void, Never> {
         return self.cancelButton.tapPublisher
     }
     

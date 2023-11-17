@@ -166,7 +166,7 @@ final class DetailEditViewController: UIViewController {
     }
     
     private func bindCancelButton() {
-        self.detailEditView.cancleButtonPublisher
+        self.detailEditView.cancelButtonPublisher
             .sink(receiveValue: { [weak self] _ in
                 self?.dismiss(animated: true)
             })
