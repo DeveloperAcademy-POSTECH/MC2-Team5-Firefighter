@@ -31,12 +31,17 @@ final class ParticipateRoomView: UIView, BaseViewType {
         button.isDisabled = true
         return button
     }()
-    let inputInvitedCodeView: InputInvitedCodeView = InputInvitedCodeView()
+    private let inputInvitedCodeView: InputInvitedCodeView = InputInvitedCodeView()
     
     // MARK: - property
     
-    let nextButtonTapPublisher = PassthroughSubject<String, Never>()
-    lazy var closeButtonTapPublisher = self.closeButton.tapPublisher
+    let nextButtonTapPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
+    var closeButtonTapPublisher: AnyPublisher<Void, Never> {
+        self.closeButton.tapPublisher
+    }
+    var textFieldDidChangedPublisher: PassthroughSubject<String, Never> {
+        return self.inputInvitedCodeView.textFieldDidChangedPublisher
+    }
     
     // MARK: - init
     
@@ -107,5 +112,13 @@ final class ParticipateRoomView: UIView, BaseViewType {
     
     func toggleDoneButton(isEnabled: Bool) {
         self.nextButton.isDisabled = !isEnabled
+    }
+    
+    func updateTextCount(count: Int, maxLength: Int) {
+        self.inputInvitedCodeView.updateTextCount(count: count, maxLength: maxLength)
+    }
+    
+    func updateTextFieldText(fixedText: String) {
+        self.inputInvitedCodeView.updateTextFieldText(fixedText: fixedText)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  CreateRoomService.swift
+//  CreateRoomUsecase.swift
 //  Manito
 //
 //  Created by 이성호 on 2023/08/23.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol CreateRoomSevicable {
+protocol CreateRoomUsecase {
     func dispatchCreateRoom(room: CreatedRoomRequestDTO) async throws -> Int
 }
 
-final class CreateRoomService: CreateRoomSevicable {
+final class CreateRoomUsecaseImpl: CreateRoomUsecase {
     
     private let repository: RoomParticipationRepository
     
@@ -23,10 +23,8 @@ final class CreateRoomService: CreateRoomSevicable {
         do {
             let roomId = try await self.repository.dispatchCreateRoom(room: room)
             return roomId
-        } catch NetworkError.serverError {
-            throw NetworkError.serverError
-        } catch NetworkError.clientError(let message) {
-            throw NetworkError.clientError(message: message)
+        } catch {
+            throw CreateRoomError.failedToCreateRoom
         }
     }
 }

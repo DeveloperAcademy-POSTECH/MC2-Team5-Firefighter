@@ -23,7 +23,7 @@ final class ParticipationRoomDetailsViewModel: BaseViewModelType {
     // MARK: - property
 
     private let roomInfo: ParticipatedRoomInfo
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     

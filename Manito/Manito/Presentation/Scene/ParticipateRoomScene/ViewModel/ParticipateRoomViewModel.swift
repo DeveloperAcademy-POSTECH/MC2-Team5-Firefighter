@@ -22,7 +22,7 @@ final class ParticipateRoomViewModel: BaseViewModelType {
         let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
-        let roomInfo: PassthroughSubject<ParticipatedRoomInfo, Error>
+        let roomInfo: AnyPublisher<Result<ParticipatedRoomInfo, Error>, Never>
     }
     
     // MARK: - property
@@ -30,22 +30,19 @@ final class ParticipateRoomViewModel: BaseViewModelType {
     private let maxCount: Int = 6
     
     private let usecase: ParticipateRoomUsecase
-    private var cancellable = Set<AnyCancellable>()
+    private let textFieldUsecase: TextFieldUsecase
     
-    private let roomInfoSubject = PassthroughSubject<ParticipatedRoomInfo, Error>()
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
-    init(usecase: ParticipateRoomUsecaseImpl) {
+    init(usecase: ParticipateRoomUsecase,
+         textFieldUsecase: TextFieldUsecase) {
         self.usecase = usecase
+        self.textFieldUsecase = textFieldUsecase
     }
     
     // MARK: - func
-    
-    private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
-        if titleCount > maxCount { return true }
-        else { return false }
-    }
     
     func transform(from input: Input) -> Output {
         let countViewDidLoadType = input.viewDidLoad
@@ -63,16 +60,9 @@ final class ParticipateRoomViewModel: BaseViewModelType {
         
         let fixedTitle = input.textFieldDidChanged
             .map { [weak self] text in
-                let isOverMaxCount = self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
-                
-                if isOverMaxCount {
-                    let endIndex = text.index(text.startIndex, offsetBy: self?.maxCount ?? 0)
-                    let fixedText = text[text.startIndex..<endIndex]
-                    
-                    return String(fixedText)
-                }
-
-                return text
+                guard let self else { return "" }
+                let code = self.textFieldUsecase.cutTextByMaxCount(text: text, maxCount: self.maxCount)
+                return code
             }
             .eraseToAnyPublisher()
         
@@ -80,28 +70,28 @@ final class ParticipateRoomViewModel: BaseViewModelType {
             .map { $0.count == 6 }
             .eraseToAnyPublisher()
         
-        input.nextButtonDidTap
-            .sink(receiveValue: { [weak self] code in
-                self?.requestParticipateRoom(code)
+        let roomInfo = input.nextButtonDidTap
+            .asyncMap({ [weak self] code -> Result<ParticipatedRoomInfo, Error> in
+                do {
+                    let roomInfo = try await self?.dispatchVerifyCode(code)
+                    return .success(roomInfo ?? ParticipatedRoomInfo.emptyInfo)
+                } catch (let error) {
+                    return .failure(error)
+                }
             })
-            .store(in: &self.cancellable)
-        
+            .eraseToAnyPublisher()
+            
         return Output(counts: mergeCount,
                       fixedTitleByMaxCount: fixedTitle,
                       isEnabled: isEnabled,
-                      roomInfo: self.roomInfoSubject)
+                      roomInfo: roomInfo)
     }
-    
-    // MARK: - network
-    
-    private func requestParticipateRoom(_ code: String) {
-        Task {
-            do {
-                let data = try await self.usecase.dispatchVerifyCode(code: code)
-                self.roomInfoSubject.send(data.toParticipateRoomInfo())
-            } catch(let error) {
-                self.roomInfoSubject.send(completion: .failure(error))
-            }
-        }
+}
+
+// MARK: - Helper
+
+extension ParticipateRoomViewModel {
+    private func dispatchVerifyCode(_ code: String) async throws -> ParticipatedRoomInfo {
+        return try await self.usecase.dispatchVerifyCode(code: code).toParticipateRoomInfo()
     }
 }

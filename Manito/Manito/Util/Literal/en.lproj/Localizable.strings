@@ -78,7 +78,8 @@
 "detail_edit_member_setting_title" = "인원 설정";
 "detail_edit_error_message" = "방 정보 수정에 실패했습니다. 다시 시도해주세요";
 "detail_edit_member_error_title" = "인원을 다시 설정해 주세요";
-"detail_edit_member_error_message" = "현재 인원보다 최대 인원을 \n더 적게 설정할 수 없어요.";
+"detail_edit_member_error_message" = "현재 인원보다 최대 인원을 \n더 적게 설정할 수 없어요";
+"detail_edit_date_error_message" = "시작 날짜가 오늘보다 과거일 순 없어요";
 "letter_title" = "쪽지함";
 "letter_manitto_title" = "마니또로부터";
 "letter_manitte_title" = "마니띠에게";
@@ -150,3 +151,6 @@
 "mail_aenitto_email" = "aenitto@gmail.com";
 "mail_error_title" = "메일 전송 실패";
 "mail_error_message" = "아이폰 이메일 설정을 확인하고 다시 시도해주세요.";
+"sign_error_credential" = "애플 로그인 실패";
+"sign_error_token" = "애플 로그인 토큰 획득 실패";
+"sign_error_tokenToString" = "애플 로그인 토큰 String 변환 실패";

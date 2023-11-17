@@ -10,10 +10,6 @@ import UIKit
 
 import SnapKit
 
-protocol CreateRoomViewDelegate: AnyObject {
-    func didTapCloseButton()
-}
-
 final class CreateRoomView: UIView, BaseViewType {
     
     // MARK: - ui component
@@ -45,22 +41,37 @@ final class CreateRoomView: UIView, BaseViewType {
         button.isHidden = true
         return button
     }()
-    let roomTitleView: InputTitleView = InputTitleView()
-    let roomCapacityView: InputCapacityView = InputCapacityView()
-    let roomDateView: InputDateView = InputDateView()
-    let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
-    let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
-    
-    let nextButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
-    let backButtonDidTapPublisher = PassthroughSubject<CreateRoomStep, Never>()
+    private let roomTitleView: InputTitleView = InputTitleView()
+    private let roomCapacityView: InputCapacityView = InputCapacityView()
+    private let roomDateView: InputDateView = InputDateView()
+    private let roomInfoView: CheckRoomInfoView = CheckRoomInfoView()
+    private let characterCollectionView: CharacterCollectionView = CharacterCollectionView()
     
     // MARK: - property
     
-    private weak var delegate: CreateRoomViewDelegate?
-    private var roomStep: CreateRoomStep = .inputTitle {
-        willSet(step) {
-            self.manageStepView(step: step)
-        }
+    var closeButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        return self.closeButton.tapPublisher
+    }
+    var textFieldPublisher: PassthroughSubject<String, Never> {
+        return self.roomTitleView.textFieldPublisher
+    }
+    var sliderPublisher: AnyPublisher<Int, Never> {
+        return self.roomCapacityView.sliderPublisher
+    }
+    var startDateTapPublisher: PassthroughSubject<String, Never> {
+        return self.roomDateView.startDateTapPublisher
+    }
+    var endDateTapPublisher: PassthroughSubject<String, Never> {
+        return self.roomDateView.endDateTapPublisher
+    }
+    var characterIndexTapPublisher: CurrentValueSubject<Int, Never> {
+        return self.characterCollectionView.characterIndexTapPublisher
+    }
+    var nextButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        return self.nextButton.tapPublisher
+    }
+    var backButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        return self.backButton.tapPublisher
     }
     
     // MARK: - init
@@ -68,7 +79,6 @@ final class CreateRoomView: UIView, BaseViewType {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -125,40 +135,20 @@ final class CreateRoomView: UIView, BaseViewType {
 
     func configureUI() {
         self.backgroundColor = .backgroundGrey
-        self.roomStep = .inputTitle
     }
 
     // MARK: - func
-
-    private func setupAction() {
-        let closeAction = UIAction { [weak self] _ in
-            self?.delegate?.didTapCloseButton()
-        }
-        self.closeButton.addAction(closeAction, for: .touchUpInside)
-        
-        let nextAction = UIAction { [weak self] _ in
-            guard let currentStep = self?.roomStep else { return }
-            self?.nextButtonDidTapPublisher.send(currentStep)
-        }
-        self.nextButton.addAction(nextAction, for: .touchUpInside)
-        
-        let backAction = UIAction { [weak self] _ in
-            guard let currentStep = self?.roomStep else { return }
-            self?.backButtonDidTapPublisher.send(currentStep)
-        }
-        self.backButton.addAction(backAction, for: .touchUpInside)
+    
+    private func updateHiddenView(at step: CreateRoomViewModel.Step) {
+        self.roomTitleView.isHidden = !(step == .title)
+        self.roomCapacityView.isHidden = !(step == .capacity)
+        self.roomDateView.isHidden = !(step == .date)
+        self.roomInfoView.isHidden = !(step == .roomInfo)
+        self.characterCollectionView.isHidden = !(step == .character)
     }
     
-    private func updateHiddenStepView(at step: CreateRoomStep) {
-        self.roomTitleView.isHidden = !(step == .inputTitle)
-        self.roomCapacityView.isHidden = !(step == .inputCapacity)
-        self.roomDateView.isHidden = !(step == .inputDate)
-        self.roomInfoView.isHidden = !(step == .checkRoom)
-        self.characterCollectionView.isHidden = !(step == .chooseCharacter)
-    }
-    
-    private func updateHiddenBackButton(at step: CreateRoomStep) {
-        self.backButton.isHidden = !(step == .inputCapacity || step == .inputDate || step == .checkRoom || step == .chooseCharacter)
+    private func updateHiddenBackButton(at step: CreateRoomViewModel.Step) {
+        self.backButton.isHidden = !(step == .capacity || step == .date || step == .roomInfo || step == .character)
     }
     
     private func updateRoomTitleViewAnimation() {
@@ -189,23 +179,20 @@ final class CreateRoomView: UIView, BaseViewType {
         self.characterCollectionView.fadeIn()
     }
     
-    private func runActionAtStep(at step: CreateRoomStep) {
+    private func manageViewByNextStep(at step: CreateRoomViewModel.Step, isEnabled: Bool) {
         switch step {
-        case .inputTitle:
+        case .title:
+            self.updateRoomTitleViewAnimation()
+        case .capacity:
+            self.updateRoomCapacityViewAnimation()
+            self.toggleNextButton(isEnable: isEnabled)
             self.endEditing(true)
-        case .inputCapacity:
-            self.nextButton(isEnable: false)
-        default:
-            break
+        case .date:
+            self.updateRoomDateViewAnimation()
+            self.toggleNextButton(isEnable: isEnabled)
+        case .roomInfo: self.updateRoomDataCheckViewAnimation()
+        case .character: self.updateChooseCharacterViewAnimation()
         }
-    }
-    
-    private func nextButton(isEnable: Bool) {
-        self.nextButton.isDisabled = !isEnable
-    }
-    
-    func configureDelegate(_ delegate: CreateRoomViewDelegate) {
-        self.delegate = delegate
     }
     
     func endEditingView() {
@@ -214,69 +201,31 @@ final class CreateRoomView: UIView, BaseViewType {
         }
     }
     
-    func backButtonDidTap(previousStep: CreateRoomStep) {
-        self.roomStep = previousStep
-    }
-    
-    func nextButtonDidTap(currentStep: CreateRoomStep, nextStep: CreateRoomStep) {
-        self.runActionAtStep(at: currentStep)
-        self.roomStep = nextStep
-    }
-    
     func toggleNextButton(isEnable: Bool) {
         self.nextButton.isDisabled = !isEnable
     }
     
-    private func manageStepView(step: CreateRoomStep) {
-        self.updateHiddenStepView(at: step)
+    func updateTitleCount(count: Int, maxLength: Int) {
+        self.roomTitleView.updateTitleCount(count: count, maxLength: maxLength)
+    }
+    
+    func updateTextFieldText(fixedTitle: String) {
+        self.roomTitleView.updateTextFieldText(fixedTitle: fixedTitle)
+    }
+    
+    func updateCapacity(capacity: Int) {
+        self.roomCapacityView.updateCapacity(capacity: capacity)
+    }
+    
+    func updateRoomInfo(title: String, capacity: Int, range: String) {
+        self.roomInfoView.updateRoomInfo(title: title,
+                                         capacity: capacity,
+                                         range: range)
+    }
+    
+    func manageViewByStep(at step: CreateRoomViewModel.Step, isEnabled: Bool) {
+        self.updateHiddenView(at: step)
         self.updateHiddenBackButton(at: step)
-        switch step {
-        case .inputTitle:
-            self.updateRoomTitleViewAnimation()
-        case .inputCapacity:
-            self.updateRoomCapacityViewAnimation()
-            self.nextButton(isEnable: true)
-        case .inputDate:
-            self.updateRoomDateViewAnimation()
-        case .checkRoom:
-            self.updateRoomDataCheckViewAnimation()
-        case .chooseCharacter:
-            self.updateChooseCharacterViewAnimation()
-        }
+        self.manageViewByNextStep(at: step, isEnabled: isEnabled)
     }
 }
-
-enum CreateRoomStep {
-    case inputTitle, inputCapacity, inputDate, checkRoom, chooseCharacter
-    
-    func next() -> Self {
-        switch self {
-        case .inputTitle:
-            return .inputCapacity
-        case .inputCapacity:
-            return .inputDate
-        case .inputDate:
-            return .checkRoom
-        case .checkRoom:
-            return .chooseCharacter
-        case .chooseCharacter:
-            return .chooseCharacter
-        }
-    }
-    
-    func previous() -> Self {
-        switch self {
-        case .inputTitle:
-            return .inputTitle
-        case .inputCapacity:
-            return .inputTitle
-        case .inputDate:
-            return .inputCapacity
-        case .checkRoom:
-            return .inputDate
-        case .chooseCharacter:
-            return .checkRoom
-        }
-    }
-}
-

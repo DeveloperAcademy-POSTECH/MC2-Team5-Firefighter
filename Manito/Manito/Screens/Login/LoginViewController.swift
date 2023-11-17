@@ -119,15 +119,19 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
 
                             if let isNewMember = data.isNewMember {
                                 if isNewMember {
-                                    self.navigationController?.pushViewController(CreateNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
+                                    let repository = SettingRepositoryImpl()
+                                    let nicknameUsecase = NicknameUsecaseImpl(repository: repository)
+                                    let textFieldUsecase = TextFieldUsecaseImpl()
+                                    let viewMdoel = NicknameViewModel(nicknameUsecase: nicknameUsecase,
+                                                                      textFieldUsecase: textFieldUsecase)
+                                    self.navigationController?.pushViewController(CreateNicknameViewController(viewModel: viewMdoel), animated: true)
                                     return
                                 }
                             }
 
                             UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
                             UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+                            let viewController = UINavigationController(rootViewController: MainViewController())
                             viewController.modalPresentationStyle = .fullScreen
                             viewController.modalTransitionStyle = .crossDissolve
                             self.present(viewController, animated: true)

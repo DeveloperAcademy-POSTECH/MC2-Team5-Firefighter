@@ -12,16 +12,18 @@ import SnapKit
 
 final class ChangeNicknameViewController: UIViewController, Navigationable, Keyboardable {
     
+    // MARK: - ui component
+    
+    private let nicknameView: NicknameView = NicknameView(title: TextLiteral.Nickname.changeTitle.localized())
+    
     // MARK: - property
     
-    private let viewModel: NicknameViewModel
-    private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.Nickname.changeTitle.localized())
-    
-    private var cancellable = Set<AnyCancellable>()
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
-    init(viewModel: NicknameViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -61,14 +63,17 @@ final class ChangeNicknameViewController: UIViewController, Navigationable, Keyb
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> NicknameViewModel.Output {
+    private func transformedOutput() -> NicknameViewModel.Output? {
+        guard let viewModel = self.viewModel as? NicknameViewModel else { return nil }
         let input = NicknameViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
                                             textFieldDidChanged: self.nicknameView.textFieldPublisher.eraseToAnyPublisher(),
                                             doneButtonDidTap: self.nicknameView.doneButtonTapPublisher.eraseToAnyPublisher())
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: NicknameViewModel.Output) {
+    private func bindOutputToViewModel(_ output: NicknameViewModel.Output?) {
+        guard let output else { return }
+        
         output.nickname
             .sink { [weak self] nickname in
                 self?.nicknameView.updateNickname(nickname: nickname)
@@ -97,15 +102,18 @@ final class ChangeNicknameViewController: UIViewController, Navigationable, Keyb
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    // FIXME: - Common 에러로 일단 설정했습니다.
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                                    message: TextLiteral.Common.Error.networkServer.localized())
+                case .success(): self?.popViewController()
+                case .failure(let error): self?.makeAlert(title: error.localizedDescription)
                 }
-            } receiveValue: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &self.cancellable)
+    }
+}
+
+// MARK: - Helper
+
+extension ChangeNicknameViewController {
+    private func popViewController() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

@@ -66,8 +66,12 @@ final class ParticipationRoomDetailsView: UIView, BaseViewType {
     
     // MARK: - property
     
-    lazy var noButtonDidTapPublisher = self.noButton.tapPublisher
-    lazy var yesButtonDidTapPublisher = self.yesButton.tapPublisher
+    var noButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        return self.noButton.tapPublisher
+    }
+    var yesButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        return self.yesButton.tapPublisher
+    }
     
     // MARK: - init
     

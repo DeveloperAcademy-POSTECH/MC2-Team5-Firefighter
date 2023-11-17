@@ -78,15 +78,9 @@ final class CheckRoomInfoView: UIView {
         }
     }
     
-    func updateRoomTitle(title: String) {
+    func updateRoomInfo(title: String, capacity: Int, range: String) {
         self.nameLabel.text = title
-    }
-    
-    func updateRoomCapacity(capacity: Int) {
         self.personLabel.text = TextLiteral.Common.people.localized(with: capacity)
-    }
-    
-    func updateRoomDateRange(range: String) {
         self.dateLabel.text = range
     }
 }

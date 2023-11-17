@@ -45,7 +45,6 @@ final class InputCapacityView: UIView {
         slider.maximumValue = 15
         slider.tintColor = .mainRed
         slider.setThumbImage(UIImage.Image.sliderThumb, for: .normal)
-        slider.addTarget(self, action: #selector(self.didSlideSlider(_:)), for: .valueChanged)
         return slider
     }()
     private lazy var minLabel: UILabel = {
@@ -61,7 +60,11 @@ final class InputCapacityView: UIView {
         return label
     }()
     
-    let sliderPublisher = PassthroughSubject<Int, Never>()
+    // MARK: - property
+    
+    var sliderPublisher: AnyPublisher<Int, Never> {
+        return self.personSlider.valuePublisher
+    }
     
     // MARK: - init
     
@@ -125,13 +128,5 @@ final class InputCapacityView: UIView {
     
     func updateCapacity(capacity: Int) {
         self.personLabel.text = TextLiteral.Common.xPeople.localized(with: capacity)
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    private func didSlideSlider(_ slider: UISlider) {
-        let value = Int(slider.value)
-        self.sliderPublisher.send(value)
     }
 }

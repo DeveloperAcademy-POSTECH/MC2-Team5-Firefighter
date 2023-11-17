@@ -18,12 +18,12 @@ final class ParticipationRoomDetailsViewController: UIViewController {
     
     // MARK: - property
 
-    private let viewModel: ParticipationRoomDetailsViewModel
-    private var cancellable = Set<AnyCancellable>()
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
-    init(viewModel: ParticipationRoomDetailsViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -56,13 +56,16 @@ final class ParticipationRoomDetailsViewController: UIViewController {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> ParticipationRoomDetailsViewModel.Output {
+    private func transformedOutput() -> ParticipationRoomDetailsViewModel.Output? {
+        guard let viewModel = self.viewModel as? ParticipationRoomDetailsViewModel else { return nil }
         let input = ParticipationRoomDetailsViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
-                                             yesButtonDidTap: self.participationRoomDetailsView.yesButtonDidTapPublisher)
+                                                            yesButtonDidTap: self.participationRoomDetailsView.yesButtonDidTapPublisher)
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: ParticipationRoomDetailsViewModel.Output) {
+    private func bindOutputToViewModel(_ output: ParticipationRoomDetailsViewModel.Output?) {
+        guard let output else { return }
+        
         output.roomInfo
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomInfo in
@@ -73,13 +76,8 @@ final class ParticipationRoomDetailsViewController: UIViewController {
         output.yesButtonDidTap
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomId in
-                guard let presentingViewController = self?.presentingViewController as? UINavigationController else { return }
-                self?.dismiss(animated: true, completion: {
-                    let repository = RoomParticipationRepositoryImpl()
-                    let usecase = ParticipateRoomUsecaseImpl(repository: repository)
-                    let viewModel = ChooseCharacterViewModel(usecase: usecase, roomId: roomId)
-                    presentingViewController.pushViewController(ChooseCharacterViewController(viewModel: viewModel), animated: true)
-                })
+                guard let self else { return }
+                self.presentChooseCharacterViewController(roomId: roomId)
             })
             .store(in: &self.cancellable)
     }
@@ -91,5 +89,19 @@ final class ParticipationRoomDetailsViewController: UIViewController {
                 self?.dismiss(animated: true)
             })
             .store(in: &self.cancellable)
+    }
+}
+
+// MARK: - Helper
+
+extension ParticipationRoomDetailsViewController {
+    private func presentChooseCharacterViewController(roomId: Int) {
+        guard let presentingViewController = self.presentingViewController as? UINavigationController else { return }
+        self.dismiss(animated: true, completion: {
+            let repository = RoomParticipationRepositoryImpl()
+            let usecase = ParticipateRoomUsecaseImpl(repository: repository)
+            let viewModel = ChooseCharacterViewModel(usecase: usecase, roomId: roomId)
+            presentingViewController.pushViewController(ChooseCharacterViewController(viewModel: viewModel), animated: true)
+        })
     }
 }

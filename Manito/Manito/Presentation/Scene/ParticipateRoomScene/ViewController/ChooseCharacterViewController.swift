@@ -18,12 +18,12 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
-    private let viewModel: ChooseCharacterViewModel
-    private var cancellable = Set<AnyCancellable>()
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
-    init(viewModel: ChooseCharacterViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -63,12 +63,15 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> ChooseCharacterViewModel.Output {
+    private func transformedOutput() -> ChooseCharacterViewModel.Output? {
+        guard let viewModel = self.viewModel as? ChooseCharacterViewModel else { return nil }
         let input = ChooseCharacterViewModel.Input(joinButtonTapPublisher: self.chooseCharacterView.joinButtonTapPublisher.eraseToAnyPublisher())
-        return self.viewModel.transform(from: input)
+        return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: ChooseCharacterViewModel.Output) {
+    private func bindOutputToViewModel(_ output: ChooseCharacterViewModel.Output?) {
+        guard let output else { return }
+        
         output.roomId
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
@@ -78,7 +81,7 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
                 case .failure(let error):
                     switch error {
                     case .roomAlreadyParticipating: self?.makeAlertWhenAlreadyJoin(error: error.localizedDescription)
-                    case .clientError: self?.makeAlertWhenNetworkError(error: error.localizedDescription)
+                    default: self?.makeAlertWhenNetworkError(error: error.localizedDescription)
                     }
                 }
             })
@@ -99,15 +102,6 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
             .store(in: &self.cancellable)
     }
     
-    private func pushDetailWaitViewController(roomId: Int) {
-        guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-        let viewModel = DetailWaitViewModel(roomId: roomId.description, usecase: DetailWaitUseCaseImpl(repository: DetailRoomRepositoryImpl()))
-        let viewController = DetailWaitViewController(viewModel: viewModel)
-        self.dismiss(animated: true) {
-            navigationController.pushViewController(viewController, animated: true)
-        }
-    }
-    
     private func makeAlertWhenAlreadyJoin(error: String) {
         self.makeAlert(title: TextLiteral.ParticipateRoom.Error.alreadyJoinTitle.localized(), 
                        message: error,
@@ -120,5 +114,20 @@ final class ChooseCharacterViewController: UIViewController, Navigationable {
         self.makeAlert(title: TextLiteral.Common.Error.title.localized(), 
                        message: error,
                        okAction: nil)
+    }
+}
+
+// MARK: - Helper
+
+extension ChooseCharacterViewController {
+    private func pushDetailWaitViewController(roomId: Int) {
+        guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+        let repository = DetailRoomRepositoryImpl()
+        let usecase = DetailWaitUseCaseImpl(repository: repository)
+        let viewModel = DetailWaitViewModel(roomId: roomId.description, usecase: usecase)
+        let viewController = DetailWaitViewController(viewModel: viewModel)
+        self.dismiss(animated: true) {
+            navigationController.pushViewController(viewController, animated: true)
+        }
     }
 }
