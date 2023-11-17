@@ -22,7 +22,6 @@ final class DetailEditViewController: UIViewController {
     private let viewModel: any BaseViewModelType
     weak var detailWaitDelegate: DetailWaitViewControllerDelegate?
     private var cancellable: Set<AnyCancellable> = Set()
-    private var viewModelOutput: DetailEditViewModel.Output?
     
     // MARK: - init
     
@@ -106,7 +105,6 @@ final class DetailEditViewController: UIViewController {
     
     private func bindViewModel() {
         let output = self.transformedOutput()
-        self.viewModelOutput = output
         self.bindOutputToViewModel(output)
     }
     
