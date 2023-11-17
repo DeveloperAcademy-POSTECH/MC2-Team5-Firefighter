@@ -25,7 +25,9 @@ final class DetailEditViewController: UIViewController {
     
     // MARK: - init
     
-    init(editMode: DetailEditView.EditMode, room: RoomInfo, viewModel: any BaseViewModelType) {
+    init(editMode: DetailEditView.EditMode, 
+         room: RoomInfo,
+         viewModel: any BaseViewModelType) {
         self.detailEditView = DetailEditView(editMode: editMode, roomInfo: room)
         self.editMode = editMode
         self.viewModel = viewModel
