@@ -68,7 +68,7 @@ final class DetailEditViewController: UIViewController {
         self.detailEditView.configureCalendarDelegate(self)
     }
     
-    private func updateView(roomInfo: RoomInfo) {
+    private func setupRoomInfoView(roomInfo: RoomInfo) {
         let startDate = roomInfo.roomInformation.startDate
         let endDate = roomInfo.roomInformation.endDate
         let capacity = roomInfo.roomInformation.capacity
@@ -125,7 +125,7 @@ final class DetailEditViewController: UIViewController {
         output.roomInfo
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] roomInfo in
-                self?.updateView(roomInfo: roomInfo)
+                self?.setupRoomInfoView(roomInfo: roomInfo)
             })
             .store(in: &self.cancellable)
         
