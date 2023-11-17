@@ -21,7 +21,7 @@ final class DetailEditViewController: UIViewController {
     private let editMode: DetailEditView.EditMode
     private let viewModel: any BaseViewModelType
     weak var detailWaitDelegate: DetailWaitViewControllerDelegate?
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     private var viewModelOutput: DetailEditViewModel.Output?
     
     // MARK: - init

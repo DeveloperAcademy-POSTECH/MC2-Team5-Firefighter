@@ -26,7 +26,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     private let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let changeButtonSubject = PassthroughSubject<Void, Never>()
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     private let detailWaitViewModel: DetailWaitViewModel
     
     // MARK: - init
