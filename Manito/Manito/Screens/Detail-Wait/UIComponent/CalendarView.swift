@@ -204,11 +204,11 @@ final class CalendarView: UIView {
     }
     
     func getTempStartDate() -> String {
-        return "20\(self.tempStartDateText)"
+        return self.tempStartDateText
     }
     
     func getTempEndDate() -> String {
-        return "20\(self.tempEndDateText)"
+        return self.tempEndDateText
     }
 }
 
