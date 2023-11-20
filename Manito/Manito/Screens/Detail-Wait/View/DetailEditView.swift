@@ -280,11 +280,10 @@ final class DetailEditView: UIView, BaseViewType {
     
     private func bindChangeButton() {
         self.changeButton.tapPublisher.sink(receiveValue: { [weak self] _ in
-            self?.changeButtonSubject.send(CreatedRoomInfoRequestDTO(
-                title: self?.roomTitle ?? "",
-                capacity: self?.sliderPublisher.value ?? 0,
-                startDate: "20\(self?.calendarView.getTempStartDate() ?? "")",
-                endDate: "20\(self?.calendarView.getTempEndDate() ?? "")"))
+            self?.changeButtonSubject.send(CreatedRoomInfoRequestDTO(title: self?.roomTitle ?? "",
+                                                                     capacity: self?.sliderPublisher.value ?? 0,
+                                                                     startDate: "20\(self?.calendarView.getTempStartDate() ?? "")",
+                                                                     endDate: "20\(self?.calendarView.getTempEndDate() ?? "")"))
         })
         .store(in: &self.cancellable)
     }
