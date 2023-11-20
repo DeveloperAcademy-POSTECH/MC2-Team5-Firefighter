@@ -20,8 +20,8 @@ final class DetailEditViewModel: BaseViewModelType {
         let changeSuccess: AnyPublisher<Result<Int, Error>, Never>
     }
     
-    let usecase: DetailEditUsecase
-    private var cancellable = Set<AnyCancellable>()
+    private let usecase: DetailEditUsecase
+    private var cancellable: Set<AnyCancellable> = Set()
     
     init(usecase: DetailEditUsecase) {
         let roomInfo = usecase.roomInformation.roomInformation
