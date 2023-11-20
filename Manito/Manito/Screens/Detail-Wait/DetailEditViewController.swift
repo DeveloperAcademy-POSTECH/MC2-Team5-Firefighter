@@ -129,7 +129,7 @@ final class DetailEditViewController: UIViewController {
             })
             .store(in: &self.cancellable)
         
-        output.passStartDate
+        output.isPassStartDate
             .receive(on: DispatchQueue.main)
             .filter { !$0 }
             .sink(receiveValue: { [weak self] _ in
@@ -137,7 +137,7 @@ final class DetailEditViewController: UIViewController {
             })
             .store(in: &self.cancellable)
         
-        output.overMember
+        output.isOverMember
             .receive(on: DispatchQueue.main)
             .filter { !$0 }
             .sink(receiveValue: { [weak self] _ in

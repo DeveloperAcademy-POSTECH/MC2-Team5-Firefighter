@@ -15,8 +15,8 @@ final class DetailEditViewModel: BaseViewModelType {
     }
     struct Output {
         let roomInfo: AnyPublisher<RoomInfo, Never>
-        let passStartDate: AnyPublisher<Bool, Never>
-        let overMember: AnyPublisher<Bool, Never>
+        let isPassStartDate: AnyPublisher<Bool, Never>
+        let isOverMember: AnyPublisher<Bool, Never>
         let changeSuccess: AnyPublisher<Int, Error>
     }
     
@@ -64,8 +64,8 @@ final class DetailEditViewModel: BaseViewModelType {
         
         return Output(
             roomInfo: roomInfoOutput,
-            passStartDate: isPastPublisher,
-            overMember: isMemberOverPublisher,
+            isPassStartDate: isPastPublisher,
+            isOverMember: isMemberOverPublisher,
             changeSuccess: changeRoomOutput)
     }
 }
