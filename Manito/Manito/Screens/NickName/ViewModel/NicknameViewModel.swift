@@ -8,19 +8,19 @@
 import Combine
 import Foundation
 
-final class NicknameViewModel {
+final class NicknameViewModel: BaseViewModelType {
     
     typealias Counts = (textCount: Int, maxCount: Int)
     
     // MARK: - property
     
-    let maxCount: Int = 5
+    private let maxCount: Int = 5
     
-    private let nicknameService: NicknameService
-    private var cancellable = Set<AnyCancellable>()
+    private let nicknameUsecase: NicknameUsecase
+    private let textFieldUsecase: TextFieldUsecase
+    private var cancellable: Set<AnyCancellable> = Set()
     
-    private let nicknameSubject = CurrentValueSubject<String, Never>("")
-    private let doneButtonSubject = PassthroughSubject<Void, NetworkError>()
+    private let nicknameSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -33,8 +33,18 @@ final class NicknameViewModel {
         let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
         let isEnabled: AnyPublisher<Bool, Never>
-        let doneButton: PassthroughSubject<Void, NetworkError>
+        let doneButton: AnyPublisher<Result<Void, Error>, Never>
     }
+    
+    // MARK: - init
+    
+    init(nicknameUsecase: NicknameUsecase,
+         textFieldUsecase: TextFieldUsecase) {
+        self.nicknameUsecase = nicknameUsecase
+        self.textFieldUsecase = textFieldUsecase
+    }
+    
+    // MARK: - func
     
     func transform(from input: Input) -> Output {
         let nickname = input.viewDidLoad
@@ -56,74 +66,46 @@ final class NicknameViewModel {
         
         let fixedTitle = input.textFieldDidChanged
             .map { [weak self] text -> String in
-                let isOverMaxCount = self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
-                
-                if isOverMaxCount {
-                    let endIndex = text.index(text.startIndex, offsetBy: self?.maxCount ?? 0)
-                    let fixedText = text[text.startIndex..<endIndex]
-                    return String(fixedText)
-                }
-
+                guard let self else { return "" }
+                let text = self.textFieldUsecase.cutTextByMaxCount(text: text, maxCount: self.maxCount)
                 return text
             }
             .eraseToAnyPublisher()
         
         let isEnabled = input.textFieldDidChanged
-            .map { text -> Bool in
-                return !text.isEmpty
-            }
+            .map { !$0.isEmpty }
             .eraseToAnyPublisher()
         
-        input.doneButtonDidTap
-            .sink(receiveValue: { [weak self] _ in
-                self?.didTapDoneButton()
-            })
-            .store(in: &self.cancellable)
+        let doneButtonDidTap = input.doneButtonDidTap
+            .asyncMap { [weak self] _  -> Result<Void, Error> in
+                do {
+                    let nickname = self?.nicknameSubject.value
+                    self?.saveNicknameToUserDefault(nickname: nickname ?? "")
+                    let _ = try await self?.putUserInfo(nickname: NicknameDTO(nickname: nickname ?? ""))
+                    return .success(())
+                } catch (let error) {
+                    return .failure(error)
+                }
+            }
+            .eraseToAnyPublisher()
         
         return Output(nickname: nickname,
                       counts: mergeCount,
                       fixedTitleByMaxCount: fixedTitle,
                       isEnabled: isEnabled,
-                      doneButton: self.doneButtonSubject)
+                      doneButton: doneButtonDidTap)
     }
     
-    // MARK: - init
-    
-    init(nicknameService: NicknameService) {
-        self.nicknameService = nicknameService
-    }
-    
-    // MARK: - func
-    
-    private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
-        if titleCount > maxCount { return true }
-        else { return false }
-    }
-    
-    private func didTapDoneButton() {
-        let nickname = self.nicknameSubject.value
+    private func saveNicknameToUserDefault(nickname: String) {
         UserData.setValue(nickname, forKey: .nickname)
         UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
-        self.requestCreateNickname(nickname: NicknameDTO(nickname: nickname))
     }
-    
-    // MARK: - network
-    
-    private func requestCreateNickname(nickname: NicknameDTO) {
-        Task {
-            do {
-                let statusCode = try await self.nicknameService.putUserInfo(nickname: nickname)
-                switch statusCode {
-                case 200..<300:
-                    UserDefaultHandler.setNickname(nickname: nickname.nickname)
-                    self.doneButtonSubject.send()
-                default:
-                    self.doneButtonSubject.send(completion: .failure(.unknownError))
-                }
-            } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.doneButtonSubject.send(completion: .failure(error))
-            }
-        }
+}
+
+// MARK: - Helper
+
+extension NicknameViewModel {
+    private func putUserInfo(nickname: NicknameDTO) async throws -> Int {
+        return try await self.nicknameUsecase.putUserInfo(nickname: nickname)
     }
 }

@@ -41,7 +41,7 @@ final class InputInvitedCodeView: UIView, BaseViewType {
     
     // MARK: - property
     
-    let textFieldDidChangedPublisher = PassthroughSubject<String, Never>()
+    let textFieldDidChangedPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
     
     // MARK: - life cycle
     

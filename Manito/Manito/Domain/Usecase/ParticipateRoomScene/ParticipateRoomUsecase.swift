@@ -30,10 +30,10 @@ final class ParticipateRoomUsecaseImpl: ParticipateRoomUsecase {
         do {
             let roomInfo = try await self.repository.dispatchVerifyCode(code: code)
             return roomInfo
-        } catch NetworkError.serverError {
-            throw NetworkError.serverError
-        } catch NetworkError.clientError(let message) {
-            throw NetworkError.clientError(message: message)
+        } catch ParticipateRoomError.invailedCode {
+            throw ParticipateRoomError.invailedCode
+        } catch ParticipateRoomError.clientError {
+            throw ParticipateRoomError.clientError
         }
     }
     

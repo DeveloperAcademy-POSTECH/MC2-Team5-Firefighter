@@ -22,9 +22,16 @@ final class RoomParticipationRepositoryImpl: RoomParticipationRepository {
     }
 
     func dispatchVerifyCode(code: String) async throws -> ParticipatedRoomInfoDTO {
-        let response = try await self.provider
-            .request(.dispatchVerifyCode(code: code))
-        return try response.decode()
+        do {
+            let response = try await self.provider
+                .request(.dispatchVerifyCode(code: code))
+            return try response.decode()
+        } catch MTError.statusCode(reason: .clientError(let response)) {
+            switch response.statusCode {
+            case 404: throw ParticipateRoomError.invailedCode
+            default: throw ParticipateRoomError.clientError
+            }
+        }
     }
 
     func dispatchJoinRoom(roomId: String, member: MemberInfoRequestDTO) async throws -> Int {
