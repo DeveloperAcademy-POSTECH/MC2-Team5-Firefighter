@@ -24,7 +24,6 @@ final class DetailEditViewModel: BaseViewModelType {
     private var cancellable: Set<AnyCancellable> = Set()
     
     init(usecase: DetailEditUsecase) {
-        let roomInfo = usecase.roomInformation.roomInformation
         self.usecase = usecase
     }
     
