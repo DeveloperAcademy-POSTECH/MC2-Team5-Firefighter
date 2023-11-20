@@ -10,8 +10,8 @@ import Foundation
 protocol DetailEditUsecase {
     var roomInformation: RoomInfo { get set }
     
-    func validStartDatePast(startDate: String) -> Bool
-    func validMemberCountOver(capacity: Int) -> Bool
+    func vaildStartDateIsNotPast(startDate: String) -> Bool
+    func vaildMemberCountIsUnder(capacity: Int) -> Bool
     func changeRoomInformation(roomDto: CreatedRoomInfoRequestDTO) async throws -> Int
 }
 
@@ -25,15 +25,15 @@ final class DetailEditUsecaseImpl: DetailEditUsecase {
         self.repository = repository
     }
     
-    func validStartDatePast(startDate: String) -> Bool {
+    func vaildStartDateIsNotPast(startDate: String) -> Bool {
         guard let startDate = startDate.toDefaultDate else { return false }
         let isPast = startDate.isPast
         return !isPast
     }
     
-    func validMemberCountOver(capacity: Int) -> Bool {
-        let isUnderOverMember = self.roomInformation.participants.count <= capacity
-        return isUnderOverMember
+    func vaildMemberCountIsUnder(capacity: Int) -> Bool {
+        let isUnderMember = self.roomInformation.participants.count <= capacity
+        return isUnderMember
     }
     
     func changeRoomInformation(roomDto: CreatedRoomInfoRequestDTO) async throws -> Int {

@@ -23,7 +23,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         // given
         let date = "aaaa.aa.aa"
         // when
-        let sut = self.mockUsecase.validStartDatePast(startDate: date)
+        let sut = self.mockUsecase.vaildStartDateIsNotPast(startDate: date)
         // then
         XCTAssertFalse(sut)
     }
@@ -32,7 +32,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         // given
         let date = "2000.01.01"
         // when
-        let sut = self.mockUsecase.validStartDatePast(startDate: date)
+        let sut = self.mockUsecase.vaildStartDateIsNotPast(startDate: date)
         // then
         XCTAssertFalse(sut)
     }
@@ -41,7 +41,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         // given
         let today = Date().toFullString
         // when
-        let sut = self.mockUsecase.validStartDatePast(startDate: today)
+        let sut = self.mockUsecase.vaildStartDateIsNotPast(startDate: today)
         // then
         XCTAssertTrue(sut)
     }
@@ -51,7 +51,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         let oneDay: TimeInterval = 86400
         let tomorrow = (Date() + oneDay).toFullString
         // when
-        let sut = self.mockUsecase.validStartDatePast(startDate: tomorrow)
+        let sut = self.mockUsecase.vaildStartDateIsNotPast(startDate: tomorrow)
         // then
         XCTAssertTrue(sut)
     }
@@ -60,7 +60,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         // given
         let date = "2050.01.01"
         // when
-        let sut = self.mockUsecase.validStartDatePast(startDate: date)
+        let sut = self.mockUsecase.vaildStartDateIsNotPast(startDate: date)
         // then
         XCTAssertTrue(sut)
     }
@@ -69,7 +69,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         // given
         let capacity = 4
         // when
-        let sut = self.mockUsecase.validMemberCountOver(capacity: capacity)
+        let sut = self.mockUsecase.vaildMemberCountIsUnder(capacity: capacity)
         // then
         XCTAssertFalse(sut)
     }
@@ -78,7 +78,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         // given
         let capacity = 5
         // when
-        let sut = self.mockUsecase.validMemberCountOver(capacity: capacity)
+        let sut = self.mockUsecase.vaildMemberCountIsUnder(capacity: capacity)
         // then
         XCTAssertTrue(sut)
     }
@@ -87,7 +87,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         // given
         let capacity = 10
         // when
-        let sut = self.mockUsecase.validMemberCountOver(capacity: capacity)
+        let sut = self.mockUsecase.vaildMemberCountIsUnder(capacity: capacity)
         // then
         XCTAssertTrue(sut)
     }
@@ -120,13 +120,13 @@ final class MockDetailEditUsecase: DetailEditUsecase {
         self.roomInformation = roomInformation
     }
     
-    func validStartDatePast(startDate: String) -> Bool {
-        let value = self.usecaseImpl.validStartDatePast(startDate: startDate)
+    func vaildStartDateIsNotPast(startDate: String) -> Bool {
+        let value = self.usecaseImpl.vaildStartDateIsNotPast(startDate: startDate)
         return value
     }
     
-    func validMemberCountOver(capacity: Int) -> Bool {
-        let value = self.usecaseImpl.validMemberCountOver(capacity: capacity)
+    func vaildMemberCountIsUnder(capacity: Int) -> Bool {
+        let value = self.usecaseImpl.vaildMemberCountIsUnder(capacity: capacity)
         return value
     }
     

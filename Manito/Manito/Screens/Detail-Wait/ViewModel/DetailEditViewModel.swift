@@ -38,23 +38,23 @@ final class DetailEditViewModel: BaseViewModelType {
         
         let isPastPublisher = input.changeButtonDidTap
             .compactMap { [weak self] dto in
-                self?.usecase.validStartDatePast(startDate: dto.startDate)
+                self?.usecase.vaildStartDateIsNotPast(startDate: dto.startDate)
             }
             .eraseToAnyPublisher()
         
         let isMemberOverPublisher = input.changeButtonDidTap
             .compactMap { [weak self] dto in
-                self?.usecase.validMemberCountOver(capacity: dto.capacity)
+                self?.usecase.vaildMemberCountIsUnder(capacity: dto.capacity)
             }
             .eraseToAnyPublisher()
         
         let changeRoomOutput = input.changeButtonDidTap
             .filter { [weak self] dto in
                 guard let self else { return false }
-                return self.usecase.validMemberCountOver(capacity: dto.capacity) }
+                return self.usecase.vaildMemberCountIsUnder(capacity: dto.capacity) }
             .filter { [weak self] dto in
                 guard let self else { return false }
-                return self.usecase.validStartDatePast(startDate: dto.startDate) }
+                return self.usecase.vaildStartDateIsNotPast(startDate: dto.startDate) }
             .asyncMap { [weak self] dto -> Result<Int, Error> in
                 do {
                     let statusCode = try await self?.usecase.changeRoomInformation(roomDto: dto)
