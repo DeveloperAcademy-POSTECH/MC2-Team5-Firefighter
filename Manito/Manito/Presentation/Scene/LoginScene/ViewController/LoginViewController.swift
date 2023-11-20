@@ -92,9 +92,10 @@ final class LoginViewController: UIViewController {
 // MARK: - Helper
 extension LoginViewController {
     private func presentCreateNicknameViewController() {
-        let repository = SettingRepositoryImpl()
-        let service = NicknameService(repository: repository)
-        let viewModel = NicknameViewModel(nicknameService: service)
+        let nicknameUsecase = NicknameUsecaseImpl(repository: SettingRepositoryImpl())
+        let textFieldUsecase = TextFieldUsecaseImpl()
+        let viewModel = NicknameViewModel(nicknameUsecase: nicknameUsecase,
+                                          textFieldUsecase: textFieldUsecase)
         let viewController = CreateNicknameViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
