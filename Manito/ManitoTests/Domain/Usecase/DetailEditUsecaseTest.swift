@@ -19,7 +19,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         self.mockUsecase = nil
     }
     
-    func test_validStartDatePast함수에_올바른_날짜형식의_텍스트에_반응하는가() {
+    func test_vaildStartDateIsNotPast함수에_올바른_날짜형식의_텍스트에_반응하는가() {
         // given
         let date = "aaaa.aa.aa"
         // when
@@ -28,7 +28,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         XCTAssertFalse(sut)
     }
     
-    func test_validStartDatePast함수에_과거날짜가_들어갔을때() {
+    func test_vaildStartDateIsNotPast함수에_과거날짜가_들어갔을때() {
         // given
         let date = "2000.01.01"
         // when
@@ -37,7 +37,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         XCTAssertFalse(sut)
     }
     
-    func test_validStartDatePast함수에_오늘날짜가_들어갔을때() {
+    func test_vaildStartDateIsNotPast함수에_오늘날짜가_들어갔을때() {
         // given
         let today = Date().toFullString
         // when
@@ -46,7 +46,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         XCTAssertTrue(sut)
     }
     
-    func test_validStartDatePast함수에_내일날짜가_들어갔을때() {
+    func test_vaildStartDateIsNotPast함수에_내일날짜가_들어갔을때() {
         // given
         let oneDay: TimeInterval = 86400
         let tomorrow = (Date() + oneDay).toFullString
@@ -56,7 +56,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         XCTAssertTrue(sut)
     }
     
-    func test_validStartDatePast함수에_먼미래날짜가_들어갔을때() {
+    func test_vaildStartDateIsNotPast함수에_먼미래날짜가_들어갔을때() {
         // given
         let date = "2050.01.01"
         // when
@@ -65,7 +65,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         XCTAssertTrue(sut)
     }
     
-    func test_validMemberCountOver함수에_5명이참여중인데_4명으로_수정했을때() {
+    func test_vaildMemberCountIsUnder함수에_5명이참여중인데_4명으로_수정했을때() {
         // given
         let capacity = 4
         // when
@@ -74,7 +74,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         XCTAssertFalse(sut)
     }
     
-    func test_validMemberCountOver함수에_5명이참여중인데_5명으로_수정했을때() {
+    func test_vaildMemberCountIsUnder함수에_5명이참여중인데_5명으로_수정했을때() {
         // given
         let capacity = 5
         // when
@@ -83,7 +83,7 @@ final class DetailEditUsecaseTest: XCTestCase {
         XCTAssertTrue(sut)
     }
     
-    func test_validMemberCountOver함수에_5명이참여중인데_10명으로_수정했을때() {
+    func test_vaildMemberCountIsUnder함수에_5명이참여중인데_10명으로_수정했을때() {
         // given
         let capacity = 10
         // when
