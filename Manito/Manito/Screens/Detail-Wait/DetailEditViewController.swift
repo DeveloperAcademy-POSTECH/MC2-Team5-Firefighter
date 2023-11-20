@@ -147,19 +147,15 @@ final class DetailEditViewController: UIViewController {
         
         output.changeSuccess
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] result in
+            .sink(receiveValue: { [weak self] result in
                 switch result {
-                case .finished: return
+                case .success(let statusCode):
+                    if statusCode == 204 {
+                        self?.detailWaitDelegate?.didTappedChangeButton()
+                        self?.dismiss(animated: true)
+                    }
                 case .failure(let error):
                     self?.showErrorAlert(error.localizedDescription)
-                }
-            }, receiveValue: { [weak self] statusCode in
-                switch statusCode {
-                case 200..<300:
-                    self?.detailWaitDelegate?.didTappedChangeButton()
-                    self?.dismiss(animated: true)
-                default:
-                    return
                 }
             })
             .store(in: &self.cancellable)

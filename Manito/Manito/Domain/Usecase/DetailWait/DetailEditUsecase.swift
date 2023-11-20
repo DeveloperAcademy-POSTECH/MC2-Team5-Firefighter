@@ -37,8 +37,12 @@ final class DetailEditUsecaseImpl: DetailEditUsecase {
     }
     
     func changeRoomInformation(roomDto: CreatedRoomInfoRequestDTO) async throws -> Int {
-        let statusCode = try await self.repository.putRoomInfo(roomId: self.roomInformation.roomInformation.id.description,
-                                                               roomInfo: roomDto)
-        return statusCode
+        do {
+            let statusCode = try await self.repository.putRoomInfo(roomId: self.roomInformation.roomInformation.id.description,
+                                                                   roomInfo: roomDto)
+            return statusCode
+        } catch {
+            throw DetailEditUsecaseError.failedToChangeRoomInfo
+        }
     }
 }

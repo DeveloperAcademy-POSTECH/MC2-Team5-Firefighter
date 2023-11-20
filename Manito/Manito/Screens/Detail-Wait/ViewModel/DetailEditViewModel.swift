@@ -17,7 +17,7 @@ final class DetailEditViewModel: BaseViewModelType {
         let roomInfo: AnyPublisher<RoomInfo, Never>
         let isPassStartDate: AnyPublisher<Bool, Never>
         let isOverMember: AnyPublisher<Bool, Never>
-        let changeSuccess: AnyPublisher<Int, Error>
+        let changeSuccess: AnyPublisher<Result<Int, Error>, Never>
     }
     
     let usecase: DetailEditUsecase
@@ -56,8 +56,13 @@ final class DetailEditViewModel: BaseViewModelType {
             .filter { [weak self] dto in
                 guard let self else { return false }
                 return self.usecase.validStartDatePast(startDate: dto.startDate) }
-            .asyncMap { [weak self] dto in
-                try await self?.usecase.changeRoomInformation(roomDto: dto)
+            .asyncMap { [weak self] dto -> Result<Int, Error> in
+                do {
+                    let statusCode = try await self?.usecase.changeRoomInformation(roomDto: dto)
+                    return .success(statusCode ?? 0)
+                } catch(let error) {
+                    return .failure(error)
+                }
             }
             .compactMap { $0 }
             .eraseToAnyPublisher()
