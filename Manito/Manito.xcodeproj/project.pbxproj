@@ -27,6 +27,10 @@
 		395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */; };
 		39632A282AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39632A272AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift */; };
 		39632A2B2AD842A800A6E61D /* DetailWaitUsecaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39632A2A2AD842A800A6E61D /* DetailWaitUsecaseError.swift */; };
+		39632A732AF0DC2E00A6E61D /* DetailEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39632A722AF0DC2E00A6E61D /* DetailEditViewModel.swift */; };
+		39632A762AF0EE6600A6E61D /* DetailEditUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39632A752AF0EE6600A6E61D /* DetailEditUsecase.swift */; };
+		39632A842AFB24FD00A6E61D /* DetailEditUsecaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39632A832AFB24FD00A6E61D /* DetailEditUsecaseTest.swift */; };
+		39632AC52B0B477700A6E61D /* DetailEditUsecaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39632AC42B0B477700A6E61D /* DetailEditUsecaseError.swift */; };
 		397A241028BA494100454E4F /* APIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C957F0287D984900A04A2B /* APIEnvironment.swift */; };
 		39833CFE2AB09A6C009D173A /* Keyboardable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39833CFD2AB09A6C009D173A /* Keyboardable.swift */; };
 		398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */; };
@@ -292,6 +296,10 @@
 		395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModelTest.swift; sourceTree = "<group>"; };
 		39632A272AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitUsecaseTest.swift; sourceTree = "<group>"; };
 		39632A2A2AD842A800A6E61D /* DetailWaitUsecaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitUsecaseError.swift; sourceTree = "<group>"; };
+		39632A722AF0DC2E00A6E61D /* DetailEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewModel.swift; sourceTree = "<group>"; };
+		39632A752AF0EE6600A6E61D /* DetailEditUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditUsecase.swift; sourceTree = "<group>"; };
+		39632A832AFB24FD00A6E61D /* DetailEditUsecaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditUsecaseTest.swift; sourceTree = "<group>"; };
+		39632AC42B0B477700A6E61D /* DetailEditUsecaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditUsecaseError.swift; sourceTree = "<group>"; };
 		39833CFD2AB09A6C009D173A /* Keyboardable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboardable.swift; sourceTree = "<group>"; };
 		398B1C9A29F10B0300DEFCEC /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
 		398B1CB92A12415B00DEFCEC /* ManitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -620,6 +628,7 @@
 			isa = PBXGroup;
 			children = (
 				395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */,
+				39632A722AF0DC2E00A6E61D /* DetailEditViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -628,6 +637,7 @@
 			isa = PBXGroup;
 			children = (
 				39632A272AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift */,
+				39632A832AFB24FD00A6E61D /* DetailEditUsecaseTest.swift */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -638,6 +648,14 @@
 				39632A2A2AD842A800A6E61D /* DetailWaitUsecaseError.swift */,
 			);
 			path = DetailWait;
+			sourceTree = "<group>";
+		};
+		39632AC32B0B476100A6E61D /* DetailEdit */ = {
+			isa = PBXGroup;
+			children = (
+				39632AC42B0B477700A6E61D /* DetailEditUsecaseError.swift */,
+			);
+			path = DetailEdit;
 			sourceTree = "<group>";
 		};
 		398B1CBA2A12415C00DEFCEC /* ManitoTests */ = {
@@ -694,6 +712,7 @@
 			isa = PBXGroup;
 			children = (
 				39EF30F82AD3DE6700466A90 /* DetailWaitUseCase.swift */,
+				39632A752AF0EE6600A6E61D /* DetailEditUsecase.swift */,
 			);
 			path = DetailWait;
 			sourceTree = "<group>";
@@ -982,6 +1001,7 @@
 		B55469FD2AADB903004D9FE6 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				39632AC32B0B476100A6E61D /* DetailEdit */,
 				CB93325D2AFCBD3C00B7F87A /* LoginScene */,
 				39632A292AD8429000A6E61D /* DetailWait */,
 				B5422CD42ADD42C00051A966 /* DetailScene */,
@@ -2045,6 +2065,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39632A842AFB24FD00A6E61D /* DetailEditUsecaseTest.swift in Sources */,
 				390E5CAD2AB89BCE00EBE52E /* RoomListItemTest.swift in Sources */,
 				390E5CB22AB8A70600EBE52E /* Date+ExtensionTest.swift in Sources */,
 				398CED082AB9E48F00F50CBD /* RoomInfoTest.swift in Sources */,
@@ -2073,6 +2094,7 @@
 				B5422CCF2ADD3DEC0051A966 /* MemoryUsecase.swift in Sources */,
 				B577E5002AC373CA003CC102 /* PhotoPickerManager.swift in Sources */,
 				B5A085E62A972EB700C8A98D /* LetterDTO.swift in Sources */,
+				39632A732AF0DC2E00A6E61D /* DetailEditViewModel.swift in Sources */,
 				7E3058C82854B64D00489E6A /* InputCapacityView.swift in Sources */,
 				B53A35C62A96F6DB00B720BC /* RoomParticipationRepositoryImpl.swift in Sources */,
 				CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */,
@@ -2101,6 +2123,7 @@
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B5422CD62ADD42CD0051A966 /* DetailUsecaseError.swift in Sources */,
 				B55469B62AA96F54004D9FE6 /* DefaultCharacterType.swift in Sources */,
+				39632AC52B0B477700A6E61D /* DetailEditUsecaseError.swift in Sources */,
 				B53A35C82A96F84700B720BC /* LetterRepositoryImpl.swift in Sources */,
 				39EE956F2A404A3800AF6857 /* MissionEditViewController.swift in Sources */,
 				B5F5250A2851A06700614FF7 /* DetailWaitViewController.swift in Sources */,
@@ -2179,6 +2202,7 @@
 				D78B97E72AF11DCD009D9522 /* DetailRoomRepository.swift in Sources */,
 				D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+ClassName.swift in Sources */,
+				39632A762AF0EE6600A6E61D /* DetailEditUsecase.swift in Sources */,
 				3904F4FA2AA36F4F00B6264F /* UserInfo.swift in Sources */,
 				39FFE32828EEFFFE008442EE /* MoreButton.swift in Sources */,
 				7E0C5C362855B22700F698D1 /* CreateNicknameViewController.swift in Sources */,

@@ -5,6 +5,7 @@
 //  Created by Mingwan Choi on 2022/06/13.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -18,16 +19,18 @@ final class DetailEditViewController: UIViewController {
     // MARK: - property
     
     private let editMode: DetailEditView.EditMode
-    private let detailRoomRepository: DetailRoomRepository = DetailRoomRepositoryImpl()
-    private let room: RoomInfo
+    private let viewModel: any BaseViewModelType
     weak var detailWaitDelegate: DetailWaitViewControllerDelegate?
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
-    init(editMode: DetailEditView.EditMode, room: RoomInfo) {
-        self.detailEditView = DetailEditView(editMode: editMode)
+    init(editMode: DetailEditView.EditMode, 
+         room: RoomInfo,
+         viewModel: any BaseViewModelType) {
+        self.detailEditView = DetailEditView(editMode: editMode, roomInfo: room)
         self.editMode = editMode
-        self.room = room
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -50,10 +53,8 @@ final class DetailEditViewController: UIViewController {
         super.viewDidLoad()
         self.setupPresentationController()
         self.configureDelegation()
-        self.setupCalendarDateRange()
-        if self.editMode == .information {
-            self.setupMemberSliderValue()
-        }
+        self.bindViewModel()
+        self.bindCancelButton()
     }
 
     // MARK: - func
@@ -64,18 +65,23 @@ final class DetailEditViewController: UIViewController {
     }
     
     private func configureDelegation() {
-        self.detailEditView.configureDelegation(self)
         self.detailEditView.configureCalendarDelegate(self)
     }
     
-    private func setupCalendarDateRange() {
-        let startDate = self.room.roomInformation.startDate
-        let endDate = self.room.roomInformation.endDate
+    private func setupRoomInfoView(roomInfo: RoomInfo) {
+        let startDate = roomInfo.roomInformation.startDate
+        let endDate = roomInfo.roomInformation.endDate
+        let capacity = roomInfo.roomInformation.capacity
+        
+        self.setupCalendarDateRange(startDate: startDate, endDate: endDate)
+        self.setupMemberSliderValue(capacity: capacity)
+    }
+    
+    private func setupCalendarDateRange(startDate: String, endDate: String) {
         self.detailEditView.setupDateRange(from: startDate, to: endDate)
     }
     
-    private func setupMemberSliderValue() {
-        let capacity = self.room.roomInformation.capacity
+    private func setupMemberSliderValue(capacity: Int) {
         self.detailEditView.setupSliderValue(capacity)
     }
     
@@ -99,63 +105,93 @@ final class DetailEditViewController: UIViewController {
                         actions: actions)
     }
     
-    // MARK: - network
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
+    }
     
-    private func putRoomInfo(roomDTO: CreatedRoomInfoRequestDTO, completionHandler: @escaping ((Result<Void, NetworkError>) -> Void)) {
-        let roomIndex = self.room.roomInformation.id
-        Task {
-            do {
-                let status = try await self.detailRoomRepository.putRoomInfo(roomId: roomIndex.description,
-                                                                             roomInfo: roomDTO)
-                switch status {
-                case 200..<300:
-                    completionHandler(.success(()))
-                default:
-                    completionHandler(.failure((.unknownError)))
+    private func transformedOutput() -> DetailEditViewModel.Output? {
+        guard let viewModel = self.viewModel as? DetailEditViewModel else { return nil }
+        let input = DetailEditViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            changeButtonDidTap: self.detailEditView.changeButtonSubject.eraseToAnyPublisher())
+        
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: DetailEditViewModel.Output?) {
+        guard let output else { return }
+        
+        output.roomInfo
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] roomInfo in
+                self?.setupRoomInfoView(roomInfo: roomInfo)
+            })
+            .store(in: &self.cancellable)
+        
+        output.isPassStartDate
+            .receive(on: DispatchQueue.main)
+            .filter { !$0 }
+            .sink(receiveValue: { [weak self] _ in
+                self?.showAlertPassedStartDate()
+            })
+            .store(in: &self.cancellable)
+        
+        output.isOverMember
+            .receive(on: DispatchQueue.main)
+            .filter { !$0 }
+            .sink(receiveValue: { [weak self] _ in
+                self?.showAlertOverMember()
+            })
+            .store(in: &self.cancellable)
+        
+        output.changeSuccess
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let statusCode):
+                    if statusCode == 204 {
+                        self?.detailWaitDelegate?.didTappedChangeButton()
+                        self?.dismiss(animated: true)
+                    }
+                case .failure(let error):
+                    self?.showErrorAlert(error.localizedDescription)
                 }
-            } catch NetworkError.serverError {
-                completionHandler(.failure(.serverError))
-            } catch NetworkError.clientError(let message) {
-                completionHandler(.failure(.clientError(message: message)))
-            }
-        }
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    private func bindCancelButton() {
+        self.detailEditView.cancelButtonPublisher
+            .sink(receiveValue: { [weak self] _ in
+                self?.dismiss(animated: true)
+            })
+            .store(in: &self.cancellable)
+    }
+}
+
+
+// MARK: - Helper
+extension DetailEditViewController {
+    private func showAlertPassedStartDate() {
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                       message: TextLiteral.DetailEdit.Error.date.localized())
+    }
+    
+    private func showAlertOverMember() {
+        self.makeAlert(title: TextLiteral.DetailEdit.Error.memberTitle.localized(),
+                       message: TextLiteral.DetailEdit.Error.memberMessage.localized())
+    }
+    
+    private func showErrorAlert(_ text: String) {
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                       message: text)
     }
 }
 
 extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
         self.presentationControllerDidAttemptToDismissAlert()
-    }
-}
-
-extension DetailEditViewController: DetailEditDelegate {
-    func cancelButtonDidTap() {
-        self.dismiss(animated: true)
-    }
-    
-    func changeButtonDidTap(capacity: Int, from startDate: String, to endDate: String) {
-        let roomTitle = self.room.roomInformation.title
-        let currentUserCount = self.room.participants.count
-        let dto = CreatedRoomInfoRequestDTO(title: roomTitle,
-                                            capacity: capacity,
-                                            startDate: "20\(startDate)",
-                                            endDate: "20\(endDate)")
-        if currentUserCount <= capacity {
-            self.putRoomInfo(roomDTO: dto) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.detailWaitDelegate?.didTappedChangeButton()
-                    self?.cancelButtonDidTap()
-                case .failure:
-                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
-                                    message: TextLiteral.DetailEdit.Error.message.localized()
-                    )
-                }
-            }
-        } else {
-            self.makeAlert(title: TextLiteral.DetailEdit.Error.memberTitle.localized(),
-                           message: TextLiteral.DetailEdit.Error.memberMessage.localized())
-        }
     }
 }
 

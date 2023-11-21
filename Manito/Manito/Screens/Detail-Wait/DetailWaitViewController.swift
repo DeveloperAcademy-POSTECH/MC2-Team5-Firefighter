@@ -26,7 +26,7 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     private let deleteMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let leaveMenuButtonSubject = PassthroughSubject<Void, Never>()
     private let changeButtonSubject = PassthroughSubject<Void, Never>()
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     private let detailWaitViewModel: DetailWaitViewModel
     
     // MARK: - init
@@ -221,7 +221,13 @@ final class DetailWaitViewController: UIViewController, Navigationable {
     }
         
     private func showDetailEditViewController(roomInformation: RoomInfo, mode: DetailEditView.EditMode) {
-        let viewController = DetailEditViewController(editMode: mode, room: roomInformation)
+        let repository = DetailRoomRepositoryImpl()
+        let usecase = DetailEditUsecaseImpl(roomInformation: roomInformation,
+                                            repository: repository)
+        let viewModel = DetailEditViewModel(usecase: usecase)
+        let viewController = DetailEditViewController(editMode: mode,
+                                                      room: roomInformation,
+                                                      viewModel: viewModel)
         viewController.detailWaitDelegate = self
         self.present(viewController, animated: true)
     }

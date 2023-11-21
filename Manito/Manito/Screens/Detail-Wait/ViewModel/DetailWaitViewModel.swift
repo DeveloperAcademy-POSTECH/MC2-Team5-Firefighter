@@ -57,7 +57,7 @@ final class DetailWaitViewModel {
     // MARK: - property
     
     let roomId: String
-    private var cancellable = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set()
     private let usecase: DetailWaitUseCase
     
     // MARK: - init
