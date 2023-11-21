@@ -8,9 +8,9 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
@@ -20,22 +20,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
     }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) { }
-
+    
     func sceneDidBecomeActive(_ scene: UIScene) { }
-
+    
     func sceneWillResignActive(_ scene: UIScene) { }
-
+    
     func sceneWillEnterForeground(_ scene: UIScene) { }
-
+    
     func sceneDidEnterBackground(_ scene: UIScene) { }
 }
 
 extension SceneDelegate {
     func moveToLoginViewController() {
-        let viewController = UINavigationController(rootViewController: LoginViewController())
-        window?.rootViewController = viewController
+        let repository = LoginRepositoryImpl()
+        let usecase = LoginUsecaseImpl(repository: repository)
+        let viewModel = LoginViewModel(usecase: usecase)
+        let viewController = LoginViewController(viewModel: viewModel)
+        window?.rootViewController = UINavigationController(rootViewController: viewController)
     }
     
     func changeRootViewWithLetterView(roomId: Int) {

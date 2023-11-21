@@ -75,6 +75,14 @@ extension UISegmentedControl {
     }
 }
 
+extension UIControl {
+    var buttonTapPublisher: AnyPublisher<Void, Never> {
+        self.controlPublisher(for: .touchUpInside)
+            .map { _ in Void() }
+            .eraseToAnyPublisher()
+    }
+}
+
 extension UISlider {
      var valuePublisher: AnyPublisher<Int, Never> {
          controlPublisher(for: .valueChanged)

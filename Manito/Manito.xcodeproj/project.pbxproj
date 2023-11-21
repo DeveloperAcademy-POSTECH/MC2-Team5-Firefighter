@@ -184,9 +184,14 @@
 		CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB358C0128A564080084D001 /* SettingDeveloperInfoViewController.swift */; };
 		CB637A3B28595C1200FF1240 /* ParticipateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */; };
 		CB6637E82959CBC60050BD04 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = CB6637E72959CBC60050BD04 /* SkeletonView */; };
+		CB66FD6C2AE7FCDE00358CA2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66FD6B2AE7FCDE00358CA2 /* LoginView.swift */; };
+		CB66FD6E2AE7FCE900358CA2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66FD6D2AE7FCE900358CA2 /* LoginViewModel.swift */; };
 		CB674C1C285966020063A6B7 /* InputInvitedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */; };
 		CB674C2128596A310063A6B7 /* ParticipationRoomDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB674C2028596A310063A6B7 /* ParticipationRoomDetailsViewController.swift */; };
 		CB85DE1F28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */; };
+		CB9332562AFCAE3100B7F87A /* LoginUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9332552AFCAE3100B7F87A /* LoginUsecase.swift */; };
+		CB93325A2AFCAF3F00B7F87A /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9332592AFCAF3F00B7F87A /* LoginInfo.swift */; };
+		CB93325F2AFCBD4D00B7F87A /* LoginUsecaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB93325E2AFCBD4D00B7F87A /* LoginUsecaseError.swift */; };
 		CB9592B22855C09A00847751 /* ManitoRoomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */; };
 		CB9592B52855D52700847751 /* CommonMissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9592B42855D52700847751 /* CommonMissionView.swift */; };
 		CBA15C94285CE1A80051EDE2 /* ChooseCharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */; };
@@ -444,9 +449,14 @@
 		CB21C33828C4C10200128D25 /* CharacterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB358C0128A564080084D001 /* SettingDeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoViewController.swift; sourceTree = "<group>"; };
 		CB637A3A28595C1200FF1240 /* ParticipateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateRoomViewController.swift; sourceTree = "<group>"; };
+		CB66FD6B2AE7FCDE00358CA2 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		CB66FD6D2AE7FCE900358CA2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		CB674C1B285966020063A6B7 /* InputInvitedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputInvitedCodeView.swift; sourceTree = "<group>"; };
 		CB674C2028596A310063A6B7 /* ParticipationRoomDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationRoomDetailsViewController.swift; sourceTree = "<group>"; };
 		CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDeveloperInfoHeaderView.swift; sourceTree = "<group>"; };
+		CB9332552AFCAE3100B7F87A /* LoginUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUsecase.swift; sourceTree = "<group>"; };
+		CB9332592AFCAF3F00B7F87A /* LoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
+		CB93325E2AFCBD4D00B7F87A /* LoginUsecaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUsecaseError.swift; sourceTree = "<group>"; };
 		CB9592B12855C09A00847751 /* ManitoRoomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManitoRoomCollectionCell.swift; sourceTree = "<group>"; };
 		CB9592B42855D52700847751 /* CommonMissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMissionView.swift; sourceTree = "<group>"; };
 		CBA15C93285CE1A80051EDE2 /* ChooseCharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCharacterViewController.swift; sourceTree = "<group>"; };
@@ -645,14 +655,6 @@
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		39C957CC2876E2BE00A04A2B /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				39C957CD2876E2ED00A04A2B /* LoginViewController.swift */,
-			);
-			path = Login;
 			sourceTree = "<group>";
 		};
 		39C957D328799A8200A04A2B /* Foundation */ = {
@@ -980,6 +982,7 @@
 		B55469FD2AADB903004D9FE6 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				CB93325D2AFCBD3C00B7F87A /* LoginScene */,
 				39632A292AD8429000A6E61D /* DetailWait */,
 				B5422CD42ADD42C00051A966 /* DetailScene */,
 				B5546A092AADCAFD004D9FE6 /* LetterScene */,
@@ -1082,6 +1085,7 @@
 		B58CA3052A9CC37000977592 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				CB9332572AFCAEDA00B7F87A /* LoginScene */,
 				D7AE5EBE2AC1964000A20D0A /* SettingScene */,
 				D7AE5EB72AC184A600A20D0A /* ParticipateRoomScene */,
 				B57D57652AD97D0200626BCD /* SplashScene */,
@@ -1146,6 +1150,7 @@
 		B58CA30B2A9CC43600977592 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				CB9332542AFCAE2200B7F87A /* LoginScene */,
 				D7F1CC6F2AF4C13D007CFC97 /* Common */,
 				D7F1CC722AF4C35A007CFC97 /* CreateRoomScene */,
 				D7AE5EC42AC1966B00A20D0A /* SettingScene */,
@@ -1197,6 +1202,7 @@
 		B5A085E82A97303900C8A98D /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				CB9332592AFCAF3F00B7F87A /* LoginInfo.swift */,
 				B5A085E92A97309900C8A98D /* MessageListItem.swift */,
 				B5A086012A974B8100C8A98D /* RoomListItem.swift */,
 				B5A085FB2A97470400C8A98D /* RoomInfo.swift */,
@@ -1403,7 +1409,6 @@
 			isa = PBXGroup;
 			children = (
 				CBBFF775287AE034006A5964 /* SettingDeveloperInfo */,
-				39C957CC2876E2BE00A04A2B /* Login */,
 				7E0C5C342855B1EF00F698D1 /* NickName */,
 				B5F524E628519B0A00614FF7 /* Main */,
 				B5F524E928519B3F00614FF7 /* Detail-Ing */,
@@ -1485,12 +1490,62 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		CB66FD692AE7FC8200358CA2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CB66FD6D2AE7FCE900358CA2 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CB66FD6A2AE7FC8600358CA2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB66FD6B2AE7FCDE00358CA2 /* LoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		CB85DE1D28A76F1A00399109 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				CB85DE1E28A76F3400399109 /* SettingDeveloperInfoHeaderView.swift */,
 			);
 			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		CB9332542AFCAE2200B7F87A /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB9332552AFCAE3100B7F87A /* LoginUsecase.swift */,
+			);
+			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		CB9332572AFCAEDA00B7F87A /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB66FD6A2AE7FC8600358CA2 /* View */,
+				CB9332582AFCAEF900B7F87A /* ViewController */,
+				CB66FD692AE7FC8200358CA2 /* ViewModel */,
+			);
+			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		CB9332582AFCAEF900B7F87A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				39C957CD2876E2ED00A04A2B /* LoginViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CB93325D2AFCBD3C00B7F87A /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB93325E2AFCBD4D00B7F87A /* LoginUsecaseError.swift */,
+			);
+			path = LoginScene;
 			sourceTree = "<group>";
 		};
 		CB9592B02855BFDD00847751 /* Cell */ = {
@@ -2042,6 +2097,7 @@
 				7E7542B32923744300D725CB /* ToastPopupView.swift in Sources */,
 				D71939592AA2343E00A73D6C /* NicknameView.swift in Sources */,
 				B5A085FE2A97493900C8A98D /* UserInfoDTO.swift in Sources */,
+				CB66FD6C2AE7FCDE00358CA2 /* LoginView.swift in Sources */,
 				39C957D22879523200A04A2B /* Date+Extension.swift in Sources */,
 				B5422CD62ADD42CD0051A966 /* DetailUsecaseError.swift in Sources */,
 				B55469B62AA96F54004D9FE6 /* DefaultCharacterType.swift in Sources */,
@@ -2088,6 +2144,7 @@
 				D7AE5ECB2AC1C32F00A20D0A /* ChooseCharacterError.swift in Sources */,
 				435B17682913E71400212663 /* DetailingViewController.swift in Sources */,
 				B50CEE912A445EB700CF1C76 /* UIScrollView+Combine.swift in Sources */,
+				CB9332562AFCAE3100B7F87A /* LoginUsecase.swift in Sources */,
 				D76E02512AF5DE5500F079FB /* InvitedCodeViewModel.swift in Sources */,
 				B5A085F22A9732E800C8A98D /* MemoryDTO.swift in Sources */,
 				B5E1F2B2285ECBDF006D880B /* SelectManitteeViewController.swift in Sources */,
@@ -2118,6 +2175,7 @@
 				B5D3D2972AE0D0CE0016F1D5 /* FriendListViewModel.swift in Sources */,
 				B55BCEB428D8449E00AF7E45 /* MemoryCollectionViewCell.swift in Sources */,
 				B57D57692AD97DAE00626BCD /* SplashView.swift in Sources */,
+				CB93325A2AFCAF3F00B7F87A /* LoginInfo.swift in Sources */,
 				D78B97E72AF11DCD009D9522 /* DetailRoomRepository.swift in Sources */,
 				D75DEEC72AA612DB00BD3AC7 /* ParticipateRoomViewModel.swift in Sources */,
 				B5F525262851A26D00614FF7 /* NSObject+ClassName.swift in Sources */,
@@ -2173,6 +2231,7 @@
 				B5A085F62A9733F900C8A98D /* TokenDTO.swift in Sources */,
 				D7ADDA3C2AFBBDA600755835 /* SettingError.swift in Sources */,
 				B577E4F62ABE0C95003CC102 /* SendLetterViewModel.swift in Sources */,
+				CB93325F2AFCBD4D00B7F87A /* LoginUsecaseError.swift in Sources */,
 				B53CD03A2ADF9B6100BE7353 /* OpenManittoViewModel.swift in Sources */,
 				B5F5253B2854ABF200614FF7 /* MainButton.swift in Sources */,
 				3904F4FC2AA3729300B6264F /* InvitationCode.swift in Sources */,
@@ -2185,6 +2244,8 @@
 				D7BA95B52AF8AB9400455107 /* NicknameError.swift in Sources */,
 				B53A35C42A96F50100B720BC /* DetailRoomRepositoryImpl.swift in Sources */,
 				B53A35C42A96F50100B720BC /* DetailRoomRepositoryImpl.swift in Sources */,
+				B53A35C42A96F50100B720BC /* DetailRoomRepositoryImpl.swift in Sources */,
+				CB66FD6E2AE7FCE900358CA2 /* LoginViewModel.swift in Sources */,
 				CB358C0228A564080084D001 /* SettingDeveloperInfoViewController.swift in Sources */,
 				D71939612AA23F3B00A73D6C /* NicknameUsecase.swift in Sources */,
 				B54741E029A3A4DB00B75BA3 /* LetterImageView.swift in Sources */,
