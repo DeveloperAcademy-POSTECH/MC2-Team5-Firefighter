@@ -66,8 +66,6 @@ final class CalendarView: UIView {
     // MARK: - property
     
     private var selectStartDate: Date = Date()
-    private let oneDayInterval: TimeInterval = 86400
-    private let sevenDaysInterval: TimeInterval = 604800
     var changeButtonState: ((Bool) -> ())?
     var startDateText: String = ""
     var endDateText: String = ""
@@ -187,7 +185,7 @@ final class CalendarView: UIView {
                                                       value: 1,
                                                       to: startDate) else { return }
             self.calendar.select(addDate)
-            startDate += self.oneDayInterval
+            startDate += .oneDayInterval
         }
         self.tempStartDateText = self.calendar.selectedDates[startIndex].toDefaultString
         self.tempEndDateText = self.calendar.selectedDates[endIndex].toDefaultString
@@ -263,7 +261,7 @@ extension CalendarView: FSCalendarDelegate {
     }
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        if date < Date() - self.oneDayInterval {
+        if date < Date() - .oneDayInterval {
             self.viewController?.makeAlert(title: TextLiteral.Common.Calendar.pastAlertTitle.localized(),
                                            message: TextLiteral.Common.Calendar.pastAlertMessage.localized())
             return false
@@ -273,8 +271,8 @@ extension CalendarView: FSCalendarDelegate {
     }
 
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
-        let isBeforeToday = date < Date() - self.oneDayInterval
-        let isAWeekBeforeAfter = date < self.selectStartDate + self.sevenDaysInterval && date > self.selectStartDate - self.sevenDaysInterval
+        let isBeforeToday = date < Date() - .oneDayInterval
+        let isAWeekBeforeAfter = date < self.selectStartDate + .sevenDaysInterval && date > self.selectStartDate - .sevenDaysInterval
         let isDoneSelectedDate = calendar.selectedDates.count > 2
         if isBeforeToday {
             return .grey004.withAlphaComponent(0.4)
