@@ -66,7 +66,6 @@ final class CalendarView: UIView {
     // MARK: - property
     
     private var selectStartDate: Date = Date()
-    var changeButtonState: ((Bool) -> ())?
     var startDateText: String = ""
     var endDateText: String = ""
     private var tempStartDateText: String = ""
@@ -133,8 +132,6 @@ final class CalendarView: UIView {
     func setupButtonState() {
         let hasDate = self.tempStartDateText != "" && self.tempEndDateText != ""
         self.delegate?.detectChangeButton(hasDate)
-        // FIXME: - delegate로 통일 후 삭제해야함
-        self.changeButtonState?(hasDate)
     }
 
     private func setupDelegation() {
