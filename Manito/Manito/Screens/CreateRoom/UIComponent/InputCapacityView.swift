@@ -16,7 +16,7 @@ final class InputCapacityView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.inputPersonViewTitle
+        label.text = TextLiteral.CreateRoom.inputPersonTitle.localized()
         label.font = .font(.regular, ofSize: 18)
         return label
     }()
@@ -28,13 +28,13 @@ final class InputCapacityView: UIView {
     }()
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
+        imageView.image = UIImage.Image.ni
         imageView.backgroundColor = .darkGray
         return imageView
     }()
     private lazy var personLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.x + " \(Int(self.personSlider.value))인"
+        label.text = TextLiteral.Common.xPeople.localized(with: Int(self.personSlider.value))
         label.font = .font(.regular, ofSize: 24)
         return label
     }()
@@ -44,8 +44,7 @@ final class InputCapacityView: UIView {
         slider.minimumValue = 4
         slider.maximumValue = 15
         slider.tintColor = .mainRed
-        slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
-        slider.addTarget(self, action: #selector(self.didSlideSlider(_:)), for: .valueChanged)
+        slider.setThumbImage(UIImage.Image.sliderThumb, for: .normal)
         return slider
     }()
     private lazy var minLabel: UILabel = {
@@ -61,7 +60,11 @@ final class InputCapacityView: UIView {
         return label
     }()
     
-    let sliderPublisher = PassthroughSubject<Int, Never>()
+    // MARK: - property
+    
+    var sliderPublisher: AnyPublisher<Int, Never> {
+        return self.personSlider.valuePublisher
+    }
     
     // MARK: - init
     
@@ -105,13 +108,13 @@ final class InputCapacityView: UIView {
         
         self.addSubview(self.minLabel)
         self.minLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.top.equalTo(self.personBackView.snp.bottom).offset(49)
         }
         
         self.addSubview(self.maxLabel)
         self.maxLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.top.equalTo(self.minLabel.snp.top)
         }
         
@@ -124,14 +127,6 @@ final class InputCapacityView: UIView {
     }
     
     func updateCapacity(capacity: Int) {
-        self.personLabel.text = TextLiteral.x + " \(capacity)인"
-    }
-    
-    // MARK: - selector
-    
-    @objc
-    private func didSlideSlider(_ slider: UISlider) {
-        let value = Int(slider.value)
-        self.sliderPublisher.send(value)
+        self.personLabel.text = TextLiteral.Common.xPeople.localized(with: capacity)
     }
 }

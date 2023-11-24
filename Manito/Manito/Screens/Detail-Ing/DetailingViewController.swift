@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class DetailingViewController: BaseViewController {
+final class DetailingViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
@@ -25,7 +25,7 @@ final class DetailingViewController: BaseViewController {
     
     init(roomId: String) {
         self.roomId = roomId
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -47,6 +47,7 @@ final class DetailingViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDelegation()
         self.configureNavigationController()
+        self.setupNavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,17 +73,17 @@ final class DetailingViewController: BaseViewController {
     }
         
     private func openManittee(manitteeName: String) {
-        let viewController = SelectManitteeViewController(roomId: self.roomId, manitteeNickname: manitteeName)
+        let viewModel = SelectManitteeViewModel(roomId: self.roomId, manitteeNickname: manitteeName)
+        let viewController = SelectManitteeViewController(viewModel: viewModel)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)
     }
     
     private func pushFriendListViewController() {
-        let storyboard = UIStoryboard(name: "DetailIng", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: FriendListViewController.className) as? FriendListViewController else { return }
-        guard let roomId = Int(roomId) else { return }
-        viewController.roomIndex = roomId
+        let usecase = FriendListUsecaseImpl(repository: DetailRoomRepositoryImpl())
+        let viewModel = FriendListViewModel(usecase: usecase, roomId: self.roomId)
+        let viewController = FriendListViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -95,9 +96,9 @@ final class DetailingViewController: BaseViewController {
     }
     
     private func resetMission() {
-        self.makeRequestAlert(title: TextLiteral.detailIngViewControllerResetMissionAlertTitle,
-                              message: TextLiteral.detailIngViewControllerResetMissionAlertMessage,
-                              okTitle: TextLiteral.detailIngViewControllerResetMissionAlertOkTitle,
+        self.makeRequestAlert(title: TextLiteral.DetailIng.resetAlertTitle.localized(),
+                              message: TextLiteral.DetailIng.resetAlertMessage.localized(),
+                              okTitle: TextLiteral.DetailIng.resetAlertOk.localized(),
                               okStyle: .default,
                               okAction: { [weak self] _ in
             guard let roomId = self?.roomId else { return }
@@ -106,8 +107,8 @@ final class DetailingViewController: BaseViewController {
                 case .success():
                     self?.requestRoomInformation()
                 case .failure:
-                    self?.makeAlert(title: TextLiteral.detailIngViewControllerResetMissionErrorAlertOkTitle,
-                                    message: TextLiteral.detailIngViewControllerResetMissionErrorAlertOkMessage)
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                    message: TextLiteral.DetailIng.Error.resetMessage.localized())
                 }
             }
         })
@@ -154,7 +155,7 @@ final class DetailingViewController: BaseViewController {
                                                 roomId: self.roomId,
                                                 mission: mission,
                                                 missionId: missionId.description,
-                                                roomState: self.detailingView.roomType.rawValue,
+                                                roomStatus: self.detailingView.roomType,
                                                 messageType: .received)
                 let letterViewController = LetterViewController(viewModel: viewModel)
                 self.navigationController?.pushViewController(letterViewController, animated: true)
@@ -176,7 +177,8 @@ final class DetailingViewController: BaseViewController {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
                 print("client Error: \(String(describing: message))")
-                makeAlert(title: TextLiteral.detailIngViewControllerDoneExitAlertAdmin)
+                // FIXME: - Exit, Delete가 각각 누구에게 쓰이는지가 불분명하고 에러 처리가 잘 되어 있지 않아서 작성하지 않았습니다.
+                // 담당하시는 분께 맡기겠습니다.🙇‍♂️
             }
         }
     }
@@ -195,6 +197,8 @@ final class DetailingViewController: BaseViewController {
                 print("encoding Error")
             } catch NetworkError.clientError(let message) {
                 print("client Error: \(String(describing: message))")
+                // FIXME: - Exit, Delete가 각각 누구에게 쓰이는지가 불분명하고 에러 처리가 잘 되어 있지 않아서 작성하지 않았습니다.
+                // 담당하시는 분께 맡기겠습니다.🙇‍♂️
             }
         }
     }
@@ -224,11 +228,11 @@ extension DetailingViewController: DetailingDelegate {
             self?.resetMission()
         }
         
-        self.makeActionSheet(title: TextLiteral.detailIngViewControllerMissionEditTitle,
+        self.makeActionSheet(title: TextLiteral.DetailIng.missionMenuTitle.localized(),
                              actionTitles: [
-                                TextLiteral.detailIngViewControllerSelfEditMissionTitle,
-                                TextLiteral.detailIngViewControllerResetMissionTitle,
-                                TextLiteral.cancel],
+                                TextLiteral.DetailIng.missionMenuSetting.localized(),
+                                TextLiteral.DetailIng.missionMenuReset.localized(),
+                                TextLiteral.Common.cancel.localized()],
                              actionStyle: [.default, .default, .cancel],
                              actions: [editMissionAction, resetAction, nil])
     }
@@ -246,19 +250,25 @@ extension DetailingViewController: DetailingDelegate {
                                         roomId: self.roomId,
                                         mission: mission,
                                         missionId: missionId.description,
-                                        roomState: self.detailingView.roomType.rawValue,
+                                        roomStatus: self.detailingView.roomType,
                                         messageType: .sent)
         let letterViewController = LetterViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(letterViewController, animated: true)
     }
     
     func manittoMemoryButtonDidTap() {
-        let viewController = MemoryViewController(roomId: self.roomId)
+        let usecase = MemoryUsecaseImpl(repository: DetailRoomRepositoryImpl())
+        let viewModel = MemoryViewModel(usecase: usecase, roomId: self.roomId)
+        let viewController = MemoryViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func manittoOpenButtonDidTap(nickname: String) {
-        let viewController = OpenManittoViewController(roomId: self.roomId, manittoNickname: nickname)
+        let usecase = OpenManittoUsecaseImpl(repository: DetailRoomRepositoryImpl())
+        let viewModel = OpenManittoViewModel(usecase: usecase,
+                                             roomId: self.roomId,
+                                             manittoNickname: nickname)
+        let viewController = OpenManittoViewController(viewModel: viewModel)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)

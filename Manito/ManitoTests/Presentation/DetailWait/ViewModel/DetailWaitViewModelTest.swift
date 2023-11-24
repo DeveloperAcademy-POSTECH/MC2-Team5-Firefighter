@@ -12,16 +12,13 @@ import XCTest
 
 final class DetailWaitViewModelTest: XCTestCase {
     private var viewModel: DetailWaitViewModel!
-    private var service: MockDetailWaitService!
     private var cancellable: Set<AnyCancellable>!
     private var output: DetailWaitViewModel.Output!
     
     override func setUp() {
         super.setUp()
-        self.service = MockDetailWaitService()
-        self.viewModel = DetailWaitViewModel(roomIndex: 0, detailWaitService: self.service)
+        self.viewModel = DetailWaitViewModel(roomId: "0", usecase: MockDetailWaitUsecase(statusCode: 200))
         self.cancellable = Set<AnyCancellable>()
-        self.viewModel.setRoomInformation(room: RoomInfo.testRoom)
     }
     
     override func tearDown() {
@@ -70,7 +67,6 @@ final class DetailWaitViewModelTest: XCTestCase {
     func testMakeRoomInformation() {
         // given
         let checkRoom = RoomInfo.testRoom
-        self.viewModel.setRoomInformation(room: checkRoom)
         
         // then
         let testRoom = self.viewModel.makeRoomInformation()
@@ -117,8 +113,13 @@ final class DetailWaitViewModelTest: XCTestCase {
                 case .finished:
                     break
                 }
-            }, receiveValue: { room in
-                testRoom = room
+            }, receiveValue: { result in
+                switch result {
+                case .success(let roomInfo):
+                    testRoom = roomInfo
+                case .failure:
+                    XCTFail()
+                }
                 expectation.fulfill()
             })
             .store(in: &self.cancellable)
@@ -139,7 +140,7 @@ final class DetailWaitViewModelTest: XCTestCase {
         let output = self.viewModel.transform(input)
 
         // when
-        output.manitteeNickname
+        output.selectManitteeInfo
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:
@@ -147,7 +148,8 @@ final class DetailWaitViewModelTest: XCTestCase {
                 case .failure:
                     XCTFail("fail")
                 }
-            }, receiveValue: { nickname in
+            }, receiveValue: { data in
+                guard let nickname = data.userInfo?.nickname else { return }
                 testNickname = nickname
                 expectation.fulfill()
             })

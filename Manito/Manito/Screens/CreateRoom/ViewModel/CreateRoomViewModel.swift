@@ -10,58 +10,121 @@ import Foundation
 
 final class CreateRoomViewModel: BaseViewModelType {
     
-    typealias CurrentNextStep = (current: CreateRoomStep, next: CreateRoomStep)
+    typealias Counts = (textCount: Int, maxCount: Int)
+    typealias StepButtonState = (step: Step, isEnabled: Bool)
+    
+    struct RoomInfo {
+        let title: String
+        let capacity: Int
+        let dateRange: String
+    }
+    
+    enum Step: Int {
+        case title = 0, capacity, date, roomInfo, character
+        
+        func next() -> Self {
+            switch self {
+            case .title:
+                return .capacity
+            case .capacity:
+                return .date
+            case .date:
+                return .roomInfo
+            case .roomInfo:
+                return .character
+            case .character:
+                return .character
+            }
+        }
+        
+        func previous() -> Self {
+            switch self {
+            case .title:
+                return .title
+            case .capacity:
+                return .title
+            case .date:
+                return .capacity
+            case .roomInfo:
+                return .date
+            case .character:
+                return .roomInfo
+            }
+        }
+    }
     
     // MARK: - property
     
-    let maxCount: Int = 8
+    private let maxCount: Int = 8
+    private var currentStep: Step = .title
     
-    private let createRoomService: CreateRoomService
-    private var cancellable = Set<AnyCancellable>()
+    private let usecase: CreateRoomUsecase
+    private let textFieldUsecase: TextFieldUsecase
+    private var cancellable: Set<AnyCancellable> = Set()
     
-    private let titleSubject = CurrentValueSubject<String, Never>("")
-    private let capacitySubject = CurrentValueSubject<Int, Never>(4)
-    private let startDateSubject = CurrentValueSubject<String, Never>("")
-    private let endDateSubject = CurrentValueSubject<String, Never>("")
-    private let dateRangeSubject = PassthroughSubject<String, Never>()
-    private let characterIndexSubject = CurrentValueSubject<Int, Never>(0)
-    private let roomIdSubject = PassthroughSubject<Int, NetworkError>()
+    private let titleSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    private let capacitySubject:CurrentValueSubject<Int, Never> = CurrentValueSubject(4)
+    private let startDateSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    private let endDateSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    private let dateRangeSubject: PassthroughSubject<String, Never> = PassthroughSubject()
+    private let characterIndexSubject: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
+    private let roomIdSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
         let textFieldTextDidChanged: AnyPublisher<String, Never>
         let sliderValueDidChanged: AnyPublisher<Int, Never>
         let startDateDidTap: AnyPublisher<String, Never>
         let endDateDidTap: AnyPublisher<String, Never>
         let characterIndexDidTap: AnyPublisher<Int, Never>
-        let nextButtonDidTap: AnyPublisher<CreateRoomStep, Never>
-        let backButtonDidTap: AnyPublisher<CreateRoomStep, Never>
+        let nextButtonDidTap: AnyPublisher<Void, Never>
+        let backButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
-        let title: CurrentValueSubject<String, Never>
+        let currentStep: AnyPublisher<StepButtonState, Never>
+        let counts: AnyPublisher<Counts, Never>
         let fixedTitleByMaxCount: AnyPublisher<String, Never>
-        let capacity: CurrentValueSubject<Int, Never>
-        let dateRange: PassthroughSubject<String, Never>
+        let capacity: AnyPublisher<Int, Never>
         let isEnabled: AnyPublisher<Bool, Never>
-        let currentNextStep: AnyPublisher<CurrentNextStep, Never>
-        let previousStep: AnyPublisher<CreateRoomStep, Never>
-        let roomId: PassthroughSubject<Int, NetworkError>
+        let roomId: AnyPublisher<Result<Int, Error>, Never>
+        let roomInfo: AnyPublisher<RoomInfo, Never>
     }
     
     func transform(from input: Input) -> Output {
+        let viewDidLoad = input.viewDidLoad
+            .compactMap { [weak self] in self?.initStep() }
+            .eraseToAnyPublisher()
+        
+        let nextButtonDidTap = input.nextButtonDidTap
+            .compactMap { [weak self] in self?.nextStep() }
+            .eraseToAnyPublisher()
+        
+        let previousStep = input.backButtonDidTap
+            .compactMap { [weak self] in self?.previousStep() }
+            .eraseToAnyPublisher()
+        
+        let currentStep = Publishers.Merge3(viewDidLoad, nextButtonDidTap, previousStep)
+            .eraseToAnyPublisher()
+        
+        let countViewDidLoadType = input.viewDidLoad
+            .map { [weak self] _ -> Counts in
+                (0, self?.maxCount ?? 0)
+            }
+        
+        let countTextFieldDidChangedType = input.textFieldTextDidChanged
+            .map { [weak self] text -> Counts in
+                (text.count, self?.maxCount ?? 0)
+            }
+        
+        let mergeCount = Publishers.Merge(countViewDidLoadType, countTextFieldDidChangedType).eraseToAnyPublisher()
+        
         let fixedTitle = input.textFieldTextDidChanged
             .map { [weak self] text -> String in
-                let isOverMaxCount = self?.isOverMaxCount(titleCount: text.count, maxCount: self?.maxCount ?? 0) ?? false
-                
-                if isOverMaxCount {
-                    let endIndex = text.index(text.startIndex, offsetBy: self?.maxCount ?? 0)
-                    let fixedText = text[text.startIndex..<endIndex]
-                    self?.titleSubject.send(String(fixedText))
-                    return String(fixedText)
-                }
-                
-                self?.titleSubject.send(text)
-                return text
+                guard let self else { return "" }
+                let title = self.textFieldUsecase.cutTextByMaxCount(text: text, maxCount: self.maxCount)
+                self.titleSubject.send(title)
+                return title
             }
             .eraseToAnyPublisher()
         
@@ -88,14 +151,10 @@ final class CreateRoomViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         let isEnabledTitleType = input.textFieldTextDidChanged
-            .map { title -> Bool in
-                return !title.isEmpty
-            }
+            .map { !$0.isEmpty }
     
         let isEnabledDateType = input.endDateDidTap
-            .map { endDate -> Bool in
-                return !endDate.isEmpty
-            }
+            .map { !$0.isEmpty }
         
         let isEnabled = Publishers.Merge(isEnabledTitleType, isEnabledDateType)
             .eraseToAnyPublisher()
@@ -106,84 +165,78 @@ final class CreateRoomViewModel: BaseViewModelType {
             })
             .store(in: &self.cancellable)
         
-        let currentNextStep = input.nextButtonDidTap
-            .map { [weak self] step -> CurrentNextStep in
-                guard let self = self else { return (step, step.next()) }
-                return self.runActionByStep(step: step)
+        let roomInfo = Publishers.CombineLatest3(self.titleSubject, 
+                                                 self.capacitySubject,
+                                                 self.dateRangeSubject)
+            .map { title, capacity, date in
+                return RoomInfo(title: title, 
+                                capacity: capacity,
+                                dateRange: date)
             }
             .eraseToAnyPublisher()
         
-        let previousStep = input.backButtonDidTap
-            .map { [weak self] step -> CreateRoomStep in
-                guard let self = self else { return step }
-                return self.previous(step: step)
-            }
-            .eraseToAnyPublisher()
-        
-        return Output(title: self.titleSubject,
+        return Output(currentStep: currentStep,
+                      counts: mergeCount,
                       fixedTitleByMaxCount: fixedTitle,
-                      capacity: self.capacitySubject,
-                      dateRange: self.dateRangeSubject,
+                      capacity: self.capacitySubject.eraseToAnyPublisher(),
                       isEnabled: isEnabled,
-                      currentNextStep: currentNextStep, previousStep: previousStep,
-                      roomId: self.roomIdSubject)
+                      roomId: self.roomIdSubject.eraseToAnyPublisher(), 
+                      roomInfo: roomInfo)
     }
     
     // MARK: - init
     
-    init(createRoomService: CreateRoomService) {
-        self.createRoomService = createRoomService
+    init(usecase: CreateRoomUsecase,
+         textFieldUsecase: TextFieldUsecase) {
+        self.usecase = usecase
+        self.textFieldUsecase = textFieldUsecase
     }
     
     // MARK: - func
     
-    private func isOverMaxCount(titleCount: Int, maxCount: Int) -> Bool {
-        if titleCount > maxCount { return true }
-        else { return false }
+    private func initStep() -> StepButtonState {
+        return (self.currentStep, false)
     }
     
-    private func runActionByStep(step: CreateRoomStep) -> CurrentNextStep {
-        switch step {
-        case .chooseCharacter:
-            self.requestCreateRoom(roomInfo: CreatedRoomInfoRequestDTO(title: self.titleSubject.value,
-                                                                       capacity: self.capacitySubject.value,
-                                                                       startDate: self.startDateSubject.value,
-                                                                       endDate: self.endDateSubject.value))
-            return (step, step.next())
+    private func nextStep() -> StepButtonState {
+        switch self.currentStep {
+        case .capacity:
+            self.currentStep = currentStep.next()
+            return (self.currentStep, self.dateIsEmpty())
+        case .character:
+            let roomInfo = CreateRoomInfo(title: self.titleSubject.value,
+                                          capacity: self.capacitySubject.value,
+                                          startDate: self.startDateSubject.value,
+                                          endDate: self.endDateSubject.value)
+            self.dispatchCreateRoom(roomInfo: roomInfo)
+            return (self.currentStep, true)
         default:
-            return (step, step.next())
+            self.currentStep = currentStep.next()
+            return (self.currentStep, true)
         }
     }
     
-    private func previous(step: CreateRoomStep) -> CreateRoomStep {
-        switch step {
-        case .inputTitle:
-            return .inputTitle
-        case .inputCapacity:
-            return .inputTitle
-        case .inputDate:
-            return .inputCapacity
-        case .checkRoom:
-            return .inputDate
-        case .chooseCharacter:
-            return .checkRoom
-        }
+    private func previousStep() -> StepButtonState {
+        self.currentStep = currentStep.previous()
+        return (self.currentStep, true)
+    }
+    
+    private func dateIsEmpty() -> Bool {
+        return !self.endDateSubject.value.isEmpty
     }
     
     // MARK: - network
     
-    private func requestCreateRoom(roomInfo: CreatedRoomInfoRequestDTO) {
+    private func dispatchCreateRoom(roomInfo: CreateRoomInfo) {
         Task {
             do {
-                let roomId = try await self.createRoomService.dispatchCreateRoom(room: CreatedRoomRequestDTO(room: CreatedRoomInfoRequestDTO(title: roomInfo.title,
-                                                                                                                                             capacity: roomInfo.capacity,
-                                                                                                                                             startDate: "20\(roomInfo.startDate)",
-                                                                                                                                             endDate: "20\(roomInfo.endDate)"),
-                                                                                                             member: MemberInfoRequestDTO(colorIndex: self.characterIndexSubject.value)))
-                self.roomIdSubject.send(roomId)
+                let roomInfoDTO = roomInfo.toCreateRoomInfoDTO()
+                let memberInfoDTO = MemberInfoRequestDTO(colorIndex: self.characterIndexSubject.value)
+                let roomId = try await self.usecase.dispatchCreateRoom(room: CreatedRoomRequestDTO(room: roomInfoDTO,
+                                                                                                             member: memberInfoDTO))
+                self.roomIdSubject.send(.success(roomId))
             } catch(let error) {
-                guard let error = error as? NetworkError else { return }
-                self.roomIdSubject.send(completion: .failure(error))
+                self.roomIdSubject.send(.failure(error))
             }
         }
     }

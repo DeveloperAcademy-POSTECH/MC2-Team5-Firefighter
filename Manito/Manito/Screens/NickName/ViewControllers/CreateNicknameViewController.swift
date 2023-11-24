@@ -10,20 +10,22 @@ import UIKit
 
 import SnapKit
 
-final class CreateNicknameViewController: BaseViewController {
+final class CreateNicknameViewController: UIViewController, Keyboardable {
+    
+    // MARK: - ui component
+    
+    private let nicknameView: NicknameView = NicknameView(title: TextLiteral.Nickname.createTitle.localized())
     
     // MARK: - property
     
-    private let viewModel: NicknameViewModel
-    private lazy var nicknameView: NicknameView = NicknameView(title: TextLiteral.createNickNameViewControllerTitle)
-    
-    private var cancellable = Set<AnyCancellable>()
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
-    init(viewModel: NicknameViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -46,25 +48,11 @@ final class CreateNicknameViewController: BaseViewController {
         self.configureNavigationController()
         self.setupBackButton()
         self.bindViewModel()
-    }
-    
-    private func presentMainViewController() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
-        viewController.modalPresentationStyle = .fullScreen
-        viewController.modalTransitionStyle = .crossDissolve
-        present(viewController, animated: true)
+        self.setupKeyboardGesture()
     }
     
     override func endEditingView() {
         self.nicknameView.endEditingView()
-    }
-    
-    override func removeBarButtonItemOffset(with view: UIView, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
-        let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
-        offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
-        offsetView.addSubview(view)
-        return offsetView
     }
     
     // MARK: - func
@@ -75,10 +63,17 @@ final class CreateNicknameViewController: BaseViewController {
     }
     
     private func setupBackButton() {
-        let leftOffsetBackButton = removeBarButtonItemOffset(with: UIView(), offsetX: 10)
+        let leftOffsetBackButton = removeItemOffset(with: UIView(), offsetX: 10)
         let emptyView = makeBarButtonItem(with: leftOffsetBackButton)
 
         navigationItem.leftBarButtonItem = emptyView
+    }
+    
+    private func removeItemOffset(with view: UIView, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
+        let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
+        offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
+        offsetView.addSubview(view)
+        return offsetView
     }
     
     private func bindViewModel() {
@@ -86,14 +81,17 @@ final class CreateNicknameViewController: BaseViewController {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> NicknameViewModel.Output {
+    private func transformedOutput() -> NicknameViewModel.Output? {
+        guard let viewModel = self.viewModel as? NicknameViewModel else { return nil }
         let input = NicknameViewModel.Input(viewDidLoad: self.viewDidLoadPublisher,
                                             textFieldDidChanged: self.nicknameView.textFieldPublisher.eraseToAnyPublisher(),
-                                            doneButtonDidTap: self.nicknameView.doneButtonTapPublisher.eraseToAnyPublisher())
+                                            doneButtonDidTap: self.nicknameView.doneButtonTapPublisher)
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: NicknameViewModel.Output) {
+    private func bindOutputToViewModel(_ output: NicknameViewModel.Output?) {
+        guard let output else { return }
+        
         output.counts
             .sink { [weak self] (textCount, maxCount) in
                 self?.nicknameView.updateTextCount(count: textCount, maxLength: maxCount)
@@ -116,13 +114,21 @@ final class CreateNicknameViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    self?.makeAlert(title: TextLiteral.fail, message: "실패")
+                case .success(): self?.presentMainViewController()
+                case .failure(let error): self?.makeAlert(title: error.localizedDescription)
                 }
-            } receiveValue: { [weak self] _ in
-                self?.presentMainViewController()
             }
             .store(in: &self.cancellable)
+    }
+}
+
+// MARK: - Helper
+
+extension CreateNicknameViewController {
+    private func presentMainViewController() {
+        let viewController = UINavigationController(rootViewController: MainViewController())
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
     }
 }

@@ -11,7 +11,7 @@ import Gifu
 import SkeletonView
 import SnapKit
 
-final class MainViewController: BaseViewController, BaseViewControllerType {
+final class MainViewController: UIViewController, BaseViewControllerType {
     
     private enum InternalSize {
         static let collectionHorizontalSpacing: CGFloat = 20
@@ -29,25 +29,28 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgBackground
+        imageView.image = UIImage.Image.background
         return imageView
     }()
     private let skeletonAnimation: SkeletonLayerAnimation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
     private let refreshControl: UIRefreshControl = UIRefreshControl()
-    private let appTitleView: UIImageView = UIImageView(image: ImageLiterals.imgLogo)
+    private let appTitleView: UIImageView = UIImageView(image: UIImage.Image.logo)
     private lazy var settingButton: SettingButton = {
         let button = SettingButton()
         let action = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(SettingViewController(viewModel: SettingViewModel(settingService: SettingService(repository: SettingRepositoryImpl()))), animated: true)
+            let repository = SettingRepositoryImpl()
+            let usecase = SettingUsecaseImpl(repository: repository)
+            let viewModel = SettingViewModel(usecase: usecase)
+            self?.navigationController?.pushViewController(SettingViewController(viewModel: viewModel), animated: true)
         }
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-    private let imgStar: UIImageView = UIImageView(image: ImageLiterals.imgStar)
+    private let imgStar: UIImageView = UIImageView(image: UIImage.Image.star)
     private let commonMissionView: CommonMissionView = CommonMissionView()
     private let menuTitle: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.mainViewControllerMenuTitle
+        label.text = TextLiteral.Main.listTitle.localized()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 18)
         return label
@@ -94,6 +97,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBar()
         self.baseViewDidLoad()
         self.setupGifImage()
         self.setupRefreshControl()
@@ -102,6 +106,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.delegateInteractivePopGesture()
         self.requestCommonMission()
         self.requestManittoRoomList()
     }
@@ -145,7 +150,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
         self.view.addSubview(self.commonMissionView)
         self.commonMissionView.snp.makeConstraints {
             $0.top.equalTo(self.imgStar.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(InternalSize.commonMissionViewHeight)
         }
 
@@ -174,9 +179,7 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
 
     // MARK: - override
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-
+    private func setupNavigationBar() {
         let appTitleView = self.makeBarButtonItem(with: self.appTitleView)
         let settingButtonView = self.makeBarButtonItem(with: self.settingButton)
 
@@ -194,9 +197,9 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     
     private func setupGifImage() {
         DispatchQueue.main.async {
-            self.maCharacterImageView.animate(withGIFNamed: ImageLiterals.gifMa, animationBlock: nil)
-            self.niCharacterImageView.animate(withGIFNamed: ImageLiterals.gifNi, animationBlock: nil)
-            self.ttoCharacterImageView.animate(withGIFNamed: ImageLiterals.gifTto, animationBlock: nil)
+            self.maCharacterImageView.animate(withGIFNamed: GIFSet.ma, animationBlock: nil)
+            self.niCharacterImageView.animate(withGIFNamed: GIFSet.ni, animationBlock: nil)
+            self.ttoCharacterImageView.animate(withGIFNamed: GIFSet.tto, animationBlock: nil)
         }
     }
     
@@ -225,31 +228,39 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     }
 
     private func createNewRoom() {
-        let alert = UIAlertController(title: TextLiteral.mainViewControllerNewRoomAlert,
+        let alert = UIAlertController(title: TextLiteral.Main.menuTitle.localized(),
                                       message: nil,
                                       preferredStyle: .actionSheet)
 
-        let createRoom = UIAlertAction(title: TextLiteral.createRoom,
+        let createRoom = UIAlertAction(title: TextLiteral.Common.createRoom.localized(),
                                        style: .default,
                                        handler: { [weak self] _ in
-            let createVC = CreateRoomViewController(viewModel: CreateRoomViewModel(createRoomService: CreateRoomService(repository: RoomParticipationRepositoryImpl())))
-            let navigationController = UINavigationController(rootViewController: createVC)
+            let repository = RoomParticipationRepositoryImpl()
+            let usecase = CreateRoomUsecaseImpl(repository: repository)
+            let textFieldUsecase = TextFieldUsecaseImpl()
+            let viewController = CreateRoomViewController(viewModel: CreateRoomViewModel(usecase: usecase,
+                                                                                         textFieldUsecase: textFieldUsecase))
+            let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController,animated: true)
             }
         })
-        let enterRoom = UIAlertAction(title: TextLiteral.enterRoom,
+        let enterRoom = UIAlertAction(title: TextLiteral.Common.enterRoom.localized(),
                                       style: .default,
                                       handler: { [weak self] _ in
-            let viewController = ParticipateRoomViewController()
+            let usecase = ParticipateRoomUsecaseImpl(repository: RoomParticipationRepositoryImpl())
+            let textFieldUsecase = TextFieldUsecaseImpl()
+            let viewModel = ParticipateRoomViewModel(usecase: usecase,
+                                                     textFieldUsecase: textFieldUsecase)
+            let viewController = ParticipateRoomViewController(viewModel: viewModel)
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
         })
-        let cancel = UIAlertAction(title: TextLiteral.cancel, style: .cancel)
+        let cancel = UIAlertAction(title: TextLiteral.Common.cancel.localized(), style: .cancel)
 
         alert.addAction(createRoom)
         alert.addAction(enterRoom)
@@ -257,24 +268,12 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
         self.present(alert, animated: true)
     }
 
-    private func presentParticipateRoomViewController() {
-        let storyboard = UIStoryboard(name: "ParticipateRoom", bundle: nil)
-        let participateRoomViewController = storyboard.instantiateViewController(identifier: "ParticipateRoomViewController")
-
-        participateRoomViewController.modalPresentationStyle = .fullScreen
-        participateRoomViewController.modalTransitionStyle = .crossDissolve
-        DispatchQueue.main.async {
-            self.present(participateRoomViewController, animated: true)
-        }
-    }
-
     // FIXME: - roomIndex가 현재 item으로 설정되어 있고, index가 roomIndex로 설정되어있음. KTBQ2B
     private func pushDetailView(status: RoomStatus, roomIndex: Int, index: Int? = nil) {
         switch status {
         case .PRE:
             guard let index = index else { return }
-            let viewModel = DetailWaitViewModel(roomIndex: index,
-                                                detailWaitService: DetailWaitService(repository: DetailRoomRepositoryImpl()))
+            let viewModel = DetailWaitViewModel(roomId: index.description, usecase: DetailWaitUseCaseImpl(repository: DetailRoomRepositoryImpl()))
             let viewController = DetailWaitViewController(viewModel: viewModel)
             
             self.navigationController?.pushViewController(viewController, animated: true)
@@ -295,8 +294,12 @@ final class MainViewController: BaseViewController, BaseViewControllerType {
     }
     
     func showRoomIdErrorAlert() {
-        self.makeAlert(title: TextLiteral.mainViewControllerShowIdErrorAlertTitle,
-                       message: TextLiteral.mainViewControllerShowIdErrorAlertMessage)
+        self.makeAlert(title: TextLiteral.Main.Error.title,
+                       message: TextLiteral.Main.Error.message)
+    }
+    
+    private func delegateInteractivePopGesture() {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     // MARK: - network
@@ -409,5 +412,11 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
                 self.pushDetailView(status: roomStatus, roomIndex: indexPath.item - 1)
             }
         }
+    }
+}
+
+extension MainViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
 }

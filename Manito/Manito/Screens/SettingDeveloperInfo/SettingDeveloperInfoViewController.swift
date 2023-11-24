@@ -9,47 +9,47 @@ import UIKit
 
 import SnapKit
 
-final class SettingDeveloperInfoViewController: BaseViewController, BaseViewControllerType {
+final class SettingDeveloperInfoViewController: UIViewController, BaseViewControllerType, Navigationable {
     
-    // 개발자 정보 데이터
+    // FIXME: - 개발자 Data를 따로 빼고 그 안에서 데이터 관리
     private let developerData: [[String: Any]] = [
         [
-            "image": ImageLiterals.imgMaCoby,
+            "image": UIImage.Image.coby,
             "name": "김도영 Coby",
             "info": "디너를 좋아하는 코비"
         ],
         [
-            "image": ImageLiterals.imgMaLeo,
+            "image": UIImage.Image.leo,
             "name": "방석진 Leo",
             "info": "서버를 위해 온 천사 리오"
         ],
         [
-            "image": ImageLiterals.imgMaDuna,
+            "image": UIImage.Image.duna,
             "name": "신윤아 Duna",
             "info": "그저 신! 갓듀나^__^"
         ],
         [
-            "image": ImageLiterals.imgMaHoya,
+            "image": UIImage.Image.hoya,
             "name": "이성호 Hoya",
             "info": "아낌없이 주고 (마시는) 호야"
         ],
         [
-            "image": ImageLiterals.imgMaDinner,
+            "image": UIImage.Image.dinner,
             "name": "이정환 Dinner",
             "info": "하면 다 잘 하는 디너"
         ],
         [
-            "image": ImageLiterals.imgMaChemi,
+            "image": UIImage.Image.chemi,
             "name": "최민관 Chemi",
             "info": "우직하고 호기심 가득한 케미"
         ],
         [
-            "image": ImageLiterals.imgMaLivvy,
+            "image": UIImage.Image.livvy,
             "name": "최성희 Livvy",
             "info": "여려 보이지만 강한 리비"
         ],
         [
-            "image": ImageLiterals.imgMaDaon,
+            "image": UIImage.Image.daon,
             "name": "홍지혜 Daon",
             "info": "서버를 위해 온 천사 다온"
         ]
@@ -106,20 +106,14 @@ final class SettingDeveloperInfoViewController: BaseViewController, BaseViewCont
     override func viewDidLoad() {
         super.viewDidLoad()
         self.baseViewDidLoad()
+        self.setupNavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupLargeTitle()
     }
-
-    // MARK: - override
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        title = TextLiteral.settingDeveloperInfoTitle
-    }
-
+    
     // MARK: - base func
 
     func setupLayout() {
@@ -132,6 +126,7 @@ final class SettingDeveloperInfoViewController: BaseViewController, BaseViewCont
 
     func configureUI() {
         self.view.backgroundColor = .backgroundGrey
+        self.title = TextLiteral.Setting.developerInfo.localized()
     }
 
     // MARK: - func

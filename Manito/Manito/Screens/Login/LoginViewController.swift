@@ -10,12 +10,12 @@ import UIKit
 
 import SnapKit
 
-final class LoginViewController: BaseViewController, BaseViewControllerType {
+final class LoginViewController: UIViewController, BaseViewControllerType, Navigationable {
 
     // MARK: - ui component
 
-    private let logoImageView: UIImageView = UIImageView(image: ImageLiterals.imgAppIcon)
-    private let logoTextImageView: UIImageView = UIImageView(image: ImageLiterals.imgTextLogo)
+    private let logoImageView: UIImageView = UIImageView(image: UIImage.Image.appIcon)
+    private let logoTextImageView: UIImageView = UIImageView(image: UIImage.Image.textLogo)
     private let appleLoginButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
         button.cornerRadius = 25
@@ -39,6 +39,7 @@ final class LoginViewController: BaseViewController, BaseViewControllerType {
         self.baseViewDidLoad()
         self.setupLoginButton()
         self.configureNavigationBar()
+        self.setupNavigation()
     }
 
     // MARK: - base func
@@ -118,15 +119,19 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
 
                             if let isNewMember = data.isNewMember {
                                 if isNewMember {
-                                    self.navigationController?.pushViewController(CreateNicknameViewController(viewModel: NicknameViewModel(nicknameService: NicknameService(repository: SettingRepositoryImpl()))), animated: true)
+                                    let repository = SettingRepositoryImpl()
+                                    let nicknameUsecase = NicknameUsecaseImpl(repository: repository)
+                                    let textFieldUsecase = TextFieldUsecaseImpl()
+                                    let viewMdoel = NicknameViewModel(nicknameUsecase: nicknameUsecase,
+                                                                      textFieldUsecase: textFieldUsecase)
+                                    self.navigationController?.pushViewController(CreateNicknameViewController(viewModel: viewMdoel), animated: true)
                                     return
                                 }
                             }
 
                             UserDefaultHandler.setNickname(nickname: data.nickname ?? "")
                             UserDefaultHandler.setIsSetFcmToken(isSetFcmToken: true)
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let viewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
+                            let viewController = UINavigationController(rootViewController: MainViewController())
                             viewController.modalPresentationStyle = .fullScreen
                             viewController.modalTransitionStyle = .crossDissolve
                             self.present(viewController, animated: true)

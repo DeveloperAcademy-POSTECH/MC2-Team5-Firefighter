@@ -23,9 +23,9 @@ final class DetailWaitView: UIView, BaseViewType {
         var status: String {
             switch self {
             case .waiting:
-                return TextLiteral.datailWaitViewControllerButtonWaitingText
+                return TextLiteral.DetailWait.buttonWaiting.localized()
             case .start:
-                return TextLiteral.datailWaitViewControllerButtonStartText
+                return TextLiteral.DetailWait.buttonStart.localized()
             }
         }
     }
@@ -46,14 +46,14 @@ final class DetailWaitView: UIView, BaseViewType {
     private let titleView: DetailWaitTitleView = DetailWaitTitleView()
     private let togetherFriendLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.togetherFriend
+        label.text = TextLiteral.Detail.togetherFriendTitle.localized()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
     private let characterImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
+        imageView.image = UIImage.Image.ni
         return imageView
     }()
     private let userCountLabel: UILabel = {
@@ -64,7 +64,7 @@ final class DetailWaitView: UIView, BaseViewType {
     }()
     private let copyButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(TextLiteral.copyCode, for: .normal)
+        button.setTitle(TextLiteral.DetailWait.copyCode.localized(), for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         return button
@@ -108,14 +108,14 @@ final class DetailWaitView: UIView, BaseViewType {
     func setupLayout() {
         self.addSubview(self.titleView)
         self.titleView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.top.equalToSuperview().offset(100)
             $0.height.equalTo(86)
         }
         
         self.addSubview(self.togetherFriendLabel)
         self.togetherFriendLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.top.equalTo(titleView.snp.bottom).offset(44)
         }
         
@@ -134,21 +134,21 @@ final class DetailWaitView: UIView, BaseViewType {
         
         self.addSubview(self.copyButton)
         self.copyButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.centerY.equalTo(self.togetherFriendLabel.snp.centerY)
         }
         
         self.addSubview(self.listTableView)
         self.listTableView.snp.makeConstraints {
             $0.top.equalTo(self.togetherFriendLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(44)
         }
         
         self.addSubview(self.startButton)
         self.startButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(65)
             $0.height.equalTo(60)
         }
@@ -165,7 +165,7 @@ final class DetailWaitView: UIView, BaseViewType {
         self.titleView.setupLabelData(title: title, dateRange: dateRange)
     }
 
-    private func setupRelatedViews(of userStatus: Bool, _ isStart: Bool) {
+    private func setupRelatedViews(of userStatus: Bool) {
         self.showStartButtonForAdmin(userStatus)
         self.setExitButtonMenu(userStatus)
         self.setupTitleViewGesture(userStatus)
@@ -201,14 +201,14 @@ final class DetailWaitView: UIView, BaseViewType {
         var children: [UIAction]
         switch type {
         case .admin:
-            children = [UIAction(title: TextLiteral.modifiedRoomInfo, handler: { [weak self] _ in
+            children = [UIAction(title: TextLiteral.Detail.menuModifiedRoomInfo.localized(), handler: { [weak self] _ in
                 self?.editMenuButtonSubject.send(())
-            }),UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
+            }),UIAction(title: TextLiteral.Detail.menuDelete.localized(), handler: { [weak self] _ in
                 self?.deleteMenuButtonSubject.send(())
             })
             ]
         case .member:
-            children = [UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+            children = [UIAction(title: TextLiteral.Detail.menuLeave.localized(), handler: { [weak self] _ in
                 self?.leaveMenuButtonSubject.send(())
             })]
         }
@@ -236,7 +236,7 @@ final class DetailWaitView: UIView, BaseViewType {
         self.setupTitleViewData(title: room.roomInformation.title,
                                 status: room.roomInformation.state,
                                 dateRange: room.roomInformation.dateRangeText)
-        self.setupRelatedViews(of: room.admin, room.roomInformation.isStart)
+        self.setupRelatedViews(of: room.admin)
 
         self.configureStartButton(room.canStart)
         self.configureUserCountLabel(userCount: room.userCount)

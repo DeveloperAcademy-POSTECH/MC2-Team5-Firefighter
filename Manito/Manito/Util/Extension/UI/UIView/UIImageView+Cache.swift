@@ -23,8 +23,10 @@ extension UIImageView {
             
             guard let url = URL(string: url) else { return }
             URLSession.shared.dataTask(with: url) { data, response, error in
+                // FIXME: - 데이터베이스에서 이미지가 날라가면서 URL은 존재하는데 IMAGE가 없는 경우가 발생했습니다.
+                // Error가 발생하는 경우를 후에 추가하겠습니다.
                 guard let data = data else { return }
-                let image = UIImage(data: data)!
+                guard let image = UIImage(data: data) else { return }
                 DispatchQueue.main.async {
                     ImageCacheManager.shared.setObject(image, forKey: cachedKey)
                     self.image = image

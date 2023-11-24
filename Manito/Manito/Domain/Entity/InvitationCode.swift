@@ -7,7 +7,11 @@
 
 import Foundation
 
+///
+/// 초대 코드에 대한 Entity
+///
 struct InvitationCode {
+    /// 초대 코드
     let code: String
 }
 

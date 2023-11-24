@@ -18,16 +18,16 @@ final class GuideView: UIView {
 
         var text: String {
             switch self {
-            case .letter: return TextLiteral.letterViewControllerGuideText
-            case .main: return TextLiteral.mainViewControllerGuideText
-            case .detailing: return TextLiteral.detailIngViewControllerGuideText
+            case .letter: return TextLiteral.Letter.guide.localized()
+            case .main: return TextLiteral.Main.guide.localized()
+            case .detailing: return TextLiteral.DetailIng.guide.localized()
             }
         }
 
         var image: UIImage {
             switch self {
-            case .letter: return ImageLiterals.icLetterMissionInfo
-            default: return ImageLiterals.icMissionInfo
+            case .letter: return UIImage.Icon.letterMissionInfo
+            default: return UIImage.Icon.missionInfo
             }
         }
     }
@@ -35,7 +35,7 @@ final class GuideView: UIView {
     // MARK: - ui component
 
     private let guideButton: UIButton = UIButton()
-    private let guideBoxImageView: UIImageView = UIImageView(image: ImageLiterals.imgGuideBox)
+    private let guideBoxImageView: UIImageView = UIImageView(image: UIImage.Image.guideBox)
     private let guideLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -117,7 +117,7 @@ final class GuideView: UIView {
             view.addSubview(self.guideBoxImageView)
             self.guideBoxImageView.snp.makeConstraints {
                 $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(35)
-                $0.trailing.equalTo(view.snp.trailing).inset(Size.leadingTrailingPadding + 8)
+                $0.trailing.equalTo(view.snp.trailing).inset(SizeLiteral.leadingTrailingPadding + 8)
                 $0.width.equalTo(270)
                 $0.height.equalTo(90)
             }

@@ -1,5 +1,5 @@
 //
-//  CheckRoomView.swift
+//  CheckRoomInfoView.swift
 //  Manito
 //
 //  Created by 이성호 on 2022/06/14.
@@ -27,7 +27,7 @@ final class CheckRoomInfoView: UIView {
     }()
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
+        imageView.image = UIImage.Image.ni
         return imageView
     }()
     private var personLabel: UILabel = {
@@ -78,15 +78,9 @@ final class CheckRoomInfoView: UIView {
         }
     }
     
-    func updateRoomTitle(title: String) {
+    func updateRoomInfo(title: String, capacity: Int, range: String) {
         self.nameLabel.text = title
-    }
-    
-    func updateRoomCapacity(capacity: Int) {
-        self.personLabel.text = "\(capacity)" + TextLiteral.per
-    }
-    
-    func updateRoomDateRange(range: String) {
+        self.personLabel.text = TextLiteral.Common.people.localized(with: capacity)
         self.dateLabel.text = range
     }
 }

@@ -41,7 +41,7 @@ final class DetailWaitTitleView: UIView {
 
     private let durationLabel: UILabel = {
         let durationText = UILabel()
-        durationText.text = TextLiteral.during
+        durationText.text = TextLiteral.DetailWait.duringTitle.localized()
         durationText.textColor = .grey001
         durationText.font = .font(.regular, ofSize: 14)
         return durationText

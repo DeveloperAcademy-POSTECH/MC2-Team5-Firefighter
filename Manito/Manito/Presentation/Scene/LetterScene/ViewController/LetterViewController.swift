@@ -8,7 +8,9 @@
 import Combine
 import UIKit
 
-final class LetterViewController: BaseViewController {
+final class LetterViewController: UIViewController, Navigationable {
+    
+    typealias MessageDetail = (roomId: String, mission: String, missionId: String, manitteeId: String)
 
     enum Section: CaseIterable {
         case main
@@ -22,6 +24,8 @@ final class LetterViewController: BaseViewController {
     private var snapShot: NSDiffableDataSourceSnapshot<Section, MessageListItem>!
 
     // MARK: - property
+    
+    private let mailManager: MailComposeManager = MailComposeManager()
 
     private let segmentValueSubject: PassthroughSubject<Int, Never> = PassthroughSubject()
     private let reportSubject: PassthroughSubject<String, Never> = PassthroughSubject()
@@ -37,7 +41,7 @@ final class LetterViewController: BaseViewController {
     
     init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
 
     @available(*, unavailable)
@@ -55,6 +59,8 @@ final class LetterViewController: BaseViewController {
         super.viewDidLoad()
         self.configureDataSource()
         self.bindViewModel()
+        self.setupMailManager()
+        self.setupNavigation()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +71,12 @@ final class LetterViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.letterView.removeGuideView()
+    }
+    
+    // MARK: - func
+    
+    private func setupMailManager() {
+        self.mailManager.viewController = self
     }
 
     // MARK: - func - bind
@@ -89,41 +101,37 @@ final class LetterViewController: BaseViewController {
     }
 
     private func bindOutputToViewModel(_ output: LetterViewModel.Output?) {
-        guard let output = output else { return }
+        guard let output else { return }
 
         output.messages
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] completion in
-                switch completion {
-                case .failure(_):
-                    self?.showErrorAlert()
-                case .finished: return
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let items):
+                    self?.handleMessageList(items)
+                case .failure(let error):
+                    self?.showErrorAlert(error.localizedDescription)
+                    self?.handleMessageList([])
                 }
-            }, receiveValue: { [weak self] items in
-                self?.handleMessageList(items)
             })
             .store(in: &self.cancelBag)
 
         output.messageDetails
-            .sink(receiveValue: { [weak self] details in
-                guard let self = self else { return }
-                let viewController = CreateLetterViewController(manitteeId: details.manitteeId,
-                                                                roomId: details.roomId,
-                                                                mission: details.mission,
-                                                                missionId: details.missionId)
-                let navigationController = UINavigationController(rootViewController: viewController)
-                viewController.configureDelegation(self)
-                self.present(navigationController, animated: true)
+            .sink(receiveValue: { [weak self] detail in
+                self?.presentSendLetterViewController(detail: detail)
             })
             .store(in: &self.cancelBag)
 
         output.reportDetails
             .sink(receiveValue: { [weak self] details in
-                self?.sendReportMail(userNickname: details.nickname, content: details.content)
+                let content = TextLiteral.Mail.reportMessage.localized(with: details.nickname, 
+                                                                       details.content,
+                                                                       Date().description)
+                self?.sendReportMail(content: content)
             })
             .store(in: &self.cancelBag)
 
-        Publishers.CombineLatest(output.roomState, output.index)
+        Publishers.CombineLatest(output.roomStatus, output.index)
             .map { (state: $0, index: $1) }
             .sink(receiveValue: { [weak self] result in
                 self?.updateLetterViewBottomArea(with: result.state, result.index)
@@ -137,7 +145,7 @@ final class LetterViewController: BaseViewController {
                 if let content {
                     self?.reportSubject.send(content)
                 } else {
-                    self?.reportSubject.send("쪽지 내용 없음")
+                    self?.reportSubject.send(TextLiteral.Letter.emailEmptyContent.localized())
                 }
             })
             .store(in: &self.cancelBag)
@@ -171,37 +179,50 @@ final class LetterViewController: BaseViewController {
 
 // MARK: - Helper
 extension LetterViewController {
-    private func showErrorAlert() {
-        self.makeAlert(title: TextLiteral.letterViewControllerErrorTitle,
-                       message: TextLiteral.letterViewControllerErrorDescription)
+    private func showErrorAlert(_ message: String) {
+        self.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                       message: message)
     }
 
-    private func handleMessageList(_ messages: [MessageListItem]?) {
-        guard let messages else {
-            self.showErrorAlert()
-            return
-        }
-
+    private func handleMessageList(_ messages: [MessageListItem]) {
         self.reloadMessageList(messages)
         self.letterView.updateEmptyAreaStatus(to: !messages.isEmpty)
+    }
+    
+    private func sendReportMail(content: String) {
+        let title = TextLiteral.Mail.reportTitle.localized()
+        self.mailManager.sendMail(title: title, content: content)
     }
 
     private func updateLetterViewEmptyArea(with index: Int) {
         switch index {
         case 0:
-            self.letterView.updateEmptyArea(with: TextLiteral.letterViewControllerEmptyViewTo)
+            self.letterView.updateEmptyArea(with: TextLiteral.Letter.emptyToContent.localized())
         default:
-            self.letterView.updateEmptyArea(with: TextLiteral.letterViewControllerEmptyViewFrom)
+            self.letterView.updateEmptyArea(with: TextLiteral.Letter.emptyFromContent.localized())
         }
     }
 
-    private func updateLetterViewBottomArea(with state: LetterViewModel.RoomState, _ index: Int) {
+    private func updateLetterViewBottomArea(with state: RoomStatus, _ index: Int) {
         switch (state, index) {
-        case (.processing, 0):
+        case (.PROCESSING, 0):
             self.letterView.showBottomArea()
         default:
             self.letterView.hideBottomArea()
         }
+    }
+    
+    private func presentSendLetterViewController(detail: MessageDetail) {
+        let usecase = SendLetterUsecaseImpl(repository: LetterRepositoryImpl())
+        let viewModel = SendLetterViewModel(usecase: usecase,
+                                            mission: detail.mission,
+                                            manitteeId: detail.manitteeId,
+                                            roomId: detail.roomId,
+                                            missionId: detail.missionId)
+        let viewController = SendLetterViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        viewController.configureDelegation(self)
+        self.present(navigationController, animated: true)
     }
 }
 
@@ -275,8 +296,8 @@ extension LetterViewController {
     }
 }
 
-// MARK: - CreateLetterViewControllerDelegate
-extension LetterViewController: CreateLetterViewControllerDelegate {
+// MARK: - SendLetterViewControllerDelegate
+extension LetterViewController: SendLetterViewControllerDelegate {
     func refreshLetterData() {
         self.refreshSubject.send(())
     }

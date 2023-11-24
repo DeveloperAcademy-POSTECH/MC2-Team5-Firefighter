@@ -5,14 +5,10 @@
 //  Created by Mingwan Choi on 2023/04/20.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
-
-protocol DetailEditDelegate: AnyObject {
-    func cancelButtonDidTap()
-    func changeButtonDidTap(capacity: Int, from startDate: String, to endDate: String)
-}
 
 final class DetailEditView: UIView, BaseViewType {
     
@@ -25,7 +21,7 @@ final class DetailEditView: UIView, BaseViewType {
     
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(TextLiteral.cancel, for: .normal)
+        button.setTitle(TextLiteral.Common.cancel.localized(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         return button
@@ -38,20 +34,20 @@ final class DetailEditView: UIView, BaseViewType {
     }()
     private let changeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(TextLiteral.change, for: .normal)
+        button.setTitle(TextLiteral.Detail.change.localized(), for: .normal)
         button.setTitleColor(.subBlue, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 16)
         return button
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.modifiedRoomInfo
+        label.text = TextLiteral.Detail.menuModifiedRoomInfo.localized()
         label.font = .font(.regular, ofSize: 16)
         return label
     }()
     private let manittoPeriodTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.detailEditViewControllerStartSetting
+        label.text = TextLiteral.DetailEdit.periodSettingTitle.localized()
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
@@ -59,28 +55,28 @@ final class DetailEditView: UIView, BaseViewType {
     let calendarView: CalendarView = CalendarView()
     private let helpLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.maxMessage
+        label.text = TextLiteral.Common.Calendar.maxDateContent.localized()
         label.textColor = .grey004
         label.font = .font(.regular, ofSize: 14)
         return label
     }()
     private lazy var numberOfParticipantsTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.detailEditViewControllerSetMember
+        label.text = TextLiteral.DetailEdit.memberSettingTitle.localized()
         label.font = .font(.regular, ofSize: 18)
         label.textColor = .white
         return label
     }()
     private lazy var minimumNumberOfParticipantsLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Int(self.participantsSlider.minimumValue))인"
+        label.text = TextLiteral.Common.people.localized(with: Int(self.participantsSlider.minimumValue))
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
     }()
     private lazy var maxNumberOfParticipantsLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Int(self.participantsSlider.maximumValue))인"
+        label.text = TextLiteral.Common.people.localized(with: Int(self.participantsSlider.maximumValue))
         label.font = .font(.regular, ofSize: 16)
         label.textColor = .white
         return label
@@ -92,7 +88,8 @@ final class DetailEditView: UIView, BaseViewType {
         slider.maximumTrackTintColor = .darkGrey003
         slider.minimumTrackTintColor = .red001
         slider.isContinuous = true
-        slider.setThumbImage(ImageLiterals.imageSliderThumb, for: .normal)
+        slider.setThumbImage(UIImage.Image.sliderThumb, for: .normal)
+        slider.addTarget(self, action: #selector(self.didSlideSlider(_:)), for: .valueChanged)
         return slider
     }()
     private lazy var numberOfParticipantsLabel: UILabel = {
@@ -104,23 +101,40 @@ final class DetailEditView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private weak var delegate: DetailEditDelegate?
     private weak var calendarDelegate: CalendarDelegate?
     private let editMode: EditMode
     private var maximumMemberCount: Int? {
         willSet(count) {
             if let count {
-                self.numberOfParticipantsLabel.text = count.description + TextLiteral.per
+                self.numberOfParticipantsLabel.text = TextLiteral.Common.people.localized(with: count)
             }
         }
     }
+    private let roomTitle: String
+    private let capacity: Int
+    private var cancellable = Set<AnyCancellable>()
+    
+    var cancelButtonPublisher: AnyPublisher<Void, Never> {
+        return self.cancelButton.tapPublisher
+    }
+    
+    var changeButtonSubject: PassthroughSubject<CreatedRoomInfoRequestDTO, Never> = PassthroughSubject()
+    
+    var changeButtonPublisher: AnyPublisher<Void, Never> {
+        return self.changeButton.tapPublisher
+    }
+    
+    lazy var sliderPublisher: CurrentValueSubject<Int, Never> = CurrentValueSubject(self.capacity)
     
     // MARK: - init
     
-    init(editMode: EditMode) {
+    init(editMode: EditMode, roomInfo: RoomInfo) {
         self.editMode = editMode
+        self.roomTitle = roomInfo.roomInformation.title
+        self.capacity = roomInfo.roomInformation.capacity
         super.init(frame: .zero)
         self.baseInit()
+        self.bindChangeButton()
     }
     
     @available(*, unavailable)
@@ -162,13 +176,13 @@ final class DetailEditView: UIView, BaseViewType {
         self.addSubview(self.manittoPeriodTitleLabel)
         self.manittoPeriodTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.cancelButton.snp.bottom).offset(51)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.calendarView)
         self.calendarView.snp.makeConstraints {
             $0.top.equalTo(self.manittoPeriodTitleLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(400)
         }
         
@@ -186,8 +200,6 @@ final class DetailEditView: UIView, BaseViewType {
 
     func configureUI() {
         self.backgroundColor = .backgroundGrey
-        self.setupCancleButton()
-        self.setupChangeButton()
     }
 
     // MARK: - func
@@ -196,7 +208,7 @@ final class DetailEditView: UIView, BaseViewType {
         self.addSubview(self.numberOfParticipantsTitleLabel)
         self.numberOfParticipantsTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.calendarView.snp.bottom).offset(60)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.minimumNumberOfParticipantsLabel)
@@ -226,25 +238,6 @@ final class DetailEditView: UIView, BaseViewType {
         }
     }
     
-    private func setupCancleButton() {
-        let action = UIAction { [weak self] _ in
-            self?.delegate?.cancelButtonDidTap()
-        }
-        self.cancelButton.addAction(action, for: .touchUpInside)
-    }
-    
-    private func setupChangeButton() {
-        let action = UIAction { [weak self] _ in
-            guard let capacity = self?.participantsSlider.value,
-                  let startDateString = self?.calendarView.getTempStartDate(),
-                  let endDateString = self?.calendarView.getTempEndDate() else { return }
-            self?.delegate?.changeButtonDidTap(capacity: Int(capacity),
-                                                  from: startDateString,
-                                                  to: endDateString)
-        }
-        self.changeButton.addAction(action, for: .touchUpInside)
-    }
-    
     func setupChangeButton(_ value: Bool) {
         self.changeButton.isEnabled = value
         self.changeButton.setTitleColor(.subBlue, for: .normal)
@@ -269,11 +262,11 @@ final class DetailEditView: UIView, BaseViewType {
     }
     
     func setupDateRange(from startDateString: String, to endDateString: String) {
-        guard let startDate = startDateString.stringToDate else { return }
+        guard let startDate = startDateString.toDefaultDate else { return }
         if startDate.isPast {
             let fiveDaysInterval: TimeInterval = 86400 * 4
-            self.calendarView.startDateText = Date().dateToString
-            self.calendarView.endDateText = (Date() + fiveDaysInterval).dateToString
+            self.calendarView.startDateText = Date().toDefaultString
+            self.calendarView.endDateText = (Date() + fiveDaysInterval).toDefaultString
         } else {
             self.calendarView.startDateText = startDateString
             self.calendarView.endDateText = endDateString
@@ -281,11 +274,23 @@ final class DetailEditView: UIView, BaseViewType {
         self.calendarView.setupDateRange()
     }
     
-    func configureDelegation(_ delegate: DetailEditDelegate) {
-        self.delegate = delegate
-    }
-    
     func configureCalendarDelegate(_ delegate: CalendarDelegate) {
         self.calendarView.configureCalendarDelegate(delegate)
+    }
+    
+    private func bindChangeButton() {
+        self.changeButton.tapPublisher.sink(receiveValue: { [weak self] _ in
+            self?.changeButtonSubject.send(CreatedRoomInfoRequestDTO(title: self?.roomTitle ?? "",
+                                                                     capacity: self?.sliderPublisher.value ?? 0,
+                                                                     startDate: "20\(self?.calendarView.getTempStartDate() ?? "")",
+                                                                     endDate: "20\(self?.calendarView.getTempEndDate() ?? "")"))
+        })
+        .store(in: &self.cancellable)
+    }
+    
+    @objc
+    private func didSlideSlider(_ slider: UISlider) {
+        let value = Int(slider.value)
+        self.sliderPublisher.send(value)
     }
 }

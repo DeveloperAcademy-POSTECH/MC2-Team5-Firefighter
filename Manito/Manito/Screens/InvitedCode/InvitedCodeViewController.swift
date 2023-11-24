@@ -5,97 +5,32 @@
 //  Created by SHIN YOON AH on 2022/06/09.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 
-class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
+final class InvitedCodeViewController: UIViewController {
+        
+    // MARK: - ui components
     
-    var roomInfo: RoomListItemDTO
-    var code: String
+    private let invitedCodeView: InvitedCodeView = InvitedCodeView()
     
-    init(roomInfo: RoomListItemDTO, code: String){
-        self.roomInfo = roomInfo
-        self.code = code
-        super.init()
+    // MARK: - property
+    
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
+    
+    // MARK: - init
+    
+    init(viewModel: any BaseViewModelType){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - property
-    private let invitedImageView: UIImageView = {
-        let imageView = UIImageView(image: ImageLiterals.imgCodeBackground)
-        imageView.isUserInteractionEnabled = true
-        return imageView
-    }()
-    private lazy var closeButton: UIButton = {
-        let button = UIButton()
-        let action = UIAction { [weak self] _ in
-            self?.dismiss(animated: true)
-        }
-        button.addAction(action, for: .touchUpInside)
-        button.setImage(ImageLiterals.btnXmark, for: .normal)
-        return button
-    }()
-    private lazy var roomTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .font(.regular, ofSize: 34)
-        label.text = roomInfo.title
-        return label
-    }()
-    private lazy var roomDateLabel: UILabel = {
-        let label = UILabel()
-        label.font = .font(.regular, ofSize: 18)
-        label.text = "\(roomInfo.startDate ?? "") ~ \(roomInfo.endDate ?? "")"
-        return label
-    }()
-    private let roomImage = UIImageView(image: ImageLiterals.imgCharacterBrown)
-    private lazy var roomPersonLabel: UILabel = {
-        let label = UILabel()
-        label.font = .font(.regular, ofSize: 24)
-        label.text = "X \(roomInfo.capacity ?? 0)인"
-        return label
-    }()
-    private lazy var roomPersonView: UIView = {
-        let view = UIView()
-        view.addSubview(roomImage)
-        roomImage.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.height.width.equalTo(60)
-        }
-        view.addSubview(roomPersonLabel)
-        roomPersonLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(roomImage.snp.trailing)
-            $0.centerY.equalTo(roomImage.snp.centerY)
-        }
-        return view
-    }()
-    private lazy var roomInviteCodeButton: UIButton = {
-        let button = UIButton(type: .system)
-        let buttonAction = UIAction { [weak self] _ in
-            if let code = self?.code {
-                ToastView.showToast(code: code, message: TextLiteral.detailWaitViewControllerCopyCode, controller: self ?? UIViewController())
-            }
-        }
-        button.setTitle(code, for: .normal)
-        button.setTitleColor(.blue, for: .normal)
-        button.setTitleColor(.blue.withAlphaComponent(0.8), for: .highlighted)
-        button.titleLabel?.font = .font(.regular, ofSize: 50)
-        button.addAction(buttonAction, for: .touchUpInside)
-        return button
-    }()
-    private let roomInviteInfoLabel: UILabel = {
-        let label = UILabel()
-        label.font = .font(.regular, ofSize: 18)
-        label.text = TextLiteral.invitedCodeViewCOntroller
-        label.textColor = .backgroundGrey
-        return label
-    }()
-    
-    // MARK: - init
     
     deinit {
         print("\(#file) is dead")
@@ -103,64 +38,55 @@ class InvitedCodeViewController: BaseViewController, BaseViewControllerType {
 
     // MARK: - life cycle
 
+    override func loadView() {
+        self.view = self.invitedCodeView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.baseViewDidLoad()
+        self.bindViewModel()
+        self.bindUI()
     }
 
-    // MARK: - base func
+    // MARK: - func
     
-    func setupLayout() {
-        view.addSubview(invitedImageView)
-        invitedImageView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(142)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
-            $0.height.equalTo(463)
-        }
-        
-        view.addSubview(closeButton)
-        closeButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(16)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
-            $0.height.width.equalTo(44)
-        }
-        
-        invitedImageView.addSubview(roomTitleLabel)
-        roomTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(invitedImageView.snp.top).inset(125)
-            $0.centerX.equalToSuperview()
-        }
-        
-        invitedImageView.addSubview(roomDateLabel)
-        roomDateLabel.snp.makeConstraints {
-            $0.top.equalTo(roomTitleLabel.snp.bottom).offset(7)
-            $0.centerX.equalToSuperview()
-        }
-        
-        invitedImageView.addSubview(roomPersonView)
-        roomPersonView.snp.makeConstraints {
-            $0.top.equalTo(roomDateLabel.snp.bottom).offset(7)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(120)
-            $0.height.equalTo(60)
-        }
-        
-        invitedImageView.addSubview(roomInviteCodeButton)
-        roomInviteCodeButton.snp.makeConstraints {
-            $0.top.equalTo(roomPersonView.snp.bottom).offset(80)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(242)
-            $0.height.equalTo(65)
-        }
-        
-        invitedImageView.addSubview(roomInviteInfoLabel)
-        roomInviteInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(roomInviteCodeButton.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
-        }
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
     }
     
-    func configureUI() {
-        self.view.backgroundColor = .black.withAlphaComponent(0.8)
+    private func transformedOutput() -> InvitedCodeViewModel.Output? {
+        guard let viewModel = self.viewModel as? InvitedCodeViewModel else { return nil }
+        let input = InvitedCodeViewModel.Input(viewDidLoad: self.viewDidLoadPublisher, 
+                                               copyButtonDidTap: self.invitedCodeView.codeButtonDidTapPublisher)
+        
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: InvitedCodeViewModel.Output?) {
+        guard let output else { return }
+        
+        output.roomInfo
+            .sink { [weak self] roomInfo in
+                self?.invitedCodeView.updateRoomInfo(roomInfo: roomInfo.roomInformation)
+                self?.invitedCodeView.updateCodeButtonTitle(code: roomInfo.invitation.code)
+            }
+            .store(in: &self.cancellable)
+        
+        output.copyButtonDidTap
+            .sink { [weak self] code in
+                ToastView.showToast(code: code,
+                                    message: TextLiteral.DetailWait.toastCopyMessage.lowercased(), 
+                                    controller: self ?? UIViewController())
+            }
+            .store(in: &self.cancellable)
+    }
+    
+    private func bindUI() {
+        self.invitedCodeView.closeButtonDidTapPublisher
+            .sink { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
+            .store(in: &self.cancellable)
     }
 }

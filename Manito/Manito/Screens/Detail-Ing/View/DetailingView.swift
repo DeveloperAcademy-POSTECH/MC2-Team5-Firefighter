@@ -63,7 +63,7 @@ final class DetailingView: UIView, BaseViewType {
     }()
     private let missionTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.individualMissionViewTitleLabel
+        label.text = TextLiteral.DetailIng.individualMissionTitle.localized()
         label.textColor = .grey002
         label.font = .font(.regular, ofSize: 14)
         return label
@@ -75,7 +75,7 @@ final class DetailingView: UIView, BaseViewType {
             self?.delegate?.editMissionButtonDidTap(mission: mission)
         }
         button.addAction(action, for: .touchUpInside)
-        button.setImage(ImageLiterals.icPencil, for: .normal)
+        button.setImage(UIImage.Icon.pencil, for: .normal)
         return button
     }()
     private let missionContentsLabel: UILabel = {
@@ -92,7 +92,7 @@ final class DetailingView: UIView, BaseViewType {
     }()
     private let informationTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.detailIngViewControllerDetailInformatioin
+        label.text = TextLiteral.Detail.informationTitle.localized()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 16)
         return label
@@ -113,10 +113,10 @@ final class DetailingView: UIView, BaseViewType {
         view.layer.cornerRadius = 49.5
         return view
     }()
-    private let manitteeIconView = UIImageView(image: ImageLiterals.icManiTti)
+    private let manitteeIconView = UIImageView(image: UIImage.Icon.manitti)
     private let manitteeLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(UserDefaultStorage.nickname)의 마니띠"
+        label.text = TextLiteral.Detail.manitteeTitle.localized(with: UserDefaultStorage.nickname)
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
         return label
@@ -137,10 +137,10 @@ final class DetailingView: UIView, BaseViewType {
         view.layer.cornerRadius = 49.5
         return view
     }()
-    private let listIconView = UIImageView(image: ImageLiterals.icList)
+    private let listIconView = UIImageView(image: UIImage.Icon.list)
     private let listLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.togetherFriend
+        label.text = TextLiteral.Detail.togetherFriendTitle.localized()
         label.textColor = .white
         label.font = .font(.regular, ofSize: 15)
         return label
@@ -156,7 +156,7 @@ final class DetailingView: UIView, BaseViewType {
                                             missionId: self?.missionId ?? "")
         }
         button.addAction(action, for: .touchUpInside)
-        button.setTitle(TextLiteral.letterViewControllerTitle, for: .normal)
+        button.setTitle(TextLiteral.Letter.title.localized(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 15)
         button.backgroundColor = .darkGrey002
@@ -169,7 +169,7 @@ final class DetailingView: UIView, BaseViewType {
             self?.delegate?.manittoMemoryButtonDidTap()
         }
         button.addAction(action, for: .touchUpInside)
-        button.setTitle(TextLiteral.memoryViewControllerTitleLabel, for: .normal)
+        button.setTitle(TextLiteral.Memory.title.localized(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .font(.regular, ofSize: 15)
         button.backgroundColor = .darkGrey002
@@ -184,7 +184,7 @@ final class DetailingView: UIView, BaseViewType {
         return label
     }()
     private let manitiRealIconView: UIImageView = {
-        let imageView = UIImageView(image: ImageLiterals.imgMa)
+        let imageView = UIImageView(image: UIImage.Image.ma)
         imageView.alpha = 0
         return imageView
     }()
@@ -205,7 +205,7 @@ final class DetailingView: UIView, BaseViewType {
             self?.delegate?.manittoOpenButtonDidTap(nickname: manittoNickname)
         }
         button.addAction(action, for: .touchUpInside)
-        button.title = TextLiteral.detailIngViewControllerManitoOpenButton
+        button.title = TextLiteral.DetailIng.buttonOpen.localized()
         return button
     }()
     private let badgeLabel: LetterCountBadgeView = {
@@ -216,7 +216,7 @@ final class DetailingView: UIView, BaseViewType {
     }()
     private let exitButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icMore, for: .normal)
+        button.setImage(UIImage.Icon.more, for: .normal)
         button.showsMenuAsPrimaryAction = true
         return button
     }()
@@ -240,7 +240,7 @@ final class DetailingView: UIView, BaseViewType {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(100)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.periodLabel)
@@ -260,7 +260,7 @@ final class DetailingView: UIView, BaseViewType {
         self.addSubview(self.missionBackgroundView)
         self.missionBackgroundView.snp.makeConstraints {
             $0.top.equalTo(self.periodLabel.snp.bottom).offset(31)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(100)
         }
         
@@ -280,13 +280,13 @@ final class DetailingView: UIView, BaseViewType {
         self.addSubview(self.informationTitleLabel)
         self.informationTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.missionBackgroundView.snp.bottom).offset(44)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.manitteeBackView)
         self.manitteeBackView.snp.makeConstraints {
             $0.top.equalTo(self.informationTitleLabel.snp.bottom).offset(31)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.trailing.equalTo(self.snp.centerX).offset(-14)
             $0.height.equalTo((UIScreen.main.bounds.width - 28 - 40) / 2)
         }
@@ -321,7 +321,7 @@ final class DetailingView: UIView, BaseViewType {
         self.listBackView.snp.makeConstraints {
             $0.top.equalTo(self.informationTitleLabel.snp.bottom).offset(31)
             $0.leading.equalTo(self.snp.centerX).offset(14)
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo((UIScreen.main.bounds.width - 28 - 40) / 2)
         }
         
@@ -348,20 +348,20 @@ final class DetailingView: UIView, BaseViewType {
         self.addSubview(self.letterBoxButton)
         self.letterBoxButton.snp.makeConstraints {
             $0.top.equalTo(self.manitteeBackView.snp.bottom).offset(25)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(80)
         }
         
         self.addSubview(self.manittoMemoryButton)
         self.manittoMemoryButton.snp.makeConstraints {
             $0.top.equalTo(self.letterBoxButton.snp.bottom).offset(18)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(80)
         }
         
         self.addSubview(self.manittoOpenButtonShadowView)
         self.manittoOpenButtonShadowView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.bottom.equalToSuperview().inset(50)
             $0.height.equalTo(60)
         }
@@ -423,7 +423,9 @@ final class DetailingView: UIView, BaseViewType {
         self.missionId = room.mission?.id.description ?? ""
         DispatchQueue.main.async {
             self.titleLabel.text = room.roomInformation.title
-            self.periodLabel.text = "\(room.roomInformation.startDate.subStringToDate()) ~ \(room.roomInformation.endDate.subStringToDate())"
+            // FIXME: - subStringToDate() 메서드를 지우면서 임시적으로 처리해뒀습니다.
+            // !!!: - roomListItem에서는 Date로 가지고 있다가 화면으로 나올 때는 String 처리가 되어서 나온다던지 하는 가공 코드 필요해보입니다.
+            self.periodLabel.text = "\(room.roomInformation.startDate.toDefaultDate?.toDefaultString ?? "") ~ \(room.roomInformation.endDate.toDefaultDate?.toDefaultString ?? "")"
             self.manitteeAnimationLabel.text = room.manittee.nickname
             self.setupBadge(count: room.messages?.count ?? 0)
             self.updateMissionEditButton(room.admin, status: self.roomType)
@@ -454,14 +456,14 @@ final class DetailingView: UIView, BaseViewType {
     private func setupExitButton(admin: Bool) {
         if admin {
             let menu = UIMenu(options: [], children: [
-                UIAction(title: TextLiteral.detailWaitViewControllerDeleteRoom, handler: { [weak self] _ in
+                UIAction(title: TextLiteral.Detail.menuDelete.localized(), handler: { [weak self] _ in
                     self?.delegate?.deleteButtonDidTap()
                 })
             ])
             self.exitButton.menu = menu
         } else {
             let menu = UIMenu(options: [], children: [
-                UIAction(title: TextLiteral.detailWaitViewControllerLeaveRoom, handler: { [weak self] _ in
+                UIAction(title: TextLiteral.Detail.menuLeave.localized(), handler: { [weak self] _ in
                     self?.delegate?.leaveButtonDidTap()
                 })
             ])
@@ -480,7 +482,7 @@ final class DetailingView: UIView, BaseViewType {
     
     private func setupProcessingUI() {
         self.missionBackgroundView.makeBorderLayer(color: .subOrange)
-        self.statusLabel.text = TextLiteral.doing
+        self.statusLabel.text = TextLiteral.Common.processing.localized()
         self.statusLabel.backgroundColor = .mainRed
         self.manittoMemoryButton.isHidden = true
         self.exitButton.isHidden = true
@@ -488,16 +490,16 @@ final class DetailingView: UIView, BaseViewType {
     
     private func setupPostUI() {
         self.missionBackgroundView.makeBorderLayer(color: .darkGrey001)
-        self.statusLabel.text = TextLiteral.done
+        self.statusLabel.text = TextLiteral.Common.done.localized()
         self.statusLabel.backgroundColor = .grey002
         self.manittoMemoryButton.isHidden = false
         self.exitButton.isHidden = false
-        self.missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.detailIngViewControllerDoneMissionText)
+        self.missionContentsLabel.attributedText = NSAttributedString(string: TextLiteral.DetailDone.mission.localized())
     }
     
     private func setupManittoOpenButton(date: String) {
-        guard let endDate = date.stringToDateYYYY() else { return }
-        self.manittoOpenButtonShadowView.isHidden = !(endDate.isOpenManitto)
+        guard let endDate = date.toFullDate else { return }
+        self.manittoOpenButtonShadowView.isHidden = !(endDate.canOpenManitto)
     }
     
     private func toggledManitteeAnimation(_ value: Bool) {
@@ -537,5 +539,19 @@ final class DetailingView: UIView, BaseViewType {
                 }
             }
         }
+    }
+}
+
+private extension Date {
+    var isPastOpeningTime: Bool {
+        let now = Date()
+        let nineHoursTimeInterval: TimeInterval = 32400
+        let dateAddNineHours = self + nineHoursTimeInterval
+        let distance = dateAddNineHours.distance(to: now)
+        return distance > 0 && distance < 54000
+    }
+
+    var canOpenManitto: Bool {
+        return self.isToday && self.isPastOpeningTime
     }
 }

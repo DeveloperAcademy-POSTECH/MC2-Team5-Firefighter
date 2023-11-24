@@ -13,10 +13,10 @@ final class CreateRoomCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - ui component
     
-    private let imageView: UIImageView = UIImageView(image: ImageLiterals.icNewRoom)    
+    private let imageView: UIImageView = UIImageView(image: UIImage.Icon.newRoom)    
     private let circleView: UIView = {
         let circleView = UIView()
-        circleView.backgroundColor = .yellow
+        circleView.backgroundColor = .yellow001
         circleView.layer.cornerRadius = 44
         circleView.layer.borderWidth = 1
         circleView.layer.borderColor = UIColor.grey003.cgColor
@@ -24,7 +24,7 @@ final class CreateRoomCollectionViewCell: UICollectionViewCell, BaseViewType {
     }()
     private let menuLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.createRoomCollectionViewCellMenuLabel
+        label.text = TextLiteral.Main.cellCreateRoomTitle.localized()
         label.textColor = .grey001
         label.font = .font(.regular, ofSize: 14)
         return label

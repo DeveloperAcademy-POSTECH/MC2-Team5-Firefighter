@@ -35,12 +35,12 @@ final class CalendarView: UIView {
 
     private let previousButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icBack, for: .normal)
+        button.setImage(UIImage.Button.back, for: .normal)
         return button
     }()
     private let nextButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.icRight, for: .normal)
+        button.setImage(UIImage.Icon.right, for: .normal)
         return button
     }()
     private var calendar: FSCalendar = {
@@ -154,8 +154,10 @@ final class CalendarView: UIView {
     }
 
     func setupDateRange() {
-        guard let startDate = self.startDateText.stringToDate else { return }
-        guard let endDate = self.endDateText.stringToDate else { return }
+        self.startDateTapPublisher.send("20\(self.startDateText)")
+        self.endDateTapPublisher.send("20\(self.endDateText)")
+        guard let startDate = self.startDateText.toDefaultDate else { return }
+        guard let endDate = self.endDateText.toDefaultDate else { return }
         self.setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 
@@ -187,8 +189,8 @@ final class CalendarView: UIView {
             self.calendar.select(addDate)
             startDate += self.oneDayInterval
         }
-        self.tempStartDateText = self.calendar.selectedDates[startIndex].dateToString
-        self.tempEndDateText = self.calendar.selectedDates[endIndex].dateToString
+        self.tempStartDateText = self.calendar.selectedDates[startIndex].toDefaultString
+        self.tempEndDateText = self.calendar.selectedDates[endIndex].toDefaultString
     }
 
     func countDateRange() -> Int {
@@ -225,15 +227,15 @@ extension CalendarView: FSCalendarDelegate {
                 DispatchQueue.main.async {                
                     calendar.deselect(date)
                 }
-                self.viewController?.makeAlert(title: TextLiteral.calendarViewAlertMaxTitle,
-                                          message: TextLiteral.maxMessage)
+                self.viewController?.makeAlert(title: TextLiteral.Common.Calendar.maxAlertTitle.localized(),
+                                               message: TextLiteral.Common.Calendar.maxDateContent.localized())
             } else {
-                self.tempEndDateText = date.dateToString
+                self.tempEndDateText = date.toDefaultString
                 self.setDateRange()
                 calendar.reloadData()
             }
         } else if isReclickedStartDate {
-            self.tempStartDateText = date.dateToString
+            self.tempStartDateText = date.toDefaultString
             self.tempEndDateText = ""
             (calendar.selectedDates).forEach {
                 calendar.deselect($0)
@@ -262,8 +264,8 @@ extension CalendarView: FSCalendarDelegate {
 
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         if date < Date() - self.oneDayInterval {
-            self.viewController?.makeAlert(title: TextLiteral.calendarViewAlertPastTitle,
-                                      message: TextLiteral.calendarViewAlertPastMessage)
+            self.viewController?.makeAlert(title: TextLiteral.Common.Calendar.pastAlertTitle.localized(),
+                                           message: TextLiteral.Common.Calendar.pastAlertMessage.localized())
             return false
         } else {
             return true

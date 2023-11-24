@@ -13,7 +13,7 @@ protocol MissionEditDelegate: AnyObject {
     func didChangeMission()
 }
 
-final class MissionEditViewController: BaseViewController, BaseViewControllerType {
+final class MissionEditViewController: UIViewController, BaseViewControllerType, Navigationable {
     
     // MARK: - property
     
@@ -65,7 +65,7 @@ final class MissionEditViewController: BaseViewController, BaseViewControllerTyp
     init(mission: String, roomId: String) {
         self.mission = mission
         self.roomId = roomId
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -79,7 +79,7 @@ final class MissionEditViewController: BaseViewController, BaseViewControllerTyp
         super.viewDidLoad()
         self.baseViewDidLoad()
         self.setupGesture()
-        self.setupNotificationCenter()
+        self.setupNavigation()
     }
     
     // MARK: - base func
@@ -88,7 +88,7 @@ final class MissionEditViewController: BaseViewController, BaseViewControllerTyp
         self.view.addSubview(self.backgroundView)
         self.backgroundView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(-5)
+            $0.bottom.equalTo(self.view.keyboardLayoutGuide.snp.top).inset(-5)
             $0.height.equalTo(120)
         }
         
@@ -121,19 +121,14 @@ final class MissionEditViewController: BaseViewController, BaseViewControllerTyp
         self.view.addGestureRecognizer(tapGesture)
     }
     
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     private func didChangedTextField(_ text: String) {
         guard !text.isEmpty else {
             self.dismiss(animated: true)
             return
         }
-        self.makeRequestAlert(title: TextLiteral.missionEditViewControllerChangeMissionAlertTitle,
-                              message: TextLiteral.missionEditViewControllerChangeMissionAlertMessage,
-                              okTitle: TextLiteral.change,
+        self.makeRequestAlert(title: TextLiteral.DetailIng.missionEditAlertTitle.localized(),
+                              message: TextLiteral.DetailIng.missionEditAlertMessage.localized(),
+                              okTitle: TextLiteral.Detail.change.localized(),
                               okStyle: .default,
                               okAction: { [weak self] _ in
             guard let missionText = self?.missionTextField.text else { return }
@@ -145,8 +140,8 @@ final class MissionEditViewController: BaseViewController, BaseViewControllerTyp
                         self?.dismiss(animated: true)
                     }
                 case .failure:
-                    self?.makeAlert(title: TextLiteral.missionEditViewControllerChangeMissionErrorAlertTitle,
-                                    message: TextLiteral.missionEditViewControllerChangeMissionErrorAlertMessage)
+                    self?.makeAlert(title: TextLiteral.Common.Error.title.localized(),
+                                    message: TextLiteral.DetailIng.Error.missionEditMessage.localized())
                 }
             }
         })
@@ -157,20 +152,6 @@ final class MissionEditViewController: BaseViewController, BaseViewControllerTyp
     @objc
     private func dismissViewController() {
         self.dismiss(animated: true)
-    }
-    
-    @objc private func keyboardWillShow(notification:NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.backgroundView.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
-        }
-    }
-    
-    @objc private func keyboardWillHide(notification:NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.backgroundView.transform = .identity
-        })
     }
     
     // MARK: - network

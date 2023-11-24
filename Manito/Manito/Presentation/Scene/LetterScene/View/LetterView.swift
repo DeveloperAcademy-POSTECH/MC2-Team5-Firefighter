@@ -19,9 +19,9 @@ final class LetterView: UIView, BaseViewType {
         static let headerContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets.zero
         static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
             top: 18.0,
-            leading: Size.leadingTrailingPadding,
+            leading: SizeLiteral.leadingTrailingPadding,
             bottom: 18.0,
-            trailing: Size.leadingTrailingPadding
+            trailing: SizeLiteral.leadingTrailingPadding
         )
         static let stackMargins: UIEdgeInsets = UIEdgeInsets(
             top: 0,
@@ -49,14 +49,14 @@ final class LetterView: UIView, BaseViewType {
     }()
     private let sendLetterButton: UIButton = {
         let button = MainButton()
-        button.title = TextLiteral.sendLetterViewSendLetterButton
+        button.title = TextLiteral.Letter.buttonSend.localized()
         return button
     }()
     private let emptyLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
         label.font = .font(.regular, ofSize: 16)
-        label.text = TextLiteral.letterViewControllerEmptyViewTo
+        label.text = TextLiteral.Letter.emptyToContent.localized()
         label.isHidden = true
         label.textColor = .grey003
         label.addLabelSpacing(lineSpacing: 16)
@@ -131,7 +131,9 @@ final class LetterView: UIView, BaseViewType {
 }
 
 extension LetterView {
+
     // MARK: - base func
+
     func setupLayout() {
         self.addSubview(self.wholeStackView)
         self.wholeStackView.snp.makeConstraints {
@@ -160,7 +162,7 @@ extension LetterView {
         self.backgroundColor = .backgroundGrey
     }
 
-    // MARK: - private func
+    // MARK: - Private - func
 
     private func bindUI() {
         self.listCollectionView.scrollPublisher
@@ -172,7 +174,7 @@ extension LetterView {
 
     private func setupNavigationTitle(in viewController: UIViewController) {
         guard let navigationController = viewController.navigationController else { return }
-        viewController.title = TextLiteral.letterViewControllerTitle
+        viewController.title = TextLiteral.Letter.title.localized()
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationItem.largeTitleDisplayMode = .automatic
     }

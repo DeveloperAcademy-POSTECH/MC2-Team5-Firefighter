@@ -10,17 +10,12 @@ import Foundation
 
 final class LetterViewModel: BaseViewModelType {
 
-    typealias MessageDetails = (roomId: String, mission: String, missionId: String, manitteeId: String)
-    typealias ReportDetails = (nickname: String, content: String)
+    typealias MessageDetail = (roomId: String, mission: String, missionId: String, manitteeId: String)
+    typealias ReportDetail = (nickname: String, content: String)
 
     enum MessageType: Int {
         case sent = 0
         case received = 1
-    }
-
-    enum RoomState: String {
-        case processing = "PROCESSING"
-        case post = "POST"
     }
 
     struct Input {
@@ -32,11 +27,11 @@ final class LetterViewModel: BaseViewModelType {
     }
 
     struct Output {
-        let messages: AnyPublisher<[MessageListItem]?, Error>
+        let messages: AnyPublisher<Result<[MessageListItem], Error>, Never>
         let index: AnyPublisher<Int, Never>
-        let messageDetails: AnyPublisher<MessageDetails, Never>
-        let reportDetails: AnyPublisher<ReportDetails, Never>
-        let roomState: AnyPublisher<RoomState, Never>
+        let messageDetails: AnyPublisher<MessageDetail, Never>
+        let reportDetails: AnyPublisher<ReportDetail, Never>
+        let roomStatus: AnyPublisher<RoomStatus, Never>
     }
 
     // MARK: - property
@@ -44,8 +39,8 @@ final class LetterViewModel: BaseViewModelType {
     private var cancelBag: Set<AnyCancellable> = Set()
 
     private let usecase: LetterUsecase
-    private var messageDetails: MessageDetails
-    private let roomState: RoomState
+    private var messageDetail: MessageDetail
+    private let roomStatus: RoomStatus
     private let messageType: MessageType
 
     // MARK: - init
@@ -54,11 +49,11 @@ final class LetterViewModel: BaseViewModelType {
          roomId: String,
          mission: String,
          missionId: String,
-         roomState: String,
+         roomStatus: RoomStatus,
          messageType: MessageType) {
         self.usecase = usecase
-        self.messageDetails = MessageDetails(roomId, mission, missionId, "")
-        self.roomState = RoomState(rawValue: roomState)!
+        self.messageDetail = MessageDetail(roomId, mission, missionId, "")
+        self.roomStatus = roomStatus
         self.messageType = messageType
     }
 
@@ -77,8 +72,13 @@ final class LetterViewModel: BaseViewModelType {
         let mergePublisher = Publishers.Merge3(viewDidLoadType, segmentValueType, refreshWithType)
 
         let messagesPublisher = mergePublisher
-            .asyncMap { [weak self] type in
-                try await self?.fetchMessages(with: type)
+            .asyncMap { [weak self] type -> Result<[MessageListItem], Error> in
+                do {
+                    let messages = try await self?.fetchMessages(with: type)
+                    return .success(messages ?? [])
+                } catch (let error) {
+                    return .failure(error)
+                }
             }
             .eraseToAnyPublisher()
 
@@ -89,21 +89,21 @@ final class LetterViewModel: BaseViewModelType {
             .eraseToAnyPublisher()
 
         let messageDetailsPublisher = input.sendLetterButtonDidTap
-            .map { [weak self] _ -> MessageDetails in
-                self?.loadMessageDetails()
-                return (self?.messageDetails)!
+            .map { [weak self] _ -> MessageDetail in
+                self?.loadMessageDetail()
+                return (self?.messageDetail)!
             }
             .eraseToAnyPublisher()
 
         let reportPublisher = input.reportButtonDidTap
-            .map { [weak self] content -> ReportDetails in
+            .map { [weak self] content -> ReportDetail in
                 self?.usecase.loadNickname()
                 return ((self?.usecase.nickname)!, content)
             }
             .eraseToAnyPublisher()
 
-        let roomStatePublisher = input.viewDidLoad
-            .compactMap { [weak self] in self?.roomState }
+        let roomStatusPublisher = input.viewDidLoad
+            .compactMap { [weak self] in self?.roomStatus }
             .eraseToAnyPublisher()
 
         return Output(
@@ -111,7 +111,7 @@ final class LetterViewModel: BaseViewModelType {
             index: currentIndexPublisher,
             messageDetails: messageDetailsPublisher,
             reportDetails: reportPublisher,
-            roomState: roomStatePublisher
+            roomStatus: roomStatusPublisher
         )
     }
 
@@ -123,7 +123,7 @@ final class LetterViewModel: BaseViewModelType {
     }
 
     private func fetchMessages(with type: MessageType) async throws -> [MessageListItem] {
-        let roomId = self.messageDetails.roomId
+        let roomId = self.messageDetail.roomId
 
         switch type {
         case .sent:
@@ -142,20 +142,24 @@ extension LetterViewModel {
 
     private func fetchSendMessages(roomId: String, type: MessageType) async throws -> [MessageListItem] {
         let messages = try await self.usecase.fetchSendLetter(roomId: roomId)
-        return self.insertReportState(type, in: messages)
+        return await self.insertReportState(type, in: messages)
     }
 
     private func fetchReceivedMessages(roomId: String, type: MessageType) async throws -> [MessageListItem] {
         let messages = try await self.usecase.fetchReceiveLetter(roomId: roomId)
-        return self.insertReportState(type, in: messages)
+        return await self.insertReportState(type, in: messages)
     }
 
-    private func loadMessageDetails() {
+    private func loadMessageDetail() {
         guard let manitteeId = self.usecase.manitteeId else { return }
-        self.messageDetails.manitteeId = manitteeId
+        self.messageDetail.manitteeId = manitteeId
     }
 
-    private func insertReportState(_ type: MessageType, in messages: [MessageListItemDTO]) -> [MessageListItem] {
-        return messages.map { $0.toMessageListItem(canReport: (type == .received)) }
+    private func insertReportState(_ type: MessageType, in messages: [MessageListItemDTO]) async -> [MessageListItem] {
+        var resultMessages: [MessageListItem] = []
+        for message in messages {
+            resultMessages.append(await message.toMessageListItem(canReport: (type == .received)))
+        }
+        return resultMessages
     }
 }

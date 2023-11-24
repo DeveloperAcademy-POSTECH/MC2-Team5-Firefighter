@@ -74,3 +74,20 @@ extension UISegmentedControl {
             .eraseToAnyPublisher()
     }
 }
+
+extension UIControl {
+    var buttonTapPublisher: AnyPublisher<Void, Never> {
+        self.controlPublisher(for: .touchUpInside)
+            .map { _ in Void() }
+            .eraseToAnyPublisher()
+    }
+}
+
+extension UISlider {
+     var valuePublisher: AnyPublisher<Int, Never> {
+         controlPublisher(for: .valueChanged)
+             .map { $0 as! UISlider }
+             .map { Int($0.value) }
+             .eraseToAnyPublisher()
+     }
+ }

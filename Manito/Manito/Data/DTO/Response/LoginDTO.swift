@@ -14,3 +14,15 @@ struct LoginDTO: Decodable {
     let isNewMember: Bool?
     let userSettingDone: Bool?
 }
+
+extension LoginDTO {
+    func toLoginInfo() -> LoginInfo {
+        return LoginInfo(
+            accessToken: self.accessToken ?? "",
+            refreshToken: self.refreshToken ?? "",
+            nickname: self.nickname ?? "",
+            isNewMember: self.isNewMember ?? true,
+            userSettingDone: self.userSettingDone ?? false
+        )
+    }
+}

@@ -20,7 +20,7 @@ final class InputTitleView: UIView {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         textField.backgroundColor = .darkGrey002
-        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.inputNameViewRoomNameText,
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.CreateRoom.inputNameTitle.localized(),
                                                              attributes:attributes)
         textField.textAlignment = .center
         textField.makeBorderLayer(color: .white)
@@ -32,9 +32,8 @@ final class InputTitleView: UIView {
         textField.becomeFirstResponder()
         return textField
     }()
-    private lazy var roomsTextLimitLabel : UILabel = {
+    private let roomsTextLimitLabel : UILabel = {
         let label = UILabel()
-        label.text = "0/\(self.maxLength)"
         label.font = .font(.regular, ofSize: 20)
         label.textColor = .grey002
         return label
@@ -42,8 +41,7 @@ final class InputTitleView: UIView {
     
     // MARK: - property
     
-    private var maxLength: Int = 8
-    let textFieldPublisher = PassthroughSubject<String, Never>()
+    let textFieldPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
     
     // MARK: - init
     

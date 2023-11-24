@@ -46,7 +46,7 @@ final class CharacterCollectionView: UIView {
     
     // MARK: - property
     
-    let characterIndexTapPublisher = CurrentValueSubject<Int, Never>(0)
+    let characterIndexTapPublisher: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
     
     // MARK: - init
     
@@ -72,14 +72,14 @@ final class CharacterCollectionView: UIView {
 
 extension CharacterCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Character.allCases.count
+        return DefaultCharacterType.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterCollectionViewCell.className, for: indexPath) as? CharacterCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.configureBackgroundColor(color: Character.allCases[indexPath.item].color)
-        cell.configureImage(image: Character.allCases[indexPath.item].image)
+        cell.configureBackgroundColor(color: DefaultCharacterType.allCases[indexPath.item].backgroundColor)
+        cell.configureImage(image: DefaultCharacterType.allCases[indexPath.item].image)
         
         if indexPath.item == 0 {
             cell.isSelected = true
@@ -92,6 +92,7 @@ extension CharacterCollectionView: UICollectionViewDataSource {
 
 extension CharacterCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.characterIndexTapPublisher.send(indexPath.item)
+        let index = indexPath.item
+        self.characterIndexTapPublisher.send(index)
     }
 }

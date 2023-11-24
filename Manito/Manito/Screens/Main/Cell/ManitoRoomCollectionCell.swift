@@ -20,7 +20,7 @@ final class ManitoRoomCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - ui component
     
-    private let imageView: UIImageView = UIImageView(image: ImageLiterals.imgNi)
+    private let imageView: UIImageView = UIImageView(image: UIImage.Image.ni)
     let memberLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -29,7 +29,6 @@ final class ManitoRoomCollectionViewCell: UICollectionViewCell, BaseViewType {
     }()
     let roomLabel: UILabel = {
         let label = UILabel()
-        label.text = TextLiteral.manitoRoomCollectionViewCellRoomLabelTitle
         label.textColor = .white
         label.font = .font(.regular, ofSize: 20)
         label.textAlignment = .center

@@ -10,7 +10,7 @@ import UIKit
 
 import SnapKit
 
-final class CreateRoomViewController: BaseViewController {
+final class CreateRoomViewController: UIViewController, Navigationable, Keyboardable {
     
     // MARK: - ui component
     
@@ -18,14 +18,14 @@ final class CreateRoomViewController: BaseViewController {
     
     // MARK: - property
     
-    private var cancellable = Set<AnyCancellable>()
-    private let createRoomViewModel: CreateRoomViewModel
+    private var cancellable: Set<AnyCancellable> = Set()
+    private let viewModel: any BaseViewModelType
     
     // MARK: - init
     
-    init(viewModel: CreateRoomViewModel) {
-        self.createRoomViewModel = viewModel
-        super.init()
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -46,8 +46,10 @@ final class CreateRoomViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigationBarHiddenState()
-        self.configureDelegation()
         self.bindViewModel()
+        self.bindUI()
+        self.setupNavigation()
+        self.setupKeyboardGesture()
     }
     
     // MARK: - override
@@ -62,65 +64,42 @@ final class CreateRoomViewController: BaseViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    private func configureDelegation() {
-        self.createRoomView.configureDelegate(self)
-    }
-    
-    private func pushDetailWaitViewController(roomId: Int) {
-        guard let navigationController = self.presentingViewController as? UINavigationController else { return }
-        let viewModel = DetailWaitViewModel(roomIndex: roomId,
-                                            detailWaitService: DetailWaitService(repository: DetailRoomRepositoryImpl()))
-        let viewController = DetailWaitViewController(viewModel: viewModel)
-        
-        navigationController.popViewController(animated: true)
-        navigationController.pushViewController(viewController, animated: false)
-        
-        self.dismiss(animated: true) {
-            NotificationCenter.default.post(name: .createRoomInvitedCode, object: nil)
-        }
-    }
-    
     private func bindViewModel() {
         let output = self.transformedOutput()
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> CreateRoomViewModel.Output {
-        let input = CreateRoomViewModel.Input(textFieldTextDidChanged: self.createRoomView.roomTitleView.textFieldPublisher.eraseToAnyPublisher(),
-                                              sliderValueDidChanged: self.createRoomView.roomCapacityView.sliderPublisher.eraseToAnyPublisher(),
-                                              startDateDidTap: self.createRoomView.roomDateView.calendarView.startDateTapPublisher.eraseToAnyPublisher(),
-                                              endDateDidTap: self.createRoomView.roomDateView.calendarView.endDateTapPublisher.eraseToAnyPublisher(),
-                                              characterIndexDidTap: self.createRoomView.characterCollectionView.characterIndexTapPublisher.eraseToAnyPublisher(),
-                                              nextButtonDidTap: self.createRoomView.nextButtonDidTapPublisher.eraseToAnyPublisher(),
-                                              backButtonDidTap: self.createRoomView.backButtonDidTapPublisher.eraseToAnyPublisher())
-        return self.createRoomViewModel.transform(from: input)
+    private func transformedOutput() -> CreateRoomViewModel.Output? {
+        guard let viewModel = self.viewModel as? CreateRoomViewModel else { return nil }
+        let input = CreateRoomViewModel.Input(viewDidLoad: self.viewDidLoadPublisher, 
+                                              textFieldTextDidChanged: self.createRoomView.textFieldPublisher.eraseToAnyPublisher(),
+                                              sliderValueDidChanged: self.createRoomView.sliderPublisher.eraseToAnyPublisher(),
+                                              startDateDidTap: self.createRoomView.startDateTapPublisher.eraseToAnyPublisher(),
+                                              endDateDidTap: self.createRoomView.endDateTapPublisher.eraseToAnyPublisher(),
+                                              characterIndexDidTap: self.createRoomView.characterIndexTapPublisher.eraseToAnyPublisher(),
+                                              nextButtonDidTap: self.createRoomView.nextButtonDidTapPublisher,
+                                              backButtonDidTap: self.createRoomView.backButtonDidTapPublisher)
+        return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: CreateRoomViewModel.Output) {
+    private func bindOutputToViewModel(_ output: CreateRoomViewModel.Output?) {
+        guard let output else { return }
         
-        output.title
-            .sink(receiveValue: { [weak self] title in
-                self?.createRoomView.roomInfoView.updateRoomTitle(title: title)
-                self?.createRoomView.roomTitleView.updateTitleCount(count: title.count, maxLength: self?.createRoomViewModel.maxCount ?? 0)
-            })
+        output.counts
+            .sink { [weak self] (textCount, maxCount) in
+                self?.createRoomView.updateTitleCount(count: textCount, maxLength: maxCount)
+            }
             .store(in: &self.cancellable)
         
         output.fixedTitleByMaxCount
             .sink(receiveValue: { [weak self] fixedTitle in
-                self?.createRoomView.roomTitleView.updateTextFieldText(fixedTitle: fixedTitle)
+                self?.createRoomView.updateTextFieldText(fixedTitle: fixedTitle)
             })
             .store(in: &self.cancellable)
         
         output.capacity
             .sink(receiveValue: { [weak self] capacity in
-                self?.createRoomView.roomCapacityView.updateCapacity(capacity: capacity)
-                self?.createRoomView.roomInfoView.updateRoomCapacity(capacity: capacity)
-            })
-            .store(in: &self.cancellable)
-        
-        output.dateRange
-            .sink(receiveValue: { [weak self] dateRange in
-                self?.createRoomView.roomInfoView.updateRoomDateRange(range: dateRange)
+                self?.createRoomView.updateCapacity(capacity: capacity)
             })
             .store(in: &self.cancellable)
         
@@ -130,35 +109,52 @@ final class CreateRoomViewController: BaseViewController {
             })
             .store(in: &self.cancellable)
         
-        output.currentNextStep
-            .sink(receiveValue: { [weak self] step in
-                self?.createRoomView.nextButtonDidTap(currentStep: step.0, nextStep: step.1)
-            })
-            .store(in: &self.cancellable)
-        
-        output.previousStep
-            .sink(receiveValue: { [weak self] step in
-                self?.createRoomView.backButtonDidTap(previousStep: step)
-            })
-            .store(in: &self.cancellable)
-        
         output.roomId
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] result in 
+            .sink { [weak self] result in
                 switch result {
-                case .finished: return
-                case .failure(_):
-                    self?.makeAlert(title: "에러발생")
+                case .success(let roomId): self?.pushDetailWaitViewController(roomId: roomId.description)
+                case .failure(let error): self?.makeAlert(title: error.localizedDescription)
                 }
-            }, receiveValue: { [weak self] roomid in
-                self?.pushDetailWaitViewController(roomId: roomid)
-            })
+            }
+            .store(in: &self.cancellable)
+        
+        output.roomInfo
+            .sink { [weak self] roomInfo in
+                self?.createRoomView.updateRoomInfo(title: roomInfo.title, 
+                                                    capacity: roomInfo.capacity,
+                                                    range: roomInfo.dateRange)
+            }
+            .store(in: &self.cancellable)
+        
+        output.currentStep
+            .sink { [weak self] (currentStep, isEnabled) in
+                self?.createRoomView.manageViewByStep(at: currentStep, isEnabled: isEnabled)
+            }
+            .store(in: &self.cancellable)
+    }
+    
+    private func bindUI() {
+        self.createRoomView.closeButtonDidTapPublisher
+            .sink { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
             .store(in: &self.cancellable)
     }
 }
 
-extension CreateRoomViewController: CreateRoomViewDelegate {
-    func didTapCloseButton() {
-        self.dismiss(animated: true)
+// MARK: - Helper
+extension CreateRoomViewController {
+    private func pushDetailWaitViewController(roomId: String) {
+        guard let navigationController = self.presentingViewController as? UINavigationController else { return }
+        let viewModel = DetailWaitViewModel(roomId: roomId, usecase: DetailWaitUseCaseImpl(repository: DetailRoomRepositoryImpl()))
+        let viewController = DetailWaitViewController(viewModel: viewModel)
+        
+        navigationController.popViewController(animated: true)
+        navigationController.pushViewController(viewController, animated: false)
+        
+        self.dismiss(animated: true) {
+            viewController.sendCreateRoomEvent()
+        }
     }
 }

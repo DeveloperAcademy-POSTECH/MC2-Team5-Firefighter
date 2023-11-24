@@ -15,7 +15,7 @@ class DeveloperInfoViewCell: UICollectionViewCell, BaseViewType {
     
     let developerImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.imgNi
+        imageView.image = UIImage.Image.ni
         return imageView
     }()
     
@@ -57,7 +57,7 @@ class DeveloperInfoViewCell: UICollectionViewCell, BaseViewType {
         addSubview(developerImageView)
         developerImageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.width.height.equalTo(80)
         }
         

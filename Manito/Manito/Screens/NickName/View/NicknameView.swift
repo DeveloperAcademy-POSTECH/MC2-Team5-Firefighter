@@ -14,10 +14,9 @@ final class NicknameView: UIView, BaseViewType {
     
     // MARK: - ui components
     
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .font(.regular, ofSize: 34)
-        label.text = self.title
         return label
     }()
     private lazy var nicknameTextField: UITextField = {
@@ -26,7 +25,7 @@ final class NicknameView: UIView, BaseViewType {
             NSAttributedString.Key.font : UIFont.font(.regular, ofSize: 18)
         ]
         textField.backgroundColor = .darkGrey002
-        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.createNickNameViewControllerAskNickName, attributes:attributes)
+        textField.attributedPlaceholder = NSAttributedString(string: TextLiteral.Nickname.placeholder.localized(), attributes:attributes)
         textField.font = .font(.regular, ofSize: 18)
         textField.layer.cornerRadius = 10
         textField.layer.masksToBounds = true
@@ -48,7 +47,7 @@ final class NicknameView: UIView, BaseViewType {
     }()
     private let doneButton: MainButton = {
         let button = MainButton()
-        button.title = TextLiteral.done
+        button.title = TextLiteral.Common.done.localized()
         button.isDisabled = true
         return button
     }()
@@ -56,8 +55,11 @@ final class NicknameView: UIView, BaseViewType {
     // MARK: - property
     
     private let title: String
-    lazy var doneButtonTapPublisher = self.doneButton.tapPublisher
-    let textFieldPublisher = PassthroughSubject<String, Never>()
+    
+    var doneButtonTapPublisher: AnyPublisher<Void, Never> {
+        return self.doneButton.tapPublisher
+    }
+    let textFieldPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
     
     // MARK: - init
     
@@ -65,7 +67,7 @@ final class NicknameView: UIView, BaseViewType {
         self.title = title
         super.init(frame: .zero)
         self.baseInit()
-        self.setupNotificationCenter()
+        self.setupTitleLabel()
     }
     
     @available(*, unavailable)
@@ -79,25 +81,25 @@ final class NicknameView: UIView, BaseViewType {
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).inset(20)
-            $0.leading.equalTo(self.safeAreaLayoutGuide).inset(Size.leadingTrailingPadding)
+            $0.leading.equalTo(self.safeAreaLayoutGuide).inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.nicknameTextField)
         self.nicknameTextField.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(66)
-            $0.leading.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
             $0.height.equalTo(60)
         }
         
         self.addSubview(self.textLimitLabel)
         self.textLimitLabel.snp.makeConstraints {
             $0.top.equalTo(self.nicknameTextField.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().inset(Size.leadingTrailingPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.leadingTrailingPadding)
         }
         
         self.addSubview(self.doneButton)
         self.doneButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(23)
+            $0.bottom.equalTo(self.keyboardLayoutGuide.snp.top).inset(-23)
             $0.centerX.equalToSuperview()
         }
     }
@@ -106,12 +108,7 @@ final class NicknameView: UIView, BaseViewType {
         self.backgroundColor = .backgroundGrey
     }
 
-    // MARK: - func
-    
-    private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+    // MARK: - public func
     
     func configureNavigationItem(_ navigationController: UINavigationController) {
         navigationController.isNavigationBarHidden = false
@@ -142,20 +139,10 @@ final class NicknameView: UIView, BaseViewType {
         self.nicknameTextField.text = nickname
     }
     
-    // MARK: - selector
+    // MARK: - private func
     
-    @objc private func keyboardWillShow(notification:NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.doneButton.transform = CGAffineTransform(translationX: 0, y: -keyboardSize.height + 30)
-            })
-        }
-    }
-    
-    @objc private func keyboardWillHide(notification:NSNotification) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.doneButton.transform = .identity
-        })
+    private func setupTitleLabel() {
+        self.titleLabel.text = self.title
     }
 }
 
