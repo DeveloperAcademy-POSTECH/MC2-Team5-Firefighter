@@ -193,7 +193,7 @@ final class CalendarView: UIView {
         let selectdDate = isFirstClickPastDate
         ? self.calendar.selectedDates[1].timeIntervalSince(self.calendar.selectedDates[0])
         : self.calendar.selectedDates[0].timeIntervalSince(self.calendar.selectedDates[1])
-        let dateRangeCount = selectdDate / 86400
+        let dateRangeCount = selectdDate / .oneDayInterval
 
         return Int(dateRangeCount) + 1
     }
