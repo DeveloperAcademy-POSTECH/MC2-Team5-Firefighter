@@ -129,7 +129,7 @@ final class CalendarView: UIView {
         self.delegate = delegate
     }
     
-    func setupButtonState() {
+    private func setupButtonState() {
         let hasDate = self.tempStartDateText != "" && self.tempEndDateText != ""
         self.delegate?.detectChangeButton(hasDate)
     }
@@ -162,7 +162,7 @@ final class CalendarView: UIView {
         self.setDateRange()
     }
 
-    func setDateRange() {
+    private func setDateRange() {
         guard self.countDateRange() <= 7 else { return }
 
         let isFirstClickPastDate = self.calendar.selectedDates[0] < self.calendar.selectedDates[1]
@@ -175,7 +175,7 @@ final class CalendarView: UIView {
         }
     }
 
-    func setSelecteDate(startIndex: Int, endIndex: Int) {
+    private func setSelecteDate(startIndex: Int, endIndex: Int) {
         var startDate = self.calendar.selectedDates[startIndex]
         while startDate < self.calendar.selectedDates[endIndex] {
             guard let addDate = Calendar.current.date(byAdding: .day,
@@ -188,7 +188,7 @@ final class CalendarView: UIView {
         self.tempEndDateText = self.calendar.selectedDates[endIndex].toDefaultString
     }
 
-    func countDateRange() -> Int {
+    private func countDateRange() -> Int {
         let isFirstClickPastDate = self.calendar.selectedDates[0] < self.calendar.selectedDates[1]
         let selectdDate = isFirstClickPastDate
         ? self.calendar.selectedDates[1].timeIntervalSince(self.calendar.selectedDates[0])
