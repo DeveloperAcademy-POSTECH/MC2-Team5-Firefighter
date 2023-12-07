@@ -73,8 +73,8 @@ final class CalendarView: UIView {
     var isFirstTap: Bool = false
     private weak var delegate: CalendarDelegate?
     
-    let startDateTapPublisher = PassthroughSubject<String, Never>()
-    let endDateTapPublisher = PassthroughSubject<String, Never>()
+    let startDateTapPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
+    let endDateTapPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
 
     // MARK: - init
 
@@ -130,7 +130,7 @@ final class CalendarView: UIView {
     }
     
     private func setupButtonState() {
-        let hasDate = self.tempStartDateText != "" && self.tempEndDateText != ""
+        let hasDate = !self.tempStartDateText.isEmpty && !self.tempEndDateText.isEmpty
         self.delegate?.detectChangeButton(hasDate)
     }
 
