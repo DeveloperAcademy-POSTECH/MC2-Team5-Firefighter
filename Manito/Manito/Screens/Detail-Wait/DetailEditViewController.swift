@@ -63,10 +63,6 @@ final class DetailEditViewController: UIViewController {
         self.isModalInPresentation = true
     }
     
-    private func bindChangeButton() {
-
-    }
-    
     private func setupRoomInfoView(roomInfo: RoomInfo) {
         let startDate = roomInfo.roomInformation.startDate
         let endDate = roomInfo.roomInformation.endDate
