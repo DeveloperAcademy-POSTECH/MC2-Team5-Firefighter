@@ -249,6 +249,7 @@ extension CalendarView: FSCalendarDelegate {
         self.selectStartDate = date
         calendar.select(date)
         calendar.reloadData()
+        self.endDateTapPublisher.send(self.getEndDate())
         self.setupButtonState()
     }
 
