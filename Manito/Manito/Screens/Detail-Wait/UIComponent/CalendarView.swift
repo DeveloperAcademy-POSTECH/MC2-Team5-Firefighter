@@ -205,6 +205,11 @@ final class CalendarView: UIView {
     func getTempEndDate() -> String {
         return self.tempEndDateText
     }
+    
+    private func showAlertOverDateSelect() {
+        self.viewController?.makeAlert(title: TextLiteral.Common.Calendar.maxAlertTitle.localized(),
+                                       message: TextLiteral.Common.Calendar.maxDateContent.localized())
+    }
 }
 
 extension CalendarView: FSCalendarDelegate {
@@ -222,8 +227,7 @@ extension CalendarView: FSCalendarDelegate {
                 DispatchQueue.main.async {                
                     calendar.deselect(date)
                 }
-                self.viewController?.makeAlert(title: TextLiteral.Common.Calendar.maxAlertTitle.localized(),
-                                               message: TextLiteral.Common.Calendar.maxDateContent.localized())
+                self.showAlertOverDateSelect()
             } else {
                 self.tempEndDateText = date.toDefaultString
                 self.setDateRange()
