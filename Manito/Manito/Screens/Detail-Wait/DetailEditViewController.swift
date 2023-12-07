@@ -52,9 +52,8 @@ final class DetailEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupPresentationController()
-        self.configureDelegation()
         self.bindViewModel()
-        self.bindCancelButton()
+        self.bindButtons()
     }
 
     // MARK: - func
@@ -64,8 +63,8 @@ final class DetailEditViewController: UIViewController {
         self.isModalInPresentation = true
     }
     
-    private func configureDelegation() {
-        self.detailEditView.configureCalendarDelegate(self)
+    private func bindChangeButton() {
+
     }
     
     private func setupRoomInfoView(roomInfo: RoomInfo) {
@@ -161,10 +160,16 @@ final class DetailEditViewController: UIViewController {
             .store(in: &self.cancellable)
     }
     
-    private func bindCancelButton() {
+    private func bindButtons() {
         self.detailEditView.cancelButtonPublisher
             .sink(receiveValue: { [weak self] _ in
                 self?.dismiss(animated: true)
+            })
+            .store(in: &self.cancellable)
+        
+        self.detailEditView.calendarView.buttonStatePublisher
+            .sink(receiveValue: { [weak self] value in
+                self?.detailEditView.setupChangeButton(value)
             })
             .store(in: &self.cancellable)
     }
@@ -192,11 +197,5 @@ extension DetailEditViewController {
 extension DetailEditViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
         self.presentationControllerDidAttemptToDismissAlert()
-    }
-}
-
-extension DetailEditViewController: CalendarDelegate {
-    func detectChangeButton(_ value: Bool) {
-        self.detailEditView.setupChangeButton(value)
     }
 }

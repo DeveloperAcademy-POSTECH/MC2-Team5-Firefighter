@@ -11,10 +11,6 @@ import UIKit
 import FSCalendar
 import SnapKit
 
-protocol CalendarDelegate: AnyObject {
-    func detectChangeButton(_ value: Bool)
-}
-
 final class CalendarView: UIView {
     
     private enum CalendarMoveType {
@@ -68,13 +64,11 @@ final class CalendarView: UIView {
     private var selectStartDate: Date = Date()
     var startDateText: String = ""
     var endDateText: String = ""
-    private var tempStartDateText: String = ""
-    private var tempEndDateText: String = ""
     var isFirstTap: Bool = false
-    private weak var delegate: CalendarDelegate?
     
     let startDateTapPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
     let endDateTapPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
+    let buttonStatePublisher: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
 
     // MARK: - init
 
@@ -125,13 +119,9 @@ final class CalendarView: UIView {
         self.nextButton.addAction(action, for: .touchUpInside)
     }
     
-    func configureCalendarDelegate(_ delegate: CalendarDelegate) {
-        self.delegate = delegate
-    }
-    
     private func setupButtonState() {
-        let hasDate = !self.tempStartDateText.isEmpty && !self.tempEndDateText.isEmpty
-        self.delegate?.detectChangeButton(hasDate)
+        let hasDate = !self.startDateText.isEmpty && !self.endDateText.isEmpty
+        self.buttonStatePublisher.send(hasDate)
     }
 
     private func setupDelegation() {
@@ -149,10 +139,10 @@ final class CalendarView: UIView {
     }
 
     func setupDateRange() {
-        self.startDateTapPublisher.send("20\(self.startDateText)")
-        self.endDateTapPublisher.send("20\(self.endDateText)")
-        guard let startDate = self.startDateText.toDefaultDate else { return }
-        guard let endDate = self.endDateText.toDefaultDate else { return }
+        self.startDateTapPublisher.send(self.startDateText)
+        self.endDateTapPublisher.send(self.endDateText)
+        guard let startDate = self.startDateText.toDefaultDate,
+              let endDate = self.endDateText.toDefaultDate else { return }
         self.setupCalendarRange(startDate: startDate, endDate: endDate)
     }
 
@@ -184,8 +174,9 @@ final class CalendarView: UIView {
             self.calendar.select(addDate)
             startDate += .oneDayInterval
         }
-        self.tempStartDateText = self.calendar.selectedDates[startIndex].toDefaultString
-        self.tempEndDateText = self.calendar.selectedDates[endIndex].toDefaultString
+        self.startDateText = self.calendar.selectedDates[startIndex].toDefaultString
+        self.endDateText = self.calendar.selectedDates[endIndex].toDefaultString
+        self.setupButtonState()
     }
 
     private func countDateRange() -> Int {
@@ -198,12 +189,12 @@ final class CalendarView: UIView {
         return Int(dateRangeCount) + 1
     }
     
-    func getTempStartDate() -> String {
-        return self.tempStartDateText
+    func getStartDate() -> String {
+        return self.startDateText
     }
     
-    func getTempEndDate() -> String {
-        return self.tempEndDateText
+    func getEndDate() -> String {
+        return self.endDateText
     }
     
     private func showAlertOverDateSelect() {
@@ -229,13 +220,13 @@ extension CalendarView: FSCalendarDelegate {
                 }
                 self.showAlertOverDateSelect()
             } else {
-                self.tempEndDateText = date.toDefaultString
+                self.endDateText = date.toDefaultString
                 self.setDateRange()
                 calendar.reloadData()
             }
         } else if isReclickedStartDate {
-            self.tempStartDateText = date.toDefaultString
-            self.tempEndDateText = ""
+            self.startDateText = date.toDefaultString
+            self.endDateText = ""
             (calendar.selectedDates).forEach {
                 calendar.deselect($0)
             }
@@ -244,13 +235,13 @@ extension CalendarView: FSCalendarDelegate {
             calendar.reloadData()
         }
         
-        self.startDateTapPublisher.send(self.getTempStartDate())
-        self.endDateTapPublisher.send(self.getTempEndDate())
+        self.startDateTapPublisher.send(self.getStartDate())
+        self.endDateTapPublisher.send(self.getEndDate())
         self.setupButtonState()
     }
 
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        self.tempEndDateText = ""
+        self.endDateText = ""
         self.isFirstTap = true
         (calendar.selectedDates).forEach {
             calendar.deselect($0)

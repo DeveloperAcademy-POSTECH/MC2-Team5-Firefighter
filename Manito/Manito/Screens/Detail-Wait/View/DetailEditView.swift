@@ -101,7 +101,6 @@ final class DetailEditView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private weak var calendarDelegate: CalendarDelegate?
     private let editMode: EditMode
     private var maximumMemberCount: Int? {
         willSet(count) {
@@ -265,8 +264,8 @@ final class DetailEditView: UIView, BaseViewType {
         guard let startDate = startDateString.toDefaultDate else { return }
         if startDate.isPast {
             let fiveDaysInterval: TimeInterval = 86400 * 4
-            self.calendarView.startDateText = Date().toDefaultString
-            self.calendarView.endDateText = (Date() + fiveDaysInterval).toDefaultString
+            self.calendarView.startDateText = Date().toFullString
+            self.calendarView.endDateText = (Date() + fiveDaysInterval).toFullString
         } else {
             self.calendarView.startDateText = startDateString
             self.calendarView.endDateText = endDateString
@@ -274,16 +273,12 @@ final class DetailEditView: UIView, BaseViewType {
         self.calendarView.setupDateRange()
     }
     
-    func configureCalendarDelegate(_ delegate: CalendarDelegate) {
-        self.calendarView.configureCalendarDelegate(delegate)
-    }
-    
     private func bindChangeButton() {
         self.changeButton.tapPublisher.sink(receiveValue: { [weak self] _ in
             self?.changeButtonSubject.send(CreatedRoomInfoRequestDTO(title: self?.roomTitle ?? "",
                                                                      capacity: self?.sliderPublisher.value ?? 0,
-                                                                     startDate: "20\(self?.calendarView.getTempStartDate() ?? "")",
-                                                                     endDate: "20\(self?.calendarView.getTempEndDate() ?? "")"))
+                                                                     startDate: "20\(self?.calendarView.getStartDate() ?? "")",
+                                                                     endDate: "20\(self?.calendarView.getEndDate() ?? "")"))
         })
         .store(in: &self.cancellable)
     }
