@@ -42,9 +42,8 @@ final class RoomInfoTest: XCTestCase {
     
     func test_canStart_방장이아니고_시작인원이4명이하고_시작날짜가오늘일때() {
         // given
-        let oneTimeInterval: TimeInterval = 86400
         let todayString = Date().toFullString
-        let endDate = todayString.toDefaultDate! + oneTimeInterval
+        let endDate = todayString.toDefaultDate! + .oneDayInterval
         let endDateString = endDate.toFullString
         let sut = RoomInfo(
             roomInformation: RoomListItem(id: 0,
@@ -96,9 +95,8 @@ final class RoomInfoTest: XCTestCase {
     
     func test_canStart_방장이아니고_시작인원이4명이상이고_시작날짜가오늘일때() {
         // given
-        let oneTimeInterval: TimeInterval = 86400
         let todayString = Date().toFullString
-        let endDate = todayString.toDefaultDate! + oneTimeInterval
+        let endDate = todayString.toDefaultDate! + .oneDayInterval
         let endDateString = endDate.toFullString
         let sut = RoomInfo(
             roomInformation: RoomListItem(id: 0,
@@ -150,9 +148,8 @@ final class RoomInfoTest: XCTestCase {
     
     func test_canStart_방장이고_시작인원이4명이하고_시작날짜가오늘일때() {
         // given
-        let oneTimeInterval: TimeInterval = 86400
         let todayString = Date().toFullString
-        let endDate = todayString.toDefaultDate! + oneTimeInterval
+        let endDate = todayString.toDefaultDate! + .oneDayInterval
         let endDateString = endDate.toFullString
         let sut = RoomInfo(
             roomInformation: RoomListItem(id: 0,
@@ -204,9 +201,8 @@ final class RoomInfoTest: XCTestCase {
     
     func test_canStart_방장이고_시작인원이4명이상이고_시작날짜가오늘일때() {
         // given
-        let oneTimeInterval: TimeInterval = 86400
         let todayString = Date().toFullString
-        let endDate = todayString.toDefaultDate! + oneTimeInterval
+        let endDate = todayString.toDefaultDate! + .oneDayInterval
         let endDateString = endDate.toFullString
         let sut = RoomInfo(
             roomInformation: RoomListItem(id: 0,

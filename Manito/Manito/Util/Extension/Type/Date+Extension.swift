@@ -12,13 +12,13 @@ extension Date {
     var isToday: Bool {
         let now = Date()
         let distance = self.distance(to: now)
-        return distance > 0 && distance < 86400
+        return distance > 0 && distance < .oneDayInterval
     }
     
     /// 해당 날짜가 지난날인지
     var isPast: Bool {
         let distance = self.distance(to: Date())
-        return distance > 86400
+        return distance > .oneDayInterval
     }
     
     /// Date 값을 yy.MM.dd 형식의 String 값으로 변환

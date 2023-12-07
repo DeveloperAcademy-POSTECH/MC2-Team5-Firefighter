@@ -48,8 +48,7 @@ final class DetailEditUsecaseTest: XCTestCase {
     
     func test_vaildStartDateIsNotPast함수에_내일날짜가_들어갔을때() {
         // given
-        let oneDay: TimeInterval = 86400
-        let tomorrow = (Date() + oneDay).toFullString
+        let tomorrow = (Date() + .oneDayInterval).toFullString
         // when
         let sut = self.mockUsecase.vaildStartDateIsNotPast(startDate: tomorrow)
         // then
