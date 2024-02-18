@@ -62,8 +62,8 @@ final class CalendarView: UIView {
     // MARK: - property
     
     private var selectStartDate: Date = Date()
-    var startDateText: String = ""
-    var endDateText: String = ""
+    private var startDateText: String = ""
+    private var endDateText: String = ""
     var isFirstTap: Bool = false
     
     let startDateTapPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
@@ -195,6 +195,14 @@ final class CalendarView: UIView {
     
     func getEndDate() -> String {
         return self.endDateText
+    }
+    
+    func setStartDateText(_ text: String) {
+        self.startDateText = text
+    }
+    
+    func setEndDateText(_ text: String) {
+        self.endDateText = text
     }
     
     private func showAlertOverDateSelect() {
