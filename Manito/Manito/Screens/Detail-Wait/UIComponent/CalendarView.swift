@@ -68,7 +68,6 @@ final class CalendarView: UIView {
     
     let startDateTapPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
     let endDateTapPublisher: PassthroughSubject<String, Never> = PassthroughSubject()
-    let buttonStatePublisher: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
 
     // MARK: - init
 
@@ -112,16 +111,12 @@ final class CalendarView: UIView {
         }
         self.previousButton.addAction(action, for: .touchUpInside)
     }
+    
     private func setupNextButton() {
         let action = UIAction { [weak self] _ in
             self?.changeMonth(with: CalendarMoveType.next)
         }
         self.nextButton.addAction(action, for: .touchUpInside)
-    }
-    
-    private func setupButtonState() {
-        let hasDate = !self.startDateText.isEmpty && !self.endDateText.isEmpty
-        self.buttonStatePublisher.send(hasDate)
     }
 
     private func setupDelegation() {
@@ -176,7 +171,6 @@ final class CalendarView: UIView {
         }
         self.startDateText = self.calendar.selectedDates[startIndex].toDefaultString
         self.endDateText = self.calendar.selectedDates[endIndex].toDefaultString
-        self.setupButtonState()
     }
 
     private func countDateRange() -> Int {
@@ -212,6 +206,7 @@ final class CalendarView: UIView {
 }
 
 extension CalendarView: FSCalendarDelegate {
+    /// 캘린더의 날짜를 선택했을 때 실행되는 함수.
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         self.isFirstTap = true
         let isCreatedRoomOnlySelectedStartDate = calendar.selectedDates.count == 1
@@ -245,11 +240,12 @@ extension CalendarView: FSCalendarDelegate {
         
         self.startDateTapPublisher.send(self.getStartDate())
         self.endDateTapPublisher.send(self.getEndDate())
-        self.setupButtonState()
     }
-
+    
+    /// 이미 선택 되어있는 날짜를 클릭했을 때 실행되는 함수.
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         self.endDateText = ""
+        self.endDateTapPublisher.send("")
         self.isFirstTap = true
         (calendar.selectedDates).forEach {
             calendar.deselect($0)
@@ -257,10 +253,9 @@ extension CalendarView: FSCalendarDelegate {
         self.selectStartDate = date
         calendar.select(date)
         calendar.reloadData()
-        self.endDateTapPublisher.send(self.getEndDate())
-        self.setupButtonState()
     }
 
+    /// 선택할 수 없는 날짜 지정 함수
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         if date < Date() - .oneDayInterval {
             self.viewController?.makeAlert(title: TextLiteral.Common.Calendar.pastAlertTitle.localized(),
@@ -271,6 +266,7 @@ extension CalendarView: FSCalendarDelegate {
         }
     }
 
+    /// 캘린더의 숫자 색에 대한 함수
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         let isBeforeToday = date < Date() - .oneDayInterval
         let isAWeekBeforeAfter = date < self.selectStartDate + .sevenDaysInterval && date > self.selectStartDate - .sevenDaysInterval

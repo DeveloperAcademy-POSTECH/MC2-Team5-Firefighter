@@ -163,9 +163,9 @@ final class DetailEditViewController: UIViewController {
             })
             .store(in: &self.cancellable)
         
-        self.detailEditView.calendarView.buttonStatePublisher
-            .sink(receiveValue: { [weak self] value in
-                self?.detailEditView.setupChangeButton(value)
+        self.detailEditView.calendarView.startDateTapPublisher.combineLatest(self.detailEditView.calendarView.endDateTapPublisher)
+            .sink(receiveValue: { [weak self] startText, endText in
+                self?.detailEditView.setupChangeButton(startText != "" && endText != "")
             })
             .store(in: &self.cancellable)
     }
