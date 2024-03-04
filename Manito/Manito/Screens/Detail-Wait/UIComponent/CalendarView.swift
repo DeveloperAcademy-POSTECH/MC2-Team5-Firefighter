@@ -138,10 +138,10 @@ final class CalendarView: UIView {
         self.endDateTapPublisher.send(self.endDateText)
         guard let startDate = self.startDateText.toDefaultDate,
               let endDate = self.endDateText.toDefaultDate else { return }
-        self.setupCalendarRange(startDate: startDate, endDate: endDate)
+        self.setupInitialCalendarRange(startDate: startDate, endDate: endDate)
     }
 
-    private func setupCalendarRange(startDate: Date, endDate: Date) {
+    private func setupInitialCalendarRange(startDate: Date, endDate: Date) {
         self.calendar.select(startDate)
         self.calendar.select(endDate)
         self.setDateRange()
