@@ -29,10 +29,9 @@ final class Date_ExtensionTest: XCTestCase {
     
     func test_isToday_과거날짜에_올바르게_반환하는가() {
         // given
-        let oneTimeInterval: TimeInterval = 86400
         let dateString = Date().toFullString
         let today = dateString.toFullDate!
-        let sut = today - oneTimeInterval
+        let sut = today - .oneDayInterval
         
         // when
         let isToday = sut.isToday
@@ -43,10 +42,9 @@ final class Date_ExtensionTest: XCTestCase {
     
     func test_isToday_미래날짜에_올바르게_반환하는가() {
         // given
-        let oneTimeInterval: TimeInterval = 86400
         let dateString = Date().toFullString
         let today = dateString.toFullDate!
-        let sut = today + oneTimeInterval
+        let sut = today + .oneDayInterval
         
         // when
         let isToday = sut.isToday
@@ -63,10 +61,9 @@ final class Date_ExtensionTest: XCTestCase {
     
     func test_isPast_과거날짜에_올바르게_반환하는가() {
         // given
-        let oneTimeInterval: TimeInterval = 86400
         let dateString = Date().toFullString
         let today = dateString.toFullDate!
-        let sut = today - oneTimeInterval
+        let sut = today - .oneDayInterval
         
         // when
         let isPast = sut.isPast
@@ -77,10 +74,9 @@ final class Date_ExtensionTest: XCTestCase {
     
     func test_isPast_미래날짜에_올바르게_반환하는가() {
         // given
-        let oneTimeInterval: TimeInterval = 86400
         let dateString = Date().toFullString
         let today = dateString.toFullDate!
-        let sut = today + oneTimeInterval
+        let sut = today + .oneDayInterval
         
         // when
         let isPast = sut.isPast

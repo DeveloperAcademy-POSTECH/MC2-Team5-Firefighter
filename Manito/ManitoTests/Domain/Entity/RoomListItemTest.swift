@@ -69,7 +69,7 @@ final class RoomListItemTest: XCTestCase {
     func test_isStartDatePast_오늘날짜에대해_올바르게_반환하는가() {
         // given
         let today = Date()
-        let ondDay: TimeInterval = 86400
+        let ondDay: TimeInterval = .oneDayInterval
         let todayAfterFiveDays = Date() + ondDay
         let todayString = today.toFullString
         let endDateString = todayAfterFiveDays.toFullString

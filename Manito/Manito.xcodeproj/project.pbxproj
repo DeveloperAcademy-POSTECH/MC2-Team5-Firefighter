@@ -25,6 +25,7 @@
 		395402D42AAF0BC5003F3012 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395402D32AAF0BC5003F3012 /* UIViewController+Extension.swift */; };
 		395B5BC22A25E20000CE1420 /* DetailWaitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */; };
 		395B5BCC2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */; };
+		3962803E2B0CEC8600B0DC4B /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962803D2B0CEC8600B0DC4B /* TimeInterval+Extension.swift */; };
 		39632A282AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39632A272AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift */; };
 		39632A2B2AD842A800A6E61D /* DetailWaitUsecaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39632A2A2AD842A800A6E61D /* DetailWaitUsecaseError.swift */; };
 		39632A732AF0DC2E00A6E61D /* DetailEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39632A722AF0DC2E00A6E61D /* DetailEditViewModel.swift */; };
@@ -294,6 +295,7 @@
 		395402D32AAF0BC5003F3012 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		395B5BC12A25E20000CE1420 /* DetailWaitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModel.swift; sourceTree = "<group>"; };
 		395B5BCB2A2F6A9700CE1420 /* DetailWaitViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitViewModelTest.swift; sourceTree = "<group>"; };
+		3962803D2B0CEC8600B0DC4B /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		39632A272AD81F2E00A6E61D /* DetailWaitUsecaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitUsecaseTest.swift; sourceTree = "<group>"; };
 		39632A2A2AD842A800A6E61D /* DetailWaitUsecaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWaitUsecaseError.swift; sourceTree = "<group>"; };
 		39632A722AF0DC2E00A6E61D /* DetailEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditViewModel.swift; sourceTree = "<group>"; };
@@ -1364,6 +1366,7 @@
 				B5E1F2AD285B2917006D880B /* Int+RandomNumber.swift */,
 				39C957CF2879521400A04A2B /* String+DateFormatter.swift */,
 				39C957D12879523200A04A2B /* Date+Extension.swift */,
+				3962803D2B0CEC8600B0DC4B /* TimeInterval+Extension.swift */,
 			);
 			path = Type;
 			sourceTree = "<group>";
@@ -2245,6 +2248,7 @@
 				398B1C9B29F10B0300DEFCEC /* DetailEditView.swift in Sources */,
 				B50B1AFD2856C3500080992C /* SendLetterTextView.swift in Sources */,
 				B5A085F42A9733A700C8A98D /* LoginDTO.swift in Sources */,
+				3962803E2B0CEC8600B0DC4B /* TimeInterval+Extension.swift in Sources */,
 				B53A35D02A97194D00B720BC /* TokenRepositoryImpl.swift in Sources */,
 				B5706BF629B9D4650093D198 /* GuideView.swift in Sources */,
 				B50B1B41285B048A0080992C /* OpenManittoViewController.swift in Sources */,
