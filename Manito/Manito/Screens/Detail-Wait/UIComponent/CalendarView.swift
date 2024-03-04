@@ -152,15 +152,15 @@ final class CalendarView: UIView {
 
         let isFirstClickPastDate = self.calendar.selectedDates[0] < self.calendar.selectedDates[1]
         if isFirstClickPastDate {
-            self.setSelecteDate(startIndex: 0,
+            self.setSelectedDate(startIndex: 0,
                                 endIndex: 1)
         } else {
-            self.setSelecteDate(startIndex: 1,
+            self.setSelectedDate(startIndex: 1,
                                 endIndex: 0)
         }
     }
 
-    private func setSelecteDate(startIndex: Int, endIndex: Int) {
+    private func setSelectedDate(startIndex: Int, endIndex: Int) {
         var startDate = self.calendar.selectedDates[startIndex]
         while startDate < self.calendar.selectedDates[endIndex] {
             guard let addDate = Calendar.current.date(byAdding: .day,
